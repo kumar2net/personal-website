@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 
 const blogPosts = [
   {
+    title: 'My Experience with Windsurf',
+    date: 'June 04, 2025',
+    excerpt: 'A detailed account of my experience using Windsurf, the AI coding assistant, for my web development projects.',
+    tags: ['AI Coding', 'Windsurf', 'Developer Tools', 'Productivity'],
+    image: 'https://picsum.photos/800/400?random=5',
+    link: '/blog/my-experience-with-windsurf'
+  },
+  {
     title: 'Building My Personal Portfolio Website',
     date: 'June 3, 2025',
     excerpt: 'A detailed look at building my portfolio website with React, Tailwind CSS, and modern web technologies.',

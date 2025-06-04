@@ -29,7 +29,7 @@ const projects = [
     description: 'A modern, intelligent drug suggestion application that helps users find, compare, and manage medications effectively. Built with React and featuring advanced AI-powered suggestions.',
     tech: ['React', 'TypeScript', 'Material-UI', 'Firebase'],
     image: 'https://via.placeholder.com/800x600',
-    link: '#',
+    link: 'https://kumarai.netlify.app/',
     features: [
       'Real-time drug search with intelligent suggestions based on user history',
       'Comprehensive drug profiles with detailed information including side effects and alternatives',

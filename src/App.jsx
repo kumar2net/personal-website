@@ -9,6 +9,7 @@ import Blog from './pages/Blog'
 import SpineImplantDashboard from './pages/blog/spine-implant-dashboard'
 import DrugSuggestionApp from './pages/blog/drug-suggestion-app'
 import PortfolioWebsite from './pages/blog/portfolio-website'
+import MyExperienceWithWindsurfPost from './pages/blog/my-experience-with-windsurf'
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -93,7 +94,7 @@ function App() {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <h1 className="text-4xl font-bold mb-4">Welcome to My Personal Website></h1>
+              <h1 className="text-4xl font-bold mb-4">Welcome to My Personal Website</h1>
               <p className="text-xl text-gray-600 mb-8">AI Enthusiast</p>
               <div className="flex gap-4">
                 <Link to="/about" className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
@@ -114,6 +115,7 @@ function App() {
           <Route path="/blog/spine-implant-dashboard" element={<SpineImplantDashboard />} />
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
           <Route path="/blog/portfolio-website" element={<PortfolioWebsite />} />
+          <Route path="/blog/my-experience-with-windsurf" element={<MyExperienceWithWindsurfPost />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
@@ -123,11 +125,11 @@ function App() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center">
             <p className="text-gray-600"> 2025 My Portfolio. All rights reserved.</p>
-            <p className="text-gray-600">© 2025 My Portfolio. All rights reserved.</p>
+            {/* <p className="text-gray-600">© 2025 My Portfolio. All rights reserved.</p> */}
             <div className="flex space-x-4">
               <a href="#" className="text-gray-600 hover:text-gray-800">GitHub</a>
               <a href="#" className="text-gray-600 hover:text-gray-800">LinkedIn</a>
-              <a href="#" className="text-gray-600 hover:text-gray-800">Twitter</a>
+              <a href="https://x.com/kumar2net" className="text-gray-600 hover:text-gray-800" target="_blank" rel="noopener noreferrer">Twitter</a>
             </div>
           </div>
         </div>
