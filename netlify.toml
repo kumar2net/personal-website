@@ -1,19 +1,15 @@
-# Single page app (SPA) fallback
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback - redirect all requests to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Handle blog posts without extensions
+# Handle blog post routes
 [[redirects]]
-  from = "/blog/:slug"
+  from = "/blog/*"
   to = "/index.html"
   status = 200
-  force = false
-
-# Handle direct access to .jsx files
-[[redirects]]
-  from = "/blog/*.jsx"
-  to = "/index.html"
-  status = 200
-  force = false

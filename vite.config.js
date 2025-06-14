@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
+import { readdirSync } from 'fs'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,11 +10,13 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        '404': resolve(__dirname, '404.html')
+        main: resolve(__dirname, 'index.html')
       }
-    }
+    },
+    // Copy public directory to dist
+    copyPublicDir: true
   },
+  publicDir: 'public',
   server: {
     historyApiFallback: true,
   },
