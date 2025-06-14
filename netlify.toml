@@ -1,0 +1,14 @@
+# Handle blog posts without extensions
+[[redirects]]
+  from = "/blog/:slug"
+  to = "/blog/:slug.jsx"
+  status = 200
+  force = false
+  conditions = {Type = ["file"]}
+
+# Handle direct access to .jsx files (optional, but clean)
+[[redirects]]
+  from = "/blog/*.jsx"
+  to = "/blog/:splat"
+  status = 301
+  force = false
