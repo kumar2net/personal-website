@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 
 const blogPosts = [
   {
+    title: 'My Experience with the stock market API: Building a Mutual Fund Performance Tracker',
+    date: 'June 14, 2025',
+    excerpt: 'A dive into integrating LLMs and specialized APIs for personal finance. How I built a unified mutual fund tracker using GPT-4o and indianapi.in.',
+    tags: ['API', 'LLM', 'Mutual Funds', 'Personal Finance', 'Data Integration', 'GPT-4o'],
+    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/experience-using-api-in-ai-code-editor'
+  },
+  {
     title: 'My Experience with Windsurf',
     date: 'June 04, 2025',
     excerpt: 'A detailed account of my experience using Windsurf, the AI coding assistant, for my web development projects.',

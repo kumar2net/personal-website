@@ -10,6 +10,8 @@ import SpineImplantDashboard from './pages/blog/spine-implant-dashboard'
 import DrugSuggestionApp from './pages/blog/drug-suggestion-app'
 import PortfolioWebsite from './pages/blog/portfolio-website'
 import MyExperienceWithWindsurfPost from './pages/blog/my-experience-with-windsurf'
+import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-in-ai-code-editor';
+
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -116,6 +118,7 @@ function App() {
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
           <Route path="/blog/portfolio-website" element={<PortfolioWebsite />} />
           <Route path="/blog/my-experience-with-windsurf" element={<MyExperienceWithWindsurfPost />} />
+<Route path="/blog/experience-using-api-in-ai-code-editor" element={<ExperienceUsingApiInAiCodeEditor />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
