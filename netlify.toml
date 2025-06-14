@@ -1,14 +1,19 @@
+# Single page app (SPA) fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 # Handle blog posts without extensions
 [[redirects]]
   from = "/blog/:slug"
-  to = "/blog/:slug.jsx"
+  to = "/index.html"
   status = 200
   force = false
-  conditions = {Type = ["file"]}
 
-# Handle direct access to .jsx files (optional, but clean)
+# Handle direct access to .jsx files
 [[redirects]]
   from = "/blog/*.jsx"
-  to = "/blog/:splat"
-  status = 301
+  to = "/index.html"
+  status = 200
   force = false
