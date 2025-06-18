@@ -11,6 +11,7 @@ import DrugSuggestionApp from './pages/blog/drug-suggestion-app'
 import PortfolioWebsite from './pages/blog/portfolio-website'
 import MyExperienceWithWindsurfPost from './pages/blog/my-experience-with-windsurf'
 import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-in-ai-code-editor';
+import AcronymSoup from './pages/blog/acronym-soup';
 
 
 function App() {
@@ -119,6 +120,7 @@ function App() {
           <Route path="/blog/portfolio-website" element={<PortfolioWebsite />} />
           <Route path="/blog/my-experience-with-windsurf" element={<MyExperienceWithWindsurfPost />} />
 <Route path="/blog/experience-using-api-in-ai-code-editor" element={<ExperienceUsingApiInAiCodeEditor />} />
+          <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

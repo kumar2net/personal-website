@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 
 const blogPosts = [
   {
+    title: 'Acronym Soup: The Evolution of Tech\'s Most Influential Companies',
+    date: 'June 18, 2025',
+    excerpt: 'From FANG to MAAMA: How tech\'s most influential companies shape our digital world. A look at the evolution of tech acronyms and the companies behind them.',
+    tags: ['Tech', 'Business', 'FAANG', 'MAAMA', 'Technology Trends'],
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/acronym-soup'
+  },
+  {
     title: 'My Experience with the stock market API: Building a Mutual Fund Performance Tracker',
     date: 'June 14, 2025',
     excerpt: 'A dive into integrating LLMs and specialized APIs for personal finance. How I built a unified mutual fund tracker using GPT-4o and indianapi.in.',
