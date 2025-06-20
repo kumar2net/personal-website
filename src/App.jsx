@@ -12,6 +12,7 @@ import PortfolioWebsite from './pages/blog/portfolio-website'
 import MyExperienceWithWindsurfPost from './pages/blog/my-experience-with-windsurf'
 import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-in-ai-code-editor';
 import AcronymSoup from './pages/blog/acronym-soup';
+import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-startup-school';
 
 
 function App() {
@@ -119,8 +120,9 @@ function App() {
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
           <Route path="/blog/portfolio-website" element={<PortfolioWebsite />} />
           <Route path="/blog/my-experience-with-windsurf" element={<MyExperienceWithWindsurfPost />} />
-<Route path="/blog/experience-using-api-in-ai-code-editor" element={<ExperienceUsingApiInAiCodeEditor />} />
+          <Route path="/blog/experience-using-api-in-ai-code-editor" element={<ExperienceUsingApiInAiCodeEditor />} />
           <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
+          <Route path="/blog/andrej-karpathy-yc-ai-startup-school" element={<AndrejKarpathyYcAiStartupSchool />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

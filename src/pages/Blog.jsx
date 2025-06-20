@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 
 const blogPosts = [
   {
+    title: "Andrej Karpathy's Y Combinator AI Startup School: The Electricity Analogy",
+    date: 'June 20, 2025',
+    excerpt: 'How Andrej Karpathy\'s revolutionary "LLMs are like electricity" analogy is reshaping our understanding of AI\'s role in the modern world.',
+    tags: ['AI', 'Andrej Karpathy', 'Y Combinator', 'LLMs', 'Electricity Analogy'],
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/andrej-karpathy-yc-ai-startup-school'
+  },
+  {
     title: 'Acronym Soup: The Evolution of Tech\'s Most Influential Companies',
     date: 'June 18, 2025',
     excerpt: 'From FANG to MAAMA: How tech\'s most influential companies shape our digital world. A look at the evolution of tech acronyms and the companies behind them.',
