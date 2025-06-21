@@ -13,6 +13,7 @@ import MyExperienceWithWindsurfPost from './pages/blog/my-experience-with-windsu
 import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-in-ai-code-editor';
 import AcronymSoup from './pages/blog/acronym-soup';
 import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-startup-school';
+import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-cursor";
 
 
 function App() {
@@ -117,6 +118,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/spine-implant-dashboard" element={<SpineImplantDashboard />} />
+          <Route path="/blog/building-mcp-server-with-cursor" element={<BuildingMcpServerWithCursor />} />
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
           <Route path="/blog/portfolio-website" element={<PortfolioWebsite />} />
           <Route path="/blog/my-experience-with-windsurf" element={<MyExperienceWithWindsurfPost />} />
@@ -134,7 +136,6 @@ function App() {
             <p className="text-gray-600"> 2025 My Portfolio. All rights reserved.</p>
             {/* <p className="text-gray-600">© 2025 My Portfolio. All rights reserved.</p> */}
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 hover:text-gray-800">GitHub</a>
               <a href="#" className="text-gray-600 hover:text-gray-800">LinkedIn</a>
               <a href="https://x.com/kumar2net" className="text-gray-600 hover:text-gray-800" target="_blank" rel="noopener noreferrer">Twitter</a>
             </div>

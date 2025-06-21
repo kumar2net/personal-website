@@ -2,6 +2,31 @@ import { motion } from 'framer-motion'
 
 const projects = [
   {
+    title: 'Kumar News - News Aggregation Platform',
+    description: 'A comprehensive news aggregation platform that provides real-time news from various categories including technology, business, sports, entertainment, and more. Built with NewsAPI integration to deliver fresh, relevant content to users.',
+    tech: ['React', 'Node.js', 'NewsAPI', 'Tailwind CSS', 'Netlify'],
+    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80',
+    link: 'https://kumarnews.netlify.app',
+    features: [
+      'Real-time news aggregation from multiple sources via NewsAPI',
+      'News categorization by topics (technology, business, sports, etc.)',
+      'Responsive design optimized for all devices',
+      'Fast loading times with optimized performance',
+      'Clean, intuitive user interface for easy navigation',
+      'Regular updates with latest news from around the world'
+    ],
+    highlights: [
+      'Built with React for dynamic user experience',
+      'Integrated with NewsAPI for comprehensive news coverage',
+      'Deployed on Netlify for reliable hosting and fast CDN',
+      'Mobile-first responsive design approach',
+      'Optimized for search engines and accessibility',
+      'Real-time data processing and content management'
+    ],
+    category: 'News Aggregation',
+    impact: 'Providing users with timely, relevant news from various categories to keep them informed about current events and developments worldwide'
+  },
+  {
     title: 'Spine Implant Market Analytics Dashboard',
     description: 'A comprehensive React-based dashboard for analyzing and visualizing the spine implant market in India. This application provides detailed market insights, trends, and analytics for healthcare professionals and market analysts.',
     tech: ['React', 'Recharts', 'Next.js', 'Tailwind CSS'],

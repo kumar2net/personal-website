@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 
 const blogPosts = [
   {
+    title: "Building a NewsAPI MCP Server with Cursor",
+    date: "June 21, 2025",
+    excerpt: "A practical guide to creating an MCP server for news aggregation and integrating it with Cursor IDE for enhanced development workflows.",
+    tags: ["MCP", "Cursor IDE", "NewsAPI", "Node.js", "Netlify"],
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+    link: "/blog/building-mcp-server-with-cursor"
+  },
+  {
     title: "Andrej Karpathy's Y Combinator AI Startup School: The Electricity Analogy",
     date: 'June 20, 2025',
     excerpt: 'How Andrej Karpathy\'s revolutionary "LLMs are like electricity" analogy is reshaping our understanding of AI\'s role in the modern world.',
@@ -12,7 +20,7 @@ const blogPosts = [
   },
   {
     title: 'Acronym Soup: The Evolution of Tech\'s Most Influential Companies',
-    date: 'June 18, 2025',
+    date: 'June 19, 2025',
     excerpt: 'From FANG to MAAMA: How tech\'s most influential companies shape our digital world. A look at the evolution of tech acronyms and the companies behind them.',
     tags: ['Tech', 'Business', 'FAANG', 'MAAMA', 'Technology Trends'],
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
@@ -20,7 +28,7 @@ const blogPosts = [
   },
   {
     title: 'My Experience with the stock market API: Building a Mutual Fund Performance Tracker',
-    date: 'June 14, 2025',
+    date: 'June 18, 2025',
     excerpt: 'A dive into integrating LLMs and specialized APIs for personal finance. How I built a unified mutual fund tracker using GPT-4o and indianapi.in.',
     tags: ['API', 'LLM', 'Mutual Funds', 'Personal Finance', 'Data Integration', 'GPT-4o'],
     image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80',
@@ -28,7 +36,7 @@ const blogPosts = [
   },
   {
     title: 'My Experience with Windsurf',
-    date: 'June 04, 2025',
+    date: 'June 17, 2025',
     excerpt: 'A detailed account of my experience using Windsurf, the AI coding assistant, for my web development projects.',
     tags: ['AI Coding', 'Windsurf', 'Developer Tools', 'Productivity'],
     image: 'https://picsum.photos/800/400?random=5',
@@ -36,7 +44,7 @@ const blogPosts = [
   },
   {
     title: 'Building My Personal Portfolio Website',
-    date: 'June 3, 2025',
+    date: 'June 16, 2025',
     excerpt: 'A detailed look at building my portfolio website with React, Tailwind CSS, and modern web technologies.',
     tags: ['React', 'Web Development', 'Portfolio', 'Frontend'],
     image: 'https://picsum.photos/800/400?random=4',
@@ -44,7 +52,7 @@ const blogPosts = [
   },
   {
     title: 'Building a Spine Implant Market Analytics Dashboard',
-    date: 'May 31, 2025',
+    date: 'June 15, 2025',
     excerpt: 'A deep dive into creating a comprehensive analytics dashboard for the spine implant market in India using React and Next.js.',
     tags: ['React', 'Next.js', 'Data Visualization', 'Medical Analytics'],
     image: 'https://picsum.photos/800/400?random=1',
@@ -52,7 +60,7 @@ const blogPosts = [
   },
   {
     title: 'Smart Drug Suggestion App: Architecture and Implementation',
-    date: 'May 30, 2025',
+    date: 'June 14, 2025',
     excerpt: 'Exploring the architecture and key features of a modern drug suggestion application built with React and TypeScript.',
     tags: ['React', 'TypeScript', 'AI', 'Pharmaceutical'],
     image: 'https://picsum.photos/800/400?random=2',
