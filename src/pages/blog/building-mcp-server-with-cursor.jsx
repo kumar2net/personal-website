@@ -54,41 +54,53 @@ const BuildingMcpServerWithCursor = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
               System Architecture
             </h2>
-            <div className="my-8 p-6 bg-gray-50 rounded-lg">
-              <svg width="100%" height="300" viewBox="0 0 800 300" className="w-full">
-                <rect width="800" height="300" fill="#f8fafc" rx="8"/>
-                
+            <div className="my-8 p-4 sm:p-6 bg-gray-50 rounded-lg">
+              {/* Mobile-friendly diagram */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {/* Cursor IDE */}
-                <rect x="50" y="50" width="150" height="80" fill="#3b82f6" rx="8"/>
-                <text x="125" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">Cursor IDE</text>
-                <text x="125" y="90" textAnchor="middle" fill="white" fontSize="10">(MCP Client)</text>
+                <div className="bg-blue-500 text-white p-4 rounded-lg text-center">
+                  <div className="text-lg font-bold mb-1">Cursor IDE</div>
+                  <div className="text-sm opacity-90">(MCP Client)</div>
+                </div>
                 
                 {/* MCP Server */}
-                <rect x="300" y="50" width="150" height="80" fill="#f59e0b" rx="8"/>
-                <text x="375" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">NewsAPI MCP</text>
-                <text x="375" y="90" textAnchor="middle" fill="white" fontSize="10">Server</text>
+                <div className="bg-orange-500 text-white p-4 rounded-lg text-center">
+                  <div className="text-lg font-bold mb-1">NewsAPI MCP</div>
+                  <div className="text-sm opacity-90">Server</div>
+                </div>
                 
                 {/* NewsAPI */}
-                <rect x="550" y="50" width="150" height="80" fill="#ef4444" rx="8"/>
-                <text x="625" y="75" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">NewsAPI</text>
-                <text x="625" y="90" textAnchor="middle" fill="white" fontSize="10">External Service</text>
-                
-                {/* Web Interface */}
-                <rect x="50" y="180" width="150" height="80" fill="#8b5cf6" rx="8"/>
-                <text x="125" y="205" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">Web Interface</text>
-                <text x="125" y="220" textAnchor="middle" fill="white" fontSize="10">Testing & Demo</text>
-                
-                {/* Arrows */}
-                <defs>
-                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
-                  </marker>
-                </defs>
-                
-                <line x1="200" y1="90" x2="300" y2="90" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)"/>
-                <line x1="450" y1="90" x2="550" y2="90" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)"/>
-                <line x1="200" y1="220" x2="450" y2="90" stroke="#374151" strokeWidth="2" markerEnd="url(#arrowhead)"/>
-              </svg>
+                <div className="bg-red-500 text-white p-4 rounded-lg text-center">
+                  <div className="text-lg font-bold mb-1">NewsAPI</div>
+                  <div className="text-sm opacity-90">External Service</div>
+                </div>
+              </div>
+              
+              {/* Web Interface */}
+              <div className="bg-purple-500 text-white p-4 rounded-lg text-center">
+                <div className="text-lg font-bold mb-1">Web Interface</div>
+                <div className="text-sm opacity-90">Testing & Demo</div>
+              </div>
+              
+              {/* Flow arrows for desktop */}
+              <div className="hidden md:block mt-6">
+                <svg width="100%" height="60" viewBox="0 0 800 60" className="w-full">
+                  <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+                    </marker>
+                  </defs>
+                  <line x1="200" y1="30" x2="300" y2="30" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead)"/>
+                  <line x1="500" y1="30" x2="600" y2="30" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead)"/>
+                  <line x1="200" y1="50" x2="500" y2="30" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead)"/>
+                </svg>
+              </div>
+              
+              {/* Mobile flow description */}
+              <div className="md:hidden mt-4 text-center text-gray-600">
+                <p className="text-sm">Cursor IDE → MCP Server → NewsAPI</p>
+                <p className="text-sm mt-1">Web Interface connects to MCP Server</p>
+              </div>
             </div>
           </section>
 

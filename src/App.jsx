@@ -14,6 +14,7 @@ import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-
 import AcronymSoup from './pages/blog/acronym-soup';
 import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-startup-school';
 import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-cursor";
+import Logo from './components/Logo'
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           <div className="flex justify-between items-center h-16">
             <div>
               <Link to="/" className="flex items-center">
-                <span className="text-xl font-bold text-gray-800">Portfolio</span>
+                <Logo className="h-[60px] w-[60px]" />
               </Link>
             </div>
             <div className="hidden md:flex space-x-4">
