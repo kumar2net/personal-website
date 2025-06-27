@@ -17,15 +17,53 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Here you would typically send the form data to your backend
-    setTimeout(() => {
+    
+    try {
+      // Check if we're on localhost (development) or production
+      const isDevelopment = window.location.hostname === 'localhost'
+      
+      if (isDevelopment) {
+        // For local development, use a simple API or just log the data
+        console.log('Development mode - Form data:', formData)
+        
+        // Simulate email sending for development
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        setSubmitSuccess(true)
+        setFormData({ name: '', email: '', message: '' })
+        
+        // You can also show the user that this is development mode
+        alert('Development Mode: Email would be sent in production. Check console for form data.')
+        
+      } else {
+        // For production, use Netlify Forms
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            'form-name': 'contact',
+            'name': formData.name,
+            'email': formData.email,
+            'message': formData.message
+          }).toString()
+        })
+
+        if (response.ok) {
+          setSubmitSuccess(true)
+          setFormData({ name: '', email: '', message: '' })
+        } else {
+          throw new Error('Form submission failed')
+        }
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      alert('Failed to send message. Please try again or contact me directly at kumar@yoursite.com')
+    } finally {
       setIsSubmitting(false)
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', message: '' })
-    }, 2000)
+    }
   }
 
   return (
@@ -38,12 +76,30 @@ const Contact = () => {
       <h1 className="text-3xl font-bold mb-8">Contact Me</h1>
       <div className="max-w-2xl mx-auto">
         {submitSuccess ? (
-          <div className="bg-green-100 p-4 rounded-lg mb-6">
-            <h2 className="text-green-800 font-semibold">Message Sent Successfully!</h2>
-            <p className="text-green-700">I'll get back to you as soon as possible.</p>
+          <div className="bg-green-100 p-6 rounded-lg mb-6 text-center">
+            <div className="text-4xl mb-4">✅</div>
+            <h2 className="text-green-800 font-semibold text-xl mb-2">Message Sent Successfully!</h2>
+            <p className="text-green-700 mb-4">I'll get back to you as soon as possible.</p>
+            <button
+              onClick={() => setSubmitSuccess(false)}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+            >
+              Send Another Message
+            </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form 
+            onSubmit={handleSubmit} 
+            className="space-y-6"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+          >
+            {/* Hidden fields for Netlify Forms */}
+            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="bot-field" />
+            
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Name

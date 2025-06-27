@@ -6,6 +6,10 @@ import About from './pages/About'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import Blog from './pages/Blog'
+import Learning from './pages/Learning'
+import MacOSShortcuts from './pages/MacOSShortcuts'
+import BrowserShortcuts from './pages/BrowserShortcuts'
+import VimShortcuts from './pages/VimShortcuts'
 import SpineImplantDashboard from './pages/blog/spine-implant-dashboard'
 import DrugSuggestionApp from './pages/blog/drug-suggestion-app'
 import PortfolioWebsite from './pages/blog/portfolio-website'
@@ -14,6 +18,7 @@ import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-
 import AcronymSoup from './pages/blog/acronym-soup';
 import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-startup-school';
 import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-cursor";
+import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcuts';
 import Logo from './components/Logo'
 
 
@@ -45,6 +50,12 @@ function App() {
                 Projects
               </Link>
               <Link 
+                to="/learning" 
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                Learning
+              </Link>
+              <Link 
                 to="/contact" 
                 className="text-gray-600 hover:text-gray-800 transition-colors"
               >
@@ -60,7 +71,7 @@ function App() {
           </div>
 
           {/* Mobile menu */}
-          {isMobileMenuOpen && (
+                        {isMobileMenuOpen && (
             <div className="md:hidden mt-4">
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <Link 
@@ -76,6 +87,13 @@ function App() {
                   className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                 >
                   Projects
+                </Link>
+                <Link 
+                  to="/learning" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Learning
                 </Link>
                 <Link 
                   to="/contact" 
@@ -102,7 +120,7 @@ function App() {
             >
               <h1 className="text-4xl font-bold mb-4">Welcome to My Personal Website</h1>
               <p className="text-xl text-gray-600 mb-8">AI Enthusiast</p>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4 justify-center">
                 <Link to="/about" className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                   About Me
                 </Link>
@@ -112,12 +130,19 @@ function App() {
                 <Link to="/blog" className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors">
                   Blog
                 </Link>
+                <Link to="/learning" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                  Learning Hub
+                </Link>
               </div>
             </motion.div>
           } />
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/learning" element={<Learning />} />
+          <Route path="/learning/macos-shortcuts" element={<MacOSShortcuts />} />
+          <Route path="/learning/browser-shortcuts" element={<BrowserShortcuts />} />
+          <Route path="/learning/vim-shortcuts" element={<VimShortcuts />} />
           <Route path="/blog/spine-implant-dashboard" element={<SpineImplantDashboard />} />
           <Route path="/blog/building-mcp-server-with-cursor" element={<BuildingMcpServerWithCursor />} />
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
@@ -126,6 +151,7 @@ function App() {
           <Route path="/blog/experience-using-api-in-ai-code-editor" element={<ExperienceUsingApiInAiCodeEditor />} />
           <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
           <Route path="/blog/andrej-karpathy-yc-ai-startup-school" element={<AndrejKarpathyYcAiStartupSchool />} />
+          <Route path="/blog/my-fascination-with-shortcuts" element={<MyFascinationWithShortcuts />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

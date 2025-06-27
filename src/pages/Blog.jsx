@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 
 const blogPosts = [
   {
+    title: "My Fascination with Shortcuts: The Art of Keyboard Navigation",
+    date: "June 27, 2025",
+    excerpt: "Why keyboard shortcuts feel like a superpower and how they've become second nature to me. Plus, interactive flashcards to master them yourself!",
+    tags: ["Productivity", "Vim", "macOS", "Browser", "Keyboard Shortcuts"],
+    image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
+    link: "/blog/my-fascination-with-shortcuts"
+  },
+  {
     title: "Building a NewsAPI MCP Server with Cursor",
     date: "June 21, 2025",
     excerpt: "A practical guide to creating an MCP server for news aggregation and integrating it with Cursor IDE for enhanced development workflows.",

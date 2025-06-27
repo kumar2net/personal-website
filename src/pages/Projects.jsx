@@ -25,54 +25,6 @@ const projects = [
     ],
     category: 'News Aggregation',
     impact: 'Providing users with timely, relevant news from various categories to keep them informed about current events and developments worldwide'
-  },
-  {
-    title: 'Spine Implant Market Analytics Dashboard',
-    description: 'A comprehensive React-based dashboard for analyzing and visualizing the spine implant market in India. This application provides detailed market insights, trends, and analytics for healthcare professionals and market analysts.',
-    tech: ['React', 'Recharts', 'Next.js', 'Tailwind CSS'],
-    image: 'https://via.placeholder.com/800x600',
-    link: 'https://kumarai.netlify.app',
-    features: [
-      'Interactive market analytics with yearly, quarterly, and monthly views',
-      'Comprehensive market overview including total market size, growth rate, and procedure volume',
-      'Advanced data visualization with market share analysis and procedure volume trends',
-      'Healthcare provider analytics with surgeon directories and hospital performance metrics',
-      'Real-time data integration from multiple sources including market research reports and healthcare registries'
-    ],
-    highlights: [
-      'Built with modern React architecture using Next.js for optimal performance',
-      'Integrated Recharts for sophisticated data visualization',
-      'Automated deployment pipeline with Netlify',
-      'Responsive design that works across all devices',
-      'Real-time data processing and validation system'
-    ],
-    category: 'Medical Analytics',
-    impact: 'Providing healthcare professionals with actionable insights into the spine implant market, enabling better decision-making and strategic planning'
-  },
-  {
-    title: 'Smart Drug Suggestion App',
-    description: 'A modern, intelligent drug suggestion application that helps users find, compare, and manage medications effectively. Built with React and featuring advanced AI-powered suggestions.',
-    tech: ['React', 'TypeScript', 'Material-UI', 'Firebase'],
-    image: 'https://via.placeholder.com/800x600',
-    link: 'https://kumarai.netlify.app/',
-    features: [
-      'Real-time drug search with intelligent suggestions based on user history',
-      'Comprehensive drug profiles with detailed information including side effects and alternatives',
-      'Smart drug interaction checker',
-      'Medication reminder system with proactive notifications',
-      'Price comparison and alert system',
-      'Favorite drugs management and organization'
-    ],
-    highlights: [
-      'Agent-based context system for personalized recommendations',
-      'Advanced search algorithms with category and price filtering',
-      'Interactive drug cards with smooth animations',
-      'Proactive notification system for reminders and price changes',
-      'Mobile-first responsive design',
-      'AI-powered suggestion engine that learns from user behavior'
-    ],
-    category: 'Pharmaceutical Management',
-    impact: 'Empowering patients and healthcare providers with accurate, personalized medication information and management tools'
   }
 ];
 
