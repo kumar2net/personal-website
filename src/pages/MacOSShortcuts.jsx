@@ -20,10 +20,7 @@ const MacOSShortcuts = () => {
     { front: "⌘ + S", back: "Save current document" },
     { front: "⌘ + Tab", back: "Switch between open applications" },
     { front: "⌘ + Space", back: "Open Spotlight search" },
-    { front: "⌘ + W", back: "Close current window" },
-    { front: "⌘ + Q", back: "Quit application completely" },
-    { front: "⌘ + T", back: "Open new tab (in browsers/apps that support tabs)" },
-    { front: "⌃ + ⌘ + F", back: "Toggle full screen for the active window" }
+    { front: "⌘ + W", back: "Close current window" }
   ];
   const reversedFlashcards = flashcards.slice().reverse();
 
