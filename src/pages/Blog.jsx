@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import FascinatingIndiaStory from './blog/fascinating-india-story'
+import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
-    title: "Fascinating India Story: How Millennials Are Powering the SIP Revolution",
+    title: "Very Compelling India Story: How Millennials Are Powering the SIP Revolution",
     date: "June 28, 2025",
     excerpt: "A look at how India's millennials are driving record SIP inflows, with the latest numbers and a visual chart of the growth.",
     tags: ["Personal Finance", "SIP", "Millennials", "India Growth"],
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/fascinating-india-story"
+    link: "/blog/compelling-india-story"
   },
   {
     title: "My Fascination with Shortcuts: The Art of Keyboard Navigation",

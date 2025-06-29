@@ -2,7 +2,7 @@ import React from 'react';
 
 const FascinatingIndiaStory = () => (
   <div className="max-w-2xl mx-auto py-10 px-4">
-    <h1 className="text-3xl font-bold mb-4">Fascinating India Story: How Millennials Are Powering the SIP Revolution</h1>
+    <h1 className="text-3xl font-bold mb-4">Very Compelling India Story: How Millennials Are Powering the SIP Revolution</h1>
     <p className="mb-6">
       Let's talk about something quietly amazing happening in India right now. No, it's not cricket (for once!)—it's the way young Indians are changing the game when it comes to investing.
     </p>

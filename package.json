@@ -21,6 +21,7 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.21.3",
     "remark-gfm": "^4.0.1",
+    "sentiment": "^5.0.2",
     "sharp": "^0.34.2"
   },
   "devDependencies": {

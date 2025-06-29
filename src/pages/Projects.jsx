@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import BlogSentimentSummary from '../components/BlogSentimentSummary'
 
 const projects = [
   {
@@ -25,6 +26,28 @@ const projects = [
     ],
     category: 'News Aggregation',
     impact: 'Providing users with timely, relevant news from various categories to keep them informed about current events and developments worldwide'
+  },
+  {
+    title: 'Drug Recommendation App',
+    description: 'The Drug Recommendation App leverages AI to suggest optimal medications based on user input and medical context. It streamlines the process of finding suitable drugs, improving both safety and efficacy for patients and healthcare providers. The app features a user-friendly interface and real-time recommendations, making it a valuable tool for modern healthcare.',
+    tech: ['React', 'Node.js', 'Express', 'Machine Learning', 'Tailwind CSS'],
+    image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=800&q=80',
+    link: 'https://drugreco-production.up.railway.app/',
+    features: [
+      'AI-powered drug recommendations',
+      'User-friendly interface for inputting symptoms and context',
+      'Real-time suggestions for optimal medications',
+      'Improves safety and efficacy in drug selection',
+      'Modern, responsive design'
+    ],
+    highlights: [
+      'Built with React and Node.js for a seamless experience',
+      'Machine learning models for intelligent recommendations',
+      'Deployed on Railway for high availability',
+      'Focus on healthcare usability and safety'
+    ],
+    category: 'Healthcare AI',
+    impact: 'Empowering patients and healthcare providers with intelligent, context-aware drug recommendations for better health outcomes.'
   }
 ];
 
@@ -61,7 +84,24 @@ const Projects = () => {
                 </a>
               </div>
               <p className="text-gray-600 mb-6">{project.description}</p>
-              
+              {/* Data Flow SVG for Drug Recommendation App */}
+              {project.title === 'Drug Recommendation App' && (
+                <div className="flex justify-center mb-6">
+                  <svg width="340" height="70" viewBox="0 0 340 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g fontFamily="sans-serif" fontSize="16" fontWeight="bold">
+                      <rect x="0" y="10" width="90" height="40" rx="10" fill="#e0f2fe" stroke="#0284c7" strokeWidth="2"/>
+                      <text x="45" y="35" textAnchor="middle" alignmentBaseline="middle" fill="#0369a1">Client</text>
+                      <rect x="125" y="10" width="90" height="40" rx="10" fill="#f1f5f9" stroke="#64748b" strokeWidth="2"/>
+                      <text x="170" y="35" textAnchor="middle" alignmentBaseline="middle" fill="#334155">Server</text>
+                      <rect x="250" y="10" width="90" height="40" rx="10" fill="#fef9c3" stroke="#eab308" strokeWidth="2"/>
+                      <text x="295" y="35" textAnchor="middle" alignmentBaseline="middle" fill="#b45309">Database</text>
+                      {/* Simple thick lines */}
+                      <line x1="90" y1="30" x2="125" y2="30" stroke="#0284c7" strokeWidth="6" />
+                      <line x1="215" y1="30" x2="250" y2="30" stroke="#eab308" strokeWidth="6" />
+                    </g>
+                  </svg>
+                </div>
+              )}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-2">Impact</h3>
                 <p className="text-gray-600">{project.impact}</p>
@@ -111,6 +151,15 @@ const Projects = () => {
             </div>
           </motion.div>
         ))}
+        {/* Blog Sentiment Analysis ML Use Case */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: projects.length * 0.2 }}
+          className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+        >
+          <BlogSentimentSummary />
+        </motion.div>
       </div>
     </motion.div>
   )

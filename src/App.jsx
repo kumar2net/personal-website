@@ -21,7 +21,7 @@ import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-c
 import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcuts';
 import Logo from './components/Logo'
 import Shortcuts from './pages/Shortcuts'
-import FascinatingIndiaStory from './pages/blog/fascinating-india-story'
+import CompellingIndiaStory from './pages/blog/Compelling-india-story'
 
 
 function App() {
@@ -155,7 +155,7 @@ function App() {
           <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
           <Route path="/blog/andrej-karpathy-yc-ai-startup-school" element={<AndrejKarpathyYcAiStartupSchool />} />
           <Route path="/blog/my-fascination-with-shortcuts" element={<MyFascinationWithShortcuts />} />
-          <Route path="/blog/fascinating-india-story" element={<FascinatingIndiaStory />} />
+          <Route path="/blog/compelling-india-story" element={<CompellingIndiaStory />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
