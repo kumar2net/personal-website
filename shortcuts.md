@@ -14,6 +14,7 @@
 | ⌘ + H                   | Hide App                      |
 | ⌘ + Shift + 4           | Screenshot (select area)      |
 | ⌘ + Shift + 3           | Screenshot (full screen)      |
+| ⌃ + ⌘ + F               | Toggle Full Screen            |
 | ⌘ + Option + Esc        | Force Quit                    |
 | ⌘ + ,                   | App Preferences               |
 | ⌘ + L                   | Lock Screen                   |
@@ -35,4 +36,6 @@
 | ⌘ + D                   | Bookmark Page                 |
 | ⌘ + F                   | Find on Page                  |
 | ⌘ + Shift + B           | Toggle Bookmarks Bar          |
-| ⌘ + Shift + N           | New Incognito Window          | 
+| ⌘ + Shift + N           | New Incognito Window          |
+| ⌘ + Ctrl + F            | Toggle Full Screen            |
+| ⌘ + Option + I          | Open Developer Tools          | 

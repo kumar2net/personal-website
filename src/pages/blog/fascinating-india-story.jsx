@@ -111,7 +111,6 @@ const FascinatingIndiaStory = () => (
         <tr>
           <td className="py-2 px-3">Typical Application</td>
           <td className="py-2 px-3">Mutual funds (SIP/STP (Systematic Transfer Plans)/SWP), real estate, private equity</td>
-          <td className="py-2 px-3">Mutual funds (SIP/STP/SWP), real estate, private equity</td>
           <td className="py-2 px-3">Stocks, FDs, mutual funds (lump sum)</td>
         </tr>
         <tr>
@@ -121,6 +120,7 @@ const FascinatingIndiaStory = () => (
         </tr>
       </tbody>
     </table>
+    <p className="mb-4 text-sm text-gray-600"><b>PS:</b> <b>SWP</b>: retirees needing funds for monthly expenses. <b>STP</b>: moving funds from non-performing to better performing funds.</p>
     <h2 className="text-2xl font-semibold mb-2">The Big Picture</h2>
     <p className="mb-4">
       What's really fascinating is how this SIP wave is making India's financial future more resilient. Millennials are leading the charge, turning regular investing into a habit. It's not about chasing quick gains—it's about building wealth, one month at a time.

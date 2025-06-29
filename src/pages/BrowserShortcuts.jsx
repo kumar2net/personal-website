@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, RotateCcw, Home, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -7,6 +7,7 @@ const BrowserShortcuts = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const cardRef = useRef(null);
 
   // Browser keyboard shortcuts flashcards for Safari and Chrome
   const flashcards = [
@@ -24,15 +25,18 @@ const BrowserShortcuts = () => {
     { front: "⌘ + +", back: "Zoom in on page (Safari & Chrome)" },
     { front: "⌘ + -", back: "Zoom out on page (Safari & Chrome)" },
     { front: "⌘ + 0", back: "Reset zoom to default size (Safari & Chrome)" },
-    { front: "⌘ + Shift + Delete", back: "Clear browsing data (Chrome) / Clear history (Safari)" }
+    { front: "⌘ + Shift + Delete", back: "Clear browsing data (Chrome) / Clear history (Safari)" },
+    { front: "⌘ + Ctrl + F", back: "Toggle full screen (Safari & Chrome on macOS)" },
+    { front: "⌘ + Option + I", back: "Open Developer Tools (Safari & Chrome on macOS)" }
   ];
+  const reversedFlashcards = flashcards.slice().reverse();
 
   const handleFlip = () => {
     setFlipped(!flipped);
   };
 
   const handleNext = () => {
-    if (currentIndex < flashcards.length - 1 && !animating) {
+    if (currentIndex < reversedFlashcards.length - 1 && !animating) {
       setAnimating(true);
       setTimeout(() => {
         setFlipped(false);
@@ -71,10 +75,10 @@ const BrowserShortcuts = () => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentIndex, flashcards.length, flipped, animating]);
+  }, [currentIndex, reversedFlashcards.length, flipped, animating]);
 
-  const currentCard = flashcards[currentIndex];
-  const progress = ((currentIndex + 1) / flashcards.length) * 100;
+  const currentCard = reversedFlashcards[currentIndex];
+  const progress = ((currentIndex + 1) / reversedFlashcards.length) * 100;
 
   return (
     <motion.div 
@@ -118,7 +122,7 @@ const BrowserShortcuts = () => {
           ></div>
         </div>
         <div className="flex justify-between text-sm text-gray-600">
-          <span>Card {currentIndex + 1} of {flashcards.length}</span>
+          <span>Card {currentIndex + 1} of {reversedFlashcards.length}</span>
           <span>{Math.round(progress)}% Complete</span>
         </div>
       </div>
@@ -126,10 +130,15 @@ const BrowserShortcuts = () => {
       {/* Flashcard */}
       <div className="flex justify-center mb-8" style={{ perspective: '1000px' }}>
         <div
-          className={`relative w-full max-w-2xl h-96 transition-all duration-700 transform-style-preserve-3d cursor-pointer ${
+          ref={cardRef}
+          tabIndex={0}
+          role="button"
+          aria-pressed={flipped}
+          className={`relative w-full max-w-2xl h-96 transition-all duration-700 transform-style-preserve-3d cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-400 ${
             flipped ? 'rotate-x-180' : ''
           } ${animating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
-          onClick={handleFlip}
+          onClick={e => { handleFlip(); cardRef.current && cardRef.current.focus(); }}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleFlip(); } }}
           style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Front of card */}
@@ -184,7 +193,7 @@ const BrowserShortcuts = () => {
         
         <div className="text-center px-6">
           <div className="text-2xl font-bold text-gray-900">
-            {currentIndex + 1} / {flashcards.length}
+            {currentIndex + 1} / {reversedFlashcards.length}
           </div>
           <div className="text-sm text-gray-500">
             Use ← → keys to navigate
@@ -193,9 +202,9 @@ const BrowserShortcuts = () => {
         
         <button
           onClick={handleNext}
-          disabled={currentIndex === flashcards.length - 1}
+          disabled={currentIndex === reversedFlashcards.length - 1}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
-            currentIndex === flashcards.length - 1 
+            currentIndex === reversedFlashcards.length - 1 
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
               : 'bg-green-500 text-white hover:bg-green-600 shadow-md hover:shadow-lg'
           }`}
@@ -244,7 +253,7 @@ const BrowserShortcuts = () => {
       </div>
 
       {/* Completion Message */}
-      {currentIndex === flashcards.length - 1 && flipped && (
+      {currentIndex === reversedFlashcards.length - 1 && flipped && (
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -254,7 +263,7 @@ const BrowserShortcuts = () => {
           <div className="text-2xl mb-2">🎉</div>
           <h3 className="text-lg font-semibold text-green-800 mb-2">Excellent!</h3>
           <p className="text-green-700 mb-4">
-            You've mastered all {flashcards.length} browser shortcuts! Your web browsing is about to get much faster! 🚀
+            You've mastered all {reversedFlashcards.length} browser shortcuts! Your web browsing is about to get much faster! 🚀
           </p>
           <div className="flex justify-center space-x-4">
             <button
