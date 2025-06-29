@@ -79,7 +79,7 @@ const FascinatingIndiaStory = () => (
         <tr className="bg-gray-100">
           <th className="py-2 px-3 text-left">Feature</th>
           <th className="py-2 px-3 text-left">XIRR (Extended Internal Rate of Return)</th>
-          <th className="py-2 px-3 text-left">CAGR (Compound Annual Growth Rate)</th>
+          <th className="py-2 px-3 text-left">CAGR (Compounded Annual Growth Rate)</th>
         </tr>
       </thead>
       <tbody>
@@ -90,7 +90,7 @@ const FascinatingIndiaStory = () => (
         </tr>
         <tr>
           <td className="py-2 px-3">Use Case</td>
-          <td className="py-2 px-3">SIPs, SWPs, multiple investments/redemptions</td>
+          <td className="py-2 px-3">SIPs, SWPs (Systematic Withdrawal Plans), multiple investments/redemptions</td>
           <td className="py-2 px-3">Lump sum investments</td>
         </tr>
         <tr>
@@ -110,6 +110,7 @@ const FascinatingIndiaStory = () => (
         </tr>
         <tr>
           <td className="py-2 px-3">Typical Application</td>
+          <td className="py-2 px-3">Mutual funds (SIP/STP (Systematic Transfer Plans)/SWP), real estate, private equity</td>
           <td className="py-2 px-3">Mutual funds (SIP/STP/SWP), real estate, private equity</td>
           <td className="py-2 px-3">Stocks, FDs, mutual funds (lump sum)</td>
         </tr>
