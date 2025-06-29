@@ -13,21 +13,14 @@ const BrowserShortcuts = () => {
   const flashcards = [
     { front: "⌘ + T", back: "Open new tab (Safari & Chrome)" },
     { front: "⌘ + W", back: "Close current tab (Safari & Chrome)" },
-    { front: "⌘ + R", back: "Reload/refresh current page (Safari & Chrome)" },
-    { front: "⌘ + L", back: "Focus address bar to type URL (Safari & Chrome)" },
-    { front: "⌘ + D", back: "Bookmark current page (Safari & Chrome)" },
     { front: "⌘ + Shift + T", back: "Reopen recently closed tab (Safari & Chrome)" },
-    { front: "⌘ + [", back: "Go back to previous page (Safari & Chrome)" },
-    { front: "⌘ + ]", back: "Go forward to next page (Safari & Chrome)" },
+    { front: "⌘ + L", back: "Focus address bar to type URL (Safari & Chrome)" },
+    { front: "⌘ + R", back: "Reload/refresh current page (Safari & Chrome)" },
+    { front: "⌘ + F", back: "Find text on current page (Safari & Chrome)" },
     { front: "⌘ + 1-9", back: "Switch to tab by number (Safari & Chrome)" },
     { front: "⌘ + Shift + N", back: "Open incognito/private browsing window (Safari & Chrome)" },
-    { front: "⌘ + F", back: "Find text on current page (Safari & Chrome)" },
-    { front: "⌘ + +", back: "Zoom in on page (Safari & Chrome)" },
-    { front: "⌘ + -", back: "Zoom out on page (Safari & Chrome)" },
-    { front: "⌘ + 0", back: "Reset zoom to default size (Safari & Chrome)" },
-    { front: "⌘ + Shift + Delete", back: "Clear browsing data (Chrome) / Clear history (Safari)" },
     { front: "⌘ + Ctrl + F", back: "Toggle full screen (Safari & Chrome on macOS)" },
-    { front: "⌘ + Option + I", back: "Open Developer Tools (Safari & Chrome on macOS)" }
+    { front: "⌘ + D", back: "Bookmark current page (Safari & Chrome)" }
   ];
   const reversedFlashcards = flashcards.slice().reverse();
 
