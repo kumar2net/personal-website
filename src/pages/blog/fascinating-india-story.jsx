@@ -98,11 +98,7 @@ const FascinatingIndiaStory = () => (
           <td className="py-2 px-3">Considers timing and amount of each cash flow</td>
           <td className="py-2 px-3">Assumes only two cash flows: start and end</td>
         </tr>
-        <tr>
-          <td className="py-2 px-3">Formula</td>
-          <td className="py-2 px-3">Solves for rate where NPV of all cash flows = 0</td>
-          <td className="py-2 px-3">((End Value / Start Value)<sup>1/n</sup>) - 1</td>
-        </tr>
+
         <tr>
           <td className="py-2 px-3">Accuracy</td>
           <td className="py-2 px-3">More accurate for real-world investments with multiple transactions</td>
@@ -120,13 +116,14 @@ const FascinatingIndiaStory = () => (
         </tr>
       </tbody>
     </table>
-    <p className="mb-4 text-sm text-gray-600"><b>PS:</b> <b>SWP</b>: retirees needing funds for monthly expenses. <b>STP</b>: moving funds from non-performing to better performing funds.</p>
+    <p className="mb-4 text-sm text-gray-600"><b>PS:</b> <b>SWP</b>: useful for retirees needing funds for monthly expenses. <b>STP</b>: when you want to move funds from non-performing to better performing funds.</p>
     <h2 className="text-2xl font-semibold mb-2">The Big Picture</h2>
     <p className="mb-4">
       What's really fascinating is how this SIP wave is making India's financial future more resilient. Millennials are leading the charge, turning regular investing into a habit. It's not about chasing quick gains—it's about building wealth, one month at a time.
     </p>
     <p className="mb-4">
-      So, if you're already on the SIP train, give yourself a pat on the back. If not, maybe it's time to hop on. The journey's just getting started, and the numbers show it's a ride worth taking.
+      Is there something like this in western countries? Please enlighten me.
+
     </p>
   </div>
 );

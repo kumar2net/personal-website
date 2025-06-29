@@ -85,6 +85,13 @@ const VimShortcuts = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [currentIndex, reversedFlashcards.length, flipped, animating]);
 
+  // Scroll to card on mobile when card changes
+  useEffect(() => {
+    if (cardRef.current && window.innerWidth < 768) {
+      cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [currentIndex]);
+
   const currentCard = reversedFlashcards[currentIndex];
   const progress = ((currentIndex + 1) / reversedFlashcards.length) * 100;
 
