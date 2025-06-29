@@ -20,6 +20,8 @@ import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-
 import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-cursor";
 import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcuts';
 import Logo from './components/Logo'
+import Shortcuts from './pages/Shortcuts'
+import FascinatingIndiaStory from './pages/blog/fascinating-india-story'
 
 
 function App() {
@@ -143,6 +145,7 @@ function App() {
           <Route path="/learning/macos-shortcuts" element={<MacOSShortcuts />} />
           <Route path="/learning/browser-shortcuts" element={<BrowserShortcuts />} />
           <Route path="/learning/vim-shortcuts" element={<VimShortcuts />} />
+          <Route path="/learning/shortcuts" element={<Shortcuts />} />
           <Route path="/blog/spine-implant-dashboard" element={<SpineImplantDashboard />} />
           <Route path="/blog/building-mcp-server-with-cursor" element={<BuildingMcpServerWithCursor />} />
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
@@ -152,6 +155,7 @@ function App() {
           <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
           <Route path="/blog/andrej-karpathy-yc-ai-startup-school" element={<AndrejKarpathyYcAiStartupSchool />} />
           <Route path="/blog/my-fascination-with-shortcuts" element={<MyFascinationWithShortcuts />} />
+          <Route path="/blog/fascinating-india-story" element={<FascinatingIndiaStory />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

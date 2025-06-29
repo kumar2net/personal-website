@@ -39,6 +39,18 @@ const Learning = () => {
       icon: Terminal,
       color: 'bg-purple-500',
       route: '/learning/vim-shortcuts'
+    },
+    {
+      id: 'shortcuts-reckoner',
+      title: 'Shortcuts Ready Reckoner',
+      description: 'Quick reference for essential Mac OS and Chrome shortcuts',
+      cardCount: 24,
+      difficulty: 'Beginner',
+      estimatedTime: '5 min',
+      category: 'Reference',
+      icon: Command,
+      color: 'bg-orange-500',
+      route: '/learning/shortcuts'
     }
     // More flashcard sets will be added here in the future
   ];
