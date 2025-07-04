@@ -1,8 +1,16 @@
-THIS SHOULD BE A LINTER ERRORimport { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
+  {
+    title: "Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution",
+    date: "January 3, 2025",
+    excerpt: "Microsoft's MAI-DxO achieves 85.5% diagnostic accuracy compared to 20% for human doctors, while reducing costs by 20%. Here's why India needs this breakthrough technology now.",
+    tags: ["Microsoft AI", "MAI-DxO", "Medical AI", "Healthcare India", "Diagnostic AI", "Human-in-Loop"],
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
+    link: "/blog/microsoft-mai-dx-india"
+  },
   {
     title: "Very Compelling India Story: How Millennials Are Powering the SIP Revolution",
     date: "June 28, 2025",
