@@ -33,7 +33,7 @@ const MicrosoftMaiDxIndia = () => {
         <div className="prose prose-lg max-w-none">
           <header className="text-center mb-10">
             <p className="text-md sm:text-lg text-gray-600 mt-4">
-              Microsoft's MAI-DxO achieves 85.5% diagnostic accuracy compared to 20% for human doctors, while reducing costs by 20%. Here's why India needs this breakthrough technology now.
+              Microsoft's MAI-DxO (Microsoft AI Diagnostic Orchestrator) achieves 85.5% diagnostic accuracy compared to 20% for human doctors, while reducing costs by 20%. Here's why India needs this breakthrough technology now.
             </p>
           </header>
 
