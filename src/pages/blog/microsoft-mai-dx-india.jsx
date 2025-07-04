@@ -160,87 +160,7 @@ const MicrosoftMaiDxIndia = () => {
             </p>
           </section>
 
-          {/* Revolutionary Results */}
-          <section className="mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
-              Revolutionary Results
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="bg-green-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold text-green-800 mb-3">MAI-DxO Performance</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Diagnostic Accuracy:</span>
-                    <span className="font-bold text-green-600">85.5%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Cost Reduction:</span>
-                    <span className="font-bold text-green-600">20%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Test Cases:</span>
-                    <span className="font-bold">304 NEJM cases</span>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-red-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold text-red-800 mb-3">Human Doctors</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Diagnostic Accuracy:</span>
-                    <span className="font-bold text-red-600">20%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Experience Level:</span>
-                    <span className="font-bold">5-20 years</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Test Conditions:</span>
-                    <span className="font-bold">No external aids</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="text-base sm:text-lg leading-relaxed mb-4">
-              The testing was conducted on 304 diagnostically challenging cases from the New England Journal of Medicine's 
-              Case Record series—some of the most complex medical scenarios that often challenge even experienced physicians. 
-              These cases represent real-world diagnostic puzzles that require multiple specialists and extensive testing.
-            </p>
-          </section>
 
-          {/* Real-World Example */}
-          <section className="mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
-              Real-World Impact: A Case Study
-            </h2>
-            <div className="bg-gray-100 rounded-lg p-6 mb-4">
-              <h3 className="text-xl font-bold mb-3">Case: Alcohol Withdrawal & Toxic Exposure</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-bold text-red-600 mb-2">Traditional AI Approach (GPT-4)</h4>
-                  <ul className="text-sm space-y-1">
-                    <li>• Ordered extensive imaging</li>
-                    <li>• Brain MRIs and EEGs</li>
-                    <li>• Cost: $3,431</li>
-                    <li>• Result: Incorrect diagnosis</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-bold text-green-600 mb-2">MAI-DxO Approach</h4>
-                  <ul className="text-sm space-y-1">
-                    <li>• Identified need for toxin screening</li>
-                    <li>• Asked about hand sanitizer consumption</li>
-                    <li>• Cost: $795</li>
-                    <li>• Result: Correct diagnosis</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <p className="text-base sm:text-lg leading-relaxed">
-              This example demonstrates how MAI-DxO's strategic thinking about information gathering can lead to both 
-              better outcomes and significant cost savings—crucial for healthcare systems like India's.
-            </p>
-          </section>
 
           {/* Why India Needs This */}
           <section className="mb-8">
@@ -277,36 +197,7 @@ const MicrosoftMaiDxIndia = () => {
             </div>
           </section>
 
-          {/* Implementation Challenges */}
-          <section className="mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
-              Implementation Challenges & Solutions
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-red-50 p-4 rounded-lg">
-                <h4 className="font-bold text-red-800 mb-2">Challenges</h4>
-                <ul className="text-sm text-red-700 space-y-1">
-                  <li>• Regulatory approval and validation</li>
-                  <li>• Integration with existing hospital systems</li>
-                  <li>• Training healthcare professionals</li>
-                  <li>• Data privacy and security concerns</li>
-                  <li>• Cost of implementation</li>
-                  <li>• Language and cultural adaptation</li>
-                </ul>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h4 className="font-bold text-green-800 mb-2">Solutions</h4>
-                <ul className="text-sm text-green-700 space-y-1">
-                  <li>• Phased rollout starting with pilot programs</li>
-                  <li>• Partnership with Indian medical institutions</li>
-                  <li>• Comprehensive training and certification programs</li>
-                  <li>• Local data centers and compliance frameworks</li>
-                  <li>• Government partnerships for affordable access</li>
-                  <li>• Multilingual AI models for Indian languages</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+
 
           {/* Human-in-the-Loop */}
           <section className="mb-8">
@@ -330,28 +221,7 @@ const MicrosoftMaiDxIndia = () => {
             </div>
           </section>
 
-          {/* Future Outlook */}
-          <section className="mb-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
-              The Road Ahead
-            </h2>
-            <p className="text-base sm:text-lg leading-relaxed mb-4">
-              Microsoft is currently conducting real-world studies in partnership with healthcare organizations, starting 
-              with Beth Israel Deaconess Medical Center. The company emphasizes that extensive validation, clinical trials, 
-              and regulatory approvals are still needed before MAI-DxO can be deployed in clinical settings.
-            </p>
-            <div className="bg-green-50 p-6 rounded-lg">
-              <h3 className="font-bold text-green-800 mb-3">🎯 Next Steps for India</h3>
-              <ol className="text-base leading-relaxed space-y-2 list-decimal list-inside">
-                <li>Establish partnerships between Microsoft and Indian medical institutions</li>
-                <li>Conduct pilot studies in major Indian hospitals</li>
-                <li>Develop regulatory frameworks with CDSCO and other authorities</li>
-                <li>Train healthcare professionals on AI-assisted diagnostics</li>
-                <li>Create affordable access models for public healthcare</li>
-                <li>Build local language and cultural adaptations</li>
-              </ol>
-            </div>
-          </section>
+
 
           {/* Conclusion */}
           <section>
