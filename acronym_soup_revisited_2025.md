@@ -43,3 +43,20 @@ Spotlight Image
 
 Wrap-Up  
 From four letters to seven, acronym creep mirrors the concentration of tech power. Watch who joins—or drops off—the list next; tomorrow's soup will be seasoned by breakthroughs we can scarcely imagine today.
+
+---
+
+## Learning Ready-Reckoner: 10 Tech Buzzwords (2025)
+
+| Term | One-Line Cheat Sheet |
+|------|----------------------|
+| Cloud | Renting compute, storage and services from hyperscale data centers rather than owning hardware. |
+| Edge Computing | Pushing compute closer to devices/users to cut latency and back-haul cost. |
+| GPU | Graphics Processing Unit; parallel silicon (Nvidia/AMD) that now trains most AI models. |
+| TPU / AI ASIC | Custom "tensor" chips (Google, AWS, etc.) purpose-built for deep-learning math. |
+| LLM | Large Language Model; neural net with billions/trillions of parameters trained on text to generate human-like responses. |
+| GenAI | Generative AI; umbrella term for models (text, image, audio, code) that create new content. |
+| Vector DB | Database optimized for storing and searching high-dimensional embeddings used in AI retrieval. |
+| Transformer | Neural-net architecture behind LLMs; key idea is self-attention. |
+| RAG | Retrieval-Augmented Generation; piping external data into an LLM at query time for fresher, factual answers. |
+| Green Compute | Designing hardware & datacenters for lower watts per AI query to meet climate targets. |
