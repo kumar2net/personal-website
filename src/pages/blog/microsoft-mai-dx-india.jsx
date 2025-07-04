@@ -72,6 +72,7 @@ const MicrosoftMaiDxIndia = () => {
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-600">304</div>
                   <div>Complex NEJM Cases</div>
+                  <div className="text-xs text-gray-500">(New England Journal of Medicine)</div>
                 </div>
               </div>
             </div>
