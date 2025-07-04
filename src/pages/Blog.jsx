@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+THIS SHOULD BE A LINTER ERRORimport { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import CompellingIndiaStory from './blog/Compelling-india-story'
 
