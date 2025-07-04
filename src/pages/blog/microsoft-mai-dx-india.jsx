@@ -33,21 +33,20 @@ const MicrosoftMaiDxIndia = () => {
         <div className="prose prose-lg max-w-none">
           <header className="text-center mb-10">
             <p className="text-md sm:text-lg text-gray-600 mt-4">
-              Microsoft's MAI-DxO (Microsoft AI Diagnostic Orchestrator) achieves a groundbreaking 85.5% diagnostic accuracy compared to just 20% for experienced human doctors on complex medical cases. This 4x improvement in diagnostic precision could revolutionize healthcare outcomes in India.
+              Microsoft's MAI-DxO (Microsoft AI Diagnostic Orchestrator) achieves 85.5% diagnostic accuracy vs 20% for human doctors—a 4x improvement that could transform India's healthcare.
             </p>
           </header>
 
           {/* Executive Summary */}
           <section className="mb-8 bg-blue-50 p-6 rounded-lg">
             <h2 className="text-2xl font-bold text-blue-800 mb-4">
-              🔬 Executive Summary
+              🔬 Key Highlights
             </h2>
             <ul className="text-base leading-relaxed space-y-2">
-              <li><strong>🎯 Diagnostic Accuracy:</strong> 85.5% success rate vs 20% for experienced physicians (4.3x improvement) on 304 complex NEJM cases</li>
-              <li><strong>� Performance Data:</strong> Tested on the most challenging medical cases that typically stump even veteran doctors with 5-20 years experience</li>
-              <li><strong>🤖 AI Orchestration:</strong> Five specialized AI agents working collaboratively with human oversight in "chain of debate" methodology</li>
-              <li><strong>🏥 Healthcare Impact:</strong> Potential to dramatically reduce India's 15-20% misdiagnosis rate in urban areas</li>
-              <li><strong>⚖️ Human-in-Loop:</strong> Qualified doctors provide final approval, ensuring safety and maintaining medical accountability</li>
+              <li><strong>🎯 85.5% vs 20%:</strong> 4x better diagnostic accuracy than experienced physicians on complex cases</li>
+              <li><strong>🤖 Five AI Agents:</strong> Collaborative diagnostic process with human oversight</li>
+              <li><strong>🏥 India Impact:</strong> Could reduce misdiagnosis rates from 15-20% to under 5%</li>
+              <li><strong>⚖️ Human Control:</strong> Qualified doctors provide final approval for all diagnoses</li>
             </ul>
           </section>
 
@@ -57,10 +56,7 @@ const MicrosoftMaiDxIndia = () => {
               What is Microsoft's MAI-DxO?
             </h2>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              Microsoft AI Diagnostic Orchestrator (MAI-DxO) represents a paradigm shift in medical AI precision. Unlike traditional 
-              systems that analyze complete case information at once, MAI-DxO follows a sequential process that mirrors 
-              how human doctors actually work—starting with limited patient information, asking targeted questions, 
-              ordering specific tests, and gradually building toward a diagnosis with unprecedented accuracy.
+              Microsoft AI Diagnostic Orchestrator (MAI-DxO) uses five specialized AI agents working together to diagnose complex medical cases. Unlike traditional AI systems, it follows a sequential process that mirrors how human doctors work—asking questions, ordering tests, and building toward a diagnosis with unprecedented 85.5% accuracy.
             </p>
             <div className="bg-green-50 p-4 rounded-lg mb-4">
               <h3 className="font-bold text-green-800 mb-2">📈 Key Performance Metrics</h3>
@@ -79,12 +75,6 @@ const MicrosoftMaiDxIndia = () => {
                 </div>
               </div>
             </div>
-            <p className="text-base sm:text-lg leading-relaxed mb-4">
-              As Mustafa Suleyman, CEO of Microsoft AI, noted: <em>"This is a real step towards medical superintelligence. 
-              AI models have aced multiple choice medical exams – but real patients don't come with ABC answer options."</em> 
-              The 304 test cases from the New England Journal of Medicine represent some of the most diagnostically challenging 
-              scenarios in modern medicine—cases that often require multiple specialists and extensive deliberation.
-            </p>
           </section>
 
           {/* The Five AI Agents Diagram */}
@@ -174,12 +164,9 @@ const MicrosoftMaiDxIndia = () => {
               </svg>
             </div>
             <p className="text-sm text-gray-600 italic text-center mt-4">
-              The MAI-DxO system orchestrates five specialized AI agents in a collaborative diagnostic process, 
-              with a qualified human doctor providing final oversight and approval.
+              Five specialized AI agents collaborate with human doctor oversight to achieve 4x better diagnostic accuracy.
             </p>
           </section>
-
-
 
           {/* Why India Needs This */}
           <section className="mb-8">
@@ -188,86 +175,58 @@ const MicrosoftMaiDxIndia = () => {
             </h2>
             <div className="space-y-4">
               <div className="bg-orange-50 p-4 rounded-lg">
-                <h3 className="font-bold text-orange-800 mb-2">🏥 Healthcare Crisis Numbers</h3>
+                <h3 className="font-bold text-orange-800 mb-2">🏥 Healthcare Crisis</h3>
                 <ul className="text-sm text-orange-700 space-y-1">
                   <li>• Doctor-to-patient ratio: 1:1,456 (WHO recommends 1:1,000)</li>
-                  <li>• Rural healthcare access: Only 30% of required specialists available</li>
-                  <li>• Diagnostic errors: Estimated 15-20% misdiagnosis rate in urban areas</li>
-                  <li>• Healthcare spending: 60% out-of-pocket, causing financial hardship</li>
+                  <li>• Only 30% of required specialists available in rural areas</li>
+                  <li>• 15-20% misdiagnosis rate in urban areas</li>
                 </ul>
               </div>
               
-              <p className="text-base sm:text-lg leading-relaxed">
-                With over 1.4 billion people and a severe shortage of qualified doctors, India faces a healthcare crisis 
-                where diagnostic accuracy can mean the difference between life and death. MAI-DxO's 85.5% success rate could 
-                transform healthcare outcomes, especially in areas where specialist expertise is limited or unavailable.
-              </p>
-              
               <div className="bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-bold text-blue-800 mb-2">🚀 Diagnostic Accuracy Impact in India</h3>
+                <h3 className="font-bold text-blue-800 mb-2">🚀 Potential Impact</h3>
                 <ul className="text-sm text-blue-700 space-y-1">
-                  <li>• <strong>4x improvement</strong> in diagnostic accuracy over current physician performance on complex cases</li>
-                  <li>• <strong>Reduce misdiagnosis rates</strong> from 15-20% to potentially under 5% in urban areas</li>
-                  <li>• <strong>Expert-level diagnosis</strong> available in Tier 2 and Tier 3 cities lacking specialists</li>
-                  <li>• <strong>Early disease detection</strong> through more accurate pattern recognition</li>
-                  <li>• <strong>Standardized diagnostic quality</strong> across all healthcare facilities</li>
-                  <li>• <strong>Reduced patient suffering</strong> from delayed or incorrect diagnoses</li>
+                  <li>• <strong>4x improvement</strong> in diagnostic accuracy on complex cases</li>
+                  <li>• <strong>Reduce misdiagnosis</strong> from 15-20% to potentially under 5%</li>
+                  <li>• <strong>Expert-level diagnosis</strong> in underserved areas</li>
+                  <li>• <strong>Standardized quality</strong> across all healthcare facilities</li>
                 </ul>
               </div>
             </div>
           </section>
-
-
 
           {/* Human-in-the-Loop */}
           <section className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
-              The Critical Role of Human Oversight
+              Human Oversight Remains Critical
             </h2>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              While MAI-DxO shows remarkable capabilities, Microsoft emphasizes that this is designed to augment, not replace, 
-              human doctors. The system includes mandatory human oversight where qualified physicians review and approve all 
-              diagnoses before implementation.
+              MAI-DxO is designed to augment, not replace, human doctors. Qualified physicians review and approve all diagnoses, ensuring safety and maintaining medical accountability.
             </p>
-            <div className="bg-yellow-50 p-6 rounded-lg">
-              <h3 className="font-bold text-yellow-800 mb-3">🔒 Safety Mechanisms</h3>
-              <ul className="text-base leading-relaxed space-y-2">
-                <li><strong>Final Approval:</strong> Only qualified doctors can approve and implement diagnoses</li>
-                <li><strong>Transparency:</strong> Full audit trail of AI decision-making process</li>
-                <li><strong>Continuous Learning:</strong> Human feedback improves system performance</li>
-                <li><strong>Fail-safes:</strong> System flags uncertain cases for additional human review</li>
-                <li><strong>Accountability:</strong> Human doctors remain legally responsible for patient care</li>
+            <div className="bg-yellow-50 p-4 rounded-lg">
+              <h3 className="font-bold text-yellow-800 mb-2">🔒 Safety First</h3>
+              <ul className="text-sm text-yellow-700 space-y-1">
+                <li>• Only qualified doctors can approve diagnoses</li>
+                <li>• Full audit trail of AI decision-making</li>
+                <li>• Human doctors remain legally responsible</li>
               </ul>
             </div>
           </section>
 
-
-
           {/* Conclusion */}
           <section>
             <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
-              Conclusion: A New Era of Medical Intelligence
+              Conclusion
             </h2>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              Microsoft's MAI-DxO represents more than just a technological advancement—it's a potential solution to one of 
-              humanity's most pressing challenges: providing accurate medical diagnosis to everyone, everywhere. The system's 
-              extraordinary 85.5% diagnostic accuracy—over 4 times better than experienced physicians—could save countless 
-              lives and prevent untold suffering from misdiagnosis in India's healthcare system.
+              Microsoft's MAI-DxO could be transformative for India's healthcare system. With 85.5% diagnostic accuracy—4x better than experienced physicians—this technology could save countless lives and reduce suffering from misdiagnosis.
             </p>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              The five-agent orchestration model, combined with mandatory human oversight, strikes the right balance between 
-              AI capability and human accountability. This isn't about replacing doctors—it's about giving them superhuman 
-              diagnostic support.
-            </p>
-            <p className="text-base sm:text-lg leading-relaxed mb-4">
-              As Mustafa Suleyman noted, we're witnessing "a real step towards medical superintelligence." For a country like 
-              India, with its massive population and healthcare challenges, this technology can't come soon enough. The question 
-              isn't whether MAI-DxO will transform healthcare—it's how quickly we can make it happen responsibly and equitably.
+              The five-agent system with human oversight strikes the right balance between AI capability and medical accountability. For a country facing massive healthcare challenges, this technology can't come soon enough.
             </p>
             <div className="bg-blue-100 p-6 rounded-lg text-center">
               <p className="text-lg font-bold text-blue-800">
-                "Hope this gets implemented sooner in India" isn't just wishful thinking—it's an urgent necessity for 
-                the millions who deserve better healthcare outcomes.
+                "Hope this gets implemented sooner in India" isn't just wishful thinking—it's an urgent necessity for millions who deserve better healthcare outcomes.
               </p>
             </div>
           </section>
