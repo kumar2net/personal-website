@@ -21,12 +21,34 @@ const MicrosoftMaiDxIndia = () => {
           Back to Blog
         </button>
       </div>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-2">
+          <div className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-bold rounded-full flex items-center gap-2">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+            </svg>
+            BREAKING
+          </div>
+          <div className="px-3 py-1 bg-gradient-to-r from-green-500 to-teal-600 text-white text-sm font-bold rounded-full flex items-center gap-2">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            FEATURED
+          </div>
+        </div>
+      </div>
       <h1 className="text-4xl font-bold mb-6">Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution</h1>
       <div className="flex items-center text-gray-600 mb-8">
         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2z" />
         </svg>
         <span>January 3, 2025</span>
+        <span className="mx-2">•</span>
+        <span className="px-2 py-1 bg-red-100 text-red-700 text-sm rounded-full font-medium">
+          🏥 Medical AI
+        </span>
+        <span className="mx-2">•</span>
+        <span className="text-sm font-medium text-blue-600">5 min read</span>
       </div>
 
       <div className="space-y-8">
