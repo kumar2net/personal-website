@@ -5,8 +5,8 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 const blogPosts = [
   {
     title: "Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution",
-    date: "January 3, 2025",
-    excerpt: "Microsoft's MAI-DxO achieves 85.5% diagnostic accuracy compared to 20% for human doctors, while reducing costs by 20%. Here's why India needs this breakthrough technology now.",
+    date: "July 4, 2025",
+    excerpt: "Microsoft's MAI-DxO achieves 85.5% diagnostic accuracy vs 20% for human doctors—a 4x improvement that could transform India's healthcare.",
     tags: ["Microsoft AI", "MAI-DxO", "Medical AI", "Healthcare India", "Diagnostic AI", "Human-in-Loop"],
     image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
     link: "/blog/microsoft-mai-dx-india"

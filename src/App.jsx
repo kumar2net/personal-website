@@ -19,6 +19,7 @@ import AcronymSoup from './pages/blog/acronym-soup';
 import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-startup-school';
 import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-cursor";
 import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcuts';
+import MicrosoftMaiDxIndia from './pages/blog/microsoft-mai-dx-india';
 import Logo from './components/Logo'
 import Shortcuts from './pages/Shortcuts'
 import CompellingIndiaStory from './pages/blog/Compelling-india-story'
@@ -155,6 +156,7 @@ function App() {
           <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
           <Route path="/blog/andrej-karpathy-yc-ai-startup-school" element={<AndrejKarpathyYcAiStartupSchool />} />
           <Route path="/blog/my-fascination-with-shortcuts" element={<MyFascinationWithShortcuts />} />
+          <Route path="/blog/microsoft-mai-dx-india" element={<MicrosoftMaiDxIndia />} />
           <Route path="/blog/compelling-india-story" element={<CompellingIndiaStory />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
