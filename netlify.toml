@@ -13,3 +13,8 @@
   from = "/blog/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/blog/acronym-soup-revisited-2025"
+  to = "/index.html"
+  status = 200

@@ -23,6 +23,7 @@ import MicrosoftMaiDxIndia from './pages/blog/microsoft-mai-dx-india';
 import Logo from './components/Logo'
 import Shortcuts from './pages/Shortcuts'
 import CompellingIndiaStory from './pages/blog/Compelling-india-story'
+import AcronymSoupRevisited2025 from './pages/blog/acronym-soup-revisited-2025';
 
 
 function App() {
@@ -158,6 +159,7 @@ function App() {
           <Route path="/blog/my-fascination-with-shortcuts" element={<MyFascinationWithShortcuts />} />
           <Route path="/blog/compelling-india-story" element={<CompellingIndiaStory />} />
           <Route path="/blog/microsoft-mai-dx-india" element={<MicrosoftMaiDxIndia />} />
+          <Route path="/blog/acronym-soup-revisited-2025" element={<AcronymSoupRevisited2025 />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

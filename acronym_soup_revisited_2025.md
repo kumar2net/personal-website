@@ -1,4 +1,4 @@
-Acronym Soup Revisited (2025)
+Acronym Soup Revisited (mid 2025)
 From FANG to the Magnificent 7
 ================================================
 
@@ -24,39 +24,31 @@ What Each Brings (one-liner snapshot)
 • Alphabet — Gemini Ultra, Waymo driver-out fleets.  
 • Amazon — Bedrock + Trainium-2 = default enterprise AI stack.  
 • Meta — Llama 3, smart-glasses social layer.  
-• Nvidia — Blackwell chips + Omniverse digital twins.  
-• Tesla — Dojo 2, EVs as rolling robots.
+• Nvidia — GPU Chips  
+• Tesla — FSD ( Full Self Driving), EVs as rolling robots
 
 Energy Red Flag  
-Every LLM prompt drinks ~0.1–0.3 Wh; volumes are doubling. On that curve we'll need mid-country-sized power plants within five years—just as Google delays its carbon-neutral pledge. Floating solar (China) may starve river ecosystems; India's 28 °C AC cap shows how quickly comfort gets regulated when grids strain. The test: mint clean terawatt-hours without frying the planet.
+Every LLM prompt drinks ~0.1–0.3 Wh (Watt Hour); volumes are doubling. On that curve we'll need mid-country-sized power plants within five years—just as Google delays its carbon-neutral pledge. Floating solar panels (China) may starve river ecosystems; India's 28 °C AC cap shows how quickly comfort gets regulated when grids strain. The test: mint clean terawatt-hours without frying the planet.
 
 Common-Person Takeaways  
 1. Higher Bills – AI's energy tab flows into subscriptions, gadgets, utilities.  
 2. Platform Lock-In – Daily life runs inside seven walled gardens; know your exit routes.  
-3. Carbon Math – Even a voice prompt has a footprint; eco-mode habits add up.  
-4. Lifestyle Rules – Expect more "28 °C-style" mandates (timed charging, surge pricing).  
+3. Carbon Math – Every AI interaction consumes energy; small choices compound into significant environmental impact.  
+4. Lifestyle Rules – Governments will implement energy-saving regulations like India's 28°C AC mandate.  
 5. Skills – Prompt craft and data literacy are becoming basic employability.
 
-Spotlight Image  
-![Tesla Robotaxi – Austin demo, March 2025](https://teslanorth.com/wp-content/uploads/2025/03/Cybercab-austin-2.jpg)  
-*Tesla's Cybercab on exhibition with Austin & Texas DOT officials ahead of the June pilot.*
+
+
 
 Wrap-Up  
 From four letters to seven, acronym creep mirrors the concentration of tech power. Watch who joins—or drops off—the list next; tomorrow's soup will be seasoned by breakthroughs we can scarcely imagine today.
 
 ---
 
-## Learning Ready-Reckoner: 10 Tech Buzzwords (2025)
+I'll help you create a new flashcard component for the tech buzzwords and update the Learning page to include it. Here's my plan:
 
-| Term | One-Line Cheat Sheet |
-|------|----------------------|
-| Cloud | Renting compute, storage and services from hyperscale data centers rather than owning hardware. |
-| Edge Computing | Pushing compute closer to devices/users to cut latency and back-haul cost. |
-| GPU | Graphics Processing Unit; parallel silicon (Nvidia/AMD) that now trains most AI models. |
-| TPU / AI ASIC | Custom "tensor" chips (Google, AWS, etc.) purpose-built for deep-learning math. |
-| LLM | Large Language Model; neural net with billions/trillions of parameters trained on text to generate human-like responses. |
-| GenAI | Generative AI; umbrella term for models (text, image, audio, code) that create new content. |
-| Vector DB | Database optimized for storing and searching high-dimensional embeddings used in AI retrieval. |
-| Transformer | Neural-net architecture behind LLMs; key idea is self-attention. |
-| RAG | Retrieval-Augmented Generation; piping external data into an LLM at query time for fresher, factual answers. |
-| Green Compute | Designing hardware & datacenters for lower watts per AI query to meet climate targets. |
+1. Remove the table from the markdown file
+2. Create a new TechBuzzwords.jsx component following the VimShortcuts pattern
+3. Add it to the Learning page flashcard sets
+
+Let me start with the markdown file rewrite:
