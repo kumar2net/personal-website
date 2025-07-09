@@ -24,6 +24,7 @@ import Logo from './components/Logo'
 import Shortcuts from './pages/Shortcuts'
 import CompellingIndiaStory from './pages/blog/Compelling-india-story'
 import AcronymSoupRevisited2025 from './pages/blog/acronym-soup-revisited-2025';
+import PriceParity from './pages/blog/price-parity';
 
 
 function App() {
@@ -160,6 +161,7 @@ function App() {
           <Route path="/blog/compelling-india-story" element={<CompellingIndiaStory />} />
           <Route path="/blog/microsoft-mai-dx-india" element={<MicrosoftMaiDxIndia />} />
           <Route path="/blog/acronym-soup-revisited-2025" element={<AcronymSoupRevisited2025 />} />
+          <Route path="/blog/price-parity" element={<PriceParity />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

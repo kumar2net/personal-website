@@ -4,6 +4,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Price/cost of essentials in places our folks live now',
+    date: 'July 9, 2025',
+    excerpt: 'Compare cost of living, taxes, and healthcare across major global cities with a compact master view.',
+    tags: ['Cost of Living', 'Taxes', 'Healthcare', 'Global Cities'],
+    image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/price-parity'
+  },
+  {
     title: 'Acronym Soup Revisited: From FANG to the Magnificent 7',
     date: 'July 5, 2025',
     excerpt: 'From FANG to Magnificent 7: how tech\'s power list evolved and what it means for investors and everyday users.',
