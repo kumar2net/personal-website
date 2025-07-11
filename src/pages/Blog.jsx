@@ -4,6 +4,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Started to Kindle Again',
+    date: 'July 11, 2025',
+    excerpt: 'Returning to focused reading and discovering the power of dopamine detox. A personal journey back to deep reading and sustained attention.',
+    tags: ['Kindle', 'Dopamine Detox', 'Digital Wellness', 'Focus', 'Reading'],
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/started-to-kindle-again'
+  },
+  {
     title: 'Price/cost of essentials in places our folks live now',
     date: 'July 9, 2025',
     excerpt: 'Compare cost of living, taxes, and healthcare across major global cities with a compact master view.',
