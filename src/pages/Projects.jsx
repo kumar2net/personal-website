@@ -32,7 +32,7 @@ const projects = [
     description: 'The Drug Recommendation App leverages AI to suggest optimal medications based on user input and medical context. It streamlines the process of finding suitable drugs, improving both safety and efficacy for patients and healthcare providers. The app features a user-friendly interface and real-time recommendations, making it a valuable tool for modern healthcare.',
     tech: ['React', 'Node.js', 'Express', 'Machine Learning', 'Tailwind CSS'],
     image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=800&q=80',
-    link: 'https://drugreco-production.up.railway.app/',
+    link: 'https://akdrugreco-production.up.railway.app/',
     features: [
       'AI-powered drug recommendations',
       'User-friendly interface for inputting symptoms and context',
