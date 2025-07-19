@@ -1,9 +1,60 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import * as Icons from 'lucide-react';
-import { flashcardSets } from '../shared/flashcard-data';
+import { BookOpen, Command, Clock, Star, Terminal } from 'lucide-react';
 
 const Learning = () => {
+  const flashcardSets = [
+    {
+      id: 'macos-shortcuts',
+      title: 'macOS Keyboard Shortcuts',
+      description: 'Master the 10 most used macOS keyboard shortcuts for productivity',
+      cardCount: 10,
+      difficulty: 'Beginner',
+      estimatedTime: '8 min',
+      category: 'Productivity',
+      icon: Command,
+      color: 'bg-blue-500',
+      route: '/learning/macos-shortcuts'
+    },
+    {
+      id: 'browser-shortcuts',
+      title: 'Browser Keyboard Shortcuts',
+      description: 'Speed up your browsing with the 10 most used Safari and Chrome shortcuts',
+      cardCount: 10,
+      difficulty: 'Beginner',
+      estimatedTime: '8 min',
+      category: 'Web Browsing',
+      icon: BookOpen,
+      color: 'bg-green-500',
+      route: '/learning/browser-shortcuts'
+    },
+    {
+      id: 'vim-shortcuts',
+      title: 'Vim Keyboard Shortcuts',
+      description: 'Master essential Vim commands for efficient text editing',
+      cardCount: 25,
+      difficulty: 'Intermediate',
+      estimatedTime: '18 min',
+      category: 'Text Editor',
+      icon: Terminal,
+      color: 'bg-purple-500',
+      route: '/learning/vim-shortcuts'
+    },
+    {
+      id: 'shortcuts-reckoner',
+      title: 'Shortcuts Ready Reckoner',
+      description: 'Quick reference for essential Mac OS and Chrome shortcuts',
+      cardCount: 24,
+      difficulty: 'Beginner',
+      estimatedTime: '5 min',
+      category: 'Reference',
+      icon: Command,
+      color: 'bg-orange-500',
+      route: '/learning/shortcuts'
+    }
+    // More flashcard sets will be added here in the future
+  ];
+
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case 'Beginner': return 'text-green-600 bg-green-100';
@@ -27,7 +78,7 @@ const Learning = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <Icons.BookOpen className="h-16 w-16 text-blue-500 mx-auto mb-4" />
+          <BookOpen className="h-16 w-16 text-blue-500 mx-auto mb-4" />
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Learning Hub</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Interactive flashcards to master new skills and concepts. Learn at your own pace with spaced repetition.
@@ -68,7 +119,7 @@ const Learning = () => {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         {flashcardSets.map((set, index) => {
-          const IconComponent = Icons[set.icon] || Icons.BookOpen;
+          const IconComponent = set.icon;
           return (
             <motion.div
               key={set.id}
@@ -78,7 +129,7 @@ const Learning = () => {
               whileHover={{ y: -5 }}
               className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
             >
-              <Link to={`/learning/${set.id}`} className="block p-6">
+              <Link to={set.route} className="block p-6">
                 <div className="flex items-center mb-4">
                   <div className={`${set.color} p-3 rounded-lg mr-4`}>
                     <IconComponent className="h-6 w-6 text-white" />
@@ -98,11 +149,11 @@ const Learning = () => {
                 
                 <div className="flex items-center justify-between text-sm text-gray-500">
                   <div className="flex items-center">
-                    <Icons.BookOpen className="h-4 w-4 mr-1" />
+                    <BookOpen className="h-4 w-4 mr-1" />
                     <span>{set.cardCount} cards</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="h-4 w-4 mr-1">⏱️</span>
+                    <Clock className="h-4 w-4 mr-1" />
                     <span>{set.estimatedTime}</span>
                   </div>
                 </div>
@@ -111,7 +162,7 @@ const Learning = () => {
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-blue-600">Start Learning →</span>
                     <div className="flex items-center">
-                      <Icons.Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
                       <span className="text-xs text-gray-500 ml-1">New</span>
                     </div>
                   </div>
@@ -136,7 +187,7 @@ const Learning = () => {
             language learning, science, and more. Check back regularly for new content!
           </p>
           <div className="text-sm text-gray-500">
-            Suggestions for new flashcard topics? <Link to="/contact" className="text-blue-600 hover:text-blue-800 underline">Let me know!</Link>
+            More flashcard sets coming soon!
           </div>
         </div>
       </motion.div>

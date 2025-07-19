@@ -23,13 +23,6 @@ import MicrosoftMaiDxIndia from './pages/blog/microsoft-mai-dx-india';
 import Logo from './components/Logo'
 import Shortcuts from './pages/Shortcuts'
 import CompellingIndiaStory from './pages/blog/Compelling-india-story'
-import AcronymSoupRevisited2025 from './pages/blog/acronym-soup-revisited-2025';
-import PriceParity from './pages/blog/price-parity';
-import StartedToKindleAgain from './pages/blog/started-to-kindle-again';
-import Autophagy from './pages/blog/autophagy';
-import FeynmanTechnique from './pages/blog/feynman-technique';
-import VocabAdditions from './pages/VocabAdditions';
-import FlashcardSetPage from './pages/FlashcardSetPage';
 
 
 function App() {
@@ -150,9 +143,10 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/learning" element={<Learning />} />
-          <Route path="/learning/:setId" element={<FlashcardSetPage />} />
+          <Route path="/learning/macos-shortcuts" element={<MacOSShortcuts />} />
+          <Route path="/learning/browser-shortcuts" element={<BrowserShortcuts />} />
+          <Route path="/learning/vim-shortcuts" element={<VimShortcuts />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />
-          <Route path="/learning/vocab-additions" element={<VocabAdditions />} />
           <Route path="/blog/spine-implant-dashboard" element={<SpineImplantDashboard />} />
           <Route path="/blog/building-mcp-server-with-cursor" element={<BuildingMcpServerWithCursor />} />
           <Route path="/blog/drug-suggestion-app" element={<DrugSuggestionApp />} />
@@ -164,11 +158,6 @@ function App() {
           <Route path="/blog/my-fascination-with-shortcuts" element={<MyFascinationWithShortcuts />} />
           <Route path="/blog/compelling-india-story" element={<CompellingIndiaStory />} />
           <Route path="/blog/microsoft-mai-dx-india" element={<MicrosoftMaiDxIndia />} />
-          <Route path="/blog/acronym-soup-revisited-2025" element={<AcronymSoupRevisited2025 />} />
-          <Route path="/blog/price-parity" element={<PriceParity />} />
-          <Route path="/blog/started-to-kindle-again" element={<StartedToKindleAgain />} />
-          <Route path="/blog/autophagy" element={<Autophagy />} />
-          <Route path="/blog/feynman-technique" element={<FeynmanTechnique />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

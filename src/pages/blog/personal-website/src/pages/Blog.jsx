@@ -4,46 +4,6 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
-    title: 'Feynman Techniques: Learning Like Richard Feynman',
-    date: 'July 19, 2025',
-    excerpt: 'How the Nobel Prize-winning physicist\'s simple approach to learning can transform your understanding of any subject. The Feynman Technique explained.',
-    tags: ['Learning', 'Feynman Technique', 'Education', 'Physics', 'Teaching'],
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80',
-    link: '/blog/feynman-technique'
-  },
-  {
-    title: 'Ekadasi morphs into IF and now Autophagy!',
-    date: 'July 19, 2025',
-    excerpt: 'How ancient fasting traditions align with modern science on cellular health and metabolic wellness. From Ekadasi to intermittent fasting to autophagy.',
-    tags: ['Fasting', 'Autophagy', 'Intermittent Fasting', 'Ekadasi', 'Health', 'Wellness'],
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80',
-    link: '/blog/autophagy'
-  },
-  {
-    title: 'Started to Kindle Again',
-    date: 'July 11, 2025',
-    excerpt: 'Returning to focused reading and discovering the power of dopamine detox. A personal journey back to deep reading and sustained attention.',
-    tags: ['Kindle', 'Dopamine Detox', 'Digital Wellness', 'Focus', 'Reading'],
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
-    link: '/blog/started-to-kindle-again'
-  },
-  {
-    title: 'Price/cost of essentials in places our folks live now',
-    date: 'July 9, 2025',
-    excerpt: 'Compare cost of living, taxes, and healthcare across major global cities with a compact master view.',
-    tags: ['Cost of Living', 'Taxes', 'Healthcare', 'Global Cities'],
-    image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80',
-    link: '/blog/price-parity'
-  },
-  {
-    title: 'Acronym Soup Revisited: From FANG to the Magnificent 7',
-    date: 'July 5, 2025',
-    excerpt: 'From FANG to Magnificent 7: how tech\'s power list evolved and what it means for investors and everyday users.',
-    tags: ['Tech Trends', 'Magnificent 7', 'FAANG', 'MAAMA'],
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80',
-    link: '/blog/acronym-soup-revisited-2025'
-  },
-  {
     title: "Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution",
     date: "July 4, 2025",
     excerpt: "Microsoft's MAI-DxO achieves 85.5% diagnostic accuracy compared to 20% for human doctors, while reducing costs by 20%. Here's why India needs this breakthrough technology now.",
@@ -82,6 +42,14 @@ const blogPosts = [
     tags: ['AI', 'Andrej Karpathy', 'Y Combinator', 'LLMs', 'Electricity Analogy'],
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
     link: '/blog/andrej-karpathy-yc-ai-startup-school'
+  },
+  {
+    title: 'Acronym Soup: The Evolution of Tech\'s Most Influential Companies',
+    date: 'June 19, 2025',
+    excerpt: 'From FANG to MAAMA: How tech\'s most influential companies shape our digital world. A look at the evolution of tech acronyms and the companies behind them.',
+    tags: ['Tech', 'Business', 'FAANG', 'MAAMA', 'Technology Trends'],
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/acronym-soup'
   },
   {
     title: 'My Experience with the stock market API: Building a Mutual Fund Performance Tracker',
