@@ -28,8 +28,10 @@ import PriceParity from './pages/blog/price-parity';
 import StartedToKindleAgain from './pages/blog/started-to-kindle-again';
 import Autophagy from './pages/blog/autophagy';
 import FeynmanTechnique from './pages/blog/feynman-technique';
+import ApplyingRobinsonMethod from './pages/blog/applying-robinson-method';
 import VocabAdditions from './pages/VocabAdditions';
 import FlashcardSetPage from './pages/FlashcardSetPage';
+import MemoryEvolution from './pages/blog/memory-evolution';
 
 
 function App() {
@@ -169,6 +171,8 @@ function App() {
           <Route path="/blog/started-to-kindle-again" element={<StartedToKindleAgain />} />
           <Route path="/blog/autophagy" element={<Autophagy />} />
           <Route path="/blog/feynman-technique" element={<FeynmanTechnique />} />
+          <Route path="/blog/applying-robinson-method" element={<ApplyingRobinsonMethod />} />
+          <Route path="/blog/memory-evolution" element={<MemoryEvolution />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

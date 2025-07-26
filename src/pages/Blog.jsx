@@ -4,6 +4,22 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Memory Evolution: From Human Moments to AI Memories',
+    date: 'July 26, 2025',
+    excerpt: 'Reflecting on how personal memories and AI memory systems are evolving side by side, from emotional moments to digital recollections. Includes a real AI-generated video memory.',
+    tags: ['AI Memory', 'Technology Evolution', 'Human Memory', 'Nostalgia', 'Personal Reflection'],
+    image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/memory-evolution'
+  },
+  {
+    title: 'Applying the Robinson Method: A Guide to Using Active Reading and Mastering Lifelong Learning',
+    date: 'July 26, 2025',
+    excerpt: 'Notes from Andréia Ramos\' book on the SQ3R method - an active reading technique developed by Francis P. Robinson in 1946 for enhanced comprehension and retention.',
+    tags: ['Learning', 'SQ3R Method', 'Active Reading', 'Study Techniques', 'Education'],
+    image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/applying-robinson-method'
+  },
+  {
     title: 'Feynman Techniques: Learning Like Richard Feynman',
     date: 'July 19, 2025',
     excerpt: 'How the Nobel Prize-winning physicist\'s simple approach to learning can transform your understanding of any subject. The Feynman Technique explained.',
