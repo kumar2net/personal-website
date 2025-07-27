@@ -32,6 +32,8 @@ import ApplyingRobinsonMethod from './pages/blog/applying-robinson-method';
 import VocabAdditions from './pages/VocabAdditions';
 import FlashcardSetPage from './pages/FlashcardSetPage';
 import MemoryEvolution from './pages/blog/memory-evolution';
+import NepalAnnapurnaCircuit from './pages/blog/nepal-annapurna-circuit';
+import MusicPage from './pages/Music';
 
 
 function App() {
@@ -66,6 +68,12 @@ function App() {
                 className="text-gray-600 hover:text-gray-800 transition-colors"
               >
                 Learning
+              </Link>
+              <Link 
+                to="/music" 
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                Music
               </Link>
               <Link 
                 to="/contact" 
@@ -108,6 +116,13 @@ function App() {
                   Learning
                 </Link>
                 <Link 
+                  to="/music" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Music
+                </Link>
+                <Link 
                   to="/contact" 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
@@ -145,6 +160,9 @@ function App() {
                 <Link to="/learning" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
                   Learning Hub
                 </Link>
+                <Link to="/music" className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                  Music
+                </Link>
               </div>
             </motion.div>
           } />
@@ -152,6 +170,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/learning" element={<Learning />} />
+          <Route path="/music" element={<MusicPage />} />
           <Route path="/learning/:setId" element={<FlashcardSetPage />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />
           <Route path="/learning/vocab-additions" element={<VocabAdditions />} />
@@ -173,6 +192,7 @@ function App() {
           <Route path="/blog/feynman-technique" element={<FeynmanTechnique />} />
           <Route path="/blog/applying-robinson-method" element={<ApplyingRobinsonMethod />} />
           <Route path="/blog/memory-evolution" element={<MemoryEvolution />} />
+          <Route path="/blog/nepal-annapurna-circuit" element={<NepalAnnapurnaCircuit />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

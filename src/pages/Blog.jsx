@@ -4,6 +4,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Nepal Journeys: An Annapurna Circuit Adventure',
+    date: 'July 27, 2025',
+    excerpt: 'Our incredible journey through Nepal centered on the Annapurna Circuit trail, a challenging yet rewarding trek spanning approximately 120km from Phedi to Tatopani.',
+    tags: ['Adventure', 'Trekking', 'Nepal', 'Annapurna', 'Travel', 'Mountains'],
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/nepal-annapurna-circuit'
+  },
+  {
     title: 'Memory Evolution: From Human Moments to AI Memories',
     date: 'July 26, 2025',
     excerpt: 'Reflecting on how personal memories and AI memory systems are evolving side by side, from emotional moments to digital recollections. Includes a real AI-generated video memory.',
