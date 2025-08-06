@@ -2,76 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
-# Handle specific routes that should go to the SPA
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/about"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/blog"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/analytics"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/contact"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/projects"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/learning"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/shortcuts"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/music"
-  to = "/index.html"
-  status = 200
-
-# Handle blog post routes
-[[redirects]]
-  from = "/blog/*"
-  to = "/index.html"
-  status = 200
-
-# Catch-all for other frontend routes
+# SPA fallback - redirect all requests to index.html
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Handle blog post routes
-[[redirects]]
-  from = "/blog/*"
   to = "/index.html"
   status = 200
 
 # Analytics function configuration
 [functions]
   directory = "netlify/functions"
-
-# API redirects for analytics
-[[redirects]]
-  from = "/.netlify/functions/analytics/*"
-  to = "/.netlify/functions/analytics"
-  status = 200

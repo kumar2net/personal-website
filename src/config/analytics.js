@@ -11,10 +11,10 @@ export const ANALYTICS_CONFIG = {
   
   // Production environment
   production: {
-    apiUrl: null, // Netlify Functions not working - need alternative backend
+    apiUrl: 'https://kumarsite.netlify.app/.netlify/functions/analytics',
     debug: false,
-    autoTrack: false, // Disable auto-tracking until backend is available
-    enabled: false, // Disable analytics until backend is available
+    autoTrack: true, // Enable auto-tracking in production
+    enabled: true, // Enable analytics in production
     generateIds: true
   }
 };

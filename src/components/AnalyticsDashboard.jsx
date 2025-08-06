@@ -13,7 +13,7 @@ const AnalyticsDashboard = () => {
   const isDevelopment = import.meta.env.MODE === 'development';
   const API_BASE = isDevelopment 
     ? 'http://localhost:3001/api' 
-    : null; // Netlify Functions not working - need alternative backend
+    : 'https://kumarsite.netlify.app/.netlify/functions/analytics';
     
   console.log('Analytics Dashboard: Environment:', import.meta.env.MODE);
   console.log('Analytics Dashboard: isDevelopment:', isDevelopment);
