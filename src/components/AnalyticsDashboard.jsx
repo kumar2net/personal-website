@@ -13,7 +13,7 @@ const AnalyticsDashboard = () => {
   const isDevelopment = import.meta.env.MODE === 'development';
   const API_BASE = isDevelopment 
     ? 'http://localhost:3001/api' 
-    : 'https://kumarsite.netlify.app/.netlify/functions/analytics';
+    : null; // Netlify Functions not working - need alternative backend
     
   console.log('Analytics Dashboard: Environment:', import.meta.env.MODE);
   console.log('Analytics Dashboard: isDevelopment:', isDevelopment);
@@ -184,12 +184,18 @@ const AnalyticsDashboard = () => {
                   </div>
                 ) : (
                   <div className="mt-2">
-                    <p>Analytics backend is now configured for production! The system should be working with Netlify Functions.</p>
+                    <p>Production analytics backend needs to be configured. Netlify Functions are not working on this account.</p>
                     <ul className="list-disc list-inside mt-1 space-y-1">
-                      <li>Backend: Netlify Functions at <code className="bg-red-100 px-1 rounded">/.netlify/functions/analytics</code></li>
-                      <li>Storage: Local JSON file (persists between function calls)</li>
-                      <li>Tracking: Enabled for all visitors</li>
+                      <li><strong>Option 1:</strong> Enable Netlify Functions in your Netlify dashboard</li>
+                      <li><strong>Option 2:</strong> Deploy a separate backend (Railway, Render, Heroku)</li>
+                      <li><strong>Option 3:</strong> Use a third-party analytics service (Google Analytics, Plausible)</li>
+                      <li><strong>Current Status:</strong> Analytics disabled in production</li>
                     </ul>
+                    <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                      <p className="text-sm text-blue-800">
+                        <strong>Quick Fix:</strong> To enable Netlify Functions, go to your Netlify dashboard → Site settings → Functions → Enable Functions.
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>

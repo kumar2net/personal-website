@@ -22,3 +22,9 @@
 # Analytics function configuration
 [functions]
   directory = "netlify/functions"
+
+# API redirects for analytics
+[[redirects]]
+  from = "/.netlify/functions/analytics/*"
+  to = "/.netlify/functions/analytics"
+  status = 200
