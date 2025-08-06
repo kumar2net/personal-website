@@ -2,9 +2,49 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback - redirect all requests to index.html
+# Handle specific routes that should go to the SPA
 [[redirects]]
-  from = "/*"
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/analytics"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/projects"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/learning"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/shortcuts"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/music"
   to = "/index.html"
   status = 200
 
@@ -14,8 +54,15 @@
   to = "/index.html"
   status = 200
 
+# Catch-all for other frontend routes
 [[redirects]]
-  from = "/blog/acronym-soup-revisited-2025"
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Handle blog post routes
+[[redirects]]
+  from = "/blog/*"
   to = "/index.html"
   status = 200
 
