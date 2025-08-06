@@ -14,10 +14,12 @@
 
   // Configuration
   const config = {
-    apiUrl: window.location.hostname === 'localhost' ? 'http://localhost:3001/api' : null, // Only use backend in development
+    apiUrl: window.location.hostname === 'localhost' 
+      ? 'http://localhost:3001/api' 
+      : 'https://kumarsite.netlify.app/.netlify/functions/analytics',
     fallbackApiUrl: null, // No fallback needed
     debug: window.location.hostname === 'localhost', // Enable debug in development
-    autoTrack: window.location.hostname === 'localhost', // Only auto-track in development
+    autoTrack: true, // Enable auto-tracking in both development and production
     sessionTimeout: 30 * 60 * 1000, // 30 minutes
     maxRetries: 3
   };

@@ -13,16 +13,16 @@ const AnalyticsDashboard = () => {
   const isDevelopment = import.meta.env.MODE === 'development';
   const API_BASE = isDevelopment 
     ? 'http://localhost:3001/api' 
-    : null; // No production backend available yet
+    : 'https://kumarsite.netlify.app/.netlify/functions/analytics';
     
   console.log('Analytics Dashboard: Environment:', import.meta.env.MODE);
   console.log('Analytics Dashboard: isDevelopment:', isDevelopment);
   console.log('Analytics Dashboard: API_BASE:', API_BASE);
 
   const fetchAnalytics = async () => {
-    if (!isDevelopment) {
+    if (!API_BASE) {
       setLoading(false);
-      setError('Analytics Backend Not Available in Production');
+      setError('Analytics configuration not available');
       return;
     }
 
@@ -184,11 +184,11 @@ const AnalyticsDashboard = () => {
                   </div>
                 ) : (
                   <div className="mt-2">
-                    <p>Production analytics backend is not yet configured. To enable analytics in production:</p>
+                    <p>Analytics backend is now configured for production! The system should be working with Netlify Functions.</p>
                     <ul className="list-disc list-inside mt-1 space-y-1">
-                      <li>Deploy the analytics backend to a production server</li>
-                      <li>Update the production API URL in <code className="bg-red-100 px-1 rounded">src/config/analytics.js</code></li>
-                      <li>Enable analytics tracking in production configuration</li>
+                      <li>Backend: Netlify Functions at <code className="bg-red-100 px-1 rounded">/.netlify/functions/analytics</code></li>
+                      <li>Storage: Local JSON file (persists between function calls)</li>
+                      <li>Tracking: Enabled for all visitors</li>
                     </ul>
                   </div>
                 )}

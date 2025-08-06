@@ -18,3 +18,7 @@
   from = "/blog/acronym-soup-revisited-2025"
   to = "/index.html"
   status = 200
+
+# Analytics function configuration
+[functions]
+  directory = "netlify/functions"
