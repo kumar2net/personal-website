@@ -115,7 +115,7 @@ const DeviceTechnologyChart: React.FC<DeviceTechnologyChartProps> = ({
   return (
     <div className="chart-container">
       <div className="chart-header">
-        <h3>Device Type & Technology</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Device Type & Technology</h3>
         <div className="chart-stats">
           <span className="stat-item">
             <span className="stat-label">Total Visitors:</span>
@@ -128,51 +128,139 @@ const DeviceTechnologyChart: React.FC<DeviceTechnologyChartProps> = ({
         </div>
       </div>
 
-      <div className="chart-tabs">
+      <div className="chart-tabs mb-6">
         <button
           className={`tab-button ${activeTab === 'devices' ? 'active' : ''}`}
           onClick={() => setActiveTab('devices')}
         >
-          📱 Devices
+          <span className="mr-2">📱</span>
+          Devices
         </button>
         <button
           className={`tab-button ${activeTab === 'browsers' ? 'active' : ''}`}
           onClick={() => setActiveTab('browsers')}
         >
-          🌐 Browsers
+          <span className="mr-2">🌐</span>
+          Browsers
         </button>
         <button
           className={`tab-button ${activeTab === 'os' ? 'active' : ''}`}
           onClick={() => setActiveTab('os')}
         >
-          💻 OS
+          <span className="mr-2">💻</span>
+          Operating Systems
         </button>
       </div>
 
-      <div className="table-container">
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>{getColumnHeader()}</th>
-              <th>Visitors</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentData.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  {activeTab === 'devices' ? (item as DeviceData).device_type :
-                   activeTab === 'browsers' ? (item as BrowserData).browser :
-                   (item as OSData).os}
-                </td>
-                <td>{item.visitors}</td>
-                <td>{item.percentage.toFixed(1)}%</td>
-              </tr>
+      {currentData.length > 0 ? (
+        <div className="space-y-4">
+          {/* Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            {currentData.slice(0, 3).map((item, index) => (
+              <div key={index} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-sm font-medium text-blue-600">
+                      {activeTab === 'devices' ? (item as DeviceData).device_type :
+                       activeTab === 'browsers' ? (item as BrowserData).browser :
+                       (item as OSData).os}
+                    </div>
+                    <div className="text-2xl font-bold text-blue-900">
+                      {item.visitors}
+                    </div>
+                    <div className="text-xs text-blue-700">
+                      {item.percentage.toFixed(1)}% of total
+                    </div>
+                  </div>
+                  <div className="text-3xl opacity-20">
+                    {activeTab === 'devices' ? '📱' : activeTab === 'browsers' ? '🌐' : '💻'}
+                  </div>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+
+          {/* Detailed Table */}
+          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+              <h4 className="text-sm font-medium text-gray-700">
+                Detailed {getColumnHeader()} Breakdown
+              </h4>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {getColumnHeader()}
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Visitors
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Percentage
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Distribution
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {currentData.map((item, index) => (
+                    <tr key={index} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span className="text-sm font-medium text-blue-600">
+                              {activeTab === 'devices' ? (item as DeviceData).device_type.charAt(0).toUpperCase() :
+                               activeTab === 'browsers' ? (item as BrowserData).browser.charAt(0).toUpperCase() :
+                               (item as OSData).os.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {activeTab === 'devices' ? (item as DeviceData).device_type :
+                               activeTab === 'browsers' ? (item as BrowserData).browser :
+                               (item as OSData).os}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 font-medium">{item.visitors}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{item.percentage.toFixed(1)}%</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-1 bg-gray-200 rounded-full h-2 mr-3">
+                            <div 
+                              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                              style={{ width: `${item.percentage}%` }}
+                            ></div>
+                          </div>
+                          <span className="text-xs text-gray-500 w-12 text-right">
+                            {item.percentage.toFixed(0)}%
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-12">
+          <div className="text-4xl mb-4 opacity-20">
+            {activeTab === 'devices' ? '📱' : activeTab === 'browsers' ? '🌐' : '💻'}
+          </div>
+          <p className="text-gray-500 text-lg">No {activeTab} data available yet</p>
+          <p className="text-gray-400 text-sm mt-2">Data will appear as visitors use your website</p>
+        </div>
+      )}
     </div>
   );
 };

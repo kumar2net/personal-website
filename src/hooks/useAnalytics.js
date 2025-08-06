@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import analyticsConfig from '../config/analytics';
+import analyticsConfig, { generateVisitorId, generateSessionId } from '../config/analytics';
 import webhookService from '../services/webhookService';
 
 // Initialize analytics when the hook is first used
@@ -42,7 +42,10 @@ export const useAnalytics = () => {
           screen_width: screen.width,
           screen_height: screen.height,
           language: navigator.language,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          visitor_id: generateVisitorId(),
+          session_id: generateSessionId(),
+          timestamp: new Date().toISOString()
         };
 
         // Track with traditional analytics
@@ -66,7 +69,10 @@ export const useAnalytics = () => {
       const eventPayload = {
         ...eventData,
         route: location.pathname,
-        page_title: document.title
+        page_title: document.title,
+        visitor_id: generateVisitorId(),
+        session_id: generateSessionId(),
+        timestamp: new Date().toISOString()
       };
 
       // Track with traditional analytics
@@ -83,8 +89,9 @@ export const useAnalytics = () => {
 
   // Track button clicks
   const trackClick = useCallback((buttonName, additionalData = {}) => {
-    trackEvent('button_click', {
-      button_name: buttonName,
+    trackEvent('click', {
+      element_type: 'button',
+      element_name: buttonName,
       ...additionalData
     });
   }, [trackEvent]);
@@ -98,18 +105,20 @@ export const useAnalytics = () => {
   }, [trackEvent]);
 
   // Track external link clicks
-  const trackExternalLink = useCallback((url, linkText = '') => {
+  const trackExternalLink = useCallback((url, linkText, additionalData = {}) => {
     trackEvent('external_link_click', {
-      url,
-      link_text: linkText
+      link_url: url,
+      link_text: linkText,
+      ...additionalData
     });
   }, [trackEvent]);
 
   // Track social media interactions
-  const trackSocialInteraction = useCallback((platform, action = 'click') => {
+  const trackSocialInteraction = useCallback((platform, action, additionalData = {}) => {
     trackEvent('social_interaction', {
       platform,
-      action
+      action,
+      ...additionalData
     });
   }, [trackEvent]);
 
@@ -118,7 +127,6 @@ export const useAnalytics = () => {
     trackClick,
     trackFormSubmit,
     trackExternalLink,
-    trackSocialInteraction,
-    isInitialized: analyticsInitialized
+    trackSocialInteraction
   };
 }; 
