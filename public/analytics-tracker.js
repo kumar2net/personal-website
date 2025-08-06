@@ -14,10 +14,10 @@
 
   // Configuration
   const config = {
-    apiUrl: 'https://siteanalyticsak.netlify.app/api',
-    fallbackApiUrl: 'http://localhost:3001/api', // Fallback for development
+    apiUrl: window.location.hostname === 'localhost' ? 'http://localhost:3001/api' : null, // Only use backend in development
+    fallbackApiUrl: null, // No fallback needed
     debug: window.location.hostname === 'localhost', // Enable debug in development
-    autoTrack: true,
+    autoTrack: window.location.hostname === 'localhost', // Only auto-track in development
     sessionTimeout: 30 * 60 * 1000, // 30 minutes
     maxRetries: 3
   };
@@ -64,7 +64,18 @@
 
   // Send data to analytics API with retry logic
   async function sendAnalyticsData(endpoint, data, retryCount = 0) {
-    const urls = [config.apiUrl, config.fallbackApiUrl];
+    // If no API URL is configured, skip sending data
+    if (!config.apiUrl) {
+      if (config.debug) {
+        console.log('Analytics: No API URL configured, skipping data send');
+      }
+      return { success: false, message: 'No API URL configured' };
+    }
+
+    const urls = [config.apiUrl];
+    if (config.fallbackApiUrl) {
+      urls.push(config.fallbackApiUrl);
+    }
     
     for (let i = 0; i < urls.length; i++) {
       try {

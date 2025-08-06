@@ -10,17 +10,23 @@ const AnalyticsDashboard = () => {
   const [lastUpdated, setLastUpdated] = useState(null);
 
   // Check if analytics is enabled for current environment
-  const isAnalyticsEnabled = import.meta.env.MODE === 'development' || import.meta.env.MODE === 'production';
-  const API_BASE = import.meta.env.MODE === 'development' 
+  const isDevelopment = import.meta.env.MODE === 'development';
+  const API_BASE = isDevelopment 
     ? 'http://localhost:3001/api' 
-    : 'https://siteanalyticsak.netlify.app/api';
+    : null; // No production backend available yet
     
   console.log('Analytics Dashboard: Environment:', import.meta.env.MODE);
-  console.log('Analytics Dashboard: isAnalyticsEnabled:', isAnalyticsEnabled);
+  console.log('Analytics Dashboard: isDevelopment:', isDevelopment);
   console.log('Analytics Dashboard: API_BASE:', API_BASE);
 
   const fetchAnalytics = async () => {
-    if (!isAnalyticsEnabled || !API_BASE) {
+    if (!isDevelopment) {
+      setLoading(false);
+      setError('Analytics Backend Not Available in Production');
+      return;
+    }
+
+    if (!API_BASE) {
       setLoading(false);
       setError('Analytics configuration not available');
       return;
@@ -131,7 +137,7 @@ const AnalyticsDashboard = () => {
 
   useEffect(() => {
     fetchAnalytics();
-  }, [isAnalyticsEnabled, API_BASE]);
+  }, [isDevelopment, API_BASE]);
 
   if (loading) {
     return (
@@ -165,16 +171,25 @@ const AnalyticsDashboard = () => {
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-red-800">
-                Analytics Error
+                Analytics Backend Not Available
               </h3>
               <div className="mt-2 text-sm text-red-700">
                 <p>{error}</p>
-                {import.meta.env.MODE === 'development' && (
+                {import.meta.env.MODE === 'development' ? (
                   <div className="mt-2">
-                    <p>Make sure the analytics backend is running:</p>
+                    <p>To see real analytics, start the analytics backend server:</p>
                     <code className="block mt-1 p-2 bg-red-100 rounded text-xs">
                       cd /Users/kumar/siteanalytics/backend && npm run dev
                     </code>
+                  </div>
+                ) : (
+                  <div className="mt-2">
+                    <p>Production analytics backend is not yet configured. To enable analytics in production:</p>
+                    <ul className="list-disc list-inside mt-1 space-y-1">
+                      <li>Deploy the analytics backend to a production server</li>
+                      <li>Update the production API URL in <code className="bg-red-100 px-1 rounded">src/config/analytics.js</code></li>
+                      <li>Enable analytics tracking in production configuration</li>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -273,7 +288,7 @@ const AnalyticsDashboard = () => {
             <p><strong>Configuration:</strong></p>
             <p>API Base: {API_BASE}</p>
             <p>Environment: {import.meta.env.MODE}</p>
-            <p>Analytics Enabled: {isAnalyticsEnabled ? 'Yes' : 'No'}</p>
+            <p>Analytics Enabled: {isDevelopment ? 'Yes' : 'No'}</p>
           </div>
         </div>
       )}

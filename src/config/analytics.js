@@ -11,16 +11,16 @@ export const ANALYTICS_CONFIG = {
   
   // Production environment
   production: {
-    apiUrl: 'https://siteanalyticsak.netlify.app/api', // Production analytics backend
+    apiUrl: null, // No production backend available yet
     debug: false,
-    autoTrack: true,
-    enabled: true,
+    autoTrack: false, // Disable auto-tracking in production until backend is available
+    enabled: false, // Disable analytics in production until backend is available
     generateIds: true
   }
 };
 
 // Get current environment
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = import.meta.env.MODE === 'development';
 const currentConfig = ANALYTICS_CONFIG[isDevelopment ? 'development' : 'production'];
 
 // Helper functions for generating IDs
