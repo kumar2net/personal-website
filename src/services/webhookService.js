@@ -2,11 +2,21 @@ import analyticsConfig from '../config/analytics';
 
 class WebhookService {
   constructor() {
-    this.webhookUrl = analyticsConfig.apiUrl.replace('/api', '/api/webhooks');
+    this.webhookUrl = analyticsConfig.apiUrl 
+      ? analyticsConfig.apiUrl.replace('/api', '/api/webhooks')
+      : null;
   }
 
   // Send analytics event to webhook
   async sendAnalyticsEvent(eventType, data) {
+    // If no webhook URL is configured, skip sending
+    if (!this.webhookUrl) {
+      if (analyticsConfig.debug) {
+        console.log(`[Webhook] No webhook URL configured, skipping ${eventType}`);
+      }
+      return { success: false, message: 'No webhook URL configured' };
+    }
+
     try {
       const payload = {
         event_type: eventType,
