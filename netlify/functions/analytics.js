@@ -185,8 +185,8 @@ function getTopPages(limit = 5, startDate = null, endDate = null) {
 exports.handler = async (event, context) => {
   // Enable CORS
   const headers = {
-    'Access-Control-Allow-Origin': 'https://kumarsite.netlify.app',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -207,8 +207,8 @@ exports.handler = async (event, context) => {
     // Debug logging
     console.log('Analytics function called with:', { path, method, event });
 
-    // Health check - handle any GET request for now
-    if (method === 'GET') {
+    // Health check
+    if (path.endsWith('/health') || path.endsWith('/api/health')) {
       return {
         statusCode: 200,
         headers,
@@ -216,10 +216,92 @@ exports.handler = async (event, context) => {
           status: 'healthy',
           timestamp: new Date().toISOString(),
           data_points: analyticsData.pageViews.length,
-          unique_visitors: analyticsData.visitors.size,
-          path: path,
-          method: method,
-          message: 'Analytics function is working!'
+          unique_visitors: analyticsData.visitors.size
+        })
+      };
+    }
+
+    // Track page view
+    if (path.endsWith('/analytics/track') && method === 'POST') {
+      const data = JSON.parse(event.body || '{}');
+      const pageView = await trackPageView(data);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: pageView
+        })
+      };
+    }
+
+    // Get real-time metrics
+    if (path.endsWith('/analytics/metrics/realtime') && method === 'GET') {
+      const metrics = getRealtimeMetrics();
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            metrics
+          }
+        })
+      };
+    }
+
+    // Get daily metrics
+    if (path.endsWith('/analytics/metrics/daily') && method === 'GET') {
+      const { days = 7 } = event.queryStringParameters || {};
+      const metrics = getDailyMetrics(parseInt(days));
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            metrics
+          }
+        })
+      };
+    }
+
+    // Get top pages
+    if (path.endsWith('/analytics/pages/top') && method === 'GET') {
+      const { limit = 5, start_date, end_date } = event.queryStringParameters || {};
+      const pages = getTopPages(parseInt(limit), start_date, end_date);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            pages
+          }
+        })
+      };
+    }
+
+    // Reset data (for testing)
+    if (path.endsWith('/analytics/reset') && method === 'POST') {
+      analyticsData = {
+        pageViews: [],
+        sessions: [],
+        visitors: new Set(),
+        lastReset: Date.now()
+      };
+      await saveData();
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          message: 'Analytics data reset'
         })
       };
     }
