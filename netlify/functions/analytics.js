@@ -49,11 +49,13 @@ function generateId() {
 }
 
 function getDateKey(date = new Date()) {
-  return date.toISOString().split('T')[0];
+  const dateObj = new Date(date);
+  return dateObj.toISOString().split('T')[0];
 }
 
 function isToday(date) {
-  return getDateKey(date) === getDateKey();
+  const dateObj = new Date(date);
+  return getDateKey(dateObj) === getDateKey();
 }
 
 function isLast7Days(date) {
