@@ -204,8 +204,97 @@ function getOS(userAgent) {
   return 'Unknown';
 }
 
+// Get geolocation from IP address
+async function getGeolocationFromIP(ip) {
+  // Skip localhost and private IPs
+  if (ip === '127.0.0.1' || ip === 'localhost' || 
+      ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.')) {
+    return {
+      country: 'Local Development',
+      region: 'Local',
+      city: 'Local'
+    };
+  }
+
+  try {
+    // Use a free IP geolocation service
+    const response = await fetch(`https://ipapi.co/${ip}/json/`);
+    if (response.ok) {
+      const data = await response.json();
+      
+      // Check if we got valid data
+      if (data.country_name && data.country_name !== 'None') {
+        return {
+          country: data.country_name || 'Unknown',
+          region: data.region || data.state || 'Unknown',
+          city: data.city || 'Unknown',
+          latitude: data.latitude,
+          longitude: data.longitude,
+          timezone: data.timezone
+        };
+      }
+    }
+  } catch (error) {
+    console.log('Primary geolocation lookup failed:', error.message);
+  }
+  
+  // Fallback to basic IP-based country detection
+  try {
+    const response = await fetch(`https://ipapi.co/${ip}/country_name/`);
+    if (response.ok) {
+      const country = await response.text();
+      if (country && country !== 'None' && country !== 'null') {
+        return {
+          country: country || 'Unknown',
+          region: 'Unknown',
+          city: 'Unknown'
+        };
+      }
+    }
+  } catch (error) {
+    console.log('Fallback geolocation lookup failed:', error.message);
+  }
+  
+  // Additional fallback using a different service
+  try {
+    const response = await fetch(`https://ipinfo.io/${ip}/json`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data.country) {
+        return {
+          country: data.country || 'Unknown',
+          region: data.region || 'Unknown',
+          city: data.city || 'Unknown',
+          latitude: data.loc?.split(',')[0],
+          longitude: data.loc?.split(',')[1],
+          timezone: data.timezone
+        };
+      }
+    }
+  } catch (error) {
+    console.log('Secondary fallback geolocation lookup failed:', error.message);
+  }
+  
+  return {
+    country: 'Unknown',
+    region: 'Unknown',
+    city: 'Unknown'
+  };
+}
+
 // Analytics tracking
-async function trackPageView(data) {
+async function trackPageView(data, clientIP = null) {
+  // Get geolocation data
+  let geolocation = {
+    country: 'Unknown',
+    region: 'Unknown',
+    city: 'Unknown'
+  };
+  
+  if (clientIP) {
+    geolocation = await getGeolocationFromIP(clientIP);
+  }
+  
   const pageView = {
     id: generateId(),
     timestamp: new Date().toISOString(),
@@ -218,7 +307,12 @@ async function trackPageView(data) {
     screen_width: data.screen_width || 0,
     screen_height: data.screen_height || 0,
     language: data.language || 'en',
-    country: data.country || 'unknown'
+    country: geolocation.country,
+    region: geolocation.region,
+    city: geolocation.city,
+    latitude: geolocation.latitude,
+    longitude: geolocation.longitude,
+    timezone: geolocation.timezone || data.timezone || 'Unknown'
   };
 
   analyticsData.pageViews.push(pageView);
@@ -365,7 +459,16 @@ exports.handler = async (event, context) => {
     // Track page view
     if (path.endsWith('/analytics/track') && method === 'POST') {
       const data = JSON.parse(event.body || '{}');
-      const pageView = await trackPageView(data);
+      
+      // Extract client IP from various headers
+      const clientIP = event.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+                      event.headers['x-real-ip'] ||
+                      event.headers['x-client-ip'] ||
+                      event.headers['cf-connecting-ip'] ||
+                      event.requestContext?.identity?.sourceIp ||
+                      '127.0.0.1';
+      
+      const pageView = await trackPageView(data, clientIP);
       
       return {
         statusCode: 200,
@@ -456,15 +559,19 @@ exports.handler = async (event, context) => {
       
       analyticsData.pageViews.forEach(view => {
         const country = view.country || 'Unknown';
-        const region = 'Unknown'; // We don't store region in our data
-        const city = 'Unknown'; // We don't store city in our data
+        const region = view.region || 'Unknown';
+        const city = view.city || 'Unknown';
         
+        // Create a more specific key for better grouping
         const key = `${country}-${region}-${city}`;
         if (!geolocationStats[key]) {
           geolocationStats[key] = {
             country,
             region,
             city,
+            latitude: view.latitude,
+            longitude: view.longitude,
+            timezone: view.timezone,
             unique_visitors: new Set()
           };
         }
