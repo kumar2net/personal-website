@@ -66,34 +66,141 @@ function isLast7Days(date) {
 
 // Helper functions for parsing user agents
 function getDeviceType(userAgent) {
+  if (!userAgent || typeof userAgent !== 'string') {
+    return 'Unknown';
+  }
+  
   const ua = userAgent.toLowerCase();
-  if (ua.includes('mobile') || ua.includes('android') || ua.includes('iphone') || ua.includes('ipad')) {
+  
+  // Check for mobile devices
+  if (ua.includes('mobile') || ua.includes('android') || ua.includes('iphone') || 
+      ua.includes('blackberry') || ua.includes('windows phone')) {
     return 'Mobile';
-  } else if (ua.includes('tablet') || ua.includes('ipad')) {
+  }
+  
+  // Check for tablets
+  if (ua.includes('tablet') || ua.includes('ipad') || ua.includes('kindle')) {
     return 'Tablet';
-  } else {
+  }
+  
+  // Check for desktop/laptop
+  if (ua.includes('windows') || ua.includes('macintosh') || ua.includes('linux') || 
+      ua.includes('x11') || ua.includes('unix')) {
     return 'Desktop';
   }
+  
+  // Check for bots and API clients
+  if (ua.includes('bot') || ua.includes('crawler') || ua.includes('spider') ||
+      ua.includes('curl') || ua.includes('wget') || ua.includes('python') ||
+      ua.includes('node') || ua.includes('axios')) {
+    return 'Bot/API';
+  }
+  
+  return 'Unknown';
 }
 
 function getBrowser(userAgent) {
+  if (!userAgent || typeof userAgent !== 'string') {
+    return 'Unknown';
+  }
+  
   const ua = userAgent.toLowerCase();
-  if (ua.includes('chrome')) return 'Chrome';
+  
+  // Check for common browsers with more specific patterns
+  if (ua.includes('chrome') && !ua.includes('edg')) return 'Chrome';
   if (ua.includes('firefox')) return 'Firefox';
-  if (ua.includes('safari') && !ua.includes('chrome')) return 'Safari';
-  if (ua.includes('edge')) return 'Edge';
-  if (ua.includes('opera')) return 'Opera';
+  if (ua.includes('safari') && !ua.includes('chrome') && !ua.includes('edg')) return 'Safari';
+  if (ua.includes('edg')) return 'Edge';
+  if (ua.includes('opera') || ua.includes('opr/')) return 'Opera';
   if (ua.includes('ie') || ua.includes('trident')) return 'Internet Explorer';
+  if (ua.includes('brave')) return 'Brave';
+  if (ua.includes('vivaldi')) return 'Vivaldi';
+  if (ua.includes('ucbrowser')) return 'UC Browser';
+  if (ua.includes('samsungbrowser')) return 'Samsung Browser';
+  if (ua.includes('miuibrowser')) return 'MIUI Browser';
+  if (ua.includes('maxthon')) return 'Maxthon';
+  if (ua.includes('yandex')) return 'Yandex Browser';
+  if (ua.includes('duckduckgo')) return 'DuckDuckGo Browser';
+  if (ua.includes('chromium')) return 'Chromium';
+  
+  // Check for mobile browsers
+  if (ua.includes('mobile safari')) return 'Mobile Safari';
+  if (ua.includes('android browser')) return 'Android Browser';
+  if (ua.includes('miuibrowser')) return 'MIUI Browser';
+  if (ua.includes('samsungbrowser')) return 'Samsung Browser';
+  
+  // Check for bot/crawler patterns
+  if (ua.includes('bot') || ua.includes('crawler') || ua.includes('spider') || 
+      ua.includes('scraper') || ua.includes('headless') || ua.includes('puppeteer') ||
+      ua.includes('selenium') || ua.includes('phantomjs') || ua.includes('playwright')) {
+    return 'Bot/Crawler';
+  }
+  
+  // Check for API clients and tools
+  if (ua.includes('curl') || ua.includes('wget') || ua.includes('python') ||
+      ua.includes('node') || ua.includes('axios') || ua.includes('fetch')) {
+    return 'API Client';
+  }
+  
+  // Check for empty or very short user agents
+  if (ua.length < 10) {
+    return 'Unknown (Short UA)';
+  }
+  
+  // Log unknown user agents for debugging (only in development)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Unknown User Agent:', userAgent);
+  }
+  
   return 'Unknown';
 }
 
 function getOS(userAgent) {
+  if (!userAgent || typeof userAgent !== 'string') {
+    return 'Unknown';
+  }
+  
   const ua = userAgent.toLowerCase();
+  
+  // Check for Windows variants
+  if (ua.includes('windows nt 10')) return 'Windows 10/11';
+  if (ua.includes('windows nt 6.3')) return 'Windows 8.1';
+  if (ua.includes('windows nt 6.2')) return 'Windows 8';
+  if (ua.includes('windows nt 6.1')) return 'Windows 7';
+  if (ua.includes('windows nt 6.0')) return 'Windows Vista';
+  if (ua.includes('windows nt 5')) return 'Windows XP';
   if (ua.includes('windows')) return 'Windows';
-  if (ua.includes('mac os') || ua.includes('macintosh')) return 'macOS';
+  
+  // Check for macOS variants
+  if (ua.includes('mac os x 14')) return 'macOS Sonoma';
+  if (ua.includes('mac os x 13')) return 'macOS Ventura';
+  if (ua.includes('mac os x 12')) return 'macOS Monterey';
+  if (ua.includes('mac os x 11')) return 'macOS Big Sur';
+  if (ua.includes('mac os x 10.15')) return 'macOS Catalina';
+  if (ua.includes('mac os x 10.14')) return 'macOS Mojave';
+  if (ua.includes('mac os x')) return 'macOS';
+  if (ua.includes('macintosh')) return 'macOS';
+  
+  // Check for Linux variants
+  if (ua.includes('ubuntu')) return 'Ubuntu';
+  if (ua.includes('debian')) return 'Debian';
+  if (ua.includes('fedora')) return 'Fedora';
+  if (ua.includes('centos')) return 'CentOS';
+  if (ua.includes('redhat')) return 'Red Hat';
   if (ua.includes('linux')) return 'Linux';
+  
+  // Check for mobile OS
   if (ua.includes('android')) return 'Android';
   if (ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad')) return 'iOS';
+  if (ua.includes('blackberry')) return 'BlackBerry OS';
+  if (ua.includes('windows phone')) return 'Windows Phone';
+  
+  // Check for other systems
+  if (ua.includes('freebsd')) return 'FreeBSD';
+  if (ua.includes('openbsd')) return 'OpenBSD';
+  if (ua.includes('netbsd')) return 'NetBSD';
+  if (ua.includes('unix')) return 'Unix';
+  
   return 'Unknown';
 }
 
