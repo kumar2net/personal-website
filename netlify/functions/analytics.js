@@ -205,7 +205,7 @@ exports.handler = async (event, context) => {
     const method = event.httpMethod;
 
     // Health check
-    if (path === '/api/health' && method === 'GET') {
+    if ((path === '/api/health' || path.endsWith('/api/health')) && method === 'GET') {
       return {
         statusCode: 200,
         headers,
@@ -219,7 +219,7 @@ exports.handler = async (event, context) => {
     }
 
     // Track page view
-    if (path === '/api/analytics/track' && method === 'POST') {
+    if ((path === '/api/analytics/track' || path.endsWith('/api/analytics/track')) && method === 'POST') {
       const data = JSON.parse(event.body || '{}');
       const pageView = await trackPageView(data);
       
@@ -234,7 +234,7 @@ exports.handler = async (event, context) => {
     }
 
     // Get real-time metrics
-    if (path === '/api/analytics/metrics/realtime' && method === 'GET') {
+    if ((path === '/api/analytics/metrics/realtime' || path.endsWith('/api/analytics/metrics/realtime')) && method === 'GET') {
       const metrics = getRealtimeMetrics();
       
       return {
@@ -250,7 +250,7 @@ exports.handler = async (event, context) => {
     }
 
     // Get daily metrics
-    if (path === '/api/analytics/metrics/daily' && method === 'GET') {
+    if ((path === '/api/analytics/metrics/daily' || path.endsWith('/api/analytics/metrics/daily')) && method === 'GET') {
       const { days = 7 } = event.queryStringParameters || {};
       const metrics = getDailyMetrics(parseInt(days));
       
@@ -267,7 +267,7 @@ exports.handler = async (event, context) => {
     }
 
     // Get top pages
-    if (path === '/api/analytics/pages/top' && method === 'GET') {
+    if ((path === '/api/analytics/pages/top' || path.endsWith('/api/analytics/pages/top')) && method === 'GET') {
       const { limit = 5, start_date, end_date } = event.queryStringParameters || {};
       const pages = getTopPages(parseInt(limit), start_date, end_date);
       
@@ -284,7 +284,7 @@ exports.handler = async (event, context) => {
     }
 
     // Reset data (for testing)
-    if (path === '/api/analytics/reset' && method === 'POST') {
+    if ((path === '/api/analytics/reset' || path.endsWith('/api/analytics/reset')) && method === 'POST') {
       analyticsData = {
         pageViews: [],
         sessions: [],
