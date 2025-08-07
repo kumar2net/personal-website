@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { DailyMetrics, Prediction, HealthStatus, AnalyticsData } from '../types/analytics';
 
-const BACKEND_API_URL = 'http://localhost:3001/api';
+const BACKEND_API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3001/api' 
+  : 'https://kumarsite.netlify.app/.netlify/functions/analytics';
 const ML_API_URL = 'http://localhost:5001';
 
 const backendApi = axios.create({
