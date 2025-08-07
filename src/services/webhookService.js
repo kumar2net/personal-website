@@ -28,7 +28,7 @@ class WebhookService {
         source: 'personal-website'
       };
 
-      const response = await fetch(`${this.webhookUrl}/analytics`, {
+      const response = await fetch(`${this.webhookUrl}/analytics/track`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
