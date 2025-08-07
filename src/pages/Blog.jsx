@@ -4,6 +4,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'India-USA Trade Relations: A $212.3B Partnership Under Pressure',
+    date: 'August 7, 2025',
+    excerpt: 'From record-breaking trade volumes to escalating tariffs: The complex dynamics of India-US economic relations in 2025. Cornell notes analysis of the $212.3B trade relationship and recent 50% tariff escalations.',
+    tags: ['Trade Relations', 'India Economy', 'US Tariffs', 'International Trade', 'Economic Policy'],
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/india-usa-trade-gap-2025'
+  },
+  {
     title: 'revolutionizing soil analysis: laser vs traditional methods',
     date: 'August 03, 2025',
     excerpt: 'A groundbreaking Florida study comparing traditional sieve methods with laser diffraction technology reveals surprising insights about soil composition analysis. 75 samples, 5x faster results, and new accuracy standards.',

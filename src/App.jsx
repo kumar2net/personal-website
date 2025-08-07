@@ -36,6 +36,7 @@ import MemoryEvolution from './pages/blog/memory-evolution';
 import NepalAnnapurnaCircuit from './pages/blog/nepal-annapurna-circuit';
 import MyRandomThoughtsThisWeek from './pages/blog/my-random-thoughts-this-week';
 import NammuSoilAnalysisResearch from './pages/blog/nammu-soil-analysis-research';
+import IndiaUSATradeGap from './pages/blog/india-usa-trade-gap-2025';
 import MusicPage from './pages/Music';
 import Analytics from './pages/Analytics';
 
@@ -226,6 +227,7 @@ function App() {
           <Route path="/blog/nepal-annapurna-circuit" element={<NepalAnnapurnaCircuit />} />
           <Route path="/blog/my-random-thoughts-this-week" element={<MyRandomThoughtsThisWeek />} />
           <Route path="/blog/nammu-soil-analysis-research" element={<NammuSoilAnalysisResearch />} />
+          <Route path="/blog/india-usa-trade-gap-2025" element={<IndiaUSATradeGap />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
