@@ -2,7 +2,7 @@
 
 This document explains how to use the analytics system integrated into your personal website.
 
-**Last Updated:** August 6, 2025 (14:52 UTC)
+**Last Updated:** August 7, 2025 (17:24 IST)
 
 ## Overview
 

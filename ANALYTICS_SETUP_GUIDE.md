@@ -1,5 +1,7 @@
 # Analytics Backend Setup Guide
 
+**Last Updated:** August 7, 2025
+
 ## Current Status
 
 Your analytics system is currently configured to work only in development mode. The production backend needs to be set up to enable analytics tracking on your live site.

@@ -1,5 +1,7 @@
 # Analytics Production Setup Guide
 
+**Last Updated:** August 7, 2025
+
 ## Current Status
 
 The analytics system is currently configured to work only in development mode. In production, analytics tracking is disabled to prevent errors until a production backend is deployed.

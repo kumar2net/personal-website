@@ -1,4 +1,7 @@
 Acronym Soup Revisited (mid 2025)
+
+**Last Updated:** August 7, 2025
+
 From FANG to the Magnificent 7
 ================================================
 

@@ -1,5 +1,7 @@
 # Personal Website - Kumar's Portfolio
 
+**Last Updated:** August 7, 2025
+
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, and integrated analytics.
 
 **Last Updated:** August 6, 2025
