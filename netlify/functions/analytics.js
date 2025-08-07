@@ -207,8 +207,8 @@ exports.handler = async (event, context) => {
     // Debug logging
     console.log('Analytics function called with:', { path, method, event });
 
-    // Health check
-    if ((path === '/api/health' || path.endsWith('/api/health')) && method === 'GET') {
+    // Health check - handle any GET request for now
+    if (method === 'GET') {
       return {
         statusCode: 200,
         headers,
@@ -216,7 +216,10 @@ exports.handler = async (event, context) => {
           status: 'healthy',
           timestamp: new Date().toISOString(),
           data_points: analyticsData.pageViews.length,
-          unique_visitors: analyticsData.visitors.size
+          unique_visitors: analyticsData.visitors.size,
+          path: path,
+          method: method,
+          message: 'Analytics function is working!'
         })
       };
     }
