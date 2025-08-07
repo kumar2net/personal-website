@@ -64,6 +64,39 @@ function isLast7Days(date) {
   return new Date(date) >= sevenDaysAgo;
 }
 
+// Helper functions for parsing user agents
+function getDeviceType(userAgent) {
+  const ua = userAgent.toLowerCase();
+  if (ua.includes('mobile') || ua.includes('android') || ua.includes('iphone') || ua.includes('ipad')) {
+    return 'Mobile';
+  } else if (ua.includes('tablet') || ua.includes('ipad')) {
+    return 'Tablet';
+  } else {
+    return 'Desktop';
+  }
+}
+
+function getBrowser(userAgent) {
+  const ua = userAgent.toLowerCase();
+  if (ua.includes('chrome')) return 'Chrome';
+  if (ua.includes('firefox')) return 'Firefox';
+  if (ua.includes('safari') && !ua.includes('chrome')) return 'Safari';
+  if (ua.includes('edge')) return 'Edge';
+  if (ua.includes('opera')) return 'Opera';
+  if (ua.includes('ie') || ua.includes('trident')) return 'Internet Explorer';
+  return 'Unknown';
+}
+
+function getOS(userAgent) {
+  const ua = userAgent.toLowerCase();
+  if (ua.includes('windows')) return 'Windows';
+  if (ua.includes('mac os') || ua.includes('macintosh')) return 'macOS';
+  if (ua.includes('linux')) return 'Linux';
+  if (ua.includes('android')) return 'Android';
+  if (ua.includes('ios') || ua.includes('iphone') || ua.includes('ipad')) return 'iOS';
+  return 'Unknown';
+}
+
 // Analytics tracking
 async function trackPageView(data) {
   const pageView = {
@@ -303,6 +336,203 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({
           success: true,
           message: 'Analytics data reset'
+        })
+      };
+    }
+
+    // Get geolocation data
+    if (path.endsWith('/analytics/geolocation') && method === 'GET') {
+      const { start_date, end_date, limit = 20 } = event.queryStringParameters || {};
+      
+      // Extract geolocation data from page views
+      const geolocationStats = {};
+      
+      analyticsData.pageViews.forEach(view => {
+        const country = view.country || 'Unknown';
+        const region = 'Unknown'; // We don't store region in our data
+        const city = 'Unknown'; // We don't store city in our data
+        
+        const key = `${country}-${region}-${city}`;
+        if (!geolocationStats[key]) {
+          geolocationStats[key] = {
+            country,
+            region,
+            city,
+            unique_visitors: new Set()
+          };
+        }
+        geolocationStats[key].unique_visitors.add(view.visitor_id);
+      });
+
+      const geolocationData = Object.values(geolocationStats)
+        .map(item => ({
+          ...item,
+          unique_visitors: item.unique_visitors.size
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors)
+        .slice(0, parseInt(limit));
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            geolocation: geolocationData
+          }
+        })
+      };
+    }
+
+    // Get device data
+    if (path.endsWith('/analytics/devices') && method === 'GET') {
+      const { start_date, end_date, limit = 20 } = event.queryStringParameters || {};
+      
+      // Extract device data from page views
+      const deviceStats = {};
+      
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const deviceType = getDeviceType(userAgent);
+        const browser = getBrowser(userAgent);
+        const os = getOS(userAgent);
+        
+        const key = `${deviceType}-${browser}-${os}`;
+        if (!deviceStats[key]) {
+          deviceStats[key] = {
+            device_type: deviceType,
+            browser,
+            operating_system: os,
+            visitors: new Set()
+          };
+        }
+        deviceStats[key].visitors.add(view.visitor_id);
+      });
+
+      const deviceData = Object.values(deviceStats)
+        .map(item => ({
+          ...item,
+          visitors: item.visitors.size
+        }))
+        .sort((a, b) => b.visitors - a.visitors)
+        .slice(0, parseInt(limit));
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            devices: deviceData
+          }
+        })
+      };
+    }
+
+    // Get device type breakdown
+    if (path.endsWith('/analytics/devices/breakdown') && method === 'GET') {
+      const deviceTypeStats = {};
+      let totalVisitors = 0;
+      
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const deviceType = getDeviceType(userAgent);
+        
+        if (!deviceTypeStats[deviceType]) {
+          deviceTypeStats[deviceType] = new Set();
+        }
+        deviceTypeStats[deviceType].add(view.visitor_id);
+        totalVisitors++;
+      });
+
+      const deviceTypeData = Object.entries(deviceTypeStats)
+        .map(([device_type, visitors]) => ({
+          device_type,
+          unique_visitors: visitors.size,
+          percentage: totalVisitors > 0 ? ((visitors.size / totalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            device_types: deviceTypeData
+          }
+        })
+      };
+    }
+
+    // Get browser breakdown
+    if (path.endsWith('/analytics/browsers/breakdown') && method === 'GET') {
+      const browserStats = {};
+      let totalVisitors = 0;
+      
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const browser = getBrowser(userAgent);
+        
+        if (!browserStats[browser]) {
+          browserStats[browser] = new Set();
+        }
+        browserStats[browser].add(view.visitor_id);
+        totalVisitors++;
+      });
+
+      const browserData = Object.entries(browserStats)
+        .map(([browser, visitors]) => ({
+          browser,
+          unique_visitors: visitors.size,
+          percentage: totalVisitors > 0 ? ((visitors.size / totalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            browsers: browserData
+          }
+        })
+      };
+    }
+
+    // Get OS breakdown
+    if (path.endsWith('/analytics/os/breakdown') && method === 'GET') {
+      const osStats = {};
+      let totalVisitors = 0;
+      
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const os = getOS(userAgent);
+        
+        if (!osStats[os]) {
+          osStats[os] = new Set();
+        }
+        osStats[os].add(view.visitor_id);
+        totalVisitors++;
+      });
+
+      const osData = Object.entries(osStats)
+        .map(([operating_system, visitors]) => ({
+          operating_system,
+          unique_visitors: visitors.size,
+          percentage: totalVisitors > 0 ? ((visitors.size / totalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            operating_systems: osData
+          }
         })
       };
     }
