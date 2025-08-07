@@ -119,7 +119,7 @@ const IndiaUSATradeGap = () => {
                 </tr>
                 <tr className="bg-gray-50">
                   <td className="border border-gray-300 p-3 font-semibold">But what about other stuff - IP rights, defence, digital services (google, meta etc), higher education and other stuff the great country sells to India?</td>
-                  <td className="border border-gray-300 p-3">Not covered in these notes - focuses primarily on goods and services trade data</td>
+                  <td className="border border-gray-300 p-3">Not covered in these notes - focuses primarily on goods and services trade data. The trade numbers don't include IP rights, defense sales, digital services revenue, or other economic benefits, so it's not really an apple-to-apple comparison of the full economic relationship.</td>
                 </tr>
               </tbody>
             </table>
