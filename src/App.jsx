@@ -38,6 +38,9 @@ import MyRandomThoughtsThisWeek from './pages/blog/my-random-thoughts-this-week'
 import NammuSoilAnalysisResearch from './pages/blog/nammu-soil-analysis-research';
 import IndiaUSATradeGap from './pages/blog/india-usa-trade-gap-2025';
 import MusicPage from './pages/Music';
+import Books from './pages/Books';
+import BookCornellMethod from './pages/BookCornellMethod';
+import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import Analytics from './pages/Analytics';
 
 
@@ -70,6 +73,13 @@ function App() {
                 onClick={() => trackClick('nav_projects')}
               >
                 Projects
+              </Link>
+              <Link 
+                to="/books" 
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+                onClick={() => trackClick('nav_books')}
+              >
+                Books
               </Link>
               <Link 
                 to="/learning" 
@@ -130,6 +140,16 @@ function App() {
                   Projects
                 </Link>
                 <Link 
+                  to="/books" 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackClick('nav_books_mobile');
+                  }}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Books
+                </Link>
+                <Link 
                   to="/learning" 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
@@ -185,7 +205,10 @@ function App() {
                 <Link to="/projects" className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors">
                   My Projects
                 </Link>
-                <Link to="/blog" className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors">
+                <Link to="/books" className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors">
+                  Books
+                </Link>
+                <Link to="/blog" className="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">
                   Blog
                 </Link>
                 <Link to="/learning" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
@@ -202,6 +225,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/learning" element={<Learning />} />
           <Route path="/music" element={<MusicPage />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/books/applying-cornell-method" element={<ApplyingCornellMethodMd />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/learning/:setId" element={<FlashcardSetPage />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />

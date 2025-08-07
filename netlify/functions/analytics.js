@@ -751,6 +751,176 @@ exports.handler = async (event, context) => {
       };
     }
 
+    // Get aggregate statistics (all-in-one endpoint for efficiency)
+    if (path.endsWith('/analytics/aggregate') && method === 'GET') {
+      const { days = 30, limit = 10 } = event.queryStringParameters || {};
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - parseInt(days));
+
+      // Views within period
+      const filteredViews = analyticsData.pageViews.filter(view => {
+        const ts = new Date(view.timestamp);
+        return ts >= startDate && ts <= endDate;
+      });
+
+      // Get daily metrics
+      const dailyMetrics = getDailyMetrics(parseInt(days));
+      
+      // Calculate aggregate statistics (period-accurate)
+      const totalPageViews = filteredViews.length;
+      const uniqueVisitorIds = new Set(filteredViews.map(v => v.visitor_id));
+      const totalVisitors = uniqueVisitorIds.size;
+      const avgVisitorsPerDay = dailyMetrics.length > 0 ? (totalVisitors / dailyMetrics.length).toFixed(1) : 0;
+      const avgPageViewsPerDay = dailyMetrics.length > 0 ? (totalPageViews / dailyMetrics.length).toFixed(1) : 0;
+      
+      // Calculate growth rates from daily series
+      const firstHalf = dailyMetrics.slice(0, Math.ceil(dailyMetrics.length / 2));
+      const secondHalf = dailyMetrics.slice(Math.ceil(dailyMetrics.length / 2));
+      const firstHalfVisitors = firstHalf.reduce((sum, day) => sum + (day.unique_visitors || 0), 0);
+      const secondHalfVisitors = secondHalf.reduce((sum, day) => sum + (day.unique_visitors || 0), 0);
+      const growthRate = firstHalfVisitors > 0 ? ((secondHalfVisitors - firstHalfVisitors) / firstHalfVisitors * 100).toFixed(1) : 0;
+
+      // Find peak day
+      const peakDay = dailyMetrics.reduce((peak, day) => 
+        (day.unique_visitors || 0) > (peak.unique_visitors || 0) ? day : peak, 
+        { unique_visitors: 0, date: null }
+      );
+
+      // Get top pages
+      const topPages = getTopPages(parseInt(limit), startDate.toISOString(), endDate.toISOString());
+
+      // Get geolocation data (period-accurate)
+      const geolocationStats = {};
+      filteredViews.forEach(view => {
+        const country = view.country || 'Unknown';
+        const region = view.region || 'Unknown';
+        const city = view.city || 'Unknown';
+        const key = `${country}-${region}-${city}`;
+        if (!geolocationStats[key]) {
+          geolocationStats[key] = {
+            country,
+            region,
+            city,
+            latitude: view.latitude,
+            longitude: view.longitude,
+            timezone: view.timezone,
+            unique_visitors: new Set()
+          };
+        }
+        geolocationStats[key].unique_visitors.add(view.visitor_id);
+      });
+
+      const geolocationData = Object.values(geolocationStats)
+        .map(item => ({
+          ...item,
+          unique_visitors: item.unique_visitors.size
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors)
+        .slice(0, parseInt(limit));
+
+      // Get device breakdown (period-accurate)
+      const deviceTypeStats = {};
+      let deviceTotalVisitors = 0;
+      filteredViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const deviceType = getDeviceType(userAgent);
+        if (!deviceTypeStats[deviceType]) {
+          deviceTypeStats[deviceType] = new Set();
+        }
+        deviceTypeStats[deviceType].add(view.visitor_id);
+        deviceTotalVisitors++;
+      });
+
+      const deviceData = Object.entries(deviceTypeStats)
+        .map(([device_type, visitors]) => ({
+          device_type,
+          unique_visitors: visitors.size,
+          percentage: deviceTotalVisitors > 0 ? ((visitors.size / deviceTotalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      // Get browser breakdown (period-accurate)
+      const browserStats = {};
+      let browserTotalVisitors = 0;
+      filteredViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const browser = getBrowser(userAgent);
+        if (!browserStats[browser]) {
+          browserStats[browser] = new Set();
+        }
+        browserStats[browser].add(view.visitor_id);
+        browserTotalVisitors++;
+      });
+
+      const browserData = Object.entries(browserStats)
+        .map(([browser, visitors]) => ({
+          browser,
+          unique_visitors: visitors.size,
+          percentage: browserTotalVisitors > 0 ? ((visitors.size / browserTotalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      // Get OS breakdown (period-accurate)
+      const osStats = {};
+      let osTotalVisitors = 0;
+      filteredViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const os = getOS(userAgent);
+        if (!osStats[os]) {
+          osStats[os] = new Set();
+        }
+        osStats[os].add(view.visitor_id);
+        osTotalVisitors++;
+      });
+
+      const osData = Object.entries(osStats)
+        .map(([operating_system, visitors]) => ({
+          operating_system,
+          unique_visitors: visitors.size,
+          percentage: osTotalVisitors > 0 ? ((visitors.size / osTotalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      // Unique counts for summary table
+      const uniqueDeviceTypes = new Set(filteredViews.map(v => getDeviceType(v.user_agent || ''))).size;
+      const uniqueLocations = new Set(filteredViews.map(v => `${v.country || 'Unknown'}-${v.region || 'Unknown'}-${v.city || 'Unknown'}`)).size;
+      const uniqueBrowsers = new Set(filteredViews.map(v => getBrowser(v.user_agent || ''))).size;
+      const uniqueOperatingSystems = new Set(filteredViews.map(v => getOS(v.user_agent || ''))).size;
+      const uniquePages = new Set(filteredViews.map(v => v.page_url)).size;
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            summary: {
+              totalVisitors,
+              totalPageViews,
+              avgVisitorsPerDay,
+              avgPageViewsPerDay,
+              growthRate,
+              peakDay,
+              dataPoints: dailyMetrics.length,
+              period: `${days} days`,
+              uniqueDeviceTypes,
+              uniqueLocations,
+              uniqueBrowsers,
+              uniqueOperatingSystems,
+              uniquePages
+            },
+            daily: dailyMetrics,
+            topPages,
+            geolocation: geolocationData,
+            devices: deviceData,
+            browsers: browserData,
+            operatingSystems: osData
+          }
+        })
+      };
+    }
+
     // Track page view
     if ((path === '/api/analytics/track' || path.endsWith('/api/analytics/track')) && method === 'POST') {
       const data = JSON.parse(event.body || '{}');
@@ -777,6 +947,157 @@ exports.handler = async (event, context) => {
           success: true,
           data: {
             metrics
+          }
+        })
+      };
+    }
+
+    // Get aggregate statistics
+    if ((path === '/api/analytics/aggregate' || path.endsWith('/api/analytics/aggregate')) && method === 'GET') {
+      const { days = 30, limit = 10 } = event.queryStringParameters || {};
+      const endDate = new Date();
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - parseInt(days));
+
+      // Get daily metrics
+      const dailyMetrics = getDailyMetrics(parseInt(days));
+      
+      // Calculate aggregate statistics
+      const totalVisitors = dailyMetrics.reduce((sum, day) => sum + (day.unique_visitors || 0), 0);
+      const totalPageViews = dailyMetrics.reduce((sum, day) => sum + (day.page_views || 0), 0);
+      const avgVisitorsPerDay = dailyMetrics.length > 0 ? (totalVisitors / dailyMetrics.length).toFixed(1) : 0;
+      const avgPageViewsPerDay = dailyMetrics.length > 0 ? (totalPageViews / dailyMetrics.length).toFixed(1) : 0;
+      
+      // Calculate growth rates
+      const firstHalf = dailyMetrics.slice(0, Math.ceil(dailyMetrics.length / 2));
+      const secondHalf = dailyMetrics.slice(Math.ceil(dailyMetrics.length / 2));
+      const firstHalfVisitors = firstHalf.reduce((sum, day) => sum + (day.unique_visitors || 0), 0);
+      const secondHalfVisitors = secondHalf.reduce((sum, day) => sum + (day.unique_visitors || 0), 0);
+      const growthRate = firstHalfVisitors > 0 ? ((secondHalfVisitors - firstHalfVisitors) / firstHalfVisitors * 100).toFixed(1) : 0;
+
+      // Find peak day
+      const peakDay = dailyMetrics.reduce((peak, day) => 
+        (day.unique_visitors || 0) > (peak.unique_visitors || 0) ? day : peak, 
+        { unique_visitors: 0, date: null }
+      );
+
+      // Get top pages
+      const topPages = getTopPages(parseInt(limit), startDate.toISOString(), endDate.toISOString());
+
+      // Get geolocation data
+      const geolocationStats = {};
+      analyticsData.pageViews.forEach(view => {
+        const country = view.country || 'Unknown';
+        const region = view.region || 'Unknown';
+        const city = view.city || 'Unknown';
+        const key = `${country}-${region}-${city}`;
+        if (!geolocationStats[key]) {
+          geolocationStats[key] = {
+            country,
+            region,
+            city,
+            latitude: view.latitude,
+            longitude: view.longitude,
+            timezone: view.timezone,
+            unique_visitors: new Set()
+          };
+        }
+        geolocationStats[key].unique_visitors.add(view.visitor_id);
+      });
+
+      const geolocationData = Object.values(geolocationStats)
+        .map(item => ({
+          ...item,
+          unique_visitors: item.unique_visitors.size
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors)
+        .slice(0, parseInt(limit));
+
+      // Get device breakdown
+      const deviceTypeStats = {};
+      let deviceTotalVisitors = 0;
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const deviceType = getDeviceType(userAgent);
+        if (!deviceTypeStats[deviceType]) {
+          deviceTypeStats[deviceType] = new Set();
+        }
+        deviceTypeStats[deviceType].add(view.visitor_id);
+        deviceTotalVisitors++;
+      });
+
+      const deviceData = Object.entries(deviceTypeStats)
+        .map(([device_type, visitors]) => ({
+          device_type,
+          unique_visitors: visitors.size,
+          percentage: deviceTotalVisitors > 0 ? ((visitors.size / deviceTotalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      // Get browser breakdown
+      const browserStats = {};
+      let browserTotalVisitors = 0;
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const browser = getBrowser(userAgent);
+        if (!browserStats[browser]) {
+          browserStats[browser] = new Set();
+        }
+        browserStats[browser].add(view.visitor_id);
+        browserTotalVisitors++;
+      });
+
+      const browserData = Object.entries(browserStats)
+        .map(([browser, visitors]) => ({
+          browser,
+          unique_visitors: visitors.size,
+          percentage: browserTotalVisitors > 0 ? ((visitors.size / browserTotalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      // Get OS breakdown
+      const osStats = {};
+      let osTotalVisitors = 0;
+      analyticsData.pageViews.forEach(view => {
+        const userAgent = view.user_agent || '';
+        const os = getOS(userAgent);
+        if (!osStats[os]) {
+          osStats[os] = new Set();
+        }
+        osStats[os].add(view.visitor_id);
+        osTotalVisitors++;
+      });
+
+      const osData = Object.entries(osStats)
+        .map(([operating_system, visitors]) => ({
+          operating_system,
+          unique_visitors: visitors.size,
+          percentage: osTotalVisitors > 0 ? ((visitors.size / osTotalVisitors) * 100).toFixed(2) : 0
+        }))
+        .sort((a, b) => b.unique_visitors - a.unique_visitors);
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            summary: {
+              totalVisitors,
+              totalPageViews,
+              avgVisitorsPerDay,
+              avgPageViewsPerDay,
+              growthRate,
+              peakDay,
+              dataPoints: dailyMetrics.length,
+              period: `${days} days`
+            },
+            daily: dailyMetrics,
+            topPages,
+            geolocation: geolocationData,
+            devices: deviceData,
+            browsers: browserData,
+            operatingSystems: osData
           }
         })
       };

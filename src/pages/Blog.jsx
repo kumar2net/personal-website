@@ -222,6 +222,15 @@ const Blog = () => {
                 <Link to={post.link}>{post.title}</Link>
               </h2>
               <p className="text-gray-600 mb-4">{post.excerpt}</p>
+              <div className="mt-3">
+                <Link
+                  to={post.link}
+                  className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  aria-label={`Read more: ${post.title}`}
+                >
+                  Read more
+                </Link>
+              </div>
               <div className="flex items-center text-gray-500 text-sm">
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
