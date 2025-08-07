@@ -206,8 +206,7 @@ exports.handler = async (event, context) => {
     const { path } = event;
     const method = event.httpMethod;
     
-    // Debug logging
-    console.log('Analytics function called with:', { path, method, event });
+
 
     // Health check
     if (path.endsWith('/health') || path.endsWith('/api/health')) {
