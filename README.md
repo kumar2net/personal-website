@@ -2,14 +2,13 @@
 
 **Last Updated:** August 7, 2025
 
-A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, and integrated analytics.
-
-**Last Updated:** August 6, 2025
+A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
 ## 🚀 Features
 
 - **Portfolio Showcase** - Display projects and skills
 - **Blog System** - Share thoughts and experiences
+- **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Learning Hub** - Educational resources and shortcuts
 - **Analytics Dashboard** - Track website performance (access via `/analytics`)
 - **Responsive Design** - Works on all devices
@@ -22,6 +21,18 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Analytics:** Custom analytics system with Netlify Functions
 - **Deployment:** Netlify
 - **Icons:** React Icons
+  
+## 📚 Books
+
+- List page: `/books`
+- Example detail page: `/books/applying-cornell-method`
+- Cover: book icon placeholder for consistency
+- Badges: shields.io badges for topics
+
+Content pipeline:
+- Source DOCX placed in `docs/`
+- Converted to Markdown with script (see Scripts)
+- Rendered via `react-markdown` + `remark-gfm`
 
 ## 📁 Project Structure
 
@@ -86,12 +97,19 @@ The blog system supports:
 - **Build:** `npm run build`
 - **Preview:** `npm run preview`
 - **Lint:** `npm run lint`
+- **Convert Books (DOCX → MD):** `npm run convert:books`
+
+Scripts
+- `scripts/convert-docx-to-md.mjs` converts `docs/Applying_Cornell_method.docx` → `src/pages/books/applying-cornell-method.md`.
+- To add a new book, update the script inputs/outputs accordingly and re-run.
 
 ## 🌐 Deployment
 
-The website is automatically deployed to Netlify from the main branch.
-
-**Live Site:** https://kumarsite.netlify.app
+- Host: Netlify
+- Live Site: https://kumarsite.netlify.app
+- Branch: Deployed from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your workflow (main or master).
+- Build command: `npm run build`
+- Publish directory: `dist`
 
 ## 📄 License
 

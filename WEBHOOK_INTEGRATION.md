@@ -346,6 +346,11 @@ Request Body:
 }
 ```
 
+## Deployment Notes
+
+- Netlify deploys from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your active branch (recommend: `main`).
+- Live site: https://kumarsite.netlify.app
+
 ## Support
 
 For issues or questions:

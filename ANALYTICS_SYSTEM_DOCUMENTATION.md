@@ -290,8 +290,9 @@ const headers = {
 2. **Proper netlify.toml structure:**
    ```toml
    [build]
-     command = "npm run build"
-     publish = "dist"
+  base = "."
+  command = "npm run build"
+  publish = "dist"
 
    [[redirects]]
      from = "/*"
@@ -301,6 +302,11 @@ const headers = {
    [functions]
      directory = "netlify/functions"
    ```
+
+3. **Branch consistency:**
+   - Prefer a single deployment branch (recommendation: `main`).
+   - Ensure Netlify “Branch to deploy” matches your chosen branch.
+   - Avoid maintaining both `main` and `master` to eliminate confusion.
 
 ## Testing and Validation
 
