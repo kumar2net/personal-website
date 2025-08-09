@@ -145,6 +145,15 @@ const IndiaUSATradeGap = () => {
               Appeared in The Hindu dated 7th August 2025
             </p>
           </div>
+
+          {/* PS */}
+          <p className="mt-8 italic text-gray-700">
+            PS: As I infer from news of August 9, 2025, the BRICS (Brazil, Russia, India, China, South Africa) group is
+            forming a more cohesive alliance to develop alternate solutions—potentially including an alternative to SWIFT
+            (Society for Worldwide Interbank Financial Telecommunication — the global financial messaging network used by
+            banks for cross-border payments)—, broader financial coordination, and cross-border trade settlement in their
+            respective local currencies.
+          </p>
         </div>
       </div>
     </motion.div>

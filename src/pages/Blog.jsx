@@ -4,6 +4,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Top 10 Famous Rules (with Examples)',
+    date: 'August 9, 2025',
+    excerpt: 'Ten timeless rules like Rule of 72, Pareto Principle (with effort tip), and Benford’s Law—each explained with simple, real-world examples.',
+    tags: ['Mental Models', 'Decision Making', 'Productivity', 'Economics', 'Statistics'],
+    image: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/top-9-famous-rules'
+  },
+  {
     title: 'India-USA Trade Relations: A $212.3B Partnership Under Pressure',
     date: 'August 7, 2025',
     excerpt: 'From record-breaking trade volumes to escalating tariffs: The complex dynamics of India-US economic relations in 2025. Cornell notes analysis of the $212.3B trade relationship and recent 50% tariff escalations.',

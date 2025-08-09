@@ -15,6 +15,74 @@ const MusicPage = () => {
       </div>
 
       <div className="space-y-8">
+        {/* Bhajan Gang Feature */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.03 }}
+          className="bg-gradient-to-r from-amber-50 to-orange-50 p-8 rounded-xl border-l-4 border-amber-500"
+        >
+          <div className="flex items-center mb-6">
+            <MusicIcon className="h-8 w-8 text-amber-600 mr-3" />
+            <h2 className="text-2xl font-bold text-gray-800">I am impressed with this Bhajan Gang - Nandagovindam.</h2>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="text-gray-700 mb-4">
+              Refreshing to see a band of young performers impressing both grey‑haired listeners and the youth—judging by the
+              smiles and energy the roaming camera captures in the crowd.
+            </p>
+            <a
+              href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8UERmtu-FIu2wbWDBl-Vb1&si=V5tumXX1Hmx-mIEx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-medium"
+            >
+              <Play className="h-5 w-5 mr-2" />
+              Open on YouTube Music
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </a>
+          </div>
+        </motion.div>
+        {/* Quote Block */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-xl border-l-4 border-gray-400"
+        >
+          <blockquote className="text-2xl md:text-3xl font-semibold text-gray-800 leading-snug text-center">
+            “Without music, life would be a mistake.”
+          </blockquote>
+          <p className="mt-4 text-right text-gray-600 italic">— Friedrich Nietzsche</p>
+        </motion.div>
+
+        {/* Panchakshari Mantra Note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.07 }}
+          className="bg-gradient-to-r from-indigo-50 to-violet-50 p-8 rounded-xl border-l-4 border-indigo-500"
+        >
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Na-Ma-Si-Va-Ya: Panchakshari Mantra</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="text-gray-700 mb-4">
+              Na-Ma-Si-Va-Ya. This sequence—known as the <strong>Panchakshari mantra</strong>—and the rotating syllables in
+              this rendition is a goosebump experience. These five syllables denote the five elements of nature
+              <span className="italic"> (earth, water, fire, air, space)</span>.
+            </p>
+            <a
+              href="https://music.youtube.com/watch?v=qD6OKmzg_AA&si=9xTwsDN50UF8Lv6Z"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+            >
+              <Play className="h-5 w-5 mr-2" />
+              Play this Na-Ma-Si-Va-Ya track
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </a>
+          </div>
+        </motion.div>
+
         {/* Featured Playlist */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

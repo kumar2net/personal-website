@@ -42,6 +42,7 @@ import Books from './pages/Books';
 import BookCornellMethod from './pages/BookCornellMethod';
 import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import Analytics from './pages/Analytics';
+import Top9FamousRules from './pages/blog/top-9-famous-rules';
 
 
 function App() {
@@ -218,6 +219,19 @@ function App() {
                   Music
                 </Link>
               </div>
+
+              {/* Home quote */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
+              >
+                <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
+                  “The surest way to corrupt a youth is to instruct him to hold in higher esteem those who think alike than those who think differently.”
+                </blockquote>
+                <p className="mt-4 text-gray-600 italic text-right">— Friedrich Nietzsche</p>
+              </motion.div>
             </motion.div>
           } />
           <Route path="/about" element={<About />} />
@@ -253,6 +267,7 @@ function App() {
           <Route path="/blog/my-random-thoughts-this-week" element={<MyRandomThoughtsThisWeek />} />
           <Route path="/blog/nammu-soil-analysis-research" element={<NammuSoilAnalysisResearch />} />
           <Route path="/blog/india-usa-trade-gap-2025" element={<IndiaUSATradeGap />} />
+          <Route path="/blog/top-9-famous-rules" element={<Top9FamousRules />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
