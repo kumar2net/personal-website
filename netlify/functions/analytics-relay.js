@@ -45,6 +45,8 @@ export async function handler(event) {
   const functionStyle = [
     '/.netlify/functions/analytics',
     '/.netlify/functions/analytics/track',
+    '/.netlify/functions/api',
+    '/.netlify/functions/api/analytics/track',
     '/.netlify/functions/track',
     '/.netlify/functions/collect',
     '/.netlify/functions/events',
