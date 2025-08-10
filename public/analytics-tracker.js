@@ -120,7 +120,12 @@
 
         if (response.ok) {
           if (config.debug) console.log('Analytics data sent successfully to:', url);
-          return await response.json();
+          const contentType = (response.headers.get('content-type') || '').toLowerCase();
+          if (contentType.includes('application/json')) {
+            return await response.json();
+          }
+          // Treat non-JSON 2xx as success to avoid noisy errors from HTML fallbacks
+          return { success: true, status: response.status, url };
         } else {
           const errorText = await response.text();
           if (config.debug) console.error('Analytics request failed:', { status: response.status, statusText: response.statusText, url, data, error: errorText });
