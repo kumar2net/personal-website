@@ -24,8 +24,13 @@ exports.handler = async function handler(event) {
     return { statusCode: 204, headers: corsHeaders, body: '' };
   }
 
+  // Silently acknowledge non-POST methods to avoid cross-origin console noise from external dashboards
+  if (event.httpMethod === 'GET' || event.httpMethod === 'HEAD') {
+    return { statusCode: 204, headers: corsHeaders, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers: corsHeaders, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+    return { statusCode: 204, headers: corsHeaders, body: '' };
   }
 
   try {
