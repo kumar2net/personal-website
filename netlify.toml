@@ -7,7 +7,14 @@
 [functions]
   directory = "netlify/functions"
 
-# Ensure API relay takes precedence over SPA fallback
+# Direct ingestion endpoint (first-party). Highest precedence.
+[[redirects]]
+  from = "/api/analytics/track"
+  to = "/.netlify/functions/analytics"
+  status = 200
+  force = true
+
+# Ensure API relay takes precedence over SPA fallback for any other analytics paths
 [[redirects]]
   from = "/api/analytics/*"
   to = "/.netlify/functions/analytics-relay/:splat"
