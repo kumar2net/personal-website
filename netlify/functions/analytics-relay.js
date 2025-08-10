@@ -84,7 +84,7 @@ export async function handler(event) {
     }
   }
 
-  // Do not surface errors to the browser; respond 200 with debug info so client doesn't spam console
+  // Acknowledge to client; include diagnostics
   return {
     statusCode: 200,
     headers: corsHeaders,

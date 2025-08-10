@@ -1,7 +1,13 @@
 // Minimal first-party analytics ingestion endpoint (CommonJS)
 // Stores each event as a JSON document in Netlify Blobs under the bucket "analytics-events"
 
-const { getStore } = require('@netlify/blobs');
+let getStore;
+try {
+  ({ getStore } = require('@netlify/blobs'));
+} catch (_) {
+  // Optional dependency; function will noop-store if not available in runtime
+  getStore = null;
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,7 +30,7 @@ exports.handler = async function handler(event) {
   }
 
   try {
-    const store = getStore('analytics-events');
+    const store = getStore ? getStore('analytics-events') : null;
     const receivedAt = new Date();
     const dateKey = receivedAt.toISOString().slice(0, 10); // YYYY-MM-DD
     const eventId = generateId();
@@ -43,12 +49,15 @@ exports.handler = async function handler(event) {
       ...payload,
     };
 
-    const key = `${dateKey}/${eventId}.json`;
-    await store.setJSON(key, record);
+    if (store && store.setJSON) {
+      const key = `${dateKey}/${eventId}.json`;
+      await store.setJSON(key, record);
+    }
 
     return { statusCode: 204, headers: corsHeaders, body: '' };
   } catch (error) {
-    return { statusCode: 500, headers: corsHeaders, body: JSON.stringify({ error: 'Failed to store analytics event', message: String(error) }) };
+    // Do not fail ingestion on storage issues; acknowledge receipt to keep client quiet
+    return { statusCode: 204, headers: corsHeaders, body: '' };
   }
 };
 
