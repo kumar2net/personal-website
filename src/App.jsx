@@ -97,6 +97,13 @@ function App() {
                 Books
               </Link>
               <Link 
+                to="/blog" 
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+                onClick={() => trackClick('nav_blog')}
+              >
+                Blog
+              </Link>
+              <Link 
                 to="/learning" 
                 className="text-gray-600 hover:text-gray-800 transition-colors"
                 onClick={() => trackClick('nav_learning')}
@@ -163,6 +170,16 @@ function App() {
                   className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                 >
                   Books
+                </Link>
+                <Link 
+                  to="/blog" 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackClick('nav_blog_mobile');
+                  }}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Blog
                 </Link>
                 <Link 
                   to="/learning" 
