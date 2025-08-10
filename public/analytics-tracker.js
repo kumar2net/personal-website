@@ -71,7 +71,9 @@
       endpoint.replace('/analytics/track', '/track'),
       endpoint.replace('/analytics/track', '/collect'),
       endpoint.replace('/analytics/track', '/events'),
-      endpoint.replace('/analytics/track', '/ingest')
+      endpoint.replace('/analytics/track', '/ingest'),
+      '/.netlify/functions/analytics',
+      '/.netlify/functions/analytics/track'
     ];
 
     // Ensure uniqueness

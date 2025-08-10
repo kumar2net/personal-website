@@ -31,14 +31,27 @@ export async function handler(event) {
     return '/analytics/track';
   })();
 
-  // Build candidate URLs to maximize compatibility
-  const candidatePaths = Array.from(new Set([
-    pathSuffix,
-    pathSuffix.replace('/analytics/track', '/track'),
-    pathSuffix.replace('/analytics/track', '/collect'),
-    pathSuffix.replace('/analytics/track', '/events'),
-    pathSuffix.replace('/analytics/track', '/ingest'),
-  ]));
+  // Build candidate URLs to maximize compatibility with various deployments
+  const normalized = pathSuffix.startsWith('/') ? pathSuffix : `/${pathSuffix}`;
+  const basicCandidates = [
+    normalized,
+    normalized.replace('/analytics/track', '/track'),
+    normalized.replace('/analytics/track', '/collect'),
+    normalized.replace('/analytics/track', '/events'),
+    normalized.replace('/analytics/track', '/ingest'),
+  ];
+
+  // Also try common Netlify Functions-style paths
+  const functionStyle = [
+    '/.netlify/functions/analytics',
+    '/.netlify/functions/analytics/track',
+    '/.netlify/functions/track',
+    '/.netlify/functions/collect',
+    '/.netlify/functions/events',
+    '/.netlify/functions/ingest',
+  ];
+
+  const candidatePaths = Array.from(new Set([...basicCandidates, ...functionStyle]));
 
   const candidateBases = [externalApiBase, externalBase];
   const candidateUrls = [];
