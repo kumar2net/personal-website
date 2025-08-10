@@ -124,7 +124,11 @@
           if (config.debug) console.log('Analytics data sent successfully to:', url);
           const contentType = (response.headers.get('content-type') || '').toLowerCase();
           if (contentType.includes('application/json')) {
-            return await response.json();
+            const json = await response.json();
+            if (json && json.success === false && config.debug) {
+              console.warn('Analytics relay responded with success:false (upstream likely failed):', json);
+            }
+            return json;
           }
           // Treat non-JSON 2xx as success to avoid noisy errors from HTML fallbacks
           return { success: true, status: response.status, url };
