@@ -108,7 +108,7 @@
     
     for (let i = 0; i < urls.length; i++) {
       try {
-        const url = urls[i] + endpoint;
+        const url = urls[i];
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -128,6 +128,17 @@
         }
       } catch (error) {
         if (config.debug) console.warn(`Failed to send analytics to ${urls[i]}:`, error.message);
+
+        // Attempt sendBeacon as a CORS-friendly fallback for this URL
+        try {
+          if (navigator.sendBeacon) {
+            const sent = navigator.sendBeacon(urls[i], JSON.stringify(data));
+            if (sent) {
+              if (config.debug) console.log('Analytics sent via sendBeacon to:', urls[i]);
+              return { success: true, via: 'beacon' };
+            }
+          }
+        } catch (_) { /* ignore and continue */ }
         
         // If we've tried all URLs and haven't exceeded retries, try again
         if (i === urls.length - 1 && retryCount < config.maxRetries) {
