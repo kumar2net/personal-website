@@ -126,6 +126,9 @@
           }
           // Treat non-JSON 2xx as success to avoid noisy errors from HTML fallbacks
           return { success: true, status: response.status, url };
+        } else if (response.status === 200) {
+          // Some proxies misreport successful upstream attempts as 200 with non-JSON body
+          return { success: true, status: 200, url };
         } else {
           const errorText = await response.text();
           if (config.debug) console.error('Analytics request failed:', { status: response.status, statusText: response.statusText, url, data, error: errorText });

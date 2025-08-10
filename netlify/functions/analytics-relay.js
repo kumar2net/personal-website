@@ -50,6 +50,8 @@ export async function handler(event) {
 
   const payload = event.body || '{}';
 
+  const attemptResults = [];
+
   for (const url of candidateUrls) {
     try {
       const res = await fetch(url, {
@@ -62,15 +64,18 @@ export async function handler(event) {
         const text = await res.text();
         return { statusCode: 200, headers: corsHeaders, body: text };
       }
+      const text = await res.text().catch(() => '');
+      attemptResults.push({ url, status: res.status, statusText: res.statusText, bodySample: text?.slice?.(0, 200) || '' });
     } catch (_err) {
-      // try next
+      attemptResults.push({ url, error: 'fetch_failed' });
     }
   }
 
+  // Do not surface errors to the browser; respond 200 with debug info so client doesn't spam console
   return {
-    statusCode: 502,
+    statusCode: 200,
     headers: corsHeaders,
-    body: JSON.stringify({ error: 'Upstream analytics endpoint not reachable or returned non-2xx' }),
+    body: JSON.stringify({ success: false, reason: 'Upstream returned non-2xx or unreachable', attempts: attemptResults }),
   };
 }
 
