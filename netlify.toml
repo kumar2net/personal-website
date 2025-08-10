@@ -12,3 +12,9 @@
 # Analytics function configuration
 [functions]
   directory = "netlify/functions"
+
+[[redirects]]
+  from = "/api/analytics/*"
+  to = "/.netlify/functions/analytics-relay/:splat"
+  status = 200
+  force = true
