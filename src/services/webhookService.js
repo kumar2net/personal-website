@@ -2,9 +2,8 @@ import analyticsConfig from '../config/analytics';
 
 class WebhookService {
   constructor() {
-    this.webhookUrl = analyticsConfig.apiUrl 
-      ? analyticsConfig.apiUrl.replace(/\/?api$/, '/api/webhooks')
-      : null;
+    // Disable webhook posting for external analytics to avoid 404s until endpoints are confirmed
+    this.webhookUrl = null;
   }
 
   // Send analytics event to webhook

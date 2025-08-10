@@ -1,7 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import analyticsConfig, { generateVisitorId, generateSessionId } from '../config/analytics';
-import webhookService from '../services/webhookService';
 
 // Initialize analytics when the hook is first used
 let analyticsInitialized = false;
@@ -48,15 +47,8 @@ export const useAnalytics = () => {
           timestamp: new Date().toISOString()
         };
 
-        // Track with traditional analytics
+        // Track via tracker script only (external backend)
         window.SiteAnalytics.track(pageData);
-
-        // Also send to webhook system
-        webhookService.sendPageView(pageData).catch(error => {
-          if (analyticsConfig.debug) {
-            console.warn('[Webhook] Failed to send page view:', error);
-          }
-        });
       }, 100);
 
       return () => clearTimeout(timer);
@@ -75,15 +67,8 @@ export const useAnalytics = () => {
         timestamp: new Date().toISOString()
       };
 
-      // Track with traditional analytics
+      // Track via tracker script only (external backend)
       window.SiteAnalytics.trackEvent(eventName, eventPayload);
-
-      // Also send to webhook system
-      webhookService.sendCustomEvent(eventName, eventPayload).catch(error => {
-        if (analyticsConfig.debug) {
-          console.warn('[Webhook] Failed to send custom event:', error);
-        }
-      });
     }
   }, [location]);
 
