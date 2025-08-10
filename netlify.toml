@@ -3,18 +3,19 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback - redirect all requests to index.html
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
 # Analytics function configuration
 [functions]
   directory = "netlify/functions"
 
+# Ensure API relay takes precedence over SPA fallback
 [[redirects]]
   from = "/api/analytics/*"
   to = "/.netlify/functions/analytics-relay/:splat"
   status = 200
   force = true
+
+# SPA fallback - redirect all other requests to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

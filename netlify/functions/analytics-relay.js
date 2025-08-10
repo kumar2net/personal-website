@@ -1,5 +1,5 @@
 // Serverless relay to forward analytics POSTs to external analytics backend
-// Accepts POST /analytics-relay/* and proxies to https://siteanalyticsak.netlify.app/api/*
+// Accepts POST /.netlify/functions/analytics-relay/* and proxies to https://siteanalyticsak.netlify.app/api/*
 
 export async function handler(event) {
   const corsHeaders = {
@@ -58,8 +58,9 @@ export async function handler(event) {
         body: payload,
       });
       if (res.ok) {
-        const data = await res.text();
-        return { statusCode: 200, headers: corsHeaders, body: data };
+        // Stream back upstream response without assuming JSON
+        const text = await res.text();
+        return { statusCode: 200, headers: corsHeaders, body: text };
       }
     } catch (_err) {
       // try next

@@ -11,7 +11,8 @@ export const ANALYTICS_CONFIG = {
   
   // Production environment
   production: {
-    apiUrl: 'https://siteanalyticsak.netlify.app/api',
+    // Point to our site relay so the client never posts cross-origin
+    apiUrl: 'https://kumarsite.netlify.app/api',
     debug: false,
     autoTrack: true, // Enable auto-tracking in production
     enabled: true, // Enable analytics in production
