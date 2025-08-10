@@ -11,7 +11,7 @@ export const ANALYTICS_CONFIG = {
   
   // Production environment
   production: {
-    apiUrl: 'https://kumarsite.netlify.app/.netlify/functions/analytics',
+    apiUrl: 'https://siteanalyticsak.netlify.app/api',
     debug: false,
     autoTrack: true, // Enable auto-tracking in production
     enabled: true, // Enable analytics in production

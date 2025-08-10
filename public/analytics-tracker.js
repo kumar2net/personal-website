@@ -16,7 +16,7 @@
   const config = {
     apiUrl: window.location.hostname === 'localhost' 
       ? 'http://localhost:3001/api' 
-      : 'https://kumarsite.netlify.app/.netlify/functions/analytics',
+      : 'https://siteanalyticsak.netlify.app/api',
     fallbackApiUrl: null, // No fallback needed
     debug: window.location.hostname === 'localhost', // Enable debug in development
     autoTrack: true, // Enable auto-tracking in both development and production

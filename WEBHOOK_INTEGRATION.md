@@ -1,6 +1,6 @@
 # Webhook Integration Documentation
 
-**Last Updated:** August 7, 2025 (17:24 IST)
+**Last Updated:** August 10, 2025
 
 ## Overview
 
@@ -14,7 +14,7 @@ The webhook integration system allows your personal website to send real-time an
 ## Architecture
 
 ```
-Personal Website → Analytics Backend → Webhook System → External Services
+Personal Website → External Analytics Backend → Webhook System → External Services
      ↓                    ↓                ↓              ↓
   Page Views         Process Data    Route Events    Slack/Email/etc.
   User Events        Store Metrics   Retry Logic    Custom APIs
@@ -31,7 +31,7 @@ cd /Users/kumar/siteanalytics/backend
 npm run dev
 ```
 
-The backend should be running on `http://localhost:3001`
+The backend should be running on `http://localhost:3001` (development) or `https://siteanalyticsak.netlify.app` (production)
 
 ### 2. Webhook Endpoints
 
@@ -350,6 +350,7 @@ Request Body:
 
 - Netlify deploys from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your active branch (recommend: `main`).
 - Live site: https://kumarsite.netlify.app
+- External analytics: https://siteanalyticsak.netlify.app
 
 ## Support
 

@@ -41,7 +41,6 @@ import MusicPage from './pages/Music';
 import Books from './pages/Books';
 import BookCornellMethod from './pages/BookCornellMethod';
 import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
-import Analytics from './pages/Analytics';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 
 
@@ -241,7 +240,6 @@ function App() {
           <Route path="/music" element={<MusicPage />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/applying-cornell-method" element={<ApplyingCornellMethodMd />} />
-          <Route path="/analytics" element={<Analytics />} />
           <Route path="/learning/:setId" element={<FlashcardSetPage />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />
           <Route path="/learning/vocab-additions" element={<VocabAdditions />} />

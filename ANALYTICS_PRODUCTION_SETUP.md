@@ -1,10 +1,10 @@
 # Analytics Production Setup Guide
 
-**Last Updated:** August 7, 2025
+**Last Updated:** August 10, 2025
 
 ## Current Status
 
-The analytics system is currently configured to work only in development mode. In production, analytics tracking is disabled to prevent errors until a production backend is deployed.
+Production analytics now use the external backend at `https://siteanalyticsak.netlify.app/api`. The personal site only POSTs analytics data; the dashboard is external.
 
 ## Production Backend Setup
 
@@ -22,11 +22,11 @@ The analytics backend needs to be deployed to a production server. Options inclu
 
 ### 2. Update Configuration
 
-Once the backend is deployed, update the production configuration in `src/config/analytics.js`:
+Set the production configuration in `src/config/analytics.js`:
 
 ```javascript
 production: {
-  apiUrl: 'https://your-production-backend.com/api', // Update this URL
+  apiUrl: 'https://siteanalyticsak.netlify.app/api',
   debug: false,
   autoTrack: true, // Enable auto-tracking
   enabled: true, // Enable analytics
@@ -42,7 +42,7 @@ Update the analytics tracker in `public/analytics-tracker.js`:
 const config = {
   apiUrl: window.location.hostname === 'localhost' 
     ? 'http://localhost:3001/api' 
-    : 'https://your-production-backend.com/api', // Update this URL
+  : 'https://siteanalyticsak.netlify.app/api',
   // ... other config
 };
 ```

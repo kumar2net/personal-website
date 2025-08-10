@@ -1,32 +1,22 @@
 # Analytics Backend Setup Guide
 
-**Last Updated:** August 7, 2025
+**Last Updated:** August 10, 2025
 
 ## Current Status
 
-Your analytics system is currently configured to work only in development mode. The production backend needs to be set up to enable analytics tracking on your live site.
+The personal website now uses an external analytics backend and dashboard at `https://siteanalyticsak.netlify.app`. The site only POSTs analytics data; there is no in-site dashboard.
 
-## Problem Identified
+## Notes
 
-Netlify Functions are not working on your account, which is why the analytics backend shows "Backend Not Available" at [https://kumarsite.netlify.app/analytics](https://kumarsite.netlify.app/analytics).
+The previous in-site dashboard at `/analytics` has been removed.
 
 ## Solution Options
 
-### Option 1: Enable Netlify Functions (Recommended)
+### Option 1: Use External Analytics (Current)
 
-**Steps:**
-1. Go to your [Netlify Dashboard](https://app.netlify.com)
-2. Select your site: `kumarsite`
-3. Go to **Site settings** → **Functions**
-4. Click **Enable Functions**
-5. Deploy your site again
+No action needed beyond endpoint configuration. The website sends analytics events to `https://siteanalyticsak.netlify.app/api`.
 
-**After enabling:**
-- The analytics function at `netlify/functions/analytics.js` will work
-- Update `src/config/analytics.js` to enable production analytics
-- Analytics will start tracking automatically
-
-### Option 2: Deploy Separate Backend (Railway/Render)
+### Option 2: Deploy Separate Backend (Optional)
 
 **Using Railway:**
 1. Create account at [railway.app](https://railway.app)
@@ -40,7 +30,7 @@ Netlify Functions are not working on your account, which is why the analytics ba
 3. Deploy the backend code
 4. Update the API URL
 
-### Option 3: Use Third-Party Analytics
+### Option 3: Use Third-Party Analytics (Alternative)
 
 **Google Analytics:**
 1. Create Google Analytics account
@@ -54,53 +44,28 @@ Netlify Functions are not working on your account, which is why the analytics ba
 
 ## Quick Fix Instructions
 
-### To Enable Netlify Functions:
+### Endpoint Configuration
 
-1. **Visit Netlify Dashboard:**
-   - Go to [app.netlify.com](https://app.netlify.com)
-   - Select your site: `kumarsite`
+Set production endpoint in `src/config/analytics.js`:
 
-2. **Enable Functions:**
-   - Go to **Site settings** (top navigation)
-   - Click **Functions** in the left sidebar
-   - Click **Enable Functions** button
-
-3. **Redeploy:**
-   - Push any change to trigger a new deployment
-   - Or manually trigger deployment from dashboard
-
-4. **Test:**
-   - Visit [https://kumarsite.netlify.app/.netlify/functions/analytics](https://kumarsite.netlify.app/.netlify/functions/analytics)
-   - Should return JSON instead of HTML
+```javascript
+production: {
+  apiUrl: 'https://siteanalyticsak.netlify.app/api',
+  debug: false,
+  autoTrack: true,
+  enabled: true,
+  generateIds: true
+}
+```
 
 ### After Functions are Working:
 
-1. **Update Configuration:**
-   ```javascript
-   // In src/config/analytics.js
-   production: {
-     apiUrl: 'https://kumarsite.netlify.app/.netlify/functions/analytics',
-     debug: false,
-     autoTrack: true,
-     enabled: true,
-     generateIds: true
-   }
-   ```
-
-2. **Update Dashboard:**
-   ```javascript
-   // In src/components/AnalyticsDashboard.jsx
-   const API_BASE = isDevelopment 
-     ? 'http://localhost:3001/api' 
-     : 'https://kumarsite.netlify.app/.netlify/functions/analytics';
-   ```
-
-3. **Update Tracker:**
+2. **Update Tracker:**
    ```javascript
    // In public/analytics-tracker.js
-   apiUrl: window.location.hostname === 'localhost' 
-     ? 'http://localhost:3001/api' 
-     : 'https://kumarsite.netlify.app/.netlify/functions/analytics',
+   apiUrl: window.location.hostname === 'localhost' \
+     ? 'http://localhost:3001/api' \
+     : 'https://siteanalyticsak.netlify.app/api',
    autoTrack: true
    ```
 
@@ -122,10 +87,10 @@ Your analytics system includes:
 
 | Feature | Development | Production |
 |---------|-------------|------------|
-| Backend | `localhost:3001` | Not configured |
-| Tracking | ✅ Enabled | ❌ Disabled |
-| Dashboard | ✅ Working | ⚠️ Shows error |
-| Auto-track | ✅ Enabled | ❌ Disabled |
+| Backend | `localhost:3001` | `siteanalyticsak.netlify.app/api` |
+| Tracking | ✅ Enabled | ✅ Enabled (POST-only) |
+| Dashboard | ✅ N/A | ✅ External (link only) |
+| Auto-track | ✅ Enabled | ✅ Enabled |
 
 ## Next Steps
 

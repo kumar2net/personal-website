@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 7, 2025
+**Last Updated:** August 10, 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
@@ -10,7 +10,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Blog System** - Share thoughts and experiences
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Learning Hub** - Educational resources and shortcuts
-- **Analytics Dashboard** - Track website performance (access via `/analytics`)
+- **Analytics** - Events are POSTed to external backend; view dashboard at `https://siteanalyticsak.netlify.app/`
 - **Responsive Design** - Works on all devices
 - **Modern UI** - Built with Tailwind CSS and Framer Motion
 
@@ -70,9 +70,9 @@ src/
 
 ## 📊 Analytics
 
-The website includes a custom analytics system:
-- **Backend:** Deployed on Netlify Functions
-- **Dashboard:** Access at `/analytics` (hidden from navigation)
+The website sends analytics data to an external service:
+- **Backend:** `https://siteanalyticsak.netlify.app/api`
+- **Dashboard:** `https://siteanalyticsak.netlify.app/` (external)
 - **Tracking:** Page views, user interactions, and performance metrics
 
 See [ANALYTICS_README.md](./ANALYTICS_README.md) for detailed documentation.

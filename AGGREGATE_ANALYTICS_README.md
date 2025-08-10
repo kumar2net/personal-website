@@ -1,6 +1,6 @@
 # Aggregate Analytics System
 
-**Last Updated:** August 7, 2025
+**Last Updated:** August 10, 2025
 
 ## Overview
 
@@ -41,23 +41,7 @@ The Aggregate Analytics System provides efficient, historical analytics insights
 
 ### Frontend Components
 
-#### `AggregateStats.jsx`
-- **Location**: `src/components/AggregateStats.jsx`
-- **Purpose**: Main aggregate analytics display component
-- **Features**:
-  - Time range selection (7/30/90 days)
-  - Efficient data fetching via single API call
-  - Responsive design with mobile optimization
-  - Loading states and error handling
-  - Real-time data refresh capability
-
-#### `Analytics.jsx` (Updated)
-- **Location**: `src/pages/Analytics.jsx`
-- **Purpose**: Tabbed interface for analytics views
-- **Features**:
-  - Tab navigation between real-time and aggregate views
-  - Feature comparison display
-  - Responsive layout
+The previous in-site components (`AggregateStats.jsx`, `Analytics.jsx`) have been removed. Aggregate analytics are available on the external dashboard.
 
 ### Backend Endpoints
 
@@ -115,10 +99,7 @@ GET /analytics/aggregate?days=30&limit=10
 
 ### Accessing Aggregate Analytics
 
-1. **Navigate to Analytics Page**: Visit `/analytics` on your website
-2. **Select Aggregate Tab**: Click "Aggregate Statistics" tab
-3. **Choose Time Range**: Select 7, 30, or 90 days from dropdown
-4. **View Insights**: Explore various analytics sections
+Visit the external dashboard: `https://siteanalyticsak.netlify.app/`
 
 ### Interpreting Data
 
@@ -236,14 +217,8 @@ User Request → Frontend Component → Aggregate API → Analytics Function →
 
 ### Debug Commands
 ```bash
-# Test aggregate endpoint
-curl "https://kumarsite.netlify.app/.netlify/functions/analytics/analytics/aggregate?days=7"
-
-# Check function deployment
-npx netlify functions:list
-
-# View function logs
-npx netlify functions:logs
+# Test aggregate endpoint (external)
+curl "https://siteanalyticsak.netlify.app/api/analytics/aggregate?days=7"
 ```
 
 ## Conclusion
@@ -256,5 +231,5 @@ The system is designed to scale with your website's growth and can be easily ext
 
 **Status**: ✅ Production Ready  
 **Version**: 1.0  
-**Last Deployed**: August 7, 2025
+**Last Deployed**: August 10, 2025
 

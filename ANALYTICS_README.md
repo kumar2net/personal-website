@@ -1,8 +1,8 @@
 # Website Analytics Integration
 
-This document explains how to use the analytics system integrated into your personal website.
+This document explains how the website sends analytics events to an external analytics backend and how to view metrics on the external dashboard.
 
-**Last Updated:** August 7, 2025 (17:24 IST)
+**Last Updated:** August 10, 2025
 
 ## Overview
 
@@ -27,7 +27,7 @@ npm run dev
 The backend should be running on `http://localhost:3001`
 
 **Production:**
-The analytics backend is deployed at: `https://siteanalyticsak.netlify.app`
+The analytics backend and dashboard are hosted externally at `https://siteanalyticsak.netlify.app`.
 
 ### 2. Configuration
 
@@ -36,7 +36,7 @@ Update the analytics configuration in `src/config/analytics.js`:
 ```javascript
 // Production configuration (current)
 production: {
-  apiEndpoint: 'https://siteanalyticsak.netlify.app',
+  apiUrl: 'https://siteanalyticsak.netlify.app/api',
   debug: false,
   autoTrack: true,
   enabled: true
@@ -93,7 +93,7 @@ function MyComponent() {
 
 ## Analytics Dashboard
 
-Access your analytics dashboard at `/analytics` route (hidden from navigation). The dashboard shows:
+There is no in-site dashboard. Access the external dashboard at `https://siteanalyticsak.netlify.app/`.
 
 - Real-time visitor count
 - 24-hour page views
@@ -115,7 +115,7 @@ The analytics system:
 
 In development, analytics debug mode is enabled. You'll see console logs like:
 ```
-[SiteAnalytics] Initializing SiteAnalytics {apiEndpoint: "http://localhost:3001", debug: true, autoTrack: false}
+[SiteAnalytics] Initializing SiteAnalytics {apiUrl: "http://localhost:3001/api", debug: true, autoTrack: false}
 [SiteAnalytics] Session initialized {visitorId: "...", sessionId: "..."}
 [SiteAnalytics] Tracking page view {page_url: "...", visitor_id: "...", ...}
 ```
@@ -126,25 +126,23 @@ To test the analytics:
 1. Start your personal website: `npm run dev`
 2. Start the analytics backend: `cd backend && npm run dev`
 3. Navigate through your website
-4. Check the analytics dashboard at `/analytics`
-5. Monitor console logs for tracking events
+4. Monitor console logs for tracking events
+5. View metrics on the external dashboard at `https://siteanalyticsak.netlify.app/` (in production)
 
 ## Production Deployment
 
-**Current Status (August 6, 2025 - 14:52 UTC):**
-✅ Analytics backend deployed to Netlify Functions  
-✅ Production configuration updated  
-✅ Analytics dashboard accessible at `/analytics`  
+**Current Status:**
+✅ External analytics backend and dashboard live  
+✅ Production configuration updated to external API  
+✅ POST-only tracking from personal site  
 ✅ CORS properly configured for production domains  
-✅ **NEW: Webhook integration system fully operational**
-✅ **NEW: Real-time event streaming to external services**
+✅ Webhook integration system fully operational
 
 **Deployment Details:**
 - **Frontend:** https://kumarsite.netlify.app
-- **Analytics Backend:** https://siteanalyticsak.netlify.app
-- **Analytics Dashboard:** https://kumarsite.netlify.app/analytics
+- **Analytics Backend & Dashboard:** https://siteanalyticsak.netlify.app
 
-The analytics system is fully operational in production.
+The analytics system is fully operational in production with an external dashboard.
 
 ## Troubleshooting
 

@@ -1,6 +1,6 @@
 # Analytics System Documentation
 
-**Last Updated:** August 7, 2025
+**Last Updated:** August 10, 2025
 
 ## Overview
 
@@ -9,16 +9,13 @@ This document captures all learnings, issues, solutions, and technical insights 
 ## System Architecture
 
 ### Frontend Components
-- **Analytics Dashboard** (`src/components/AnalyticsDashboard.jsx`) - Main analytics display
-- **Geolocation Chart** (`src/components/GeolocationChart.tsx`) - Visitor location visualization
-- **Device Technology Chart** (`src/components/DeviceTechnologyChart.tsx`) - Device/browser/OS breakdown
+- (Removed) In-site Analytics Dashboard and related charts
 - **Analytics Tracker** (`public/analytics-tracker.js`) - Client-side tracking script
 - **Analytics Hook** (`src/hooks/useAnalytics.js`) - React hook for tracking
 - **Webhook Service** (`src/services/webhookService.js`) - Webhook integration
 
-### Backend (Netlify Functions)
-- **Analytics Function** (`netlify/functions/analytics.js`) - Serverless analytics API
-- **Configuration** (`netlify.toml`) - Netlify deployment settings
+### Backend
+- External analytics backend and dashboard: `https://siteanalyticsak.netlify.app`
 
 ### API Service Layer
 - **API Service** (`src/services/api.ts`) - Frontend API client
@@ -126,7 +123,7 @@ function getDateKey(date = new Date()) {
 
 **Learning:** Always validate and convert data types when working with dates and timestamps.
 
-### 8. Missing Geolocation and Device Analytics Endpoints
+### 8. Missing Geolocation and Device Analytics Endpoints (Historical)
 
 **Problem:** "Failed to fetch geolocation data" and "Failed to fetch device and technology data" errors.
 
@@ -147,11 +144,11 @@ function getDateKey(date = new Date()) {
 
 **Root Cause:** Hardcoded localhost URLs in API service configuration.
 
-**Solution:** Updated API service to use environment-aware URLs:
+**Solution (updated):** Updated API service and tracker to use external endpoint:
 ```javascript
 const BACKEND_API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:3001/api' 
-  : 'https://kumarsite.netlify.app/.netlify/functions/analytics';
+  : 'https://siteanalyticsak.netlify.app/api';
 ```
 
 **Learning:** Always use environment-aware configuration for API endpoints.
@@ -310,24 +307,15 @@ const headers = {
 
 ## Testing and Validation
 
-### API Endpoint Testing
+### API Endpoint Testing (External)
 
 Test all endpoints to ensure proper functionality:
 
 ```bash
-# Health check
-curl -X GET "https://kumarsite.netlify.app/.netlify/functions/analytics/analytics/metrics/realtime"
-
 # Page tracking
-curl -X POST "https://kumarsite.netlify.app/.netlify/functions/analytics/analytics/track" \
+curl -X POST "https://siteanalyticsak.netlify.app/api/analytics/track" \
   -H "Content-Type: application/json" \
   -d '{"page_url":"https://kumarsite.netlify.app/test","visitor_id":"test"}'
-
-# Geolocation data
-curl -X GET "https://kumarsite.netlify.app/.netlify/functions/analytics/analytics/geolocation"
-
-# Device breakdown
-curl -X GET "https://kumarsite.netlify.app/.netlify/functions/analytics/analytics/devices/breakdown"
 ```
 
 ### Frontend Testing

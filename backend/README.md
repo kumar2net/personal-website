@@ -57,7 +57,7 @@ The server will start on `http://localhost:3001`
 - `GET /api/analytics/pages/top` - Top pages
 - `POST /api/analytics/reset` - Reset data
 
-## After Deployment
+## After Deployment (If Using Your Own Backend)
 
 1. **Get your backend URL** (e.g., `https://your-app.railway.app`)
 2. **Update your frontend configuration:**
@@ -73,14 +73,7 @@ production: {
 }
 ```
 
-3. **Update your dashboard:**
-
-```javascript
-// In src/components/AnalyticsDashboard.jsx
-const API_BASE = isDevelopment 
-  ? 'http://localhost:3001/api' 
-  : 'https://your-app.railway.app/api';
-```
+3. The personal website no longer hosts an internal dashboard. Use the external dashboard at `https://siteanalyticsak.netlify.app/` if using that service.
 
 4. **Update your tracker:**
 

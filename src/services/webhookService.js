@@ -3,7 +3,7 @@ import analyticsConfig from '../config/analytics';
 class WebhookService {
   constructor() {
     this.webhookUrl = analyticsConfig.apiUrl 
-      ? analyticsConfig.apiUrl.replace('/api', '/api/webhooks')
+      ? analyticsConfig.apiUrl.replace(/\/?api$/, '/api/webhooks')
       : null;
   }
 
