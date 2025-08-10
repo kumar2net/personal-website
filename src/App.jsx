@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link, Routes, Route } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, Routes, Route, useLocation } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
 import { motion } from 'framer-motion'
 import { useAnalytics } from './hooks/useAnalytics'
@@ -44,9 +44,25 @@ import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 
 
+function useGaPageViews() {
+  const location = useLocation();
+  
+  // Track GA4 page_view on route change
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname + location.search,
+        page_location: window.location.href,
+        page_title: document.title
+      });
+    }
+  }, [location.pathname, location.search]);
+}
+
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { trackClick } = useAnalytics()
+  useGaPageViews()
 
   return (
     <div className="min-h-screen bg-gray-100">

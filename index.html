@@ -5,6 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Personal Portfolio</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FEL8ZHLFWR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      // Disable automatic page_view to avoid double-counting in SPA; we will send page_view manually on route changes
+      gtag('config', 'G-FEL8ZHLFWR', { send_page_view: false });
+    </script>
     <!-- Analytics Tracker -->
     <script src="/analytics-tracker.js"></script>
   </head>
