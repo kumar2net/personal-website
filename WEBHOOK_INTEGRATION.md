@@ -2,6 +2,8 @@
 
 **Last Updated:** August 10, 2025
 
+Note: Primary website analytics now use Google Analytics 4 (GA4). The webhook system described here is optional and can be used for custom integrations independent of GA4.
+
 ## Overview
 
 The webhook integration system allows your personal website to send real-time analytics events to external services via webhooks. This enables you to:
@@ -31,7 +33,7 @@ cd /Users/kumar/siteanalytics/backend
 npm run dev
 ```
 
-The backend should be running on `http://localhost:3001` (development) or `https://siteanalyticsak.netlify.app` (production)
+If you choose to run your own backend, it should be running on `http://localhost:3001` in development and your chosen production URL.
 
 ### 2. Webhook Endpoints
 
@@ -350,7 +352,7 @@ Request Body:
 
 - Netlify deploys from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your active branch (recommend: `main`).
 - Live site: https://kumarsite.netlify.app
-- External analytics: https://siteanalyticsak.netlify.app
+- GA4 is the primary analytics platform for the site.
 
 ## Support
 

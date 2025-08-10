@@ -1,6 +1,6 @@
-# Analytics Backend
+# (Archived) Analytics Backend
 
-A simple Express.js analytics backend for your personal website.
+This backend was used for a custom analytics system and is now archived. The live site uses Google Analytics 4 (GA4).
 
 ## Features
 
@@ -73,17 +73,9 @@ production: {
 }
 ```
 
-3. The personal website no longer hosts an internal dashboard. Use the external dashboard at `https://siteanalyticsak.netlify.app/` if using that service.
+3. Note: Production site now uses GA4. This backend is optional for experiments.
 
-4. **Update your tracker:**
-
-```javascript
-// In public/analytics-tracker.js
-apiUrl: window.location.hostname === 'localhost' 
-  ? 'http://localhost:3001/api' 
-  : 'https://your-app.railway.app/api',
-autoTrack: true
-```
+4. Client-side custom tracker has been removed from the live site.
 
 ## Environment Variables
 

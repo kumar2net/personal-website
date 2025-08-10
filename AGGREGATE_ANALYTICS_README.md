@@ -41,7 +41,7 @@ The Aggregate Analytics System provides efficient, historical analytics insights
 
 ### Frontend Components
 
-The previous in-site components (`AggregateStats.jsx`, `Analytics.jsx`) have been removed. Aggregate analytics are available on the external dashboard.
+The previous in-site components (`AggregateStats.jsx`, `Analytics.jsx`) have been removed. Production analytics rely on GA4. This document is retained for historical reference.
 
 ### Backend Endpoints
 
@@ -99,7 +99,7 @@ GET /analytics/aggregate?days=30&limit=10
 
 ### Accessing Aggregate Analytics
 
-Visit the external dashboard: `https://siteanalyticsak.netlify.app/`
+Use GA4 Explorations and Reports for aggregate views. The previously referenced external dashboard has been deprecated.
 
 ### Interpreting Data
 
@@ -215,11 +215,8 @@ User Request → Frontend Component → Aggregate API → Analytics Function →
 - Check data consistency
 - Review calculation logic
 
-### Debug Commands
-```bash
-# Test aggregate endpoint (external)
-curl "https://siteanalyticsak.netlify.app/api/analytics/aggregate?days=7"
-```
+### Debug
+Use GA4 DebugView or Tag Assistant to validate events.
 
 ## Conclusion
 

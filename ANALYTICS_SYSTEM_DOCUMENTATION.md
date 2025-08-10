@@ -295,28 +295,7 @@ const headers = {
 
 ## Testing and Validation
 
-### API Endpoint Testing (External)
-
-Test all endpoints to ensure proper functionality:
-
-```bash
-# Page tracking
-curl -X POST "https://siteanalyticsak.netlify.app/api/analytics/track" \
-  -H "Content-Type: application/json" \
-  -d '{"page_url":"https://kumarsite.netlify.app/test","visitor_id":"test"}'
-```
-
-### Frontend Testing
-
-1. **Check JavaScript file deployment:**
-   ```bash
-   curl -s "https://kumarsite.netlify.app/analytics" | grep -o "main-[a-zA-Z0-9_]*\.js"
-   ```
-
-2. **Verify page loading:**
-   ```bash
-   curl -s "https://kumarsite.netlify.app/analytics" | head -10
-   ```
+Use GA4 Realtime and DebugView to validate page_view events while navigating between routes. Ensure only one GA tag is present and `send_page_view: false` is set in `index.html`.
 
 ## Performance Considerations
 
