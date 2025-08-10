@@ -77,7 +77,7 @@ const Top9FamousRules = () => {
           <h2>1. Rule of 72</h2>
           <ul>
             <li>What it is: Estimates how long it takes for an investment to double, given a fixed annual percentage rate, by dividing 72 by the rate.</li>
-            <li>Example: At 6% annual interest, it takes approximately 9 years for your money to double (72 ÷ 6 = 12).</li>
+            <li>Example: At 6% annual interest, it takes 12 years for your money to double (72 ÷ 6 = 12).</li>
             <li>Einstein's Quote: “Compound interest is the eighth wonder of the world. He who understands it, earns it ... he who doesn’t ... pays it.”</li>
           </ul>
         </section>
