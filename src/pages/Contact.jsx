@@ -152,6 +152,9 @@ const Contact = () => {
           </form>
         )}
       </div>
+      <p className="max-w-2xl mx-auto mt-8 text-sm text-gray-600 italic">
+        PS: This is a dummy page. Please send me an email to my Gmail ID or WhatsApp me.
+      </p>
     </motion.div>
   )
 }
