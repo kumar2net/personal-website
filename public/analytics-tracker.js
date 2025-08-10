@@ -64,7 +64,37 @@
     };
   }
 
-  // Send data to analytics API with retry logic
+  // Build candidate endpoints to improve compatibility across backends
+  function buildCandidateUrls(endpoint) {
+    const endpointCandidates = [
+      endpoint,
+      endpoint.replace('/analytics/track', '/track'),
+      endpoint.replace('/analytics/track', '/collect'),
+      endpoint.replace('/analytics/track', '/events'),
+      endpoint.replace('/analytics/track', '/ingest')
+    ];
+
+    // Ensure uniqueness
+    const uniqueEndpointCandidates = Array.from(new Set(endpointCandidates));
+
+    const baseCandidates = [config.apiUrl];
+    if (config.apiUrl && /\/api$/.test(config.apiUrl)) {
+      baseCandidates.push(config.apiUrl.replace(/\/api$/, ''));
+    }
+    if (config.fallbackApiUrl) {
+      baseCandidates.push(config.fallbackApiUrl);
+    }
+
+    const urls = [];
+    for (const base of baseCandidates) {
+      for (const ep of uniqueEndpointCandidates) {
+        urls.push(base + ep);
+      }
+    }
+    return Array.from(new Set(urls));
+  }
+
+  // Send data to analytics API with retry logic and endpoint fallbacks
   async function sendAnalyticsData(endpoint, data, retryCount = 0) {
     // If no API URL is configured, skip sending data
     if (!config.apiUrl) {
@@ -74,10 +104,7 @@
       return { success: false, message: 'No API URL configured' };
     }
 
-    const urls = [config.apiUrl];
-    if (config.fallbackApiUrl) {
-      urls.push(config.fallbackApiUrl);
-    }
+    const urls = buildCandidateUrls(endpoint);
     
     for (let i = 0; i < urls.length; i++) {
       try {
@@ -92,29 +119,17 @@
         });
 
         if (response.ok) {
-          if (config.debug) {
-            console.log('Analytics data sent successfully to:', url);
-          }
+          if (config.debug) console.log('Analytics data sent successfully to:', url);
           return await response.json();
         } else {
           const errorText = await response.text();
-          if (config.debug) {
-            console.error('Analytics request failed:', {
-              status: response.status,
-              statusText: response.statusText,
-              url: url,
-              data: data,
-              error: errorText
-            });
-          }
+          if (config.debug) console.error('Analytics request failed:', { status: response.status, statusText: response.statusText, url, data, error: errorText });
           throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`);
         }
       } catch (error) {
-        if (config.debug) {
-          console.warn(`Failed to send analytics to ${urls[i]}:`, error.message);
-        }
+        if (config.debug) console.warn(`Failed to send analytics to ${urls[i]}:`, error.message);
         
-        // If this is the last URL and we haven't exceeded retries, try again
+        // If we've tried all URLs and haven't exceeded retries, try again
         if (i === urls.length - 1 && retryCount < config.maxRetries) {
           await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1))); // Exponential backoff
           return sendAnalyticsData(endpoint, data, retryCount + 1);
@@ -209,13 +224,26 @@
         
         // Use sendBeacon for reliable delivery during page unload
         if (navigator.sendBeacon) {
-          navigator.sendBeacon(config.apiUrl + '/analytics/track', JSON.stringify(data));
+          const beaconUrls = buildCandidateUrls('/analytics/track');
+          let sent = false;
+          for (const u of beaconUrls) {
+            try {
+              if (navigator.sendBeacon(u, JSON.stringify(data))) { sent = true; break; }
+            } catch (_) { /* ignore and try next */ }
+          }
+          if (!sent && config.debug) console.warn('sendBeacon failed for all candidate URLs');
         } else {
           // Fallback to synchronous XMLHttpRequest
           const xhr = new XMLHttpRequest();
-          xhr.open('POST', config.apiUrl + '/analytics/track', false);
-          xhr.setRequestHeader('Content-Type', 'application/json');
-          xhr.send(JSON.stringify(data));
+          const xhrUrls = buildCandidateUrls('/analytics/track');
+          for (let i = 0; i < xhrUrls.length; i++) {
+            try {
+              xhr.open('POST', xhrUrls[i], false);
+              xhr.setRequestHeader('Content-Type', 'application/json');
+              xhr.send(JSON.stringify(data));
+              if (xhr.status >= 200 && xhr.status < 300) break;
+            } catch (_) { /* try next */ }
+          }
         }
       }
     });
@@ -225,6 +253,13 @@
   function init(options = {}) {
     // Merge options with config
     Object.assign(config, options);
+
+    // Allow forcing debug in production via localStorage flag
+    try {
+      if (localStorage.getItem('analytics_debug') === '1') {
+        config.debug = true;
+      }
+    } catch (_) { /* ignore */ }
 
     if (config.debug) {
       console.log('Analytics initialized with config:', config);
