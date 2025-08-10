@@ -10,16 +10,13 @@ This document captures all learnings, issues, solutions, and technical insights 
 
 ### Frontend Components
 - (Removed) In-site Analytics Dashboard and related charts
-- **Analytics Tracker** (`public/analytics-tracker.js`) - Client-side tracking script
-- **Analytics Hook** (`src/hooks/useAnalytics.js`) - React hook for tracking
-- **Webhook Service** (`src/services/webhookService.js`) - Webhook integration
+- (Removed) Custom analytics tracker and hook; replaced by GA4 `gtag.js`
 
 ### Backend
-- External analytics backend and dashboard: `https://siteanalyticsak.netlify.app`
+- Replaced by GA4. No custom backend used.
 
 ### API Service Layer
-- **API Service** (`src/services/api.ts`) - Frontend API client
-- **Analytics Config** (`src/config/analytics.js`) - Environment-specific configuration
+- (Removed) Custom analytics API client and config
 
 ## Issues Encountered and Solutions
 
@@ -40,18 +37,9 @@ src="/media/image2.png"
 
 **Learning:** In production builds, the `public` directory contents are served from the root path, not `/public/`.
 
-### 2. Analytics Backend Not Available
+### 2. Migrated to GA4
 
-**Problem:** Analytics dashboard showed "Analytics Backend Not Available" error.
-
-**Root Cause:** Netlify Functions were not properly configured or deployed.
-
-**Solution:** 
-1. Created `netlify/functions/analytics.js` with full analytics logic
-2. Updated `netlify.toml` with proper function configuration
-3. Fixed API endpoints to match frontend expectations
-
-**Learning:** Netlify Functions require proper directory structure and configuration in `netlify.toml`.
+**Change:** Removed custom backend and switched to GA4 for reliability and simplicity.
 
 ### 3. Netlify Functions Returning HTML Instead of JSON
 
@@ -59,7 +47,7 @@ src="/media/image2.png"
 
 **Root Cause:** Routing conflicts between React Router SPA fallback and Netlify Functions.
 
-**Solution:** Simplified `netlify.toml` redirects to use single SPA fallback:
+**Solution (historical):** Simplified `netlify.toml` redirects to use single SPA fallback:
 ```toml
 [[redirects]]
   from = "/*"
@@ -138,13 +126,13 @@ function getDateKey(date = new Date()) {
 
 **Learning:** User agent parsing requires robust helper functions for device, browser, and OS detection.
 
-### 9. API Base URL Configuration Issues
+### 9. API Base URL Configuration Issues (historical)
 
 **Problem:** Frontend API service using localhost URLs in production.
 
 **Root Cause:** Hardcoded localhost URLs in API service configuration.
 
-**Solution (updated):** Updated API service and tracker to use external endpoint:
+**Solution (then):** Updated API service and tracker to use external endpoint:
 ```javascript
 const BACKEND_API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:3001/api' 
@@ -153,7 +141,7 @@ const BACKEND_API_URL = window.location.hostname === 'localhost'
 
 **Learning:** Always use environment-aware configuration for API endpoints.
 
-### 10. Webhook Service 404 Error
+### 10. Webhook Service 404 Error (historical)
 
 **Problem:** `POST https://kumarsite.netlify.app/.netlify/functions/analytics/analytics 404 (Not Found)`
 

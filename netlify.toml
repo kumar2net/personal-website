@@ -3,23 +3,9 @@
   command = "npm run build"
   publish = "dist"
 
-# Analytics function configuration
+# No Netlify functions needed for analytics; GA4 is used directly
 [functions]
   directory = "netlify/functions"
-
-# Direct ingestion endpoint (first-party). Highest precedence.
-[[redirects]]
-  from = "/api/analytics/track"
-  to = "/.netlify/functions/analytics"
-  status = 200
-  force = true
-
-# Ensure API relay takes precedence over SPA fallback for any other analytics paths
-[[redirects]]
-  from = "/api/analytics/*"
-  to = "/.netlify/functions/analytics-relay/:splat"
-  status = 200
-  force = true
 
 # SPA fallback - redirect all other requests to index.html
 [[redirects]]

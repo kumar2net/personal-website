@@ -10,7 +10,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Blog System** - Share thoughts and experiences
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Learning Hub** - Educational resources and shortcuts
-- **Analytics** - Events are POSTed to external backend; view dashboard at `https://siteanalyticsak.netlify.app/`
+- **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
 - **Responsive Design** - Works on all devices
 - **Modern UI** - Built with Tailwind CSS and Framer Motion
 
@@ -18,7 +18,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 
 - **Frontend:** React 18, Vite, Tailwind CSS
 - **Animations:** Framer Motion
-- **Analytics:** Custom analytics system with Netlify Functions
+- **Analytics:** Google Analytics 4 (GA4)
 - **Deployment:** Netlify
 - **Icons:** React Icons
   
@@ -70,12 +70,9 @@ src/
 
 ## 📊 Analytics
 
-The website sends analytics data to an external service:
-- **Backend:** `https://siteanalyticsak.netlify.app/api`
-- **Dashboard:** `https://siteanalyticsak.netlify.app/` (external)
-- **Tracking:** Page views, user interactions, and performance metrics
-
-See [ANALYTICS_README.md](./ANALYTICS_README.md) for detailed documentation.
+The site uses Google Analytics 4 (GA4):
+- GA tag added in `index.html` with `send_page_view: false`
+- SPA route changes tracked in `src/App.jsx` using React Router
 
 ## 🎨 Customization
 

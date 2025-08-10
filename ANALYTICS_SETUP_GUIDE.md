@@ -1,10 +1,10 @@
-# Analytics Backend Setup Guide
+# Google Analytics (GA4) Setup Guide
 
 **Last Updated:** August 10, 2025
 
 ## Current Status
 
-The personal website now uses an external analytics backend and dashboard at `https://siteanalyticsak.netlify.app`. The site only POSTs analytics data; there is no in-site dashboard.
+The personal website now uses Google Analytics 4 (GA4) exclusively.
 
 ## Notes
 
@@ -12,9 +12,12 @@ The previous in-site dashboard at `/analytics` has been removed.
 
 ## Solution Options
 
-### Option 1: Use External Analytics (Current)
+### Option 1: Google Analytics 4 (Current)
 
-No action needed beyond endpoint configuration. The website sends analytics events to `https://siteanalyticsak.netlify.app/api`.
+1. Create a GA4 property and a Web data stream.
+2. Copy the Measurement ID and add the GA tag in `index.html`.
+3. Keep `send_page_view: false`.
+4. SPA page_view tracking is wired in `src/App.jsx`.
 
 ### Option 2: Deploy Separate Backend (Optional)
 
@@ -30,67 +33,42 @@ No action needed beyond endpoint configuration. The website sends analytics even
 3. Deploy the backend code
 4. Update the API URL
 
-### Option 3: Use Third-Party Analytics (Alternative)
+### Option 3: Other privacy tools (optional)
 
-**Google Analytics:**
-1. Create Google Analytics account
-2. Add tracking code to your site
-3. Remove custom analytics system
-
-**Plausible Analytics:**
-1. Sign up at [plausible.io](https://plausible.io)
-2. Add tracking script
-3. Privacy-friendly alternative
+Consider Plausible, Fathom, etc., if you want a privacy-focused alternative.
 
 ## Quick Fix Instructions
 
-### Endpoint Configuration
+### GA Tag Configuration
 
-Set production endpoint in `src/config/analytics.js`:
+In `index.html`:
 
-```javascript
-production: {
-  apiUrl: 'https://siteanalyticsak.netlify.app/api',
-  debug: false,
-  autoTrack: true,
-  enabled: true,
-  generateIds: true
-}
+```html
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);} 
+  gtag('js', new Date());
+  gtag('config', 'G-XXXX', { send_page_view: false });
+<\/script>
 ```
 
-### After Functions are Working:
+### SPA Route Tracking
 
-2. **Update Tracker:**
-   ```javascript
-   // In public/analytics-tracker.js
-   apiUrl: window.location.hostname === 'localhost' \
-     ? 'http://localhost:3001/api' \
-     : 'https://siteanalyticsak.netlify.app/api',
-   autoTrack: true
-   ```
+In `src/App.jsx` send `page_view` on route changes with React Router.
 
-## Current Analytics Features
+## Analytics Features
 
-Your analytics system includes:
-
-- ✅ **Real-time visitor tracking**
-- ✅ **Page view analytics**
-- ✅ **Time on page metrics**
-- ✅ **Top performing pages**
-- ✅ **Daily visitor trends**
-- ✅ **Session tracking**
-- ✅ **Geolocation data**
-- ✅ **Device/technology tracking**
-- ✅ **Data export functionality**
+- **Page view analytics**
+- **Realtime (via GA4 Realtime)**
 
 ## Development vs Production
 
 | Feature | Development | Production |
 |---------|-------------|------------|
-| Backend | `localhost:3001` | `siteanalyticsak.netlify.app/api` |
-| Tracking | ✅ Enabled | ✅ Enabled (POST-only) |
-| Dashboard | ✅ N/A | ✅ External (link only) |
-| Auto-track | ✅ Enabled | ✅ Enabled |
+| Tracking | ✅ Enabled | ✅ Enabled |
+| Dashboard | GA4 Realtime | GA4 Realtime |
+| Auto-track | Manual (SPA) | Manual (SPA) |
 
 ## Next Steps
 
@@ -105,8 +83,6 @@ If you need help setting up any of these options, the analytics system is design
 
 ## Files Modified
 
-- `src/config/analytics.js` - Main configuration
-- `src/components/AnalyticsDashboard.jsx` - Dashboard component
-- `public/analytics-tracker.js` - Client-side tracker
-- `netlify/functions/analytics.js` - Serverless function (ready to use)
-- `netlify.toml` - Netlify configuration 
+- `index.html` - GA tag
+- `src/App.jsx` - SPA page_view tracking
+- `netlify.toml` - Remove analytics redirects/functions

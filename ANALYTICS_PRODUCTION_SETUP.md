@@ -1,102 +1,26 @@
-# Analytics Production Setup Guide
+# Google Analytics (GA4) Production Setup Guide
 
 **Last Updated:** August 10, 2025
 
 ## Current Status
 
-Production analytics now use the external backend at `https://siteanalyticsak.netlify.app/api`. The personal site only POSTs analytics data; the dashboard is external.
+Production analytics now use Google Analytics 4 (GA4). The site posts page_view events via `gtag.js` and manual SPA routing hooks.
 
-## Production Backend Setup
+## GA4 Setup
 
-To enable analytics in production, follow these steps:
+1. Add GA tag in `index.html` with Measurement ID (`G-...`).
+2. Configure `send_page_view: false`.
+3. In `src/App.jsx`, send `page_view` on route changes.
+4. Deploy and verify in GA4 Realtime.
 
-### 1. Deploy Analytics Backend
+## Development
 
-The analytics backend needs to be deployed to a production server. Options include:
-
-- **Railway**: Easy deployment with PostgreSQL support
-- **Render**: Free tier available with PostgreSQL
-- **Heroku**: Paid service with PostgreSQL add-on
-- **DigitalOcean**: VPS with manual PostgreSQL setup
-- **AWS/GCP**: Cloud services with managed databases
-
-### 2. Update Configuration
-
-Set the production configuration in `src/config/analytics.js`:
-
-```javascript
-production: {
-  apiUrl: 'https://siteanalyticsak.netlify.app/api',
-  debug: false,
-  autoTrack: true, // Enable auto-tracking
-  enabled: true, // Enable analytics
-  generateIds: true
-}
-```
-
-### 3. Update Analytics Tracker
-
-Update the analytics tracker in `public/analytics-tracker.js`:
-
-```javascript
-const config = {
-  apiUrl: window.location.hostname === 'localhost' 
-    ? 'http://localhost:3001/api' 
-  : 'https://siteanalyticsak.netlify.app/api',
-  // ... other config
-};
-```
-
-### 4. Environment Variables
-
-Set up environment variables for the backend:
-
-```bash
-# Database
-DATABASE_URL=postgresql://username:password@host:port/database
-
-# Server
-PORT=3001
-NODE_ENV=production
-
-# CORS (if needed)
-CORS_ORIGIN=https://kumarsite.netlify.app
-```
-
-### 5. Database Setup
-
-Ensure the PostgreSQL database is set up with the required tables:
-
-```sql
--- Run the database initialization script
--- Located in: /Users/kumar/siteanalytics/backend/src/database/init.sql
-```
-
-### 6. Deploy and Test
-
-1. Deploy the backend to production
-2. Test the health endpoint: `https://your-backend.com/api/health`
-3. Update the frontend configuration
-4. Deploy the frontend changes
-5. Test analytics tracking in production
-
-## Current Development Setup
-
-In development, the analytics system works with:
-
-- **Backend**: `http://localhost:3001/api`
-- **Database**: Local PostgreSQL instance
-- **Auto-tracking**: Enabled
-- **Debug**: Enabled
+- Use GA4 DebugView or Tag Assistant for validation.
 
 ## Troubleshooting
 
-### Common Issues
-
-1. **CORS Errors**: Ensure the backend allows requests from `https://kumarsite.netlify.app`
-2. **Database Connection**: Verify DATABASE_URL is correct
-3. **API Endpoints**: Test all endpoints return 200 status codes
-4. **Environment Variables**: Ensure all required env vars are set
+- Ensure only one GA tag is present.
+- If duplicate pageviews, confirm `send_page_view: false` and SPA hook is active.
 
 ### Testing
 

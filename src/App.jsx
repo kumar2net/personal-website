@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link, Routes, Route, useLocation } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
 import { motion } from 'framer-motion'
-import { useAnalytics } from './hooks/useAnalytics'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
@@ -61,7 +60,7 @@ function useGaPageViews() {
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { trackClick } = useAnalytics()
+  const trackClick = () => {}
   useGaPageViews()
 
   return (
