@@ -46,6 +46,15 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
     enabled: !disabled && hasText,
   });
 
+  const formattedDate = useMemo(() => {
+    if (!created) return '';
+    const d = new Date(created * 1000);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`; // dd-mmm-yyyy
+  }, [created]);
+
   return (
     <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div className="mb-2 flex items-center justify-between">
@@ -62,7 +71,7 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
           <div className="mt-2 text-[11px] text-gray-500">
             <span>Model: {model || 'unknown'}</span>
             <span className="mx-2">•</span>
-            <span>{created ? new Date(created * 1000).toLocaleString() : ''}</span>
+            <span>{formattedDate}</span>
             {fallback && (
               <>
                 <span className="mx-2">•</span>
