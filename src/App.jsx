@@ -21,6 +21,7 @@ import BuildingMcpServerWithCursor from "./pages/blog/building-mcp-server-with-c
 import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcuts';
 import MicrosoftMaiDxIndia from './pages/blog/microsoft-mai-dx-india';
 import Logo from './components/Logo'
+import ScrollToTop from './components/ScrollToTop'
 import Shortcuts from './pages/Shortcuts'
 import CompellingIndiaStory from './pages/blog/Compelling-india-story'
 import AcronymSoupRevisited2025 from './pages/blog/acronym-soup-revisited-2025';
@@ -65,6 +66,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <ScrollToTop />
       {/* Navigation */}
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
