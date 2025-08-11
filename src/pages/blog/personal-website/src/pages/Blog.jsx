@@ -64,7 +64,7 @@ const blogPosts = [
     date: 'June 17, 2025',
     excerpt: 'A detailed account of my experience using Windsurf, the AI coding assistant, for my web development projects.',
     tags: ['AI Coding', 'Windsurf', 'Developer Tools', 'Productivity'],
-    image: 'https://picsum.photos/800/400?random=5',
+    image: '/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D5',
     link: '/blog/my-experience-with-windsurf'
   },
   {
@@ -72,7 +72,7 @@ const blogPosts = [
     date: 'June 16, 2025',
     excerpt: 'A detailed look at building my portfolio website with React, Tailwind CSS, and modern web technologies.',
     tags: ['React', 'Web Development', 'Portfolio', 'Frontend'],
-    image: 'https://picsum.photos/800/400?random=4',
+    image: '/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D4',
     link: '/blog/portfolio-website'
   },
   {
@@ -80,7 +80,7 @@ const blogPosts = [
     date: 'June 15, 2025',
     excerpt: 'A deep dive into creating a comprehensive analytics dashboard for the spine implant market in India using React and Next.js.',
     tags: ['React', 'Next.js', 'Data Visualization', 'Medical Analytics'],
-    image: 'https://picsum.photos/800/400?random=1',
+    image: '/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D1',
     link: '/blog/spine-implant-dashboard'
   },
   {
@@ -88,7 +88,7 @@ const blogPosts = [
     date: 'June 14, 2025',
     excerpt: 'Exploring the architecture and key features of a modern drug suggestion application built with React and TypeScript.',
     tags: ['React', 'TypeScript', 'AI', 'Pharmaceutical'],
-    image: 'https://picsum.photos/800/400?random=2',
+    image: '/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D2',
     link: '/blog/drug-suggestion-app'
   },
   /* {
@@ -96,7 +96,7 @@ const blogPosts = [
     date: 'March 30, 2025',
     excerpt: 'Best practices and techniques for optimizing React applications to deliver better performance and user experience.',
     tags: ['React', 'Performance', 'Optimization'],
-    image: 'https://picsum.photos/800/400?random=3',
+    image: '/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D3',
     link: '/blog/react-performance'
   } */
 ]

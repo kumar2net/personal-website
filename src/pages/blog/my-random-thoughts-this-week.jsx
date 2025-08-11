@@ -68,11 +68,11 @@ const MyRandomThoughtsThisWeek = () => {
           {/* Hero Image */}
           <div className="mb-10">
             <img 
-              src="https://picsum.photos/1200/400?random=tech" 
+              src={`/.netlify/functions/image-proxy?url=${encodeURIComponent('https://picsum.photos/1200/400?random=tech')}`}
               alt="Technology and innovation concept" 
               className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
               onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/1200x400/4285f4/ffffff?text=Technology+Innovation';
+                e.target.src = '/media/image4.png';
               }}
             />
             <p className="text-sm text-gray-500 text-center mt-2">
