@@ -9,7 +9,7 @@ const crypto = require('crypto');
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-// 'auto' tries OpenAI then Gemini based on configured keys
+// Providers: 'auto' | 'openai' | 'gemini'
 const TLDR_PROVIDER = (process.env.TLDR_PROVIDER || 'auto').toLowerCase();
 const TLDR_DEV_FAKE = process.env.TLDR_DEV_FAKE === '1';
 const TLDR_DEV_FALLBACK_ON_ERROR = process.env.TLDR_DEV_FALLBACK_ON_ERROR === '1';
@@ -40,17 +40,13 @@ function makeFallbackSummary(text) {
 }
 
 exports.handler = async (event) => {
+  console.log('[tldr] Function started');
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
   }
 
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, { error: 'Method Not Allowed' });
-  }
-
-  // Allow dev fake or fallback when key is missing, gated by TLDR_DEV_FAKE
-  if (!OPENAI_API_KEY && !TLDR_DEV_FAKE) {
-    return jsonResponse(500, { error: 'Missing OPENAI_API_KEY' });
   }
 
   let payload;
@@ -61,6 +57,11 @@ exports.handler = async (event) => {
   }
 
   const { content, language, maxTokens, slug } = payload || {};
+  console.log('[tldr] Received data', {
+    slug: slug || null,
+    contentLength: typeof content === 'string' ? content.length : 0,
+    provider: TLDR_PROVIDER,
+  });
   if (!content || typeof content !== 'string') {
     return jsonResponse(400, { error: 'content is required' });
   }
@@ -103,6 +104,7 @@ exports.handler = async (event) => {
   // Provider selection and execution
   const tryOpenAI = async () => {
     if (!OPENAI_API_KEY) throw new Error('Missing OPENAI_API_KEY');
+    console.log('[tldr] Calling OpenAI', { model: OPENAI_MODEL });
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -119,6 +121,7 @@ exports.handler = async (event) => {
         temperature: 0.3,
       }),
     });
+    console.log('[tldr] OpenAI response', { ok: response.ok, status: response.status });
     if (!response.ok) {
       const errText = await response.text();
       throw new Error(`OpenAI API error: ${errText}`);
@@ -133,6 +136,7 @@ exports.handler = async (event) => {
     if (!GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY');
     const model = 'gemini-1.5-flash-latest';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    console.log('[tldr] Calling Gemini', { model });
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -149,6 +153,7 @@ exports.handler = async (event) => {
         },
       }),
     });
+    console.log('[tldr] Gemini response', { ok: response.ok, status: response.status });
     if (!response.ok) {
       const errText = await response.text();
       throw new Error(`Gemini API error: ${errText}`);
@@ -179,7 +184,9 @@ exports.handler = async (event) => {
   };
 
   try {
+    console.log('[tldr] Provider selected', { provider: TLDR_PROVIDER });
     const result = await runProvider();
+    console.log('[tldr] Function completed successfully');
     return jsonResponse(200, {
       summary: result.summary,
       model: result.model,
@@ -188,6 +195,7 @@ exports.handler = async (event) => {
       slug: slug || null,
     });
   } catch (err) {
+    console.error('[tldr] Error in function:', err);
     if (TLDR_DEV_FALLBACK_ON_ERROR) {
       const summary = makeFallbackSummary(trimmed);
       return jsonResponse(200, {
