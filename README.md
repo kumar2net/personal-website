@@ -108,6 +108,33 @@ Scripts
 - Build command: `npm run build`
 - Publish directory: `dist`
 
+## 🧠 AI TL;DR Summaries
+
+Add concise AI-generated summaries at the top of selected blog posts.
+
+Environment
+- Set environment variables in Netlify (Site settings → Build & deploy → Environment):
+  - `OPENAI_API_KEY` (required)
+  - `OPENAI_MODEL` (optional; default `gpt-4o-mini`)
+
+Local development
+- Use Netlify CLI for local functions:
+  - Install: `npm i -g netlify-cli`
+  - Run: `netlify dev`
+  - App: `http://localhost:8888` (functions proxied at `/.netlify/functions/*`)
+
+How it works
+- Backend: `netlify/functions/tldr.js` calls OpenAI Chat Completions to produce a 2–3 sentence TL;DR.
+- Frontend:
+  - `src/hooks/useContentText.js` extracts visible article text from a ref
+  - `src/hooks/useTldrSummary.js` hashes content, caches via `localStorage`, fetches `/.netlify/functions/tldr`
+  - `src/components/TldrSummary.jsx` renders the card
+- Integration: posts wrap main content with a `ref` and place `<TldrSummary articleRef={articleRef} />` below title/byline.
+
+Notes
+- Only enabled on the three most recent posts by default.
+- Caching is client-side only; clear with `localStorage.clear()` if needed.
+
 ## 📄 License
 
 MIT License - see LICENSE file for details.
