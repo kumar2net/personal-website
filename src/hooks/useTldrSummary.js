@@ -39,7 +39,14 @@ export function useTldrSummary({ slug, text, enabled = true }) {
           return;
         }
 
-        const resp = await fetch('/.netlify/functions/tldr', {
+        // Ensure functions resolve when app is opened on Vite port (5173/5174)
+        const isLocalHost = typeof window !== 'undefined' && (
+          window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        );
+        const isVitePort = typeof window !== 'undefined' && (window.location.port === '5173' || window.location.port === '5174');
+        const functionsBase = isLocalHost && isVitePort ? 'http://localhost:8888' : '';
+
+        const resp = await fetch(`${functionsBase}/.netlify/functions/tldr`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ slug, content: safeText }),
