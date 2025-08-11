@@ -8,6 +8,9 @@ const crypto = require('crypto');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// 'auto' tries OpenAI then Gemini based on configured keys
+const TLDR_PROVIDER = (process.env.TLDR_PROVIDER || 'auto').toLowerCase();
 const TLDR_DEV_FAKE = process.env.TLDR_DEV_FAKE === '1';
 const TLDR_DEV_FALLBACK_ON_ERROR = process.env.TLDR_DEV_FALLBACK_ON_ERROR === '1';
 
@@ -97,7 +100,9 @@ exports.handler = async (event) => {
     });
   }
 
-  try {
+  // Provider selection and execution
+  const tryOpenAI = async () => {
+    if (!OPENAI_API_KEY) throw new Error('Missing OPENAI_API_KEY');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -114,35 +119,71 @@ exports.handler = async (event) => {
         temperature: 0.3,
       }),
     });
-
     if (!response.ok) {
       const errText = await response.text();
-      if (TLDR_DEV_FALLBACK_ON_ERROR) {
-        const summary = makeFallbackSummary(trimmed);
-        return jsonResponse(200, {
-          summary,
-          model: 'dev-fallback-openai-error',
-          created: Math.floor(Date.now() / 1000),
-          inputHash,
-          slug: slug || null,
-          fallback: true,
-          error: 'OpenAI API error',
-          details: errText,
-        });
-      }
-      return jsonResponse(response.status, { error: 'OpenAI API error', details: errText });
+      throw new Error(`OpenAI API error: ${errText}`);
     }
-
     const data = await response.json();
     const summary = data?.choices?.[0]?.message?.content?.trim();
-    if (!summary) {
-      return jsonResponse(502, { error: 'Empty summary from model' });
-    }
+    if (!summary) throw new Error('Empty summary from OpenAI');
+    return { summary, model: data?.model || OPENAI_MODEL, created: data?.created };
+  };
 
+  const tryGemini = async () => {
+    if (!GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY');
+    const model = 'gemini-1.5-flash-latest';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: Math.min(typeof maxTokens === 'number' ? maxTokens : 160, 300),
+        },
+      }),
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Gemini API error: ${errText}`);
+    }
+    const data = await response.json();
+    const text = data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join(' ').trim();
+    if (!text) throw new Error('Empty summary from Gemini');
+    return { summary: text, model: model, created: Math.floor(Date.now() / 1000) };
+  };
+
+  const runProvider = async () => {
+    if (TLDR_PROVIDER === 'openai') return tryOpenAI();
+    if (TLDR_PROVIDER === 'gemini') return tryGemini();
+    // auto: prefer OpenAI if key present, else Gemini
+    if (OPENAI_API_KEY) {
+      try {
+        return await tryOpenAI();
+      } catch (e) {
+        // Try Gemini if available
+        if (GEMINI_API_KEY) {
+          return await tryGemini();
+        }
+        throw e;
+      }
+    }
+    if (GEMINI_API_KEY) return tryGemini();
+    throw new Error('No provider configured');
+  };
+
+  try {
+    const result = await runProvider();
     return jsonResponse(200, {
-      summary,
-      model: data?.model || OPENAI_MODEL,
-      created: data?.created || Math.floor(Date.now() / 1000),
+      summary: result.summary,
+      model: result.model,
+      created: result.created || Math.floor(Date.now() / 1000),
       inputHash,
       slug: slug || null,
     });
@@ -156,7 +197,7 @@ exports.handler = async (event) => {
         inputHash,
         slug: slug || null,
         fallback: true,
-        error: 'Exception calling OpenAI',
+        error: 'Exception calling provider',
         details: String(err),
       });
     }
