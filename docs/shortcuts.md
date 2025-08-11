@@ -1,5 +1,7 @@
 # Ready Reckoner: Mac OS & Chrome Shortcuts
 
+**Last Updated:** August 7, 2025
+
 ---
 
 ## Mac OS Shortcuts

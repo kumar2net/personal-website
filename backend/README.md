@@ -96,3 +96,4 @@ Currently uses in-memory storage. For production, consider:
 - MongoDB Atlas
 - Supabase
 - PlanetScale 
+Last updated: 2025-08-11

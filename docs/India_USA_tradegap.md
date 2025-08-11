@@ -88,3 +88,5 @@ India--U.S. trade reached historic heights in 2024 with total trade of
 Indian exports were growing strongly in 2025, but recent tariff
 escalations---first 25%, now doubled to 50%---have introduced a major
 disruption, primarily triggered by India's Russian oil imports.
+
+Last updated: 2025-08-11

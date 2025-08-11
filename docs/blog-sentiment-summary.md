@@ -1,5 +1,7 @@
 # Blog Sentiment Summary
 
+**Last Updated:** August 7, 2025
+
 | Post Title | Sentiment Score | Sentiment Label |
 |------------|-----------------|-----------------|
 | Very Compelling India Story: How Millennials Are Powering the SIP Revolution | 34 | positive |
