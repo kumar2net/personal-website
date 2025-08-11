@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
-    "convert:books": "node scripts/convert-docx-to-md.mjs"
+    "convert:books": "node scripts/convert-docx-to-md.mjs",
+    "puml:render:svg": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tsvg docs/reco-architecture-*.puml",
+    "puml:render:png": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tpng docs/reco-architecture-*.puml"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
