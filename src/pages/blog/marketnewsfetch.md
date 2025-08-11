@@ -4,3 +4,5 @@ create a menu in home page navigation bar
 create a new page MarketNews and fetch the data and display it in the page
 next step update it every day after market closes with date time stamp at top of the web page   
 
+
+Last updated: 2025-08-11

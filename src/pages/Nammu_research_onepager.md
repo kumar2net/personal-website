@@ -16,3 +16,5 @@ The two methods did not always agree. LDM often found more fine stuff like silt 
 Implications:  
 For soils with a large quantity of fine particles the laser method works better and faster. For sandy soils, either method works fine. Consistency of method is important because they might not always match \- so stick with one.
 
+
+Last updated: 2025-08-11

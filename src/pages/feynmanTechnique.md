@@ -36,3 +36,5 @@ For Feynman, the joy was never in titles or awards—though he won a Nobel Prize
 
 It’s worth remembering: Feynman worked alongside Oppenheimer on the Manhattan Project, making the first nuclear bomb. But he soon moved on—choosing a life defined by teaching, learning, and making science joyful, not just historical.
 
+
+Last updated: 2025-08-11

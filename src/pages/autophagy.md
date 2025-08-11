@@ -36,3 +36,5 @@ Fasting—whether you call it Ekadasi, intermittent, or just a mindful pause bet
 
 ---
 
+
+Last updated: 2025-08-11

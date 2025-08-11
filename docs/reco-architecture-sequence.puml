@@ -1,0 +1,23 @@
+@startuml
+skinparam dpi 150
+actor User
+participant UI as "React"
+participant NX as "Express"
+participant PY as "Python API"
+database FS as "Feature/Vector Store"
+
+User -> UI : Open Post Page
+UI -> NX : GET /api/recommendations?post_id=123&user_seg=mobile
+NX -> PY : POST /recommendations {post_id, user_seg}
+PY -> FS : Load vectors + GA aggregates
+FS --> PY : embeddings + behavior features
+PY -> PY : Compute similarity + re-rank
+PY --> NX : [{post_id, score}...]
+NX --> UI : Recommended posts
+UI -> NX : POST /api/track {user_id, post_id, event:click}
+NX -> PY : POST /log_interaction {...}
+PY -> FS : Store interaction
+@enduml
+
+
+

@@ -79,3 +79,4 @@ Among these valuable approaches that aid in study routines, the Cornell Method a
 Note - Page 60
 
 haha yes. Combine with Feymann's
+Last updated: 2025-08-11

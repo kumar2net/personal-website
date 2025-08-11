@@ -37,6 +37,7 @@ const AcronymSoupRevisited2025 = () => {
       </div>
 
       <div className="space-y-8 prose prose-lg max-w-none">
+        <div>
         {/* Company badges */}
         <div className="flex flex-wrap gap-3">
           <img src="https://img.shields.io/badge/Apple-000000?style=for-the-badge&logo=apple&logoColor=white" alt="Apple" />
@@ -100,6 +101,7 @@ const AcronymSoupRevisited2025 = () => {
           From four letters to seven, acronym creep mirrors the concentration of tech power. Watch who joins—or drops off—the list next;
           tomorrow's soup will be seasoned by breakthroughs we can scarcely imagine today.
         </p>
+        </div>
       </div>
     </motion.div>
   );

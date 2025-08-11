@@ -75,3 +75,5 @@ The main table covers cost of living and healthcare access. Separate tables belo
 | GBP (British £)    | 0.86 GBP                | 1.16 USD                 |
 | INR (Indian ₹)     | 85.15 INR               | 0.0117 USD               |
 
+
+Last updated: 2025-08-11

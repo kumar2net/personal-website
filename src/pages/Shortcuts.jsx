@@ -3,17 +3,16 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 // Import the markdown file as raw text
-import shortcuts from "../../shortcuts.md?raw";
+import shortcuts from "../../docs/shortcuts.md?raw";
 
-// Split the markdown into two sections
+// Split the markdown into two sections (robust against spacing/line-endings)
 const [macSection, chromeSection] = (() => {
-  const macHeader = "## Mac OS Shortcuts";
-  const chromeHeader = "## Chrome Browser Shortcuts";
-  const macStart = shortcuts.indexOf(macHeader);
-  const chromeStart = shortcuts.indexOf(chromeHeader);
+  const normalized = shortcuts.replace(/\r\n/g, "\n");
+  const macMatch = normalized.match(/##\s*Mac OS Shortcuts[\s\S]*?(?=\n##\s|$)/i);
+  const chromeMatch = normalized.match(/##\s*Chrome Browser Shortcuts[\s\S]*?(?=\n##\s|$)/i);
   return [
-    shortcuts.slice(macStart, chromeStart).trim(),
-    shortcuts.slice(chromeStart).trim(),
+    (macMatch ? macMatch[0] : normalized).trim(),
+    (chromeMatch ? chromeMatch[0] : "").trim(),
   ];
 })();
 
