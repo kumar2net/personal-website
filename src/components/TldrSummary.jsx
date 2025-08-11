@@ -40,7 +40,7 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
   }, [articleRef, getTextFromRef, articleText]);
 
   const hasText = articleText && articleText.length > 40;
-  const { summary, loading, error } = useTldrSummary({
+  const { summary, loading, error, model, created, fallback } = useTldrSummary({
     slug: derivedSlug,
     text: articleText,
     enabled: !disabled && hasText,
@@ -57,7 +57,20 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
       {error ? (
         <p className="text-sm text-red-600">{error}</p>
       ) : summary ? (
-        <p className="text-sm leading-relaxed text-gray-800">{summary}</p>
+        <>
+          <p className="text-sm leading-relaxed text-gray-800">{summary}</p>
+          <div className="mt-2 text-[11px] text-gray-500">
+            <span>Model: {model || 'unknown'}</span>
+            <span className="mx-2">•</span>
+            <span>{created ? new Date(created * 1000).toLocaleString() : ''}</span>
+            {fallback && (
+              <>
+                <span className="mx-2">•</span>
+                <span>fallback</span>
+              </>
+            )}
+          </div>
+        </>
       ) : (
         <div className="animate-pulse space-y-2">
           <div className="h-3 w-11/12 rounded bg-gray-200" />

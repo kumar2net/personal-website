@@ -14,6 +14,9 @@ export function useTldrSummary({ slug, text, enabled = true }) {
   const [summary, setSummary] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [model, setModel] = useState('');
+  const [created, setCreated] = useState(0);
+  const [fallback, setFallback] = useState(false);
 
   const safeText = useMemo(() => (text || '').trim(), [text]);
 
@@ -34,7 +37,12 @@ export function useTldrSummary({ slug, text, enabled = true }) {
         const cached = localStorage.getItem(cacheKey);
         if (cached) {
           const parsed = JSON.parse(cached);
-          if (!cancelled) setSummary(parsed.summary || '');
+          if (!cancelled) {
+            setSummary(parsed.summary || '');
+            setModel(parsed.model || '');
+            setCreated(parsed.created || 0);
+            setFallback(Boolean(parsed.fallback));
+          }
           setLoading(false);
           return;
         }
@@ -57,9 +65,20 @@ export function useTldrSummary({ slug, text, enabled = true }) {
           throw new Error(errText || `HTTP ${resp.status}`);
         }
         const data = await resp.json();
-        const result = { summary: data.summary, model: data.model, inputHash: data.inputHash };
+        const result = {
+          summary: data.summary,
+          model: data.model,
+          inputHash: data.inputHash,
+          created: data.created,
+          fallback: Boolean(data.fallback),
+        };
         localStorage.setItem(cacheKey, JSON.stringify(result));
-        if (!cancelled) setSummary(result.summary);
+        if (!cancelled) {
+          setSummary(result.summary);
+          setModel(result.model || '');
+          setCreated(result.created || 0);
+          setFallback(Boolean(result.fallback));
+        }
       } catch (err) {
         if (!cancelled) setError(String(err?.message || err));
       } finally {
@@ -74,7 +93,7 @@ export function useTldrSummary({ slug, text, enabled = true }) {
     };
   }, [enabled, safeText, slug]);
 
-  return { summary, loading, error };
+  return { summary, loading, error, model, created, fallback };
 }
 
 
