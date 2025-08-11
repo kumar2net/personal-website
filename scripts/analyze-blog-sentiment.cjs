@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const Sentiment = require('sentiment');
 
-const BLOG_DIR = path.join(__dirname, 'src/pages/blog');
-const OUTPUT_FILE = path.join(__dirname, 'blog-sentiment-summary.md');
+const ROOT = path.join(__dirname, '..');
+const BLOG_DIR = path.join(ROOT, 'src/pages/blog');
+const OUTPUT_MD = path.join(ROOT, 'docs', 'blog-sentiment-summary.md');
+const OUTPUT_JSON = path.join(ROOT, 'src', 'data', 'blog-sentiment-summary.json');
 const sentiment = new Sentiment();
 
 function extractTitle(content) {
@@ -44,15 +46,11 @@ function analyzeBlogPosts() {
   for (const { title, score, label } of results) {
     md += `| ${title} | ${score} | ${label} |\n`;
   }
-  fs.writeFileSync(OUTPUT_FILE, md, 'utf8');
+  fs.writeFileSync(OUTPUT_MD, md, 'utf8');
 
   // Write JSON summary
-  fs.writeFileSync(
-    path.join(__dirname, 'blog-sentiment-summary.json'),
-    JSON.stringify(results, null, 2),
-    'utf8'
-  );
-  console.log(`Sentiment summary written to ${OUTPUT_FILE} and blog-sentiment-summary.json`);
+  fs.writeFileSync(OUTPUT_JSON, JSON.stringify(results, null, 2), 'utf8');
+  console.log(`Sentiment summary written to ${OUTPUT_MD} and ${OUTPUT_JSON}`);
 }
 
 analyzeBlogPosts(); 

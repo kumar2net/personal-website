@@ -1,5 +1,5 @@
 import React from 'react';
-import summary from '../../blog-sentiment-summary.json';
+import summary from '../data/blog-sentiment-summary.json';
 
 const sentimentColors = {
   positive: 'bg-green-100 text-green-800',

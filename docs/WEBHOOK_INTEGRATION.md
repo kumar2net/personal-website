@@ -144,7 +144,7 @@ function verifySignature(payload, signature, secret) {
 
 ```bash
 cd /Users/kumar/kumarai/personal-website
-node webhook-receiver.js
+node scripts/webhook-receiver.js
 ```
 
 This starts a test server on `http://localhost:3002`
