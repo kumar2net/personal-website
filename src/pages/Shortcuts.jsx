@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 // Import the markdown file as raw text
-import shortcuts from "../../shortcuts.md?raw";
+import shortcuts from "../../docs/shortcuts.md?raw";
 
 // Split the markdown into two sections
 const [macSection, chromeSection] = (() => {
