@@ -8,6 +8,8 @@ const crypto = require('crypto');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+const TLDR_DEV_FAKE = process.env.TLDR_DEV_FAKE === '1';
+const TLDR_DEV_FALLBACK_ON_ERROR = process.env.TLDR_DEV_FALLBACK_ON_ERROR === '1';
 
 function jsonResponse(statusCode, body, extraHeaders = {}) {
   return {
@@ -23,6 +25,17 @@ function jsonResponse(statusCode, body, extraHeaders = {}) {
   };
 }
 
+function makeFallbackSummary(text) {
+  const sentences = text
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  let combined = sentences.slice(0, 2).join(' ');
+  if (!combined) combined = text.slice(0, 240);
+  if (combined.length > 480) combined = combined.slice(0, 480) + '…';
+  return combined;
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
@@ -32,7 +45,8 @@ exports.handler = async (event) => {
     return jsonResponse(405, { error: 'Method Not Allowed' });
   }
 
-  if (!OPENAI_API_KEY) {
+  // Allow dev fake or fallback when key is missing, gated by TLDR_DEV_FAKE
+  if (!OPENAI_API_KEY && !TLDR_DEV_FAKE) {
     return jsonResponse(500, { error: 'Missing OPENAI_API_KEY' });
   }
 
@@ -70,6 +84,19 @@ exports.handler = async (event) => {
     .filter(Boolean)
     .join('\n');
 
+  // Dev short-circuit: always return a local fallback
+  if (TLDR_DEV_FAKE) {
+    const summary = makeFallbackSummary(trimmed);
+    return jsonResponse(200, {
+      summary,
+      model: 'dev-fallback',
+      created: Math.floor(Date.now() / 1000),
+      inputHash,
+      slug: slug || null,
+      fallback: true,
+    });
+  }
+
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -90,6 +117,19 @@ exports.handler = async (event) => {
 
     if (!response.ok) {
       const errText = await response.text();
+      if (TLDR_DEV_FALLBACK_ON_ERROR) {
+        const summary = makeFallbackSummary(trimmed);
+        return jsonResponse(200, {
+          summary,
+          model: 'dev-fallback-openai-error',
+          created: Math.floor(Date.now() / 1000),
+          inputHash,
+          slug: slug || null,
+          fallback: true,
+          error: 'OpenAI API error',
+          details: errText,
+        });
+      }
       return jsonResponse(response.status, { error: 'OpenAI API error', details: errText });
     }
 
@@ -107,6 +147,19 @@ exports.handler = async (event) => {
       slug: slug || null,
     });
   } catch (err) {
+    if (TLDR_DEV_FALLBACK_ON_ERROR) {
+      const summary = makeFallbackSummary(trimmed);
+      return jsonResponse(200, {
+        summary,
+        model: 'dev-fallback-exception',
+        created: Math.floor(Date.now() / 1000),
+        inputHash,
+        slug: slug || null,
+        fallback: true,
+        error: 'Exception calling OpenAI',
+        details: String(err),
+      });
+    }
     return jsonResponse(500, { error: 'Failed to generate summary', details: String(err) });
   }
 };
