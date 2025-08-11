@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useContentText } from '../hooks/useContentText';
 import { useTldrSummary } from '../hooks/useTldrSummary';
@@ -13,8 +13,38 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
   }, [location?.pathname, slug]);
 
   const { getTextFromRef } = useContentText(5000);
-  const text = useMemo(() => getTextFromRef(articleRef), [articleRef, getTextFromRef]);
-  const { summary, loading, error } = useTldrSummary({ slug: derivedSlug, text, enabled: !disabled });
+  const [articleText, setArticleText] = useState('');
+
+  // Observe DOM content so we extract text after mount and on updates
+  useEffect(() => {
+    const element = articleRef?.current;
+    if (!element) return;
+
+    const extract = () => {
+      const txt = getTextFromRef(articleRef);
+      if (txt && txt !== articleText) {
+        setArticleText(txt);
+      }
+    };
+
+    // Initial extraction after current tick
+    const timer = setTimeout(extract, 0);
+
+    const observer = new MutationObserver(() => extract());
+    observer.observe(element, { childList: true, subtree: true, characterData: true });
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [articleRef, getTextFromRef, articleText]);
+
+  const hasText = articleText && articleText.length > 40;
+  const { summary, loading, error } = useTldrSummary({
+    slug: derivedSlug,
+    text: articleText,
+    enabled: !disabled && hasText,
+  });
 
   return (
     <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
