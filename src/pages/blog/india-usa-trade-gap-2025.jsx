@@ -157,7 +157,18 @@ const IndiaUSATradeGap = () => {
             (Society for Worldwide Interbank Financial Telecommunication — the global financial messaging network used by
             banks for cross-border payments)—, broader financial coordination, and cross-border trade settlement in their
             respective local currencies.
+            The Reserve Bank of India (RBI) announced that Authorised Dealer Category-I banks can now open Special Rupee Vostro Accounts (SRVAs) for overseas correspondent banks without needing prior approval from the RBI. This marks a major procedural relaxation and is designed to encourage the use of the Indian Rupee (INR) for cross-border trade settlements.
           </p>
+
+          <div className="mt-3 text-gray-700">
+            <h4 className="font-semibold">What this simplifies</h4>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>AD Cat-I banks may open SRVAs for overseas correspondent banks without prior RBI approval, using their standard KYC and due‑diligence processes.</li>
+              <li>Banks handle onboarding and regulatory reporting under FEMA as usual, removing a central approval bottleneck.</li>
+              <li>Exporters/importers can invoice and settle directly in INR: the overseas bank holds INR in the SRVA with the Indian bank, which credits/debits the Indian party.</li>
+              <li>Result: faster bank onboarding, less paperwork, and lower friction for INR-denominated cross‑border trade.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </motion.div>
