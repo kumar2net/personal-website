@@ -162,7 +162,7 @@ const IndiaUSATradeGap = () => {
           <div className="mt-3 text-gray-700">
             <h4 className="font-semibold">What this simplifies</h4>
             <ul className="list-disc pl-6 space-y-1">
-              <li>AD Cat-I banks may open SRVAs for overseas correspondent banks without prior RBI approval, using their standard KYC and due‑diligence processes.</li>
+              <li>AD Cat-I banks may open SRVAs (Special Rupee Vostro Accounts) for overseas correspondent banks without prior RBI approval, using their standard KYC and due‑diligence processes.</li>
               <li>Banks handle onboarding and regulatory reporting under FEMA as usual, removing a central approval bottleneck.</li>
               <li>Exporters/importers can invoice and settle directly in INR: the overseas bank holds INR in the SRVA with the Indian bank, which credits/debits the Indian party.</li>
               <li>Result: faster bank onboarding, less paperwork, and lower friction for INR-denominated cross‑border trade.</li>
