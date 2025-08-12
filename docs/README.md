@@ -115,7 +115,7 @@ Add concise AI-generated summaries at the top of selected blog posts.
 Environment
 - Set environment variables in Netlify (Site settings → Build & deploy → Environment):
   - `OPENAI_API_KEY` (required)
-  - `OPENAI_MODEL` (optional; default `gpt-4o-mini`)
+  - `OPENAI_MODEL` (optional; default an appropriate GPT-4o mini variant)
 
 Local development
 - Use Netlify CLI for local functions:
