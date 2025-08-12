@@ -17,16 +17,19 @@ const GCP_PROJECT_ID = process.env.GCP_PROJECT_ID;
 const GCP_LOCATION = process.env.GCP_LOCATION || 'us-central1';
 const VERTEX_INDEX_ID = process.env.VERTEX_INDEX_ID;
 const VERTEX_EMBED_DIM = Number(process.env.VERTEX_EMBED_DIM || '768');
+const SEMANTIC_SKIP_VERTEX = process.env.SEMANTIC_SKIP_VERTEX === '1';
 const GCP_SERVICE_ACCOUNT_JSON = process.env.GCP_SERVICE_ACCOUNT_JSON;
 
 if (!GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY');
 if (!GCP_PROJECT_ID) throw new Error('Missing GCP_PROJECT_ID');
-if (!VERTEX_INDEX_ID) throw new Error('Missing VERTEX_INDEX_ID');
-if (!GCP_SERVICE_ACCOUNT_JSON) throw new Error('Missing GCP_SERVICE_ACCOUNT_JSON');
+// Only required if upserting to Vertex
+if (!SEMANTIC_SKIP_VERTEX && !VERTEX_INDEX_ID) throw new Error('Missing VERTEX_INDEX_ID');
+if (!SEMANTIC_SKIP_VERTEX && !GCP_SERVICE_ACCOUNT_JSON) throw new Error('Missing GCP_SERVICE_ACCOUNT_JSON');
 
 // --- Config ---
 const BLOG_DIR = path.resolve(process.cwd(), 'src/pages/blog');
 const MAPPING_FILE = path.resolve(process.cwd(), 'src/data/semantic-mapping.json');
+const EMBEDDINGS_FILE = path.resolve(process.cwd(), 'src/data/semantic-embeddings.json');
 const MAX_TEXT_CHARS = 16000; // defensive cap per item
 
 // --- Helpers ---
@@ -156,14 +159,23 @@ async function main() {
     mapping.push({ id: post.id, title: post.title, url: post.url, excerpt: post.excerpt });
   }
 
-  console.log('[semantic-index] Upserting datapoints into Vertex AI...');
-  await upsertDatapoints(datapoints);
-  console.log('[semantic-index] Upsert completed');
+  if (SEMANTIC_SKIP_VERTEX || !VERTEX_INDEX_ID) {
+    console.log('[semantic-index] Skipping Vertex upsert (SEMANTIC_SKIP_VERTEX=1 or missing VERTEX_INDEX_ID)');
+  } else {
+    console.log('[semantic-index] Upserting datapoints into Vertex AI...');
+    await upsertDatapoints(datapoints);
+    console.log('[semantic-index] Upsert completed');
+  }
 
   // Write mapping file
   await fs.promises.mkdir(path.dirname(MAPPING_FILE), { recursive: true });
   await fs.promises.writeFile(MAPPING_FILE, JSON.stringify(mapping, null, 2));
   console.log(`[semantic-index] Wrote mapping file at ${MAPPING_FILE}`);
+
+  // Write embeddings file for local fallback search
+  const embeddings = datapoints.map((d) => ({ id: d.datapointId, vector: d.featureVector }));
+  await fs.promises.writeFile(EMBEDDINGS_FILE, JSON.stringify(embeddings));
+  console.log(`[semantic-index] Wrote embeddings file at ${EMBEDDINGS_FILE}`);
 
   console.log('[semantic-index] Done');
 }

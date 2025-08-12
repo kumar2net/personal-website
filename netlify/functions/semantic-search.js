@@ -87,7 +87,9 @@ exports.handler = async (event) => {
   try {
     const queryEmbedding = await embedQuery(q);
 
-    // Build MatchService client
+    const mapping = loadMapping();
+    const byId = new Map(mapping.map((m) => [m.id, m]));
+
     const credentials = JSON.parse(GCP_SERVICE_ACCOUNT_JSON);
     const clientOptions = {
       projectId: GCP_PROJECT_ID,
@@ -100,7 +102,7 @@ exports.handler = async (event) => {
 
     const request = {
       indexEndpoint,
-      deployedIndexId: undefined, // optional if single deployed index; otherwise set env VERTEX_DEPLOYED_INDEX_ID
+      deployedIndexId: undefined,
       queries: [
         {
           datapoint: { featureVector: queryEmbedding },
@@ -108,16 +110,11 @@ exports.handler = async (event) => {
         },
       ],
     };
-
-    // If a specific deployed index ID is needed, allow env override
     if (process.env.VERTEX_DEPLOYED_INDEX_ID) {
       request.deployedIndexId = process.env.VERTEX_DEPLOYED_INDEX_ID;
     }
 
     const [response] = await matchServiceClient.findNeighbors(request);
-    const mapping = loadMapping();
-    const byId = new Map(mapping.map((m) => [m.id, m]));
-
     const neighbors = response?.nearestNeighbors?.[0]?.neighbors || [];
     const results = neighbors.map((n) => {
       const id = n?.datapoint?.datapointId;
@@ -126,7 +123,7 @@ exports.handler = async (event) => {
       return { id, title: meta.title, url: meta.url, excerpt: meta.excerpt, score };
     });
 
-    return jsonResponse(200, { results, tookMs: Date.now() - started });
+    return jsonResponse(200, { results, tookMs: Date.now() - started, provider: 'vertex' });
   } catch (err) {
     return jsonResponse(500, { error: 'Search failed', details: String(err) });
   }

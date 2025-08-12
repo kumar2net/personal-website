@@ -29,7 +29,7 @@ This document describes how to add semantic search to the blog using Google AI G
 4. Assign roles to the service account:
    - For querying only: `roles/aiplatform.user`
    - For indexing (create/deploy index, upsert datapoints): `roles/aiplatform.admin`
-5. Create a JSON key for the service account. Keep it private.
+5. Create a JSON key for the service account. Keep it private. If a key is ever exposed, delete and recreate it (rotate the key) and update your environment variable.
 
 Region recommendation: `us-central1` for Vertex AI Vector Search.
 
@@ -51,14 +51,66 @@ Optional (local dev): add these to an `.env` file used by `netlify dev` if desir
 ---
 
 ### 3) Vertex AI Vector Search: create and deploy index
-You can create resources via the Cloud Console for speed:
-1. Vertex AI → Vector Search → Create index
-   - Distance: Cosine
-   - Dimensions: `768`
-   - Collection ID: default
-2. Create Index Endpoint (Vertex AI → Vector Search → Index endpoints → Create)
-3. Deploy the index to the endpoint (select the index and choose Deploy)
-4. Copy the `Index ID` and `Index Endpoint ID` and set them in Netlify env vars
+You can create resources via the Cloud Console or the CLI.
+
+CLI example (recommended one-time, run as a project Owner):
+
+1. Ensure required services are enabled on the project:
+   - `aiplatform.googleapis.com`
+   - `iamcredentials.googleapis.com`
+   - `cloudresourcemanager.googleapis.com`
+   - `storage.googleapis.com`
+   - `serviceusage.googleapis.com`
+
+2. Prepare index metadata JSON (NearestNeighborSearch schema):
+
+```json
+{
+  "config": {
+    "dimensions": 768,
+    "distanceMeasureType": "COSINE_DISTANCE",
+    "algorithmConfig": {
+      "treeAhConfig": {
+        "leafNodeEmbeddingCount": 1000,
+        "leafNodesToSearchPercent": 7
+      }
+    }
+  }
+}
+```
+
+3. Create index (us-central1):
+
+```bash
+gcloud config set ai/region us-central1
+gcloud ai indexes create \
+  --display-name=blog-semantic-index \
+  --metadata-file=PATH/TO/index_metadata.json \
+  --format='value(name)'
+# Capture the printed full name and derive IDs as needed
+```
+
+4. Create index endpoint:
+
+```bash
+gcloud ai index-endpoints create \
+  --display-name=blog-semantic-endpoint \
+  --format='value(name)'
+```
+
+5. Deploy the index to the endpoint:
+
+```bash
+gcloud ai index-endpoints deploy-index \
+  --index-endpoint=INDEX_ENDPOINT_ID \
+  --deployed-index-display-name=blog-semantic-deployed \
+  --index=INDEX_ID
+```
+
+6. Copy the IDs and set them in Netlify env vars:
+   - `VERTEX_INDEX_ID`
+   - `VERTEX_INDEX_ENDPOINT_ID`
+   - `VERTEX_DEPLOYED_INDEX_ID` (if your endpoint has multiple deployed indexes)
 
 > Alternative: programmatically create/deploy via SDK. This guide assumes you will create/deploy via Console and script will only upsert datapoints.
 
@@ -130,6 +182,15 @@ Function:
 2. Test with curl or a REST client:
    - `POST /.netlify/functions/semantic-search` with `{ "q": "your query" }`.
 
+Example curl:
+
+```bash
+curl -s -X POST \
+  -H 'Content-Type: application/json' \
+  -d '{"q":"india usa trade gap","topK":5}' \
+  http://localhost:8889/.netlify/functions/semantic-search | jq
+```
+
 ---
 
 ### 8) Production
@@ -144,6 +205,9 @@ Function:
 - Embedding dimension mismatch: confirm the index `Dimensions` equals the returned vector length (expected 768 for `text-embedding-004`). Recreate index if needed.
 - 403/permission errors from Vertex AI: check service account roles; ensure the request uses the correct project/region.
 - Timeouts from function: reduce `topK`, ensure index is deployed in the configured region, and keep payloads minimal.
+- INVALID_ARGUMENT creating index: ensure the index metadata JSON matches the NearestNeighborSearch schema. Remove unsupported fields like `indexUpdateMethod`.
+- AUTH_PERMISSION_DENIED enabling services: only a project Owner/Editor (or org policy that allows) can enable services. Enable in Console or grant appropriate roles.
+- Missing `VERTEX_INDEX_ENDPOINT_ID`: create an index endpoint and deploy your index; set both IDs in env vars.
 
 ---
 
@@ -166,5 +230,22 @@ Function:
 - Do not commit service account keys. Only store JSON in Netlify env vars.
 - Control spend by limiting `topK` and only indexing public content.
 - Re-run the indexer after adding or significantly editing posts.
+ - If a service account key is exposed, delete and recreate the key immediately (rotate), then update `GCP_SERVICE_ACCOUNT_JSON`.
 
 
+---
+
+### 13) Current status (Aug 12, 2025)
+
+- Code completed: indexer, Netlify function, basic UI.
+- GCP resources:
+  - Project: `my-project-74001686249`
+  - Region: `us-central1`
+  - Index Endpoint ID: `3577513968643604480`
+  - Index ID: `3326139222254944256` (brute force, dims=768, cosine)
+  - Deployed Index ID: `blog_post_index_deployed` (deployment in progress or needs confirmation in Console)
+- IAM: service account `kumarsemantic@my-project-74001686249.iam.gserviceaccount.com` has Vertex AI Admin.
+- Next actions to enable search end-to-end:
+  1. Confirm the deployed index appears on the endpoint in Console.
+  2. Run the indexer with `VERTEX_INDEX_ID=3326139222254944256` to upsert vectors.
+  3. Start Netlify dev and test `/.netlify/functions/semantic-search`.
