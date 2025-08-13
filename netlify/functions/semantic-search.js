@@ -96,9 +96,7 @@ exports.handler = async (event) => {
   }
 
   if (!GEMINI_API_KEY) return jsonResponse(500, { error: 'Missing GEMINI_API_KEY' });
-  if (!GCP_PROJECT_ID) return jsonResponse(500, { error: 'Missing GCP_PROJECT_ID' });
-  if (!GCP_SERVICE_ACCOUNT_JSON) return jsonResponse(500, { error: 'Missing GCP_SERVICE_ACCOUNT_JSON' });
-  if (!VERTEX_INDEX_ENDPOINT_ID) return jsonResponse(500, { error: 'Missing VERTEX_INDEX_ENDPOINT_ID' });
+  // GCP variables are optional for local fallback
 
   let payload;
   try {
@@ -117,54 +115,61 @@ exports.handler = async (event) => {
     const mapping = loadMapping();
     const byId = new Map(mapping.map((m) => [m.id, m]));
 
-    // Use REST call instead of gRPC for broader compatibility in serverless envs
-    const credentials = JSON.parse(GCP_SERVICE_ACCOUNT_JSON);
-    const auth = new GoogleAuth({ credentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] });
-    const accessToken = await auth.getAccessToken();
-    const endpointUrl = `https://${GCP_LOCATION}-aiplatform.googleapis.com/v1/projects/${GCP_PROJECT_ID}/locations/${GCP_LOCATION}/indexEndpoints/${VERTEX_INDEX_ENDPOINT_ID}:findNeighbors`;
-    const restBody = {
-      deployedIndexId: process.env.VERTEX_DEPLOYED_INDEX_ID || undefined,
-      queries: [
-        {
-          datapoint: { featureVector: queryEmbedding },
-          neighborCount: topK,
-        },
-      ],
-    };
-    const resp = await fetch(endpointUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(restBody),
-    });
-    if (!resp.ok) {
-      const errText = await resp.text();
-      // Automatic local fallback if Vertex query is unavailable (e.g., UNIMPLEMENTED)
-      const embeddings = loadEmbeddings();
-      if (embeddings.length > 0) {
-        const scored = embeddings.map((e) => ({ id: e.id, score: cosineSimilarity(queryEmbedding, e.vector) }));
-        scored.sort((a, b) => b.score - a.score);
-        const top = scored.slice(0, topK);
-        const results = top.map(({ id, score }) => {
-          const meta = byId.get(id) || { id, title: id, url: `/blog/${id}`, excerpt: '' };
-          return { id, title: meta.title, url: meta.url, excerpt: meta.excerpt, score };
+    // Try Vertex AI if GCP variables are available
+    if (GCP_PROJECT_ID && GCP_SERVICE_ACCOUNT_JSON && VERTEX_INDEX_ENDPOINT_ID) {
+      try {
+        // Use REST call instead of gRPC for broader compatibility in serverless envs
+        const credentials = JSON.parse(GCP_SERVICE_ACCOUNT_JSON);
+        const auth = new GoogleAuth({ credentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] });
+        const accessToken = await auth.getAccessToken();
+        const endpointUrl = `https://${GCP_LOCATION}-aiplatform.googleapis.com/v1/projects/${GCP_PROJECT_ID}/locations/${GCP_LOCATION}/indexEndpoints/${VERTEX_INDEX_ENDPOINT_ID}:findNeighbors`;
+        const restBody = {
+          deployedIndexId: process.env.VERTEX_DEPLOYED_INDEX_ID || undefined,
+          queries: [
+            {
+              datapoint: { featureVector: queryEmbedding },
+              neighborCount: topK,
+            },
+          ],
+        };
+        const resp = await fetch(endpointUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(restBody),
         });
-        return jsonResponse(200, { results, tookMs: Date.now() - started, provider: 'local' });
+        if (resp.ok) {
+          const response = await resp.json();
+          const neighbors = response?.nearestNeighbors?.[0]?.neighbors || [];
+          const results = neighbors.map((n) => {
+            const id = n?.datapoint?.datapointId;
+            const score = n?.distance || 0;
+            const meta = byId.get(id) || { id, title: id, url: `/blog/${id}`, excerpt: '' };
+            return { id, title: meta.title, url: meta.url, excerpt: meta.excerpt, score };
+          });
+          return jsonResponse(200, { results, tookMs: Date.now() - started, provider: 'vertex' });
+        }
+      } catch (err) {
+        console.log('Vertex AI failed, falling back to local search:', err.message);
       }
-      throw new Error(`Vertex findNeighbors error: ${resp.status} ${errText}`);
     }
-    const response = await resp.json();
-    const neighbors = response?.nearestNeighbors?.[0]?.neighbors || [];
-    const results = neighbors.map((n) => {
-      const id = n?.datapoint?.datapointId;
-      const score = n?.distance || 0;
-      const meta = byId.get(id) || { id, title: id, url: `/blog/${id}`, excerpt: '' };
-      return { id, title: meta.title, url: meta.url, excerpt: meta.excerpt, score };
-    });
 
-    return jsonResponse(200, { results, tookMs: Date.now() - started, provider: 'vertex' });
+    // Local fallback using cosine similarity
+    const embeddings = loadEmbeddings();
+    if (embeddings.length > 0) {
+      const scored = embeddings.map((e) => ({ id: e.id, score: cosineSimilarity(queryEmbedding, e.vector) }));
+      scored.sort((a, b) => b.score - a.score);
+      const top = scored.slice(0, topK);
+      const results = top.map(({ id, score }) => {
+        const meta = byId.get(id) || { id, title: id, url: `/blog/${id}`, excerpt: '' };
+        return { id, title: meta.title, url: meta.url, excerpt: meta.excerpt, score };
+      });
+      return jsonResponse(200, { results, tookMs: Date.now() - started, provider: 'local' });
+    }
+
+    return jsonResponse(500, { error: 'No embeddings available for search' });
   } catch (err) {
     return jsonResponse(500, { error: 'Search failed', details: String(err) });
   }
