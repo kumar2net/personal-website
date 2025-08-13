@@ -11,7 +11,8 @@
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
     "convert:books": "node scripts/convert-docx-to-md.mjs",
     "puml:render:svg": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tsvg docs/reco-architecture-*.puml",
-    "puml:render:png": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tpng docs/reco-architecture-*.puml"
+    "puml:render:png": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tpng docs/reco-architecture-*.puml",
+    "semantic:index": "node scripts/index-semantic.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -24,6 +25,8 @@
     "lucide-react": "^0.524.0",
     "mammoth": "^1.10.0",
     "node-fetch": "^3.3.2",
+    "@google-cloud/aiplatform": "^5.4.0",
+    "google-auth-library": "^9.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",

@@ -100,7 +100,3 @@ export default function SemanticSearch() {
     </div>
   );
 }
-
-
-
-
