@@ -1,0 +1,158 @@
+[
+  {
+    "id": "Compelling-india-story",
+    "title": "Compelling India Story",
+    "url": "/blog/Compelling-india-story",
+    "excerpt": "const FascinatingIndiaStory = () => ( Very Compelling India Story: How Millennials Are Powering the SIP Revolution Let's talk about something quietly amazing happening in India right now. No, it's not cricket (for once!)—it's the way young "
+  },
+  {
+    "id": "acronym-soup-revisited-2025",
+    "title": "Acronym Soup Revisited 2025",
+    "url": "/blog/acronym-soup-revisited-2025",
+    "excerpt": "const AcronymSoupRevisited2025 = () => { const navigate = useNavigate(); return ( navigate('/blog')} className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Acronym Soup Revisited (2"
+  },
+  {
+    "id": "acronym-soup",
+    "title": "Acronym Soup",
+    "url": "/blog/acronym-soup",
+    "excerpt": "const AcronymSoup = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Acronym Soup: The Evolution of Tech's Most Influential Companies June 18, 2025 From FANG to MAAMA: H"
+  },
+  {
+    "id": "andrej-karpathy-yc-ai-startup-school",
+    "title": "Andrej Karpathy Yc Ai Startup School",
+    "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+    "excerpt": "const AndrejKarpathyYcAiStartupSchool = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Andrej Karpathy's Y Combinator AI Startup School: The Electricity Analogy June 2"
+  },
+  {
+    "id": "applying-robinson-method",
+    "title": "Applying Robinson Method",
+    "url": "/blog/applying-robinson-method",
+    "excerpt": "const ApplyingRobinsonMethod = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Applying the Robinson Method: A Guide to Using Active Reading and Mastering Lifelong Lear"
+  },
+  {
+    "id": "autophagy",
+    "title": "Autophagy",
+    "url": "/blog/autophagy",
+    "excerpt": "const Autophagy = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Ekadasi morphs into IF and now Autophagy! July 19, 2025 How ancient fasting traditions align with mode"
+  },
+  {
+    "id": "building-mcp-server-with-cursor",
+    "title": "Building Mcp Server With Cursor",
+    "url": "/blog/building-mcp-server-with-cursor",
+    "excerpt": "const BuildingMcpServerWithCursor = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog Building a NewsAPI MCP Server with Cursor June 21, 2025 A practical guide to creating an MCP server fo"
+  },
+  {
+    "id": "compare",
+    "title": "Compare",
+    "url": "/blog/compare",
+    "excerpt": "Price/cost of essentials in places our folks live now I made this to just vet my curiocity. July 9, 2025 The main table covers cost of living and healthcare access. Separate tables below show dental/drug costs, income tax slabs, capital gai"
+  },
+  {
+    "id": "drug-suggestion-app",
+    "title": "Drug Suggestion App",
+    "url": "/blog/drug-suggestion-app",
+    "excerpt": "import from 'framer-motion' import from 'react-router-dom' const DrugSuggestionAppPost = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog Building a Smart Drug Suggestion Application May "
+  },
+  {
+    "id": "experience-using-api-in-ai-code-editor",
+    "title": "Experience Using Api In Ai Code Editor",
+    "url": "/blog/experience-using-api-in-ai-code-editor",
+    "excerpt": "const ExperienceUsingApiInAiCodeEditor = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog My Experience with the stock market API: Building a Mutual Fund Performance Tracker June 14, 2025"
+  },
+  {
+    "id": "feynman-technique",
+    "title": "Feynman Technique",
+    "url": "/blog/feynman-technique",
+    "excerpt": "const FeynmanTechnique = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Feynman Techniques: Learning Like Richard Feynman July 19, 2025 How the Nobel Prize-winning phy"
+  },
+  {
+    "id": "india-usa-trade-gap-2025",
+    "title": "India Usa Trade Gap 2025",
+    "url": "/blog/india-usa-trade-gap-2025",
+    "excerpt": "const IndiaUSATradeGap = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog 📄 Cornell Notes: India--USA Trade Relations (2024--2025) Date: August 7, 2025 Trade Relations "
+  },
+  {
+    "id": "kumblogtipsaug3",
+    "title": "Kumblogtipsaug3",
+    "url": "/blog/kumblogtipsaug3",
+    "excerpt": "Da vinci xi robot in a local hospital ad i read in newspaper and did dig and found its specs and price T&T - headline grabbing news in the last 3 days. Does it really matter. Per capita GDP of massive percentage of India population calculat"
+  },
+  {
+    "id": "marketnewsfetch",
+    "title": "Marketnewsfetch",
+    "url": "/blog/marketnewsfetch",
+    "excerpt": "i want to fetch latest Market News for my specific stocks in file /home/kumara/akstockanalysis/kumdematicicijun62025updatedfinal.xlsx using indianapi.in for which i have api key create a menu in home page navigation bar create a new page Ma"
+  },
+  {
+    "id": "memory-evolution",
+    "title": "Memory Evolution",
+    "url": "/blog/memory-evolution",
+    "excerpt": "const MemoryEvolution = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Memory Evolution: From Human Moments to AI Memories July 26, 2025 How AI memory systems are resh"
+  },
+  {
+    "id": "microsoft-mai-dx-india",
+    "title": "Microsoft Mai Dx India",
+    "url": "/blog/microsoft-mai-dx-india",
+    "excerpt": "const MicrosoftMaiDxIndia = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution July 4, 2025 Micr"
+  },
+  {
+    "id": "my-experience-with-windsurf",
+    "title": "My Experience With Windsurf",
+    "url": "/blog/my-experience-with-windsurf",
+    "excerpt": "import from 'framer-motion' import from 'react-router-dom' const MyExperienceWithWindsurfPost = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog My Experience with Windsurf June 04, 2025 "
+  },
+  {
+    "id": "my-fascination-with-shortcuts",
+    "title": "My Fascination With Shortcuts",
+    "url": "/blog/my-fascination-with-shortcuts",
+    "excerpt": "const MyFascinationWithShortcuts = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog My Fascination with Shortcuts: The Art of Keyboard Navigation June 27, 2025 Why keybo"
+  },
+  {
+    "id": "my-random-thoughts-this-week",
+    "title": "My Random Thoughts This Week",
+    "url": "/blog/my-random-thoughts-this-week",
+    "excerpt": "const MyRandomThoughtsThisWeek = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog my random thoughts this week August 03, 2025 • 3 min read Technology Healthcare Robotic"
+  },
+  {
+    "id": "nammu-soil-analysis-research",
+    "title": "Nammu Soil Analysis Research",
+    "url": "/blog/nammu-soil-analysis-research",
+    "excerpt": "const NammuSoilAnalysisResearch = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog revolutionizing soil analysis: laser vs traditional methods August 03, 2025 • 5 min re"
+  },
+  {
+    "id": "nepal-annapurna-circuit",
+    "title": "Nepal Annapurna Circuit",
+    "url": "/blog/nepal-annapurna-circuit",
+    "excerpt": "const NepalAnnapurnaCircuit = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Nepal Journeys: An Annapurna Circuit Adventure July 27, 2025 Adventure Trekking Nepal Anna"
+  },
+  {
+    "id": "portfolio-website",
+    "title": "Portfolio Website",
+    "url": "/blog/portfolio-website",
+    "excerpt": "const PortfolioWebsitePost = () => className=\"flex items-center text-blue-600 hover:text-blue-800 mb-8\" > Back to Blog Building My Personal Portfolio Website June 3, 2025 Introduction I recently built my personal portfolio website using mod"
+  },
+  {
+    "id": "price-parity",
+    "title": "Price Parity",
+    "url": "/blog/price-parity",
+    "excerpt": "const lines = markdownContent.split('\\n'); const title = lines[0].replace(/^#\\s*/, ''); const date = lines[2].replace(/^\\*\\s*|\\s*\\*$/g, ''); const body = lines.slice(4).join('\\n'); const PriceParity = () => className=\"px-4 py-2 bg-gray-100 "
+  },
+  {
+    "id": "spine-implant-dashboard",
+    "title": "Spine Implant Dashboard",
+    "url": "/blog/spine-implant-dashboard",
+    "excerpt": "import from 'framer-motion' import from 'react-router-dom' const SpineImplantDashboardPost = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog Building a Spine Implant Market Analytics Das"
+  },
+  {
+    "id": "started-to-kindle-again",
+    "title": "Started To Kindle Again",
+    "url": "/blog/started-to-kindle-again",
+    "excerpt": "const StartedToKindleAgain = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Started to Kindle Again Reading Notes From: Dopamine Detox: A Short Guide to Remove Distrac"
+  },
+  {
+    "id": "top-9-famous-rules",
+    "title": "Top 9 Famous Rules",
+    "url": "/blog/top-9-famous-rules",
+    "excerpt": "import from 'framer-motion' import from 'react-router-dom' const Top9FamousRules = () => { const navigate = useNavigate() const publishedDate = 'August 9, 2025' const readingTime = '3 min read' return ( navigate('/blog')} className=\"px-4 py"
+  }
+]
