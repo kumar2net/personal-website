@@ -1,10 +1,10 @@
 # Session Summary (Semantic Search)
 
-Last Updated: 12 Aug 2025
+Last Updated: 13 Aug 2025
 
 ## Completed Today
 
-- Backend function `netlify/functions/semantic-search.js` implemented (Vertex-only; no local fallback).
+- Backend function `netlify/functions/semantic-search.js` implemented. Vertex REST + automatic local fallback when Vertex is unavailable.
 - Indexer `scripts/index-semantic.mjs` to embed posts and upsert vectors.
 - Frontend UI `src/components/SemanticSearch.jsx` integrated into `Blog` page.
 - GCP: Created Vertex AI Vector Search Index (brute force) in `us-central1`.
@@ -22,7 +22,7 @@ Last Updated: 12 Aug 2025
 
 - Netlify Dev running on `http://localhost:8890` (when started).
 - Function endpoint: `POST /.netlify/functions/semantic-search`.
-- Calls currently return 500 until the deployed index is available and vectors are upserted.
+- Semantic search works locally using precomputed embeddings (local fallback). Vertex path pending deployed index readiness and stream/batch upsert.
 
 ## Next Steps (Tomorrow)
 

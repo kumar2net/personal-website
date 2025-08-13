@@ -235,17 +235,19 @@ curl -s -X POST \
 
 ---
 
-### 13) Current status (Aug 12, 2025)
+### 13) Current status (Aug 13, 2025)
 
 - Code completed: indexer, Netlify function, basic UI.
 - GCP resources:
   - Project: `my-project-74001686249`
   - Region: `us-central1`
   - Index Endpoint ID: `3577513968643604480`
-  - Index ID: `3326139222254944256` (brute force, dims=768, cosine)
-  - Deployed Index ID: `blog_post_index_deployed` (deployment in progress or needs confirmation in Console)
+- Index ID(s):
+  - `3440981012752891904` (blog-index, deployed ID: `blog_post_index_v1`)
+  - `3326139222254944256` (blog-post-index-data)
+- Deployed Index ID: `blog_post_index_v1` (deploy in progress; verify in Console)
 - IAM: service account `kumarsemantic@my-project-74001686249.iam.gserviceaccount.com` has Vertex AI Admin.
-- Next actions to enable search end-to-end:
-  1. Confirm the deployed index appears on the endpoint in Console.
-  2. Run the indexer with `VERTEX_INDEX_ID=3326139222254944256` to upsert vectors.
-  3. Start Netlify dev and test `/.netlify/functions/semantic-search`.
+- Next actions to enable Vertex path end-to-end:
+  1. Confirm endpoint `3577513968643604480` shows deployed index `blog_post_index_v1` Ready.
+  2. Upsert vectors to `VERTEX_INDEX_ID=3440981012752891904` (or batch import). Re-run indexer.
+  3. Keep local fallback active until Vertex returns neighbors.
