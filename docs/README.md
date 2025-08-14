@@ -1,16 +1,17 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 10, 2025
+**Last Updated:** August 14, 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
 ## 🚀 Features
 
 - **Portfolio Showcase** - Display projects and skills
-- **Blog System** - Share thoughts and experiences
+- **Blog System** - Share thoughts and experiences with AI-generated TL;DR summaries
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Learning Hub** - Educational resources and shortcuts
 - **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
+- **Semantic Search** - AI-powered search across blog content
 - **Responsive Design** - Works on all devices
 - **Modern UI** - Built with Tailwind CSS and Framer Motion
 
@@ -19,7 +20,8 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Frontend:** React 18, Vite, Tailwind CSS
 - **Animations:** Framer Motion
 - **Analytics:** Google Analytics 4 (GA4)
-- **Deployment:** Netlify
+- **AI Services:** Gemini API (TL;DR), Vertex AI (Semantic Search)
+- **Deployment:** Netlify (with serverless functions)
 - **Icons:** React Icons
   
 ## 📚 Books
@@ -88,6 +90,10 @@ The blog system supports:
 - Automatic routing
 - SEO optimization
 - Reading time estimation
+- AI-generated TL;DR summaries
+- Semantic search integration
+- Shields.io badges for topics
+- Hero images with Unsplash attribution
 
 ## 🔧 Development
 
