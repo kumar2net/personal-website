@@ -5,6 +5,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: '🚀 The Great Pivot — What\'s Behind All This T&T Hullabaloo!',
+    date: 'August 14, 2025',
+    excerpt: 'When the US decides to pivot towards manufacturing glory, it\'s not a nostalgic trip back to old-school factories — it\'s a calculated move in the global economic game. And here\'s the kicker: one manufacturing job can spark 10 other jobs.',
+    tags: ['Manufacturing', 'US Economy', 'Tariffs', 'Global Trade', 'Economic Policy', 'Job Creation', 'Supply Chain'],
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+    link: '/blog/the-great-pivot'
+  },
+  {
     title: 'Top 10 Famous Rules (with Examples)',
     date: 'August 9, 2025',
     excerpt: 'Ten timeless rules like Rule of 72, Pareto Principle (with effort tip), and Benford’s Law—each explained with simple, real-world examples.',
