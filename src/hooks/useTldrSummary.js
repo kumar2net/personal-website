@@ -52,7 +52,7 @@ export function useTldrSummary({ slug, text, enabled = true }) {
           window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         );
         const isVitePort = typeof window !== 'undefined' && (window.location.port === '5173' || window.location.port === '5174');
-        const functionsBase = isLocalHost && isVitePort ? 'http://localhost:8888' : '';
+        const functionsBase = isLocalHost && isVitePort ? 'http://localhost:8889' : '';
 
         const resp = await fetch(`${functionsBase}/.netlify/functions/tldr`, {
           method: 'POST',

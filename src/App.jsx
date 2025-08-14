@@ -43,6 +43,7 @@ import BookCornellMethod from './pages/BookCornellMethod';
 import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 import PostDynamic from './pages/blog/PostDynamic';
+import TheGreatPivot from './pages/blog/the-great-pivot';
 
 
 function useGaPageViews() {
@@ -301,7 +302,8 @@ function App() {
           <Route path="/blog/nammu-soil-analysis-research" element={<NammuSoilAnalysisResearch />} />
           <Route path="/blog/india-usa-trade-gap-2025" element={<IndiaUSATradeGap />} />
           <Route path="/blog/top-9-famous-rules" element={<Top9FamousRules />} />
-          <Route path="/blog/:slug" element={<PostDynamic />} />
+<Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
+<Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
