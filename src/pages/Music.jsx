@@ -15,11 +15,48 @@ const MusicPage = () => {
       </div>
 
       <div className="space-y-8">
-        {/* Bhajan Gang Feature */}
+        {/* Viral Music Moment */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.03 }}
+          className="bg-gradient-to-r from-pink-50 to-rose-50 p-8 rounded-xl border-l-4 border-pink-500"
+        >
+          <div className="flex items-center mb-6">
+            <Heart className="h-8 w-8 text-pink-600 mr-3" />
+            <h2 className="text-2xl font-bold text-gray-800">Viral Music Moments</h2>
+          </div>
+          
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="text-sm text-gray-500 mb-3">
+              {new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </div>
+            <p className="text-gray-700 mb-4">
+              Viral in India and what lovely, cute expression by this little girl
+            </p>
+            <a
+              href="https://youtube.com/shorts/URI83iIoCzo?si=Ao65hUr2qugCVvsv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors font-medium"
+            >
+              <Play className="h-5 w-5 mr-2" />
+              Watch on YouTube
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Bhajan Gang Feature */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
           className="bg-gradient-to-r from-amber-50 to-orange-50 p-8 rounded-xl border-l-4 border-amber-500"
         >
           <div className="flex items-center mb-6">
@@ -192,6 +229,8 @@ const MusicPage = () => {
             </p>
           </div>
         </motion.div>
+
+
 
         {/* Music Categories */}
         <motion.div
