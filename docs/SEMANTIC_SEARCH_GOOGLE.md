@@ -249,5 +249,5 @@ curl -s -X POST \
 - IAM: service account `kumarsemantic@my-project-74001686249.iam.gserviceaccount.com` has Vertex AI Admin.
 - Next actions to enable Vertex path end-to-end:
   1. Confirm endpoint `3577513968643604480` shows deployed index `blog_post_index_v1` Ready.
-  2. Upsert vectors to `VERTEX_INDEX_ID=3440981012752891904` (or batch import). Re-run indexer.
+  2. Upsert vectors to `VERTEX_INDEX_ID=YOUR_INDEX_ID` (or batch import). Re-run indexer.
   3. Keep local fallback active until Vertex returns neighbors.
