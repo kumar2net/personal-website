@@ -26,7 +26,7 @@ const TheGreatPivot = () => {
         </button>
       </div>
       
-      <h1 className="text-4xl font-bold mb-6">🚀 The Great Pivot — What's Behind All This T&T Hullabaloo!</h1>
+      <h1 className="text-4xl font-bold mb-6">🚀 The Great Pivot — What's Behind All This T&T Hullabaloo! (குய்யோ மொய்யோ)</h1>
       
       <div className="flex items-center text-gray-600 mb-8">
         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
