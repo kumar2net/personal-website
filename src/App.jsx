@@ -44,6 +44,7 @@ import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 import PostDynamic from './pages/blog/PostDynamic';
 import TheGreatPivot from './pages/blog/the-great-pivot';
+import Trends from './pages/Trends';
 
 
 function useGaPageViews() {
@@ -106,6 +107,13 @@ function App() {
                 onClick={() => trackClick('nav_blog')}
               >
                 Blog
+              </Link>
+              <Link 
+                to="/trends" 
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+                onClick={() => trackClick('nav_trends')}
+              >
+                Trends
               </Link>
               <Link 
                 to="/learning" 
@@ -186,6 +194,16 @@ function App() {
                   Blog
                 </Link>
                 <Link 
+                  to="/trends" 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackClick('nav_trends_mobile');
+                  }}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Trends
+                </Link>
+                <Link 
                   to="/learning" 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
@@ -247,6 +265,9 @@ function App() {
                 <Link to="/blog" className="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">
                   Blog
                 </Link>
+                <Link to="/trends" className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                  Trends
+                </Link>
                 <Link to="/learning" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
                   Learning Hub
                 </Link>
@@ -272,6 +293,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/trends" element={<Trends />} />
           <Route path="/learning" element={<Learning />} />
           <Route path="/music" element={<MusicPage />} />
           <Route path="/books" element={<Books />} />
@@ -302,8 +324,8 @@ function App() {
           <Route path="/blog/nammu-soil-analysis-research" element={<NammuSoilAnalysisResearch />} />
           <Route path="/blog/india-usa-trade-gap-2025" element={<IndiaUSATradeGap />} />
           <Route path="/blog/top-9-famous-rules" element={<Top9FamousRules />} />
-<Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
-<Route path="/blog/:slug" element={<PostDynamic />} />
+          <Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
+          <Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
