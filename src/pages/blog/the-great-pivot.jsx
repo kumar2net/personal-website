@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import TldrSummary from '../../components/TldrSummary';
+import GraphRecommendations from '../../components/GraphRecommendations';
 
 const TheGreatPivot = () => {
   const navigate = useNavigate();
@@ -154,7 +155,15 @@ const TheGreatPivot = () => {
             </p>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-gray-200">
+          {/* Neural Graph Recommendations */}
+          <div className="mt-12">
+            <GraphRecommendations 
+              currentPostId="the-great-pivot" 
+              maxRecommendations={5} 
+            />
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-gray-200">
             <h3 className="text-lg font-semibold mb-4 text-gray-800">🔗 Related Topics</h3>
             <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Manufacturing Revival</span>
