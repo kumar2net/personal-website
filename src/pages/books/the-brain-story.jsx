@@ -112,7 +112,7 @@ function TheBrainStory() {
               </div>
               
               <a
-                href="/docs/The_Brain_The_Story.pdf"
+                href="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
                 download
                 className="flex items-center text-sm text-blue-600 hover:text-blue-700 transition-colors"
               >
@@ -125,7 +125,7 @@ function TheBrainStory() {
           {/* PDF Viewer */}
           <div className="relative w-full" style={{ height: isMobile ? 'calc(100vh - 120px)' : 'calc(100vh - 200px)' }}>
             <iframe
-              src={`/docs/The_Brain_The_Story.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=${scale * 100}`}
+              src={`https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=${scale * 100}`}
               className="w-full h-full border-0"
               title="The Brain: The Story of You PDF"
               style={{
@@ -142,7 +142,7 @@ function TheBrainStory() {
         {isMobile && (
           <div className="mt-4 text-center">
             <a
-              href="/docs/The_Brain_The_Story.pdf"
+              href="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
               download
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
