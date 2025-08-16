@@ -27,12 +27,24 @@ const TechTrendsDashboard = () => {
     setError('');
     
     try {
-      // Use Netlify dev server for local development
-      const baseUrl = 'http://localhost:8888';
-      const response = await fetch(`${baseUrl}/.netlify/functions/tech-trends`);
+      // Try local Netlify dev server first, then fallback to deployed function
+      const localUrl = 'http://localhost:8888/.netlify/functions/tech-trends';
+      const deployedUrl = 'https://kumarsite.netlify.app/.netlify/functions/tech-trends';
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      let response;
+      try {
+        // Try local first
+        response = await fetch(localUrl);
+        if (!response.ok) {
+          throw new Error(`Local server error: ${response.status}`);
+        }
+      } catch (localError) {
+        console.log('Local Netlify dev server not available, trying deployed function...');
+        // Fallback to deployed function
+        response = await fetch(deployedUrl);
+        if (!response.ok) {
+          throw new Error(`Deployed function error: ${response.status}`);
+        }
       }
       
       const data = await response.json();

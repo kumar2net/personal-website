@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import TldrSummary from '../../components/TldrSummary';
+// import TldrSummary from '../../components/TldrSummary';
 
 const MyRandomThoughtsThisWeek = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const MyRandomThoughtsThisWeek = () => {
       </div>
 
       <div className="space-y-8">
-        <TldrSummary articleRef={articleRef} />
+        {/* <TldrSummary articleRef={articleRef} /> */}
         <div ref={articleRef} className="prose prose-lg max-w-none">
           <header className="text-center mb-10">
             <p className="text-md sm:text-lg text-gray-600 mt-4">

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import GraphRecommendations from '../../components/GraphRecommendations';
+// import GraphRecommendations from '../../components/GraphRecommendations';
 
 const Autophagy = () => {
   const navigate = useNavigate();
@@ -158,12 +158,12 @@ const Autophagy = () => {
         </div>
 
         {/* Neural Graph Recommendations */}
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <GraphRecommendations 
             currentPostId="autophagy" 
             maxRecommendations={5} 
           />
-        </div>
+        </div> */}
       </div>
     </motion.div>
   );

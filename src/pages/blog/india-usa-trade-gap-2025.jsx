@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import TldrSummary from '../../components/TldrSummary';
+// import TldrSummary from '../../components/TldrSummary';
 
 const IndiaUSATradeGap = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const IndiaUSATradeGap = () => {
       </div>
 
       <div className="space-y-8">
-        <TldrSummary articleRef={articleRef} />
+        {/* <TldrSummary articleRef={articleRef} /> */}
         <div ref={articleRef} className="prose prose-lg max-w-none">
           <p className="text-lg text-gray-700 mb-8 italic">
             Seeing all the hullabaloo after yesterday's announcement by the great country, I set out to understand the numbers and this is what I discovered
