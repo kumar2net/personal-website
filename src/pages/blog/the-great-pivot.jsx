@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import TldrSummary from '../../components/TldrSummary';
-import GraphRecommendations from '../../components/GraphRecommendations';
+// import TldrSummary from '../../components/TldrSummary';
+// import GraphRecommendations from '../../components/GraphRecommendations';
 
 const TheGreatPivot = () => {
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ const TheGreatPivot = () => {
       </div>
 
       <div className="space-y-8">
-        <TldrSummary articleRef={articleRef} />
+        {/* <TldrSummary articleRef={articleRef} /> */}
         <div ref={articleRef} className="prose prose-lg max-w-none">
           <p className="text-lg text-gray-700 mb-8 italic">
             When the US decides to pivot towards manufacturing glory (from getting stuff manufactured at the best place at an optimal cost, leveraging global supply chain at the sametime keeping the IP rights tightly in control), it's not a nostalgic trip back to old-school factories — it's a calculated move in the global economic game. And here's the kicker: <strong>one manufacturing job can spark 10 other jobs</strong> — from supply chains and transport to retail and app-based delivery. That's not just a job; it's a job multiplier. <em>(And yes, these moves fit perfectly with their voter base — blue collar! hahaha)</em>
@@ -156,23 +156,23 @@ const TheGreatPivot = () => {
           </div>
 
           {/* Neural Graph Recommendations */}
-          <div className="mt-12">
+          {/* <div className="mt-12">
             <GraphRecommendations 
               currentPostId="the-great-pivot" 
               maxRecommendations={5} 
             />
-          </div>
+          </div> */}
 
-          <div className="mt-8 pt-8 border-t border-gray-200">
+          {/* <div className="mt-8 pt-8 border-t border-gray-200">
             <h3 className="text-lg font-semibold mb-4 text-gray-800">🔗 Related Topics</h3>
             <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Manufacturing Revival</span>
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Job Multiplier Effect</span>
-              <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Trade Policy</span>
+              <span className="px-3 py-1 bg-gray-700 rounded-full text-sm">Trade Policy</span>
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Economic Strategy</span>
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Global Trade Dynamics</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </motion.div>

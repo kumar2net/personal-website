@@ -5,6 +5,14 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'What to Write This Week?',
+    date: 'August 16, 2025',
+    excerpt: 'A long weekend in India brings reflections on trade, AI quirks, family adventures, and the simple joys of life. From Tirupur\'s textile industry to ChatGPT\'s confusion with Indian epics.',
+    tags: ['Personal', 'Trade Policy', 'AI & Technology', 'Travel', 'India', 'Family'],
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+    link: '/blog/long-weekend-musings-2025'
+  },
+  {
     title: '🚀 The Great Pivot — What\'s Behind All This T&T Hullabaloo!',
     date: 'August 14, 2025',
     excerpt: 'When the US decides to pivot towards manufacturing glory, it\'s not a nostalgic trip back to old-school factories — it\'s a calculated move in the global economic game. And here\'s the kicker: one manufacturing job can spark 10 other jobs.',
