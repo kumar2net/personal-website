@@ -32,7 +32,7 @@ function Books() {
             </div>
             <p className="text-gray-600 mt-3 text-sm sm:text-base">One of the best books I have read in a while. Observing all the advances in AI and listening to gyan from my kin on neurology brain implants, wanted to dig deeper. As they say these days - learn from First Principles</p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read PDF</span>
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read Book</span>
             </div>
           </div>
         </Link>

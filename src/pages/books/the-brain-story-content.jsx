@@ -7,7 +7,7 @@ function TheBrainStoryContent() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
               <Link
@@ -33,7 +33,7 @@ function TheBrainStoryContent() {
       </header>
 
       {/* Book Cover and Description */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-shrink-0">
@@ -61,82 +61,62 @@ function TheBrainStoryContent() {
         </div>
       </div>
 
-      {/* Book Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      {/* PDF Embed */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="prose prose-lg max-w-none p-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">The Brain: The Story of You</h1>
-            <p className="text-lg text-gray-600 italic mb-8">By David Eagleman</p>
-            
-            <hr className="my-8" />
-            
-            <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-6">Introduction</h2>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              The brain is the most complex object in the known universe. It's the seat of our thoughts, emotions, memories, and consciousness. Yet, for most of human history, we've known almost nothing about how it works.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-8">
-              In "The Brain: The Story of You," neuroscientist David Eagleman takes us on a fascinating journey through the inner workings of our most mysterious organ. This book explores how the brain creates our reality, shapes our decisions, and makes us who we are.
-            </p>
+          <div className="bg-gray-50 px-4 py-3 border-b">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">Read "The Brain: The Story of You"</h3>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">PDF Reader</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="relative w-full" style={{ height: 'calc(100vh - 300px)' }}>
+            <iframe
+              src="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
+              className="w-full h-full border-0"
+              title="The Brain: The Story of You PDF"
+              loading="lazy"
+            />
+          </div>
+          
+          <div className="bg-gray-50 px-4 py-3 border-t">
+            <div className="flex items-center justify-between text-sm text-gray-600">
+              <span>📖 Full PDF content with native reader controls</span>
+              <span>🔍 Zoom, search, and navigate with your browser's PDF tools</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-6">Key Insights from the Book</h2>
-            
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">1. The Brain is Not What You Think</h3>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              Your brain is not a single, unified entity. Instead, it's a collection of specialized modules that compete and collaborate to create your experience of reality. Each part of your brain has evolved to solve specific problems, from recognizing faces to avoiding danger.
-            </p>
-
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">2. Reality is Constructed</h3>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              What you perceive as "reality" is actually a carefully constructed simulation created by your brain. Your brain takes in sensory information and builds a model of the world that helps you navigate and survive. This means that what you see, hear, and feel is not the objective truth, but rather your brain's best guess about what's happening.
-            </p>
-
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">3. The Unconscious Mind</h3>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              Most of what your brain does happens unconsciously. From regulating your heartbeat to processing visual information, the vast majority of neural activity occurs without your awareness. Your conscious mind is just the tip of the iceberg.
-            </p>
-
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">4. Plasticity and Change</h3>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              The brain is incredibly plastic, meaning it can change and adapt throughout your life. Every experience you have, every skill you learn, every memory you form, physically changes the structure of your brain. This plasticity is what allows us to learn, grow, and adapt to new situations.
-            </p>
-
-            <h3 className="text-xl font-semibold text-gray-800 mt-8 mb-4">5. The Social Brain</h3>
-            <p className="text-gray-700 leading-relaxed mb-8">
-              Humans are fundamentally social creatures, and our brains have evolved to help us navigate complex social relationships. We have specialized neural circuits for recognizing faces, understanding emotions, and cooperating with others.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-6">Implications for AI and Technology</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              As we develop increasingly sophisticated artificial intelligence and neural implants, understanding how the brain works becomes more important than ever. The insights from neuroscience can help us:
-            </p>
-            <ul className="list-disc pl-6 mb-8 space-y-2 text-gray-700">
-              <li><strong>Design Better AI</strong>: Understanding how the brain processes information can inspire new approaches to artificial intelligence</li>
-              <li><strong>Develop Neural Interfaces</strong>: Knowledge of brain function is crucial for developing safe and effective brain-computer interfaces</li>
-              <li><strong>Enhance Human Capabilities</strong>: Understanding brain plasticity could lead to new ways to enhance learning and cognitive abilities</li>
-              <li><strong>Treat Brain Disorders</strong>: Better understanding of brain function can lead to new treatments for neurological and psychiatric conditions</li>
-            </ul>
-
-            <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-6">The Future of Brain Science</h2>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              The field of neuroscience is advancing rapidly, with new technologies allowing us to study the brain in unprecedented detail. From functional MRI to optogenetics, we're gaining new insights into how the brain works every day.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-8">
-              As we continue to unravel the mysteries of the brain, we're not just learning about biology—we're learning about what it means to be human. The brain is the story of you, and understanding it is understanding yourself.
-            </p>
-
-            <h2 className="text-2xl font-bold text-gray-800 mt-12 mb-6">Conclusion</h2>
-            <p className="text-gray-700 leading-relaxed mb-6">
-              "The Brain: The Story of You" is more than just a book about neuroscience. It's a book about what makes us human, about how we perceive the world, and about the incredible complexity of our own minds. It's a reminder that we are all walking around with the most sophisticated piece of technology in the known universe inside our heads.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-8">
-              As we move forward into an era of artificial intelligence and brain-computer interfaces, understanding our own brains becomes not just interesting, but essential. The future of technology and the future of humanity are both deeply intertwined with our understanding of the brain.
-            </p>
-
-            <hr className="my-8" />
-            
-            <p className="text-gray-600 italic text-center">
-              This summary captures the key themes and insights from David Eagleman's "The Brain: The Story of You." The book is a fascinating exploration of neuroscience that has profound implications for our understanding of consciousness, technology, and what it means to be human.
-            </p>
+      {/* Mobile Download Notice */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-blue-800">Mobile Users</h3>
+              <div className="mt-2 text-sm text-blue-700">
+                <p>For the best reading experience on mobile devices, consider downloading the PDF to use your device's native PDF reader app.</p>
+              </div>
+              <div className="mt-3">
+                <a
+                  href="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
+                  download
+                  className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  <HiDownload className="w-4 h-4 mr-1" />
+                  Download for Mobile
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
