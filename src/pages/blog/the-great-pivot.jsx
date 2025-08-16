@@ -72,7 +72,7 @@ const TheGreatPivot = () => {
         <TldrSummary articleRef={articleRef} />
         <div ref={articleRef} className="prose prose-lg max-w-none">
           <p className="text-lg text-gray-700 mb-8 italic">
-            When the US decides to pivot towards manufacturing glory, it's not a nostalgic trip back to old-school factories — it's a calculated move in the global economic game. And here's the kicker: <strong>one manufacturing job can spark 10 other jobs</strong> — from supply chains and transport to retail and app-based delivery. That's not just a job; it's a job multiplier. <em>(And yes, these moves fit perfectly with their voter base — blue collar! hahaha)</em>
+            When the US decides to pivot towards manufacturing glory (from getting stuff manufactured at the best place at an optimal cost, leveraging global supply chain at the sametime keeping the IP rights tightly in control), it's not a nostalgic trip back to old-school factories — it's a calculated move in the global economic game. And here's the kicker: <strong>one manufacturing job can spark 10 other jobs</strong> — from supply chains and transport to retail and app-based delivery. That's not just a job; it's a job multiplier. <em>(And yes, these moves fit perfectly with their voter base — blue collar! hahaha)</em>
           </p>
 
           <h2 className="text-2xl font-bold mt-12 mb-6 text-gray-800">🎯 The Intention Behind All the Tariff Hoopla</h2>
