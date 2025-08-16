@@ -43,6 +43,7 @@ import BookCornellMethod from './pages/BookCornellMethod';
 import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import TheBrainStory from './pages/books/the-brain-story';
 import TheBrainStoryContent from './pages/books/the-brain-story-content';
+import PDFExtractorPage from './pages/books/pdf-extractor';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 import PostDynamic from './pages/blog/PostDynamic';
 import TheGreatPivot from './pages/blog/the-great-pivot';
@@ -302,6 +303,7 @@ function App() {
           <Route path="/books/applying-cornell-method" element={<ApplyingCornellMethodMd />} />
           <Route path="/books/the-brain-story" element={<TheBrainStory />} />
           <Route path="/books/the-brain-story-content" element={<TheBrainStoryContent />} />
+          <Route path="/books/pdf-extractor" element={<PDFExtractorPage />} />
           <Route path="/learning/:setId" element={<FlashcardSetPage />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />
           <Route path="/learning/vocab-additions" element={<VocabAdditions />} />
