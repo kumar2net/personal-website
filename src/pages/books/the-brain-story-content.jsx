@@ -5,7 +5,7 @@ import BookCover from '../../components/BookCover'
 function TheBrainStoryContent() {
   const handleReadBook = () => {
     // Open PDF in default PDF reader
-    window.open('https://kumarsite.netlify.app/The_Brain_The_Story.pdf', '_blank')
+    window.open('/The_Brain_The_Story.pdf', '_blank')
   }
 
   return (
@@ -26,7 +26,7 @@ function TheBrainStoryContent() {
             </div>
             
             <a
-              href="https://kumarsite.netlify.app/The_Brain_The_Story.pdf"
+              href="/The_Brain_The_Story.pdf"
               download
               className="flex items-center text-sm text-blue-600 hover:text-blue-700 transition-colors"
             >
@@ -130,7 +130,7 @@ function TheBrainStoryContent() {
                   Download the PDF to read offline or transfer to your preferred device.
                 </p>
                 <a
-                  href="https://kumarsite.netlify.app/The_Brain_The_Story.pdf"
+                  href="/The_Brain_The_Story.pdf"
                   download
                   className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                 >
@@ -155,7 +155,7 @@ function TheBrainStoryContent() {
                   Open the PDF directly in your web browser for quick access.
                 </p>
                 <a
-                  href="https://kumarsite.netlify.app/The_Brain_The_Story.pdf"
+                  href="/The_Brain_The_Story.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
