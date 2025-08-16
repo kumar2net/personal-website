@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 14, 2025
+**Last Updated:** August 16, 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
@@ -94,6 +94,8 @@ The blog system supports:
 - Semantic search integration
 - Shields.io badges for topics
 - Hero images with Unsplash attribution
+- Photo album integration with Google Photos
+- Music playlist links integration
 
 ## 🔧 Development
 
