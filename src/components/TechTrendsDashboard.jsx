@@ -11,6 +11,13 @@ const TechTrendsDashboard = () => {
 
   const categories = ['All', 'AI/ML', 'Web Dev', 'Mobile', 'DevOps', 'Programming', 'Technology'];
 
+  const formatDate = (date) => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = date.toLocaleDateString('en-US', { month: 'short' });
+    const year = date.getFullYear().toString().slice(-2);
+    return `${day}-${month}-${year}`;
+  };
+
   useEffect(() => {
     fetchTechTrends();
   }, []);
@@ -134,7 +141,7 @@ const TechTrendsDashboard = () => {
               Top 10 trending topics from Hacker News, GitHub, and Reddit
               {lastUpdated && (
                 <span className="ml-2 text-sm">
-                  • Last updated: {new Date(lastUpdated).toLocaleDateString()}
+                  • Last updated: {formatDate(new Date(lastUpdated))}
                   {cacheAge > 0 && ` (${cacheAge}h ago)`}
                 </span>
               )}
