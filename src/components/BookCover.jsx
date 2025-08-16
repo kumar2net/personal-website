@@ -46,7 +46,7 @@ function BookCover({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <img 
-        src={coverUrl} 
+        src={coverUrl ? coverUrl.replace(/^http:/, 'https:') : coverUrl} 
         alt={`${title} book cover`}
         className="w-full h-full object-cover"
         onLoad={handleImageLoad}
