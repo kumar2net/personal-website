@@ -116,19 +116,6 @@ const LongWeekendMusings2025 = () => {
             <h2 className="text-2xl font-bold mb-6 text-gray-800">
               5. The Arunachal Pradesh little girl singing national anthem and Pardesiya from Param sundari are in my /music playlist
             </h2>
-            <div className="my-6 text-center">
-              <a 
-                href="https://www.youtube.com/watch?v=your-pardesiya-video-id" 
-                className="inline-block px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-lg" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                🎵 Listen to Pardesiya
-              </a>
-              <p className="text-sm text-gray-500 mt-2">
-                From Param Sundari
-              </p>
-            </div>
           </section>
 
           <section className="mb-8">
