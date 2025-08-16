@@ -6,6 +6,12 @@
     "excerpt": "const FascinatingIndiaStory = () => ( Very Compelling India Story: How Millennials Are Powering the SIP Revolution Let's talk about something quietly amazing happening in India right now. No, it's not cricket (for once!)—it's the way young "
   },
   {
+    "id": "PostDynamic",
+    "title": "PostDynamic",
+    "url": "/blog/PostDynamic",
+    "excerpt": "const jsxModules = import.meta.glob('/src/pages/blog/*.jsx'); const mdModules = import.meta.glob('/src/pages/blog/*.md', ); const [markdown, setMarkdown] = useState(''); const LazyComponent = useMemo(() => { const path = `/src/pages/blog/$ "
+  },
+  {
     "id": "acronym-soup-revisited-2025",
     "title": "Acronym Soup Revisited 2025",
     "url": "/blog/acronym-soup-revisited-2025",
@@ -148,6 +154,12 @@
     "title": "Started To Kindle Again",
     "url": "/blog/started-to-kindle-again",
     "excerpt": "const StartedToKindleAgain = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Started to Kindle Again Reading Notes From: Dopamine Detox: A Short Guide to Remove Distrac"
+  },
+  {
+    "id": "the-great-pivot",
+    "title": "The Great Pivot",
+    "url": "/blog/the-great-pivot",
+    "excerpt": "const TheGreatPivot = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog 🚀 The Great Pivot — What's Behind All This T&T Hullabaloo! (குய்யோ மொய்யோ) Date: August 14, 2025 "
   },
   {
     "id": "top-9-famous-rules",
