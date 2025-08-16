@@ -11,7 +11,7 @@ function Books() {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Link
-          to="/books/the-brain-story"
+          to="/books/the-brain-story-content"
           aria-label="Read The Brain: The Story of You"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
         >
