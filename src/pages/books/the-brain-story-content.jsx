@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom'
-import { HiArrowLeft, HiDownload } from 'react-icons/hi'
+import { HiArrowLeft, HiDownload, HiExternalLink } from 'react-icons/hi'
 import BookCover from '../../components/BookCover'
 
 function TheBrainStoryContent() {
+  const handleReadBook = () => {
+    // Open PDF in default PDF reader
+    window.open('https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf', '_blank')
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -33,7 +38,7 @@ function TheBrainStoryContent() {
       </header>
 
       {/* Book Cover and Description */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-shrink-0">
@@ -61,59 +66,102 @@ function TheBrainStoryContent() {
         </div>
       </div>
 
-      {/* PDF Embed */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      {/* Read Book Section */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="bg-gray-50 px-4 py-3 border-b">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900">Read "The Brain: The Story of You"</h3>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">PDF Reader</span>
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-8 py-12 text-center">
+            <div className="max-w-2xl mx-auto">
+              <div className="mb-6">
+                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <HiExternalLink className="w-10 h-10 text-blue-600" />
+                </div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Read?</h2>
+                <p className="text-lg text-gray-600 mb-8">
+                  Click the button below to open "The Brain: The Story of You" in your default PDF reader for the best reading experience.
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                <button
+                  onClick={handleReadBook}
+                  className="inline-flex items-center px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                >
+                  <HiExternalLink className="w-6 h-6 mr-3" />
+                  Click to Read
+                </button>
+                
+                <p className="text-sm text-gray-500">
+                  Opens in your default PDF reader application
+                </p>
               </div>
             </div>
           </div>
           
-          <div className="relative w-full" style={{ height: 'calc(100vh - 300px)' }}>
-            <iframe
-              src="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
-              className="w-full h-full border-0"
-              title="The Brain: The Story of You PDF"
-              loading="lazy"
-            />
-          </div>
-          
-          <div className="bg-gray-50 px-4 py-3 border-t">
+          <div className="bg-gray-50 px-6 py-4">
             <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>📖 Full PDF content with native reader controls</span>
-              <span>🔍 Zoom, search, and navigate with your browser's PDF tools</span>
+              <div className="flex items-center space-x-4">
+                <span className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                  Native PDF Reader
+                </span>
+                <span className="flex items-center">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                  Full Features
+                </span>
+              </div>
+              <span>📖 Zoom, search, bookmarks, and more</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Download Notice */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-start">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-blue-800">Mobile Users</h3>
-              <div className="mt-2 text-sm text-blue-700">
-                <p>For the best reading experience on mobile devices, consider downloading the PDF to use your device's native PDF reader app.</p>
+      {/* Reading Options */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Download Option */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <HiDownload className="w-8 h-8 text-green-600" />
               </div>
-              <div className="mt-3">
+              <div className="ml-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Download & Read Offline</h3>
+                <p className="text-gray-600 mb-4">
+                  Download the PDF to read offline or transfer to your preferred device.
+                </p>
                 <a
                   href="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
                   download
-                  className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
                 >
-                  <HiDownload className="w-4 h-4 mr-1" />
-                  Download for Mobile
+                  <HiDownload className="w-4 h-4 mr-2" />
+                  Download PDF
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Browser Reading Option */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Read in Browser</h3>
+                <p className="text-gray-600 mb-4">
+                  Open the PDF directly in your web browser for quick access.
+                </p>
+                <a
+                  href="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  <HiExternalLink className="w-4 h-4 mr-2" />
+                  Open in Browser
                 </a>
               </div>
             </div>
