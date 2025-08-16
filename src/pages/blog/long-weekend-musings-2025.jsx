@@ -77,7 +77,7 @@ const LongWeekendMusings2025 = () => {
 
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-6 text-gray-800">
-              3. This article in The Hindu was interesting and to the point. Especially i notice in these days of AI and LLMs - ChatGPT, Gemini- they come up with 'Ramayana' for Mahabharata related querries. They like to dump or should i say -spit volumonius amount of words when i ask a simple question. I have to prompt 'give me crisp reply', 'give me 3 bullet point' etc... all the time
+              3. This article in The Hindu was interesting and to the point. Especially i notice in these days of AI and LLMs - ChatGPT, Gemini- they come up with 'Ramayana' - long winding answers, for Mahabharata related querries- pun intended. They like to dump or should i say -spit volumonius amount of words when i ask a simple question. I have to prompt 'give me crisp reply', 'give me 3 bullet points' etc... all the time
             </h2>
 
             {/* The Hindu Article Image */}
