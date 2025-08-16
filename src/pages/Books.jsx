@@ -11,6 +11,28 @@ function Books() {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Link
+          to="/books/the-brain-story"
+          aria-label="Read The Brain: The Story of You"
+          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+        >
+          <div className="rounded-md h-40 sm:h-48 bg-gray-100 border flex items-center justify-center">
+            <HiBookOpen className="w-16 h-16 text-gray-400" aria-hidden="true" />
+            <span className="sr-only">Book cover placeholder</span>
+          </div>
+          <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">The Brain: The Story of You</h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <img src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple" alt="Neuroscience badge" />
+              <img src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange" alt="AI Technology badge" />
+            </div>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">One of the best books I have read in a while. Observing all the advances in AI and listening to gyan from my kin on neurology brain implants, wanted to dig deeper. As they say these days - learn from First Principles</p>
+            <div className="mt-4">
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read PDF</span>
+            </div>
+          </div>
+        </Link>
+
+        <Link
           to="/books/applying-cornell-method"
           aria-label="Read Applying the Cornell Method"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
