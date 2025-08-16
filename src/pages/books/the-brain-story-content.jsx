@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { HiArrowLeft, HiDownload } from 'react-icons/hi'
+import BookCover from '../../components/BookCover'
 
 function TheBrainStoryContent() {
   return (
@@ -37,10 +38,11 @@ function TheBrainStoryContent() {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-shrink-0">
               <div className="w-48 h-64 rounded-lg overflow-hidden shadow-lg">
-                <img 
-                  src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" 
-                  alt="The Brain: The Story of You book cover"
-                  className="w-full h-full object-cover"
+                <BookCover
+                  bookId="the-brain-story"
+                  title="The Brain: The Story of You"
+                  author="David Eagleman"
+                  className="w-full h-full"
                 />
               </div>
               <p className="text-center text-sm text-gray-600 mt-2">David Eagleman</p>
