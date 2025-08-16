@@ -27,7 +27,9 @@ const TechTrendsDashboard = () => {
     setError('');
     
     try {
-      const response = await fetch('/.netlify/functions/tech-trends');
+      // Use Netlify dev server for local development
+      const baseUrl = 'http://localhost:8888';
+      const response = await fetch(`${baseUrl}/.netlify/functions/tech-trends`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
