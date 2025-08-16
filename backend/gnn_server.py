@@ -190,6 +190,8 @@ async def get_all_posts():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting posts: {str(e)}")
 
+
+
 @app.get("/graph/stats")
 async def get_graph_stats():
     """Get graph statistics"""
@@ -218,4 +220,4 @@ async def get_graph_stats():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=False)

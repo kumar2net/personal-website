@@ -7,6 +7,8 @@ from torch_geometric.nn import GCNConv, global_mean_pool
 from torch_geometric.data import Data, Batch
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import time
 from typing import List, Dict, Tuple
 import re
 
@@ -31,7 +33,13 @@ class BlogPostGraphBuilder:
             
             # Load semantic embeddings  
             with open(self.semantic_embeddings_path, 'r') as f:
-                self.embeddings = json.load(f)
+                embeddings_data = json.load(f)
+                
+            # Convert embeddings to list format for easier access
+            self.embeddings = []
+            for emb in embeddings_data:
+                if 'vector' in emb:
+                    self.embeddings.append(emb['vector'])
                 
             # Create mappings
             for idx, post in enumerate(self.posts):
@@ -218,9 +226,11 @@ class NeuralGraphRecommenderMVP:
             return False
     
     def _train_model(self, epochs: int = 50):
-        """Simple unsupervised training for the GNN model"""
+        """Improved unsupervised training for the GNN model"""
         self.model.train()
         optimizer = torch.optim.Adam(self.model.parameters(), lr=0.01)
+        
+        num_posts = len(self.graph_builder.posts)
         
         for epoch in range(epochs):
             optimizer.zero_grad()
@@ -228,15 +238,49 @@ class NeuralGraphRecommenderMVP:
             # Forward pass
             embeddings = self.model(self.graph_data.x, self.graph_data.edge_index)
             
-            # Simple reconstruction loss (node similarity preservation)
-            # For connected nodes, embeddings should be similar
-            edge_index = self.graph_data.edge_index
-            src_embeddings = embeddings[edge_index[0]]
-            dst_embeddings = embeddings[edge_index[1]]
+            # Get post embeddings only
+            post_embeddings = embeddings[:num_posts]
             
-            # Cosine similarity loss
-            similarity = F.cosine_similarity(src_embeddings, dst_embeddings)
-            loss = -similarity.mean()  # Maximize similarity for connected nodes
+            # Contrastive learning approach
+            # Positive pairs: connected nodes should be similar
+            # Negative pairs: unconnected nodes should be different
+            edge_index = self.graph_data.edge_index
+            
+            # Only consider post-to-post edges for similarity
+            post_edges = []
+            for i in range(edge_index.shape[1]):
+                src, dst = edge_index[0][i].item(), edge_index[1][i].item()
+                if src < num_posts and dst < num_posts:  # Both are posts
+                    post_edges.append((src, dst))
+            
+            if post_edges:
+                # Positive pairs (connected posts)
+                pos_src = torch.stack([post_embeddings[src] for src, _ in post_edges])
+                pos_dst = torch.stack([post_embeddings[dst] for _, dst in post_edges])
+                pos_similarity = F.cosine_similarity(pos_src, pos_dst)
+                
+                # Negative pairs (random unconnected posts)
+                neg_pairs = []
+                for _ in range(min(len(post_edges), 10)):  # Sample some negative pairs
+                    src = torch.randint(0, num_posts, (1,)).item()
+                    dst = torch.randint(0, num_posts, (1,)).item()
+                    if src != dst and (src, dst) not in post_edges:
+                        neg_pairs.append((src, dst))
+                
+                if neg_pairs:
+                    neg_src = torch.stack([post_embeddings[src] for src, _ in neg_pairs])
+                    neg_dst = torch.stack([post_embeddings[dst] for _, dst in neg_pairs])
+                    neg_similarity = F.cosine_similarity(neg_src, neg_dst)
+                    
+                    # Contrastive loss: maximize positive similarity, minimize negative similarity
+                    margin = 0.5
+                    loss = (1 - pos_similarity).mean() + torch.clamp(neg_similarity - margin, min=0).mean()
+                else:
+                    # Fallback to simple similarity loss
+                    loss = (1 - pos_similarity).mean()
+            else:
+                # Fallback: simple regularization to prevent collapse
+                loss = torch.norm(post_embeddings, dim=1).mean() * 0.01
             
             loss.backward()
             optimizer.step()
@@ -256,34 +300,41 @@ class NeuralGraphRecommenderMVP:
             
             post_idx = self.graph_builder.post_to_idx[post_id]
             
-            # Get embeddings from trained model
-            self.model.eval()
-            with torch.no_grad():
-                embeddings = self.model(self.graph_data.x, self.graph_data.edge_index)
+            # Use original embeddings for content-based similarity (more reliable)
+            if post_idx >= len(self.graph_builder.embeddings):
+                return []
             
-            # Calculate similarities to other posts
-            post_embedding = embeddings[post_idx].unsqueeze(0)
+            # Calculate content-based similarities using original embeddings
+            original_embedding = np.array(self.graph_builder.embeddings[post_idx])
             num_posts = len(self.graph_builder.posts)
-            post_embeddings = embeddings[:num_posts]
             
-            similarities = F.cosine_similarity(post_embedding, post_embeddings)
+            similarities = []
+            for i in range(num_posts):
+                if i < len(self.graph_builder.embeddings):
+                    other_embedding = np.array(self.graph_builder.embeddings[i])
+                    # Cosine similarity
+                    similarity = np.dot(original_embedding, other_embedding) / (np.linalg.norm(original_embedding) * np.linalg.norm(other_embedding))
+                    similarities.append(similarity)
+                else:
+                    similarities.append(0.0)
+            
+            similarities = np.array(similarities)
             
             # Get top recommendations (excluding the input post)
             similarities[post_idx] = -1  # Exclude self
-            top_indices = similarities.argsort(descending=True)[:num_recommendations]
+            top_indices = np.argsort(similarities)[::-1][:num_recommendations]
             
             # Format recommendations
             recommendations = []
             for idx in top_indices:
-                idx_val = idx.item()
-                if idx_val < num_posts:  # Ensure it's a post node
-                    post = self.graph_builder.idx_to_post[idx_val]
+                if idx < num_posts:  # Ensure it's a post node
+                    post = self.graph_builder.idx_to_post[idx]
                     recommendations.append({
                         'id': post['id'],
                         'title': post.get('title', 'Untitled'),
                         'url': post.get('url', ''),
                         'excerpt': post.get('excerpt', ''),
-                        'score': similarities[idx].item(),
+                        'score': float(similarities[idx]),
                         'tags': post.get('extracted_tags', [])
                     })
             
@@ -292,6 +343,8 @@ class NeuralGraphRecommenderMVP:
         except Exception as e:
             print(f"Error getting recommendations: {e}")
             return []
+    
+
     
     def get_all_posts_with_scores(self) -> List[Dict]:
         """Get all posts with their centrality scores for trending analysis"""

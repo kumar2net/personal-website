@@ -7,6 +7,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v1 as aiplatform } from '@google-cloud/aiplatform';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,10 +25,12 @@ const SEMANTIC_SKIP_VERTEX = process.env.SEMANTIC_SKIP_VERTEX === '1';
 const GCP_SERVICE_ACCOUNT_JSON = process.env.GCP_SERVICE_ACCOUNT_JSON;
 
 if (!GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY');
-if (!GCP_PROJECT_ID) throw new Error('Missing GCP_PROJECT_ID');
-// Only required if upserting to Vertex
-if (!SEMANTIC_SKIP_VERTEX && !VERTEX_INDEX_ID) throw new Error('Missing VERTEX_INDEX_ID');
-if (!SEMANTIC_SKIP_VERTEX && !GCP_SERVICE_ACCOUNT_JSON) throw new Error('Missing GCP_SERVICE_ACCOUNT_JSON');
+// Only require GCP config if not skipping Vertex AI
+if (!SEMANTIC_SKIP_VERTEX) {
+  if (!GCP_PROJECT_ID) throw new Error('Missing GCP_PROJECT_ID');
+  if (!VERTEX_INDEX_ID) throw new Error('Missing VERTEX_INDEX_ID');
+  if (!GCP_SERVICE_ACCOUNT_JSON) throw new Error('Missing GCP_SERVICE_ACCOUNT_JSON');
+}
 
 // --- Config ---
 const BLOG_DIR = path.resolve(process.cwd(), 'src/pages/blog');
