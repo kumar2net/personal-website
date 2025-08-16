@@ -8,6 +8,19 @@
 [functions]
   directory = "netlify/functions"
 
+# Serve static files directly (PDFs, images, etc.)
+[[redirects]]
+  from = "/docs/*"
+  to = "/docs/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/public/*"
+  to = "/public/:splat"
+  status = 200
+  force = true
+
 # SPA fallback - redirect all other requests to index.html
 [[redirects]]
   from = "/*"
