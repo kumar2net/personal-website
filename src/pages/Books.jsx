@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { HiBookOpen } from 'react-icons/hi'
+import BookCover from '../components/BookCover'
 
 function Books() {
   return (
@@ -16,17 +16,13 @@ function Books() {
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-purple-100 to-blue-100 border overflow-hidden relative">
-            <img 
-              src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" 
-              alt="The Brain: The Story of You book cover"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            <BookCover
+              bookId="the-brain-story"
+              title="The Brain: The Story of You"
+              author="David Eagleman"
+              className="w-full h-full group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
-            <div className="absolute bottom-2 left-2 right-2">
-              <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded px-2 py-1">
-                <p className="text-xs font-semibold text-gray-800">David Eagleman</p>
-              </div>
-            </div>
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
             <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">The Brain: The Story of You</h2>
@@ -47,17 +43,13 @@ function Books() {
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-green-100 to-blue-100 border overflow-hidden relative">
-            <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" 
-              alt="Applying the Cornell Method book cover"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            <BookCover
+              bookId="cornell-method"
+              title="Applying the Cornell Method"
+              author="Study Method Guide"
+              className="w-full h-full group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
-            <div className="absolute bottom-2 left-2 right-2">
-              <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded px-2 py-1">
-                <p className="text-xs font-semibold text-gray-800">Study Method Guide</p>
-              </div>
-            </div>
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
             <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">Applying the Cornell Method</h2>
