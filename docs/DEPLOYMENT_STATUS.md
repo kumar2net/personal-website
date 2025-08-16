@@ -2,12 +2,23 @@
 
 ## Current Status: ✅ Active
 
-**Last Updated**: December 2024  
+**Last Updated**: January 2025  
 **Live URL**: https://kumarsite.netlify.app
 
 ## 🚀 Recent Deployments
 
-### Latest Deployment (December 2024)
+### Latest Deployment (January 2025)
+- **Status**: ✅ Successful
+- **Changes**: 
+  - Added "The Brain: The Story of You" PDF book with mobile-optimized viewer
+  - Created dedicated PDF viewer page with zoom controls and responsive design
+  - Updated blog post "The Great Pivot" with manufacturing clarification
+  - Enhanced Books page with new PDF book entry
+  - Added mobile-friendly PDF reading experience
+- **Build Time**: ~2 minutes
+- **Functions**: All deployed successfully
+
+### Previous Deployment (December 2024)
 - **Status**: ✅ Successful
 - **Changes**: 
   - Added Weekly Trends page (`/trends`)
@@ -23,10 +34,10 @@
 - ✅ **Home** (`/`) - Working
 - ✅ **About** (`/about`) - Working
 - ✅ **Blog** (`/blog`) - Working
-- ✅ **Trends** (`/trends`) - **NEW** - Working
+- ✅ **Trends** (`/trends`) - Working
 - ✅ **Learning** (`/learning`) - Working
 - ✅ **Projects** (`/projects`) - Working
-- ✅ **Books** (`/books`) - Working
+- ✅ **Books** (`/books`) - **UPDATED** - Working (Added PDF viewer)
 - ✅ **Music** (`/music`) - Working
 - ✅ **Contact** (`/contact`) - Working
 
