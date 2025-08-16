@@ -69,13 +69,15 @@ class BookCoverService {
           
           if (imageLinks) {
             // Try to get the highest quality image available
-            const coverUrl = imageLinks.extraLarge || 
-                           imageLinks.large || 
-                           imageLinks.medium || 
-                           imageLinks.small ||
-                           imageLinks.thumbnail
+            let coverUrl = imageLinks.extraLarge || 
+                          imageLinks.large || 
+                          imageLinks.medium || 
+                          imageLinks.small ||
+                          imageLinks.thumbnail
             
             if (coverUrl) {
+              // Force HTTPS to avoid mixed content warnings
+              coverUrl = coverUrl.replace(/^http:/, 'https:')
               console.log(`Found cover for "${title}" via Google Books API`)
               return coverUrl
             }

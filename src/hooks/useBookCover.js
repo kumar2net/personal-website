@@ -17,7 +17,9 @@ export function useBookCover(bookId, title, author) {
         // First show cached cover if available
         const cachedCover = bookCoverService.getCachedCover(bookId)
         if (cachedCover && isMounted) {
-          setCoverUrl(cachedCover)
+          // Ensure HTTPS to avoid mixed content warnings
+          const secureCachedCover = cachedCover.replace(/^http:/, 'https:')
+          setCoverUrl(secureCachedCover)
           setIsLoading(false)
         }
 
@@ -25,7 +27,9 @@ export function useBookCover(bookId, title, author) {
         const freshCover = await bookCoverService.getBookCover(bookId, title, author)
         
         if (isMounted) {
-          setCoverUrl(freshCover)
+          // Ensure HTTPS to avoid mixed content warnings
+          const secureCover = freshCover ? freshCover.replace(/^http:/, 'https:') : freshCover
+          setCoverUrl(secureCover)
           setIsLoading(false)
         }
       } catch (err) {
