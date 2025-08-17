@@ -29,7 +29,30 @@ npm run build
 - **Semantic Search**: AI-powered search across blog content
 - **Blog System**: Markdown-based blog with dynamic routing
 - **Book Reviews**: Cornell method book notes and reviews
+- **Google Analytics 4**: Automated content analysis and topic suggestions
 - **Responsive Design**: Mobile-first design with Tailwind CSS
+
+## Analytics
+
+The project includes Google Analytics 4 integration with automated content analysis and blog topic generation.
+
+### Analytics Scripts
+
+- `npm run ga:topics` - Generate general blog topic suggestions
+- `npm run ga:topic-suggestions` - **MAIN** Generate specific topic suggestions based on GA4 data
+- `npm run ga:config` - Show GA4 configuration details
+- `npm run ga:test` - Test GA4 API connection
+- `npm run ga:all` - Run all analytics scripts
+
+### Current Recommendations
+
+Based on your GA4 data (36 users, 14-minute sessions, 6.8% bounce rate), the system recommends focusing on:
+
+1. **Technology** - Advanced AI Development, Machine Learning, API Development
+2. **Trade & Economics** - India-US Trade Relations, Global Supply Chain Analysis
+3. **Productivity & Learning** - Keyboard Shortcuts, Workflow Automation, Time Management
+
+See `docs/GA4_ANALYTICS_DOCUMENTATION.md` for detailed documentation.
 
 ## Tech Stack
 

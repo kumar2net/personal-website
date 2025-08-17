@@ -1,0 +1,17 @@
+{
+  "config": {
+    "propertyId": "500563672",
+    "propertyUrl": "https://analytics.google.com/analytics/web/#/p500563672/reports/intelligenthome",
+    "projectId": "my-project-74001686249",
+    "serviceAccountEmail": "kumarsemantic@my-project-74001686249.iam.gserviceaccount.com",
+    "apiVersion": "v1",
+    "hasCredentials": true
+  },
+  "summary": {
+    "totalUsers": 36,
+    "totalSessions": 104,
+    "totalPageViews": 2282,
+    "avgSessionDuration": 840,
+    "bounceRate": 0.0673076923076923
+  }
+}
