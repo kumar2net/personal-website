@@ -49,6 +49,7 @@ import PostDynamic from './pages/blog/PostDynamic';
 import TheGreatPivot from './pages/blog/the-great-pivot';
 import LongWeekendMusings2025 from './pages/blog/long-weekend-musings-2025';
 import Trends from './pages/Trends';
+import DossierPage from './pages/Dossier';
 
 
 function useGaPageViews() {
@@ -333,6 +334,7 @@ function App() {
           <Route path="/blog/top-9-famous-rules" element={<Top9FamousRules />} />
           <Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
           <Route path="/blog/long-weekend-musings-2025" element={<LongWeekendMusings2025 />} />
+          <Route path="/dossier" element={<DossierPage />} />
           <Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
