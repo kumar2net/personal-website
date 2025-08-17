@@ -13,9 +13,15 @@
     "convert:books": "node scripts/convert-docx-to-md.mjs",
     "puml:render:svg": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tsvg docs/reco-architecture-*.puml",
     "puml:render:png": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tpng docs/reco-architecture-*.puml",
-    "semantic:index": "node scripts/index-semantic.mjs"
+    "semantic:index": "node scripts/index-semantic.mjs",
+    "ga:topics": "node scripts/ga-blog-topic-generator.mjs",
+    "ga:topic-suggestions": "node scripts/ga4-topic-suggestions.mjs",
+    "ga:config": "node scripts/show-ga4-config.mjs",
+    "ga:test": "node scripts/test-ga4-connection.mjs",
+    "ga:all": "npm run ga:topics && npm run ga:topic-suggestions"
   },
   "dependencies": {
+    "@google-analytics/data": "^5.2.0",
     "@google-cloud/aiplatform": "^5.4.0",
     "@heroicons/react": "^2.2.0",
     "@netlify/blobs": "^6.4.0",
@@ -26,6 +32,7 @@
     "express": "^5.1.0",
     "framer-motion": "^11.0.3",
     "google-auth-library": "^9.13.0",
+    "googleapis": "^156.0.0",
     "lucide-react": "^0.524.0",
     "mammoth": "^1.10.0",
     "node-fetch": "^3.3.2",
