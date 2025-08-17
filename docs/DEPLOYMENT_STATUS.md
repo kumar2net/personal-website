@@ -2,12 +2,24 @@
 
 ## Current Status: ✅ Active
 
-**Last Updated**: August 16, 2025  
+**Last Updated**: August 17, 2025  
 **Live URL**: https://kumarsite.netlify.app
 
 ## 🚀 Recent Deployments
 
-### Latest Deployment (August 16, 2025)
+### Latest Deployment (August 17, 2025)
+- **Status**: ✅ Successful
+- **Changes**: 
+  - Added Weekly Neurosurgical Dossier page (`/dossier`) with professional mobile-first design
+  - Created new Dossier.jsx component with medical-grade layout
+  - Integrated all content from weekly_neurosurgeon_dossier_aug17_2025.md
+  - Added route configuration for /dossier (not visible in nav header)
+  - Professional design suitable for neurosurgeons with color-coded sections
+  - Mobile-first responsive design with smooth animations
+- **Build Time**: ~35 seconds
+- **Functions**: All deployed successfully
+
+### Previous Deployment (August 16, 2025)
 - **Status**: ✅ Successful
 - **Changes**: 
   - Created new blog post "What to Write This Week?" from long weekend musings
@@ -51,6 +63,7 @@
 - ✅ **Projects** (`/projects`) - Working
 - ✅ **Books** (`/books`) - **UPDATED** - Working (Added PDF viewer)
 - ✅ **Music** (`/music`) - Working
+- ✅ **Dossier** (`/dossier`) - **NEW** - Working (Weekly Neurosurgical Dossier)
 - ✅ **Contact** (`/contact`) - Working
 
 ### Blog Posts
