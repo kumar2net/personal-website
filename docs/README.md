@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 16, 2025
+**Last Updated:** August 17, 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
@@ -10,6 +10,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Blog System** - Share thoughts and experiences with AI-generated TL;DR summaries
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Learning Hub** - Educational resources and shortcuts
+- **Weekly Neurosurgical Dossier** - Professional medical intelligence briefings
 - **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
 - **Semantic Search** - AI-powered search across blog content
 - **Responsive Design** - Works on all devices
@@ -35,6 +36,15 @@ Content pipeline:
 - Source DOCX placed in `docs/`
 - Converted to Markdown with script (see Scripts)
 - Rendered via `react-markdown` + `remark-gfm`
+
+## 🧠 Weekly Neurosurgical Dossier
+
+- Page: `/dossier` (not visible in navigation header)
+- Professional medical intelligence briefings for neurosurgeons
+- Mobile-first responsive design with medical-grade layout
+- Color-coded sections for easy scanning
+- Content sourced from weekly research analysis
+- Smooth animations and professional typography
 
 ## 📁 Project Structure
 
