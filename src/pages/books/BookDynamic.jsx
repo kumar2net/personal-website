@@ -7,6 +7,30 @@ import { motion } from 'framer-motion';
 const jsxModules = import.meta.glob('/src/pages/books/*.jsx');
 const mdModules = import.meta.glob('/src/pages/books/*.md', { query: '?raw', import: 'default' });
 
+// Function to strip frontmatter from markdown content
+function stripFrontmatter(content) {
+  const lines = content.split('\n');
+  let inFrontmatter = false;
+  let frontmatterEndIndex = -1;
+  
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim() === '---') {
+      if (!inFrontmatter) {
+        inFrontmatter = true;
+      } else {
+        frontmatterEndIndex = i;
+        break;
+      }
+    }
+  }
+  
+  if (frontmatterEndIndex !== -1) {
+    return lines.slice(frontmatterEndIndex + 1).join('\n');
+  }
+  
+  return content;
+}
+
 export default function BookDynamic() {
   const { slug } = useParams();
   const [markdown, setMarkdown] = useState('');
@@ -22,7 +46,11 @@ export default function BookDynamic() {
   useEffect(() => {
     const path = `/src/pages/books/${slug}.md`;
     if (mdModules[path]) {
-      mdModules[path]().then((raw) => setMarkdown(raw || ''));
+      mdModules[path]().then((raw) => {
+        const content = raw || '';
+        const strippedContent = stripFrontmatter(content);
+        setMarkdown(strippedContent);
+      });
     } else {
       setMarkdown('');
     }
