@@ -168,6 +168,21 @@ const IndiaUSATradeGap = () => {
               <li>Result: faster bank onboarding, less paperwork, and lower friction for INR-denominated cross‑border trade.</li>
             </ul>
           </div>
+
+          {/* Additional image at the bottom */}
+          <div className="mt-12 text-center">
+            <img 
+              src="/media/theHindu_GSTslabs.jpg" 
+              alt="Recent announcement" 
+              className="max-w-full h-auto rounded-lg shadow-lg mx-auto"
+            />
+            <p className="text-sm text-gray-500 mt-2 italic">
+              Recent announcement
+            </p>
+            <p className="text-sm text-gray-600 mt-2 max-w-2xl mx-auto">
+              This is being done to boost domestic consumption and probably negate the T&T narrative and especially since Diwali shopping is on the horizon. It is the busiest time for commercial establishments.
+            </p>
+          </div>
         </div>
       </div>
     </motion.div>

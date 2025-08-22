@@ -12,6 +12,12 @@ Go to **images.google.com** and search using these exact terms:
 - `"The Brain: The Story of You" book cover`
 - `David Eagleman brain book cover`
 
+#### For "Atheism: A Wonderful World Without Religion"
+**Search Terms:**
+- `"Atheism: A Wonderful World Without Religion" "Tom Miles" cover`
+- `"Atheism" "Tom Miles" book cover`
+- `atheism philosophy book cover`
+
 #### For "Applying the Cornell Method"
 **Search Terms:**
 - `"Cornell Method" study guide cover`
@@ -36,11 +42,15 @@ Look for:
 
 #### Files to Update:
 
-1. **`src/pages/Books.jsx`** (2 locations)
-   - Line ~20: The Brain book cover
-   - Line ~45: Cornell Method book cover
+1. **`src/pages/Books.jsx`** (3 locations)
+   - Line ~15: Atheism book cover
+   - Line ~40: The Brain book cover
+   - Line ~65: Cornell Method book cover
 
-2. **`src/pages/books/the-brain-story-content.jsx`** (1 location)
+2. **`src/pages/books/atheism.jsx`** (1 location)
+   - Line ~25: Atheism book cover in content page
+
+3. **`src/pages/books/the-brain-story-content.jsx`** (1 location)
    - Line ~35: The Brain book cover in content page
 
 #### Example Replacement:
