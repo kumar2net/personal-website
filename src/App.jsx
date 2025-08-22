@@ -41,7 +41,6 @@ import MusicPage from './pages/Music';
 import Books from './pages/Books';
 import BookCornellMethod from './pages/BookCornellMethod';
 import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
-import TheBrainStory from './pages/books/the-brain-story';
 import TheBrainStoryContent from './pages/books/the-brain-story-content';
 import PDFExtractorPage from './pages/books/pdf-extractor';
 import Atheism from './pages/books/atheism';
@@ -354,7 +353,6 @@ function App() {
           <Route path="/music" element={<MusicPage />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/applying-cornell-method" element={<ApplyingCornellMethodMd />} />
-          <Route path="/books/the-brain-story" element={<TheBrainStory />} />
           <Route path="/books/the-brain-story-content" element={<TheBrainStoryContent />} />
           <Route path="/books/pdf-extractor" element={<PDFExtractorPage />} />
           <Route path="/books/atheism" element={<Atheism />} />
