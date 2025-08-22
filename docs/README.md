@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** January 16, 2025
+**Last Updated:** August 8, 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
@@ -13,6 +13,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Weekly Neurosurgical Dossier** - Professional medical intelligence briefings
 - **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
 - **Semantic Search** - AI-powered search across blog content
+- **Content Badges** - Automatic NEW/UPDATED indicators based on system dates
 - **Responsive Design** - Works on all devices
 - **Modern UI** - Built with Tailwind CSS and Framer Motion
 
@@ -56,8 +57,12 @@ Content pipeline:
 ```
 src/
 ├── components/     # Reusable UI components
+│   ├── ContentBadge.jsx  # NEW/UPDATED content indicators
+│   └── ...
 ├── pages/         # Page components and blog posts
 ├── hooks/         # Custom React hooks
+├── utils/         # Utility functions
+│   └── contentDates.js  # Content date management
 ├── config/        # Configuration files
 └── shared/        # Shared utilities and data
 ```
@@ -97,6 +102,17 @@ The site uses Google Analytics 4 (GA4):
 - Add new blog posts in `src/pages/blog/`
 - Modify styling in `tailwind.config.js`
 - Update analytics configuration in `src/config/analytics.js`
+- Manage content badges via `src/utils/contentDates.js`
+
+## 🏷️ Content Badges
+
+The site automatically shows NEW and UPDATED badges on content:
+- **NEW Badge**: Shows on content published within last 7 days
+- **UPDATED Badge**: Shows on content modified within last 30 days
+- **Auto-Expiration**: Badges automatically disappear based on system dates
+- **Zero Maintenance**: No manual cleanup required
+
+See `docs/CONTENT_BADGES_GUIDE.md` for detailed usage instructions.
 
 ## 📝 Blog Posts
 

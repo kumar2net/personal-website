@@ -2,12 +2,27 @@
 
 ## Current Status: ✅ Active
 
-**Last Updated**: August 17, 2025  
+**Last Updated**: August 8, 2025  
 **Live URL**: https://kumarsite.netlify.app
 
 ## 🚀 Recent Deployments
 
-### Latest Deployment (August 17, 2025)
+### Latest Deployment (August 8, 2025)
+- **Status**: ✅ Successful
+- **Changes**: 
+  - **NEW**: Added content badge system with automatic NEW/UPDATED indicators
+  - **NEW**: Created ContentBadge component with system date-based logic
+  - **NEW**: Added utility functions for content date management
+  - **NEW**: Updated Blog and Books pages with badge integration
+  - **NEW**: Added comprehensive documentation in CONTENT_BADGES_GUIDE.md
+  - **UPDATED**: India-USA trade gap post with GST image and context
+  - **NEW**: Added blog post "FAQ with budding dentist"
+  - **NEW**: Added book "Atheism: A Wonderful World Without Religion" by Tom Miles
+  - **ENHANCED**: Auto-expiration logic (7 days for NEW, 30 days for UPDATED)
+- **Build Time**: ~22 seconds
+- **Functions**: All deployed successfully
+
+### Previous Deployment (August 17, 2025)
 - **Status**: ✅ Successful
 - **Changes**: 
   - Added Weekly Neurosurgical Dossier page (`/dossier`) with professional mobile-first design
@@ -57,13 +72,13 @@
 ### Core Pages
 - ✅ **Home** (`/`) - Working
 - ✅ **About** (`/about`) - Working
-- ✅ **Blog** (`/blog`) - Working
+- ✅ **Blog** (`/blog`) - **ENHANCED** - Working (Added content badges)
 - ✅ **Trends** (`/trends`) - Working
 - ✅ **Learning** (`/learning`) - Working
 - ✅ **Projects** (`/projects`) - Working
-- ✅ **Books** (`/books`) - **UPDATED** - Working (Added PDF viewer)
+- ✅ **Books** (`/books`) - **ENHANCED** - Working (Added content badges + PDF viewer)
 - ✅ **Music** (`/music`) - Working
-- ✅ **Dossier** (`/dossier`) - **NEW** - Working (Weekly Neurosurgical Dossier)
+- ✅ **Dossier** (`/dossier`) - Working (Weekly Neurosurgical Dossier)
 - ✅ **Contact** (`/contact`) - Working
 
 ### Blog Posts
@@ -71,7 +86,9 @@
 - ✅ TL;DR functionality working
 - ✅ Semantic search operational
 - ✅ Image optimization working
-- ✅ New blog post "What to Write This Week?" added
+- ✅ **NEW**: Content badges system operational (NEW/UPDATED indicators)
+- ✅ **NEW**: Blog post "FAQ with budding dentist" added
+- ✅ **UPDATED**: India-USA trade gap post with GST context
 - ✅ Photo album integration working
 
 ### Functions
