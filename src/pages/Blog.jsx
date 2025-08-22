@@ -1,12 +1,24 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import SemanticSearch from '../components/SemanticSearch'
+import ContentBadge from '../components/ContentBadge'
+import { addLastModifiedIfMissing } from '../utils/contentDates'
 import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'FAQ with our budding dentist',
+    date: 'August 22, 2025',
+    lastModified: 'August 22, 2025',
+    excerpt: 'An insightful conversation about dentistry. Common questions we want answered and help us improve our oral health.',
+    tags: ['Dentistry', 'Healthcare', 'Education', 'Audio Interview'],
+    image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+    link: '/blog/faq-budding-dentist'
+  },
+  {
     title: 'What to Write This Week?',
     date: 'August 16, 2025',
+    lastModified: 'August 16, 2025',
     excerpt: 'A long weekend in India brings reflections on trade, AI quirks, family adventures, and the simple joys of life. From Tirupur\'s textile industry to ChatGPT\'s confusion with Indian epics.',
     tags: ['Personal', 'Trade Policy', 'AI & Technology', 'Travel', 'India', 'Family'],
     image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
@@ -15,6 +27,7 @@ const blogPosts = [
   {
     title: '🚀 The Great Pivot — What\'s Behind All This T&T Hullabaloo!',
     date: 'August 14, 2025',
+    lastModified: 'August 14, 2025',
     excerpt: 'When the US decides to pivot towards manufacturing glory, it\'s not a nostalgic trip back to old-school factories — it\'s a calculated move in the global economic game. And here\'s the kicker: one manufacturing job can spark 10 other jobs.',
     tags: ['Manufacturing', 'US Economy', 'Tariffs', 'Global Trade', 'Economic Policy', 'Job Creation', 'Supply Chain'],
     image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
@@ -31,6 +44,7 @@ const blogPosts = [
   {
     title: 'India-USA Trade Relations: A $212.3B Partnership Under Pressure',
     date: 'August 7, 2025',
+    lastModified: 'August 8, 2025',
     excerpt: 'From record-breaking trade volumes to escalating tariffs: The complex dynamics of India-US economic relations in 2025. Cornell notes analysis of the $212.3B trade relationship and recent 50% tariff escalations.',
     tags: ['Trade Relations', 'India Economy', 'US Tariffs', 'International Trade', 'Economic Policy'],
     image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80',
@@ -207,6 +221,9 @@ const blogPosts = [
 ]
 
 const Blog = () => {
+  // Ensure all posts have lastModified dates
+  const processedPosts = blogPosts.map(addLastModifiedIfMissing);
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -219,7 +236,7 @@ const Blog = () => {
       <h2 className="text-2xl font-semibold mb-6">Latest Posts</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {blogPosts.map((post, index) => (
+        {processedPosts.map((post, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
@@ -232,6 +249,10 @@ const Blog = () => {
                 src={post.image} 
                 alt={post.title}
                 className="w-full h-full object-cover"
+              />
+              <ContentBadge 
+                publishDate={post.date}
+                lastModified={post.lastModified}
               />
             </div>
             <div className="p-6">

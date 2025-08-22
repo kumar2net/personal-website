@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 17, 2025
+**Last Updated:** January 16, 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
 
@@ -28,13 +28,18 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 ## 📚 Books
 
 - List page: `/books`
-- Example detail page: `/books/applying-cornell-method`
+- Example detail pages: `/books/atheism`, `/books/applying-cornell-method`
 - Cover: book icon placeholder for consistency
 - Badges: shields.io badges for topics
 
+**Current Books:**
+1. **Atheism: A Wonderful World Without Religion** by Tom Miles - Philosophical exploration of atheism
+2. **The Brain: The Story of You** by David Eagleman - Neuroscience and brain science
+3. **Applying the Cornell Method** - Study method guide
+
 Content pipeline:
-- Source DOCX placed in `docs/`
-- Converted to Markdown with script (see Scripts)
+- Source files (PDF/DOCX) placed in `docs/`
+- Converted to Markdown with scripts (see Scripts)
 - Rendered via `react-markdown` + `remark-gfm`
 
 ## 🧠 Weekly Neurosurgical Dossier
@@ -114,9 +119,14 @@ The blog system supports:
 - **Lint:** `npm run lint`
 - **Convert Books (DOCX → MD):** `npm run convert:books`
 
-Scripts
+### Scripts
 - `scripts/convert-docx-to-md.mjs` converts `docs/Applying_Cornell_method.docx` → `src/pages/books/applying-cornell-method.md`.
+- PDF conversion: Use `pdftotext` command-line tool to extract text from PDF files (e.g., `pdftotext docs/Atheism.pdf src/pages/books/atheism.txt`).
 - To add a new book, update the script inputs/outputs accordingly and re-run.
+
+### Documentation
+- **Book Conversion Guide**: `docs/BOOK_CONVERSION_GUIDE.md` - Detailed guide for converting PDF/DOCX files to website content
+- **Book Cover Images Guide**: `docs/BOOK_COVER_IMAGES_GUIDE.md` - How to find and implement actual book cover images
 
 ## 🌐 Deployment
 

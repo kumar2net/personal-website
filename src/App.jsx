@@ -44,10 +44,12 @@ import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import TheBrainStory from './pages/books/the-brain-story';
 import TheBrainStoryContent from './pages/books/the-brain-story-content';
 import PDFExtractorPage from './pages/books/pdf-extractor';
+import Atheism from './pages/books/atheism';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 import PostDynamic from './pages/blog/PostDynamic';
 import TheGreatPivot from './pages/blog/the-great-pivot';
 import LongWeekendMusings2025 from './pages/blog/long-weekend-musings-2025';
+import FAQBuddingDentist from './pages/blog/faq-budding-dentist';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
 
@@ -61,6 +63,15 @@ function useGaPageViews() {
       window.gtag('event', 'page_view', {
         page_path: location.pathname + location.search,
         page_location: window.location.href,
+        page_title: document.title,
+        page_referrer: document.referrer || 'direct'
+      });
+      
+      // Also track custom event for better analytics
+      window.gtag('event', 'page_view_custom', {
+        event_category: 'engagement',
+        event_label: location.pathname,
+        page_path: location.pathname,
         page_title: document.title
       });
     }
@@ -69,7 +80,15 @@ function useGaPageViews() {
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const trackClick = () => {}
+  const trackClick = (eventName, parameters = {}) => {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', eventName, {
+        event_category: 'navigation',
+        event_label: eventName,
+        ...parameters
+      });
+    }
+  }
   useGaPageViews()
 
   return (
@@ -134,6 +153,15 @@ function App() {
               >
                 Music
               </Link>
+              <a 
+                href="https://deepdivedl.netlify.app/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+                onClick={() => trackClick('nav_deepdive')}
+              >
+                DeepDive
+              </a>
               <Link 
                 to="/contact" 
                 className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -228,6 +256,18 @@ function App() {
                 >
                   Music
                 </Link>
+                <a 
+                  href="https://deepdivedl.netlify.app/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackClick('nav_deepdive_mobile');
+                  }}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  DeepDive
+                </a>
                 <Link 
                   to="/contact" 
                   onClick={() => {
@@ -257,6 +297,7 @@ function App() {
             >
               <h1 className="text-4xl font-bold mb-4">Welcome to My Personal Website</h1>
               <p className="text-xl text-gray-600 mb-8">AI Enthusiast</p>
+              
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link to="/about" className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                   About Me
@@ -279,6 +320,15 @@ function App() {
                 <Link to="/music" className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
                   Music
                 </Link>
+                <a 
+                  href="https://deepdivedl.netlify.app/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackClick('home_deepdive')}
+                  className="px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+                >
+                  DeepDive
+                </a>
               </div>
 
               {/* Home quote */}
@@ -289,9 +339,9 @@ function App() {
                 className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
               >
                 <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                  “The surest way to corrupt a youth is to instruct him to hold in higher esteem those who think alike than those who think differently.”
+                  "The problem with the world is that the intelligent people are full of doubts, while the stupid ones are full of confidence."
                 </blockquote>
-                <p className="mt-4 text-gray-600 italic text-right">— Friedrich Nietzsche</p>
+                <p className="mt-4 text-gray-600 italic text-right">— Charles Bukowski</p>
               </motion.div>
             </motion.div>
           } />
@@ -306,6 +356,7 @@ function App() {
           <Route path="/books/the-brain-story" element={<TheBrainStory />} />
           <Route path="/books/the-brain-story-content" element={<TheBrainStoryContent />} />
           <Route path="/books/pdf-extractor" element={<PDFExtractorPage />} />
+          <Route path="/books/atheism" element={<Atheism />} />
           <Route path="/learning/:setId" element={<FlashcardSetPage />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />
           <Route path="/learning/vocab-additions" element={<VocabAdditions />} />
@@ -334,6 +385,7 @@ function App() {
           <Route path="/blog/top-9-famous-rules" element={<Top9FamousRules />} />
           <Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
           <Route path="/blog/long-weekend-musings-2025" element={<LongWeekendMusings2025 />} />
+          <Route path="/blog/faq-budding-dentist" element={<FAQBuddingDentist />} />
           <Route path="/dossier" element={<DossierPage />} />
           <Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />

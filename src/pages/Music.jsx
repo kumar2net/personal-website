@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Music as MusicIcon, Play, ExternalLink, Heart, Users, Target } from 'lucide-react';
+import { Music as MusicIcon, Play, ExternalLink } from 'lucide-react';
 
 const MusicPage = () => {
   return (
@@ -15,89 +15,7 @@ const MusicPage = () => {
       </div>
 
       <div className="space-y-8">
-        {/* Viral Music Moment */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.03 }}
-          className="bg-gradient-to-r from-pink-50 to-rose-50 p-8 rounded-xl border-l-4 border-pink-500"
-        >
-          <div className="flex items-center mb-6">
-            <Heart className="h-8 w-8 text-pink-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">Viral Music Moments</h2>
-          </div>
-          
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="text-sm text-gray-500 mb-3">
-              {new Date().toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </div>
-            <p className="text-gray-700 mb-4">
-              Viral in India and what lovely, cute expression by this little girl
-            </p>
-            <a
-              href="https://youtube.com/shorts/URI83iIoCzo?si=Ao65hUr2qugCVvsv"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors font-medium"
-            >
-              <Play className="h-5 w-5 mr-2" />
-              Watch on YouTube
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Pardesiya from Param Sundari */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="bg-gradient-to-r from-orange-50 to-red-50 p-8 rounded-xl border-l-4 border-orange-500"
-        >
-          <div className="flex items-center mb-6">
-            <MusicIcon className="h-8 w-8 text-orange-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">Pardesiya from Param Sundari</h2>
-          </div>
-          
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-gray-700 mb-4">
-              A beautiful rendition that captures the essence of longing and nostalgia, 
-              perfectly complementing the Arunachal Pradesh little girl's viral performance.
-            </p>
-            <a
-              href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=3nj29csF4335C5GQ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium"
-            >
-              <Play className="h-5 w-5 mr-2" />
-              Listen to Pardesiya - newly added this Week
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Quote Block */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="bg-gradient-to-r from-gray-50 to-gray-100 p-8 rounded-xl border-l-4 border-gray-400"
-        >
-          <blockquote className="text-2xl md:text-3xl font-semibold text-gray-800 leading-snug text-center">
-            “Without music, life would be a mistake.”
-          </blockquote>
-          <p className="mt-4 text-right text-gray-600 italic">— Friedrich Nietzsche</p>
-        </motion.div>
-
-
-
-        {/* Featured Playlist */}
+        {/* New YouTube Music Link */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -106,22 +24,16 @@ const MusicPage = () => {
         >
           <div className="flex items-center mb-6">
             <MusicIcon className="h-8 w-8 text-red-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">Featured Playlist</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Latest Music</h2>
           </div>
           
-                      <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">My YouTube Music Collection</h3>
-              <p className="text-gray-600 mb-6">
-                A carefully curated collection of tracks that resonate with my musical taste and journey.
-              </p>
-              <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500 mb-4">
-                <p className="text-sm text-gray-700">
-                  <strong>Updated:</strong> August 2025
-                </p>
-              </div>
-            
-            <a 
-              href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=Wxt3p7_meOmIYilq"
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">Jogiya</h3>
+            <p className="text-gray-600 mb-6">
+              A beautiful track
+            </p>
+            <a
+              href="https://music.youtube.com/watch?v=7owsi-rTf2I&si=gdH2svbaI5BPn5Sp"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
@@ -133,7 +45,7 @@ const MusicPage = () => {
           </div>
         </motion.div>
 
-        {/* Story Section */}
+        {/* Featured Playlist */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,72 +53,30 @@ const MusicPage = () => {
           className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border-l-4 border-blue-500"
         >
           <div className="flex items-center mb-6">
-            <Heart className="h-8 w-8 text-blue-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">The Story Behind the Music</h2>
-          </div>
-          
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold mb-3 text-gray-800">Jack Collier & The Introduction</h3>
-              <p className="text-gray-600 mb-4">
-                One of our boys introduced me to Jack Collier and this track particularly, and I thank him for this discovery. 
-                It's amazing how music can connect people and open up new worlds of sound.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold mb-3 text-gray-800">A Rock Somewhere with Anoushka Shankar</h3>
-              <p className="text-gray-600 mb-4">
-                Featuring the incredible <strong>Anoushka Shankar</strong> on Sitar and <strong>Varijashree</strong> 
-                (what a unique and beautiful name!). The fusion of classical Indian music with contemporary sounds creates 
-                something truly magical.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold mb-3 text-gray-800">Hesham's Magic</h3>
-              <p className="text-gray-600 mb-4">
-                Of course, I love listening to <strong>Hesham</strong>. His music has a way of touching the soul and 
-                creating moments of pure connection.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* YouTube Music vs Spotify */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-gradient-to-r from-purple-50 to-pink-50 p-8 rounded-xl border-l-4 border-purple-500"
-        >
-          <div className="flex items-center mb-6">
-            <Target className="h-8 w-8 text-purple-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">Why YouTube Music & Not Spotify?</h2>
+            <MusicIcon className="h-8 w-8 text-blue-600 mr-3" />
+            <h2 className="text-2xl font-bold text-gray-800">My Playlists</h2>
           </div>
           
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-gray-600 mb-4">
-              Hahaha! I like to see what the algorithm's impression of me is - this used to be referred to as 
-              <strong> 'Behavioral Targeting'</strong>. This is very early internet days, 20 odd years ago itself.
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">YouTube Music Collection</h3>
+            <p className="text-gray-600 mb-6">
+              A carefully curated collection of tracks that resonate with my musical taste and journey. Jab tu Sajan is a lovely track too.
             </p>
             
-            <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 mb-4">
-              <p className="text-gray-700">
-                <strong>Fun Fact:</strong> Sometimes the ads you see are more interesting than the Live Cricket these days. 
-                These folks are very creative guys, and I also get the pulse of India through their targeted content.
-              </p>
-            </div>
+            <a 
+              href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=Wxt3p7_meOmIYilq"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium mb-4"
+            >
+              <Play className="h-5 w-5 mr-2" />
+              Main Playlist
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </a>
+
             
-            <p className="text-gray-600">
-              YouTube Music's algorithm has become quite sophisticated at understanding my musical preferences, 
-              and I find myself discovering new artists and tracks that I wouldn't have found otherwise. 
-              It's fascinating to see how technology has evolved from simple behavioral targeting to complex 
-              recommendation systems.
-            </p>
           </div>
         </motion.div>
-
       </div>
     </motion.div>
   );

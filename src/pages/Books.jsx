@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import BookCover from '../components/BookCover'
+import ContentBadge from '../components/ContentBadge'
 
 function Books() {
   return (
@@ -10,6 +11,37 @@ function Books() {
       </header>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <Link
+          to="/books/atheism"
+          aria-label="Read Atheism: A Wonderful World Without Religion"
+          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+        >
+          <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-red-100 to-orange-100 border overflow-hidden relative">
+            <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <div className="text-center">
+                <div className="text-6xl mb-2">🤔</div>
+                <div className="text-sm text-gray-600">Philosophy</div>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge 
+              publishDate="July 15, 2025"
+              lastModified="July 15, 2025"
+            />
+          </div>
+          <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">Atheism: A Wonderful World Without Religion</h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <img src="https://img.shields.io/badge/Philosophy-Atheism-purple" alt="Philosophy badge" />
+              <img src="https://img.shields.io/badge/Worldview-Secular-orange" alt="Worldview badge" />
+            </div>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">A comprehensive exploration of atheism, its philosophical foundations, and its implications for understanding the world and human existence.</p>
+            <div className="mt-4">
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read Book</span>
+            </div>
+          </div>
+        </Link>
+
         <Link
           to="/books/the-brain-story-content"
           aria-label="Read The Brain: The Story of You"
@@ -23,6 +55,10 @@ function Books() {
               className="w-full h-full group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge 
+              publishDate="July 10, 2025"
+              lastModified="July 12, 2025"
+            />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
             <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">The Brain: The Story of You</h2>
@@ -50,6 +86,10 @@ function Books() {
               className="w-full h-full group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge 
+              publishDate="June 20, 2025"
+              lastModified="June 20, 2025"
+            />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
             <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">Applying the Cornell Method</h2>
