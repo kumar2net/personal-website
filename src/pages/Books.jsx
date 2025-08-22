@@ -43,7 +43,7 @@ function Books() {
         </Link>
 
         <Link
-          to="/books/the-brain-story-content"
+          to="/books/the-brain-story"
           aria-label="Read The Brain: The Story of You"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
         >
