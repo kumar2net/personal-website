@@ -3,24 +3,36 @@ import path from 'node:path'
 import pdf from 'pdf-parse'
 
 async function main() {
+  // Get input file from command line arguments
+  const inputFile = process.argv[2]
+  
+  if (!inputFile) {
+    console.error('❌ Please provide a PDF file path as an argument')
+    console.error('Usage: node scripts/convert-pdf-to-md.mjs <pdf-file-path>')
+    process.exit(1)
+  }
+
   const projectRoot = path.resolve(process.cwd())
-  const srcPdf = path.join(projectRoot, 'docs', 'The_Brain_The_Story.pdf')
+  const srcPdf = path.isAbsolute(inputFile) ? inputFile : path.join(projectRoot, inputFile)
   const outDir = path.join(projectRoot, 'src', 'pages', 'books')
-  const outMd = path.join(outDir, 'the-brain-story.md')
+  
+  // Generate output filename based on input filename
+  const inputBasename = path.basename(inputFile, '.pdf')
+  const outMd = path.join(outDir, `${inputBasename.toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`)
 
   await fs.mkdir(outDir, { recursive: true })
 
   try {
-    console.log('Reading PDF file...')
+    console.log(`📖 Reading PDF file: ${srcPdf}`)
     const buffer = await fs.readFile(srcPdf)
     
-    console.log('Parsing PDF content...')
+    console.log('🔍 Parsing PDF content...')
     const data = await pdf(buffer)
     
-    console.log('Converting to Markdown...')
-    const markdown = convertToMarkdown(data.text)
+    console.log('📝 Converting to Markdown...')
+    const markdown = convertToMarkdown(data.text, inputBasename)
     
-    console.log('Writing Markdown file...')
+    console.log(`💾 Writing Markdown file: ${outMd}`)
     await fs.writeFile(outMd, markdown, 'utf8')
     
     console.log(`✅ Successfully converted PDF to Markdown: ${outMd}`)
@@ -35,7 +47,7 @@ async function main() {
   }
 }
 
-function convertToMarkdown(text) {
+function convertToMarkdown(text, title) {
   // Clean up the text and convert to markdown
   let markdown = text
   
@@ -66,14 +78,14 @@ function convertToMarkdown(text) {
   
   // Add frontmatter
   const frontmatter = `---
-title: "The Brain: The Story of You"
+title: "${title}"
 author: "David Eagleman"
 description: "One of the best books I have read in a while. Observing all the advances in AI and listening to gyan from my kin on neurology brain implants, wanted to dig deeper. As they say these days - learn from First Principles"
 tags: ["neuroscience", "brain-science", "ai-technology", "neural-implants"]
 date: "2025-01-16"
 ---
 
-# The Brain: The Story of You
+# ${title}
 
 *By David Eagleman*
 

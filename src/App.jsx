@@ -45,6 +45,7 @@ import TheBrainStory from './pages/books/the-brain-story';
 import TheBrainStoryContent from './pages/books/the-brain-story-content';
 import PDFExtractorPage from './pages/books/pdf-extractor';
 import Atheism from './pages/books/atheism';
+import BookDynamic from './pages/books/BookDynamic';
 import Top9FamousRules from './pages/blog/top-9-famous-rules';
 import PostDynamic from './pages/blog/PostDynamic';
 import TheGreatPivot from './pages/blog/the-great-pivot';
@@ -357,6 +358,7 @@ function App() {
           <Route path="/books/the-brain-story-content" element={<TheBrainStoryContent />} />
           <Route path="/books/pdf-extractor" element={<PDFExtractorPage />} />
           <Route path="/books/atheism" element={<Atheism />} />
+          <Route path="/books/:slug" element={<BookDynamic />} />
           <Route path="/learning/:setId" element={<FlashcardSetPage />} />
           <Route path="/learning/shortcuts" element={<Shortcuts />} />
           <Route path="/learning/vocab-additions" element={<VocabAdditions />} />
