@@ -21,19 +21,21 @@
   status = 200
   force = true
 
-# Serve sitemap.xml directly
+# Serve sitemap.xml directly with proper headers
 [[redirects]]
   from = "/sitemap.xml"
   to = "/sitemap.xml"
   status = 200
   force = true
+  headers = {Content-Type = "application/xml"}
 
-# Serve robots.txt directly
+# Serve robots.txt directly with proper headers
 [[redirects]]
   from = "/robots.txt"
   to = "/robots.txt"
   status = 200
   force = true
+  headers = {Content-Type = "text/plain"}
 
 # SPA fallback - redirect all other requests to index.html
 [[redirects]]
