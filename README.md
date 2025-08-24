@@ -25,6 +25,7 @@ npm run build
 
 ## Features
 
+- **WordPress Auto-Publishing**: Automatic cross-posting from Netlify to WordPress.com
 - **Tech Trends Dashboard**: Real-time trending topics from Hacker News, GitHub, and Reddit
 - **Semantic Search**: AI-powered search across blog content
 - **Blog System**: Markdown-based blog with dynamic routing
@@ -53,6 +54,27 @@ Based on your GA4 data (36 users, 14-minute sessions, 6.8% bounce rate), the sys
 3. **Productivity & Learning** - Keyboard Shortcuts, Workflow Automation, Time Management
 
 See `docs/GA4_ANALYTICS_DOCUMENTATION.md` for detailed documentation.
+
+## WordPress Auto-Publishing
+
+The site automatically publishes blog posts to WordPress.com via GitHub Actions and Netlify Functions.
+
+### WordPress Publishing Scripts
+
+- `npm run crosspost:extract` - Test content extraction from blog posts
+- `npm run crosspost:test` - Test publishing a specific blog post
+- `npm run crosspost:latest` - Publish the latest blog post
+- `npm run crosspost:all` - Publish all blog posts
+- `npm run wordpress:token` - Generate WordPress.com API token
+- `npm run wordpress:setup` - Interactive setup wizard
+
+### Status: ✅ LIVE AND WORKING
+
+- **Netlify Site**: https://kumarsite.netlify.app/
+- **WordPress Site**: https://kumar2net.wordpress.com/
+- **Auto-Publishing**: Active and operational
+
+See `docs/WORDPRESS_AUTO_PUBLISH_SETUP.md` for detailed documentation.
 
 ## Tech Stack
 
