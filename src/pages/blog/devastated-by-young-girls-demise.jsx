@@ -192,7 +192,6 @@ const DevastatedByYoungGirlsDemise = () => {
           </p>
         </div>
 
-        {/* Blog Interactions */}
         <BlogInteractions postId="devastated-by-young-girls-demise" />
       </div>
     </motion.div>
