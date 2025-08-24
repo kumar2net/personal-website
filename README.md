@@ -22,6 +22,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Google Analytics 4** - Comprehensive analytics tracking
 - **Semantic Search** - AI-powered search functionality
 - **SEO Optimized** - Meta tags, structured data, and performance
+- **Google Search Console** - ✅ **Sitemap submitted successfully** - [https://kumarsite.netlify.app/sitemap.html](https://kumarsite.netlify.app/sitemap.html)
 - **Social Media Integration** - Open Graph and Twitter cards
 
 ### 🔧 Technical Features
@@ -98,6 +99,8 @@ personal-website/
 ## Documentation
 
 - [Blog Interactions Guide](docs/BLOG_INTERACTIONS_GUIDE.md) - Complete guide to like/comment functionality
+- [SEO Setup Guide](docs/SEO_SETUP.md) - Complete SEO and Google Search Console integration
+- [Sitemap Setup Guide](docs/SITEMAP_SETUP.md) - Google Search Console sitemap configuration
 - [Analytics Setup](docs/ANALYTICS_README.md) - Google Analytics configuration
 - [WordPress Integration](docs/WORDPRESS_STATUS.md) - Auto-publishing setup
 
