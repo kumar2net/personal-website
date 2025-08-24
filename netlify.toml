@@ -29,6 +29,14 @@
   force = true
   headers = {Content-Type = "application/xml"}
 
+# Serve sitemap-index.xml as alternative
+[[redirects]]
+  from = "/sitemap-index.xml"
+  to = "/sitemap-index.xml"
+  status = 200
+  force = true
+  headers = {Content-Type = "application/xml"}
+
 # Serve robots.txt directly with proper headers
 [[redirects]]
   from = "/robots.txt"
