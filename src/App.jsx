@@ -50,6 +50,7 @@ import PostDynamic from './pages/blog/PostDynamic';
 import TheGreatPivot from './pages/blog/the-great-pivot';
 import LongWeekendMusings2025 from './pages/blog/long-weekend-musings-2025';
 import FAQBuddingDentist from './pages/blog/faq-budding-dentist';
+import DevastatedByYoungGirlsDemise from './pages/blog/devastated-by-young-girls-demise';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
 
@@ -386,6 +387,7 @@ function App() {
           <Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
           <Route path="/blog/long-weekend-musings-2025" element={<LongWeekendMusings2025 />} />
           <Route path="/blog/faq-budding-dentist" element={<FAQBuddingDentist />} />
+          <Route path="/blog/devastated-by-young-girls-demise" element={<DevastatedByYoungGirlsDemise />} />
           <Route path="/dossier" element={<DossierPage />} />
           <Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />

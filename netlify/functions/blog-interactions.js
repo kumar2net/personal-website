@@ -2,22 +2,22 @@ import { getStore } from '@netlify/blobs';
 
 // Use Netlify Blobs for persistent storage
 const STORE_NAME = 'blog-interactions';
+const SITE_ID = process.env.NETLIFY_SITE_ID;
+const BLOBS_TOKEN = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_AUTH_TOKEN;
 
 // Initialize the blob store
-async function getBlobStore(context) {
-  return getStore(
-    STORE_NAME,
-    {
-      siteID: context.site?.id || process.env.NETLIFY_SITE_ID,
-      token: process.env.NETLIFY_AUTH_TOKEN || context.account?.access_token,
-    }
-  );
+async function getBlobStore() {
+  // Prefer explicit credentials if provided via env; otherwise rely on implicit Netlify Functions context
+  if (SITE_ID && BLOBS_TOKEN) {
+    return getStore({ name: STORE_NAME, siteID: SITE_ID, token: BLOBS_TOKEN });
+  }
+  return getStore({ name: STORE_NAME });
 }
 
 // Read data from blob storage
-async function readData(context) {
+async function readData() {
   try {
-    const store = await getBlobStore(context);
+    const store = await getBlobStore();
     const data = await store.get('data', { type: 'json' });
     
     // Return default structure if no data exists
@@ -33,9 +33,9 @@ async function readData(context) {
 }
 
 // Write data to blob storage
-async function writeData(context, data) {
+async function writeData(data) {
   try {
-    const store = await getBlobStore(context);
+    const store = await getBlobStore();
     await store.setJSON('data', data);
     return true;
   } catch (error) {
@@ -69,7 +69,11 @@ function getUserId(event) {
   // In production, implement proper authentication
   const ip = event.headers['client-ip'] || event.headers['x-forwarded-for'] || 'unknown';
   const userAgent = event.headers['user-agent'] || 'unknown';
-  return btoa(ip + userAgent).substring(0, 16);
+  try {
+    return Buffer.from(ip + userAgent).toString('base64').substring(0, 16);
+  } catch (_e) {
+    return `${(ip + userAgent).replace(/[^a-zA-Z0-9]/g, '').slice(0, 16)}`;
+  }
 }
 
 export const handler = async (event, context) => {
@@ -86,17 +90,17 @@ export const handler = async (event, context) => {
   try {
     switch (action) {
       case 'like':
-        return await handleLike(postId, getUserId(event), context);
+        return await handleLike(postId, getUserId(event));
       case 'unlike':
-        return await handleUnlike(postId, getUserId(event), context);
+        return await handleUnlike(postId, getUserId(event));
       case 'get-likes':
-        return await getLikes(postId, context);
+        return await getLikes(postId, getUserId(event));
       case 'add-comment':
-        return await addComment(postId, content, author || 'Anonymous', context);
+        return await addComment(postId, content, author || 'Anonymous');
       case 'get-comments':
-        return await getComments(postId, context);
+        return await getComments(postId);
       case 'delete-comment':
-        return await deleteComment(postId, commentId, getUserId(event), context);
+        return await deleteComment(postId, commentId, getUserId(event));
       default:
         return jsonResponse(400, { error: 'Invalid action' });
     }
@@ -106,8 +110,8 @@ export const handler = async (event, context) => {
   }
 };
 
-async function handleLike(postId, userId, context) {
-  const data = await readData(context);
+async function handleLike(postId, userId) {
+  const data = await readData();
   
   if (!data.likes[postId]) {
     data.likes[postId] = { users: [], totalLikes: 0 };
@@ -116,7 +120,10 @@ async function handleLike(postId, userId, context) {
   if (!data.likes[postId].users.includes(userId)) {
     data.likes[postId].users.push(userId);
     data.likes[postId].totalLikes = data.likes[postId].users.length;
-    await writeData(context, data);
+    const ok = await writeData(data);
+    if (!ok) {
+      return jsonResponse(500, { error: 'Failed to persist like' });
+    }
   }
 
   return jsonResponse(200, { 
@@ -126,8 +133,8 @@ async function handleLike(postId, userId, context) {
   });
 }
 
-async function handleUnlike(postId, userId, context) {
-  const data = await readData(context);
+async function handleUnlike(postId, userId) {
+  const data = await readData();
   
   if (!data.likes[postId]) {
     return jsonResponse(200, { 
@@ -139,7 +146,10 @@ async function handleUnlike(postId, userId, context) {
 
   data.likes[postId].users = data.likes[postId].users.filter(id => id !== userId);
   data.likes[postId].totalLikes = data.likes[postId].users.length;
-  await writeData(context, data);
+  const ok = await writeData(data);
+  if (!ok) {
+    return jsonResponse(500, { error: 'Failed to persist unlike' });
+  }
 
   return jsonResponse(200, { 
     success: true, 
@@ -148,22 +158,24 @@ async function handleUnlike(postId, userId, context) {
   });
 }
 
-async function getLikes(postId, context) {
-  const data = await readData(context);
+async function getLikes(postId, userId) {
+  const data = await readData();
   const postLikes = data.likes[postId];
-  
+  const users = postLikes?.users || [];
+
   return jsonResponse(200, { 
-    totalLikes: postLikes?.totalLikes || 0,
-    likes: postLikes?.users || []
+    totalLikes: postLikes?.totalLikes || users.length,
+    likes: users,
+    isLiked: users.includes(userId)
   });
 }
 
-async function addComment(postId, content, author, context) {
+async function addComment(postId, content, author) {
   if (!content || content.trim().length === 0) {
     return jsonResponse(400, { error: 'Comment content is required' });
   }
 
-  const data = await readData(context);
+  const data = await readData();
   
   if (!data.comments[postId]) {
     data.comments[postId] = [];
@@ -178,7 +190,10 @@ async function addComment(postId, content, author, context) {
   };
 
   data.comments[postId].unshift(newComment);
-  await writeData(context, data);
+  const ok = await writeData(data);
+  if (!ok) {
+    return jsonResponse(500, { error: 'Failed to persist comment' });
+  }
 
   return jsonResponse(200, { 
     success: true, 
@@ -187,8 +202,8 @@ async function addComment(postId, content, author, context) {
   });
 }
 
-async function getComments(postId, context) {
-  const data = await readData(context);
+async function getComments(postId) {
+  const data = await readData();
   const comments = data.comments[postId] || [];
   
   return jsonResponse(200, { 
@@ -197,8 +212,8 @@ async function getComments(postId, context) {
   });
 }
 
-async function deleteComment(postId, commentId, userId, context) {
-  const data = await readData(context);
+async function deleteComment(postId, commentId, userId) {
+  const data = await readData();
   
   if (!data.comments[postId]) {
     return jsonResponse(404, { error: 'Comments not found' });
@@ -210,7 +225,10 @@ async function deleteComment(postId, commentId, userId, context) {
   }
 
   data.comments[postId].splice(commentIndex, 1);
-  await writeData(context, data);
+  const ok = await writeData(data);
+  if (!ok) {
+    return jsonResponse(500, { error: 'Failed to persist delete' });
+  }
 
   return jsonResponse(200, { 
     success: true,
