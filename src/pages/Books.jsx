@@ -12,6 +12,36 @@ function Books() {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Link
+          to="/books/the-stoic-art-manual"
+          aria-label="Read The Stoic Art Manual"
+          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+        >
+          <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-yellow-100 to-amber-100 border overflow-hidden relative">
+            <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <div className="text-center">
+                <div className="text-6xl mb-2">📜</div>
+                <div className="text-sm text-gray-600">Stoicism</div>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge 
+              publishDate={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              lastModified={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+            />
+          </div>
+          <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">The Stoic Art of Living</h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <img src="https://img.shields.io/badge/Philosophy-Stoicism-brown" alt="Stoicism badge" />
+              <img src="https://img.shields.io/badge/Notes-Verbatim-blue" alt="Notes badge" />
+            </div>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">Your verbatim notes converted from PDF.</p>
+            <div className="mt-4">
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read Book</span>
+            </div>
+          </div>
+        </Link>
+        <Link
           to="/books/atheism"
           aria-label="Read Atheism: A Wonderful World Without Religion"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"

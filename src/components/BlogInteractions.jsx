@@ -77,7 +77,7 @@ const BlogInteractions = ({ postId }) => {
         // Use mock API in development
         const data = await mockApi.getLikes(postId);
         setLikes(data.totalLikes);
-        setIsLiked(false); // For now, always false
+        if (typeof data.isLiked === 'boolean') setIsLiked(data.isLiked);
       } else {
         // Use real API in production
         const response = await fetch(getApiUrl(), {
@@ -87,7 +87,7 @@ const BlogInteractions = ({ postId }) => {
         });
         const data = await response.json();
         setLikes(data.totalLikes);
-        setIsLiked(false); // For now, always false
+        if (typeof data.isLiked === 'boolean') setIsLiked(data.isLiked);
       }
     } catch (error) {
       console.error('Error loading likes:', error);

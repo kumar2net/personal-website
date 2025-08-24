@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Devastated by the Young Girl\'s Sudden Demise',
+    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    lastModified: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    excerpt: 'A heartbreaking reflection on the sudden loss of a young life to dengue-related complications. A call to action for better healthcare and prevention.',
+    tags: ['Healthcare', 'Dengue', 'Public Health', 'Tragedy', 'Prevention', 'Social Impact'],
+    image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iMzgiIGZpbGw9IiNGRkY3RDAiLz4KPHN2ZyB4PSIyMCIgeT0iMjAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjRkY5NjAwIj4KPHBhdGggZD0iTTEyIDJMMiA3djEwYzAgNS41NSAzLjg0IDkuNzQgOSAxMSA1LjE2LTEuMjYgOS01LjQ1IDktMTFWN2wtMTAtNXoiLz4KPHBhdGggZD0iTTEyIDZjLTIuMjEgMC00IDEuNzktNCA0czEuNzkgNCA0IDQgNC0xLjc5IDQtNC0xLjc5LTQtNC00eiIvPgo8cGF0aCBkPSJNMTIgMTZjLTMuMzEgMC02LTIuNjktNi02czIuNjktNiA2LTYgNiAyLjY5IDYgNi0yLjY5IDYtNiA2eiIvPgo8L3N2Zz4KPC9zdmc+',
+    link: '/blog/devastated-by-young-girls-demise'
+  },
+  {
     title: 'FAQ with our budding dentist',
     date: 'August 22, 2025',
     lastModified: 'August 22, 2025',
