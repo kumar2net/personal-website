@@ -25,7 +25,8 @@
     "crosspost:extract": "node scripts/wordpress-test.mjs --all",
     "wordpress:token": "node scripts/get-wordpress-token.mjs",
     "wordpress:setup": "node scripts/setup-wordpress.mjs",
-    "test:interactions": "node scripts/test-blog-interactions.mjs"
+    "test:interactions": "node scripts/test-blog-interactions.mjs",
+    "sitemap": "node scripts/generate-sitemap.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
