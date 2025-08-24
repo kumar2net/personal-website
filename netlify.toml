@@ -21,29 +21,18 @@
   status = 200
   force = true
 
-# Serve sitemap.xml directly with proper headers
+# Serve static files directly (PDFs, images, etc.)
 [[redirects]]
-  from = "/sitemap.xml"
-  to = "/sitemap.xml"
+  from = "/docs/*"
+  to = "/docs/:splat"
   status = 200
   force = true
-  headers = {Content-Type = "application/xml"}
 
-# Serve sitemap-index.xml as alternative
 [[redirects]]
-  from = "/sitemap-index.xml"
-  to = "/sitemap-index.xml"
+  from = "/public/*"
+  to = "/public/:splat"
   status = 200
   force = true
-  headers = {Content-Type = "application/xml"}
-
-# Serve robots.txt directly with proper headers
-[[redirects]]
-  from = "/robots.txt"
-  to = "/robots.txt"
-  status = 200
-  force = true
-  headers = {Content-Type = "text/plain"}
 
 # SPA fallback - redirect all other requests to index.html
 [[redirects]]
