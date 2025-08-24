@@ -21,6 +21,20 @@
   status = 200
   force = true
 
+# Serve sitemap.xml directly
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+  force = true
+
+# Serve robots.txt directly
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+  force = true
+
 # SPA fallback - redirect all other requests to index.html
 [[redirects]]
   from = "/*"
