@@ -2,7 +2,7 @@
   base = "."
   command = "npm run build"
   publish = "dist"
-  environment = { SECRETS_SCAN_ENABLED = "false" }
+  environment = { SECRETS_SCAN_ENABLED = "false", NODE_VERSION = "20" }
 
 # No Netlify functions needed for analytics; GA4 is used directly
 [functions]
