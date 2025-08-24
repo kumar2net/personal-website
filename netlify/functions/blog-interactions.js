@@ -1,4 +1,5 @@
-const { getStore } = require('@netlify/blobs');
+// Simple in-memory storage for demo (in production, use a proper database)
+const storage = new Map();
 
 function jsonResponse(statusCode, body, extraHeaders = {}) {
   return {
@@ -33,7 +34,6 @@ exports.handler = async (event) => {
     return jsonResponse(200, { ok: true });
   }
 
-  const store = getStore('blog-interactions');
   const { postId, action, commentId, content, author } = JSON.parse(event.body || '{}');
 
   if (!postId) {
@@ -43,17 +43,17 @@ exports.handler = async (event) => {
   try {
     switch (action) {
       case 'like':
-        return await handleLike(store, postId, getUserId(event));
+        return await handleLike(postId, getUserId(event));
       case 'unlike':
-        return await handleUnlike(store, postId, getUserId(event));
+        return await handleUnlike(postId, getUserId(event));
       case 'get-likes':
-        return await getLikes(store, postId);
+        return await getLikes(postId);
       case 'add-comment':
-        return await addComment(store, postId, content, author || 'Anonymous');
+        return await addComment(postId, content, author || 'Anonymous');
       case 'get-comments':
-        return await getComments(store, postId);
+        return await getComments(postId);
       case 'delete-comment':
-        return await deleteComment(store, postId, commentId, getUserId(event));
+        return await deleteComment(postId, commentId, getUserId(event));
       default:
         return jsonResponse(400, { error: 'Invalid action' });
     }
@@ -63,9 +63,9 @@ exports.handler = async (event) => {
   }
 };
 
-async function handleLike(store, postId, userId) {
+async function handleLike(postId, userId) {
   const key = `likes-${postId}`;
-  let likesData = await store.get(key);
+  let likesData = storage.get(key);
   
   if (!likesData) {
     likesData = { postId, likes: [], totalLikes: 0 };
@@ -74,7 +74,7 @@ async function handleLike(store, postId, userId) {
   if (!likesData.likes.includes(userId)) {
     likesData.likes.push(userId);
     likesData.totalLikes = likesData.likes.length;
-    await store.set(key, likesData);
+    storage.set(key, likesData);
   }
 
   return jsonResponse(200, { 
@@ -84,9 +84,9 @@ async function handleLike(store, postId, userId) {
   });
 }
 
-async function handleUnlike(store, postId, userId) {
+async function handleUnlike(postId, userId) {
   const key = `likes-${postId}`;
-  let likesData = await store.get(key);
+  let likesData = storage.get(key);
   
   if (!likesData) {
     return jsonResponse(200, { 
@@ -98,7 +98,7 @@ async function handleUnlike(store, postId, userId) {
 
   likesData.likes = likesData.likes.filter(id => id !== userId);
   likesData.totalLikes = likesData.likes.length;
-  await store.set(key, likesData);
+  storage.set(key, likesData);
 
   return jsonResponse(200, { 
     success: true, 
@@ -107,9 +107,9 @@ async function handleUnlike(store, postId, userId) {
   });
 }
 
-async function getLikes(store, postId) {
+async function getLikes(postId) {
   const key = `likes-${postId}`;
-  const likesData = await store.get(key);
+  const likesData = storage.get(key);
   
   return jsonResponse(200, { 
     totalLikes: likesData?.totalLikes || 0,
@@ -117,13 +117,13 @@ async function getLikes(store, postId) {
   });
 }
 
-async function addComment(store, postId, content, author) {
+async function addComment(postId, content, author) {
   if (!content || content.trim().length === 0) {
     return jsonResponse(400, { error: 'Comment content is required' });
   }
 
   const key = `comments-${postId}`;
-  let commentsData = await store.get(key);
+  let commentsData = storage.get(key);
   
   if (!commentsData) {
     commentsData = { postId, comments: [] };
@@ -138,7 +138,7 @@ async function addComment(store, postId, content, author) {
   };
 
   commentsData.comments.unshift(newComment); // Add to beginning
-  await store.set(key, commentsData);
+  storage.set(key, commentsData);
 
   return jsonResponse(200, { 
     success: true, 
@@ -147,9 +147,9 @@ async function addComment(store, postId, content, author) {
   });
 }
 
-async function getComments(store, postId) {
+async function getComments(postId) {
   const key = `comments-${postId}`;
-  const commentsData = await store.get(key);
+  const commentsData = storage.get(key);
   
   return jsonResponse(200, { 
     comments: commentsData?.comments || [],
@@ -157,9 +157,9 @@ async function getComments(store, postId) {
   });
 }
 
-async function deleteComment(store, postId, commentId, userId) {
+async function deleteComment(postId, commentId, userId) {
   const key = `comments-${postId}`;
-  let commentsData = await store.get(key);
+  let commentsData = storage.get(key);
   
   if (!commentsData) {
     return jsonResponse(404, { error: 'Comments not found' });
@@ -173,7 +173,7 @@ async function deleteComment(store, postId, commentId, userId) {
 
   // For now, allow deletion by anyone (you can add proper auth later)
   commentsData.comments.splice(commentIndex, 1);
-  await store.set(key, commentsData);
+  storage.set(key, commentsData);
 
   return jsonResponse(200, { 
     success: true,
