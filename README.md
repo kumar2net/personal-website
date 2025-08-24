@@ -1,86 +1,124 @@
 # Personal Website
 
-A modern personal website built with React, Vite, and Tailwind CSS.
-
-## Development
-
-### Standard Development
-```bash
-npm run dev
-```
-
-### Development with Netlify Functions
-To run the development server with Netlify functions (for tech trends, semantic search, etc.):
-
-```bash
-npm run dev:netlify
-```
-
-This will start both the Vite dev server and Netlify dev server, allowing you to test serverless functions locally.
-
-### Building for Production
-```bash
-npm run build
-```
+A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include blog posts, book reviews, learning resources, and interactive components.
 
 ## Features
 
-- **WordPress Auto-Publishing**: Automatic cross-posting from Netlify to WordPress.com
-- **Tech Trends Dashboard**: Real-time trending topics from Hacker News, GitHub, and Reddit
-- **Semantic Search**: AI-powered search across blog content
-- **Blog System**: Markdown-based blog with dynamic routing
-- **Book Reviews**: Cornell method book notes and reviews
-- **Google Analytics 4**: Automated content analysis and topic suggestions
-- **Responsive Design**: Mobile-first design with Tailwind CSS
+### 🚀 Core Features
+- **Responsive Design** - Works perfectly on all devices
+- **Blog System** - Dynamic blog posts with markdown support
+- **Book Reviews** - Interactive book content with PDF extraction
+- **Learning Resources** - Educational content and techniques
+- **Interactive Components** - Modern UI with smooth animations
 
-## Analytics
+### 💬 Blog Interactions (NEW!)
+- **Like/Unlike Posts** - Users can like blog posts with permanent storage
+- **Comments System** - Add, view, and delete comments on blog posts
+- **Real-time Updates** - Instant feedback without page refresh
+- **Permanent Storage** - Data persists across page reloads and deployments
+- **Beautiful UI** - Smooth animations and clear interaction labels
 
-The project includes Google Analytics 4 integration with automated content analysis and blog topic generation.
+### 📊 Analytics & SEO
+- **Google Analytics 4** - Comprehensive analytics tracking
+- **Semantic Search** - AI-powered search functionality
+- **SEO Optimized** - Meta tags, structured data, and performance
+- **Social Media Integration** - Open Graph and Twitter cards
 
-### Analytics Scripts
+### 🔧 Technical Features
+- **Netlify Functions** - Serverless backend for dynamic features
+- **File-based Storage** - Permanent data storage without external databases
+- **WordPress Integration** - Auto-publishing to WordPress
+- **Image Optimization** - Automatic image processing and optimization
+- **Performance Optimized** - Fast loading with code splitting
 
-- `npm run ga:topics` - Generate general blog topic suggestions
-- `npm run ga:topic-suggestions` - **MAIN** Generate specific topic suggestions based on GA4 data
-- `npm run ga:config` - Show GA4 configuration details
-- `npm run ga:test` - Test GA4 API connection
-- `npm run ga:all` - Run all analytics scripts
+## Quick Start
 
-### Current Recommendations
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-Based on your GA4 data (36 users, 14-minute sessions, 6.8% bounce rate), the system recommends focusing on:
+### Installation
+```bash
+git clone https://github.com/kumar2net/personal-website.git
+cd personal-website
+npm install
+```
 
-1. **Technology** - Advanced AI Development, Machine Learning, API Development
-2. **Trade & Economics** - India-US Trade Relations, Global Supply Chain Analysis
-3. **Productivity & Learning** - Keyboard Shortcuts, Workflow Automation, Time Management
+### Development
+```bash
+npm run dev
+```
+Visit `http://localhost:5173`
 
-See `docs/GA4_ANALYTICS_DOCUMENTATION.md` for detailed documentation.
+### Build & Deploy
+```bash
+npm run build
+npm run preview
+```
 
-## WordPress Auto-Publishing
+## Blog Interactions Setup
 
-The site automatically publishes blog posts to WordPress.com via GitHub Actions and Netlify Functions.
+The blog interactions feature is automatically deployed with your site. To add it to new blog posts:
 
-### WordPress Publishing Scripts
+```jsx
+import BlogInteractions from '../../components/BlogInteractions';
 
-- `npm run crosspost:extract` - Test content extraction from blog posts
-- `npm run crosspost:test` - Test publishing a specific blog post
-- `npm run crosspost:latest` - Publish the latest blog post
-- `npm run crosspost:all` - Publish all blog posts
-- `npm run wordpress:token` - Generate WordPress.com API token
-- `npm run wordpress:setup` - Interactive setup wizard
+// Add to your blog post component
+<BlogInteractions postId="your-blog-post-id" />
+```
 
-### Status: ✅ LIVE AND WORKING
+### Features
+- **Permanent Storage** - Uses file-based JSON storage (`/tmp/blog-interactions.json`)
+- **No External Dependencies** - Self-contained solution
+- **Cross-Environment Support** - Works in development and production
+- **User-Friendly** - Clear "Like" and "Comment" labels with count badges
 
-- **Netlify Site**: https://kumarsite.netlify.app/
-- **WordPress Site**: https://kumar2net.wordpress.com/
-- **Auto-Publishing**: Active and operational
+## Project Structure
 
-See `docs/WORDPRESS_AUTO_PUBLISH_SETUP.md` for detailed documentation.
+```
+personal-website/
+├── src/
+│   ├── components/          # React components
+│   │   ├── BlogInteractions.jsx  # Like/comment functionality
+│   │   └── ...
+│   ├── pages/              # Page components
+│   │   ├── blog/           # Blog posts
+│   │   └── ...
+│   └── ...
+├── netlify/
+│   └── functions/          # Serverless functions
+│       ├── blog-interactions.js  # Backend for likes/comments
+│       └── ...
+├── docs/                   # Documentation
+│   ├── BLOG_INTERACTIONS_GUIDE.md
+│   └── ...
+└── ...
+```
 
-## Tech Stack
+## Documentation
 
-- React 18
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Netlify Functions
-- React Router
+- [Blog Interactions Guide](docs/BLOG_INTERACTIONS_GUIDE.md) - Complete guide to like/comment functionality
+- [Analytics Setup](docs/ANALYTICS_README.md) - Google Analytics configuration
+- [WordPress Integration](docs/WORDPRESS_STATUS.md) - Auto-publishing setup
+
+## Deployment
+
+The site is automatically deployed to Netlify on every push to the `master` branch.
+
+**Live Site:** https://kumarsite.netlify.app
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+Built with ❤️ using React, Vite, Tailwind CSS, and Netlify Functions.
