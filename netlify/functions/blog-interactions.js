@@ -1,38 +1,44 @@
-import fs from 'fs';
-import path from 'path';
+import { getStore } from '@netlify/blobs';
 
-// Simple file-based storage for persistence
-const DATA_FILE = '/tmp/blog-interactions.json';
+// Use Netlify Blobs for persistent storage
+const STORE_NAME = 'blog-interactions';
 
-// Ensure data file exists
-function ensureDataFile() {
-  try {
-    if (!fs.existsSync(DATA_FILE)) {
-      fs.writeFileSync(DATA_FILE, JSON.stringify({ likes: {}, comments: {} }));
-    }
-  } catch (error) {
-    console.error('Error ensuring data file:', error);
-  }
+// Initialize the blob store
+async function getBlobStore(context) {
+  return getStore({
+    name: STORE_NAME,
+    siteID: context.site?.id || process.env.NETLIFY_SITE_ID,
+    token: process.env.NETLIFY_AUTH_TOKEN || context.account?.access_token,
+  });
 }
 
-// Read data from file
-function readData() {
+// Read data from blob storage
+async function readData(context) {
   try {
-    ensureDataFile();
-    const data = fs.readFileSync(DATA_FILE, 'utf8');
-    return JSON.parse(data);
+    const store = await getBlobStore(context);
+    const data = await store.get('data', { type: 'json' });
+    
+    // Return default structure if no data exists
+    if (!data) {
+      return { likes: {}, comments: {} };
+    }
+    
+    return data;
   } catch (error) {
-    console.error('Error reading data:', error);
+    console.error('Error reading data from blob storage:', error);
     return { likes: {}, comments: {} };
   }
 }
 
-// Write data to file
-function writeData(data) {
+// Write data to blob storage
+async function writeData(context, data) {
   try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+    const store = await getBlobStore(context);
+    await store.setJSON('data', data);
+    return true;
   } catch (error) {
-    console.error('Error writing data:', error);
+    console.error('Error writing data to blob storage:', error);
+    return false;
   }
 }
 
@@ -64,7 +70,7 @@ function getUserId(event) {
   return btoa(ip + userAgent).substring(0, 16);
 }
 
-export const handler = async (event) => {
+export const handler = async (event, context) => {
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
   }
@@ -78,17 +84,17 @@ export const handler = async (event) => {
   try {
     switch (action) {
       case 'like':
-        return await handleLike(postId, getUserId(event));
+        return await handleLike(postId, getUserId(event), context);
       case 'unlike':
-        return await handleUnlike(postId, getUserId(event));
+        return await handleUnlike(postId, getUserId(event), context);
       case 'get-likes':
-        return await getLikes(postId);
+        return await getLikes(postId, context);
       case 'add-comment':
-        return await addComment(postId, content, author || 'Anonymous');
+        return await addComment(postId, content, author || 'Anonymous', context);
       case 'get-comments':
-        return await getComments(postId);
+        return await getComments(postId, context);
       case 'delete-comment':
-        return await deleteComment(postId, commentId, getUserId(event));
+        return await deleteComment(postId, commentId, getUserId(event), context);
       default:
         return jsonResponse(400, { error: 'Invalid action' });
     }
@@ -98,8 +104,8 @@ export const handler = async (event) => {
   }
 };
 
-async function handleLike(postId, userId) {
-  const data = readData();
+async function handleLike(postId, userId, context) {
+  const data = await readData(context);
   
   if (!data.likes[postId]) {
     data.likes[postId] = { users: [], totalLikes: 0 };
@@ -108,7 +114,7 @@ async function handleLike(postId, userId) {
   if (!data.likes[postId].users.includes(userId)) {
     data.likes[postId].users.push(userId);
     data.likes[postId].totalLikes = data.likes[postId].users.length;
-    writeData(data);
+    await writeData(context, data);
   }
 
   return jsonResponse(200, { 
@@ -118,8 +124,8 @@ async function handleLike(postId, userId) {
   });
 }
 
-async function handleUnlike(postId, userId) {
-  const data = readData();
+async function handleUnlike(postId, userId, context) {
+  const data = await readData(context);
   
   if (!data.likes[postId]) {
     return jsonResponse(200, { 
@@ -131,7 +137,7 @@ async function handleUnlike(postId, userId) {
 
   data.likes[postId].users = data.likes[postId].users.filter(id => id !== userId);
   data.likes[postId].totalLikes = data.likes[postId].users.length;
-  writeData(data);
+  await writeData(context, data);
 
   return jsonResponse(200, { 
     success: true, 
@@ -140,8 +146,8 @@ async function handleUnlike(postId, userId) {
   });
 }
 
-async function getLikes(postId) {
-  const data = readData();
+async function getLikes(postId, context) {
+  const data = await readData(context);
   const postLikes = data.likes[postId];
   
   return jsonResponse(200, { 
@@ -150,12 +156,12 @@ async function getLikes(postId) {
   });
 }
 
-async function addComment(postId, content, author) {
+async function addComment(postId, content, author, context) {
   if (!content || content.trim().length === 0) {
     return jsonResponse(400, { error: 'Comment content is required' });
   }
 
-  const data = readData();
+  const data = await readData(context);
   
   if (!data.comments[postId]) {
     data.comments[postId] = [];
@@ -170,7 +176,7 @@ async function addComment(postId, content, author) {
   };
 
   data.comments[postId].unshift(newComment);
-  writeData(data);
+  await writeData(context, data);
 
   return jsonResponse(200, { 
     success: true, 
@@ -179,8 +185,8 @@ async function addComment(postId, content, author) {
   });
 }
 
-async function getComments(postId) {
-  const data = readData();
+async function getComments(postId, context) {
+  const data = await readData(context);
   const comments = data.comments[postId] || [];
   
   return jsonResponse(200, { 
@@ -189,8 +195,8 @@ async function getComments(postId) {
   });
 }
 
-async function deleteComment(postId, commentId, userId) {
-  const data = readData();
+async function deleteComment(postId, commentId, userId, context) {
+  const data = await readData(context);
   
   if (!data.comments[postId]) {
     return jsonResponse(404, { error: 'Comments not found' });
@@ -202,7 +208,7 @@ async function deleteComment(postId, commentId, userId) {
   }
 
   data.comments[postId].splice(commentIndex, 1);
-  writeData(data);
+  await writeData(context, data);
 
   return jsonResponse(200, { 
     success: true,
