@@ -1,5 +1,40 @@
-// Simple in-memory storage for demo (in production, use a proper database)
-const storage = new Map();
+import fs from 'fs';
+import path from 'path';
+
+// Simple file-based storage for persistence
+const DATA_FILE = '/tmp/blog-interactions.json';
+
+// Ensure data file exists
+function ensureDataFile() {
+  try {
+    if (!fs.existsSync(DATA_FILE)) {
+      fs.writeFileSync(DATA_FILE, JSON.stringify({ likes: {}, comments: {} }));
+    }
+  } catch (error) {
+    console.error('Error ensuring data file:', error);
+  }
+}
+
+// Read data from file
+function readData() {
+  try {
+    ensureDataFile();
+    const data = fs.readFileSync(DATA_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error reading data:', error);
+    return { likes: {}, comments: {} };
+  }
+}
+
+// Write data to file
+function writeData(data) {
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+  } catch (error) {
+    console.error('Error writing data:', error);
+  }
+}
 
 function jsonResponse(statusCode, body, extraHeaders = {}) {
   return {
@@ -29,7 +64,7 @@ function getUserId(event) {
   return btoa(ip + userAgent).substring(0, 16);
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
   }
@@ -64,31 +99,29 @@ exports.handler = async (event) => {
 };
 
 async function handleLike(postId, userId) {
-  const key = `likes-${postId}`;
-  let likesData = storage.get(key);
+  const data = readData();
   
-  if (!likesData) {
-    likesData = { postId, likes: [], totalLikes: 0 };
+  if (!data.likes[postId]) {
+    data.likes[postId] = { users: [], totalLikes: 0 };
   }
 
-  if (!likesData.likes.includes(userId)) {
-    likesData.likes.push(userId);
-    likesData.totalLikes = likesData.likes.length;
-    storage.set(key, likesData);
+  if (!data.likes[postId].users.includes(userId)) {
+    data.likes[postId].users.push(userId);
+    data.likes[postId].totalLikes = data.likes[postId].users.length;
+    writeData(data);
   }
 
   return jsonResponse(200, { 
     success: true, 
-    totalLikes: likesData.totalLikes,
+    totalLikes: data.likes[postId].totalLikes,
     isLiked: true 
   });
 }
 
 async function handleUnlike(postId, userId) {
-  const key = `likes-${postId}`;
-  let likesData = storage.get(key);
+  const data = readData();
   
-  if (!likesData) {
+  if (!data.likes[postId]) {
     return jsonResponse(200, { 
       success: true, 
       totalLikes: 0,
@@ -96,24 +129,24 @@ async function handleUnlike(postId, userId) {
     });
   }
 
-  likesData.likes = likesData.likes.filter(id => id !== userId);
-  likesData.totalLikes = likesData.likes.length;
-  storage.set(key, likesData);
+  data.likes[postId].users = data.likes[postId].users.filter(id => id !== userId);
+  data.likes[postId].totalLikes = data.likes[postId].users.length;
+  writeData(data);
 
   return jsonResponse(200, { 
     success: true, 
-    totalLikes: likesData.totalLikes,
+    totalLikes: data.likes[postId].totalLikes,
     isLiked: false 
   });
 }
 
 async function getLikes(postId) {
-  const key = `likes-${postId}`;
-  const likesData = storage.get(key);
+  const data = readData();
+  const postLikes = data.likes[postId];
   
   return jsonResponse(200, { 
-    totalLikes: likesData?.totalLikes || 0,
-    likes: likesData?.likes || []
+    totalLikes: postLikes?.totalLikes || 0,
+    likes: postLikes?.users || []
   });
 }
 
@@ -122,11 +155,10 @@ async function addComment(postId, content, author) {
     return jsonResponse(400, { error: 'Comment content is required' });
   }
 
-  const key = `comments-${postId}`;
-  let commentsData = storage.get(key);
+  const data = readData();
   
-  if (!commentsData) {
-    commentsData = { postId, comments: [] };
+  if (!data.comments[postId]) {
+    data.comments[postId] = [];
   }
 
   const newComment = {
@@ -137,46 +169,43 @@ async function addComment(postId, content, author) {
     replies: []
   };
 
-  commentsData.comments.unshift(newComment); // Add to beginning
-  storage.set(key, commentsData);
+  data.comments[postId].unshift(newComment);
+  writeData(data);
 
   return jsonResponse(200, { 
     success: true, 
     comment: newComment,
-    totalComments: commentsData.comments.length
+    totalComments: data.comments[postId].length
   });
 }
 
 async function getComments(postId) {
-  const key = `comments-${postId}`;
-  const commentsData = storage.get(key);
+  const data = readData();
+  const comments = data.comments[postId] || [];
   
   return jsonResponse(200, { 
-    comments: commentsData?.comments || [],
-    totalComments: commentsData?.comments?.length || 0
+    comments: comments,
+    totalComments: comments.length
   });
 }
 
 async function deleteComment(postId, commentId, userId) {
-  const key = `comments-${postId}`;
-  let commentsData = storage.get(key);
+  const data = readData();
   
-  if (!commentsData) {
+  if (!data.comments[postId]) {
     return jsonResponse(404, { error: 'Comments not found' });
   }
 
-  // Find and remove the comment
-  const commentIndex = commentsData.comments.findIndex(c => c.id === commentId);
+  const commentIndex = data.comments[postId].findIndex(c => c.id === commentId);
   if (commentIndex === -1) {
     return jsonResponse(404, { error: 'Comment not found' });
   }
 
-  // For now, allow deletion by anyone (you can add proper auth later)
-  commentsData.comments.splice(commentIndex, 1);
-  storage.set(key, commentsData);
+  data.comments[postId].splice(commentIndex, 1);
+  writeData(data);
 
   return jsonResponse(200, { 
     success: true,
-    totalComments: commentsData.comments.length
+    totalComments: data.comments[postId].length
   });
 }

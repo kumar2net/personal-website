@@ -18,7 +18,13 @@
     "ga:topic-suggestions": "node scripts/ga4-topic-suggestions.mjs",
     "ga:config": "node scripts/show-ga4-config.mjs",
     "ga:test": "node scripts/test-ga4-connection.mjs",
-    "ga:all": "npm run ga:topics && npm run ga:topic-suggestions"
+    "ga:all": "npm run ga:topics && npm run ga:topic-suggestions",
+    "crosspost:all": "node scripts/wordpress-crosspost.mjs --all",
+    "crosspost:latest": "node scripts/wordpress-crosspost.mjs --latest",
+    "crosspost:test": "node scripts/wordpress-crosspost.mjs src/pages/blog/india-usa-trade-gap-2025.jsx",
+    "crosspost:extract": "node scripts/wordpress-test.mjs --all",
+    "wordpress:token": "node scripts/get-wordpress-token.mjs",
+    "wordpress:setup": "node scripts/setup-wordpress.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
@@ -44,6 +50,7 @@
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.21.3",
+    "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "sentiment": "^5.0.2",
     "sharp": "^0.34.2",
