@@ -24,7 +24,8 @@
     "crosspost:test": "node scripts/wordpress-crosspost.mjs src/pages/blog/india-usa-trade-gap-2025.jsx",
     "crosspost:extract": "node scripts/wordpress-test.mjs --all",
     "wordpress:token": "node scripts/get-wordpress-token.mjs",
-    "wordpress:setup": "node scripts/setup-wordpress.mjs"
+    "wordpress:setup": "node scripts/setup-wordpress.mjs",
+    "test:interactions": "node scripts/test-blog-interactions.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
