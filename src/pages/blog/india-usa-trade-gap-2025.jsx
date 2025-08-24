@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
+import BlogInteractions from '../../components/BlogInteractions';
 // import TldrSummary from '../../components/TldrSummary';
 
 const IndiaUSATradeGap = () => {
@@ -184,6 +185,9 @@ const IndiaUSATradeGap = () => {
             </p>
           </div>
         </div>
+        
+        {/* Blog Interactions Component */}
+        <BlogInteractions postId="india-usa-trade-gap-2025" />
       </div>
     </motion.div>
   );

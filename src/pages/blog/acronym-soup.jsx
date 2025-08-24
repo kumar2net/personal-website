@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import BlogInteractions from '../../components/BlogInteractions';
 
 const AcronymSoup = () => {
   const navigate = useNavigate();
@@ -378,6 +379,9 @@ const AcronymSoup = () => {
             </p>
           </section>
         </div>
+        
+        {/* Blog Interactions Component */}
+        <BlogInteractions postId="acronym-soup" />
       </div>
     </motion.div>
   );
