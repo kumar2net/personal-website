@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: '🌍 Global Economic Concerns: A 2025 Pew Research Perspective',
+    date: 'August 25, 2025',
+    lastModified: 'August 25, 2025',
+    excerpt: 'The 2025 Pew Research Center survey reveals fascinating insights into how different nations perceive global economic threats and their economic outlooks. Analysis of economic concerns across India, Singapore, USA, Canada, and the UK.',
+    tags: ['Global Economy', 'Economic Survey', 'Economic Inequality', 'International Relations', 'Economic Outlook', 'Pew Research'],
+    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+    link: '/blog/global-economic-concerns-2025'
+  },
+  {
     title: 'Devastated by the Young Girl\'s Sudden Demise',
     date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     lastModified: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
