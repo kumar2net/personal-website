@@ -67,6 +67,7 @@ class WordPressCrossPoster {
         },
         body: new URLSearchParams({
           client_id: '123358',
+          client_secret: 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm',
           grant_type: 'refresh_token',
           refresh_token: refreshToken
         })

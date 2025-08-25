@@ -12,6 +12,7 @@ class WordPressAutoRefresh {
   constructor() {
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
     this.clientId = '123358';
+    this.clientSecret = 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm';
     this.redirectUri = 'https://kumarsite.netlify.app/';
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
   }
@@ -57,6 +58,7 @@ class WordPressAutoRefresh {
         },
         body: new URLSearchParams({
           client_id: this.clientId,
+          client_secret: this.clientSecret,
           grant_type: 'refresh_token',
           refresh_token: refreshToken
         })
