@@ -14,6 +14,102 @@ class WordPressCrossPoster {
     this.apiToken = process.env.WORDPRESS_API_TOKEN;
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
     this.postedLogFile = path.join(__dirname, '../data/wordpress-posted.json');
+    this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
+  }
+
+  async getValidToken() {
+    // First try environment variable
+    if (this.apiToken) {
+      const isValid = await this.testToken(this.apiToken);
+      if (isValid) {
+        return this.apiToken;
+      }
+    }
+
+    // Try to load from token file
+    try {
+      const data = await fs.readFile(this.tokenFile, 'utf-8');
+      const tokenData = JSON.parse(data);
+      
+      // Check if token is expired (tokens expire in 30 days)
+      const tokenAge = Date.now() - tokenData.createdAt;
+      const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+      
+      if (tokenAge < thirtyDays && tokenData.access_token) {
+        const isValid = await this.testToken(tokenData.access_token);
+        if (isValid) {
+          return tokenData.access_token;
+        }
+      }
+
+      // Try to refresh token if we have a refresh token
+      if (tokenData.refresh_token) {
+        console.log('🔄 Attempting to refresh token...');
+        const newToken = await this.refreshToken(tokenData.refresh_token);
+        if (newToken) {
+          return newToken;
+        }
+      }
+    } catch (error) {
+      console.log('No token file found or invalid token');
+    }
+
+    console.log('❌ No valid token available. Please run: npm run wordpress:token');
+    return null;
+  }
+
+  async refreshToken(refreshToken) {
+    try {
+      const response = await fetch('https://public-api.wordpress.com/oauth2/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          client_id: '123358',
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Token refresh failed: ${response.status}`);
+      }
+
+      const tokenData = await response.json();
+      await this.saveToken(tokenData);
+      console.log('✅ Token refreshed successfully!');
+      return tokenData.access_token;
+    } catch (error) {
+      console.error('❌ Failed to refresh token:', error.message);
+      return null;
+    }
+  }
+
+  async saveToken(tokenData) {
+    await fs.mkdir(path.dirname(this.tokenFile), { recursive: true });
+    const dataToSave = {
+      access_token: tokenData.access_token,
+      refresh_token: tokenData.refresh_token,
+      createdAt: Date.now(),
+      expires_in: tokenData.expires_in || 2592000 // 30 days in seconds
+    };
+    await fs.writeFile(this.tokenFile, JSON.stringify(dataToSave, null, 2));
+  }
+
+  async testToken(token) {
+    try {
+      const response = await fetch(`${this.apiBase}/sites/kumar2net.wordpress.com/posts`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
   }
 
   async loadPostedLog() {
@@ -132,10 +228,16 @@ class WordPressCrossPoster {
     };
 
     try {
+      // Get a valid token
+      const token = await this.getValidToken();
+      if (!token) {
+        throw new Error('No valid WordPress API token available');
+      }
+
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${this.apiToken}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
