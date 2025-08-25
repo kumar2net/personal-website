@@ -13,6 +13,7 @@ class WordPressPermanentSetup {
   constructor() {
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
     this.clientId = '123358';
+    this.clientSecret = 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm';
     this.redirectUri = 'https://kumarsite.netlify.app/';
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
     this.rl = readline.createInterface({
@@ -70,6 +71,9 @@ class WordPressPermanentSetup {
     try {
       console.log('🔄 Exchanging authorization code for tokens...');
       
+      // Clean the authorization code (remove &state part if present)
+      const cleanAuthCode = authCode.split('&')[0];
+      
       const response = await fetch('https://public-api.wordpress.com/oauth2/token', {
         method: 'POST',
         headers: {
@@ -77,8 +81,9 @@ class WordPressPermanentSetup {
         },
         body: new URLSearchParams({
           client_id: this.clientId,
+          client_secret: this.clientSecret,
           grant_type: 'authorization_code',
-          code: authCode,
+          code: cleanAuthCode,
           redirect_uri: this.redirectUri
         })
       });
