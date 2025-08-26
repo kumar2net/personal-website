@@ -30,6 +30,12 @@
     "wordpress:permanent-setup": "node scripts/wordpress-permanent-setup.mjs --setup",
     "wordpress:test-setup": "node scripts/wordpress-permanent-setup.mjs --test",
     "wordpress:status": "node scripts/wordpress-permanent-setup.mjs --status",
+    "wordpress:webhook-setup": "node scripts/setup-wordpress-webhook.mjs",
+    "wordpress:webhook-test": "node scripts/setup-wordpress-webhook.mjs --test",
+    "wordpress:poll": "node scripts/wordpress-polling.mjs",
+    "wordpress:poll-once": "node scripts/wordpress-polling.mjs --once",
+    "wordpress:publisher": "node scripts/wordpress-netlify-publisher.mjs",
+    "wordpress:publisher-generate": "node scripts/wordpress-netlify-button.mjs --generate",
     "test:interactions": "node scripts/test-blog-interactions.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "cms:convert": "node scripts/convert-md-to-jsx.mjs"

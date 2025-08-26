@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'agentic feature in a browser',
+    date: 'August 23, 2025',
+    lastModified: 'August 23, 2025',
+    excerpt: 'Tell us about the last thing you got excited about. I like the agentic features Perplexity has got in their new Comet web browser. I tried out few tasks and it did work well. This along with their perplexity.ai/ finance page for India stock market news, earnings, other metrics is brilliant.',
+    tags: ['Technology', 'AI', 'Browser', 'Perplexity', 'Agentic Features', 'Finance'],
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/2025-08-23-agentic-feature-in-a-browser'
+  },
+  {
     title: '🌍 Global Economic Concerns: A 2025 Pew Research Perspective',
     date: 'August 25, 2025',
     lastModified: 'August 25, 2025',
