@@ -54,6 +54,7 @@ import DevastatedByYoungGirlsDemise from './pages/blog/devastated-by-young-girls
 import GlobalEconomicConcerns from './pages/blog/global-economic-concerns-2025';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
+// Admin CMS removed
 
 
 function useGaPageViews() {
@@ -391,8 +392,10 @@ function App() {
           <Route path="/blog/devastated-by-young-girls-demise" element={<DevastatedByYoungGirlsDemise />} />
           <Route path="/blog/global-economic-concerns-2025" element={<GlobalEconomicConcerns />} />
           <Route path="/dossier" element={<DossierPage />} />
+          {/* Admin route removed */}
           <Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />
+          {/* Admin route is handled by static files, not React Router */}
         </Routes>
       </main>
 

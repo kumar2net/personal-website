@@ -17,6 +17,8 @@ export default defineConfig({
     copyPublicDir: true
   },
   publicDir: 'public',
+  // Ensure Vite treats .docx as static assets when imported with ?url
+  assetsInclude: ['**/*.docx'],
   server: {
     historyApiFallback: true,
   },
