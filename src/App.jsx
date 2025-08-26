@@ -52,6 +52,7 @@ import LongWeekendMusings2025 from './pages/blog/long-weekend-musings-2025';
 import FAQBuddingDentist from './pages/blog/faq-budding-dentist';
 import DevastatedByYoungGirlsDemise from './pages/blog/devastated-by-young-girls-demise';
 import GlobalEconomicConcerns from './pages/blog/global-economic-concerns-2025';
+import AgenticFeatureInABrowser from './pages/blog/2025-08-23-agentic-feature-in-a-browser';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
 // Admin CMS removed
@@ -391,6 +392,7 @@ function App() {
           <Route path="/blog/faq-budding-dentist" element={<FAQBuddingDentist />} />
           <Route path="/blog/devastated-by-young-girls-demise" element={<DevastatedByYoungGirlsDemise />} />
           <Route path="/blog/global-economic-concerns-2025" element={<GlobalEconomicConcerns />} />
+          <Route path="/blog/2025-08-23-agentic-feature-in-a-browser" element={<AgenticFeatureInABrowser />} />
           <Route path="/dossier" element={<DossierPage />} />
           {/* Admin route removed */}
           <Route path="/blog/:slug" element={<PostDynamic />} />
