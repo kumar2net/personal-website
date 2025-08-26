@@ -31,7 +31,8 @@
     "wordpress:test-setup": "node scripts/wordpress-permanent-setup.mjs --test",
     "wordpress:status": "node scripts/wordpress-permanent-setup.mjs --status",
     "test:interactions": "node scripts/test-blog-interactions.mjs",
-    "sitemap": "node scripts/generate-sitemap.mjs"
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "cms:convert": "node scripts/convert-md-to-jsx.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
@@ -44,6 +45,7 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "framer-motion": "^11.0.3",
+    "gray-matter": "^4.0.3",
     "google-auth-library": "^9.13.0",
     "googleapis": "^156.0.0",
     "lucide-react": "^0.524.0",
@@ -61,6 +63,7 @@
     "remark-gfm": "^4.0.1",
     "sentiment": "^5.0.2",
     "sharp": "^0.34.2",
+    "tesseract.js": "^6.0.1",
     "turndown": "^7.2.0"
   },
   "devDependencies": {

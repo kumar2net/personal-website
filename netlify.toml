@@ -34,6 +34,12 @@
   status = 200
   force = true
 
+# Admin panel redirect
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
 # SPA fallback - redirect all other requests to index.html
 [[redirects]]
   from = "/*"
