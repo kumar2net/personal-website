@@ -32,6 +32,14 @@ const About = () => {
               </div>
               <div className="flex items-center">
                 <span className="w-4 h-4 rounded-full bg-blue-500 mr-2"></span>
+                <span>Express</span>
+              </div>
+              <div className="flex items-center">
+                <span className="w-4 h-4 rounded-full bg-blue-500 mr-2"></span>
+                <span>PostgreSQL</span>
+              </div>
+              <div className="flex items-center">
+                <span className="w-4 h-4 rounded-full bg-blue-500 mr-2"></span>
                 <span>Tailwind CSS</span>
               </div>
             </div>
