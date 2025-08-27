@@ -329,8 +329,8 @@ class WordPressCrossPoster {
         .trim();
       const tldrHtml = await this.generateTldrFromGemini(plainText, postData.title);
 
-      // Prepend TL;DR and attribution
-      const attribution = `<p><em>Originally published at <a href="${originalUrl}" rel="noopener noreferrer">${originalUrl}</a>. This cross-post includes a TL;DR and source link to avoid duplicate-content SEO issues.</em></p>`;
+      // Prepend optional TL;DR and attribution (source link only)
+      const attribution = `<p><em>Originally published at <a href="${originalUrl}" rel="noopener noreferrer">${originalUrl}</a>.</em></p>`;
       postData.content = `${tldrHtml || ''}${attribution}${postData.content}`;
       
       // Post to WordPress
