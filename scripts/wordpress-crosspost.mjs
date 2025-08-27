@@ -15,6 +15,8 @@ class WordPressCrossPoster {
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
     this.postedLogFile = path.join(__dirname, '../data/wordpress-posted.json');
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
+    this.geminiApiKey = process.env.GEMINI_API_KEY;
+    this.originalSiteBase = 'https://kumarsite.netlify.app/blog/';
   }
 
   async getValidToken() {
@@ -217,6 +219,48 @@ class WordPressCrossPoster {
     return html;
   }
 
+  async generateTldrFromGemini(text, title) {
+    try {
+      if (!this.geminiApiKey) {
+        console.log('ℹ️  GEMINI_API_KEY not set; skipping TL;DR generation.');
+        return null;
+      }
+      const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
+      const prompt = `You are a precise editor. Write a concise TL;DR (3-6 bullets) for the following blog post titled "${title}". Keep each bullet under 20 words, plain text, no emojis.`;
+      // Truncate to ~10k chars to keep payload small
+      const maxLen = 10000;
+      const body = {
+        contents: [
+          { role: 'user', parts: [{ text: prompt }] },
+          { role: 'user', parts: [{ text: text.slice(0, maxLen) }] }
+        ]
+      };
+      const res = await fetch(`${endpoint}?key=${this.geminiApiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        console.log(`⚠️  Gemini API failed: ${res.status}`);
+        return null;
+      }
+      const data = await res.json();
+      const textOut = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('\n') || '';
+      if (!textOut) return null;
+      // Convert to HTML list
+      const bullets = textOut
+        .split(/\n+/)
+        .map(s => s.replace(/^[-•\s]+/, '').trim())
+        .filter(Boolean)
+        .map(s => `<li>${s}</li>`) // escape skipped for brevity
+        .join('');
+      return `<h2>TL;DR</h2><ul>${bullets}</ul>`;
+    } catch (e) {
+      console.log('⚠️  TL;DR generation error:', e.message);
+      return null;
+    }
+  }
+
   async postToWordPress(postData) {
     const url = `${this.apiBase}/sites/${this.siteId}/posts/new`;
     
@@ -271,6 +315,23 @@ class WordPressCrossPoster {
       
       // Extract content from JSX file
       const postData = await this.extractBlogContent(jsxFilePath);
+
+      // Build original URL from filename
+      const slug = path.basename(jsxFilePath).replace(/\.jsx$/, '');
+      const originalUrl = `${this.originalSiteBase}${slug}`;
+
+      // Generate TL;DR via Gemini
+      const plainText = postData.content
+        .replace(/<style[\s\S]*?<\/style>/g, '')
+        .replace(/<script[\s\S]*?<\/script>/g, '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const tldrHtml = await this.generateTldrFromGemini(plainText, postData.title);
+
+      // Prepend TL;DR and attribution
+      const attribution = `<p><em>Originally published at <a href="${originalUrl}" rel="noopener noreferrer">${originalUrl}</a>. This cross-post includes a TL;DR and source link to avoid duplicate-content SEO issues.</em></p>`;
+      postData.content = `${tldrHtml || ''}${attribution}${postData.content}`;
       
       // Post to WordPress
       const result = await this.postToWordPress(postData);

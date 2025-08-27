@@ -125,11 +125,4 @@ These are usually handled automatically by Netlify.
 - ✅ **Zero maintenance** - No database to manage or backup
 - ✅ **Global distribution** - Fast access from anywhere
 
-## Content Style Rules (Site-Wide)
-
-- Acronyms: Expand at first occurrence in a post (e.g., "Advanced Metering Infrastructure (AMI)").
-- Capitalization: Apply the 7 rules of capitalization for headings and section titles.
-- Section order for problem-solution posts:
-  1) The Problem → 2) What Triggered This Post → 3) What I Found → 4) Advantages → 5) Solution/Executive Summary → 6) Plan/Architecture → 7) References → 8) Final Takeaway.
-- Telecom wording: Prefer generic "5G/LTE"; avoid product brand links; do not mention 2G; keep provider names as plain text if needed.
-- Comments/Likes: Always include `BlogInteractions` at the end of blog posts with a stable `postId`.
+<!-- Site-wide content style rules were removed as out-of-scope for this guide -->

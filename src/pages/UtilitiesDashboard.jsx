@@ -120,6 +120,14 @@ const DATA = {
       costPerM3: 0.36,
       total: 110.05,
       label: 'Seminole County Utilities — derived from UsageX100 (hundreds of gallons)'
+    },
+    {
+      city: 'Singapore',
+      unitsM3: 57.0,
+      currency: 'SGD',
+      costPerM3: 0.3235,
+      total: 18.44,
+      label: 'SP Services — Water 57 m³; effective includes WBT/WCT (S$18.44 total)'
     }
   ]
 }
@@ -152,6 +160,16 @@ function BarRow({ label, value, max, rightLabel, colorClass = 'bg-blue-500' }) {
 }
 
 export default function UtilitiesDashboard() {
+  function normalizeCity(rawCity) {
+    if (!rawCity) return rawCity
+    // Toronto / Etobicoke → Toronto
+    if (rawCity.includes('Etobicoke')) return 'Toronto, ON, Canada'
+    if (rawCity === 'Toronto' || rawCity.includes('Toronto, ON')) return 'Toronto, ON, Canada'
+    // Altamonte Springs / Lake Mary → Altamonte Springs
+    if (rawCity.includes('Altamonte Springs')) return 'Altamonte Springs, FL, USA'
+    if (rawCity === 'Lake Mary' || rawCity.includes('Lake Mary, FL')) return 'Altamonte Springs, FL, USA'
+    return rawCity
+  }
   const maxKwh = Math.max(...DATA.electricity.map(d => d.unitsKwh))
   const costPerKwhUsd = DATA.electricity.map(d => toUsdEquivalent(d.currency, d.costPerKwh) || 0)
   const maxCostPerKwhUsd = Math.max(...costPerKwhUsd, 0)
@@ -164,8 +182,27 @@ export default function UtilitiesDashboard() {
     return v != null ? toUsdEquivalent(currency, v) || 0 : 0
   })
   const maxCostPerUnitUsd = Math.max(...gasUsdUnitPrices, 0)
-  const normalizedGas = DATA.gas.map(d => ({ city: d.city, value: normalizedGasUsdPerKwh(d) }))
+  const normalizedGas = DATA.gas.map(d => ({ city: normalizeCity(d.city), value: normalizedGasUsdPerKwh(d) }))
   const maxNormalizedUsdPerKwh = Math.max(...normalizedGas.map(d => d.value || 0))
+  // Build stacked totals (USD) by city across electricity, gas, water
+  const cityTotals = new Map()
+
+  function addToCity(city, key, currency, value) {
+    if (value == null) return
+    const normalized = normalizeCity(city)
+    const usd = toUsdEquivalent(currency, value) || 0
+    if (!cityTotals.has(normalized)) cityTotals.set(normalized, { electricity: 0, gas: 0, water: 0, total: 0 })
+    const entry = cityTotals.get(normalized)
+    entry[key] += usd
+    entry.total += usd
+  }
+
+  DATA.electricity.forEach(d => addToCity(d.city, 'electricity', d.currency, d.total))
+  DATA.gas.forEach(d => addToCity(d.city, 'gas', d.currency, d.total))
+  DATA.water.forEach(d => addToCity(d.city, 'water', d.currency, d.total))
+
+  const stackedData = Array.from(cityTotals.entries()).map(([city, v]) => ({ city, ...v }))
+  const maxStacked = Math.max(...stackedData.map(d => d.total || 0), 0)
   const maxWaterM3 = Math.max(...DATA.water.map(d => d.unitsM3 || 0), 0)
   const maxWaterCostUsd = Math.max(...DATA.water.map(d => toUsdEquivalent(d.currency, d.costPerM3) || 0), 0)
 
@@ -307,6 +344,9 @@ export default function UtilitiesDashboard() {
             <div key={`${d.city}-gasnote`}>• {d.city}: {d.label}{d.total != null ? ` — Total: ${formatCurrency(d.total, d.currency)}` : ''}</div>
           ))}
         </div>
+        <div className="mt-2 text-sm text-gray-600">
+          Note: Altamonte Springs, FL (Orlando area) hotplate is electric; no gas usage.
+        </div>
       </section>
 
       {/* Normalized Gas Cost */}
@@ -337,6 +377,44 @@ export default function UtilitiesDashboard() {
           <li>Singapore: 166 kWh at S$0.2747/kWh from SP Services breakdown; City Energy gas shown as 67 (bill kWh-equiv), m³ not provided.</li>
           <li>Gas data: Etobicoke recorded 21 m³ with an effective unit cost around C$1.78/m³ (tax-incl.). Coimbatore’s LPG shows a flat monthly fee without units.</li>
         </ul>
+      </section>
+
+      {/* Stacked totals across utilities (USD) */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-2">All Utilities — Stacked Charges by City (USD)</h2>
+        <p className="text-gray-600 mb-4">Each bar stacks Electricity + Gas + Water totals, converted to USD using FX (₹83.5, S$1.35, C$1.36 per USD).</p>
+        <div className="p-4 bg-white rounded-xl shadow">
+          <div className="flex items-end gap-6 overflow-x-auto pb-2">
+            {stackedData.map(d => {
+              const e = d.electricity || 0
+              const g = d.gas || 0
+              const w = d.water || 0
+              const total = Math.max(d.total || 0, 0)
+              const height = maxStacked > 0 ? Math.max(6, Math.round((total / maxStacked) * 220)) : 0
+              const eHeight = total > 0 ? Math.round((e / total) * height) : 0
+              const gHeight = total > 0 ? Math.round((g / total) * height) : 0
+              const wHeight = Math.max(0, height - eHeight - gHeight)
+              return (
+                <div key={`stack-${d.city}`} className="flex flex-col items-center text-sm">
+                  <div className="w-10 bg-gray-200 rounded flex flex-col justify-end" style={{ height }}>
+                    {e > 0 && <div className="bg-indigo-500" style={{ height: eHeight }} />}
+                    {g > 0 && <div className="bg-amber-500" style={{ height: gHeight }} />}
+                    {w > 0 && <div className="bg-cyan-600" style={{ height: wHeight }} />}
+                  </div>
+                  <div className="mt-2 text-center max-w-[7rem] leading-tight">
+                    <div className="font-medium">{d.city}</div>
+                    <div className="text-gray-600">${total.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          <div className="flex gap-4 mt-4 text-sm text-gray-700">
+            <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 bg-indigo-500" />Electricity</div>
+            <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 bg-amber-500" />Gas</div>
+            <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 bg-cyan-600" />Water</div>
+          </div>
+        </div>
       </section>
     </motion.div>
   )
