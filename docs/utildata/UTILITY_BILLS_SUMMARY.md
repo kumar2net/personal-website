@@ -30,6 +30,19 @@ Explanation:
 ## Overview
 Successfully parsed utility bill data from PDF files in the `docs/utildata` folder and extracted key information including units consumed, total cost, and cost per unit in their respective currencies.
 
+### Water Consumption and Unit Costs
+
+| City | Water (m³) | Cost/m³ (local) | Cost/m³ (USD) |
+|---|---:|---:|---:|
+| Toronto, ON, Canada | 7.00 | C$4.6872 | $3.45 |
+| Lake Mary, FL, USA | 309.27 | $0.36 | $0.36 |
+| Singapore | — | — | — |
+
+Notes:
+- Toronto (CARMA): Cold water consumption 7 m³ at C$4.6872/m³ → C$32.81. USD assumes C$1.36/USD.
+- Orlando (Seminole County Utilities): Usage derived from “UsageX100” (hundreds of gallons) converted to m³; total $110.05.
+- Singapore: Water line not detected in extracted block; will populate if parsed reliably in a future pass.
+
 ## Files Processed
 
 ### 1. Tamil Nadu Power Distribution Corporation (cbetneb.pdf)

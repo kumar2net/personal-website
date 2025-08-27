@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Friction in India with Government Services — TNPDCL Energy Meter Reading',
+    date: 'August 27, 2025',
+    lastModified: 'August 27, 2025',
+    excerpt: 'Manual readings cause stress and billing errors. A cellular-only AMR/AMI plan with CAPEX/OPEX, ROI, and a phased rollout tailored for TNPDCL.',
+    tags: ['Utilities', 'Smart Metering', 'TNPDCL', 'AMI', 'Cellular'],
+    image: 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/tnpdcl-automated-meter-reading'
+  },
+  {
     title: 'joy of writing',
     date: 'August 26, 2025',
     lastModified: 'August 26, 2025',
