@@ -15,7 +15,9 @@ async function parseUtilityBills() {
     for (const bill of bills) {
       if (bill.content && bill.content.length > 0) {
         const parsed = parseBillContent(bill.filename, bill.content)
-        if (parsed) {
+        if (Array.isArray(parsed)) {
+          parsed.forEach(row => parsedBills.push(row))
+        } else if (parsed) {
           parsedBills.push(parsed)
         }
       }
@@ -73,6 +75,11 @@ function parseBillContent(filename, content) {
       (content.includes('Account No.') && content.includes('Singapore')) ||
       filename.includes('sgutilbill')) {
     return parseSingaporeBill(filename, content)
+  }
+
+  // Parse Enbridge Gas (Toronto / Etobicoke)
+  if (filename.toLowerCase().includes('toronto_gas') || content.toLowerCase().includes('enbridge gas')) {
+    return parseEnbridgeGasBill(filename, content)
   }
   
   return null
@@ -179,119 +186,122 @@ function parseDukeEnergyBill(filename, content) {
 
 function parseSingaporeBill(filename, content) {
   try {
-    
-    // Extract account number
+    // Account number (optional)
     const accountMatch = content.match(/Account No\.\s*(\d+)/)
     const accountNumber = accountMatch ? accountMatch[1] : ''
-    
-    // Extract bill period - look for August 2025
-    const billPeriod = 'August 2025'
-    
-    // Extract total cost - look for patterns like $96.27 or similar
-    // Try multiple patterns to find the total cost
-    let totalCostMatch = content.match(/\$(\d+\.?\d*)/)
-    if (!totalCostMatch) {
-      totalCostMatch = content.match(/Total.*?\$(\d+\.?\d*)/)
+
+    // Bill period e.g. "06 Jul 2025 - 05 Aug 2025" or fallback "August 2025"
+    let billPeriod = 'August 2025'
+    const periodMatch = content.match(/(\d{2}\s+[A-Za-z]{3,}\s+\d{4})\s*-\s*(\d{2}\s+[A-Za-z]{3,}\s+\d{4})/)
+    if (periodMatch) billPeriod = `${periodMatch[1]} - ${periodMatch[2]}`
+
+    // Extract per-utility breakdowns strictly within the "Breakdown of Current Charges" block
+    const breakdownMatch = content.match(/Breakdown of Current Charges([\s\S]*?)Subtotal/i)
+    const breakdown = breakdownMatch ? breakdownMatch[1] : ''
+    const elecSectionMatch = breakdown.match(/Electricity\s+Services([\s\S]*?)(?:Gas\s+Services|Water\s+Services|Refuse|GST|$)/i)
+    const gasSectionMatch = breakdown.match(/Gas\s+Services([\s\S]*?)(?:Water\s+Services|Refuse|GST|$)/i)
+    let elecRowMatch = null
+    let gasRowMatch = null
+    if (elecSectionMatch) {
+      // Expect: "166 kWh   0.2747   45.60" (units, rate, amount)
+      elecRowMatch = elecSectionMatch[1].match(/(\d+\.?\d*)\s*kWh\s+(\d+\.?\d*)\s+(\d+\.?\d+)/i)
     }
-    if (!totalCostMatch) {
-      totalCostMatch = content.match(/Current Charges.*?\$(\d+\.?\d*)/)
+    if (gasSectionMatch) {
+      // Expect: "67 kWh   0.2228   14.93" (units, rate, amount)
+      gasRowMatch = gasSectionMatch[1].match(/(\d+\.?\d*)\s*kWh\s+(\d+\.?\d*)\s+(\d+\.?\d+)/i)
     }
-    if (!totalCostMatch) {
-      totalCostMatch = content.match(/Bill.*?\$(\d+\.?\d*)/)
-    }
-    if (!totalCostMatch) {
-      totalCostMatch = content.match(/Amount.*?\$(\d+\.?\d*)/)
-    }
-    if (!totalCostMatch) {
-      totalCostMatch = content.match(/Pay.*?\$(\d+\.?\d*)/)
-    }
-    
-    // Look for the largest dollar amount as it's likely the total
-    const allDollarMatches = content.match(/\$(\d+\.?\d*)/g)
-    if (allDollarMatches && allDollarMatches.length > 0) {
-      const amounts = allDollarMatches.map(match => parseFloat(match.replace('$', '')))
-      
-      // Filter out obviously wrong amounts (like $9627 which should be $96.27)
-      const reasonableAmounts = amounts.filter(amount => amount < 1000)
-      
-      if (reasonableAmounts.length > 0) {
-        const maxAmount = Math.max(...reasonableAmounts)
-        if (maxAmount > 0) {
-          totalCostMatch = [`$${maxAmount}`, maxAmount.toString()]
-        }
-      }
-    }
-    
-    let totalCost = totalCostMatch ? parseFloat(totalCostMatch[1]) : null
-    
-    // Manual correction for known OCR errors in Singapore bills
-    if (filename.includes('sgutilbill2.jpeg') && totalCost === 936) {
-      totalCost = 96.27 // Correct the OCR error
-    }
-    if (filename.includes('sgutilbill1.jpeg') && totalCost === 200) {
-      totalCost = 96.27 // Based on the OCR text showing $96.27
-    }
-    
-    // Extract electricity usage - look for patterns like "Usage: 67 Wh" or similar
-    let electricityMatch = content.match(/Usage:\s*(\d+)\s*Wh/i)
-    if (!electricityMatch) {
-      electricityMatch = content.match(/Electricity.*?(\d+)\s*Wh/i)
-    }
-    if (!electricityMatch) {
-      electricityMatch = content.match(/Electric.*?(\d+)\s*Wh/i)
-    }
-    const electricityUsage = electricityMatch ? parseFloat(electricityMatch[1]) : null
-    
-    // Extract water usage - look for patterns like "Usage: 57 uM" or similar
-    let waterMatch = content.match(/Usage:\s*(\d+)\s*uM/i)
-    if (!waterMatch) {
-      waterMatch = content.match(/Water.*?(\d+)\s*uM/i)
-    }
-    if (!waterMatch) {
-      waterMatch = content.match(/Water.*?(\d+)\s*cuM/i)
-    }
-    const waterUsage = waterMatch ? parseFloat(waterMatch[1]) : null
-    
-    // Determine utility type and units
-    let unitsConsumed = null
-    let utilityType = 'Unknown'
-    
-    if (electricityUsage) {
-      unitsConsumed = electricityUsage / 1000 // Convert Wh to kWh
-      utilityType = 'Electricity'
-    } else if (waterUsage) {
-      unitsConsumed = waterUsage
-      utilityType = 'Water'
-    }
-    
-    // For Singapore bills, if we have both electricity and water, use electricity for cost per unit calculation
-    if (electricityUsage && waterUsage) {
-      unitsConsumed = electricityUsage / 1000 // Use electricity for kWh calculation
-      utilityType = 'Electricity (with Water)'
-    }
-    
-    // Debug info removed for cleaner output
-    
-    if (totalCost && unitsConsumed) {
-      const costPerUnit = (totalCost / unitsConsumed).toFixed(4)
-      
-      return {
+
+    // Fallback: global search if section-bounded regex failed (OCR irregularities)
+    // No global fallback to avoid accidental capture of trend charts
+
+    const rows = []
+
+    if (elecRowMatch) {
+      const units = parseFloat(elecRowMatch[1])
+      const rate = parseFloat(elecRowMatch[2])
+      const amount = parseFloat(elecRowMatch[3])
+      rows.push({
         filename,
-        utilityCompany: 'SP Services (Singapore)',
+        utilityCompany: 'SP Services (Electricity)',
         currency: 'SGD',
-        unitsConsumed: unitsConsumed,
-        totalCost: totalCost,
-        costPerUnit: costPerUnit,
-        billPeriod: billPeriod,
+        unitsConsumed: units, // kWh
+        totalCost: amount,
+        costPerUnit: rate.toFixed(4),
+        billPeriod,
         location: 'Singapore',
-        utilityType: utilityType,
-        accountNumber: accountNumber
-      }
-    // Missing data handling
+        accountNumber
+      })
+    }
+
+    if (gasRowMatch) {
+      const units = parseFloat(gasRowMatch[1])
+      const rate = parseFloat(gasRowMatch[2])
+      const amount = parseFloat(gasRowMatch[3])
+      rows.push({
+        filename,
+        utilityCompany: 'City Energy (Gas)',
+        currency: 'SGD',
+        unitsConsumed: units, // kWh equivalent per bill
+        totalCost: amount,
+        costPerUnit: rate.toFixed(4),
+        billPeriod,
+        location: 'Singapore',
+        accountNumber
+      })
+    }
+
+    if (rows.length > 0) return rows
   } catch (error) {
     console.log(`❌ Error parsing Singapore bill: ${error.message}`)
   }
-  
+  return null
+}
+
+function parseEnbridgeGasBill(filename, content) {
+  try {
+    // Bill period
+    let billPeriod = ''
+    const periodMatch = content.match(/Billing\s+Period\s+([A-Za-z]{3,}\s+\d{1,2}\s*,\s*\d{4}\s*-\s*[A-Za-z]{3,}\s+\d{1,2}\s*,\s*\d{4})/i)
+    if (periodMatch) billPeriod = periodMatch[1]
+
+    // Total amount (taxes included)
+    let totalCost = null
+    const totalMatch = content.match(/Total\s+Amount\s+(?:Due\s+)?\$\s*([0-9]+\.?[0-9]*)/i)
+    if (totalMatch) totalCost = parseFloat(totalMatch[1])
+
+    // Units in m3 — prefer the "How much gas did I use" section
+    let unitsM3 = null
+    const m3MatchSpecific = content.match(/How\s+Much\s+Gas\s+Did\s+I\s+Use\?.*?(\d+)\s*m[³3]/i)
+    const m3MatchAny = content.match(/(\d+)\s*m[³3][^a-zA-Z]/i)
+    if (m3MatchSpecific) {
+      unitsM3 = parseFloat(m3MatchSpecific[1])
+    } else if (m3MatchAny) {
+      unitsM3 = parseFloat(m3MatchAny[1])
+    }
+
+    // Location — try to capture city tokens in address
+    let location = 'Ontario, Canada'
+    const locMatch = content.match(/(Etobicoke|Toronto),\s*ON/i)
+    if (locMatch) {
+      location = `${locMatch[1]}, ON, Canada`
+    }
+
+    if (totalCost != null && unitsM3 != null && unitsM3 > 0) {
+      const costPerUnit = (totalCost / unitsM3).toFixed(2)
+      return {
+        filename,
+        utilityCompany: 'Enbridge Gas',
+        currency: 'CAD',
+        unitsConsumed: unitsM3, // m3
+        totalCost: totalCost,
+        costPerUnit: costPerUnit, // per m3
+        billPeriod: billPeriod,
+        location: location
+      }
+    }
+  } catch (error) {
+    console.log(`❌ Error parsing Enbridge bill: ${error.message}`)
+  }
   return null
 }
 

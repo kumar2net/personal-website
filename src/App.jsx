@@ -53,8 +53,10 @@ import FAQBuddingDentist from './pages/blog/faq-budding-dentist';
 import DevastatedByYoungGirlsDemise from './pages/blog/devastated-by-young-girls-demise';
 import GlobalEconomicConcerns from './pages/blog/global-economic-concerns-2025';
 import AgenticFeatureInABrowser from './pages/blog/2025-08-23-agentic-feature-in-a-browser';
+import JoyOfWriting from './pages/blog/joy-of-writing';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
+import UtilitiesDashboard from './pages/UtilitiesDashboard';
 // Admin CMS removed
 
 
@@ -167,6 +169,13 @@ function App() {
                 DeepDive
               </a>
               <Link 
+                to="/utilities"
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+                onClick={() => trackClick('nav_utilities')}
+              >
+                Utilities
+              </Link>
+              <Link 
                 to="/contact" 
                 className="text-gray-600 hover:text-gray-800 transition-colors"
                 onClick={() => trackClick('nav_contact')}
@@ -272,6 +281,16 @@ function App() {
                 >
                   DeepDive
                 </a>
+                <Link 
+                  to="/utilities" 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackClick('nav_utilities_mobile');
+                  }}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Utilities
+                </Link>
                 <Link 
                   to="/contact" 
                   onClick={() => {
@@ -393,7 +412,9 @@ function App() {
           <Route path="/blog/devastated-by-young-girls-demise" element={<DevastatedByYoungGirlsDemise />} />
           <Route path="/blog/global-economic-concerns-2025" element={<GlobalEconomicConcerns />} />
           <Route path="/blog/2025-08-23-agentic-feature-in-a-browser" element={<AgenticFeatureInABrowser />} />
+          <Route path="/blog/joy-of-writing" element={<JoyOfWriting />} />
           <Route path="/dossier" element={<DossierPage />} />
+          <Route path="/utilities" element={<UtilitiesDashboard />} />
           {/* Admin route removed */}
           <Route path="/blog/:slug" element={<PostDynamic />} />
           <Route path="/contact" element={<Contact />} />

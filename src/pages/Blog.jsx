@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'joy of writing',
+    date: 'August 26, 2025',
+    lastModified: 'August 26, 2025',
+    excerpt: 'Why I love writing: organizing thoughts without interruption, and a thought on the next big thing—natural spoken language interfaces replacing screens.',
+    tags: ['Writing', 'AI', 'Natural Language', 'UX'],
+    image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/joy-of-writing'
+  },
+  {
     title: 'agentic feature in a browser',
     date: 'August 23, 2025',
     lastModified: 'August 23, 2025',

@@ -1,5 +1,32 @@
 # Utility Bills Data Parsing Summary
 
+## Key Insights
+
+| City | Electricity (kWh) | Cost/kWh (local) | Cost/kWh (USD) | Gas (units) | Cost/unit (local) | Cost/unit (USD) |
+|---|---:|---:|---:|---:|---:|---:|
+| Coimbatore, TN, India | 323 | ₹2.52 | $0.0302 | 10 kg | ₹66.00/kg | $0.79/kg |
+| Altamonte Springs, FL, USA | 1,564 | $0.1858 | $0.1858 | — | — | — |
+| Singapore | 166 | S$0.2747 | $0.2035 | 67 kWh-e | S$0.2228/kWh | $0.1650/kWh |
+| Etobicoke, ON, Canada | — | — | — | 21 m³ | C$1.78/m³ | $1.31/m³ |
+
+Notes:
+- Coimbatore: LPG 10 kg/month at ₹660 ⇒ ₹66/kg.
+- Singapore: Electricity 166 kWh at S$0.2747/kWh; gas appears as 67 kWh-equivalent at S$0.2228/kWh (City Energy). m³ not provided.
+ - USD equivalents assume FX: ₹83.5/USD, S$1.35/USD, C$1.36/USD.
+
+### Normalized Gas Cost (USD/kWh, apples-to-apples)
+
+| City | Local gas unit | Local price | Energy factor | USD/unit | USD/kWh |
+|---|---|---:|---:|---:|---:|
+| Etobicoke, ON, Canada | m³ (natural gas) | C$1.78/m³ | 9.94 kWh/m³ | $1.31/m³ | $0.132/kWh |
+| Coimbatore, TN, India | kg (LPG) | ₹66.00/kg | 12.78 kWh/kg | $0.79/kg | $0.062/kWh |
+| Singapore | kWh-e (City Energy) | S$0.2228/kWh | 1.00 kWh/kWh | $0.165/kWh | $0.165/kWh |
+
+Explanation:
+- Uses lower heating value (LHV) approximations: natural gas ≈ 35.8 MJ/m³ (≈ 9.94 kWh/m³), LPG ≈ 46 MJ/kg (≈ 12.78 kWh/kg).
+- Singapore City Energy gas is already presented as kWh-equivalent on the bill, so no conversion needed.
+- USD conversions use the FX assumptions listed above.
+
 ## Overview
 Successfully parsed utility bill data from PDF files in the `docs/utildata` folder and extracted key information including units consumed, total cost, and cost per unit in their respective currencies.
 
@@ -13,6 +40,8 @@ Successfully parsed utility bill data from PDF files in the `docs/utildata` fold
 - **Total Cost**: ₹813 (INR)
 - **Cost Per Unit**: ₹2.52 per kWh
 - **Currency**: Indian Rupees (INR)
+1.1 Tamilinadu Indane Gas = 660 per month
+
 
 ### 2. Duke Energy (orlbill.pdf)
 - **Utility Company**: Duke Energy
