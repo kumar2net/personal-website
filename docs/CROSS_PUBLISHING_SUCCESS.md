@@ -12,6 +12,13 @@
 - **Netlify Cross-Published**: https://kumarsite.netlify.app/blog/2025-08-23-agentic-feature-in-a-browser
 - **Status**: ✅ **FULLY OPERATIONAL**
 
+### **New Cross-Published Post** (Aug 26, 2025)
+- **WordPress Original**: https://kumar2net.wordpress.com/2025/08/26/joy-of-writing/
+- **Netlify Cross-Published**: https://kumarsite.netlify.app/blog/joy-of-writing
+- **Badges**: Shields.io badges (Writing, Natural_Speech_UI, UX, AI, Voice_Agents)
+- **Interactions**: Likes and comments enabled
+- **Status**: ✅ Live
+
 ### **Netlify → WordPress Success**
 - **Latest WordPress Post**: https://kumar2net.wordpress.com/2025/08/25/%f0%9f%8c%8d-global-economic-concerns-a-2025-pew-research-perspective/
 - **Source**: Netlify blog post automatically published to WordPress

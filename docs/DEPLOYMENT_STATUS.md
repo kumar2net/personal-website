@@ -1,12 +1,12 @@
 # Deployment Status
 
-**Last Updated:** August 24, 2025  
+**Last Updated:** August 27, 2025  
 **Status:** ✅ ALL SYSTEMS OPERATIONAL
 
 ## 🚀 Live Site
 - **URL**: https://kumarsite.netlify.app
 - **Status**: ✅ Deployed and Running
-- **Last Deployment**: August 24, 2025 - New Blog Post + WordPress Content Extraction Fix
+- **Last Deployment**: August 27, 2025 - Added "joy of writing" post with Shields.io badges
 
 ## 📊 Core Features Status
 
@@ -15,12 +15,15 @@
 - **Markdown Support**: Working
 - **SEO Optimization**: Implemented
 - **Blog Interactions**: ✅ **LIVE AND WORKING**
-  - Like/Unlike functionality with permanent storage
+  - Like/Unlike functionality with permanent storage (Netlify Blobs)
   - Comment system with add/delete capabilities
   - Real-time updates without page refresh
-  - File-based JSON storage (`/tmp/blog-interactions.json`)
   - Beautiful UI with clear labels and count badges
-- **Latest Blog Post**: ✅ **"Devastated by the Young Girl's Sudden Demise"** - Live and published
+- **Latest Blog Post**: ✅ **"joy of writing"** — Live and published
+  - URL: https://kumarsite.netlify.app/blog/joy-of-writing
+  - Source: https://kumar2net.wordpress.com/2025/08/26/joy-of-writing/
+  - Badges: Shields.io topic badges
+  - Interactions: Likes and comments enabled
 
 ### ✅ Book Reviews
 - **Cornell Method Notes**: Functional
@@ -51,7 +54,7 @@
 ## 🔧 Technical Infrastructure
 
 ### Netlify Functions Status
-1. ✅ `blog-interactions.js` - Like/comment backend API
+1. ✅ `blog-interactions.js` - Like/comment backend API (Netlify Blobs storage)
 2. ✅ `image-proxy.js` - Image optimization
 3. ✅ `semantic-search.js` - AI-powered search
 4. ✅ `tech-trends.js` - Trending topics
@@ -128,7 +131,7 @@
 
 ### Blog Interactions Performance
 - **API Response Time**: < 100ms
-- **Storage Efficiency**: Minimal JSON footprint
+- **Storage**: Netlify Blobs (persistent cloud KV)
 - **User Experience**: Instant feedback
 - **Reliability**: 100% uptime
 

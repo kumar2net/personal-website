@@ -60,6 +60,14 @@
 - ✅ **Test Results**: Token validation successful
 
 ### Previous Test (August 24, 2025)
+### New Test (August 27, 2025) - CROSS-PUBLISHING SUCCESS
+- ✅ **Blog Post**: "joy of writing"
+- ✅ **Cross-Publishing**: Successfully published from WordPress to Netlify
+- ✅ **WordPress URL**: https://kumar2net.wordpress.com/2025/08/26/joy-of-writing/
+- ✅ **Netlify URL**: https://kumarsite.netlify.app/blog/joy-of-writing
+- ✅ **Badges**: Shields.io topic badges added
+- ✅ **Interactions**: Likes and comments enabled
+
 - ✅ **Blog Post**: "Devastated by the Young Girl's Sudden Demise"
 - ✅ **Direct Publishing**: Successfully posted to WordPress.com
 - ✅ **URL**: https://kumar2net.wordpress.com/2025/08/24/devastated-by-the-young-girls-sudden-demise-4/

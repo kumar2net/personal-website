@@ -96,3 +96,23 @@ import {
   lastModified: 'July 1, 2025'    // Older than 30 days
 }
 ```
+
+## Shields.io Topic Badges
+
+Use Shields.io badges for visual topic tags in blog posts. Place them under the byline.
+
+Example:
+
+```jsx
+<div className="flex flex-wrap gap-2 mb-6">
+  <img src="https://img.shields.io/badge/Writing-111827?style=for-the-badge&labelColor=1F2937&color=111827" alt="Writing" />
+  <img src="https://img.shields.io/badge/Natural_Speech_UI-2563EB?style=for-the-badge&labelColor=1F2937&logoColor=white" alt="Natural Speech UI" />
+  <img src="https://img.shields.io/badge/UX-7C3AED?style=for-the-badge&labelColor=1F2937&logoColor=white" alt="UX" />
+  <img src="https://img.shields.io/badge/AI-059669?style=for-the-badge&labelColor=1F2937&logoColor=white" alt="AI" />
+  <img src="https://img.shields.io/badge/Voice_Agents-F97316?style=for-the-badge&labelColor=1F2937&logoColor=white" alt="Voice Agents" />
+</div>
+```
+
+Notes:
+- Prefer `style=for-the-badge` and dark `labelColor=1F2937` for consistency.
+- Keep 4–6 badges max to avoid clutter.
