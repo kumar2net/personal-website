@@ -219,44 +219,34 @@ class WordPressCrossPoster {
     return html;
   }
 
-  async generateTldrFromGemini(text, title) {
+  // Local TL;DR generator (no external APIs)
+  async generateTldrLocally(text, title) {
     try {
-      if (!this.geminiApiKey) {
-        console.log('ℹ️  GEMINI_API_KEY not set; skipping TL;DR generation.');
-        return null;
-      }
-      const endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
-      const prompt = `You are a precise editor. Write a concise TL;DR (3-6 bullets) for the following blog post titled "${title}". Keep each bullet under 20 words, plain text, no emojis.`;
-      // Truncate to ~10k chars to keep payload small
-      const maxLen = 10000;
-      const body = {
-        contents: [
-          { role: 'user', parts: [{ text: prompt }] },
-          { role: 'user', parts: [{ text: text.slice(0, maxLen) }] }
-        ]
-      };
-      const res = await fetch(`${endpoint}?key=${this.geminiApiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      if (!res.ok) {
-        console.log(`⚠️  Gemini API failed: ${res.status}`);
-        return null;
-      }
-      const data = await res.json();
-      const textOut = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('\n') || '';
-      if (!textOut) return null;
-      // Convert to HTML list
-      const bullets = textOut
-        .split(/\n+/)
-        .map(s => s.replace(/^[-•\s]+/, '').trim())
-        .filter(Boolean)
-        .map(s => `<li>${s}</li>`) // escape skipped for brevity
-        .join('');
-      return `<h2>TL;DR</h2><ul>${bullets}</ul>`;
+      if (!text || typeof text !== 'string') return null;
+      const clean = text
+        .replace(/\s+/g, ' ')
+        .replace(/\[[^\]]*\]/g, '')
+        .trim();
+
+      const sentences = clean
+        .split(/(?<=[.!?])\s+/)
+        .map(s => s.trim())
+        .filter(s => s.length >= 40 && s.length <= 220);
+
+      if (sentences.length === 0) return null;
+
+      const keywords = ['recommend', 'suggest', 'key', 'important', 'use', 'need', 'next', 'insight', 'summary', 'learned', 'plan'];
+      const scored = sentences.map((s, i) => ({
+        s,
+        score: keywords.reduce((acc, k) => acc + (s.toLowerCase().includes(k) ? 1 : 0), 0) + (i < 5 ? 0.5 : 0)
+      }));
+
+      scored.sort((a, b) => b.score - a.score);
+      const top = Array.from(new Set(scored.map(o => o.s))).slice(0, 5);
+      const bullets = top.map(line => `<li>${line}</li>`).join('');
+      return bullets ? `<h2>TL;DR</h2><ul>${bullets}</ul>` : null;
     } catch (e) {
-      console.log('⚠️  TL;DR generation error:', e.message);
+      console.log('⚠️  Local TL;DR generation error:', e.message);
       return null;
     }
   }
@@ -320,14 +310,14 @@ class WordPressCrossPoster {
       const slug = path.basename(jsxFilePath).replace(/\.jsx$/, '');
       const originalUrl = `${this.originalSiteBase}${slug}`;
 
-      // Generate TL;DR via Gemini
+      // Generate TL;DR locally (no external API)
       const plainText = postData.content
         .replace(/<style[\s\S]*?<\/style>/g, '')
         .replace(/<script[\s\S]*?<\/script>/g, '')
         .replace(/<[^>]+>/g, ' ')
         .replace(/\s+/g, ' ')
         .trim();
-      const tldrHtml = await this.generateTldrFromGemini(plainText, postData.title);
+      const tldrHtml = await this.generateTldrLocally(plainText, postData.title);
 
       // Prepend optional TL;DR and attribution (source link only)
       const attribution = `<p><em>Originally published at <a href="${originalUrl}" rel="noopener noreferrer">${originalUrl}</a>.</em></p>`;
