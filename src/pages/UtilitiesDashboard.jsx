@@ -127,11 +127,17 @@ function BarRow({ label, value, max, rightLabel, colorClass = 'bg-blue-500' }) {
 
 export default function UtilitiesDashboard() {
   const maxKwh = Math.max(...DATA.electricity.map(d => d.unitsKwh))
-  const maxCostPerKwh = Math.max(...DATA.electricity.map(d => d.costPerKwh))
+  const costPerKwhUsd = DATA.electricity.map(d => toUsdEquivalent(d.currency, d.costPerKwh) || 0)
+  const maxCostPerKwhUsd = Math.max(...costPerKwhUsd, 0)
   const m3Items = DATA.gas.filter(d => d.unitsM3 != null)
   const maxM3 = Math.max(...m3Items.map(d => d.unitsM3 || 0), 0)
   const maxUnitsLocal = Math.max(...DATA.gas.map(d => d.unitsLocal || 0), 0)
-  const maxCostPerUnit = Math.max(...DATA.gas.map(d => (d.costPerUnitLocal ?? d.costPerM3 ?? 0)))
+  const gasLocalUnitPrices = DATA.gas.map(d => (d.costPerUnitLocal ?? d.costPerM3))
+  const gasUsdUnitPrices = gasLocalUnitPrices.map((v, i) => {
+    const currency = DATA.gas[i].currency
+    return v != null ? toUsdEquivalent(currency, v) || 0 : 0
+  })
+  const maxCostPerUnitUsd = Math.max(...gasUsdUnitPrices, 0)
   const normalizedGas = DATA.gas.map(d => ({ city: d.city, value: normalizedGasUsdPerKwh(d) }))
   const maxNormalizedUsdPerKwh = Math.max(...normalizedGas.map(d => d.value || 0))
 
@@ -165,13 +171,13 @@ export default function UtilitiesDashboard() {
             ))}
           </div>
           <div className="p-4 bg-white rounded-xl shadow">
-            <h3 className="font-medium mb-3">Cost per kWh (local + USD)</h3>
+            <h3 className="font-medium mb-3">Cost per kWh (bars in USD; label local + USD)</h3>
             {DATA.electricity.map((d) => (
               <BarRow
                 key={`${d.city}-costkwh`}
                 label={d.city}
-                value={d.costPerKwh}
-                max={maxCostPerKwh}
+                value={toUsdEquivalent(d.currency, d.costPerKwh) || 0}
+                max={maxCostPerKwhUsd || 1}
                 rightLabel={`${d.currency} ${d.costPerKwh.toLocaleString(undefined, { maximumFractionDigits: 4 })}/kWh · $${toUsdEquivalent(d.currency, d.costPerKwh)?.toLocaleString(undefined, { maximumFractionDigits: 4 })}/kWh`}
                 colorClass="bg-green-500"
               />
@@ -206,13 +212,16 @@ export default function UtilitiesDashboard() {
             ))}
           </div>
           <div className="p-4 bg-white rounded-xl shadow">
-            <h3 className="font-medium mb-3">Cost per unit (local + USD)</h3>
+            <h3 className="font-medium mb-3">Cost per unit (bars in USD; label local + USD)</h3>
             {DATA.gas.map((d) => (
               <BarRow
                 key={`${d.city}-costunit`}
                 label={d.city}
-                value={(d.costPerUnitLocal ?? d.costPerM3) || 0}
-                max={maxCostPerUnit || 1}
+                value={(() => {
+                  const local = d.costPerUnitLocal ?? d.costPerM3
+                  return local != null ? (toUsdEquivalent(d.currency, local) || 0) : 0
+                })()}
+                max={maxCostPerUnitUsd || 1}
                 rightLabel={(() => {
                   const local = d.costPerUnitLocal ?? d.costPerM3
                   if (local == null) return '—'

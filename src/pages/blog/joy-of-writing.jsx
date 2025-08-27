@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ContentBadge from '../../components/ContentBadge';
 import BlogInteractions from '../../components/BlogInteractions';
 
 const JoyOfWriting = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-8">
+      <div className="mb-8 relative">
+        {/* NEW/UPDATED badge */}
+        <ContentBadge publishDate="August 26, 2025" lastModified="August 26, 2025" />
         <Link to="/blog" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
           ← Back to Blog
         </Link>
@@ -13,6 +16,15 @@ const JoyOfWriting = () => {
         <div className="flex items-center text-gray-600 mb-6">
           <span className="mr-4">Date: August 26, 2025</span>
           <span className="mr-4">By: kumar2net</span>
+        </div>
+
+        {/* Tag badges */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Writing</span>
+          <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Productivity</span>
+          <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">Natural Language</span>
+          <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">AI</span>
+          <span className="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-sm font-medium">UX</span>
         </div>
 
         <div
