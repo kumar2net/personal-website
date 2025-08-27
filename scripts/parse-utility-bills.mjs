@@ -81,6 +81,16 @@ function parseBillContent(filename, content) {
   if (filename.toLowerCase().includes('toronto_gas') || content.toLowerCase().includes('enbridge gas')) {
     return parseEnbridgeGasBill(filename, content)
   }
+
+  // Parse CARMA Toronto condo bill (electricity + water)
+  if (filename.toLowerCase().includes('torontobill') || content.toLowerCase().includes('carma')) {
+    return parseCarmaTorontoBill(filename, content)
+  }
+
+  // Parse Orlando water bill (Seminole County Utilities)
+  if (filename.toLowerCase().includes('orlandowaterbill') || /Seminole\s+County\s+Utilities/i.test(content)) {
+    return parseOrlandoWaterBill(filename, content)
+  }
   
   return null
 }
@@ -186,22 +196,27 @@ function parseDukeEnergyBill(filename, content) {
 
 function parseSingaporeBill(filename, content) {
   try {
-    // Account number (optional)
-    const accountMatch = content.match(/Account No\.\s*(\d+)/)
-    const accountNumber = accountMatch ? accountMatch[1] : ''
+    // Normalize OCR spacing glitches (e.g., W ater, Subt otal)
+    const text = content.replace(/([A-Za-z])\s+(?=[A-Za-z])/g, '$1')
 
+    // Account number (optional)
+    const accountMatch = text.match(/Account No\.\s*(\d+)/)
+    const accountNumber = accountMatch ? accountMatch[1] : ''
+    
     // Bill period e.g. "06 Jul 2025 - 05 Aug 2025" or fallback "August 2025"
     let billPeriod = 'August 2025'
-    const periodMatch = content.match(/(\d{2}\s+[A-Za-z]{3,}\s+\d{4})\s*-\s*(\d{2}\s+[A-Za-z]{3,}\s+\d{4})/)
+    const periodMatch = text.match(/(\d{2}\s+[A-Za-z]{3,}\s+\d{4})\s*-\s*(\d{2}\s+[A-Za-z]{3,}\s+\d{4})/)
     if (periodMatch) billPeriod = `${periodMatch[1]} - ${periodMatch[2]}`
 
     // Extract per-utility breakdowns strictly within the "Breakdown of Current Charges" block
-    const breakdownMatch = content.match(/Breakdown of Current Charges([\s\S]*?)Subtotal/i)
+    const breakdownMatch = text.match(/Breakdown of Current Charges([\s\S]*?)Subtotal/i)
     const breakdown = breakdownMatch ? breakdownMatch[1] : ''
     const elecSectionMatch = breakdown.match(/Electricity\s+Services([\s\S]*?)(?:Gas\s+Services|Water\s+Services|Refuse|GST|$)/i)
     const gasSectionMatch = breakdown.match(/Gas\s+Services([\s\S]*?)(?:Water\s+Services|Refuse|GST|$)/i)
+    const waterSectionMatch = breakdown.match(/Water\s+Services([\s\S]*?)(?:Refuse|GST|$)/i)
     let elecRowMatch = null
     let gasRowMatch = null
+    let waterRowMatch = null
     if (elecSectionMatch) {
       // Expect: "166 kWh   0.2747   45.60" (units, rate, amount)
       elecRowMatch = elecSectionMatch[1].match(/(\d+\.?\d*)\s*kWh\s+(\d+\.?\d*)\s+(\d+\.?\d+)/i)
@@ -209,6 +224,16 @@ function parseSingaporeBill(filename, content) {
     if (gasSectionMatch) {
       // Expect: "67 kWh   0.2228   14.93" (units, rate, amount)
       gasRowMatch = gasSectionMatch[1].match(/(\d+\.?\d*)\s*kWh\s+(\d+\.?\d*)\s+(\d+\.?\d+)/i)
+    }
+    if (waterSectionMatch) {
+      // Expect forms like: "57 m3 0.1430 8.15" or "57 CuM 0.1430 8.15"
+      waterRowMatch = waterSectionMatch[1].match(/(\d+\.?\d*)\s*(?:m[³3]|cum)\s+(\d+\.?\d*)\s+(\d+\.?\d+)/i)
+    }
+
+    // Global fallback for Water if section header is OCR-mangled
+    if (!waterRowMatch) {
+      const waterAny = text.match(/Water[\s\S]{0,120}?(\d+\.?\d*)\s*(?:m[³3]|cum)[\s\S]{0,80}?(\d+\.?\d*)[\s\S]{0,80}?(\d+\.?\d+)/i)
+      if (waterAny) waterRowMatch = waterAny
     }
 
     // Fallback: global search if section-bounded regex failed (OCR irregularities)
@@ -244,6 +269,23 @@ function parseSingaporeBill(filename, content) {
         unitsConsumed: units, // kWh equivalent per bill
         totalCost: amount,
         costPerUnit: rate.toFixed(4),
+        billPeriod,
+        location: 'Singapore',
+        accountNumber
+      })
+    }
+    if (waterRowMatch) {
+      const units = parseFloat(waterRowMatch[1])
+      const rate = parseFloat(waterRowMatch[2])
+      const amount = parseFloat(waterRowMatch[3])
+      const unitCost = units > 0 ? (amount / units) : rate
+      rows.push({
+        filename,
+        utilityCompany: 'SP Services (Water)',
+        currency: 'SGD',
+        unitsConsumed: units, // m³
+        totalCost: amount,
+        costPerUnit: unitCost.toFixed(4),
         billPeriod,
         location: 'Singapore',
         accountNumber
@@ -301,6 +343,147 @@ function parseEnbridgeGasBill(filename, content) {
     }
   } catch (error) {
     console.log(`❌ Error parsing Enbridge bill: ${error.message}`)
+  }
+  return null
+}
+
+function parseCarmaTorontoBill(filename, content) {
+  try {
+    // Normalize OCR letter spacing (e.g., W ater, SUBT OT AL)
+    const text = content.replace(/([A-Za-z])\s+(?=[A-Za-z])/g, '$1')
+    // Bill period: dates like 06/23/2025 07/23/2025 near meter read lines
+    let billPeriod = ''
+    const periodPair = text.match(/(\d{2}\/\d{2}\/\d{4})\s+(\d{2}\/\d{2}\/\d{4})/)
+    if (periodPair) billPeriod = `${periodPair[1]} - ${periodPair[2]}`
+
+    // Location
+    let location = 'Toronto, ON, Canada'
+    if (/Lindsay\s*,\s*ON/i.test(text)) location = 'Lindsay, ON, Canada'
+    if (/Toronto\s*ON|T\s*O\s*R\s*O\s*N\s*T\s*O\s*\s*ON/i.test(text)) location = 'Toronto, ON, Canada'
+
+    const rows = []
+
+    // Electricity: total kWh and total electricity charges
+    // kWh usage: try explicit kWh token or sum of peak buckets
+    let kwh = null
+    const kwhMatch = text.match(/kWh\s*(\d{1,5})\b/)
+    if (kwhMatch) {
+      kwh = parseFloat(kwhMatch[1])
+    } else {
+      // Sum On/Off/Mid peak quantities: lines like "On Peak Usage 0.158000 135.0000 $21.33"
+      const onPeak = text.match(/On\s*Peak\s*Usage\s*[0-9.]+\s+(\d+\.?\d*)/i)
+      const offPeak = text.match(/Off\s*Peak\s*Usage\s*[0-9.]+\s+(\d+\.?\d*)/i)
+      const midPeak = text.match(/Mid\s*Peak\s*Usage\s*[0-9.]+\s+(\d+\.?\d*)/i)
+      const sum = [onPeak, offPeak, midPeak]
+        .map(m => (m ? parseFloat(m[1]) : 0))
+        .reduce((a, b) => a + b, 0)
+      if (sum > 0) kwh = sum
+    }
+
+    // Total electricity charges: look for TOTAL ELECTRICITY CHARGES  $131.69
+    let elecTotal = null
+    const elecTotalMatch = text.match(/TOTAL\s+ELECTRICITY\s+CHARGES\s*\$\s*([0-9]+\.?[0-9]*)/i)
+    if (elecTotalMatch) elecTotal = parseFloat(elecTotalMatch[1])
+    // Fallback: ELECTRICITY CHARGES SUBTOTAL  $131.69
+    if (elecTotal == null) {
+      const subMatch = text.match(/ELECTRICITY\s+CHARGES\s+SUBT?OTAL\s*\$\s*([0-9]+\.?[0-9]*)/i)
+      if (subMatch) elecTotal = parseFloat(subMatch[1])
+    }
+
+    if (kwh != null && elecTotal != null) {
+      rows.push({
+        filename,
+        utilityCompany: 'CARMA (Electricity)',
+        currency: 'CAD',
+        unitsConsumed: kwh,
+        totalCost: elecTotal.toFixed(2),
+        costPerUnit: (elecTotal / kwh).toFixed(4),
+        billPeriod,
+        location
+      })
+    }
+
+    // Water: line like "Cold Water Consumption   4.687200   7.0000  $32.81"
+    const waterLine = text.match(/Cold\s*Water\s*Consumption\s+([0-9]+\.?[0-9]*)\s+([0-9]+\.?[0-9]*)\s*\$\s*([0-9]+\.?[0-9]*)/i)
+    if (waterLine) {
+      const rate = parseFloat(waterLine[1])
+      const units = parseFloat(waterLine[2])
+      const amount = parseFloat(waterLine[3])
+      if (units > 0 && amount > 0) {
+        rows.push({
+          filename,
+          utilityCompany: 'CARMA (Water)',
+          currency: 'CAD',
+          unitsConsumed: units, // m3
+          totalCost: amount.toFixed(2),
+          costPerUnit: rate.toFixed(4), // per m3
+          billPeriod,
+          location
+        })
+      }
+    }
+
+    if (rows.length > 0) return rows
+  } catch (error) {
+    console.log(`❌ Error parsing CARMA bill: ${error.message}`)
+  }
+  return null
+}
+
+function parseOrlandoWaterBill(filename, content) {
+  try {
+    // Normalize letter-separated OCR, collapse multiple spaces
+    const t = content.replace(/([A-Za-z])\s+(?=[A-Za-z])/g, '$1').replace(/\s+/g, ' ')
+
+    // Billing period (MM/DD/YYYY to MM/DD/YYYY)
+    let billPeriod = ''
+    const pm = t.match(/(\d{2}\/\d{2}\/\d{4})\s+to\s+(\d{2}\/\d{2}\/\d{4})/i)
+    if (pm) billPeriod = `${pm[1]} - ${pm[2]}`
+    // Fallback to bracketed From/To line with two dates in sequence
+    if (!pm) {
+      const twoDates = t.match(/(\d{2}\/\d{2}\/\d{4}).{0,20}?(\d{2}\/\d{2}\/\d{4})/)
+      if (twoDates) billPeriod = `${twoDates[1]} - ${twoDates[2]}`
+    }
+
+    // Location
+    let location = 'Altamonte Springs, FL, USA'
+    if (/LAKE\s*MARY\s*,?\s*FL/i.test(t)) location = 'Lake Mary, FL, USA'
+
+    // Usage: look for "UsageX100" value — this represents hundreds of gallons
+    // Example table shows: "UsageX100 | 258" meaning 25,800 gallons
+    // Prefer integer right after the UsageX100 header cell and before a pipe or space
+    let ux = t.match(/Usage\s*X?\s*100[^\d]{0,40}(\d{1,4})\s*\|/i)
+    if (!ux) ux = t.match(/Usage\s*X?\s*100[^\d]{0,80}(\d{1,4})\b/i)
+    let unitsM3 = null
+    if (ux) {
+      const hundredsOfGallons = parseFloat(ux[1])
+      const gallons = hundredsOfGallons * 100
+      unitsM3 = +((gallons * 3.78541) / 1000).toFixed(2) // gallons → liters → m³
+    }
+
+    // Amount: prefer a $ near WATER keyword, else fall back to the largest $ amount
+    let amount = null
+    const nearWater = t.match(/Water[\s\S]{0,120}?\$\s*([0-9]+\.?[0-9]*)/i)
+    if (nearWater) amount = parseFloat(nearWater[1])
+    if (amount == null) {
+      const dollars = Array.from(t.matchAll(/\$\s*([0-9]+\.?[0-9]*)/g)).map(m => parseFloat(m[1]))
+      if (dollars.length) amount = Math.max(...dollars)
+    }
+
+    if (unitsM3 != null && amount != null) {
+      return {
+        filename,
+        utilityCompany: 'Seminole County Utilities (Water)',
+        currency: 'USD',
+        unitsConsumed: unitsM3, // m3
+        totalCost: amount.toFixed(2),
+        costPerUnit: (amount / unitsM3).toFixed(2),
+        billPeriod,
+        location
+      }
+    }
+  } catch (error) {
+    console.log(`❌ Error parsing Orlando water bill: ${error.message}`)
   }
   return null
 }

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-// Simple utilities dashboard for utility bills: electricity and gas
+// Simple utilities dashboard for utility bills: electricity, gas, and water
 // Uses inline data derived from docs/utildata parsing
 
 // FX assumptions for USD equivalents (match summary doc)
@@ -59,6 +59,14 @@ const DATA = {
       costPerKwh: 0.2747,
       total: 45.6,
       label: 'SP Services (Jul 6–Aug 5, 2025) — electricity 166 kWh @ S$0.2747/kWh'
+    },
+    {
+      city: 'Toronto, ON, Canada',
+      unitsKwh: 702,
+      currency: 'CAD',
+      costPerKwh: 0.1876,
+      total: 131.69,
+      label: 'CARMA (Jun 23–Jul 23, 2025) — ~702 kWh @ C$0.1876/kWh'
     }
   ],
   gas: [
@@ -94,6 +102,24 @@ const DATA = {
       costPerUnitLocal: 0.2228, // S$/kWh-e
       total: 14.93,
       label: 'City Energy gas appears as 67 (bill kWh-equiv) @ S$0.2228; m³ not provided'
+    }
+  ],
+  water: [
+    {
+      city: 'Toronto, ON, Canada',
+      unitsM3: 7.0,
+      currency: 'CAD',
+      costPerM3: 4.6872,
+      total: 32.81,
+      label: 'CARMA Cold Water Consumption — 7 m³ @ C$4.6872/m³'
+    },
+    {
+      city: 'Lake Mary, FL, USA',
+      unitsM3: 309.27,
+      currency: 'USD',
+      costPerM3: 0.36,
+      total: 110.05,
+      label: 'Seminole County Utilities — derived from UsageX100 (hundreds of gallons)'
     }
   ]
 }
@@ -140,13 +166,15 @@ export default function UtilitiesDashboard() {
   const maxCostPerUnitUsd = Math.max(...gasUsdUnitPrices, 0)
   const normalizedGas = DATA.gas.map(d => ({ city: d.city, value: normalizedGasUsdPerKwh(d) }))
   const maxNormalizedUsdPerKwh = Math.max(...normalizedGas.map(d => d.value || 0))
+  const maxWaterM3 = Math.max(...DATA.water.map(d => d.unitsM3 || 0), 0)
+  const maxWaterCostUsd = Math.max(...DATA.water.map(d => toUsdEquivalent(d.currency, d.costPerM3) || 0), 0)
 
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
       <h1 className="text-3xl font-bold mb-6">Utilities Dashboard</h1>
 
       <p className="text-gray-700 mb-8">
-        This dashboard summarizes electricity and gas consumption and unit costs across locations.
+        This dashboard summarizes electricity, gas, and water consumption and unit costs across locations.
         Charts below highlight comparative usage (bars scaled within each category). Notes under each
         chart provide context for why some values may look unusual.
       </p>
@@ -188,6 +216,45 @@ export default function UtilitiesDashboard() {
         <div className="mt-4 text-sm text-gray-600 space-y-1">
           {DATA.electricity.map((d) => (
             <div key={`${d.city}-note`}>• {d.city}: {d.label}. Total: {formatCurrency(d.total, d.currency)}</div>
+          ))}
+        </div>
+      </section>
+
+      {/* Water */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-2">Water</h2>
+        <p className="text-gray-600 mb-4">Consumption in m³ and unit prices (bars in USD; label local + USD).</p>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-4 bg-white rounded-xl shadow">
+            <h3 className="font-medium mb-3">m³ Consumed</h3>
+            {DATA.water.map((d) => (
+              <BarRow
+                key={`${d.city}-water-m3`}
+                label={d.city}
+                value={d.unitsM3 || 0}
+                max={maxWaterM3 || 1}
+                rightLabel={`${d.unitsM3?.toLocaleString()} m³`}
+                colorClass="bg-blue-600"
+              />
+            ))}
+          </div>
+          <div className="p-4 bg-white rounded-xl shadow">
+            <h3 className="font-medium mb-3">Cost per m³ (bars in USD; label local + USD)</h3>
+            {DATA.water.map((d) => (
+              <BarRow
+                key={`${d.city}-water-cost`}
+                label={d.city}
+                value={toUsdEquivalent(d.currency, d.costPerM3) || 0}
+                max={maxWaterCostUsd || 1}
+                rightLabel={`${d.currency} ${d.costPerM3.toLocaleString(undefined, { maximumFractionDigits: 4 })}/m³ · $${toUsdEquivalent(d.currency, d.costPerM3)?.toLocaleString(undefined, { maximumFractionDigits: 4 })}/m³`}
+                colorClass="bg-cyan-600"
+              />
+            ))}
+          </div>
+        </div>
+        <div className="mt-4 text-sm text-gray-600 space-y-1">
+          {DATA.water.map((d) => (
+            <div key={`${d.city}-water-note`}>• {d.city}: {d.label}. Total: {formatCurrency(d.total, d.currency)}</div>
           ))}
         </div>
       </section>
