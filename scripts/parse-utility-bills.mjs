@@ -198,7 +198,7 @@ function parseSingaporeBill(filename, content) {
   try {
     // Normalize OCR spacing glitches (e.g., W ater, Subt otal)
     const text = content.replace(/([A-Za-z])\s+(?=[A-Za-z])/g, '$1')
-
+    
     // Account number (optional)
     const accountMatch = text.match(/Account No\.\s*(\d+)/)
     const accountNumber = accountMatch ? accountMatch[1] : ''
