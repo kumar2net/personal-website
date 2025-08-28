@@ -111,7 +111,7 @@ const DATA = {
       currency: 'INR',
       costPerM3: 166.67, // ₹2,500 / 15 m³ = ₹166.67/m³
       total: 2500,
-      label: 'Coimbatore Municipal Water — 500 liters/day × 30 days = 15 m³ @ ₹166.67/m³'
+      label: 'Coimbatore Groundwater (RO treated) — 500 liters/day × 30 days = 15 m³ @ ₹166.67/m³'
     },
     {
       city: 'Toronto, ON, Canada',
@@ -350,6 +350,11 @@ export default function UtilitiesDashboard() {
         <div className="mt-2 p-3 bg-amber-50 border-l-4 border-amber-400 rounded-r">
           <div className="text-sm text-amber-800">
             <strong>Note:</strong> Altamonte Springs, FL is a large bungalow-style house with a mini pool. Pool maintenance costs (filtering, cleaning, chemical treatment) are not included in utility bills but contribute to overall household expenses. Pool pumps typically run 6-12 hours daily, adding to electricity consumption.
+          </div>
+        </div>
+        <div className="mt-2 p-3 bg-blue-50 border-l-4 border-blue-400 rounded-r">
+          <div className="text-sm text-blue-800">
+            <strong>Note:</strong> Coimbatore, TN uses a Reverse Osmosis (RO) system for groundwater treatment across all usage types (drinking, cooking, bathing, etc.). This advanced water purification system significantly increases water costs compared to typical Indian household costs, as RO systems require electricity for operation, regular filter replacements, and maintenance.
           </div>
         </div>
       </section>
