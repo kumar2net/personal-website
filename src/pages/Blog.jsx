@@ -321,6 +321,9 @@ const Blog = () => {
                 src={post.image} 
                 alt={post.title}
                 className="w-full h-full object-cover"
+                style={post.title === 'A Sobering Week: Reflections on Loss, Life, and Learning' ? {
+                  objectPosition: 'center 30%'
+                } : {}}
               />
               <ContentBadge 
                 publishDate={post.date}
