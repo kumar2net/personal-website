@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Boy with Music in His Veins',
+    date: 'August 29, 2025',
+    lastModified: 'August 29, 2025',
+    excerpt: 'Meet Dharun, my good friend Senthil\'s son, a 15-year-old music fanatic and passionate pianist whose love for music began at the tender age of four. His journey from a curious toddler to a Grade 7 Trinity pianist is nothing short of extraordinary.',
+    tags: ['Music', 'Piano', 'Composition', 'Trinity', 'Yamaha', 'Logic Pro'],
+    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/boy-with-music-in-veins'
+  },
+  {
     title: 'Friction in India with Government Services — TNPDCL Energy Meter Reading',
     date: 'August 27, 2025',
     lastModified: 'August 27, 2025',
