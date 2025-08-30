@@ -30,16 +30,16 @@ const MusicPage = () => {
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4 text-gray-800">This Week's Melting Tracks</h3>
             <p className="text-gray-600 mb-6">
-              These two tracks just melt me completely - wanting to just vaporize...
+              These two tracks just melt me completely 
             </p>
             <div className="bg-blue-50 p-4 rounded-lg mb-6 border-l-4 border-blue-400">
               <p className="text-sm text-gray-700 italic">
-                <strong>All-time Favorite:</strong> Karthick Iyer of Indo Soul - a musical genius whose work transcends boundaries and touches the soul.
+                <strong>All-time Favorite:</strong> Karthick Iyer of Indo Soul - touches the soul.
               </p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg mb-6 border-l-4 border-green-400">
               <p className="text-sm text-gray-700 italic">
-                <strong>Master of Medley:</strong> Mahesh - from Nadhaswaram and Thavil to Geoshrd! A true virtuoso who bridges classical tradition with contemporary fusion, creating musical magic that spans centuries. The mashup just blew me away!
+                <strong>Master of Medley:</strong> Mahesh - from Nadhaswaram and Thavil to Geoshrd!
               </p>
             </div>
             
