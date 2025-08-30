@@ -74,6 +74,19 @@ const BoyWithMusicInVeins = () => {
               Duration: ~3 minutes | Format: WAV | Interview about Dharun's musical journey
             </p>
           </div>
+
+          {/* Dharun at the Piano */}
+          <div className="mt-8 text-center">
+            <img 
+              src="/media/Dharun_keys.jpg" 
+              alt="Dharun playing the piano" 
+              className="max-w-full h-auto rounded-lg shadow-lg mx-auto"
+              style={{ maxHeight: '500px' }}
+            />
+            <p className="text-sm text-gray-600 mt-3 italic">
+              Dharun at the piano - where his musical journey comes to life
+            </p>
+          </div>
         </section>
 
         {/* Early Beginnings */}
