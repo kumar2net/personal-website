@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'A Sobering Week: Reflections on Loss, Life, and Learning',
+    date: 'August 2025',
+    lastModified: 'August 2025',
+    excerpt: 'When life reminds us of its fragility, we find ourselves reflecting on what truly matters. Personal reflections on loss, family, education, and the importance of staying curious and persistent.',
+    tags: ['Personal Reflection', 'Family', 'Education', 'Loss', 'Life Lessons', 'Resilience'],
+    image: '/media/RamStripesStars.jpeg',
+    link: '/blog/sobering-week-august-2025'
+  },
+  {
     title: 'Habit',
     date: 'August 29, 2025',
     lastModified: 'August 29, 2025',

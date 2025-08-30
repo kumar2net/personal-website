@@ -55,6 +55,7 @@ import GlobalEconomicConcerns from './pages/blog/global-economic-concerns-2025';
 import AgenticFeatureInABrowser from './pages/blog/2025-08-23-agentic-feature-in-a-browser';
 import JoyOfWriting from './pages/blog/joy-of-writing';
 import Habit from './pages/blog/habit';
+import SoberingWeekAugust2025 from './pages/blog/sobering-week-august-2025';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
 import UtilitiesDashboard from './pages/UtilitiesDashboard';
@@ -375,6 +376,7 @@ function App() {
           <Route path="/blog/2025-08-23-agentic-feature-in-a-browser" element={<AgenticFeatureInABrowser />} />
           <Route path="/blog/joy-of-writing" element={<JoyOfWriting />} />
           <Route path="/blog/habit" element={<Habit />} />
+          <Route path="/blog/sobering-week-august-2025" element={<SoberingWeekAugust2025 />} />
           <Route path="/dossier" element={<DossierPage />} />
           <Route path="/utilities" element={<UtilitiesDashboard />} />
           {/* Admin route removed */}

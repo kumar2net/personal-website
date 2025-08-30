@@ -1,14 +1,15 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 8, 2025
+**Last Updated:** August 30, 2025
 
-A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, and integrated analytics.
+A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, Music curation, and integrated analytics.
 
 ## 🚀 Features
 
 - **Portfolio Showcase** - Display projects and skills
 - **Blog System** - Share thoughts and experiences with AI-generated TL;DR summaries
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
+- **Music Curation** - Personal music journey with favorite tracks and artists
 - **Learning Hub** - Educational resources and shortcuts
 - **Weekly Neurosurgical Dossier** - Professional medical intelligence briefings
 - **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
@@ -26,6 +27,22 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Deployment:** Netlify (with serverless functions)
 - **Icons:** React Icons
   
+## 🎵 Music Curation
+
+- Page: `/music`
+- Features current favorite tracks with emotional descriptions
+- Includes complete lyrics for special tracks
+- Highlights favorite artists with personal commentary
+- Links to YouTube Music playlists
+- Current favorites: "Ab Na Jao Chod Kar" and "Narumugaye"
+- Featured artists: Karthick Iyer (Indo Soul), Mahesh (Master of Medley)
+
+**Current Music Features:**
+- **This Week's Melting Tracks** - Tracks that "melt me completely - wanting to just vaporize"
+- **Complete Lyrics** - Full lyrics display for special tracks
+- **Artist Spotlights** - Personal favorites with authentic reactions
+- **Playlist Integration** - Direct links to KUMAR_2025 YouTube Music playlist
+
 ## 📚 Books
 
 - List page: `/books`
@@ -127,6 +144,12 @@ The blog system supports:
 - Hero images with Unsplash attribution
 - Photo album integration with Google Photos
 - Music playlist links integration
+- Audio file embedding
+- Canonical references to original sources
+
+**Recent Blog Posts:**
+- **Habit** - Daily routines and philosophy with AI-generated TL;DR
+- **Boy with Music in His Veins** - Dharun's musical journey with embedded audio interview
 
 ## 🔧 Development
 
@@ -179,8 +202,17 @@ Notes
 - Only enabled on the three most recent posts by default.
 - Caching is client-side only; clear with `localStorage.clear()` if needed.
 
+## 🎵 Music Integration
+
+The music page features:
+- **Current Favorites** - Tracks that resonate deeply with personal commentary
+- **Complete Lyrics** - Full song lyrics in styled text boxes
+- **Artist Spotlights** - Personal favorites with authentic reactions
+- **Playlist Links** - Direct integration with YouTube Music playlists
+- **Emotional Descriptions** - Authentic personal responses to music
+
 ## 📄 License
 
 MIT License - see LICENSE file for details.
 
-Last updated: 2025-08-11
+Last updated: 2025-08-30
