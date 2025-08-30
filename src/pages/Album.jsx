@@ -1,8 +1,35 @@
 import { motion } from 'framer-motion'
 import { FaExternalLinkAlt } from 'react-icons/fa'
+import { useState } from 'react'
 
 const Album = () => {
   const albumUrl = "https://photos.app.goo.gl/FFPhBFVeacvZm1dc6"
+  const [isMobile] = useState(() => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  })
+
+  const handleAlbumClick = () => {
+    if (isMobile) {
+      // For mobile devices, try multiple approaches
+      try {
+        // First, try to open in the same tab (better for Google Photos app)
+        window.location.href = albumUrl
+      } catch (error) {
+        console.log('Same tab failed, trying new tab...')
+        try {
+          // Fallback to new tab
+          window.open(albumUrl, '_blank', 'noopener,noreferrer')
+        } catch (fallbackError) {
+          console.log('New tab failed, trying direct navigation...')
+          // Final fallback - direct navigation
+          window.location.assign(albumUrl)
+        }
+      }
+    } else {
+      // For desktop, use new tab
+      window.open(albumUrl, '_blank', 'noopener,noreferrer')
+    }
+  }
 
   return (
     <motion.div
@@ -46,17 +73,20 @@ const Album = () => {
           </div>
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">Google Photos Album</h2>
           <p className="text-gray-600">Explore the complete collection of photos and memories</p>
+          {isMobile && (
+            <p className="text-sm text-blue-600 mt-2">
+              📱 Tap to open in Google Photos app or browser
+            </p>
+          )}
         </div>
         
-        <a
-          href={albumUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+        <button
+          onClick={handleAlbumClick}
+          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg cursor-pointer"
         >
           <FaExternalLinkAlt className="mr-2" />
           View Album
-        </a>
+        </button>
       </motion.div>
     </motion.div>
   )
