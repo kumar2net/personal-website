@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import BlogInteractions from '../../components/BlogInteractions';
+import DisqusComments from '../../components/DisqusComments';
 
 const TnpdclAutomatedMeterReading = () => {
   const navigate = useNavigate();
@@ -341,7 +341,11 @@ const TnpdclAutomatedMeterReading = () => {
       </div>
 
       {/* Likes and Comments */}
-      <BlogInteractions postId="tnpdcl-automated-meter-reading" />
+      <DisqusComments 
+        postId="tnpdcl-automated-meter-reading"
+        postUrl="https://kumarsite.netlify.app/blog/tnpdcl-automated-meter-reading"
+        postTitle="Friction in India with government services — TNPDCL energy meter reading - Kumar's Blog"
+      />
     </motion.div>
   );
 };

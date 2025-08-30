@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import BlogInteractions from '../../components/BlogInteractions';
+import DisqusComments from '../../components/DisqusComments';
 
 const Compare = () => {
   const navigate = useNavigate();
@@ -130,7 +130,11 @@ Last updated: 2025-08-11
 ` }} />
         </div>
         
-        <BlogInteractions articleRef={articleRef} />
+        <DisqusComments 
+        postId="compare"
+        postUrl="https://kumarsite.netlify.app/blog/compare"
+        postTitle="Untitled - Kumar's Blog"
+      />
       </div>
     </motion.div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ContentBadge from '../../components/ContentBadge';
-import BlogInteractions from '../../components/BlogInteractions';
+import DisqusComments from '../../components/DisqusComments';
 
 const JoyOfWriting = () => {
   return (
@@ -56,7 +56,11 @@ const JoyOfWriting = () => {
         />
       </div>
 
-      <BlogInteractions postId="joy-of-writing" />
+      <DisqusComments 
+        postId="joy-of-writing"
+        postUrl="https://kumarsite.netlify.app/blog/joy-of-writing"
+        postTitle="Joy of Writing - Kumar's Blog"
+      />
 
       <div className="mt-12 pt-8 border-t border-gray-200">
         <div className="flex justify-between items-center">

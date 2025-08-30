@@ -36,7 +36,8 @@
     "wordpress:poll-once": "node scripts/wordpress-polling.mjs --once",
     "wordpress:publisher": "node scripts/wordpress-netlify-publisher.mjs",
     "wordpress:publisher-generate": "node scripts/wordpress-netlify-button.mjs --generate",
-    "test:interactions": "node scripts/test-blog-interactions.mjs",
+    "migrate:disqus": "node scripts/migrate-to-disqus.mjs",
+    "verify:disqus": "node scripts/verify-disqus-integration.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "cms:convert": "node scripts/convert-md-to-jsx.mjs"
   },
@@ -44,7 +45,7 @@
     "@google-analytics/data": "^5.2.0",
     "@google-cloud/aiplatform": "^5.4.0",
     "@heroicons/react": "^2.2.0",
-    "@netlify/blobs": "^6.4.0",
+
     "@tailwindcss/typography": "^0.5.16",
     "axios": "^1.11.0",
     "docx-preview": "^0.3.6",
