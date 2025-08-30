@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import BlogInteractions from '../../components/BlogInteractions';
+import DisqusComments from '../../components/DisqusComments';
 // import TldrSummary from '../../components/TldrSummary';
 
 const IndiaUSATradeGap = () => {
@@ -187,7 +187,11 @@ const IndiaUSATradeGap = () => {
         </div>
         
         {/* Blog Interactions Component */}
-        <BlogInteractions postId="india-usa-trade-gap-2025" />
+        <DisqusComments 
+        postId="india-usa-trade-gap-2025"
+        postUrl="https://kumarsite.netlify.app/blog/india-usa-trade-gap-2025"
+        postTitle="📄 Cornell Notes: India--USA Trade Relations (2024--2025) - Kumar's Blog"
+      />
       </div>
     </motion.div>
   );

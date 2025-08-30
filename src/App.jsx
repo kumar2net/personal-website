@@ -39,6 +39,7 @@ import NammuSoilAnalysisResearch from './pages/blog/nammu-soil-analysis-research
 import IndiaUSATradeGap from './pages/blog/india-usa-trade-gap-2025';
 import MusicPage from './pages/Music';
 import Books from './pages/Books';
+import Album from './pages/Album';
 import BookCornellMethod from './pages/BookCornellMethod';
 import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
 import TheBrainStoryContent from './pages/books/the-brain-story-content';
@@ -155,6 +156,13 @@ function App() {
               >
                 Music
               </Link>
+              <Link 
+                to="/album" 
+                className="text-gray-600 hover:text-gray-800 transition-colors"
+                onClick={() => trackClick('nav_album')}
+              >
+                Album
+              </Link>
               <a 
                 href="https://deepdivedl.netlify.app/" 
                 target="_blank"
@@ -250,6 +258,16 @@ function App() {
                 >
                   Music
                 </Link>
+                <Link 
+                  to="/album" 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackClick('nav_album_mobile');
+                  }}
+                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                >
+                  Album
+                </Link>
                 <a 
                   href="https://deepdivedl.netlify.app/" 
                   target="_blank"
@@ -313,6 +331,9 @@ function App() {
                 <Link to="/music" className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
                   Music
                 </Link>
+                <Link to="/album" className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors">
+                  Album
+                </Link>
 
               </div>
 
@@ -336,6 +357,7 @@ function App() {
           <Route path="/trends" element={<Trends />} />
           <Route path="/learning" element={<Learning />} />
           <Route path="/music" element={<MusicPage />} />
+          <Route path="/album" element={<Album />} />
           <Route path="/books" element={<Books />} />
           <Route path="/books/applying-cornell-method" element={<ApplyingCornellMethodMd />} />
           <Route path="/books/the-brain-story-content" element={<TheBrainStoryContent />} />

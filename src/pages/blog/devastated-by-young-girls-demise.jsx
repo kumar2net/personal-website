@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-import BlogInteractions from '../../components/BlogInteractions';
+import DisqusComments from '../../components/DisqusComments';
 
 const DevastatedByYoungGirlsDemise = () => {
   const navigate = useNavigate();
@@ -192,7 +192,11 @@ const DevastatedByYoungGirlsDemise = () => {
           </p>
         </div>
 
-        <BlogInteractions postId="devastated-by-young-girls-demise" />
+        <DisqusComments 
+        postId="devastated-by-young-girls-demise"
+        postUrl="https://kumarsite.netlify.app/blog/devastated-by-young-girls-demise"
+        postTitle="Devastated by the Young Girl's Sudden Demise - Kumar's Blog"
+      />
       </div>
     </motion.div>
   );
