@@ -7,6 +7,15 @@ import CompellingIndiaStory from './blog/Compelling-india-story'
 
 const blogPosts = [
   {
+    title: 'Habit',
+    date: 'August 29, 2025',
+    lastModified: 'August 29, 2025',
+    excerpt: 'A comprehensive daily routine focused on early rising, continuous learning, creation, mindfulness, honest communication, healthy eating, providing technical feedback, and mentoring family youngsters. The philosophy emphasizes authenticity over politeness.',
+    tags: ['Habits', 'Productivity', 'Technology', 'Philosophy', 'Zen', 'Feedback'],
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/habit'
+  },
+  {
     title: 'Boy with Music in His Veins',
     date: 'August 29, 2025',
     lastModified: 'August 29, 2025',

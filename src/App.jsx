@@ -54,6 +54,7 @@ import DevastatedByYoungGirlsDemise from './pages/blog/devastated-by-young-girls
 import GlobalEconomicConcerns from './pages/blog/global-economic-concerns-2025';
 import AgenticFeatureInABrowser from './pages/blog/2025-08-23-agentic-feature-in-a-browser';
 import JoyOfWriting from './pages/blog/joy-of-writing';
+import Habit from './pages/blog/habit';
 import Trends from './pages/Trends';
 import DossierPage from './pages/Dossier';
 import UtilitiesDashboard from './pages/UtilitiesDashboard';
@@ -138,13 +139,7 @@ function App() {
               >
                 Blog
               </Link>
-              <Link 
-                to="/trends" 
-                className="text-gray-600 hover:text-gray-800 transition-colors"
-                onClick={() => trackClick('nav_trends')}
-              >
-                Trends
-              </Link>
+
               <Link 
                 to="/learning" 
                 className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -168,13 +163,7 @@ function App() {
               >
                 DeepDive
               </a>
-              <Link 
-                to="/utilities"
-                className="text-gray-600 hover:text-gray-800 transition-colors"
-                onClick={() => trackClick('nav_utilities')}
-              >
-                Utilities
-              </Link>
+
               <Link 
                 to="/contact" 
                 className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -239,16 +228,7 @@ function App() {
                 >
                   Blog
                 </Link>
-                <Link 
-                  to="/trends" 
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    trackClick('nav_trends_mobile');
-                  }}
-                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                >
-                  Trends
-                </Link>
+
                 <Link 
                   to="/learning" 
                   onClick={() => {
@@ -281,16 +261,7 @@ function App() {
                 >
                   DeepDive
                 </a>
-                <Link 
-                  to="/utilities" 
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    trackClick('nav_utilities_mobile');
-                  }}
-                  className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                >
-                  Utilities
-                </Link>
+
                 <Link 
                   to="/contact" 
                   onClick={() => {
@@ -334,24 +305,14 @@ function App() {
                 <Link to="/blog" className="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors">
                   Blog
                 </Link>
-                <Link to="/trends" className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors">
-                  Trends
-                </Link>
+
                 <Link to="/learning" className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
                   Learning Hub
                 </Link>
                 <Link to="/music" className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
                   Music
                 </Link>
-                <a 
-                  href="https://deepdivedl.netlify.app/" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackClick('home_deepdive')}
-                  className="px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
-                >
-                  DeepDive
-                </a>
+
               </div>
 
               {/* Home quote */}
@@ -362,9 +323,9 @@ function App() {
                 className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
               >
                 <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                  "The problem with the world is that the intelligent people are full of doubts, while the stupid ones are full of confidence."
+                  "You must have chaos within you to give birth to a dancing star."
                 </blockquote>
-                <p className="mt-4 text-gray-600 italic text-right">— Charles Bukowski</p>
+                <p className="mt-4 text-gray-600 italic text-right">— Friedrich Nietzsche</p>
               </motion.div>
             </motion.div>
           } />
@@ -413,6 +374,7 @@ function App() {
           <Route path="/blog/global-economic-concerns-2025" element={<GlobalEconomicConcerns />} />
           <Route path="/blog/2025-08-23-agentic-feature-in-a-browser" element={<AgenticFeatureInABrowser />} />
           <Route path="/blog/joy-of-writing" element={<JoyOfWriting />} />
+          <Route path="/blog/habit" element={<Habit />} />
           <Route path="/dossier" element={<DossierPage />} />
           <Route path="/utilities" element={<UtilitiesDashboard />} />
           {/* Admin route removed */}
