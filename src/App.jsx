@@ -3,6 +3,7 @@ import { Link, Routes, Route, useLocation } from 'react-router-dom'
 import { HiMenu } from 'react-icons/hi'
 import { FaHome } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import ErrorBoundary from './components/ErrorBoundary'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
@@ -162,8 +163,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 mobile-fix">
-      <ScrollToTop />
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gray-100 mobile-fix">
+        <ScrollToTop />
       {/* Navigation */}
       <nav className="bg-white shadow-lg">
         <div className="max-w-6xl mx-auto px-4">
@@ -499,6 +501,7 @@ function App() {
         </div>
       </footer>
     </div>
+    </ErrorBoundary>
   )
 }
 
