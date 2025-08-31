@@ -1,10 +1,53 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import './output.css'
 import App from './App.jsx'
+import './output.css'
 
-// Ensure DOM is ready before rendering
+// Global error handler for DOM manipulation errors
+const handleGlobalError = (event) => {
+  // Check if it's a DOM manipulation error
+  if (event.error && event.error.message && 
+      (event.error.message.includes('removeChild') || 
+       event.error.message.includes('appendChild') ||
+       event.error.message.includes('insertBefore'))) {
+    
+    console.warn('DOM manipulation error caught and handled:', event.error.message);
+    
+    // Prevent the error from being logged to console
+    event.preventDefault();
+    
+    // Optionally, you can add analytics here
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'dom_manipulation_error', {
+        event_category: 'error',
+        event_label: event.error.message,
+        value: 1
+      });
+    }
+    
+    return false;
+  }
+  
+  // For other errors, let them pass through
+  return true;
+};
+
+// Add global error handler
+window.addEventListener('error', handleGlobalError);
+
+// Add unhandled rejection handler
+window.addEventListener('unhandledrejection', (event) => {
+  if (event.reason && event.reason.message && 
+      (event.reason.message.includes('removeChild') || 
+       event.reason.message.includes('appendChild'))) {
+    
+    console.warn('Unhandled DOM manipulation promise rejection caught:', event.reason.message);
+    event.preventDefault();
+    return false;
+  }
+});
+
 const renderApp = () => {
   const rootElement = document.getElementById('root')
   if (!rootElement) {
@@ -13,8 +56,8 @@ const renderApp = () => {
   }
 
   try {
-    createRoot(rootElement).render(
-      <StrictMode>
+    ReactDOM.createRoot(rootElement).render(
+      <React.StrictMode>
         <BrowserRouter
           future={{
             v7_startTransition: true,
@@ -23,14 +66,13 @@ const renderApp = () => {
         >
           <App />
         </BrowserRouter>
-      </StrictMode>,
+      </React.StrictMode>,
     )
   } catch (error) {
     console.error('Error rendering app:', error)
   }
 }
 
-// Handle different loading scenarios
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', renderApp)
 } else {
