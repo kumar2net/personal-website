@@ -89,6 +89,9 @@ function useGaPageViews() {
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  
   const trackClick = (eventName, parameters = {}) => {
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', eventName, {
@@ -98,10 +101,67 @@ function App() {
       });
     }
   }
+  
   useGaPageViews()
+  
+  // Handle app loading and error states
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 100)
+    
+    return () => clearTimeout(timer)
+  }, [])
+  
+  // Error boundary for mobile browsers
+  useEffect(() => {
+    const handleError = (error) => {
+      console.error('App error:', error)
+      setHasError(true)
+    }
+    
+    window.addEventListener('error', handleError)
+    window.addEventListener('unhandledrejection', handleError)
+    
+    return () => {
+      window.removeEventListener('error', handleError)
+      window.removeEventListener('unhandledrejection', handleError)
+    }
+  }, [])
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+  
+  // Show error state
+  if (hasError) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h1 className="text-xl font-semibold text-gray-800 mb-2">Something went wrong</h1>
+          <p className="text-gray-600 mb-4">Please refresh the page or try again later.</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 mobile-fix">
       <ScrollToTop />
       {/* Navigation */}
       <nav className="bg-white shadow-lg">
