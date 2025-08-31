@@ -7,6 +7,15 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
+  // Global script management
+  useEffect(() => {
+    // Check if Disqus script is already loaded globally
+    if (window.DISQUS) {
+      setScriptLoaded(true);
+    }
+  }, []);
 
   useEffect(() => {
     // Only load Disqus when component is in viewport
@@ -27,32 +36,102 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
 
     return () => {
       observer.disconnect();
-      // Clean up script on unmount
-      cleanupScript();
     };
   }, [isLoaded, isLoading]);
 
-  const cleanupScript = () => {
-    try {
-      // Safely remove our script reference
-      if (scriptRef.current && scriptRef.current.parentNode) {
-        scriptRef.current.parentNode.removeChild(scriptRef.current);
+  const ensureDisqusThread = () => {
+    // Ensure the disqus_thread element exists and is clean
+    let threadElement = document.getElementById('disqus_thread');
+    if (!threadElement) {
+      threadElement = document.createElement('div');
+      threadElement.id = 'disqus_thread';
+      if (disqusRef.current) {
+        disqusRef.current.appendChild(threadElement);
       }
-      scriptRef.current = null;
-    } catch (err) {
-      console.warn('Script cleanup warning:', err);
+    } else {
+      // Clear existing content
+      threadElement.innerHTML = '';
     }
+    return threadElement;
   };
 
-  const loadDisqus = () => {
+  const loadDisqusScript = () => {
+    return new Promise((resolve, reject) => {
+      // Check if script is already loaded
+      if (window.DISQUS) {
+        resolve();
+        return;
+      }
+
+      // Check if script is already in the process of loading
+      if (scriptRef.current) {
+        resolve();
+        return;
+      }
+
+      // Create script element
+      const script = document.createElement('script');
+      script.src = 'https://kumarsite.disqus.com/embed.js';
+      script.setAttribute('data-timestamp', +new Date());
+      script.async = true;
+      
+      script.onerror = () => {
+        scriptRef.current = null;
+        reject(new Error('Failed to load Disqus script'));
+      };
+      
+      script.onload = () => {
+        setScriptLoaded(true);
+        resolve();
+      };
+      
+      // Store reference
+      scriptRef.current = script;
+      
+      // Append to head
+      if (document.head) {
+        document.head.appendChild(script);
+      } else {
+        document.body.appendChild(script);
+      }
+    });
+  };
+
+  const loadDisqus = async () => {
     if (isLoading || isLoaded) return;
     
     setIsLoading(true);
     setError(null);
 
     try {
-      // Clear any existing Disqus configuration
-      if (window.DISQUS) {
+      // Ensure thread element exists
+      ensureDisqusThread();
+
+      // Load script if not already loaded
+      if (!window.DISQUS) {
+        await loadDisqusScript();
+      }
+
+      // Wait a bit for DISQUS to be available
+      let attempts = 0;
+      while (!window.DISQUS && attempts < 10) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      if (!window.DISQUS) {
+        throw new Error('Disqus failed to initialize');
+      }
+
+      // Configure Disqus
+      window.disqus_config = function () {
+        this.page.url = postUrl || window.location.href;
+        this.page.identifier = postId;
+        this.page.title = postTitle || document.title;
+      };
+
+      // Reset Disqus with error handling
+      try {
         window.DISQUS.reset({
           reload: true,
           config: function () {
@@ -61,80 +140,24 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
             this.page.title = postTitle || document.title;
           }
         });
-        setIsLoaded(true);
-        setIsLoading(false);
-        return;
-      }
-
-      // Disqus configuration
-      window.disqus_config = function () {
-        this.page.url = postUrl || window.location.href;
-        this.page.identifier = postId;
-        this.page.title = postTitle || document.title;
-      };
-
-      // Safely remove any existing Disqus scripts
-      const existingScripts = document.querySelectorAll('script[src*="disqus.com/embed.js"]');
-      existingScripts.forEach(script => {
-        try {
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
+      } catch (resetError) {
+        console.warn('Disqus reset warning:', resetError);
+        // Try to reload the thread manually
+        const threadElement = document.getElementById('disqus_thread');
+        if (threadElement) {
+          threadElement.innerHTML = '';
+          // Force a new embed
+          if (window.DISQUS && window.DISQUS.embed) {
+            window.DISQUS.embed();
           }
-        } catch (err) {
-          console.warn('Existing script removal warning:', err);
         }
-      });
-
-      // Create new script element
-      const script = document.createElement('script');
-      script.src = 'https://kumarsite.disqus.com/embed.js';
-      script.setAttribute('data-timestamp', +new Date());
-      script.async = true;
-      
-      // Store reference for cleanup
-      scriptRef.current = script;
-      
-      // Add error handling for script loading
-      script.onerror = () => {
-        setError('Failed to load Disqus comments. Please refresh the page and try again.');
-        setIsLoading(false);
-        scriptRef.current = null;
-      };
-      
-      script.onload = () => {
-        setIsLoaded(true);
-        setIsLoading(false);
-        
-        // Ensure Disqus is properly initialized
-        setTimeout(() => {
-          try {
-            if (window.DISQUS && typeof window.DISQUS.reset === 'function') {
-              window.DISQUS.reset({
-                reload: true,
-                config: function () {
-                  this.page.url = postUrl || window.location.href;
-                  this.page.identifier = postId;
-                  this.page.title = postTitle || document.title;
-                }
-              });
-            }
-          } catch (err) {
-            console.warn('Disqus reset warning:', err);
-          }
-        }, 100);
-      };
-      
-      // Safely append script to head
-      if (document.head) {
-        document.head.appendChild(script);
-      } else {
-        // Fallback to body if head is not available
-        document.body.appendChild(script);
       }
-    } catch (err) {
-      setError('Failed to initialize Disqus comments. Please refresh the page and try again.');
+
+      setIsLoaded(true);
       setIsLoading(false);
-      scriptRef.current = null;
+    } catch (err) {
+      setError('Failed to load Disqus comments. Please refresh the page and try again.');
+      setIsLoading(false);
       console.error('Disqus loading error:', err);
     }
   };
@@ -143,7 +166,6 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     setIsLoaded(false);
     setIsLoading(false);
     setError(null);
-    cleanupScript();
     loadDisqus();
   };
 
@@ -159,7 +181,6 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
         
         <div 
           ref={disqusRef}
-          id="disqus_thread"
           className="min-h-[200px] bg-gray-50 rounded-lg p-4"
         >
           {error && (
@@ -186,6 +207,9 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
               </div>
             </div>
           )}
+          
+          {/* Disqus thread will be inserted here */}
+          <div id="disqus_thread"></div>
         </div>
         
         <noscript>
