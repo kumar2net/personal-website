@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FaExternalLinkAlt } from 'react-icons/fa'
+import { FaExternalLinkAlt, FaPlay, FaVideo, FaImages } from 'react-icons/fa'
 import { useState } from 'react'
 
 const Album = () => {
@@ -58,6 +58,34 @@ const Album = () => {
         </div>
       </div>
 
+      {/* Preview Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 mb-8 border border-gray-200"
+      >
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">What's Inside:</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+          <div className="flex items-center">
+            <FaVideo className="w-4 h-4 mr-2 text-red-500" />
+            <span>Personal video memories</span>
+          </div>
+          <div className="flex items-center">
+            <FaImages className="w-4 h-4 mr-2 text-blue-500" />
+            <span>Photo collections</span>
+          </div>
+          <div className="flex items-center">
+            <FaPlay className="w-4 h-4 mr-2 text-green-500" />
+            <span>Playable video content</span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-4 h-4 mr-2 text-purple-500">🎵</span>
+            <span>Background music by Dharun</span>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Album Link */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -66,13 +94,30 @@ const Album = () => {
         className="bg-white rounded-xl shadow-lg p-8 text-center"
       >
         <div className="mb-6">
-          <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-            </svg>
+          {/* Enhanced visual with video indicators */}
+          <div className="relative w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <FaImages className="w-8 h-8 text-white" />
+            {/* Video play button overlay */}
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center shadow-lg">
+              <FaPlay className="w-3 h-3 text-white ml-0.5" />
+            </div>
           </div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Google Photos Album</h2>
-          <p className="text-gray-600">Explore the complete collection of photos and memories</p>
+          
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Photo & Video Album</h2>
+          <p className="text-gray-600 mb-3">Explore the complete collection of photos and videos</p>
+          
+          {/* Content indicators */}
+          <div className="flex items-center justify-center space-x-6 mb-4">
+            <div className="flex items-center text-sm text-gray-600">
+              <FaImages className="w-4 h-4 mr-1 text-blue-500" />
+              <span>Photos</span>
+            </div>
+            <div className="flex items-center text-sm text-gray-600">
+              <FaVideo className="w-4 h-4 mr-1 text-red-500" />
+              <span>Videos</span>
+            </div>
+          </div>
+          
           {isMobile && (
             <p className="text-sm text-blue-600 mt-2">
               📱 Tap to open in Google Photos app or browser
@@ -82,10 +127,14 @@ const Album = () => {
         
         <button
           onClick={handleAlbumClick}
-          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg cursor-pointer"
+          className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg cursor-pointer relative overflow-hidden group"
         >
-          <FaExternalLinkAlt className="mr-2" />
-          View Album
+          <FaPlay className="mr-2 text-red-200" />
+          <span>Watch Videos & View Photos</span>
+          <FaExternalLinkAlt className="ml-2 text-sm opacity-75" />
+          
+          {/* Subtle video indicator */}
+          <div className="absolute top-0 right-0 w-2 h-2 bg-red-400 rounded-full opacity-75"></div>
         </button>
       </motion.div>
     </motion.div>
