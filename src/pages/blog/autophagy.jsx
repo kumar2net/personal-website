@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 // import GraphRecommendations from '../../components/GraphRecommendations';
 
-const Autophagy = () => {
+
+import DisqusComments from '../../components/DisqusComments';const Autophagy = () => {
   const navigate = useNavigate();
   
   return (
@@ -165,6 +166,13 @@ const Autophagy = () => {
           />
         </div> */}
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="autophagy"
+        postUrl="https://kumarsite.netlify.app/blog/autophagy"
+        postTitle="Ekadasi morphs into IF and now Autophagy! - Kumar's Blog"
+      />
     </motion.div>
   );
 };

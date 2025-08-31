@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
-const LongWeekendMusings2025 = () => {
+
+import DisqusComments from '../../components/DisqusComments';const LongWeekendMusings2025 = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
   
@@ -127,6 +128,13 @@ const LongWeekendMusings2025 = () => {
 
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="long-weekend-musings-2025"
+        postUrl="https://kumarsite.netlify.app/blog/long-weekend-musings-2025"
+        postTitle="What to Write This Week? - Kumar's Blog"
+      />
     </motion.div>
   );
 };

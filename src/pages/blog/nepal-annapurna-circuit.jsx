@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import AuthorBio from '../../components/AuthorBio';
 
-const NepalAnnapurnaCircuit = () => {
+
+import DisqusComments from '../../components/DisqusComments';const NepalAnnapurnaCircuit = () => {
   const navigate = useNavigate();
   
   return (
@@ -242,6 +243,13 @@ const NepalAnnapurnaCircuit = () => {
           </section>
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="nepal-annapurna-circuit"
+        postUrl="https://kumarsite.netlify.app/blog/nepal-annapurna-circuit"
+        postTitle="Nepal Journeys: An Annapurna Circuit Adventure - Kumar's Blog"
+      />
     </motion.div>
   );
 };

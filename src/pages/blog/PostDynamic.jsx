@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const jsxModules = import.meta.glob('/src/pages/blog/*.jsx');
+
+import DisqusComments from '../../components/DisqusComments';const jsxModules = import.meta.glob('/src/pages/blog/*.jsx');
 const mdModules = import.meta.glob('/src/pages/blog/*.md', { query: '?raw', import: 'default' });
 
 export default function PostDynamic() {

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
-const Top9FamousRules = () => {
+
+import DisqusComments from '../../components/DisqusComments';const Top9FamousRules = () => {
   const navigate = useNavigate()
   const publishedDate = 'August 9, 2025'
   const readingTime = '3 min read'

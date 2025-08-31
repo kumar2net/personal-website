@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const ApplyingRobinsonMethod = () => {
+
+import DisqusComments from '../../components/DisqusComments';const ApplyingRobinsonMethod = () => {
   const navigate = useNavigate();
   
   return (
@@ -174,6 +175,13 @@ const ApplyingRobinsonMethod = () => {
           </section>
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="applying-robinson-method"
+        postUrl="https://kumarsite.netlify.app/blog/applying-robinson-method"
+        postTitle="Applying the Robinson Method: A Guide to Using Active Reading and Mastering Lifelong Learning - Kumar's Blog"
+      />
     </motion.div>
   );
 };
