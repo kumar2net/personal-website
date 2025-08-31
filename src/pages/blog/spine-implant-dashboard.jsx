@@ -1,33 +1,54 @@
-import { motion } from 'framer-motion'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-
-import DisqusComments from '../../components/DisqusComments';const SpineImplantDashboardPost = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
+const SpineImplantDashboardPost = () => {
+  const _location = useLocation();
+  const navigate = useNavigate();
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto px-4 py-8"
     >
       <div className="flex justify-between items-center mb-8">
-        <button 
+        <button
           onClick={() => navigate('/blog')}
           className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
         >
-          <svg className="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          <svg
+            className="w-5 h-5 mr-2 inline"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
           </svg>
           Back to Blog
         </button>
       </div>
-      <h1 className="text-4xl font-bold mb-6">Building a Spine Implant Market Analytics Dashboard</h1>
+      <h1 className="text-4xl font-bold mb-6">
+        Building a Spine Implant Market Analytics Dashboard
+      </h1>
       <div className="flex items-center text-gray-600 mb-8">
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <svg
+          className="w-4 h-4 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
         </svg>
         <span>May 20, 2025</span>
       </div>
@@ -36,7 +57,11 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
         <div className="prose prose-lg max-w-none">
           <h2>Introduction</h2>
           <p>
-            The Spine Implant Market Analytics Dashboard is a powerful React-based application that provides deep insights into the spine implant market in India. This article explores the architecture, features, and technical implementation of this sophisticated analytics platform.
+            The Spine Implant Market Analytics Dashboard is a powerful
+            React-based application that provides deep insights into the spine
+            implant market in India. This article explores the architecture,
+            features, and technical implementation of this sophisticated
+            analytics platform.
           </p>
 
           <h2>Technical Stack</h2>
@@ -49,9 +74,7 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
           </ul>
 
           <h3>Architecture</h3>
-          <p>
-            The dashboard follows a modern micro-frontend architecture:
-          </p>
+          <p>The dashboard follows a modern micro-frontend architecture:</p>
           <ul className="list-disc list-inside">
             <li>Data Layer - REST API integration and data processing</li>
             <li>Visualization Layer - Interactive charts and graphs</li>
@@ -69,9 +92,7 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
           </ul>
 
           <h3>Data Visualization</h3>
-          <p>
-            Leveraging Recharts for sophisticated visualizations:
-          </p>
+          <p>Leveraging Recharts for sophisticated visualizations:</p>
           <ul className="list-disc list-inside">
             <li>Interactive line charts</li>
             <li>Stacked bar charts</li>
@@ -89,9 +110,7 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
 
           <h2>Technical Implementation</h2>
           <h3>Data Integration</h3>
-          <p>
-            The dashboard integrates data from multiple sources:
-          </p>
+          <p>The dashboard integrates data from multiple sources:</p>
           <ul className="list-disc list-inside">
             <li>Market research reports</li>
             <li>Healthcare registry data</li>
@@ -100,9 +119,7 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
           </ul>
 
           <h3>Performance Optimization</h3>
-          <p>
-            Key performance optimizations include:
-          </p>
+          <p>Key performance optimizations include:</p>
           <ul className="list-disc list-inside">
             <li>Lazy loading of components</li>
             <li>Data caching strategies</li>
@@ -129,7 +146,11 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
 
           <h2>Conclusion</h2>
           <p>
-            The Spine Implant Market Analytics Dashboard represents a cutting-edge solution for healthcare market analysis. Its combination of modern web technologies and sophisticated data visualization makes it an invaluable tool for healthcare professionals and market analysts in the spine implant industry.
+            The Spine Implant Market Analytics Dashboard represents a
+            cutting-edge solution for healthcare market analysis. Its
+            combination of modern web technologies and sophisticated data
+            visualization makes it an invaluable tool for healthcare
+            professionals and market analysts in the spine implant industry.
           </p>
         </div>
 
@@ -152,7 +173,7 @@ import DisqusComments from '../../components/DisqusComments';const SpineImplantD
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default SpineImplantDashboardPost
+export default SpineImplantDashboardPost;

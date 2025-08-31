@@ -21,8 +21,12 @@ export function useTldrSummary({ slug, text, enabled = true }) {
   const safeText = useMemo(() => (text || '').trim(), [text]);
 
   useEffect(() => {
-    if (!enabled) return;
-    if (!safeText) return;
+    if (!enabled) {
+      return;
+    }
+    if (!safeText) {
+      return;
+    }
 
     let cancelled = false;
 
@@ -48,11 +52,15 @@ export function useTldrSummary({ slug, text, enabled = true }) {
         }
 
         // Ensure functions resolve when app is opened on Vite port (5173/5174)
-        const isLocalHost = typeof window !== 'undefined' && (
-          window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        );
-        const isVitePort = typeof window !== 'undefined' && (window.location.port === '5173' || window.location.port === '5174');
-        const functionsBase = isLocalHost && isVitePort ? 'http://localhost:8889' : '';
+        const isLocalHost =
+          typeof window !== 'undefined' &&
+          (window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1');
+        const isVitePort =
+          typeof window !== 'undefined' &&
+          (window.location.port === '5173' || window.location.port === '5174');
+        const functionsBase =
+          isLocalHost && isVitePort ? 'http://localhost:8889' : '';
 
         const resp = await fetch(`${functionsBase}/.netlify/functions/tldr`, {
           method: 'POST',
@@ -80,9 +88,13 @@ export function useTldrSummary({ slug, text, enabled = true }) {
           setFallback(Boolean(result.fallback));
         }
       } catch (err) {
-        if (!cancelled) setError(String(err?.message || err));
+        if (!cancelled) {
+          setError(String(err?.message || err));
+        }
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
@@ -95,5 +107,3 @@ export function useTldrSummary({ slug, text, enabled = true }) {
 
   return { summary, loading, error, model, created, fallback };
 }
-
-

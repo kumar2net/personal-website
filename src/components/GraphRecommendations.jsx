@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
   const [recommendations, setRecommendations] = useState([]);
@@ -9,21 +9,22 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
   const [systemStatus, setSystemStatus] = useState({ initialized: false });
 
   // API base URL - adjust for your setup
-  const API_BASE_URL = process.env.NODE_ENV === 'development' 
-    ? 'http://localhost:8000' 
-    : 'https://your-gnn-backend.netlify.app';  // Update this for production
+  const API_BASE_URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:8000'
+      : 'https://your-gnn-backend.netlify.app'; // Update this for production
 
   // Check system status on mount
   useEffect(() => {
     checkSystemStatus();
-  }, []);
+  }, [checkSystemStatus]);
 
   // Fetch recommendations when currentPostId changes
   useEffect(() => {
     if (currentPostId && systemStatus.initialized) {
       fetchRecommendations();
     }
-  }, [currentPostId, systemStatus.initialized]);
+  }, [currentPostId, systemStatus.initialized, fetchRecommendations]);
 
   const checkSystemStatus = async () => {
     try {
@@ -52,13 +53,12 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
         setRecommendations(data.recommendations || []);
       } else {
         setError(data.message || 'Failed to get recommendations');
       }
-
     } catch (err) {
       console.error('Error fetching recommendations:', err);
       setError('Failed to load recommendations');
@@ -81,7 +81,9 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
       <div className="mb-8 p-4 bg-gray-50 rounded-lg border">
         <div className="flex items-center space-x-2">
           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-          <span className="text-sm text-gray-600">Neural Graph Recommender initializing...</span>
+          <span className="text-sm text-gray-600">
+            Neural Graph Recommender initializing...
+          </span>
         </div>
       </div>
     );
@@ -110,7 +112,8 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
           </div>
           {systemStatus.num_posts && (
             <span className="text-xs text-gray-500">
-              From {systemStatus.num_posts} posts • {systemStatus.num_edges} connections
+              From {systemStatus.num_posts} posts • {systemStatus.num_edges}{' '}
+              connections
             </span>
           )}
         </div>
@@ -120,7 +123,9 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
           <div className="flex items-center justify-center py-8">
             <div className="flex items-center space-x-3">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-              <span className="text-gray-600">Analyzing graph connections...</span>
+              <span className="text-gray-600">
+                Analyzing graph connections...
+              </span>
             </div>
           </div>
         )}
@@ -140,7 +145,7 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
             <p className="text-sm text-gray-600 mb-4">
               Based on content similarity and graph neural network analysis:
             </p>
-            
+
             <AnimatePresence>
               {recommendations.map((rec, index) => (
                 <motion.div
@@ -164,7 +169,7 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
                             {rec.excerpt}
                           </p>
                         )}
-                        
+
                         {/* Tags */}
                         {rec.tags && rec.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-2">
@@ -184,7 +189,7 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
                           </div>
                         )}
                       </div>
-                      
+
                       {/* Similarity Score */}
                       <div className="ml-3 text-right">
                         <div className="text-xs text-gray-500">Similarity</div>

@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+import DisqusComments from '../../components/DisqusComments';
 
-import DisqusComments from '../../components/DisqusComments';const BuildingMcpServerWithCursor = () => {
+const BuildingMcpServerWithCursor = () => {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -16,16 +17,38 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
           onClick={() => navigate('/blog')}
           className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
         >
-          <svg className="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          <svg
+            className="w-5 h-5 mr-2 inline"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
           </svg>
           Back to Blog
         </button>
       </div>
-      <h1 className="text-4xl font-bold mb-6">Building a NewsAPI MCP Server with Cursor</h1>
+      <h1 className="text-4xl font-bold mb-6">
+        Building a NewsAPI MCP Server with Cursor
+      </h1>
       <div className="flex items-center text-gray-600 mb-8">
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <svg
+          className="w-4 h-4 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
         </svg>
         <span>June 21, 2025</span>
       </div>
@@ -34,7 +57,8 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
         <div className="prose prose-lg max-w-none">
           <header className="text-center mb-10">
             <p className="text-md sm:text-lg text-gray-600 mt-4">
-              A practical guide to creating an MCP server for news aggregation and integrating it with Cursor IDE.
+              A practical guide to creating an MCP server for news aggregation
+              and integrating it with Cursor IDE.
             </p>
           </header>
 
@@ -44,9 +68,10 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
               What is MCP and Why It Matters
             </h2>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              The Model Context Protocol (MCP) is a standardized way for AI assistants to access external tools and data. 
-              Instead of switching between applications, you can now fetch news, analyze data, or interact with APIs 
-              directly within your IDE through AI commands.
+              The Model Context Protocol (MCP) is a standardized way for AI
+              assistants to access external tools and data. Instead of switching
+              between applications, you can now fetch news, analyze data, or
+              interact with APIs directly within your IDE through AI commands.
             </p>
           </section>
 
@@ -63,44 +88,82 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
                   <div className="text-lg font-bold mb-1">Cursor IDE</div>
                   <div className="text-sm opacity-90">(MCP Client)</div>
                 </div>
-                
+
                 {/* MCP Server */}
                 <div className="bg-orange-500 text-white p-4 rounded-lg text-center">
                   <div className="text-lg font-bold mb-1">NewsAPI MCP</div>
                   <div className="text-sm opacity-90">Server</div>
                 </div>
-                
+
                 {/* NewsAPI */}
                 <div className="bg-red-500 text-white p-4 rounded-lg text-center">
                   <div className="text-lg font-bold mb-1">NewsAPI</div>
                   <div className="text-sm opacity-90">External Service</div>
                 </div>
               </div>
-              
+
               {/* Web Interface */}
               <div className="bg-purple-500 text-white p-4 rounded-lg text-center">
                 <div className="text-lg font-bold mb-1">Web Interface</div>
                 <div className="text-sm opacity-90">Testing & Demo</div>
               </div>
-              
+
               {/* Flow arrows for desktop */}
               <div className="hidden md:block mt-6">
-                <svg width="100%" height="60" viewBox="0 0 800 60" className="w-full">
+                <svg
+                  width="100%"
+                  height="60"
+                  viewBox="0 0 800 60"
+                  className="w-full"
+                >
                   <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                      <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+                    <marker
+                      id="arrowhead"
+                      markerWidth="10"
+                      markerHeight="7"
+                      refX="9"
+                      refY="3.5"
+                      orient="auto"
+                    >
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#374151" />
                     </marker>
                   </defs>
-                  <line x1="200" y1="30" x2="300" y2="30" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead)"/>
-                  <line x1="500" y1="30" x2="600" y2="30" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead)"/>
-                  <line x1="200" y1="50" x2="500" y2="30" stroke="#374151" strokeWidth="3" markerEnd="url(#arrowhead)"/>
+                  <line
+                    x1="200"
+                    y1="30"
+                    x2="300"
+                    y2="30"
+                    stroke="#374151"
+                    strokeWidth="3"
+                    markerEnd="url(#arrowhead)"
+                  />
+                  <line
+                    x1="500"
+                    y1="30"
+                    x2="600"
+                    y2="30"
+                    stroke="#374151"
+                    strokeWidth="3"
+                    markerEnd="url(#arrowhead)"
+                  />
+                  <line
+                    x1="200"
+                    y1="50"
+                    x2="500"
+                    y2="30"
+                    stroke="#374151"
+                    strokeWidth="3"
+                    markerEnd="url(#arrowhead)"
+                  />
                 </svg>
               </div>
-              
+
               {/* Mobile flow description */}
               <div className="md:hidden mt-4 text-center text-gray-600">
                 <p className="text-sm">Cursor IDE → MCP Server → NewsAPI</p>
-                <p className="text-sm mt-1">Web Interface connects to MCP Server</p>
+                <p className="text-sm mt-1">
+                  Web Interface connects to MCP Server
+                </p>
               </div>
             </div>
           </section>
@@ -110,20 +173,33 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
             <h2 className="text-3xl sm:text-4xl font-bold text-blue-600 mb-4 border-b-2 border-blue-200 pb-2">
               Implementation Steps
             </h2>
-            
-            <h3 className="text-2xl font-bold text-gray-800 mb-3">1. MCP Server Setup</h3>
+
+            <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              1. MCP Server Setup
+            </h3>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              Created a Node.js server implementing the MCP specification with three main tools:
+              Created a Node.js server implementing the MCP specification with
+              three main tools:
             </p>
             <ul className="list-disc list-inside text-base sm:text-lg leading-relaxed mb-4 pl-4">
-              <li><code>get_top_headlines</code> - Fetch breaking news by country/category</li>
-              <li><code>search_news</code> - Search articles with advanced filters</li>
-              <li><code>get_sources</code> - Get available news sources</li>
+              <li>
+                <code>get_top_headlines</code> - Fetch breaking news by
+                country/category
+              </li>
+              <li>
+                <code>search_news</code> - Search articles with advanced filters
+              </li>
+              <li>
+                <code>get_sources</code> - Get available news sources
+              </li>
             </ul>
 
-            <h3 className="text-2xl font-bold text-gray-800 mb-3">2. Cursor Integration</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              2. Cursor Integration
+            </h3>
             <div className="bg-gray-100 rounded-lg p-4 mb-4">
-              <pre className="text-sm overflow-x-auto"><code>{`// cursor-mcp-config.json
+              <pre className="text-sm overflow-x-auto">
+                <code>{`// cursor-mcp-config.json
 {
   "mcpServers": {
     "newsapi": {
@@ -134,13 +210,17 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
       }
     }
   }
-}`}</code></pre>
+}`}</code>
+              </pre>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-800 mb-3">3. Web Interface</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-3">
+              3. Web Interface
+            </h3>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              Built a responsive web interface using vanilla HTML/CSS/JavaScript for testing and demonstration. 
-              Features mobile-first design with tabbed interface for different functionalities.
+              Built a responsive web interface using vanilla HTML/CSS/JavaScript
+              for testing and demonstration. Features mobile-first design with
+              tabbed interface for different functionalities.
             </p>
           </section>
 
@@ -150,8 +230,9 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
               Deployment to Netlify
             </h2>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              Deployed the web interface to Netlify using serverless functions to mirror the MCP server functionality. 
-              This provides a public demo while keeping the MCP server secure for local development.
+              Deployed the web interface to Netlify using serverless functions
+              to mirror the MCP server functionality. This provides a public
+              demo while keeping the MCP server secure for local development.
             </p>
             <ul className="list-disc list-inside text-base sm:text-lg leading-relaxed mb-4 pl-4">
               <li>Netlify Functions for API endpoints</li>
@@ -167,11 +248,26 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
               Key Benefits and Use Cases
             </h2>
             <ul className="list-disc list-inside text-base sm:text-lg leading-relaxed mb-4 pl-4">
-              <li><strong>Seamless Integration:</strong> Access news data without leaving your IDE</li>
-              <li><strong>AI-Powered Queries:</strong> Natural language requests for news information</li>
-              <li><strong>Real-time Data:</strong> Live news updates through NewsAPI</li>
-              <li><strong>Extensible Architecture:</strong> Easy to add more tools and data sources</li>
-              <li><strong>Secure Implementation:</strong> API keys managed through environment variables</li>
+              <li>
+                <strong>Seamless Integration:</strong> Access news data without
+                leaving your IDE
+              </li>
+              <li>
+                <strong>AI-Powered Queries:</strong> Natural language requests
+                for news information
+              </li>
+              <li>
+                <strong>Real-time Data:</strong> Live news updates through
+                NewsAPI
+              </li>
+              <li>
+                <strong>Extensible Architecture:</strong> Easy to add more tools
+                and data sources
+              </li>
+              <li>
+                <strong>Secure Implementation:</strong> API keys managed through
+                environment variables
+              </li>
             </ul>
           </section>
 
@@ -208,14 +304,18 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
               Conclusion
             </h2>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              This project demonstrates the power of MCP in modern development workflows. By creating a custom MCP server, 
-              I was able to seamlessly integrate external news data into my development environment, enhancing productivity 
-              and providing real-time information access.
+              This project demonstrates the power of MCP in modern development
+              workflows. By creating a custom MCP server, I was able to
+              seamlessly integrate external news data into my development
+              environment, enhancing productivity and providing real-time
+              information access.
             </p>
             <p className="text-base sm:text-lg leading-relaxed mb-4">
-              The MCP ecosystem represents the future of AI-assisted development, where external services and data sources 
-              become natural extensions of your IDE. This opens up endless possibilities for building more intelligent, 
-              context-aware development environments.
+              The MCP ecosystem represents the future of AI-assisted
+              development, where external services and data sources become
+              natural extensions of your IDE. This opens up endless
+              possibilities for building more intelligent, context-aware
+              development environments.
             </p>
           </section>
         </div>
@@ -241,9 +341,9 @@ import DisqusComments from '../../components/DisqusComments';const BuildingMcpSe
           </div>
         </div>
       </div>
-    
+
       {/* Blog interactions */}
-      <DisqusComments 
+      <DisqusComments
         postId="building-mcp-server-with-cursor"
         postUrl="https://kumarsite.netlify.app/blog/building-mcp-server-with-cursor"
         postTitle="Building a NewsAPI MCP Server with Cursor - Kumar's Blog"

@@ -7,7 +7,7 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [_scriptLoaded, setScriptLoaded] = useState(false);
 
   // Global script management
   useEffect(() => {
@@ -37,7 +37,7 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     return () => {
       observer.disconnect();
     };
-  }, [isLoaded, isLoading]);
+  }, [isLoaded, isLoading, loadDisqus]);
 
   const ensureDisqusThread = () => {
     // Ensure the disqus_thread element exists and is clean
@@ -72,22 +72,22 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       // Create script element
       const script = document.createElement('script');
       script.src = 'https://kumarsite.disqus.com/embed.js';
-      script.setAttribute('data-timestamp', +new Date());
+      script.setAttribute('data-timestamp', Date.now());
       script.async = true;
-      
+
       script.onerror = () => {
         scriptRef.current = null;
         reject(new Error('Failed to load Disqus script'));
       };
-      
+
       script.onload = () => {
         setScriptLoaded(true);
         resolve();
       };
-      
+
       // Store reference
       scriptRef.current = script;
-      
+
       // Append to head
       if (document.head) {
         document.head.appendChild(script);
@@ -98,8 +98,10 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
   };
 
   const loadDisqus = async () => {
-    if (isLoading || isLoaded) return;
-    
+    if (isLoading || isLoaded) {
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
@@ -115,7 +117,7 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       // Wait a bit for DISQUS to be available
       let attempts = 0;
       while (!window.DISQUS && attempts < 10) {
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
         attempts++;
       }
 
@@ -138,7 +140,7 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
             this.page.url = postUrl || window.location.href;
             this.page.identifier = postId;
             this.page.title = postTitle || document.title;
-          }
+          },
         });
       } catch (resetError) {
         console.warn('Disqus reset warning:', resetError);
@@ -147,7 +149,7 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
         if (threadElement) {
           threadElement.innerHTML = '';
           // Force a new embed
-          if (window.DISQUS && window.DISQUS.embed) {
+          if (window.DISQUS?.embed) {
             window.DISQUS.embed();
           }
         }
@@ -156,7 +158,9 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       setIsLoaded(true);
       setIsLoading(false);
     } catch (err) {
-      setError('Failed to load Disqus comments. Please refresh the page and try again.');
+      setError(
+        'Failed to load Disqus comments. Please refresh the page and try again.'
+      );
       setIsLoading(false);
       console.error('Disqus loading error:', err);
     }
@@ -178,8 +182,8 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
             Join the discussion below. Comments are powered by Disqus.
           </p>
         </div>
-        
-        <div 
+
+        <div
           ref={disqusRef}
           className="min-h-[200px] bg-gray-50 rounded-lg p-4"
         >
@@ -196,22 +200,24 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
               </div>
             </div>
           )}
-          
+
           {!isLoaded && !error && (
             <div className="flex items-center justify-center h-32">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
                 <p className="text-gray-500 text-sm">
-                  {isLoading ? 'Loading comments...' : 'Scroll to load comments'}
+                  {isLoading
+                    ? 'Loading comments...'
+                    : 'Scroll to load comments'}
                 </p>
               </div>
             </div>
           )}
-          
+
           {/* Disqus thread will be inserted here */}
           <div id="disqus_thread"></div>
         </div>
-        
+
         <noscript>
           Please enable JavaScript to view the{' '}
           <a href="https://disqus.com/?ref_noscript">

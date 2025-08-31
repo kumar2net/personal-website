@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
-import BookCover from '../components/BookCover'
-import ContentBadge from '../components/ContentBadge'
+import { Link } from 'react-router-dom';
+import BookCover from '../components/BookCover';
+import ContentBadge from '../components/ContentBadge';
 
 function Books() {
   return (
@@ -24,20 +24,40 @@ function Books() {
               </div>
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
-            <ContentBadge 
-              publishDate={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-              lastModified={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+            <ContentBadge
+              publishDate={new Date().toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+              lastModified={new Date().toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">The Stoic Art of Living</h2>
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              The Stoic Art of Living
+            </h2>
             <div className="mt-2 flex flex-wrap gap-2">
-              <img src="https://img.shields.io/badge/Philosophy-Stoicism-brown" alt="Stoicism badge" />
-              <img src="https://img.shields.io/badge/Notes-Verbatim-blue" alt="Notes badge" />
+              <img
+                src="https://img.shields.io/badge/Philosophy-Stoicism-brown"
+                alt="Stoicism badge"
+              />
+              <img
+                src="https://img.shields.io/badge/Notes-Verbatim-blue"
+                alt="Notes badge"
+              />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">Your verbatim notes converted from PDF.</p>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              Your verbatim notes converted from PDF.
+            </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read Book</span>
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read Book
+              </span>
             </div>
           </div>
         </Link>
@@ -54,20 +74,34 @@ function Books() {
               </div>
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
-            <ContentBadge 
+            <ContentBadge
               publishDate="July 15, 2025"
               lastModified="July 15, 2025"
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">Atheism: A Wonderful World Without Religion</h2>
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              Atheism: A Wonderful World Without Religion
+            </h2>
             <div className="mt-2 flex flex-wrap gap-2">
-              <img src="https://img.shields.io/badge/Philosophy-Atheism-purple" alt="Philosophy badge" />
-              <img src="https://img.shields.io/badge/Worldview-Secular-orange" alt="Worldview badge" />
+              <img
+                src="https://img.shields.io/badge/Philosophy-Atheism-purple"
+                alt="Philosophy badge"
+              />
+              <img
+                src="https://img.shields.io/badge/Worldview-Secular-orange"
+                alt="Worldview badge"
+              />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">A comprehensive exploration of atheism, its philosophical foundations, and its implications for understanding the world and human existence.</p>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              A comprehensive exploration of atheism, its philosophical
+              foundations, and its implications for understanding the world and
+              human existence.
+            </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read Book</span>
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read Book
+              </span>
             </div>
           </div>
         </Link>
@@ -85,20 +119,35 @@ function Books() {
               className="w-full h-full group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
-            <ContentBadge 
+            <ContentBadge
               publishDate="July 10, 2025"
               lastModified="July 12, 2025"
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">The Brain: The Story of You</h2>
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              The Brain: The Story of You
+            </h2>
             <div className="mt-2 flex flex-wrap gap-2">
-              <img src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple" alt="Neuroscience badge" />
-              <img src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange" alt="AI Technology badge" />
+              <img
+                src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple"
+                alt="Neuroscience badge"
+              />
+              <img
+                src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange"
+                alt="AI Technology badge"
+              />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">One of the best books I have read in a while. Observing all the advances in AI and listening to gyan from my kin on neurology brain implants, wanted to dig deeper. As they say these days - learn from First Principles</p>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              One of the best books I have read in a while. Observing all the
+              advances in AI and listening to gyan from my kin on neurology
+              brain implants, wanted to dig deeper. As they say these days -
+              learn from First Principles
+            </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read Book</span>
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read Book
+              </span>
             </div>
           </div>
         </Link>
@@ -116,27 +165,38 @@ function Books() {
               className="w-full h-full group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
-            <ContentBadge 
+            <ContentBadge
               publishDate="June 20, 2025"
               lastModified="June 20, 2025"
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">Applying the Cornell Method</h2>
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              Applying the Cornell Method
+            </h2>
             <div className="mt-2 flex flex-wrap gap-2">
-              <img src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue" alt="Cornell Method badge" />
-              <img src="https://img.shields.io/badge/Study%20Skills-Productivity-green" alt="Study skills badge" />
+              <img
+                src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue"
+                alt="Cornell Method badge"
+              />
+              <img
+                src="https://img.shields.io/badge/Study%20Skills-Productivity-green"
+                alt="Study skills badge"
+              />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">Verbatim content embedded from the original document.</p>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              Verbatim content embedded from the original document.
+            </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Read more</span>
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read more
+              </span>
             </div>
           </div>
         </Link>
       </section>
     </div>
-  )
+  );
 }
 
-export default Books
-
+export default Books;

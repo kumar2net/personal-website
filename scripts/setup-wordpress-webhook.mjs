@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import readline from 'node:readline';
+import { fileURLToPath } from 'node:url';
 import fetch from 'node-fetch';
-import readline from 'readline';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,13 +13,14 @@ class WordPressWebhookSetup {
   constructor() {
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
     this.clientId = '123358';
-    this.clientSecret = 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm';
+    this.clientSecret =
+      'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm';
     this.redirectUri = 'https://kumarsite.netlify.app/';
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
     this.siteId = 'kumar2net.wordpress.com';
     this.rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
   }
 
@@ -36,12 +37,12 @@ class WordPressWebhookSetup {
   async getValidToken() {
     try {
       const tokenData = JSON.parse(await fs.readFile(this.tokenFile, 'utf8'));
-      
+
       // Check if token is still valid
       const response = await fetch(`${this.apiBase}/me`, {
         headers: {
-          'Authorization': `Bearer ${tokenData.access_token}`
-        }
+          Authorization: `Bearer ${tokenData.access_token}`,
+        },
       });
 
       if (response.ok) {
@@ -50,18 +51,21 @@ class WordPressWebhookSetup {
 
       // Token expired, refresh it
       console.log('🔄 Token expired, refreshing...');
-      const refreshResponse = await fetch('https://public-api.wordpress.com/oauth2/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          client_id: this.clientId,
-          client_secret: this.clientSecret,
-          grant_type: 'refresh_token',
-          refresh_token: tokenData.refresh_token
-        })
-      });
+      const refreshResponse = await fetch(
+        'https://public-api.wordpress.com/oauth2/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            client_id: this.clientId,
+            client_secret: this.clientSecret,
+            grant_type: 'refresh_token',
+            refresh_token: tokenData.refresh_token,
+          }),
+        }
+      );
 
       if (refreshResponse.ok) {
         const newTokenData = await refreshResponse.json();
@@ -103,7 +107,9 @@ class WordPressWebhookSetup {
     // Get valid token
     const token = await this.getValidToken();
     if (!token) {
-      console.log('❌ No valid token available. Please run the permanent setup first:');
+      console.log(
+        '❌ No valid token available. Please run the permanent setup first:'
+      );
       console.log('   npm run wordpress:permanent-setup');
       await this.close();
       return;
@@ -113,7 +119,7 @@ class WordPressWebhookSetup {
 
     // Set up webhook
     await this.createWebhook(token);
-    
+
     await this.close();
   }
 
@@ -122,13 +128,16 @@ class WordPressWebhookSetup {
       console.log('');
       console.log('📡 Creating WordPress webhook...');
 
-      const webhookUrl = 'https://kumarsite.netlify.app/.netlify/functions/wordpress-webhook-receiver';
-      
+      const webhookUrl =
+        'https://kumarsite.netlify.app/.netlify/functions/wordpress-webhook-receiver';
+
       // Note: WordPress.com doesn't have a direct webhook API, so we'll use a different approach
       // We'll set up a polling mechanism or use WordPress.com's REST API hooks
-      
-      console.log('ℹ️  WordPress.com doesn\'t provide direct webhook creation via API.');
-      console.log('   We\'ll use an alternative approach:');
+
+      console.log(
+        "ℹ️  WordPress.com doesn't provide direct webhook creation via API."
+      );
+      console.log("   We'll use an alternative approach:");
       console.log('');
       console.log('Option 1: Manual Webhook Setup (Recommended)');
       console.log('===========================================');
@@ -140,7 +149,7 @@ class WordPressWebhookSetup {
       console.log('   - Method: POST');
       console.log('   - Content-Type: application/json');
       console.log('');
-      
+
       console.log('Option 2: Automated Polling (Alternative)');
       console.log('=========================================');
       console.log('We can create a script that polls for new posts and');
@@ -148,7 +157,7 @@ class WordPressWebhookSetup {
       console.log('');
 
       const option = await this.question('Choose option (1/2): ');
-      
+
       if (option === '2') {
         await this.setupPolling(token);
       } else {
@@ -169,20 +178,21 @@ class WordPressWebhookSetup {
         console.log('');
         console.log('3. Environment Variables (for GitHub integration):');
         console.log('   - GITHUB_TOKEN: Your GitHub personal access token');
-        console.log('   - GITHUB_REPO: Your repository (format: username/repository)');
+        console.log(
+          '   - GITHUB_REPO: Your repository (format: username/repository)'
+        );
         console.log('');
         console.log('✅ Webhook setup instructions provided!');
       }
-
     } catch (error) {
       console.error('❌ Webhook setup failed:', error);
     }
   }
 
-  async setupPolling(token) {
+  async setupPolling(_token) {
     console.log('');
     console.log('🔄 Setting up automated polling...');
-    
+
     // Create polling script
     const pollingScript = `#!/usr/bin/env node
 
@@ -326,7 +336,7 @@ export default WordPressPolling;
 
     const pollingPath = path.join(__dirname, 'wordpress-polling.mjs');
     await fs.writeFile(pollingPath, pollingScript);
-    
+
     console.log('✅ Created polling script: scripts/wordpress-polling.mjs');
     console.log('');
     console.log('📋 To use the polling system:');
@@ -342,14 +352,15 @@ export default WordPressPolling;
 
   async testWebhook() {
     console.log('🧪 Testing webhook...');
-    
-    const webhookUrl = 'https://kumarsite.netlify.app/.netlify/functions/wordpress-webhook-receiver';
-    
+
+    const webhookUrl =
+      'https://kumarsite.netlify.app/.netlify/functions/wordpress-webhook-receiver';
+
     try {
       const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           post: {
@@ -362,21 +373,20 @@ export default WordPressPolling;
             status: 'publish',
             categories: ['Test'],
             tags: ['test'],
-            URL: 'https://kumar2net.wordpress.com/test-post'
+            URL: 'https://kumar2net.wordpress.com/test-post',
           },
-          site: { ID: this.siteId }
-        })
+          site: { ID: this.siteId },
+        }),
       });
 
       const result = await response.json();
-      
+
       if (response.ok) {
         console.log('✅ Webhook test successful!');
         console.log('Result:', result);
       } else {
         console.log('❌ Webhook test failed:', result);
       }
-
     } catch (error) {
       console.error('❌ Webhook test error:', error);
     }

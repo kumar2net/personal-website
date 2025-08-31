@@ -1,52 +1,54 @@
-import { useState } from 'react'
-import PDFExtractor from '../../components/PDFExtractor'
+import { useState } from 'react';
+import PDFExtractor from '../../components/PDFExtractor';
 
 function PDFExtractorPage() {
-  const [extractedText, setExtractedText] = useState('')
-  const [markdownContent, setMarkdownContent] = useState('')
+  const [extractedText, setExtractedText] = useState('');
+  const [markdownContent, setMarkdownContent] = useState('');
 
   const handleExtract = (text) => {
-    setExtractedText(text)
-    
+    setExtractedText(text);
+
     // Convert to markdown
-    const markdown = convertToMarkdown(text)
-    setMarkdownContent(markdown)
-  }
+    const markdown = convertToMarkdown(text);
+    setMarkdownContent(markdown);
+  };
 
   const convertToMarkdown = (text) => {
     // Clean up the text
-    let markdown = text
-    
+    let markdown = text;
+
     // Remove excessive whitespace
-    markdown = markdown.replace(/\n\s*\n\s*\n/g, '\n\n')
-    markdown = markdown.replace(/\s+/g, ' ')
-    
+    markdown = markdown.replace(/\n\s*\n\s*\n/g, '\n\n');
+    markdown = markdown.replace(/\s+/g, ' ');
+
     // Split into paragraphs
-    const paragraphs = markdown.split('\n\n').filter(p => p.trim().length > 0)
-    
+    const paragraphs = markdown
+      .split('\n\n')
+      .filter((p) => p.trim().length > 0);
+
     // Process each paragraph
-    const processedParagraphs = paragraphs.map(paragraph => {
-      const trimmed = paragraph.trim()
-      
+    const processedParagraphs = paragraphs.map((paragraph) => {
+      const trimmed = paragraph.trim();
+
       // Detect chapter headings (all caps or short lines)
       if (trimmed.length < 100 && trimmed === trimmed.toUpperCase()) {
-        return `## ${trimmed}`
+        return `## ${trimmed}`;
       }
-      
+
       // Detect chapter numbers
       if (/^CHAPTER \d+/i.test(trimmed)) {
-        return `# ${trimmed}`
+        return `# ${trimmed}`;
       }
-      
+
       // Detect section headings
       if (/^\d+\.\s+[A-Z]/.test(trimmed)) {
-        return `### ${trimmed}`
+        return `### ${trimmed}`;
       }
-      
+
       // Regular paragraph
-      return trimmed
-    })
-    
+      return trimmed;
+    });
+
     // Add frontmatter
     const frontmatter = `---
 title: "The Brain: The Story of You"
@@ -62,30 +64,32 @@ date: "2025-01-16"
 
 ---
 
-`
-    
-    return frontmatter + processedParagraphs.join('\n\n')
-  }
+`;
+
+    return frontmatter + processedParagraphs.join('\n\n');
+  };
 
   const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text)
-    alert('Content copied to clipboard!')
-  }
+    navigator.clipboard.writeText(text);
+    alert('Content copied to clipboard!');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8">PDF Content Extractor</h1>
-        
+        <h1 className="text-3xl font-bold text-center mb-8">
+          PDF Content Extractor
+        </h1>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* PDF Extractor */}
           <div>
-            <PDFExtractor 
+            <PDFExtractor
               pdfUrl="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
               onExtract={handleExtract}
             />
           </div>
-          
+
           {/* Results */}
           <div className="space-y-6">
             {extractedText && (
@@ -106,7 +110,7 @@ date: "2025-01-16"
                 </div>
               </div>
             )}
-            
+
             {markdownContent && (
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex justify-between items-center mb-4">
@@ -129,7 +133,7 @@ date: "2025-01-16"
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default PDFExtractorPage
+export default PDFExtractorPage;

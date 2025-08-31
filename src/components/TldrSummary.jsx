@@ -6,7 +6,9 @@ import { useTldrSummary } from '../hooks/useTldrSummary';
 export default function TldrSummary({ slug, articleRef, disabled = false }) {
   const location = useLocation();
   const derivedSlug = useMemo(() => {
-    if (slug) return slug;
+    if (slug) {
+      return slug;
+    }
     const path = location?.pathname || '';
     const parts = path.split('/').filter(Boolean);
     return parts[parts.length - 1] || 'post';
@@ -18,7 +20,9 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
   // Observe DOM content so we extract text after mount and on updates
   useEffect(() => {
     const element = articleRef?.current;
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
     const extract = () => {
       const txt = getTextFromRef(articleRef);
@@ -31,7 +35,11 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
     const timer = setTimeout(extract, 0);
 
     const observer = new MutationObserver(() => extract());
-    observer.observe(element, { childList: true, subtree: true, characterData: true });
+    observer.observe(element, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
 
     return () => {
       clearTimeout(timer);
@@ -47,10 +55,25 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
   });
 
   const formattedDate = useMemo(() => {
-    if (!created) return '';
+    if (!created) {
+      return '';
+    }
     const d = new Date(created * 1000);
     const day = String(d.getDate()).padStart(2, '0');
-    const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    const month = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ][d.getMonth()];
     const year = d.getFullYear();
     return `${day}-${month}-${year}`; // dd-mmm-yyyy
   }, [created]);
@@ -58,10 +81,10 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
   return (
     <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">AI-generated TL;DR</span>
-        {loading && (
-          <span className="text-xs text-gray-400">Generating…</span>
-        )}
+        <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">
+          AI-generated TL;DR
+        </span>
+        {loading && <span className="text-xs text-gray-400">Generating…</span>}
       </div>
       {error ? (
         <p className="text-sm text-red-600">{error}</p>
@@ -90,5 +113,3 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
     </div>
   );
 }
-
-
