@@ -1,22 +1,24 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** August 30, 2025
+**Last Updated:** January 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, Music curation, and integrated analytics.
 
 ## 🚀 Features
 
 - **Portfolio Showcase** - Display projects and skills
-- **Blog System** - Share thoughts and experiences with AI-generated TL;DR summaries
+- **Blog System** - Share thoughts and experiences with Disqus comments and AI-generated TL;DR summaries
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Music Curation** - Personal music journey with favorite tracks and artists
 - **Learning Hub** - Educational resources and shortcuts
+- **Photo Album** - Google Photos integration with video content
 - **Weekly Neurosurgical Dossier** - Professional medical intelligence briefings
 - **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
 - **Semantic Search** - AI-powered search across blog content
 - **Content Badges** - Automatic NEW/UPDATED indicators based on system dates
-- **Responsive Design** - Works on all devices
+- **Responsive Design** - Works on all devices with mobile-first approach
 - **Modern UI** - Built with Tailwind CSS and Framer Motion
+- **Navigation** - Intuitive logo navigation with tooltips
 
 ## 🛠️ Tech Stack
 
@@ -42,6 +44,17 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Complete Lyrics** - Full lyrics display for special tracks
 - **Artist Spotlights** - Personal favorites with authentic reactions
 - **Playlist Integration** - Direct links to KUMAR_2025 YouTube Music playlist
+
+## 📸 Photo Album
+
+- Page: `/album`
+- Google Photos integration with video content
+- Mobile-optimized navigation with device-specific handling
+- Clear video indicators with play button overlays
+- Preview section showing content types (photos/videos)
+- Enhanced button with "Watch Videos & View Photos" text
+- Background music by Dharun
+- URL: https://photos.app.goo.gl/FFPhBFVeacvZm1dc6
 
 ## 📚 Books
 
@@ -139,6 +152,7 @@ The blog system supports:
 - SEO optimization
 - Reading time estimation
 - AI-generated TL;DR summaries
+- **Disqus Comments** - Third-party comment system with lazy loading
 - Semantic search integration
 - Shields.io badges for topics
 - Hero images with Unsplash attribution
@@ -148,6 +162,8 @@ The blog system supports:
 - Canonical references to original sources
 
 **Recent Blog Posts:**
+- **A Sobering Week** - Reflections on loss, life, and learning
+- **Joy of Writing** - Personal writing journey and insights
 - **Habit** - Daily routines and philosophy with AI-generated TL;DR
 - **Boy with Music in His Veins** - Dharun's musical journey with embedded audio interview
 
@@ -211,8 +227,17 @@ The music page features:
 - **Playlist Links** - Direct integration with YouTube Music playlists
 - **Emotional Descriptions** - Authentic personal responses to music
 
+## 🏠 Navigation
+
+The site features intuitive navigation:
+- **Logo Navigation** - Click logo to return to home page from anywhere
+- **Desktop Tooltip** - Hover tooltip shows "Click to go Home"
+- **Mobile Indicator** - "🏠 Home" text visible on mobile devices
+- **Hover Effects** - Logo scales slightly on hover for visual feedback
+- **Accessibility** - Screen reader support with title attributes
+
 ## 📄 License
 
 MIT License - see LICENSE file for details.
 
-Last updated: 2025-08-30
+Last updated: January 2025
