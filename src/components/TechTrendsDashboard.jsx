@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const TechTrendsDashboard = () => {
   const [trends, setTrends] = useState([]);
@@ -9,7 +9,15 @@ const TechTrendsDashboard = () => {
   const [lastUpdated, setLastUpdated] = useState('');
   const [cacheAge, setCacheAge] = useState(0);
 
-  const categories = ['All', 'AI/ML', 'Web Dev', 'Mobile', 'DevOps', 'Programming', 'Technology'];
+  const categories = [
+    'All',
+    'AI/ML',
+    'Web Dev',
+    'Mobile',
+    'DevOps',
+    'Programming',
+    'Technology',
+  ];
 
   const formatDate = (date) => {
     const day = date.getDate().toString().padStart(2, '0');
@@ -20,17 +28,18 @@ const TechTrendsDashboard = () => {
 
   useEffect(() => {
     fetchTechTrends();
-  }, []);
+  }, [fetchTechTrends]);
 
   const fetchTechTrends = async () => {
     setLoading(true);
     setError('');
-    
+
     try {
       // Try local Netlify dev server first, then fallback to deployed function
       const localUrl = 'http://localhost:8888/.netlify/functions/tech-trends';
-      const deployedUrl = 'https://kumarsite.netlify.app/.netlify/functions/tech-trends';
-      
+      const deployedUrl =
+        'https://kumarsite.netlify.app/.netlify/functions/tech-trends';
+
       let response;
       try {
         // Try local first
@@ -38,21 +47,23 @@ const TechTrendsDashboard = () => {
         if (!response.ok) {
           throw new Error(`Local server error: ${response.status}`);
         }
-      } catch (localError) {
-        console.log('Local Netlify dev server not available, trying deployed function...');
+      } catch (_localError) {
+        console.log(
+          'Local Netlify dev server not available, trying deployed function...'
+        );
         // Fallback to deployed function
         response = await fetch(deployedUrl);
         if (!response.ok) {
           throw new Error(`Deployed function error: ${response.status}`);
         }
       }
-      
+
       const data = await response.json();
-      
+
       if (data.error) {
         throw new Error(data.message || 'Failed to fetch tech trends');
       }
-      
+
       setTrends(data.trends || []);
       setLastUpdated(data.lastUpdated);
       setCacheAge(data.cacheAge || 0);
@@ -64,20 +75,21 @@ const TechTrendsDashboard = () => {
     }
   };
 
-  const filteredTrends = selectedCategory === 'All' 
-    ? trends 
-    : trends.filter(trend => trend.category === selectedCategory);
+  const filteredTrends =
+    selectedCategory === 'All'
+      ? trends
+      : trends.filter((trend) => trend.category === selectedCategory);
 
   const getCategoryColor = (category) => {
     const colors = {
       'AI/ML': 'bg-purple-100 text-purple-800',
       'Web Dev': 'bg-blue-100 text-blue-800',
-      'Mobile': 'bg-green-100 text-green-800',
-      'DevOps': 'bg-orange-100 text-orange-800',
-      'Programming': 'bg-indigo-100 text-indigo-800',
-      'Technology': 'bg-gray-100 text-gray-800'
+      Mobile: 'bg-green-100 text-green-800',
+      DevOps: 'bg-orange-100 text-orange-800',
+      Programming: 'bg-indigo-100 text-indigo-800',
+      Technology: 'bg-gray-100 text-gray-800',
     };
-    return colors[category] || colors['Technology'];
+    return colors[category] || colors.Technology;
   };
 
   const getRisingIcon = (rising) => {
@@ -101,7 +113,9 @@ const TechTrendsDashboard = () => {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-center mb-6">
             <div className="w-8 h-8 bg-blue-500 rounded-full mr-3 animate-pulse"></div>
-            <h1 className="text-3xl font-bold text-gray-800">🚀 Rising Tech Trends</h1>
+            <h1 className="text-3xl font-bold text-gray-800">
+              🚀 Rising Tech Trends
+            </h1>
           </div>
           <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
@@ -122,12 +136,14 @@ const TechTrendsDashboard = () => {
         <div className="bg-white rounded-lg shadow-lg p-8">
           <div className="flex items-center mb-6">
             <div className="w-8 h-8 bg-red-500 rounded-full mr-3"></div>
-            <h1 className="text-3xl font-bold text-gray-800">🚀 Rising Tech Trends</h1>
+            <h1 className="text-3xl font-bold text-gray-800">
+              🚀 Rising Tech Trends
+            </h1>
           </div>
           <div className="text-red-600 text-center py-8">
             <div className="text-4xl mb-4">⚠️</div>
             <p className="text-lg">{error}</p>
-            <button 
+            <button
               onClick={fetchTechTrends}
               className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
@@ -141,7 +157,7 @@ const TechTrendsDashboard = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -150,7 +166,9 @@ const TechTrendsDashboard = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">🚀 Rising Tech Trends</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              🚀 Rising Tech Trends
+            </h1>
             <p className="text-gray-600">
               Top 10 trending topics from Hacker News, GitHub, and Reddit
               {lastUpdated && (
@@ -161,12 +179,22 @@ const TechTrendsDashboard = () => {
               )}
             </p>
           </div>
-          <button 
+          <button
             onClick={fetchTechTrends}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
           >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            <svg
+              className="w-4 h-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
             </svg>
             Refresh
           </button>
@@ -201,7 +229,7 @@ const TechTrendsDashboard = () => {
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   className="group"
                 >
-                  <a 
+                  <a
                     href={trend.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -217,11 +245,11 @@ const TechTrendsDashboard = () => {
                             {getRisingIcon(trend.rising)} {trend.title}
                           </h3>
                         </div>
-                        
+
                         <p className="text-gray-600 mb-4 line-clamp-2">
                           {trend.description}
                         </p>
-                        
+
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                             <span className="text-sm text-gray-500">
@@ -230,14 +258,26 @@ const TechTrendsDashboard = () => {
                             <span className="text-sm font-medium text-gray-700">
                               {formatEngagement(trend.engagement, trend.source)}
                             </span>
-                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(trend.category)}`}>
+                            <span
+                              className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(trend.category)}`}
+                            >
                               {trend.category}
                             </span>
                           </div>
-                          
+
                           <div className="text-gray-400 group-hover:text-blue-500 transition-colors">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              />
                             </svg>
                           </div>
                         </div>
@@ -249,8 +289,10 @@ const TechTrendsDashboard = () => {
             ) : (
               <div className="text-center py-12 text-gray-500">
                 <div className="text-4xl mb-4">🔍</div>
-                <p className="text-lg">No trends found for "{selectedCategory}"</p>
-                <button 
+                <p className="text-lg">
+                  No trends found for "{selectedCategory}"
+                </p>
+                <button
                   onClick={() => setSelectedCategory('All')}
                   className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >

@@ -1,43 +1,44 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
+    e.preventDefault();
+    setIsSubmitting(true);
+
     try {
       // Check if we're on localhost (development) or production
-      const isDevelopment = window.location.hostname === 'localhost'
-      
+      const isDevelopment = window.location.hostname === 'localhost';
+
       if (isDevelopment) {
         // For local development, use a simple API or just log the data
-        console.log('Development mode - Form data:', formData)
-        
+        console.log('Development mode - Form data:', formData);
+
         // Simulate email sending for development
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        
-        setSubmitSuccess(true)
-        setFormData({ name: '', email: '', message: '' })
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        setSubmitSuccess(true);
+        setFormData({ name: '', email: '', message: '' });
+
         // You can also show the user that this is development mode
-        alert('Development Mode: Email would be sent in production. Check console for form data.')
-        
+        alert(
+          'Development Mode: Email would be sent in production. Check console for form data.'
+        );
       } else {
         // For production, use Netlify Forms
         const response = await fetch('/', {
@@ -45,29 +46,31 @@ const Contact = () => {
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams({
             'form-name': 'contact',
-            'name': formData.name,
-            'email': formData.email,
-            'message': formData.message
-          }).toString()
-        })
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+          }).toString(),
+        });
 
         if (response.ok) {
-          setSubmitSuccess(true)
-          setFormData({ name: '', email: '', message: '' })
+          setSubmitSuccess(true);
+          setFormData({ name: '', email: '', message: '' });
         } else {
-          throw new Error('Form submission failed')
+          throw new Error('Form submission failed');
         }
       }
     } catch (error) {
-      console.error('Error submitting form:', error)
-      alert('Failed to send message. Please try again or contact me directly at kumar@yoursite.com')
+      console.error('Error submitting form:', error);
+      alert(
+        'Failed to send message. Please try again or contact me directly at kumar@yoursite.com'
+      );
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -78,8 +81,12 @@ const Contact = () => {
         {submitSuccess ? (
           <div className="bg-green-100 p-6 rounded-lg mb-6 text-center">
             <div className="text-4xl mb-4">✅</div>
-            <h2 className="text-green-800 font-semibold text-xl mb-2">Message Sent Successfully!</h2>
-            <p className="text-green-700 mb-4">I'll get back to you as soon as possible.</p>
+            <h2 className="text-green-800 font-semibold text-xl mb-2">
+              Message Sent Successfully!
+            </h2>
+            <p className="text-green-700 mb-4">
+              I'll get back to you as soon as possible.
+            </p>
             <button
               onClick={() => setSubmitSuccess(false)}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
@@ -88,8 +95,8 @@ const Contact = () => {
             </button>
           </div>
         ) : (
-          <form 
-            onSubmit={handleSubmit} 
+          <form
+            onSubmit={handleSubmit}
             className="space-y-6"
             name="contact"
             method="POST"
@@ -99,9 +106,12 @@ const Contact = () => {
             {/* Hidden fields for Netlify Forms */}
             <input type="hidden" name="form-name" value="contact" />
             <input type="hidden" name="bot-field" />
-            
+
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Name
               </label>
               <input
@@ -115,7 +125,10 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email
               </label>
               <input
@@ -129,7 +142,10 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Message
               </label>
               <textarea
@@ -153,10 +169,11 @@ const Contact = () => {
         )}
       </div>
       <p className="max-w-2xl mx-auto mt-8 text-sm text-gray-600 italic">
-        PS: This is a dummy page. Please send me an email to my Gmail ID or WhatsApp me.
+        PS: This is a dummy page. Please send me an email to my Gmail ID or
+        WhatsApp me.
       </p>
     </motion.div>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

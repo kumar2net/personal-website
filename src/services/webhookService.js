@@ -11,7 +11,9 @@ class WebhookService {
     // If no webhook URL is configured, skip sending
     if (!this.webhookUrl) {
       if (analyticsConfig.debug) {
-        console.log(`[Webhook] No webhook URL configured, skipping ${eventType}`);
+        console.log(
+          `[Webhook] No webhook URL configured, skipping ${eventType}`
+        );
       }
       return { success: false, message: 'No webhook URL configured' };
     }
@@ -22,18 +24,18 @@ class WebhookService {
         data: {
           ...data,
           source: 'personal-website',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         },
-        source: 'personal-website'
+        source: 'personal-website',
       };
 
       const response = await fetch(`${this.webhookUrl}/analytics/track`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Origin': window.location.origin
+          Origin: window.location.origin,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -41,7 +43,7 @@ class WebhookService {
       }
 
       const result = await response.json();
-      
+
       if (analyticsConfig.debug) {
         console.log(`[Webhook] ${eventType} sent successfully:`, result);
       }
@@ -62,7 +64,7 @@ class WebhookService {
   async sendCustomEvent(eventName, eventData) {
     return this.sendAnalyticsEvent('event', {
       event_name: eventName,
-      event_data: eventData
+      event_data: eventData,
     });
   }
 
@@ -72,4 +74,4 @@ class WebhookService {
   }
 }
 
-export default new WebhookService(); 
+export default new WebhookService();

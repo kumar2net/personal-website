@@ -1,34 +1,38 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App.jsx'
-import './output.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
+import './output.css';
 
 // Global error handler for DOM manipulation errors
 const handleGlobalError = (event) => {
   // Check if it's a DOM manipulation error
-  if (event.error && event.error.message && 
-      (event.error.message.includes('removeChild') || 
-       event.error.message.includes('appendChild') ||
-       event.error.message.includes('insertBefore'))) {
-    
-    console.warn('DOM manipulation error caught and handled:', event.error.message);
-    
+  if (
+    event.error?.message &&
+    (event.error.message.includes('removeChild') ||
+      event.error.message.includes('appendChild') ||
+      event.error.message.includes('insertBefore'))
+  ) {
+    console.warn(
+      'DOM manipulation error caught and handled:',
+      event.error.message
+    );
+
     // Prevent the error from being logged to console
     event.preventDefault();
-    
+
     // Optionally, you can add analytics here
     if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'dom_manipulation_error', {
         event_category: 'error',
         event_label: event.error.message,
-        value: 1
+        value: 1,
       });
     }
-    
+
     return false;
   }
-  
+
   // For other errors, let them pass through
   return true;
 };
@@ -38,21 +42,25 @@ window.addEventListener('error', handleGlobalError);
 
 // Add unhandled rejection handler
 window.addEventListener('unhandledrejection', (event) => {
-  if (event.reason && event.reason.message && 
-      (event.reason.message.includes('removeChild') || 
-       event.reason.message.includes('appendChild'))) {
-    
-    console.warn('Unhandled DOM manipulation promise rejection caught:', event.reason.message);
+  if (
+    event.reason?.message &&
+    (event.reason.message.includes('removeChild') ||
+      event.reason.message.includes('appendChild'))
+  ) {
+    console.warn(
+      'Unhandled DOM manipulation promise rejection caught:',
+      event.reason.message
+    );
     event.preventDefault();
     return false;
   }
 });
 
 const renderApp = () => {
-  const rootElement = document.getElementById('root')
+  const rootElement = document.getElementById('root');
   if (!rootElement) {
-    console.error('Root element not found')
-    return
+    console.error('Root element not found');
+    return;
   }
 
   try {
@@ -61,20 +69,20 @@ const renderApp = () => {
         <BrowserRouter
           future={{
             v7_startTransition: true,
-            v7_relativeSplatPath: true
+            v7_relativeSplatPath: true,
           }}
         >
           <App />
         </BrowserRouter>
-      </React.StrictMode>,
-    )
+      </React.StrictMode>
+    );
   } catch (error) {
-    console.error('Error rendering app:', error)
+    console.error('Error rendering app:', error);
   }
-}
+};
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderApp)
+  document.addEventListener('DOMContentLoaded', renderApp);
 } else {
-  renderApp()
+  renderApp();
 }

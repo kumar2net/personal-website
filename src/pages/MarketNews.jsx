@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LatestMarketNews from '../components/latest_market_news.jsx';
 
 // Using a public news API as fallback
-const NEWS_URL = 'https://newsapi.org/v2/top-headlines?country=in&apiKey=YOUR_NEWSAPI_KEY';
+const _NEWS_URL =
+  'https://newsapi.org/v2/top-headlines?country=in&apiKey=YOUR_NEWSAPI_KEY';
 // Note: You'll need to sign up at https://newsapi.org/ to get a free API key
 // For now, we'll use a placeholder that will show sample data in development
 
@@ -19,37 +20,40 @@ export default function MarketNews() {
         const sampleData = {
           articles: [
             {
-              title: "Sample Market News 1",
-              description: "This is a sample news article. In a real app, this would be fetched from a news API.",
-              url: "#",
-              publishedAt: new Date().toISOString()
+              title: 'Sample Market News 1',
+              description:
+                'This is a sample news article. In a real app, this would be fetched from a news API.',
+              url: '#',
+              publishedAt: new Date().toISOString(),
             },
             {
-              title: "Sample Market News 2",
-              description: "Another sample news article. Sign up for a free API key at newsapi.org to get real news.",
-              url: "#",
-              publishedAt: new Date().toISOString()
-            }
-          ]
+              title: 'Sample Market News 2',
+              description:
+                'Another sample news article. Sign up for a free API key at newsapi.org to get real news.',
+              url: '#',
+              publishedAt: new Date().toISOString(),
+            },
+          ],
         };
-        
+
         console.log('Using sample data');
         setNewsList(sampleData.articles);
         setFetchTime(new Date());
       } catch (err) {
         console.error('Error:', err);
         setError('Failed to load news. Using sample data instead.');
-        
+
         // Set sample data even on error
         const sampleData = {
           articles: [
             {
-              title: "Sample Market News (Offline Mode)",
-              description: "This is sample data shown because the news API could not be reached.",
-              url: "#",
-              publishedAt: new Date().toISOString()
-            }
-          ]
+              title: 'Sample Market News (Offline Mode)',
+              description:
+                'This is sample data shown because the news API could not be reached.',
+              url: '#',
+              publishedAt: new Date().toISOString(),
+            },
+          ],
         };
         setNewsList(sampleData.articles);
       } finally {
@@ -79,7 +83,9 @@ export default function MarketNews() {
   return (
     <div className="max-w-2xl mx-auto px-2 py-10 sm:px-4 sm:py-16">
       <div className="bg-white rounded-xl shadow-md p-6">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-800">Market News</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-800">
+          Market News
+        </h1>
         <p className="text-gray-500 mb-4 text-sm sm:text-base">
           Last updated: {fetchTime ? fetchTime.toLocaleString() : '--'}
         </p>

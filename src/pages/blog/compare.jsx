@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DisqusComments from '../../components/DisqusComments';
 
 const Compare = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
-  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -19,36 +19,52 @@ const Compare = () => {
           onClick={() => navigate('/blog')}
           className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center"
         >
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          <svg
+            className="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
           </svg>
           Back to Blog
         </button>
       </div>
-      
+
       <h1 className="text-4xl font-bold mb-6">Untitled</h1>
-      
+
       <div className="flex items-center text-gray-600 mb-8">
-        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <svg
+          className="w-4 h-4 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
         </svg>
         <span>Date: Unknown Date</span>
         <span className="mx-2">•</span>
         <span>By Kumar</span>
       </div>
 
-      
-
       {/* Badges */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        
-      </div>
+      <div className="flex flex-wrap gap-2 mb-8"></div>
 
       <div className="space-y-8">
         <div ref={articleRef} className="prose prose-lg max-w-none">
-          
-          
-          <div dangerouslySetInnerHTML={{ __html: `# Price/cost of essentials in places our folks live now
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `# Price/cost of essentials in places our folks live now
 
 I made this to just vet my curiocity.
 
@@ -60,31 +76,31 @@ The main table covers cost of living and healthcare access. Separate tables belo
 
 | City        | Staples (mo.) | Broadband (mo.) | Fuel (L/gal) | Mortgage Rate | Electricity (kWh/mo.) | Water (mo.) | Doctor Wait (GP)        |
 |-------------|---------------|-----------------|--------------|---------------|----------------------|-------------|-------------------------|
-| Toronto     | C\$600–800 (\$440–587) | C\$40–80 (\$29–59) | C\$1.51/L (\$1.11/L) | 3.8–4.6% | C\$0.093–0.11 (\$0.07–0.08) | C\$80–100 (\$59–73) | 2–4 wks (public)        |
-| Orlando     | \$500–700      | \$25–55          | \$3.40/gal (\$0.90/L) | 6.5–7%    | \$0.13–0.15           | \$70–80      | 1–2 wks (private)       |
-| Seattle     | \$600–800      | \$35–75          | \$4.96/gal (\$1.31/L) | 6.7–7.3%  | \$0.11–0.20 (~\$65/mo) | \$20–25      | 1–2 wks (private)       |
-| Singapore   | S\$600–800 (\$471–628) | S\$29.9–55.9 (\$23–44) | S\$2.70–2.90/L (\$2.12–2.27/L) | 2.7–3.2% | S\$0.2994 (\$0.23) | S\$50–60 (\$39–47) | 1–7 days (public), 1–3 days (private) |
-| Birmingham  | £350–500 (\$478–683) | £25–40 (\$34–55) | £1.46/L (\$1.99/L) | 6.7–7%   | £0.2419 (\$0.33)      | ~£46.33 (\$63) | 1–3 wks (NHS)           |
-| Chennai     | ₹8,000–12,000 (\$93–140) | ₹600–1,000 (\$7–12) | ₹100/L (\$1.17/L) | 8–9%     | ₹8 (\$0.09)           | ₹300–500 (\$3.50–5.80) | 1–5 days (private), 1–2 wks (public) |
+| Toronto     | C$600–800 ($440–587) | C$40–80 ($29–59) | C$1.51/L ($1.11/L) | 3.8–4.6% | C$0.093–0.11 ($0.07–0.08) | C$80–100 ($59–73) | 2–4 wks (public)        |
+| Orlando     | $500–700      | $25–55          | $3.40/gal ($0.90/L) | 6.5–7%    | $0.13–0.15           | $70–80      | 1–2 wks (private)       |
+| Seattle     | $600–800      | $35–75          | $4.96/gal ($1.31/L) | 6.7–7.3%  | $0.11–0.20 (~$65/mo) | $20–25      | 1–2 wks (private)       |
+| Singapore   | S$600–800 ($471–628) | S$29.9–55.9 ($23–44) | S$2.70–2.90/L ($2.12–2.27/L) | 2.7–3.2% | S$0.2994 ($0.23) | S$50–60 ($39–47) | 1–7 days (public), 1–3 days (private) |
+| Birmingham  | £350–500 ($478–683) | £25–40 ($34–55) | £1.46/L ($1.99/L) | 6.7–7%   | £0.2419 ($0.33)      | ~£46.33 ($63) | 1–3 wks (NHS)           |
+| Chennai     | ₹8,000–12,000 ($93–140) | ₹600–1,000 ($7–12) | ₹100/L ($1.17/L) | 8–9%     | ₹8 ($0.09)           | ₹300–500 ($3.50–5.80) | 1–5 days (private), 1–2 wks (public) |
 
 ### 2. Healthcare Quality, Dental & Drug Costs
 
 | City        | Quality of Care (1–5) | Dentist Visit (USD) | Dental Implant (USD) | Diabetes/Cardio Drugs (USD/mo.) |
 |-------------|----------------------|---------------------|----------------------|----------------------------------|
-| Toronto     | 5                    | \$150–\$300           | \$4,165+              | \$20–\$40 (with insurance)         |
-| Orlando     | 4                    | \$100–\$250           | \$3,000–\$4,500        | \$30–\$100 (with insurance)        |
-| Seattle     | 4                    | \$120–\$300           | \$3,000–\$4,500        | \$30–\$100 (with insurance)        |
-| Singapore   | 5                    | \$17–\$43 (polyclinic)| \$3,000–\$5,500        | \$24–\$70 (subsidized)             |
-| Birmingham  | 4                    | \$32–\$80 (NHS/private)| \$2,000–\$3,000        | \$12 (NHS prescription)           |
-| Chennai     | 3–4                  | \$3.50–\$12           | \$235–\$470            | \$6–\$18 (generic)                 |
+| Toronto     | 5                    | $150–$300           | $4,165+              | $20–$40 (with insurance)         |
+| Orlando     | 4                    | $100–$250           | $3,000–$4,500        | $30–$100 (with insurance)        |
+| Seattle     | 4                    | $120–$300           | $3,000–$4,500        | $30–$100 (with insurance)        |
+| Singapore   | 5                    | $17–$43 (polyclinic)| $3,000–$5,500        | $24–$70 (subsidized)             |
+| Birmingham  | 4                    | $32–$80 (NHS/private)| $2,000–$3,000        | $12 (NHS prescription)           |
+| Chennai     | 3–4                  | $3.50–$12           | $235–$470            | $6–$18 (generic)                 |
 
 ### 3. Income Tax Slabs (2025, Individual)
 
 | City/Country      | Tax-Free Bracket         | Main Slabs (Individual)                                              | Top Rate        |
 |-------------------|-------------------------|----------------------------------------------------------------------|-----------------|
-| Toronto (Canada)  | C\$15,705                | 15% ≤C\$55,867, 20.5% ≤C\$111,733, 26% ≤C\$173,205 (Fed)Ontario: 5.05% ≤C\$49,231, 9.15% ≤C\$98,463 | 33% (Fed)       |
-| Orlando/Seattle (US) | \$14,600 (standard deduction) | 12% ≤\$47,150, 22% ≤\$100,525, 24% ≤\$191,950 (Single)                  | 37%             |
-| Singapore         | S\$20,000                | 2% ≤S\$30k, 3.5% ≤S\$40k, 7% ≤S\$80k, 11.5% ≤S\$120k, 15% ≤S\$160k        | 24%             |
+| Toronto (Canada)  | C$15,705                | 15% ≤C$55,867, 20.5% ≤C$111,733, 26% ≤C$173,205 (Fed)Ontario: 5.05% ≤C$49,231, 9.15% ≤C$98,463 | 33% (Fed)       |
+| Orlando/Seattle (US) | $14,600 (standard deduction) | 12% ≤$47,150, 22% ≤$100,525, 24% ≤$191,950 (Single)                  | 37%             |
+| Singapore         | S$20,000                | 2% ≤S$30k, 3.5% ≤S$40k, 7% ≤S$80k, 11.5% ≤S$120k, 15% ≤S$160k        | 24%             |
 | Birmingham (UK)   | £12,570                 | 20% ≤£50,270, 40% ≤£125,140                                          | 45%             |
 | Chennai (India)   | ₹2.5L (old), ₹3L (new)  | 5% ₹3–6L, 10% ₹6–9L, 15% ₹9–12L, 20% ₹12–15L, 30% >₹15L               | 30%             |
 
@@ -120,21 +136,23 @@ The main table covers cost of living and healthcare access. Separate tables belo
 | Currency Pair      | 1 USD = X Local Currency | 1 Local Currency = X USD |
 |--------------------|-------------------------|--------------------------|
 | USD (US Dollar)    | 1.00 USD                | 1.00 USD                 |
-| CAD (Canadian \$)   | 1.60 CAD                | 0.625 USD                |
-| SGD (Singapore \$)  | 1.50 SGD                | 0.67 USD                 |
+| CAD (Canadian $)   | 1.60 CAD                | 0.625 USD                |
+| SGD (Singapore $)  | 1.50 SGD                | 0.67 USD                 |
 | GBP (British £)    | 0.86 GBP                | 1.16 USD                 |
 | INR (Indian ₹)     | 85.15 INR               | 0.0117 USD               |
 
 
 Last updated: 2025-08-11
-` }} />
+`,
+            }}
+          />
         </div>
-        
-        <DisqusComments 
-        postId="compare"
-        postUrl="https://kumarsite.netlify.app/blog/compare"
-        postTitle="Untitled - Kumar's Blog"
-      />
+
+        <DisqusComments
+          postId="compare"
+          postUrl="https://kumarsite.netlify.app/blog/compare"
+          postTitle="Untitled - Kumar's Blog"
+        />
       </div>
     </motion.div>
   );

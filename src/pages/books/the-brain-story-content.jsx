@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom'
-import { HiArrowLeft, HiDownload, HiExternalLink } from 'react-icons/hi'
-import BookCover from '../../components/BookCover'
+import { HiArrowLeft, HiDownload, HiExternalLink } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
+import BookCover from '../../components/BookCover';
 
 function TheBrainStoryContent() {
   const handleReadBook = () => {
     // Open PDF in default PDF reader
-    window.open('/The_Brain_The_Story.pdf', '_blank')
-  }
+    window.open('/The_Brain_The_Story.pdf', '_blank');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -22,9 +22,11 @@ function TheBrainStoryContent() {
                 <HiArrowLeft className="w-5 h-5 mr-2" />
                 <span className="hidden sm:inline">Back to Books</span>
               </Link>
-              <h1 className="text-lg font-semibold text-gray-900">The Brain: The Story of You</h1>
+              <h1 className="text-lg font-semibold text-gray-900">
+                The Brain: The Story of You
+              </h1>
             </div>
-            
+
             <a
               href="/The_Brain_The_Story.pdf"
               download
@@ -50,16 +52,29 @@ function TheBrainStoryContent() {
                   className="w-full h-full"
                 />
               </div>
-              <p className="text-center text-sm text-gray-600 mt-2">David Eagleman</p>
+              <p className="text-center text-sm text-gray-600 mt-2">
+                David Eagleman
+              </p>
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">About This Book</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                About This Book
+              </h2>
               <p className="text-gray-700 leading-relaxed">
-                One of the best books I have read in a while. Observing all the advances in AI and listening to gyan from my kin on neurology brain implants, wanted to dig deeper. As they say these days - learn from First Principles
+                One of the best books I have read in a while. Observing all the
+                advances in AI and listening to gyan from my kin on neurology
+                brain implants, wanted to dig deeper. As they say these days -
+                learn from First Principles
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <img src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple" alt="Neuroscience badge" />
-                <img src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange" alt="AI Technology badge" />
+                <img
+                  src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple"
+                  alt="Neuroscience badge"
+                />
+                <img
+                  src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange"
+                  alt="AI Technology badge"
+                />
               </div>
             </div>
           </div>
@@ -75,12 +90,15 @@ function TheBrainStoryContent() {
                 <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <HiExternalLink className="w-10 h-10 text-blue-600" />
                 </div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Read?</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Ready to Read?
+                </h2>
                 <p className="text-lg text-gray-600 mb-8">
-                  Click the button below to open "The Brain: The Story of You" in your default PDF reader for the best reading experience.
+                  Click the button below to open "The Brain: The Story of You"
+                  in your default PDF reader for the best reading experience.
                 </p>
               </div>
-              
+
               <div className="space-y-4">
                 <button
                   onClick={handleReadBook}
@@ -89,14 +107,14 @@ function TheBrainStoryContent() {
                   <HiExternalLink className="w-6 h-6 mr-3" />
                   Click to Read
                 </button>
-                
+
                 <p className="text-sm text-gray-500">
                   Opens in your default PDF reader application
                 </p>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-gray-50 px-6 py-4">
             <div className="flex items-center justify-between text-sm text-gray-600">
               <div className="flex items-center space-x-4">
@@ -125,9 +143,12 @@ function TheBrainStoryContent() {
                 <HiDownload className="w-8 h-8 text-green-600" />
               </div>
               <div className="ml-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Download & Read Offline</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Download & Read Offline
+                </h3>
                 <p className="text-gray-600 mb-4">
-                  Download the PDF to read offline or transfer to your preferred device.
+                  Download the PDF to read offline or transfer to your preferred
+                  device.
                 </p>
                 <a
                   href="/The_Brain_The_Story.pdf"
@@ -145,12 +166,24 @@ function TheBrainStoryContent() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
+                <svg
+                  className="w-8 h-8 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
+                  />
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Read in Browser</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Read in Browser
+                </h3>
                 <p className="text-gray-600 mb-4">
                   Open the PDF directly in your web browser for quick access.
                 </p>
@@ -169,7 +202,7 @@ function TheBrainStoryContent() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default TheBrainStoryContent
+export default TheBrainStoryContent;

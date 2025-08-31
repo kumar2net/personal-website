@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import fetch from 'node-fetch';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,7 +12,8 @@ class WordPressAutoRefresh {
   constructor() {
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
     this.clientId = '123358';
-    this.clientSecret = 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm';
+    this.clientSecret =
+      'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm';
     this.redirectUri = 'https://kumarsite.netlify.app/';
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
   }
@@ -21,18 +22,20 @@ class WordPressAutoRefresh {
     try {
       const data = await fs.readFile(this.tokenFile, 'utf-8');
       const tokenData = JSON.parse(data);
-      
+
       // Check if token is expired (tokens expire in 30 days)
       const tokenAge = Date.now() - tokenData.createdAt;
       const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-      
+
       if (tokenAge > thirtyDays) {
-        console.log('⚠️  Token is expired or will expire soon. Need to refresh.');
+        console.log(
+          '⚠️  Token is expired or will expire soon. Need to refresh.'
+        );
         return null;
       }
-      
+
       return tokenData.access_token;
-    } catch (error) {
+    } catch (_error) {
       console.log('❌ No token file found or invalid token.');
       return null;
     }
@@ -44,25 +47,28 @@ class WordPressAutoRefresh {
       access_token: tokenData.access_token,
       refresh_token: tokenData.refresh_token,
       createdAt: Date.now(),
-      expires_in: tokenData.expires_in || 2592000 // 30 days in seconds
+      expires_in: tokenData.expires_in || 2592000, // 30 days in seconds
     };
     await fs.writeFile(this.tokenFile, JSON.stringify(dataToSave, null, 2));
   }
 
   async refreshToken(refreshToken) {
     try {
-      const response = await fetch('https://public-api.wordpress.com/oauth2/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          client_id: this.clientId,
-          client_secret: this.clientSecret,
-          grant_type: 'refresh_token',
-          refresh_token: refreshToken
-        })
-      });
+      const response = await fetch(
+        'https://public-api.wordpress.com/oauth2/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            client_id: this.clientId,
+            client_secret: this.clientSecret,
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Token refresh failed: ${response.status}`);
@@ -81,7 +87,7 @@ class WordPressAutoRefresh {
   async getValidToken() {
     // First try to load existing token
     let token = await this.loadToken();
-    
+
     if (token) {
       // Test the token
       const isValid = await this.testToken(token);
@@ -95,7 +101,7 @@ class WordPressAutoRefresh {
     try {
       const data = await fs.readFile(this.tokenFile, 'utf-8');
       const tokenData = JSON.parse(data);
-      
+
       if (tokenData.refresh_token) {
         console.log('🔄 Attempting to refresh token...');
         token = await this.refreshToken(tokenData.refresh_token);
@@ -103,7 +109,7 @@ class WordPressAutoRefresh {
           return token;
         }
       }
-    } catch (error) {
+    } catch (_error) {
       console.log('No refresh token available');
     }
 
@@ -115,22 +121,25 @@ class WordPressAutoRefresh {
 
   async testToken(token) {
     try {
-      const response = await fetch(`${this.apiBase}/sites/kumar2net.wordpress.com/posts`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      const response = await fetch(
+        `${this.apiBase}/sites/kumar2net.wordpress.com/posts`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         }
-      });
-      
+      );
+
       return response.ok;
-    } catch (error) {
+    } catch (_error) {
       return false;
     }
   }
 
   async setupAutoRefresh() {
     console.log('🔄 Setting up automatic token refresh...');
-    
+
     const token = await this.getValidToken();
     if (token) {
       // Set environment variable for current session
@@ -138,7 +147,7 @@ class WordPressAutoRefresh {
       console.log('✅ Token set in environment');
       return token;
     }
-    
+
     return null;
   }
 }
@@ -149,7 +158,7 @@ const autoRefresh = new WordPressAutoRefresh();
 if (process.argv[2] === '--setup') {
   autoRefresh.setupAutoRefresh();
 } else if (process.argv[2] === '--test') {
-  autoRefresh.getValidToken().then(token => {
+  autoRefresh.getValidToken().then((token) => {
     if (token) {
       console.log('✅ Token is valid');
     } else {
@@ -161,8 +170,12 @@ if (process.argv[2] === '--setup') {
   console.log('==========================');
   console.log('');
   console.log('Usage:');
-  console.log('  node scripts/wordpress-auto-refresh.mjs --setup    # Setup auto-refresh');
-  console.log('  node scripts/wordpress-auto-refresh.mjs --test     # Test current token');
+  console.log(
+    '  node scripts/wordpress-auto-refresh.mjs --setup    # Setup auto-refresh'
+  );
+  console.log(
+    '  node scripts/wordpress-auto-refresh.mjs --test     # Test current token'
+  );
   console.log('');
   console.log('This tool automatically refreshes WordPress API tokens');
   console.log('when they expire, providing a permanent solution for');

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import fetch from 'node-fetch';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,19 +13,22 @@ class WordPressPolling {
     this.siteId = 'kumar2net.wordpress.com';
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
-    this.processedFile = path.join(__dirname, '../data/wordpress-processed.json');
+    this.processedFile = path.join(
+      __dirname,
+      '../data/wordpress-processed.json'
+    );
     this.pollingInterval = 5 * 60 * 1000; // 5 minutes
   }
 
   async getValidToken() {
     try {
       const tokenData = JSON.parse(await fs.readFile(this.tokenFile, 'utf8'));
-      
+
       // Check if token is still valid
       const response = await fetch(`${this.apiBase}/me`, {
         headers: {
-          'Authorization': `Bearer ${tokenData.access_token}`
-        }
+          Authorization: `Bearer ${tokenData.access_token}`,
+        },
       });
 
       if (response.ok) {
@@ -34,18 +37,22 @@ class WordPressPolling {
 
       // Token expired, refresh it
       console.log('🔄 Token expired, refreshing...');
-      const refreshResponse = await fetch('https://public-api.wordpress.com/oauth2/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          client_id: '123358',
-          client_secret: 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm',
-          grant_type: 'refresh_token',
-          refresh_token: tokenData.refresh_token
-        })
-      });
+      const refreshResponse = await fetch(
+        'https://public-api.wordpress.com/oauth2/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            client_id: '123358',
+            client_secret:
+              'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm',
+            grant_type: 'refresh_token',
+            refresh_token: tokenData.refresh_token,
+          }),
+        }
+      );
 
       if (refreshResponse.ok) {
         const newTokenData = await refreshResponse.json();
@@ -68,7 +75,7 @@ class WordPressPolling {
     try {
       const data = await fs.readFile(this.processedFile, 'utf8');
       return JSON.parse(data);
-    } catch (error) {
+    } catch (_error) {
       return [];
     }
   }
@@ -78,9 +85,12 @@ class WordPressPolling {
       const processed = await this.getProcessedPosts();
       processed.push({
         id: postId,
-        processed_at: new Date().toISOString()
+        processed_at: new Date().toISOString(),
       });
-      await fs.writeFile(this.processedFile, JSON.stringify(processed, null, 2));
+      await fs.writeFile(
+        this.processedFile,
+        JSON.stringify(processed, null, 2)
+      );
     } catch (error) {
       console.error('Error marking post as processed:', error);
     }
@@ -95,12 +105,15 @@ class WordPressPolling {
 
     try {
       console.log('🔍 Checking for new WordPress posts...');
-      
-      const response = await fetch(`${this.apiBase}/sites/${this.siteId}/posts?number=10&status=publish`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+
+      const response = await fetch(
+        `${this.apiBase}/sites/${this.siteId}/posts?number=10&status=publish`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
@@ -108,7 +121,7 @@ class WordPressPolling {
 
       const posts = await response.json();
       const processed = await this.getProcessedPosts();
-      const processedIds = processed.map(p => p.id);
+      const processedIds = processed.map((p) => p.id);
 
       let newPostsFound = false;
       for (const post of posts.posts) {
@@ -123,7 +136,6 @@ class WordPressPolling {
       if (!newPostsFound) {
         console.log('✅ No new posts found');
       }
-
     } catch (error) {
       console.error('❌ Error checking for new posts:', error);
     }
@@ -133,11 +145,11 @@ class WordPressPolling {
     try {
       // Convert WordPress post to JSX directly
       const jsxContent = await this.convertToJSX(post);
-      
+
       // Generate filename
       const filename = this.generateFilename(post.title, post.date);
       const filePath = path.join(__dirname, '../src/pages/blog', filename);
-      
+
       // Write JSX file
       await fs.writeFile(filePath, jsxContent, 'utf8');
       console.log(`✅ Created JSX file: ${filename}`);
@@ -146,7 +158,6 @@ class WordPressPolling {
       if (process.env.GITHUB_TOKEN && process.env.GITHUB_REPO) {
         await this.commitToGitHub(filename, jsxContent, post.title);
       }
-
     } catch (error) {
       console.error('❌ Error processing post:', error);
     }
@@ -155,27 +166,30 @@ class WordPressPolling {
   async convertToJSX(post) {
     // Convert WordPress HTML to JSX-compatible content
     let content = post.content;
-    
+
     // Convert WordPress image URLs to relative paths
     content = content.replace(
       /https:\/\/kumar2net\.files\.wordpress\.com\//g,
       '/media/'
     );
-    
+
     // Convert WordPress embeds to standard HTML
     content = content.replace(
       /\[embed\](.*?)\[\/embed\]/g,
       '<iframe src="$1" width="100%" height="400" frameborder="0"></iframe>'
     );
-    
+
     // Convert WordPress shortcodes
     content = content.replace(/\[.*?\]/g, '');
-    
+
     // Extract tags from WordPress categories and tags
     const tags = [...(post.categories || []), ...(post.tags || [])];
-    const tagElements = tags.map(tag => 
-      `<span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mr-2 mb-2">${tag}</span>`
-    ).join('');
+    const tagElements = tags
+      .map(
+        (tag) =>
+          `<span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mr-2 mb-2">${tag}</span>`
+      )
+      .join('');
 
     // Generate JSX content
     const jsxContent = `import React from 'react';
@@ -223,7 +237,7 @@ export default ${this.generateComponentName(post.title)};
     return title
       .replace(/[^a-zA-Z0-9\s]/g, '')
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join('')
       .replace(/\s+/g, '');
   }
@@ -236,7 +250,7 @@ export default ${this.generateComponentName(post.title)};
       .replace(/[^a-z0-9\s]/g, '')
       .replace(/\s+/g, '-')
       .substring(0, 50);
-    
+
     return `${dateStr}-${slug}.jsx`;
   }
 
@@ -245,7 +259,7 @@ export default ${this.generateComponentName(post.title)};
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
@@ -253,7 +267,7 @@ export default ${this.generateComponentName(post.title)};
     try {
       const repo = process.env.GITHUB_REPO; // format: "username/repository"
       const token = process.env.GITHUB_TOKEN;
-      
+
       if (!repo || !token) {
         console.log('⚠️  GitHub credentials not configured, skipping commit');
         return;
@@ -264,9 +278,9 @@ export default ${this.generateComponentName(post.title)};
         `https://api.github.com/repos/${repo}/contents/src/pages/blog/${filename}`,
         {
           headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+          },
         }
       );
 
@@ -282,15 +296,15 @@ export default ${this.generateComponentName(post.title)};
         {
           method: 'PUT',
           headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             message: `Add WordPress cross-post: ${title}`,
             content: Buffer.from(content).toString('base64'),
-            sha: sha
-          })
+            sha: sha,
+          }),
         }
       );
 
@@ -300,7 +314,6 @@ export default ${this.generateComponentName(post.title)};
         const error = await response.text();
         console.error(`❌ GitHub commit failed: ${error}`);
       }
-
     } catch (error) {
       console.error('GitHub commit error:', error);
     }
@@ -312,10 +325,10 @@ export default ${this.generateComponentName(post.title)};
     console.log(`🌐 WordPress site: ${this.siteId}`);
     console.log(`📁 Output directory: src/pages/blog/`);
     console.log('');
-    
+
     // Initial check
     await this.checkForNewPosts();
-    
+
     // Set up interval
     setInterval(async () => {
       await this.checkForNewPosts();

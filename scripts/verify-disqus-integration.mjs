@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const BLOG_DIR = path.join(__dirname, '../src/pages/blog');
-const COMPONENT_PATH = path.join(__dirname, '../src/components/DisqusComments.jsx');
+const COMPONENT_PATH = path.join(
+  __dirname,
+  '../src/components/DisqusComments.jsx'
+);
 
 console.log('🔍 Verifying Disqus Integration\n');
 
@@ -31,7 +34,9 @@ console.log(`   ✅ Lazy loading: ${hasLazyLoading}`);
 console.log(`   ✅ Loading state: ${hasLoadingState}`);
 
 // Get all blog post files
-const blogFiles = fs.readdirSync(BLOG_DIR).filter(file => file.endsWith('.jsx'));
+const blogFiles = fs
+  .readdirSync(BLOG_DIR)
+  .filter((file) => file.endsWith('.jsx'));
 
 let totalPosts = 0;
 let migratedPosts = 0;
@@ -42,9 +47,9 @@ console.log('\n📝 Blog Post Verification:');
 for (const file of blogFiles) {
   const filePath = path.join(BLOG_DIR, file);
   const content = fs.readFileSync(filePath, 'utf8');
-  
+
   totalPosts++;
-  
+
   if (content.includes('DisqusComments')) {
     migratedPosts++;
     console.log(`   ✅ ${file} - Migrated to Disqus`);
@@ -60,12 +65,18 @@ console.log('\n📊 Summary:');
 console.log(`   📁 Total blog posts: ${totalPosts}`);
 console.log(`   ✅ Migrated to Disqus: ${migratedPosts}`);
 console.log(`   ❌ Old system remaining: ${oldSystemPosts}`);
-console.log(`   ⚪ No comment system: ${totalPosts - migratedPosts - oldSystemPosts}`);
+console.log(
+  `   ⚪ No comment system: ${totalPosts - migratedPosts - oldSystemPosts}`
+);
 
 // Check for any remaining old system references
 const hasOldSystem = oldSystemPosts > 0;
-const hasOldComponents = fs.existsSync(path.join(__dirname, '../src/components/BlogInteractions.jsx'));
-const hasOldFunctions = fs.existsSync(path.join(__dirname, '../netlify/functions/blog-interactions.js'));
+const hasOldComponents = fs.existsSync(
+  path.join(__dirname, '../src/components/BlogInteractions.jsx')
+);
+const hasOldFunctions = fs.existsSync(
+  path.join(__dirname, '../netlify/functions/blog-interactions.js')
+);
 
 console.log('\n🧹 Cleanup Status:');
 console.log(`   ✅ Old component removed: ${!hasOldComponents}`);
@@ -73,7 +84,12 @@ console.log(`   ✅ Old function removed: ${!hasOldFunctions}`);
 console.log(`   ✅ No old system references: ${!hasOldSystem}`);
 
 // Final status
-const isComplete = hasCorrectShortname && migratedPosts > 0 && !hasOldSystem && !hasOldComponents && !hasOldFunctions;
+const isComplete =
+  hasCorrectShortname &&
+  migratedPosts > 0 &&
+  !hasOldSystem &&
+  !hasOldComponents &&
+  !hasOldFunctions;
 
 console.log('\n🎯 Integration Status:');
 if (isComplete) {

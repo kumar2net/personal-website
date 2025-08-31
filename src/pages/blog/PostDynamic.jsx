@@ -1,11 +1,13 @@
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { useParams } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
 
-
-import DisqusComments from '../../components/DisqusComments';const jsxModules = import.meta.glob('/src/pages/blog/*.jsx');
-const mdModules = import.meta.glob('/src/pages/blog/*.md', { query: '?raw', import: 'default' });
+const jsxModules = import.meta.glob('/src/pages/blog/*.jsx');
+const mdModules = import.meta.glob('/src/pages/blog/*.md', {
+  query: '?raw',
+  import: 'default',
+});
 
 export default function PostDynamic() {
   const { slug } = useParams();
@@ -46,5 +48,3 @@ export default function PostDynamic() {
 
   return <div className="text-gray-600">Post not found.</div>;
 }
-
-

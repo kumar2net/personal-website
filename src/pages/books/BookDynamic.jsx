@@ -1,18 +1,21 @@
-import React, { Suspense, useEffect, useMemo, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { motion } from 'framer-motion';
+import React, { Suspense, useEffect, useMemo, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { Link, useParams } from 'react-router-dom';
+import remarkGfm from 'remark-gfm';
 
 const jsxModules = import.meta.glob('/src/pages/books/*.jsx');
-const mdModules = import.meta.glob('/src/pages/books/*.md', { query: '?raw', import: 'default' });
+const mdModules = import.meta.glob('/src/pages/books/*.md', {
+  query: '?raw',
+  import: 'default',
+});
 
 // Function to strip frontmatter from markdown content
 function stripFrontmatter(content) {
   const lines = content.split('\n');
   let inFrontmatter = false;
   let frontmatterEndIndex = -1;
-  
+
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].trim() === '---') {
       if (!inFrontmatter) {
@@ -23,11 +26,11 @@ function stripFrontmatter(content) {
       }
     }
   }
-  
+
   if (frontmatterEndIndex !== -1) {
     return lines.slice(frontmatterEndIndex + 1).join('\n');
   }
-  
+
   return content;
 }
 
@@ -73,11 +76,14 @@ export default function BookDynamic() {
         className="max-w-4xl mx-auto px-4 py-8"
       >
         <div className="mb-8">
-          <Link to="/books" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
+          <Link
+            to="/books"
+            className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
+          >
             ← Back to Books
           </Link>
         </div>
-        
+
         <div className="prose prose-lg max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
         </div>
@@ -88,7 +94,10 @@ export default function BookDynamic() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <Link to="/books" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
+        <Link
+          to="/books"
+          className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
+        >
           ← Back to Books
         </Link>
       </div>

@@ -6,12 +6,14 @@ export default function ScrollToTop() {
   const { pathname, search, hash } = location;
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (hash) return; // preserve in-page anchor behavior
+    if (typeof window === 'undefined') {
+      return;
+    }
+    if (hash) {
+      return; // preserve in-page anchor behavior
+    }
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [pathname, search, hash]);
+  }, [hash]);
 
   return null;
 }
-
-

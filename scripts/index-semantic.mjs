@@ -3,9 +3,9 @@
 // Indexing script: generate embeddings for blog posts and upsert into Vertex AI Vector Search
 // Usage: npm run semantic:index
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { v1 as aiplatform } from '@google-cloud/aiplatform';
 import dotenv from 'dotenv';
 
@@ -24,18 +24,32 @@ const VERTEX_EMBED_DIM = Number(process.env.VERTEX_EMBED_DIM || '768');
 const SEMANTIC_SKIP_VERTEX = process.env.SEMANTIC_SKIP_VERTEX === '1';
 const GCP_SERVICE_ACCOUNT_JSON = process.env.GCP_SERVICE_ACCOUNT_JSON;
 
-if (!GEMINI_API_KEY) throw new Error('Missing GEMINI_API_KEY');
+if (!GEMINI_API_KEY) {
+  throw new Error('Missing GEMINI_API_KEY');
+}
 // Only require GCP config if not skipping Vertex AI
 if (!SEMANTIC_SKIP_VERTEX) {
-  if (!GCP_PROJECT_ID) throw new Error('Missing GCP_PROJECT_ID');
-  if (!VERTEX_INDEX_ID) throw new Error('Missing VERTEX_INDEX_ID');
-  if (!GCP_SERVICE_ACCOUNT_JSON) throw new Error('Missing GCP_SERVICE_ACCOUNT_JSON');
+  if (!GCP_PROJECT_ID) {
+    throw new Error('Missing GCP_PROJECT_ID');
+  }
+  if (!VERTEX_INDEX_ID) {
+    throw new Error('Missing VERTEX_INDEX_ID');
+  }
+  if (!GCP_SERVICE_ACCOUNT_JSON) {
+    throw new Error('Missing GCP_SERVICE_ACCOUNT_JSON');
+  }
 }
 
 // --- Config ---
 const BLOG_DIR = path.resolve(process.cwd(), 'src/pages/blog');
-const MAPPING_FILE = path.resolve(process.cwd(), 'src/data/semantic-mapping.json');
-const EMBEDDINGS_FILE = path.resolve(process.cwd(), 'src/data/semantic-embeddings.json');
+const MAPPING_FILE = path.resolve(
+  process.cwd(),
+  'src/data/semantic-mapping.json'
+);
+const EMBEDDINGS_FILE = path.resolve(
+  process.cwd(),
+  'src/data/semantic-embeddings.json'
+);
 const MAX_TEXT_CHARS = 16000; // defensive cap per item
 
 // --- Helpers ---
@@ -63,7 +77,9 @@ function stripJsxToText(source) {
 async function readAllBlogFiles() {
   const entries = await fs.promises.readdir(BLOG_DIR, { withFileTypes: true });
   const files = entries
-    .filter((e) => e.isFile() && (e.name.endsWith('.jsx') || e.name.endsWith('.md')))
+    .filter(
+      (e) => e.isFile() && (e.name.endsWith('.jsx') || e.name.endsWith('.md'))
+    )
     .map((e) => path.join(BLOG_DIR, e.name));
   return files;
 }
@@ -84,7 +100,7 @@ async function readPost(filePath) {
       .replace(/#+\s*/g, '') // headings markers
       .replace(/\*\*|__/g, '') // bold markers
       .replace(/\*|_/g, '') // italic markers
-      .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // links
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links
       .replace(/\s+/g, ' ')
       .trim();
   } else {
@@ -113,9 +129,13 @@ async function embedTextGemini(text) {
   }
   const data = await res.json();
   const values = data?.embedding?.values;
-  if (!Array.isArray(values)) throw new Error('Invalid embedding response');
+  if (!Array.isArray(values)) {
+    throw new Error('Invalid embedding response');
+  }
   if (values.length !== VERTEX_EMBED_DIM) {
-    throw new Error(`Embedding dimension mismatch: got ${values.length}, expected ${VERTEX_EMBED_DIM}`);
+    throw new Error(
+      `Embedding dimension mismatch: got ${values.length}, expected ${VERTEX_EMBED_DIM}`
+    );
   }
   return values;
 }
@@ -126,7 +146,9 @@ async function upsertDatapoints(datapoints) {
     projectId: GCP_PROJECT_ID,
     apiEndpoint: `${GCP_LOCATION}-aiplatform.googleapis.com`,
   };
-  if (credentials) clientOptions.credentials = credentials;
+  if (credentials) {
+    clientOptions.credentials = credentials;
+  }
   const indexServiceClient = new aiplatform.IndexServiceClient(clientOptions);
   const indexName = `projects/${GCP_PROJECT_ID}/locations/${GCP_LOCATION}/indexes/${VERTEX_INDEX_ID}`;
   const request = { index: indexName, datapoints };
@@ -157,16 +179,25 @@ async function main() {
   for (const post of posts) {
     const embedding = await embedTextGemini(post.text);
     processed += 1;
-    console.log(`[semantic-index] Embedded ${post.id} (${processed}/${posts.length})`);
+    console.log(
+      `[semantic-index] Embedded ${post.id} (${processed}/${posts.length})`
+    );
     datapoints.push({
       datapointId: post.id,
       featureVector: embedding,
     });
-    mapping.push({ id: post.id, title: post.title, url: post.url, excerpt: post.excerpt });
+    mapping.push({
+      id: post.id,
+      title: post.title,
+      url: post.url,
+      excerpt: post.excerpt,
+    });
   }
 
   if (SEMANTIC_SKIP_VERTEX || !VERTEX_INDEX_ID) {
-    console.log('[semantic-index] Skipping Vertex upsert (SEMANTIC_SKIP_VERTEX=1 or missing VERTEX_INDEX_ID)');
+    console.log(
+      '[semantic-index] Skipping Vertex upsert (SEMANTIC_SKIP_VERTEX=1 or missing VERTEX_INDEX_ID)'
+    );
   } else {
     console.log('[semantic-index] Upserting datapoints into Vertex AI...');
     await upsertDatapoints(datapoints);
@@ -179,7 +210,10 @@ async function main() {
   console.log(`[semantic-index] Wrote mapping file at ${MAPPING_FILE}`);
 
   // Write embeddings file for local fallback search
-  const embeddings = datapoints.map((d) => ({ id: d.datapointId, vector: d.featureVector }));
+  const embeddings = datapoints.map((d) => ({
+    id: d.datapointId,
+    vector: d.featureVector,
+  }));
   await fs.promises.writeFile(EMBEDDINGS_FILE, JSON.stringify(embeddings));
   console.log(`[semantic-index] Wrote embeddings file at ${EMBEDDINGS_FILE}`);
 
@@ -190,5 +224,3 @@ main().catch((err) => {
   console.error('[semantic-index] ERROR', err);
   process.exit(1);
 });
-
-

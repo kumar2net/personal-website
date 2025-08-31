@@ -1,20 +1,22 @@
-import { motion } from 'framer-motion'
-import { HiBookOpen } from 'react-icons/hi'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import markdownContent from './applying-cornell-method.md?raw'
-import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { HiBookOpen } from 'react-icons/hi';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import markdownContent from './applying-cornell-method.md?raw';
 
-const lines = markdownContent.split('\n')
-const title = lines[0].replace(/^#\s*/, '')
-const body = lines.slice(1).join('\n')
+const lines = markdownContent.split('\n');
+const title = lines[0].replace(/^#\s*/, '');
+const body = lines.slice(1).join('\n');
 
 function ApplyingCornellMethodMd() {
-  const [coverUrl, setCoverUrl] = useState('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop')
+  const [_coverUrl, _setCoverUrl] = useState(
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop'
+  );
 
   useEffect(() => {
     // Using static placeholder cover as requested
-  }, [])
+  }, []);
 
   return (
     <motion.div
@@ -24,10 +26,18 @@ function ApplyingCornellMethodMd() {
       className="max-w-4xl mx-auto px-4 py-6 sm:py-8"
     >
       <header className="text-center">
-        <h1 className="text-3xl md:text-4xl font-bold">{title || 'Applying the Cornell Method'}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold">
+          {title || 'Applying the Cornell Method'}
+        </h1>
         <div className="mt-3 flex flex-wrap gap-2 justify-center">
-          <img src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue" alt="Cornell Method badge" />
-          <img src="https://img.shields.io/badge/Study%20Skills-Productivity-green" alt="Study skills badge" />
+          <img
+            src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue"
+            alt="Cornell Method badge"
+          />
+          <img
+            src="https://img.shields.io/badge/Study%20Skills-Productivity-green"
+            alt="Study skills badge"
+          />
         </div>
       </header>
 
@@ -42,9 +52,7 @@ function ApplyingCornellMethodMd() {
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
       </div>
     </motion.div>
-  )
+  );
 }
 
-export default ApplyingCornellMethodMd
-
-
+export default ApplyingCornellMethodMd;

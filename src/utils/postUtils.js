@@ -8,11 +8,13 @@
  * @returns {string} - The post ID/slug
  */
 export const extractPostIdFromPath = (pathname) => {
-  if (!pathname) return null;
-  
+  if (!pathname) {
+    return null;
+  }
+
   // Remove leading/trailing slashes and split by '/'
   const parts = pathname.replace(/^\/+|\/+$/g, '').split('/');
-  
+
   // For blog posts, expect format: blog/post-slug or just post-slug
   if (parts.length >= 2 && parts[0] === 'blog') {
     return parts[1];
@@ -20,7 +22,7 @@ export const extractPostIdFromPath = (pathname) => {
     // Direct post access
     return parts[0];
   }
-  
+
   return null;
 };
 
@@ -29,7 +31,9 @@ export const extractPostIdFromPath = (pathname) => {
  * @returns {string|null} - Current post ID or null
  */
 export const getCurrentPostId = () => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === 'undefined') {
+    return null;
+  }
   return extractPostIdFromPath(window.location.pathname);
 };
 
@@ -39,7 +43,8 @@ export const getCurrentPostId = () => {
  * @returns {boolean} - True if on a blog post page
  */
 export const isBlogPostPage = (pathname) => {
-  const path = pathname || (typeof window !== 'undefined' ? window.location.pathname : '');
+  const path =
+    pathname || (typeof window !== 'undefined' ? window.location.pathname : '');
   const postId = extractPostIdFromPath(path);
   return postId !== null && !['blog', ''].includes(postId);
 };
@@ -51,7 +56,7 @@ export const isBlogPostPage = (pathname) => {
 export const KNOWN_POST_MAPPINGS = {
   // URL slug -> semantic mapping ID
   'the-great-pivot': 'the-great-pivot',
-  'top-9-famous-rules': 'top-9-famous-rules', 
+  'top-9-famous-rules': 'top-9-famous-rules',
   'india-usa-trade-gap-2025': 'india-usa-trade-gap-2025',
   'nammu-soil-analysis-research': 'nammu-soil-analysis-research',
   'my-random-thoughts-this-week': 'my-random-thoughts-this-week',
@@ -66,14 +71,16 @@ export const KNOWN_POST_MAPPINGS = {
   'compelling-india-story': 'compelling-india-story',
   'acronym-soup-revisited-2025': 'acronym-soup-revisited-2025',
   'acronym-soup': 'acronym-soup',
-  'andrej-karpathy-yc-ai-startup-school': 'andrej-karpathy-yc-ai-startup-school',
+  'andrej-karpathy-yc-ai-startup-school':
+    'andrej-karpathy-yc-ai-startup-school',
   'applying-robinson-method': 'applying-robinson-method',
-  'autophagy': 'autophagy',
+  autophagy: 'autophagy',
   'building-mcp-server-with-cursor': 'building-mcp-server-with-cursor',
   'drug-suggestion-app': 'drug-suggestion-app',
-  'experience-using-api-in-ai-code-editor': 'experience-using-api-in-ai-code-editor',
+  'experience-using-api-in-ai-code-editor':
+    'experience-using-api-in-ai-code-editor',
   'feynman-technique': 'feynman-technique',
-  'price-parity': 'price-parity'
+  'price-parity': 'price-parity',
 };
 
 /**
@@ -82,13 +89,15 @@ export const KNOWN_POST_MAPPINGS = {
  * @returns {string} - Normalized post ID for the recommendation system
  */
 export const normalizePostId = (rawPostId) => {
-  if (!rawPostId) return null;
-  
+  if (!rawPostId) {
+    return null;
+  }
+
   // Check if we have a known mapping
   if (KNOWN_POST_MAPPINGS[rawPostId]) {
     return KNOWN_POST_MAPPINGS[rawPostId];
   }
-  
+
   // Default: use the raw post ID
   return rawPostId;
 };

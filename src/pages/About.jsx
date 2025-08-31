@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion } from 'framer-motion';
 
 const About = () => {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -12,8 +12,10 @@ const About = () => {
       <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <p className="text-lg text-gray-600">
-            I'm a passionate person who is inclined to try the new advancements in AI, Model Context Protocol and how to use Agents to automate tasks.
-            My background is in Telecom Test & Measuring Instruments, Wireless and IP Networking.
+            I'm a passionate person who is inclined to try the new advancements
+            in AI, Model Context Protocol and how to use Agents to automate
+            tasks. My background is in Telecom Test & Measuring Instruments,
+            Wireless and IP Networking.
           </p>
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">Skills</h2>
@@ -60,7 +62,7 @@ const About = () => {
         </div> */}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default About
+export default About;

@@ -4,9 +4,14 @@
   publish = "dist"
   environment = { SECRETS_SCAN_ENABLED = "false", NODE_VERSION = "20" }
 
-# No Netlify functions needed for analytics; GA4 is used directly
+# Netlify functions for security and CSP headers
 [functions]
   directory = "netlify/functions"
+
+# Add security headers via edge functions
+[[edge_functions]]
+  function = "csp-headers"
+  path = "/*"
 
 # Serve static files directly (PDFs, images, etc.)
 [[redirects]]

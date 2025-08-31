@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 class WordPressNetlifyButton {
   constructor() {
-    this.netlifyFunctionUrl = 'https://kumarsite.netlify.app/.netlify/functions/wordpress-manual-publish';
+    this.netlifyFunctionUrl =
+      'https://kumarsite.netlify.app/.netlify/functions/wordpress-manual-publish';
   }
 
   generateButtonHTML() {
@@ -352,26 +353,29 @@ if (typeof netlifyPublisher !== 'undefined') {
 
   async generateFiles() {
     console.log('🔧 Generating WordPress to Netlify Publisher files...');
-    
+
     const outputDir = path.join(__dirname, '../wordpress-netlify-publisher');
     await fs.mkdir(outputDir, { recursive: true });
-    
+
     // Generate plugin file
     const pluginCode = this.generateWordPressPluginCode();
-    await fs.writeFile(path.join(outputDir, 'wordpress-to-netlify-publisher.php'), pluginCode);
-    
+    await fs.writeFile(
+      path.join(outputDir, 'wordpress-to-netlify-publisher.php'),
+      pluginCode
+    );
+
     // Generate JavaScript file
     const jsCode = this.generateJavaScriptFile();
     await fs.writeFile(path.join(outputDir, 'netlify-publisher.js'), jsCode);
-    
+
     // Generate HTML snippet
     const buttonHtml = this.generateButtonHTML();
     await fs.writeFile(path.join(outputDir, 'button-snippet.html'), buttonHtml);
-    
+
     // Generate README
     const readme = this.generateREADME();
     await fs.writeFile(path.join(outputDir, 'README.md'), readme);
-    
+
     console.log('✅ Files generated in: wordpress-netlify-publisher/');
     console.log('');
     console.log('📁 Generated files:');
@@ -383,7 +387,9 @@ if (typeof netlifyPublisher !== 'undefined') {
     console.log('🚀 Next steps:');
     console.log('  1. Upload the plugin files to your WordPress site');
     console.log('  2. Activate the plugin in WordPress admin');
-    console.log('  3. The "Publish to Netlify" button will appear on published posts');
+    console.log(
+      '  3. The "Publish to Netlify" button will appear on published posts'
+    );
   }
 
   generateREADME() {

@@ -27,18 +27,22 @@ export const shouldShowNewBadge = (publishDate) => {
  * @returns {boolean} Whether to show UPDATED badge
  */
 export const shouldShowUpdatedBadge = (publishDate, lastModified) => {
-  if (!lastModified) return false;
-  
+  if (!lastModified) {
+    return false;
+  }
+
   const daysSincePublish = getDaysSince(publishDate);
   const daysSinceModified = getDaysSince(lastModified);
-  
+
   // Show updated badge if:
   // 1. Content is older than 7 days (not new)
   // 2. Modified within last 30 days
   // 3. Last modified date is different from publish date
-  return daysSincePublish > 7 && 
-         daysSinceModified <= 30 && 
-         publishDate !== lastModified;
+  return (
+    daysSincePublish > 7 &&
+    daysSinceModified <= 30 &&
+    publishDate !== lastModified
+  );
 };
 
 /**
@@ -47,10 +51,10 @@ export const shouldShowUpdatedBadge = (publishDate, lastModified) => {
  */
 export const getCurrentDate = () => {
   const now = new Date();
-  const options = { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   };
   return now.toLocaleDateString('en-US', options);
 };
@@ -63,6 +67,6 @@ export const getCurrentDate = () => {
 export const addLastModifiedIfMissing = (content) => {
   return {
     ...content,
-    lastModified: content.lastModified || content.date
+    lastModified: content.lastModified || content.date,
   };
 };

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import readline from 'node:readline';
+import { fileURLToPath } from 'node:url';
 import fetch from 'node-fetch';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import readline from 'readline';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,10 +14,13 @@ class WordPressNetlifyPublisher {
     this.siteId = 'kumar2net.wordpress.com';
     this.apiBase = 'https://public-api.wordpress.com/rest/v1.1';
     this.tokenFile = path.join(__dirname, '../data/wordpress-token.json');
-    this.publishedFile = path.join(__dirname, '../data/wordpress-netlify-published.json');
+    this.publishedFile = path.join(
+      __dirname,
+      '../data/wordpress-netlify-published.json'
+    );
     this.rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
   }
 
@@ -34,12 +37,12 @@ class WordPressNetlifyPublisher {
   async getValidToken() {
     try {
       const tokenData = JSON.parse(await fs.readFile(this.tokenFile, 'utf8'));
-      
+
       // Check if token is still valid
       const response = await fetch(`${this.apiBase}/me`, {
         headers: {
-          'Authorization': `Bearer ${tokenData.access_token}`
-        }
+          Authorization: `Bearer ${tokenData.access_token}`,
+        },
       });
 
       if (response.ok) {
@@ -48,18 +51,22 @@ class WordPressNetlifyPublisher {
 
       // Token expired, refresh it
       console.log('🔄 Token expired, refreshing...');
-      const refreshResponse = await fetch('https://public-api.wordpress.com/oauth2/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          client_id: '123358',
-          client_secret: 'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm',
-          grant_type: 'refresh_token',
-          refresh_token: tokenData.refresh_token
-        })
-      });
+      const refreshResponse = await fetch(
+        'https://public-api.wordpress.com/oauth2/token',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            client_id: '123358',
+            client_secret:
+              'plvGijZrEy4aJufDwINk4saoeApzmvzRWmonQ9tykXeQecDSSbG7BqlxVP87zAqm',
+            grant_type: 'refresh_token',
+            refresh_token: tokenData.refresh_token,
+          }),
+        }
+      );
 
       if (refreshResponse.ok) {
         const newTokenData = await refreshResponse.json();
@@ -82,7 +89,7 @@ class WordPressNetlifyPublisher {
     try {
       const data = await fs.readFile(this.publishedFile, 'utf8');
       return JSON.parse(data);
-    } catch (error) {
+    } catch (_error) {
       return [];
     }
   }
@@ -95,9 +102,12 @@ class WordPressNetlifyPublisher {
         title: postData.title,
         url: postData.URL,
         published_at: new Date().toISOString(),
-        netlify_url: `https://kumarsite.netlify.app/blog/${this.generateSlug(postData.title, postData.date)}`
+        netlify_url: `https://kumarsite.netlify.app/blog/${this.generateSlug(postData.title, postData.date)}`,
       });
-      await fs.writeFile(this.publishedFile, JSON.stringify(published, null, 2));
+      await fs.writeFile(
+        this.publishedFile,
+        JSON.stringify(published, null, 2)
+      );
     } catch (error) {
       console.error('Error marking post as published:', error);
     }
@@ -112,12 +122,15 @@ class WordPressNetlifyPublisher {
 
     try {
       console.log('📋 Fetching WordPress posts...');
-      
-      const response = await fetch(`${this.apiBase}/sites/${this.siteId}/posts?number=20&status=publish`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+
+      const response = await fetch(
+        `${this.apiBase}/sites/${this.siteId}/posts?number=20&status=publish`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
@@ -140,23 +153,26 @@ class WordPressNetlifyPublisher {
 
     try {
       // Get specific post
-      const response = await fetch(`${this.apiBase}/sites/${this.siteId}/posts/${postId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await fetch(
+        `${this.apiBase}/sites/${this.siteId}/posts/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
 
       const post = await response.json();
-      
+
       // Convert to JSX and publish
       const jsxContent = await this.convertToJSX(post);
       const filename = this.generateFilename(post.title, post.date);
       const filePath = path.join(__dirname, '../src/pages/blog', filename);
-      
+
       // Write JSX file
       await fs.writeFile(filePath, jsxContent, 'utf8');
       console.log(`✅ Created JSX file: ${filename}`);
@@ -179,29 +195,32 @@ class WordPressNetlifyPublisher {
   async convertToJSX(post) {
     // Convert WordPress HTML to JSX-compatible content
     let content = post.content;
-    
+
     // Convert WordPress image URLs to relative paths
     content = content.replace(
       /https:\/\/kumar2net\.files\.wordpress\.com\//g,
       '/media/'
     );
-    
+
     // Convert WordPress embeds to standard HTML
     content = content.replace(
       /\[embed\](.*?)\[\/embed\]/g,
       '<iframe src="$1" width="100%" height="400" frameborder="0"></iframe>'
     );
-    
+
     // Convert WordPress shortcodes
     content = content.replace(/\[.*?\]/g, '');
-    
+
     // Extract tags from WordPress categories and tags
     const categories = Array.isArray(post.categories) ? post.categories : [];
     const tags = Array.isArray(post.tags) ? post.tags : [];
     const allTags = [...categories, ...tags];
-    const tagElements = allTags.map(tag => 
-      `<span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mr-2 mb-2">${tag}</span>`
-    ).join('');
+    const tagElements = allTags
+      .map(
+        (tag) =>
+          `<span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mr-2 mb-2">${tag}</span>`
+      )
+      .join('');
 
     // Generate JSX content
     const jsxContent = `import React from 'react';
@@ -249,7 +268,7 @@ export default ${this.generateComponentName(post.title)};
     return title
       .replace(/[^a-zA-Z0-9\s]/g, '')
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join('')
       .replace(/\s+/g, '');
   }
@@ -262,7 +281,7 @@ export default ${this.generateComponentName(post.title)};
       .replace(/[^a-z0-9\s]/g, '')
       .replace(/\s+/g, '-')
       .substring(0, 50);
-    
+
     return `${dateStr}-${slug}.jsx`;
   }
 
@@ -274,7 +293,7 @@ export default ${this.generateComponentName(post.title)};
       .replace(/[^a-z0-9\s]/g, '')
       .replace(/\s+/g, '-')
       .substring(0, 50);
-    
+
     return `${dateStr}-${slug}`;
   }
 
@@ -283,7 +302,7 @@ export default ${this.generateComponentName(post.title)};
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
@@ -291,7 +310,7 @@ export default ${this.generateComponentName(post.title)};
     try {
       const repo = process.env.GITHUB_REPO;
       const token = process.env.GITHUB_TOKEN;
-      
+
       if (!repo || !token) {
         console.log('⚠️  GitHub credentials not configured, skipping commit');
         return;
@@ -302,9 +321,9 @@ export default ${this.generateComponentName(post.title)};
         `https://api.github.com/repos/${repo}/contents/src/pages/blog/${filename}`,
         {
           headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+          },
         }
       );
 
@@ -320,15 +339,15 @@ export default ${this.generateComponentName(post.title)};
         {
           method: 'PUT',
           headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             message: `Add WordPress cross-post: ${title}`,
             content: Buffer.from(content).toString('base64'),
-            sha: sha
-          })
+            sha: sha,
+          }),
         }
       );
 
@@ -338,7 +357,6 @@ export default ${this.generateComponentName(post.title)};
         const error = await response.text();
         console.error(`❌ GitHub commit failed: ${error}`);
       }
-
     } catch (error) {
       console.error('GitHub commit error:', error);
     }
@@ -351,7 +369,7 @@ export default ${this.generateComponentName(post.title)};
 
     const posts = await this.listWordPressPosts();
     const published = await this.getPublishedPosts();
-    const publishedIds = published.map(p => p.id);
+    const publishedIds = published.map((p) => p.id);
 
     if (posts.length === 0) {
       console.log('❌ No posts found');
@@ -369,21 +387,23 @@ export default ${this.generateComponentName(post.title)};
       console.log(`   Date: ${this.formatDate(post.date)}`);
       console.log(`   Status: ${status}`);
       if (isPublished) {
-        const publishedPost = published.find(p => p.id === post.ID);
+        const publishedPost = published.find((p) => p.id === post.ID);
         console.log(`   Netlify URL: ${publishedPost.netlify_url}`);
       }
       console.log('');
     });
 
-    const choice = await this.question('Enter post number to publish to Netlify (or "q" to quit): ');
-    
+    const choice = await this.question(
+      'Enter post number to publish to Netlify (or "q" to quit): '
+    );
+
     if (choice.toLowerCase() === 'q') {
       console.log('👋 Goodbye!');
       await this.close();
       return;
     }
 
-    const postIndex = parseInt(choice) - 1;
+    const postIndex = parseInt(choice, 10) - 1;
     if (postIndex < 0 || postIndex >= posts.length) {
       console.log('❌ Invalid selection');
       await this.close();
@@ -391,7 +411,7 @@ export default ${this.generateComponentName(post.title)};
     }
 
     const selectedPost = posts[postIndex];
-    
+
     if (publishedIds.includes(selectedPost.ID)) {
       console.log('⚠️  This post is already published to Netlify');
       const republish = await this.question('Republish? (y/N): ');
@@ -402,12 +422,14 @@ export default ${this.generateComponentName(post.title)};
     }
 
     console.log(`📝 Publishing "${selectedPost.title}" to Netlify...`);
-    
+
     const success = await this.publishToNetlify(selectedPost.ID);
-    
+
     if (success) {
       console.log('✅ Successfully published to Netlify!');
-      console.log(`🌐 Netlify URL: https://kumarsite.netlify.app/blog/${this.generateSlug(selectedPost.title, selectedPost.date)}`);
+      console.log(
+        `🌐 Netlify URL: https://kumarsite.netlify.app/blog/${this.generateSlug(selectedPost.title, selectedPost.date)}`
+      );
     } else {
       console.log('❌ Failed to publish to Netlify');
     }
@@ -417,9 +439,9 @@ export default ${this.generateComponentName(post.title)};
 
   async publishSpecificPost(postId) {
     console.log(`📝 Publishing post ${postId} to Netlify...`);
-    
+
     const success = await this.publishToNetlify(postId);
-    
+
     if (success) {
       console.log('✅ Successfully published to Netlify!');
     } else {
@@ -429,7 +451,7 @@ export default ${this.generateComponentName(post.title)};
 
   async showPublishedPosts() {
     const published = await this.getPublishedPosts();
-    
+
     if (published.length === 0) {
       console.log('📋 No posts published to Netlify yet');
       return;
@@ -437,10 +459,12 @@ export default ${this.generateComponentName(post.title)};
 
     console.log('📋 Posts Published to Netlify:');
     console.log('');
-    
+
     published.forEach((post, index) => {
       console.log(`${index + 1}. ${post.title}`);
-      console.log(`   Published: ${new Date(post.published_at).toLocaleDateString()}`);
+      console.log(
+        `   Published: ${new Date(post.published_at).toLocaleDateString()}`
+      );
       console.log(`   Netlify URL: ${post.netlify_url}`);
       console.log(`   WordPress URL: ${post.url}`);
       console.log('');
