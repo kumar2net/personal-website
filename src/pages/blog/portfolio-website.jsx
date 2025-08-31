@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiArrowLeft } from 'react-icons/hi';
 
-const PortfolioWebsitePost = () => {
+
+import DisqusComments from '../../components/DisqusComments';const PortfolioWebsitePost = () => {
   const navigate = useNavigate();
 
   return (
@@ -115,6 +116,13 @@ const PortfolioWebsitePost = () => {
           </ul>
         </section>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="portfolio-website"
+        postUrl="https://kumarsite.netlify.app/blog/portfolio-website"
+        postTitle="Building My Personal Portfolio Website - Kumar's Blog"
+      />
     </motion.div>
   );
 };

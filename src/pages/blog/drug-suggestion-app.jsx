@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const DrugSuggestionAppPost = () => {
+
+import DisqusComments from '../../components/DisqusComments';const DrugSuggestionAppPost = () => {
   const location = useLocation()
   const navigate = useNavigate()
 

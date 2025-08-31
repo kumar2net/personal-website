@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const ExperienceUsingApiInAiCodeEditor = () => {
+
+import DisqusComments from '../../components/DisqusComments';const ExperienceUsingApiInAiCodeEditor = () => {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -193,6 +194,13 @@ const ExperienceUsingApiInAiCodeEditor = () => {
           </div>
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="experience-using-api-in-ai-code-editor"
+        postUrl="https://kumarsite.netlify.app/blog/experience-using-api-in-ai-code-editor"
+        postTitle="My Experience with the stock market API: Building a Mutual Fund Performance Tracker - Kumar's Blog"
+      />
     </motion.div>
   );
 };

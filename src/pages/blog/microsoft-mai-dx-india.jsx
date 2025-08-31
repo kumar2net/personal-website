@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const MicrosoftMaiDxIndia = () => {
+
+import DisqusComments from '../../components/DisqusComments';const MicrosoftMaiDxIndia = () => {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -271,6 +272,13 @@ const MicrosoftMaiDxIndia = () => {
           </div>
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="microsoft-mai-dx-india"
+        postUrl="https://kumarsite.netlify.app/blog/microsoft-mai-dx-india"
+        postTitle="Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution - Kumar's Blog"
+      />
     </motion.div>
   );
 };

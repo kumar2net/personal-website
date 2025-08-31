@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AgenticFeatureInABrowser = () => {
+
+import DisqusComments from '../../components/DisqusComments';const AgenticFeatureInABrowser = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-8">
@@ -34,6 +35,13 @@ const AgenticFeatureInABrowser = () => {
 <p></p>
 ` }} />
       
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="2025-08-23-agentic-feature-in-a-browser"
+        postUrl="https://kumarsite.netlify.app/blog/2025-08-23-agentic-feature-in-a-browser"
+        postTitle="agentic feature in a browser - Kumar's Blog"
+      />
+
       <div className="mt-12 pt-8 border-t border-gray-200">
         <div className="flex justify-between items-center">
           <Link to="/blog" className="text-blue-600 hover:text-blue-800">

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const BuildingMcpServerWithCursor = () => {
+
+import DisqusComments from '../../components/DisqusComments';const BuildingMcpServerWithCursor = () => {
   const navigate = useNavigate();
   return (
     <motion.div
@@ -240,6 +241,13 @@ const BuildingMcpServerWithCursor = () => {
           </div>
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="building-mcp-server-with-cursor"
+        postUrl="https://kumarsite.netlify.app/blog/building-mcp-server-with-cursor"
+        postTitle="Building a NewsAPI MCP Server with Cursor - Kumar's Blog"
+      />
     </motion.div>
   );
 };

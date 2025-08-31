@@ -4,7 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import markdownContent from './compare.md?raw';
 
-const lines = markdownContent.split('\n');
+
+import DisqusComments from '../../components/DisqusComments';const lines = markdownContent.split('\n');
 const title = lines[0].replace(/^#\s*/, '');
 const date = lines[2].replace(/^\*\s*|\s*\*$/g, '');
 const body = lines.slice(4).join('\n');
@@ -45,6 +46,13 @@ const PriceParity = () => {
           {body}
         </ReactMarkdown>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="price-parity"
+        postUrl="https://kumarsite.netlify.app/blog/price-parity"
+        postTitle="{title} - Kumar's Blog"
+      />
     </motion.div>
   );
 };

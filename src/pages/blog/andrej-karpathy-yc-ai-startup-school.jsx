@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 // import GraphRecommendations from '../../components/GraphRecommendations';
 
-const AndrejKarpathyYcAiStartupSchool = () => {
+
+import DisqusComments from '../../components/DisqusComments';const AndrejKarpathyYcAiStartupSchool = () => {
   const navigate = useNavigate();
   
   return (
@@ -183,6 +184,13 @@ const AndrejKarpathyYcAiStartupSchool = () => {
           />
         </div> */}
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="andrej-karpathy-yc-ai-startup-school"
+        postUrl="https://kumarsite.netlify.app/blog/andrej-karpathy-yc-ai-startup-school"
+        postTitle="Andrej Karpathy's Y Combinator AI Startup School: The Electricity Analogy - Kumar's Blog"
+      />
     </motion.div>
   );
 };

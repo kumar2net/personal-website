@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const MyExperienceWithWindsurfPost = () => {
+
+import DisqusComments from '../../components/DisqusComments';const MyExperienceWithWindsurfPost = () => {
   const location = useLocation()
   const navigate = useNavigate()
 

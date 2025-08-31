@@ -1,6 +1,7 @@
 import React from 'react';
 
-const FascinatingIndiaStory = () => (
+
+import DisqusComments from '../../components/DisqusComments';const FascinatingIndiaStory = () => (
   <div className="max-w-2xl mx-auto py-10 px-4">
     <h1 className="text-3xl font-bold mb-4">Very Compelling India Story: How Millennials Are Powering the SIP Revolution</h1>
     <p className="mb-6">
@@ -125,6 +126,13 @@ const FascinatingIndiaStory = () => (
       Is there something like this in western countries? Please enlighten me.
 
     </p>
+
+    {/* Blog interactions */}
+    <DisqusComments 
+      postId="Compelling-india-story"
+      postUrl="https://kumarsite.netlify.app/blog/Compelling-india-story"
+      postTitle="Very Compelling India Story: How Millennials Are Powering the SIP Revolution - Kumar's Blog"
+    />
   </div>
 );
 

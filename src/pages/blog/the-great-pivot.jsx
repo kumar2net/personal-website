@@ -4,7 +4,8 @@ import { useRef } from 'react';
 // import TldrSummary from '../../components/TldrSummary';
 // import GraphRecommendations from '../../components/GraphRecommendations';
 
-const TheGreatPivot = () => {
+
+import DisqusComments from '../../components/DisqusComments';const TheGreatPivot = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
   
@@ -175,6 +176,13 @@ const TheGreatPivot = () => {
           </div> */}
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="the-great-pivot"
+        postUrl="https://kumarsite.netlify.app/blog/the-great-pivot"
+        postTitle="🚀 The Great Pivot — What's Behind All This T&T Hullabaloo! (குய்யோ மொய்யோ) - Kumar's Blog"
+      />
     </motion.div>
   );
 };

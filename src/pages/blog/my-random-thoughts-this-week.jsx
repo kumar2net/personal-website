@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 // import TldrSummary from '../../components/TldrSummary';
 
-const MyRandomThoughtsThisWeek = () => {
+
+import DisqusComments from '../../components/DisqusComments';const MyRandomThoughtsThisWeek = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
   
@@ -183,6 +184,13 @@ const MyRandomThoughtsThisWeek = () => {
           </div>
         </div>
       </div>
+    
+      {/* Blog interactions */}
+      <DisqusComments 
+        postId="my-random-thoughts-this-week"
+        postUrl="https://kumarsite.netlify.app/blog/my-random-thoughts-this-week"
+        postTitle="my random thoughts this week - Kumar's Blog"
+      />
     </motion.div>
   );
 };
