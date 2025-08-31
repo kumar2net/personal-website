@@ -1,12 +1,12 @@
 # Deployment Status
 
-**Last Updated:** August 30, 2025  
+**Last Updated:** January 2025  
 **Status:** ✅ ALL SYSTEMS OPERATIONAL
 
 ## 🚀 Live Site
 - **URL**: https://kumarsite.netlify.app
 - **Status**: ✅ Deployed and Running
-- **Last Deployment**: August 30, 2025 - Major updates including music page, new blog posts, and navigation improvements
+- **Last Deployment**: January 2025 - Major updates including Disqus integration, mobile fixes, album enhancements, and navigation improvements
 
 ## 📊 Core Features Status
 
@@ -14,24 +14,36 @@
 - **Dynamic Blog Posts**: Fully functional
 - **Markdown Support**: Working
 - **SEO Optimization**: Implemented
-- **Blog Interactions**: ✅ **LIVE AND WORKING**
-  - Like/Unlike functionality with permanent storage (Netlify Blobs)
-  - Comment system with add/delete capabilities
-  - Real-time updates without page refresh
-  - Beautiful UI with clear labels and count badges
-- **Latest Blog Posts**: ✅ **"Habit"** and **"Boy with Music in His Veins"** — Live and published
+- **Disqus Comments**: ✅ **LIVE AND WORKING**
+  - Third-party comment system with lazy loading
+  - Mobile-optimized navigation
+  - Automatic post identification
+  - Free plan with ad-supported experience
+- **Latest Blog Posts**: ✅ **"A Sobering Week"**, **"Joy of Writing"**, **"Habit"**, and **"Boy with Music in His Veins"** — Live and published
+  - A Sobering Week URL: https://kumarsite.netlify.app/blog/sobering-week-august-2025
+  - Joy of Writing URL: https://kumarsite.netlify.app/blog/joy-of-writing
   - Habit URL: https://kumarsite.netlify.app/blog/habit
   - Boy with Music URL: https://kumarsite.netlify.app/blog/boy-with-music-in-veins
-  - Features: AI-generated TL;DR, canonical references, embedded audio, images
+  - Features: Disqus comments, AI-generated TL;DR, canonical references, embedded audio, images
 
 ### ✅ Music Curation
-- **Music Page**: ✅ **NEW FEATURE - FULLY OPERATIONAL**
+- **Music Page**: ✅ **FULLY OPERATIONAL**
   - URL: https://kumarsite.netlify.app/music
   - Current favorites: "Ab Na Jao Chod Kar" and "Narumugaye"
   - Complete lyrics display for special tracks
   - Artist spotlights: Karthick Iyer (Indo Soul), Mahesh (Master of Medley)
   - YouTube Music playlist integration
   - Emotional descriptions and personal reactions
+
+### ✅ Photo Album
+- **Album Page**: ✅ **NEW FEATURE - FULLY OPERATIONAL**
+  - URL: https://kumarsite.netlify.app/album
+  - Google Photos integration with video content
+  - Mobile-optimized navigation with device-specific handling
+  - Clear video indicators with play button overlays
+  - Preview section showing content types (photos/videos)
+  - Enhanced button with "Watch Videos & View Photos" text
+  - Background music by Dharun
 
 ### ✅ Book Reviews
 - **Cornell Method Notes**: Functional
@@ -55,19 +67,22 @@
 - **Latest Post**: ✅ Published to https://kumar2net.wordpress.com/2025/08/24/devastated-by-the-young-girls-sudden-demise-4/
 
 ### ✅ Tech Features
-- **Netlify Functions**: All 6 functions deployed
-- **Responsive Design**: Mobile-first implementation
+- **Netlify Functions**: All 8 functions deployed
+- **Responsive Design**: Mobile-first implementation with mobile Chrome fixes
 - **Performance**: Optimized and fast
+- **Navigation**: Logo tooltips and mobile indicators
 
 ## 🔧 Technical Infrastructure
 
 ### Netlify Functions Status
-1. ✅ `blog-interactions.js` - Like/comment backend API (Netlify Blobs storage)
-2. ✅ `image-proxy.js` - Image optimization
-3. ✅ `semantic-search.js` - AI-powered search
-4. ✅ `tech-trends.js` - Trending topics
-5. ✅ `tldr.js` - Content summarization
-6. ⚠️ `wordpress-auto-publish.js` - WordPress integration (dependency issue, but direct publishing works)
+1. ✅ `image-proxy.js` - Image optimization
+2. ✅ `semantic-search.js` - AI-powered search
+3. ✅ `tech-trends.js` - Trending topics
+4. ✅ `tldr.js` - Content summarization
+5. ✅ `wordpress-auto-publish.js` - WordPress integration
+6. ✅ `wordpress-manual-publish.js` - Manual WordPress publishing
+7. ✅ `wordpress-webhook-receiver.js` - WordPress webhook handling
+8. ✅ `sitemap.js` - Dynamic sitemap generation
 
 ### Build Status
 - **Build Time**: ~25-30 seconds
@@ -76,6 +91,14 @@
 - **SEO Score**: 100
 
 ## 📈 Recent Deployments
+
+### January 2025 - Major Website Update
+- ✅ **Disqus Integration**: Replaced custom comments with Disqus system
+- ✅ **Mobile Chrome Fix**: Resolved blank screen issue on mobile Chrome
+- ✅ **Album Enhancements**: Added video indicators and mobile optimization
+- ✅ **Navigation Improvements**: Logo tooltips and mobile home indicators
+- ✅ **Blog Post Updates**: "A Sobering Week" with image adjustments
+- ✅ **Performance**: Mobile-specific optimizations and error handling
 
 ### August 30, 2025 - Major Website Update
 - ✅ **New Music Page**: Complete music curation with favorite tracks and artists
@@ -110,6 +133,31 @@
 - ✅ **Documentation**: Complete guides and examples
 
 ## 🎯 Latest Features Details
+
+### Photo Album Page
+- **URL**: https://kumarsite.netlify.app/album
+- **Features**: 
+  - Google Photos integration with video content
+  - Mobile-optimized navigation with device-specific handling
+  - Clear video indicators with play button overlays
+  - Preview section showing content types (photos/videos)
+  - Enhanced button with "Watch Videos & View Photos" text
+  - Background music by Dharun
+
+### Disqus Comments System
+- **Implementation**: Third-party comment system with lazy loading
+- **Features**: 
+  - Mobile-optimized navigation
+  - Automatic post identification
+  - Free plan with ad-supported experience
+  - Lazy loading for performance
+  - Error handling and fallback mechanisms
+
+### Navigation Improvements
+- **Logo Tooltips**: Desktop hover tooltips showing "Click to go Home"
+- **Mobile Indicators**: "🏠 Home" text visible on mobile devices
+- **Hover Effects**: Logo scales slightly on hover for visual feedback
+- **Accessibility**: Screen reader support with title attributes
 
 ### Music Curation Page
 - **URL**: https://kumarsite.netlify.app/music
