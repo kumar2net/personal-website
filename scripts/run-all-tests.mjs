@@ -91,8 +91,8 @@ function runUnitTests() {
       },
       { name: 'Proper initialization', pattern: /setTimeout/, required: true },
       {
-        name: 'Existing script cleanup',
-        pattern: /existingScript\.remove/,
+        name: 'Script management',
+        pattern: /scriptRef\.current|script\.onload/,
         required: true,
       },
     ];
