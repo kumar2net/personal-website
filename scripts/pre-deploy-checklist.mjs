@@ -8,6 +8,13 @@ console.log(
   '🚀 PRE-DEPLOYMENT CHECKLIST - Ensuring Quality Before Deployment\n'
 );
 
+console.log('🚨 MANDATORY: Before deployment, you MUST:');
+console.log('   1. Open Chrome DevTools (F12)');
+console.log('   2. Navigate to latest blog post: http://localhost:5173/blog/sobering-week-august-2025');
+console.log('   3. Check Console tab for ANY errors');
+console.log('   4. Verify zero JavaScript errors before proceeding');
+console.log('   5. Test on mobile Chrome browser\n');
+
 const checklistResults = {
   total: 0,
   passed: 0,
