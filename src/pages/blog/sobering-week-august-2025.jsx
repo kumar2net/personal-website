@@ -169,46 +169,7 @@ const SoberingWeekAugust2025 = () => {
             </p>
           </section>
 
-          {/* Like and Comment Section */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <button className="flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                    />
-                  </svg>
-                  <span>Like</span>
-                </button>
-                <span className="text-gray-500">0 likes</span>
-              </div>
-              <div className="text-gray-500">
-                <span>0 comments</span>
-              </div>
-            </div>
 
-            <div className="space-y-4">
-              <textarea
-                placeholder="Add a comment..."
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                rows="3"
-              ></textarea>
-              <div className="flex justify-end">
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                  Comment
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
