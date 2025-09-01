@@ -26,17 +26,13 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     setError(null);
 
     try {
-      // Clear any existing Disqus threads to prevent duplication
-      const existingThreads = document.querySelectorAll('#disqus_thread');
-      existingThreads.forEach(thread => {
-        if (thread !== disqusRef.current) {
-          thread.remove();
-        }
-      });
-
-      // Ensure thread element exists and is clean
+      // Ensure thread element exists and is properly set up
       const threadElement = ensureDisqusThread();
-      threadElement.innerHTML = '';
+      
+      // Verify the thread element is in the DOM before proceeding
+      if (!document.contains(threadElement)) {
+        throw new Error('Disqus thread element not properly attached to DOM');
+      }
 
       // Load script if not already loaded
       if (!window.DISQUS) {
@@ -65,6 +61,14 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
         this.page.api_key = null;
       };
 
+      // Ensure the thread element is still valid before resetting
+      if (!document.getElementById('disqus_thread')) {
+        throw new Error('Disqus thread element was removed during initialization');
+      }
+
+      // Small delay to ensure DOM is ready
+      await new Promise(resolve => setTimeout(resolve, 50));
+
       // Use proper Disqus reset to prevent duplication
       // According to Disqus troubleshooting: Why are the same comments showing up on multiple pages?
       if (window.DISQUS.reset) {
@@ -76,13 +80,13 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
         } catch (resetError) {
           console.warn('Disqus reset warning:', resetError);
           // Fallback: manually reload the thread
-          if (window.DISQUS?.embed) {
+          if (window.DISQUS?.embed && document.getElementById('disqus_thread')) {
             window.DISQUS.embed();
           }
         }
       } else {
         // If reset is not available, use embed directly
-        if (window.DISQUS?.embed) {
+        if (window.DISQUS?.embed && document.getElementById('disqus_thread')) {
           window.DISQUS.embed();
         }
       }
@@ -128,18 +132,33 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
   }, [isLoaded, isLoading, loadDisqus]);
 
   const ensureDisqusThread = () => {
-    // Remove any existing disqus_thread elements to prevent duplication
-    const existingThreads = document.querySelectorAll('#disqus_thread');
-    existingThreads.forEach(thread => thread.remove());
-
-    // Create a fresh thread element
-    const threadElement = document.createElement('div');
-    threadElement.id = 'disqus_thread';
-    threadElement.setAttribute('data-disqus-identifier', postId);
-    threadElement.setAttribute('data-disqus-url', postUrl || window.location.href);
+    // Check if we already have a valid thread element in our container
+    let threadElement = disqusRef.current?.querySelector('#disqus_thread');
     
-    if (disqusRef.current) {
-      disqusRef.current.appendChild(threadElement);
+    if (!threadElement) {
+      // Remove any existing disqus_thread elements outside our container to prevent duplication
+      const existingThreads = document.querySelectorAll('#disqus_thread');
+      existingThreads.forEach(thread => {
+        if (thread.parentNode !== disqusRef.current) {
+          thread.remove();
+        }
+      });
+
+      // Create a fresh thread element
+      threadElement = document.createElement('div');
+      threadElement.id = 'disqus_thread';
+      threadElement.setAttribute('data-disqus-identifier', postId);
+      threadElement.setAttribute('data-disqus-url', postUrl || window.location.href);
+      
+      // Ensure our container exists before appending
+      if (disqusRef.current) {
+        disqusRef.current.appendChild(threadElement);
+      } else {
+        throw new Error('Disqus container reference is null');
+      }
+    } else {
+      // Clear existing content but keep the element
+      threadElement.innerHTML = '';
     }
     
     return threadElement;
