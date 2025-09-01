@@ -29,9 +29,14 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       // Ensure thread element exists and is properly set up
       const threadElement = ensureDisqusThread();
       
-      // Verify the thread element is in the DOM before proceeding
-      if (!document.contains(threadElement)) {
+      // Verify the thread element is in the DOM and stable before proceeding
+      if (!document.contains(threadElement) || !disqusRef.current?.contains(threadElement)) {
         throw new Error('Disqus thread element not properly attached to DOM');
+      }
+      
+      // Additional check to ensure the element is still valid
+      if (threadElement.id !== 'disqus_thread') {
+        throw new Error('Disqus thread element was modified during initialization');
       }
 
       // Load script if not already loaded
@@ -121,13 +126,15 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
 
     return () => {
       observer.disconnect();
-      // Cleanup: Remove any Disqus threads when component unmounts
-      const threads = document.querySelectorAll('#disqus_thread');
-      threads.forEach(thread => {
-        if (thread.parentNode === disqusRef.current) {
-          thread.remove();
-        }
-      });
+      // Only cleanup on unmount, not during initialization
+      if (!isLoading && !isLoaded) {
+        const threads = document.querySelectorAll('#disqus_thread');
+        threads.forEach(thread => {
+          if (thread.parentNode === disqusRef.current) {
+            thread.remove();
+          }
+        });
+      }
     };
   }, [isLoaded, isLoading, loadDisqus]);
 
@@ -136,10 +143,10 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     let threadElement = disqusRef.current?.querySelector('#disqus_thread');
     
     if (!threadElement) {
-      // Remove any existing disqus_thread elements outside our container to prevent duplication
+      // Only remove threads that are not in our container to prevent conflicts
       const existingThreads = document.querySelectorAll('#disqus_thread');
       existingThreads.forEach(thread => {
-        if (thread.parentNode !== disqusRef.current) {
+        if (thread.parentNode && thread.parentNode !== disqusRef.current) {
           thread.remove();
         }
       });
@@ -150,11 +157,16 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       threadElement.setAttribute('data-disqus-identifier', postId);
       threadElement.setAttribute('data-disqus-url', postUrl || window.location.href);
       
-      // Ensure our container exists before appending
-      if (disqusRef.current) {
+      // Ensure our container exists and is stable before appending
+      if (disqusRef.current && document.contains(disqusRef.current)) {
         disqusRef.current.appendChild(threadElement);
+        
+        // Verify the element was properly added
+        if (!document.contains(threadElement)) {
+          throw new Error('Failed to append Disqus thread element to DOM');
+        }
       } else {
-        throw new Error('Disqus container reference is null');
+        throw new Error('Disqus container reference is null or not in DOM');
       }
     } else {
       // Clear existing content but keep the element
