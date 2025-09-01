@@ -381,6 +381,24 @@
             .header h1 { font-size: 24px; }
             .section h2 { font-size: 18px; }
             .content-box h3 { font-size: 16px; }
+            
+            /* Ensure solution diagram stays together */
+            .diagram-placeholder { 
+                page-break-inside: avoid !important; 
+                break-inside: avoid !important;
+            }
+            .diagram-placeholder h3 { 
+                page-break-after: avoid !important; 
+                break-after: avoid !important;
+            }
+            .diagram-placeholder img { 
+                page-break-inside: avoid !important; 
+                break-inside: avoid !important;
+            }
+            .diagram-placeholder p { 
+                page-break-inside: avoid !important; 
+                break-inside: avoid !important;
+            }
         }
     </style>
 </head>
@@ -481,12 +499,12 @@
         </div>
         
         <!-- Solution Diagram -->
-        <div class="diagram-placeholder">
-            <h3>Solution Diagram</h3>
-            <div style="text-align: center; margin-bottom: 15px;">
-                <img src="naruviSolution1.png" alt="Proposed dual water system implementation for Naruvi Gated Community" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <div class="diagram-placeholder" style="page-break-inside: avoid; break-inside: avoid;">
+            <h3 style="page-break-after: avoid; break-after: avoid;">Solution Diagram</h3>
+            <div style="text-align: center; margin-bottom: 15px; page-break-inside: avoid; break-inside: avoid;">
+                <img src="naruviSolution1.png" alt="Proposed dual water system implementation for Naruvi Gated Community" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); page-break-inside: avoid; break-inside: avoid;">
             </div>
-            <p style="text-align: center; color: #64748b; font-size: 14px; margin: 0;">
+            <p style="text-align: center; color: #64748b; font-size: 14px; margin: 0; page-break-inside: avoid; break-inside: avoid;">
                 <strong>Figure 1:</strong> Proposed dual water system implementation for Naruvi Gated Community
             </p>
         </div>
