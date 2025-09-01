@@ -13,8 +13,6 @@ The report provides a detailed analysis of water management challenges in gated 
 ```
 docs/naruviwater/
 ├── README.md                                    # This documentation file
-├── PDF_GENERATION_README.md                    # PDF generation instructions
-├── Naruvi_Water_Issues_Report.html             # Main HTML report (mobile-optimized)
 ├── costEstimate.csv                            # Detailed cost breakdown
 ├── costEstimate_new.csv                        # Extended cost analysis
 └── naruviSolution1.png                         # Solution diagram
@@ -45,10 +43,10 @@ docs/naruviwater/
 - **Navigation**: Discrete access - not prominently featured in main menus
 - **Component**: `src/pages/naruvi/NaruviWaterIssues.jsx`
 
-### **PDF Access**
-- **HTML Source**: `docs/naruviwater/Naruvi_Water_Issues_Report.html`
-- **Generated PDF**: `docs/naruviwater/Naruvi_Water_Issues_Report.pdf`
-- **Generation Script**: `scripts/generate-pdf.js`
+### **Content Access**
+- **Main Report**: Access via `/naruvi` on the website
+- **Cost Data**: CSV files for detailed analysis
+- **Solution Diagram**: PNG image for visual reference
 
 ## 🔧 **Technical Implementation**
 
@@ -57,10 +55,10 @@ docs/naruviwater/
 - **Features**: Interactive cost tables, responsive design, professional styling
 - **Integration**: Seamlessly integrated with main website routing
 
-### **PDF Generation**
-- **Method 1**: Browser print-to-PDF (recommended for most users)
-- **Method 2**: Automated Puppeteer script (for developers)
-- **Optimization**: Mobile-friendly layout with liquid mode support
+### **Content Display**
+- **React Component**: Interactive web-based report
+- **Responsive Design**: Mobile-friendly layout
+- **Professional Styling**: Clean, readable presentation
 
 ### **Data Integration**
 - **Cost Estimates**: Dynamic table population from CSV data
@@ -117,36 +115,36 @@ docs/naruviwater/
 - ✅ Troubleshooting guides
 - ✅ Recent improvements documentation
 
-## 📱 **Mobile and PDF Features**
+## 📱 **Mobile and Web Features**
 
-### **Liquid Mode Optimization**
-- **Automatic Triggering**: Designed to activate liquid mode in PDF viewers
-- **Mobile-First Layout**: Optimized for small screen viewing
+### **Mobile Optimization**
+- **Responsive Design**: Optimized for all screen sizes
 - **Touch-Friendly**: Proper spacing and sizing for mobile devices
+- **Fast Loading**: Optimized for mobile performance
 
-### **Print Optimization**
-- **Page Break Control**: Critical elements stay together
-- **Professional Layout**: Clean, readable output
-- **Background Graphics**: Maintained for visual clarity
+### **Web Presentation**
+- **Professional Layout**: Clean, readable design
+- **Interactive Elements**: Dynamic content and tables
+- **Cross-Platform**: Works on all devices and browsers
 
 ## 🔗 **Related Files**
 
 - **Main Component**: `src/pages/naruvi/NaruviWaterIssues.jsx`
 - **Routing**: `src/App.jsx` (naruvi route)
 - **Website**: https://kumarsite.netlify.app/naruvi
-- **Documentation**: `docs/naruviwater/PDF_GENERATION_README.md`
+- **Documentation**: `docs/naruviwater/README.md`
 
 ## 📞 **Support and Updates**
 
 ### **For Users**
 - Access the report at `/naruvi` on the website
-- Use browser print-to-PDF for mobile viewing
+- View on any device with responsive design
 - Contact for technical questions or implementation support
 
 ### **For Developers**
-- PDF generation script: `scripts/generate-pdf.js`
 - Component location: `src/pages/naruvi/`
 - Documentation: `docs/naruviwater/`
+- Data files: CSV and PNG assets
 
 ---
 
