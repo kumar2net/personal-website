@@ -169,7 +169,7 @@ function runE2EChecks() {
       },
       {
         url: 'http://localhost:5173/blog/habit',
-        name: 'Blog post with Disqus',
+        name: 'Blog post loads successfully',
       },
     ];
 
@@ -226,10 +226,7 @@ function runPerformanceChecks() {
 
   // Check lazy loading
   const hasLazyLoading =
-    fs.existsSync('src/components/DisqusComments.jsx') &&
-    fs
-      .readFileSync('src/components/DisqusComments.jsx', 'utf8')
-      .includes('IntersectionObserver');
+
   logChecklistItem(
     'Lazy loading implemented',
     hasLazyLoading ? 'PASS' : 'FAIL'

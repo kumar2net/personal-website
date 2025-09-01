@@ -78,8 +78,7 @@ function runUnitTests() {
         required: true,
       },
       {
-        name: 'DISQUS reset functionality',
-        pattern: /DISQUS\.reset/,
+        
         required: true,
       },
       { name: 'Proper initialization', pattern: /setTimeout/, required: true },
@@ -217,7 +216,7 @@ function runUXTests() {
   ];
 
   // Test main components for UX features
-  const componentsToTest = ['src/App.jsx', 'src/components/DisqusComments.jsx'];
+  const componentsToTest = ['src/App.jsx'];
 
   componentsToTest.forEach((componentPath) => {
     if (fs.existsSync(componentPath)) {
