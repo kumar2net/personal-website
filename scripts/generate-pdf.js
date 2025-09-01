@@ -27,10 +27,9 @@ async function generatePDF() {
     
     // Navigate to the HTML file
     const htmlPath = path.join(__dirname, '../docs/naruviwater/Naruvi_Water_Issues_Report.html');
-    const fileUrl = `file://${htmlPath}`;
     
     console.log('📄 Loading HTML report...');
-    await page.goto(fileUrl, {
+    await page.goto(`file://${htmlPath}`, {
       waitUntil: 'networkidle0',
       timeout: 30000
     });
