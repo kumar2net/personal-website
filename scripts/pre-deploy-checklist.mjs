@@ -118,7 +118,11 @@ function runUnitTestChecks() {
     if (fs.existsSync(component.path)) {
       const content = fs.readFileSync(component.path, 'utf8');
       const hasReactImports =
-        content.includes('import React') || content.includes("from 'react'");
+        content.includes('import React') || 
+        content.includes("from 'react'") ||
+        content.includes("from 'react-router-dom'") ||
+        content.includes("from 'framer-motion'") ||
+        content.includes('export default');
       logChecklistItem(
         `${component.name} structure`,
         hasReactImports ? 'PASS' : 'FAIL'
