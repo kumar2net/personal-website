@@ -64,6 +64,8 @@ The script will:
 - **Clean typography**: Readable fonts and spacing
 - **Structured content**: Logical flow that works well in liquid mode
 - **High contrast**: Good readability on mobile devices
+- **Optimized layout**: Reduced empty spaces for better content density
+- **Page break control**: Critical elements stay together in PDF
 
 ## 📁 **File Locations**
 
@@ -86,6 +88,24 @@ If liquid mode doesn't trigger:
 2. **Verify mobile device**: Test on actual mobile, not desktop
 3. **Check PDF quality**: Ensure high-resolution generation
 4. **Test different viewers**: Try multiple PDF apps
+
+## 🚀 **Recent Improvements**
+
+### **Script Optimization (Latest)**
+- **Cleaner code**: Removed unnecessary file:/// variable references
+- **Better organization**: Simplified PDF generation script
+- **Maintained functionality**: Same performance with cleaner code
+- **Layout optimization**: Reduced empty spaces on PDF pages 2 and 3
+- **Page break control**: Solution diagram heading and image stay together
+
+### **Content Updates**
+- Updated villa count to "Number of Occupied Villas (Assumption): 35"
+- Changed RO water usage from "70%" to "100%" for accuracy
+- Added WHO guidelines link and solution diagram references
+- Enhanced PS section with bathroom tile concerns and titration notes
+- Clarified use of existing single plumbing line
+- Updated resident count to "3 people (average)" per villa
+- Removed unavailable water source distribution information
 
 ---
 

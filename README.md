@@ -250,6 +250,14 @@ netlify deploy --prod --dir=dist
 - `docs/CONTENT_STYLE_GUIDE.md` - Content guidelines
 - `docs/DEPLOYMENT_STATUS.md` - Deployment information
 - `docs/SEO_SETUP.md` - SEO configuration
+- `docs/naruviwater/` - Naruvi Water Management Report documentation
+
+### **Specialized Reports**
+- **Naruvi Water Management Report** (`/naruvi`) - Comprehensive water management analysis for gated communities
+  - Technical analysis and cost estimates
+  - Mobile-optimized PDF generation
+  - Professional engineering recommendations
+  - Accessible via direct URL for discrete access
 
 ## 🔗 **Links**
 
@@ -264,5 +272,5 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Last Updated**: January 2025  
+**Last Updated**: January 2025 (Updated: January 17, 2025)  
 **Status**: Production ready, optimized, and actively maintained
