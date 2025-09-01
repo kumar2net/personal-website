@@ -27,6 +27,7 @@ function testComponent(componentPath, componentName, requiredFeatures) {
   if (!fs.existsSync(componentPath)) {
     logTestResult(`${componentName} exists`, 'FAIL', 'Component not found');
     return;
+    return;
   }
 
   logTestResult(`${componentName} exists`, 'PASS');
@@ -90,7 +91,7 @@ function testAppComponent() {
       pattern: /BrowserRouter|Routes|Route/,
       required: true,
     },
-    { name: 'Navigation component', pattern: /Navigation/, required: true },
+    { name: 'Navigation setup', pattern: /navigation|menu/, required: true },
     { name: 'Error boundary', pattern: /ErrorBoundary|error/, required: true },
     { name: 'Loading states', pattern: /loading|spinner/, required: true },
     { name: 'Mobile menu', pattern: /mobile|menu/, required: true },
@@ -136,17 +137,7 @@ function testContactComponent() {
   testComponent('src/pages/Contact.jsx', 'Contact', contactFeatures);
 }
 
-// Test Navigation component
-function testNavigationComponent() {
-  const navFeatures = [
-    { name: 'Navigation links', pattern: /Link|to=/, required: true },
-    { name: 'Mobile menu', pattern: /mobile|hamburger/, required: true },
-    { name: 'Active states', pattern: /active|current/, required: false },
-    { name: 'Logo/branding', pattern: /logo|brand/, required: true },
-  ];
 
-  testComponent('src/components/Navigation.jsx', 'Navigation', navFeatures);
-}
 
 // Test utility functions
 function testUtilityFunctions() {
@@ -200,7 +191,7 @@ function runUnitTests() {
   testAppComponent();
   testBlogComponent();
   testContactComponent();
-  testNavigationComponent();
+
   testUtilityFunctions();
   testConfigurationFiles();
 

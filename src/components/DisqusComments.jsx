@@ -175,8 +175,8 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
 
   return (
     <DisqusErrorBoundary>
-      <div className="mt-12 border-t pt-8">
-        <div className="mb-6">
+      <div className="mt-12 border-t pt-8 w-full max-w-full overflow-hidden">
+        <div className="mb-6 px-4 sm:px-0">
           <h3 className="text-xl font-semibold text-gray-900 mb-2">Comments</h3>
           <p className="text-gray-600 text-sm">
             Join the discussion below. Comments are powered by Disqus.
@@ -185,15 +185,15 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
 
         <div
           ref={disqusRef}
-          className="min-h-[200px] bg-gray-50 rounded-lg p-4"
+          className="min-h-[200px] bg-gray-50 rounded-lg p-4 w-full max-w-full overflow-x-auto"
         >
           {error && (
-            <div className="flex flex-col items-center justify-center h-32">
-              <div className="text-center">
-                <p className="text-red-600 text-sm mb-3">{error}</p>
+            <div className="flex flex-col items-center justify-center h-32 w-full">
+              <div className="text-center px-4">
+                <p className="text-red-600 text-sm mb-3 break-words">{error}</p>
                 <button
                   onClick={handleRetry}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm sm:text-base"
                 >
                   Retry Loading Comments
                 </button>
@@ -202,10 +202,10 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
           )}
 
           {!isLoaded && !error && (
-            <div className="flex items-center justify-center h-32">
-              <div className="text-center">
+            <div className="flex items-center justify-center h-32 w-full">
+              <div className="text-center px-4">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 text-sm break-words">
                   {isLoading
                     ? 'Loading comments...'
                     : 'Scroll to load comments'}

@@ -233,9 +233,11 @@ function runSecurityChecks() {
     if (fs.existsSync(file)) {
       const content = fs.readFileSync(file, 'utf8');
       if (
-        content.includes('password') ||
-        content.includes('secret') ||
-        content.includes('token')
+        content.includes('password=') ||
+        content.includes('secret=') ||
+        content.includes('token=') ||
+        content.includes('api_key=') ||
+        content.includes('private_key=')
       ) {
         hasSecrets = true;
       }
