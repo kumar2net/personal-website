@@ -11,7 +11,7 @@ const NaruviWaterIssues = () => {
     >
       <div className="bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          Naruvi Gated Community Water Management Report. Generated using my prompting of Perplexity AI.
+          Naruvi Gated Community Water Management Report
         </h1>
         
         <div className="prose prose-lg max-w-none">
@@ -301,6 +301,36 @@ const NaruviWaterIssues = () => {
             <p className="text-gray-700">
               We can even use the reject water with some dilution for non-potable uses in common areas—watering park plants, etc. Sinking one or two more borewells in close proximity to existing defunct borewells will not help as the issue is availability of water. Probably we need to explore and implement rain water harvesting also. Thank you.
             </p>
+          </section>
+
+          {/* Disclaimer */}
+          <section className="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg mt-6">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0">
+                <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h2 className="text-xl font-semibold text-red-800 mb-3">
+                  ⚠️ Disclaimer
+                </h2>
+                <div className="text-gray-700 space-y-2">
+                  <p>
+                    <strong>Experience Basis:</strong> This analysis is based on my personal experience of facing water management issues during our time living in Chennai.
+                  </p>
+                  <p>
+                    <strong>AI Assistance:</strong> The cost estimate table was generated with the help of AI tools to provide structured data.
+                  </p>
+                  <p>
+                    <strong>Expertise Level:</strong> I have limited knowledge in Civil Engineering and Plumbing. This report should be reviewed by qualified professionals before implementation.
+                  </p>
+                  <p className="text-sm text-red-600 font-medium mt-3">
+                    Please consult with certified engineers and plumbers for professional assessment and implementation.
+                  </p>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </div>
