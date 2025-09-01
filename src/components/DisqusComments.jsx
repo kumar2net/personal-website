@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import DisqusErrorBoundary from './DisqusErrorBoundary';
 
 const DisqusComments = ({ postId, postUrl, postTitle }) => {
@@ -16,6 +16,75 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       setScriptLoaded(true);
     }
   }, []);
+
+  const loadDisqus = useCallback(async () => {
+    if (isLoading || isLoaded) {
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Ensure thread element exists
+      ensureDisqusThread();
+
+      // Load script if not already loaded
+      if (!window.DISQUS) {
+        await loadDisqusScript();
+      }
+
+      // Wait a bit for DISQUS to be available
+      let attempts = 0;
+      while (!window.DISQUS && attempts < 10) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      if (!window.DISQUS) {
+        throw new Error('Disqus failed to initialize');
+      }
+
+      // Configure Disqus
+      window.disqus_config = function () {
+        this.page.url = postUrl || window.location.href;
+        this.page.identifier = postId;
+        this.page.title = postTitle || document.title;
+      };
+
+      // Reset Disqus with error handling
+      try {
+        window.DISQUS.reset({
+          reload: true,
+          config: function () {
+            this.page.url = postUrl || window.location.href;
+            this.page.identifier = postId;
+            this.page.title = postTitle || document.title;
+          },
+        });
+      } catch (resetError) {
+        console.warn('Disqus reset warning:', resetError);
+        // Try to reload the thread manually
+        const threadElement = document.getElementById('disqus_thread');
+        if (threadElement) {
+          threadElement.innerHTML = '';
+          // Force a new embed
+          if (window.DISQUS?.embed) {
+            window.DISQUS.embed();
+          }
+        }
+      }
+
+      setIsLoaded(true);
+      setIsLoading(false);
+    } catch (err) {
+      setError(
+        'Failed to load Disqus comments. Please refresh the page and try again.'
+      );
+      setIsLoading(false);
+      console.error('Disqus loading error:', err);
+    }
+  }, [isLoading, isLoaded, postUrl, postId, postTitle]);
 
   useEffect(() => {
     // Only load Disqus when component is in viewport
@@ -97,81 +166,14 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     });
   };
 
-  const loadDisqus = async () => {
-    if (isLoading || isLoaded) {
-      return;
-    }
 
-    setIsLoading(true);
-    setError(null);
 
-    try {
-      // Ensure thread element exists
-      ensureDisqusThread();
-
-      // Load script if not already loaded
-      if (!window.DISQUS) {
-        await loadDisqusScript();
-      }
-
-      // Wait a bit for DISQUS to be available
-      let attempts = 0;
-      while (!window.DISQUS && attempts < 10) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        attempts++;
-      }
-
-      if (!window.DISQUS) {
-        throw new Error('Disqus failed to initialize');
-      }
-
-      // Configure Disqus
-      window.disqus_config = function () {
-        this.page.url = postUrl || window.location.href;
-        this.page.identifier = postId;
-        this.page.title = postTitle || document.title;
-      };
-
-      // Reset Disqus with error handling
-      try {
-        window.DISQUS.reset({
-          reload: true,
-          config: function () {
-            this.page.url = postUrl || window.location.href;
-            this.page.identifier = postId;
-            this.page.title = postTitle || document.title;
-          },
-        });
-      } catch (resetError) {
-        console.warn('Disqus reset warning:', resetError);
-        // Try to reload the thread manually
-        const threadElement = document.getElementById('disqus_thread');
-        if (threadElement) {
-          threadElement.innerHTML = '';
-          // Force a new embed
-          if (window.DISQUS?.embed) {
-            window.DISQUS.embed();
-          }
-        }
-      }
-
-      setIsLoaded(true);
-      setIsLoading(false);
-    } catch (err) {
-      setError(
-        'Failed to load Disqus comments. Please refresh the page and try again.'
-      );
-      setIsLoading(false);
-      console.error('Disqus loading error:', err);
-    }
-  };
-
-  const handleRetry = () => {
+  const handleRetry = useCallback(() => {
     setIsLoaded(false);
     setIsLoading(false);
     setError(null);
     loadDisqus();
-  };
+  }, [loadDisqus]);
 
   return (
     <DisqusErrorBoundary>
