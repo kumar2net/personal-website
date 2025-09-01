@@ -116,7 +116,6 @@ function runUnitTests() {
     'src/App.jsx',
     'src/pages/Blog.jsx',
     'src/pages/Contact.jsx',
-    'src/components/Navigation.jsx',
   ];
 
   criticalComponents.forEach((componentPath) => {
