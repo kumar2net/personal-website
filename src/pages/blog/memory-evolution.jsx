@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const MemoryEvolution = () => {
   const navigate = useNavigate();
 
@@ -330,12 +328,7 @@ const MemoryEvolution = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="memory-evolution"
-        postUrl="https://kumarsite.netlify.app/blog/memory-evolution"
-        postTitle="Memory Evolution: From Human Moments to AI Memories - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

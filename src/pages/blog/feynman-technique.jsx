@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const FeynmanTechnique = () => {
   const navigate = useNavigate();
 
@@ -231,12 +229,7 @@ const FeynmanTechnique = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="feynman-technique"
-        postUrl="https://kumarsite.netlify.app/blog/feynman-technique"
-        postTitle="Feynman Techniques: Learning Like Richard Feynman - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

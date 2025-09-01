@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DisqusComments from '../../components/DisqusComments';
 
 const Compare = () => {
   const navigate = useNavigate();
@@ -141,19 +140,13 @@ The main table covers cost of living and healthcare access. Separate tables belo
 | GBP (British £)    | 0.86 GBP                | 1.16 USD                 |
 | INR (Indian ₹)     | 85.15 INR               | 0.0117 USD               |
 
-
 Last updated: 2025-08-11
 `,
             }}
           />
         </div>
 
-        <DisqusComments
-          postId="compare"
-          postUrl="https://kumarsite.netlify.app/blog/compare"
-          postTitle="Untitled - Kumar's Blog"
-        />
-      </div>
+              </div>
     </motion.div>
   );
 };

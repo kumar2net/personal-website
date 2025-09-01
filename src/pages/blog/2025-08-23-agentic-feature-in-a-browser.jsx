@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const AgenticFeatureInABrowser = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -37,15 +35,9 @@ const AgenticFeatureInABrowser = () => {
           __html: `
 <figure class="wp-block-pullquote"><blockquote><p>Tell us about the last thing you got excited about.</p></blockquote></figure>
 
-
-
 <p>I like the agentic features Perplexity has got in their new Comet web browser. I tried out few tasks and it did work well. This along with their perplexity.ai/ finance page for India stock market news, earnings, other metrics is brilliant. </p>
 
-
-
 <p></p>
-
-
 
 <p></p>
 `,
@@ -53,12 +45,7 @@ const AgenticFeatureInABrowser = () => {
       />
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="2025-08-23-agentic-feature-in-a-browser"
-        postUrl="https://kumarsite.netlify.app/blog/2025-08-23-agentic-feature-in-a-browser"
-        postTitle="agentic feature in a browser - Kumar's Blog"
-      />
-
+      
       <div className="mt-12 pt-8 border-t border-gray-200">
         <div className="flex justify-between items-center">
           <Link to="/blog" className="text-blue-600 hover:text-blue-800">

@@ -41,47 +41,6 @@ function testComponent(componentPath, componentName, requiredFeatures) {
   });
 }
 
-// Test DisqusComments component
-function testDisqusComponent() {
-  const disqusFeatures = [
-    { name: 'Error handling', pattern: /setError\(/, required: true },
-    { name: 'Loading states', pattern: /isLoading/, required: true },
-    { name: 'Retry functionality', pattern: /handleRetry/, required: true },
-    {
-      name: 'Script error handling',
-      pattern: /script\.onerror/,
-      required: true,
-    },
-    { name: 'Script load handling', pattern: /script\.onload/, required: true },
-    {
-      name: 'DISQUS reset functionality',
-      pattern: /DISQUS\.reset/,
-      required: true,
-    },
-    { name: 'Proper initialization', pattern: /setTimeout/, required: true },
-    {
-      name: 'Script management',
-      pattern: /scriptRef\.current|script\.onload/,
-      required: true,
-    },
-    {
-      name: 'Intersection Observer',
-      pattern: /IntersectionObserver/,
-      required: true,
-    },
-    {
-      name: 'React hooks usage',
-      pattern: /useEffect|useState|useRef/,
-      required: true,
-    },
-  ];
-
-  testComponent(
-    'src/components/DisqusComments.jsx',
-    'DisqusComments',
-    disqusFeatures
-  );
-}
 
 // Test App component
 function testAppComponent() {
@@ -187,8 +146,7 @@ function testConfigurationFiles() {
 function runUnitTests() {
   console.log('🚀 Starting Unit Test Suite\n');
 
-  testDisqusComponent();
-  testAppComponent();
+    testAppComponent();
   testBlogComponent();
   testContactComponent();
 

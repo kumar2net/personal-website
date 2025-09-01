@@ -2,8 +2,6 @@ import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const SoberingWeekAugust2025 = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
@@ -169,17 +167,11 @@ const SoberingWeekAugust2025 = () => {
             </p>
           </section>
 
-
         </div>
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="sobering-week-august-2025"
-        postUrl="https://kumarsite.netlify.app/blog/sobering-week-august-2025"
-        postTitle="A Sobering Week: Reflections on Loss, Life, and Learning - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

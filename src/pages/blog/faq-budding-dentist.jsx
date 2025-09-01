@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const FAQBuddingDentist = () => {
   const navigate = useNavigate();
 
@@ -294,12 +292,7 @@ const FAQBuddingDentist = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="faq-budding-dentist"
-        postUrl="https://kumarsite.netlify.app/blog/faq-budding-dentist"
-        postTitle="FAQ with our budding dentist - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

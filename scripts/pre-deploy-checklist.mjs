@@ -82,7 +82,6 @@ function runCriticalChecks() {
   // Check if all critical files exist
   const criticalFiles = [
     'src/App.jsx',
-    'src/components/DisqusComments.jsx',
     'package.json',
     'vite.config.js',
     'netlify.toml',
@@ -96,24 +95,7 @@ function runCriticalChecks() {
     }
   });
 
-  // Check Disqus configuration
-  const disqusPath = 'src/components/DisqusComments.jsx';
-  if (fs.existsSync(disqusPath)) {
-    const content = fs.readFileSync(disqusPath, 'utf8');
 
-    const hasDisqusScript = content.includes('kumarsite.disqus.com/embed.js');
-    logChecklistItem(
-      'CRITICAL: Disqus script configured',
-      hasDisqusScript ? 'PASS' : 'FAIL'
-    );
-
-    const hasErrorHandling =
-      content.includes('setError') && content.includes('handleRetry');
-    logChecklistItem(
-      'CRITICAL: Disqus error handling',
-      hasErrorHandling ? 'PASS' : 'FAIL'
-    );
-  }
 
   // Check build process
   const buildResult = runCommand('npm run build', 'Build process');
@@ -136,10 +118,6 @@ function runUnitTestChecks() {
   // Check component functionality
   const componentsToCheck = [
     { path: 'src/App.jsx', name: 'App component' },
-    {
-      path: 'src/components/DisqusComments.jsx',
-      name: 'DisqusComments component',
-    },
     { path: 'src/pages/Blog.jsx', name: 'Blog component' },
   ];
 
