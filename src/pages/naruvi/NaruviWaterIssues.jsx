@@ -37,7 +37,7 @@ const NaruviWaterIssues = () => {
                   <li>• Total daily consumption: 26,000 litres</li>
                   <li>• Occupied villas: 35</li>
                   <li>• Assumed residents per villa: 3</li>
-                  <li>• Current usage per person: 222 litres/day</li>
+                  <li>• Current usage per person: 248 litres/day</li>
                 </ul>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">

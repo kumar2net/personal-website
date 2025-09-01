@@ -255,7 +255,7 @@ netlify deploy --prod --dir=dist
 ### **Specialized Reports**
 - **Naruvi Water Management Report** (`/naruvi`) - Comprehensive water management analysis for gated communities
   - Technical analysis and cost estimates
-  - Mobile-optimized PDF generation
+  - Mobile-optimized web presentation
   - Professional engineering recommendations
   - Accessible via direct URL for discrete access
 
