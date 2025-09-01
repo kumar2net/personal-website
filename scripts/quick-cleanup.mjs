@@ -47,9 +47,7 @@ try {
   const keyFiles = [
     'src/main.jsx',
     'src/App.jsx',
-    'src/components/DisqusComments.jsx',
     'src/components/ErrorBoundary.jsx',
-    'src/components/DisqusErrorBoundary.jsx',
   ];
 
   let consoleLogsRemoved = 0;

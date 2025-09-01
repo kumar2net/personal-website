@@ -77,10 +77,10 @@ function testCriticalUserFlows() {
       : contactPageTest.output
   );
 
-  // Test 4: Blog post with Disqus
+  // Test 4: Blog post
   const blogPostTest = runCommand(
     'curl -s -o /dev/null -w "%{http_code}" http://localhost:5173/blog/habit',
-    'Blog post with Disqus'
+    'Blog post loads successfully'
   );
   logTestResult(
     'Blog post loads successfully',
@@ -102,42 +102,7 @@ function testCriticalUserFlows() {
   );
 }
 
-// Test Disqus integration
-function testDisqusIntegration() {
-  console.log('\n📋 Testing Disqus Integration:');
 
-  // Test if Disqus script is properly configured
-  const disqusComponentPath = 'src/components/DisqusComments.jsx';
-  if (fs.existsSync(disqusComponentPath)) {
-    const content = fs.readFileSync(disqusComponentPath, 'utf8');
-
-    // Test Disqus script URL
-    const hasDisqusScript = content.includes('kumarsite.disqus.com/embed.js');
-    logTestResult(
-      'Disqus script URL configured',
-      hasDisqusScript ? 'PASS' : 'FAIL'
-    );
-
-    // Test Disqus configuration
-    const hasDisqusConfig = content.includes('window.disqus_config');
-    logTestResult(
-      'Disqus configuration present',
-      hasDisqusConfig ? 'PASS' : 'FAIL'
-    );
-
-    // Test error handling
-    const hasErrorHandling =
-      content.includes('setError') && content.includes('handleRetry');
-    logTestResult('Disqus error handling', hasErrorHandling ? 'PASS' : 'FAIL');
-
-    // Test loading states
-    const hasLoadingStates =
-      content.includes('isLoading') && content.includes('animate-spin');
-    logTestResult('Disqus loading states', hasLoadingStates ? 'PASS' : 'FAIL');
-  } else {
-    logTestResult('Disqus component exists', 'FAIL', 'Component not found');
-  }
-}
 
 // Test responsive design
 function testResponsiveDesign() {
@@ -245,10 +210,7 @@ function testPerformanceMetrics() {
 
   // Test lazy loading implementation
   const hasLazyLoading =
-    fs.existsSync('src/components/DisqusComments.jsx') &&
-    fs
-      .readFileSync('src/components/DisqusComments.jsx', 'utf8')
-      .includes('IntersectionObserver');
+
   logTestResult('Lazy loading implemented', hasLazyLoading ? 'PASS' : 'FAIL');
 }
 
@@ -276,18 +238,7 @@ function testErrorHandling() {
     );
   }
 
-  // Test Disqus error handling
-  const disqusPath = 'src/components/DisqusComments.jsx';
-  if (fs.existsSync(disqusPath)) {
-    const content = fs.readFileSync(disqusPath, 'utf8');
 
-    const hasDisqusErrorHandling =
-      content.includes('setError') && content.includes('handleRetry');
-    logTestResult(
-      'Disqus error handling',
-      hasDisqusErrorHandling ? 'PASS' : 'FAIL'
-    );
-  }
 }
 
 // Main E2E test runner
@@ -307,7 +258,7 @@ function runE2ETests() {
   }
 
   testCriticalUserFlows();
-  testDisqusIntegration();
+
   testResponsiveDesign();
   testAccessibility();
   testPerformanceMetrics();

@@ -400,7 +400,7 @@ function runViewportMobileTests() {
   console.log('   2. Verify posts load from top');
   console.log('   3. Check responsive breakpoints');
   console.log('   4. Test touch interactions');
-  console.log('   5. Verify Disqus works on mobile');
+      console.log('   5. Verify mobile responsiveness');
 
   console.log('\n🔗 Test URLs:');
   console.log('   - Home: http://localhost:5173/');

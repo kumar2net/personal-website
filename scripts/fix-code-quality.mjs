@@ -41,7 +41,7 @@ try {
   console.log('🔒 Checking for security issues...');
 
   const filesToCheck = [
-    'src/components/DisqusComments.jsx',
+
     'src/main.jsx',
     'src/App.jsx',
   ];

@@ -149,7 +149,7 @@ try {
   const specificFiles = [
     'src/main.jsx',
     'src/App.jsx',
-    'src/components/DisqusComments.jsx',
+
   ];
 
   specificFiles.forEach(cleanConsoleLogs);
