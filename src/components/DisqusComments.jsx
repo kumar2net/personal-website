@@ -26,6 +26,11 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     setError(null);
 
     try {
+      // Ensure our container is still valid
+      if (!disqusRef.current || !document.contains(disqusRef.current)) {
+        throw new Error('Disqus container is no longer valid');
+      }
+
       // Ensure thread element exists and is properly set up
       const threadElement = ensureDisqusThread();
       
@@ -66,13 +71,14 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
         this.page.api_key = null;
       };
 
-      // Ensure the thread element is still valid before resetting
-      if (!document.getElementById('disqus_thread')) {
+      // Final check before Disqus operations
+      const finalThreadElement = document.getElementById('disqus_thread');
+      if (!finalThreadElement || !disqusRef.current?.contains(finalThreadElement)) {
         throw new Error('Disqus thread element was removed during initialization');
       }
 
       // Small delay to ensure DOM is ready
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Use proper Disqus reset to prevent duplication
       // According to Disqus troubleshooting: Why are the same comments showing up on multiple pages?
@@ -99,11 +105,11 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       setIsLoaded(true);
       setIsLoading(false);
     } catch (err) {
+      console.error('Disqus loading error:', err);
       setError(
-        'Failed to load Disqus comments. Please refresh the page and try again.'
+        'Something went wrong. Please refresh the page or try again later.'
       );
       setIsLoading(false);
-      console.error('Disqus loading error:', err);
     }
   }, [isLoading, isLoaded, postUrl, postId, postTitle]);
 
@@ -113,11 +119,16 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !isLoaded && !isLoading) {
-            loadDisqus();
+            // Add a small delay to prevent rapid firing
+            setTimeout(() => {
+              if (!isLoaded && !isLoading) {
+                loadDisqus();
+              }
+            }, 100);
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '50px' }
     );
 
     if (disqusRef.current) {
@@ -221,11 +232,22 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
 
 
   const handleRetry = useCallback(() => {
+    // Reset all states
     setIsLoaded(false);
     setIsLoading(false);
     setError(null);
-    loadDisqus();
-  }, [loadDisqus]);
+    
+    // Clear any existing threads
+    const threads = document.querySelectorAll('#disqus_thread');
+    threads.forEach(thread => thread.remove());
+    
+    // Small delay before retry to ensure cleanup is complete
+    setTimeout(() => {
+      if (!isLoaded && !isLoading) {
+        loadDisqus();
+      }
+    }, 200);
+  }, [loadDisqus, isLoaded, isLoading]);
 
   return (
     <DisqusErrorBoundary>
