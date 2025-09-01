@@ -43,7 +43,7 @@
     "cleanup:quick": "node scripts/quick-cleanup.mjs",
     "cleanup:full": "node scripts/cleanup-codebase.mjs",
     "clean:whistle": "npm run cleanup:quick && npm run biome:fix && npm run test:all",
-    "remove:wordpress": "node scripts/remove-wordpress-code.mjs"
+
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
