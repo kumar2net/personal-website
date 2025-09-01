@@ -156,33 +156,7 @@ Retraining (cron/CI):
 - GitHub renders Mermaid natively; open this file directly on GitHub to view diagrams.
 - Locally, use a Markdown preview that supports Mermaid (e.g., VS Code with "Markdown Preview Mermaid Support").
 
-### PlantUML equivalents
 
-- Mind map: `docs/reco-architecture-mindmap.puml`
-- Flow: `docs/reco-architecture-flow.puml`
-- Sequence: `docs/reco-architecture-sequence.puml`
-
-Render locally (Docker):
-
-```bash
-docker run --rm -v "$(pwd)":/workspace plantuml/plantuml docs/reco-architecture-*.puml
-```
-
-Or use a PlantUML extension in your editor (e.g., VS Code "PlantUML").
-
-Using npm scripts:
-
-```bash
-npm run puml:render:svg
-npm run puml:render:png
-```
-
-Using Makefile:
-
-```bash
-make puml-svg
-make puml-png
-```
 
 
 
