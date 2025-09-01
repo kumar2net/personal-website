@@ -11,8 +11,7 @@
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
     "convert:books": "node scripts/convert-docx-to-md.mjs",
-    "puml:render:svg": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tsvg docs/reco-architecture-*.puml",
-    "puml:render:png": "docker run --rm -v \"$(pwd)\":/workspace plantuml/plantuml -tpng docs/reco-architecture-*.puml",
+
     "semantic:index": "node scripts/index-semantic.mjs",
     "ga:topics": "node scripts/ga-blog-topic-generator.mjs",
     "ga:topic-suggestions": "node scripts/ga4-topic-suggestions.mjs",
