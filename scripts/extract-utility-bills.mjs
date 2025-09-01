@@ -1,6 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import pdf from 'pdf-parse';
+import * as pdfjsLib from 'pdfjs-dist';
+
+// Set up PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 async function extractUtilityBillData() {
   const projectRoot = process.cwd();
@@ -21,16 +24,29 @@ async function extractUtilityBillData() {
       if (file.endsWith('.pdf')) {
         try {
           const dataBuffer = await fs.readFile(filePath);
-          const data = await pdf(dataBuffer);
+          const loadingTask = pdfjsLib.getDocument({ data: dataBuffer });
+          const pdf = await loadingTask.promise;
+
+          let fullText = '';
+          for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const textContent = await page.getTextContent();
+            
+            const pageText = textContent.items
+              .map(item => item.str)
+              .join(' ');
+            
+            fullText += pageText + '\n\n';
+          }
 
           results.push({
             filename: file,
             type: 'pdf',
-            content: data.text,
-            pages: data.numpages,
+            content: fullText,
+            pages: pdf.numPages,
           });
 
-          console.log(`✅ Extracted ${data.numpages} pages from ${file}`);
+          console.log(`✅ Extracted ${pdf.numPages} pages from ${file}`);
         } catch (error) {
           console.log(`❌ Failed to extract PDF ${file}: ${error.message}`);
         }

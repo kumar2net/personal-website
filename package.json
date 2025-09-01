@@ -11,7 +11,6 @@
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
     "convert:books": "node scripts/convert-docx-to-md.mjs",
-
     "semantic:index": "node scripts/index-semantic.mjs",
     "ga:topics": "node scripts/ga-blog-topic-generator.mjs",
     "ga:topic-suggestions": "node scripts/ga4-topic-suggestions.mjs",
@@ -41,8 +40,7 @@
     "clean:all": "npm run cleanup && npm run biome:fix && npm run test:all",
     "cleanup:quick": "node scripts/quick-cleanup.mjs",
     "cleanup:full": "node scripts/cleanup-codebase.mjs",
-    "clean:whistle": "npm run cleanup:quick && npm run biome:fix && npm run test:all",
-
+    "clean:whistle": "npm run cleanup:quick && npm run biome:fix && npm run test:all"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
@@ -57,8 +55,6 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.524.0",
     "mammoth": "^1.10.0",
-    "pdf-parse": "^1.1.1",
-    "pdf2pic": "^3.2.0",
     "pdfjs-dist": "^5.4.54",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

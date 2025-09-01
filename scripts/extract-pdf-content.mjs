@@ -1,6 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import pdf from 'pdf-parse';
+import * as pdfjsLib from 'pdfjs-dist';
+
+// Set up PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 async function extractPDFContent() {
   const projectRoot = path.resolve(process.cwd());
@@ -18,13 +21,30 @@ async function extractPDFContent() {
     const dataBuffer = await fs.readFile(pdfPath);
 
     console.log('🔍 Parsing PDF content...');
-    const data = await pdf(dataBuffer);
+    const loadingTask = pdfjsLib.getDocument({ data: dataBuffer });
+    const pdf = await loadingTask.promise;
 
-    console.log(`📄 PDF parsed: ${data.numpages} pages`);
-    console.log(`📊 Text length: ${data.text.length} characters`);
+    console.log(`📄 PDF parsed: ${pdf.numPages} pages`);
+
+    let fullText = '';
+    console.log('📝 Extracting text from pages...');
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      console.log(`📃 Processing page ${pageNum}/${pdf.numPages}...`);
+      const page = await pdf.getPage(pageNum);
+      const textContent = await page.getTextContent();
+      
+      const pageText = textContent.items
+        .map(item => item.str)
+        .join(' ');
+      
+      fullText += pageText + '\n\n';
+    }
+
+    console.log(`📊 Text length: ${fullText.length} characters`);
 
     console.log('✍️ Converting to Markdown...');
-    const markdown = convertToMarkdown(data.text);
+    const markdown = convertToMarkdown(fullText);
 
     console.log('💾 Writing Markdown file...');
     await fs.writeFile(outputPath, markdown, 'utf8');
@@ -35,7 +55,7 @@ async function extractPDFContent() {
     // Show a preview of the extracted content
     console.log('\n📖 Content Preview (first 500 characters):');
     console.log('─'.repeat(50));
-    console.log(`${data.text.substring(0, 500)}...`);
+    console.log(`${fullText.substring(0, 500)}...`);
     console.log('─'.repeat(50));
   } catch (error) {
     console.error('❌ Error extracting PDF content:', error.message);
