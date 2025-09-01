@@ -45,6 +45,28 @@ function runCommand(command, _description) {
   }
 }
 
+// Function to get the latest blog post URL
+function getLatestBlogPostUrl() {
+  try {
+    const blogContent = fs.readFileSync('src/pages/Blog.jsx', 'utf8');
+    const blogPostsMatch = blogContent.match(/const blogPosts = \[([\s\S]*?)\];/);
+    
+    if (blogPostsMatch) {
+      const blogPostsStr = blogPostsMatch[1];
+      // Find the first link in the blogPosts array (latest post)
+      const linkMatch = blogPostsStr.match(/link: '([^']+)'/);
+      if (linkMatch) {
+        return `http://localhost:5173${linkMatch[1]}`;
+      }
+    }
+  } catch (error) {
+    console.warn('Could not parse latest blog post:', error.message);
+  }
+  
+  // Fallback to known latest post
+  return 'http://localhost:5173/blog/sobering-week-august-2025';
+}
+
 // 1. CRITICAL CHECKS
 function runCriticalChecks() {
   console.log('\n🔥 CRITICAL CHECKS (Must Pass)');
@@ -151,10 +173,15 @@ function runE2EChecks() {
     logChecklistItem('Dev server running', 'PASS');
 
     // Test critical pages
+    const latestBlogPostUrl = getLatestBlogPostUrl();
     const pagesToTest = [
       { url: 'http://localhost:5173/', name: 'Home page' },
       { url: 'http://localhost:5173/blog', name: 'Blog page' },
       { url: 'http://localhost:5173/contact', name: 'Contact page' },
+      {
+        url: latestBlogPostUrl,
+        name: 'Latest blog post',
+      },
       {
         url: 'http://localhost:5173/blog/habit',
         name: 'Blog post with Disqus',
