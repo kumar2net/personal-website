@@ -1,4 +1,4 @@
-import axios from 'axios';
+// Book cover service that tries multiple sources
 
 // Book cover service that tries multiple sources
 class BookCoverService {
@@ -61,14 +61,19 @@ class BookCoverService {
         : '';
       const query = `${titleQuery}${authorQuery}`;
 
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=3`,
-        { timeout: 5000 }
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=3`
       );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
 
-      if (response.data.items && response.data.items.length > 0) {
+      if (data.items && data.items.length > 0) {
         // Try to find the best match
-        for (const book of response.data.items) {
+        for (const book of data.items) {
           const imageLinks = book.volumeInfo.imageLinks;
 
           if (imageLinks) {
@@ -99,13 +104,18 @@ class BookCoverService {
   async getOpenLibraryCover(title, author) {
     try {
       const query = encodeURIComponent(`${title} ${author}`);
-      const response = await axios.get(
-        `https://openlibrary.org/search.json?title=${query}&limit=1`,
-        { timeout: 5000 }
+      const response = await fetch(
+        `https://openlibrary.org/search.json?title=${query}&limit=1`
       );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
 
-      if (response.data.docs?.[0]) {
-        const book = response.data.docs[0];
+      if (data.docs?.[0]) {
+        const book = data.docs[0];
         if (book.cover_i) {
           return `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
         }
@@ -121,25 +131,34 @@ class BookCoverService {
     try {
       // First try to get ISBN from Google Books
       const query = encodeURIComponent(`${title} ${author}`);
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1`,
-        { timeout: 5000 }
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1`
       );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
 
-      if (response.data.items?.[0]) {
-        const book = response.data.items[0];
+      if (data.items?.[0]) {
+        const book = data.items[0];
         const isbn = book.volumeInfo.industryIdentifiers?.find(
           (id) => id.type === 'ISBN_13' || id.type === 'ISBN_10'
         )?.identifier;
 
         if (isbn) {
           // Try OpenLibrary with ISBN
-          const isbnResponse = await axios.get(
-            `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`,
-            { timeout: 5000 }
+          const isbnResponse = await fetch(
+            `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
           );
-
-          const bookData = isbnResponse.data[`ISBN:${isbn}`];
+          
+          if (!isbnResponse.ok) {
+            throw new Error(`HTTP error! status: ${isbnResponse.status}`);
+          }
+          
+          const isbnData = await isbnResponse.json();
+          const bookData = isbnData[`ISBN:${isbn}`];
           if (bookData?.cover) {
             return (
               bookData.cover.large ||
