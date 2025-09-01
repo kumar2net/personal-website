@@ -26,8 +26,17 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
     setError(null);
 
     try {
-      // Ensure thread element exists
-      ensureDisqusThread();
+      // Clear any existing Disqus threads to prevent duplication
+      const existingThreads = document.querySelectorAll('#disqus_thread');
+      existingThreads.forEach(thread => {
+        if (thread !== disqusRef.current) {
+          thread.remove();
+        }
+      });
+
+      // Ensure thread element exists and is clean
+      const threadElement = ensureDisqusThread();
+      threadElement.innerHTML = '';
 
       // Load script if not already loaded
       if (!window.DISQUS) {
@@ -45,33 +54,36 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
         throw new Error('Disqus failed to initialize');
       }
 
-      // Configure Disqus
+      // Set up Disqus configuration ONCE to prevent split threads
+      // According to Disqus troubleshooting: Use Configuration Variables to Avoid Split Threads
       window.disqus_config = function () {
         this.page.url = postUrl || window.location.href;
         this.page.identifier = postId;
         this.page.title = postTitle || document.title;
+        // Prevent split threads by ensuring consistent configuration
+        this.page.remote_auth_s3 = null;
+        this.page.api_key = null;
       };
 
-      // Reset Disqus with error handling
-      try {
-        window.DISQUS.reset({
-          reload: true,
-          config: function () {
-            this.page.url = postUrl || window.location.href;
-            this.page.identifier = postId;
-            this.page.title = postTitle || document.title;
-          },
-        });
-      } catch (resetError) {
-        console.warn('Disqus reset warning:', resetError);
-        // Try to reload the thread manually
-        const threadElement = document.getElementById('disqus_thread');
-        if (threadElement) {
-          threadElement.innerHTML = '';
-          // Force a new embed
+      // Use proper Disqus reset to prevent duplication
+      // According to Disqus troubleshooting: Why are the same comments showing up on multiple pages?
+      if (window.DISQUS.reset) {
+        try {
+          window.DISQUS.reset({
+            reload: true,
+            config: window.disqus_config
+          });
+        } catch (resetError) {
+          console.warn('Disqus reset warning:', resetError);
+          // Fallback: manually reload the thread
           if (window.DISQUS?.embed) {
             window.DISQUS.embed();
           }
+        }
+      } else {
+        // If reset is not available, use embed directly
+        if (window.DISQUS?.embed) {
+          window.DISQUS.embed();
         }
       }
 
@@ -105,22 +117,31 @@ const DisqusComments = ({ postId, postUrl, postTitle }) => {
 
     return () => {
       observer.disconnect();
+      // Cleanup: Remove any Disqus threads when component unmounts
+      const threads = document.querySelectorAll('#disqus_thread');
+      threads.forEach(thread => {
+        if (thread.parentNode === disqusRef.current) {
+          thread.remove();
+        }
+      });
     };
   }, [isLoaded, isLoading, loadDisqus]);
 
   const ensureDisqusThread = () => {
-    // Ensure the disqus_thread element exists and is clean
-    let threadElement = document.getElementById('disqus_thread');
-    if (!threadElement) {
-      threadElement = document.createElement('div');
-      threadElement.id = 'disqus_thread';
-      if (disqusRef.current) {
-        disqusRef.current.appendChild(threadElement);
-      }
-    } else {
-      // Clear existing content
-      threadElement.innerHTML = '';
+    // Remove any existing disqus_thread elements to prevent duplication
+    const existingThreads = document.querySelectorAll('#disqus_thread');
+    existingThreads.forEach(thread => thread.remove());
+
+    // Create a fresh thread element
+    const threadElement = document.createElement('div');
+    threadElement.id = 'disqus_thread';
+    threadElement.setAttribute('data-disqus-identifier', postId);
+    threadElement.setAttribute('data-disqus-url', postUrl || window.location.href);
+    
+    if (disqusRef.current) {
+      disqusRef.current.appendChild(threadElement);
     }
+    
     return threadElement;
   };
 
