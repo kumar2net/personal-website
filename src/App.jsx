@@ -58,6 +58,7 @@ import Shortcuts from './pages/Shortcuts';
 import Trends from './pages/Trends';
 import UtilitiesDashboard from './pages/UtilitiesDashboard';
 import VocabAdditions from './pages/VocabAdditions';
+import NaruviWaterIssues from './pages/naruvi';
 
 // Admin CMS removed
 
@@ -595,6 +596,7 @@ function App() {
             />
             <Route path="/dossier" element={<DossierPage />} />
             <Route path="/utilities" element={<UtilitiesDashboard />} />
+            <Route path="/naruvi" element={<NaruviWaterIssues />} />
             {/* Admin route removed */}
             <Route path="/blog/:slug" element={<PostDynamic />} />
             <Route path="/contact" element={<Contact />} />
