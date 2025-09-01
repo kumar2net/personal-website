@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DisqusComments from '../../components/DisqusComments';
 
 const Kumblogtipsaug3 = () => {
   const navigate = useNavigate();
@@ -81,12 +80,7 @@ Last updated: 2025-08-11
           />
         </div>
 
-        <DisqusComments
-          postId="kumblogtipsaug3"
-          postUrl="https://kumarsite.netlify.app/blog/kumblogtipsaug3"
-          postTitle="Untitled - Kumar's Blog"
-        />
-      </div>
+              </div>
     </motion.div>
   );
 };

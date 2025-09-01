@@ -1,4 +1,3 @@
-import DisqusComments from '../../components/DisqusComments';
 
 const FascinatingIndiaStory = () => (
   <div className="max-w-2xl mx-auto py-10 px-4">
@@ -225,12 +224,7 @@ const FascinatingIndiaStory = () => (
     </p>
 
     {/* Blog interactions */}
-    <DisqusComments
-      postId="Compelling-india-story"
-      postUrl="https://kumarsite.netlify.app/blog/Compelling-india-story"
-      postTitle="Very Compelling India Story: How Millennials Are Powering the SIP Revolution - Kumar's Blog"
-    />
-  </div>
+      </div>
 );
 
 export default FascinatingIndiaStory;

@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DisqusComments from '../../components/DisqusComments';
 
 const GlobalEconomicConcerns = () => {
   const navigate = useNavigate();
@@ -300,12 +299,7 @@ const GlobalEconomicConcerns = () => {
         </div>
       </div>
 
-      <DisqusComments
-        postId="global-economic-concerns-2025"
-        postUrl="https://kumarsite.netlify.app/blog/global-economic-concerns-2025"
-        postTitle="🌍 Global Economic Concerns: A 2025 Pew Research Perspective - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

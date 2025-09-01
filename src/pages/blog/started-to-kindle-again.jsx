@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const StartedToKindleAgain = () => {
   const navigate = useNavigate();
 
@@ -328,12 +326,7 @@ const StartedToKindleAgain = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="started-to-kindle-again"
-        postUrl="https://kumarsite.netlify.app/blog/started-to-kindle-again"
-        postTitle="Started to Kindle Again - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

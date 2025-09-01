@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
-import DisqusComments from '../../components/DisqusComments';
 import markdownContent from './compare.md?raw';
 
 const lines = markdownContent.split('\n');
@@ -66,12 +65,7 @@ const PriceParity = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="price-parity"
-        postUrl="https://kumarsite.netlify.app/blog/price-parity"
-        postTitle="{title} - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

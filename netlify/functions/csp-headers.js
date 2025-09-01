@@ -24,10 +24,10 @@ exports.handler = async (event, context) => {
     "img-src 'self' data: blob: https: http:",
     
     // Connect sources for API calls
-    "connect-src 'self' https://disqus.com https://*.disqus.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googletagmanager.com",
+    "connect-src 'self' https:// https://*. https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googletagmanager.com",
     
     // Frame sources for Disqus and other embeds
-    "frame-src 'self' https://disqus.com https://*.disqus.com https://accounts.google.com https://www.google.com",
+    "frame-src 'self' https:// https://*. https://accounts.google.com https://www.google.com",
     "frame-ancestors 'self'",
     
     // Object sources

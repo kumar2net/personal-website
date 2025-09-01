@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const MyFascinationWithShortcuts = () => {
   const navigate = useNavigate();
 
@@ -327,12 +325,7 @@ const MyFascinationWithShortcuts = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="my-fascination-with-shortcuts"
-        postUrl="https://kumarsite.netlify.app/blog/my-fascination-with-shortcuts"
-        postTitle="My Fascination with Shortcuts: The Art of Keyboard Navigation - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

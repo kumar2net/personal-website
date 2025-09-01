@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const AcronymSoupRevisited2025 = () => {
   const navigate = useNavigate();
 
@@ -177,12 +175,7 @@ const AcronymSoupRevisited2025 = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="acronym-soup-revisited-2025"
-        postUrl="https://kumarsite.netlify.app/blog/acronym-soup-revisited-2025"
-        postTitle="Acronym Soup Revisited (2025) - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DisqusComments from '../../components/DisqusComments';
 
 const DevastatedByYoungGirlsDemise = () => {
   const navigate = useNavigate();
@@ -309,12 +308,7 @@ const DevastatedByYoungGirlsDemise = () => {
           </p>
         </div>
 
-        <DisqusComments
-          postId="devastated-by-young-girls-demise"
-          postUrl="https://kumarsite.netlify.app/blog/devastated-by-young-girls-demise"
-          postTitle="Devastated by the Young Girl's Sudden Demise - Kumar's Blog"
-        />
-      </div>
+              </div>
     </motion.div>
   );
 };

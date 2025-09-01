@@ -83,7 +83,7 @@ function testCriticalUserFlows() {
     'Blog post with Disqus'
   );
   logTestResult(
-    'Blog post with Disqus loads',
+    'Blog post loads successfully',
     blogPostTest.success && blogPostTest.output.includes('200')
       ? 'PASS'
       : 'FAIL',

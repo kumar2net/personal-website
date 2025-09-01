@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import DisqusComments from '../../components/DisqusComments';
 
 const BoyWithMusicInVeins = () => {
   const navigate = useNavigate();
@@ -273,12 +272,7 @@ const BoyWithMusicInVeins = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="boy-with-music-in-veins"
-        postUrl="https://kumarsite.netlify.app/blog/boy-with-music-in-veins"
-        postTitle="Boy with Music in His Veins - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

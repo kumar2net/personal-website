@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import DisqusComments from '../../components/DisqusComments';
 
 const Habit = () => {
   const navigate = useNavigate();
@@ -267,12 +266,7 @@ const Habit = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="habit"
-        postUrl="https://kumarsite.netlify.app/blog/habit"
-        postTitle="Habit - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

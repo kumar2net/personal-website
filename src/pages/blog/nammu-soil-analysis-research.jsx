@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 // import TldrSummary from '../../components/TldrSummary';
 import AuthorBio from '../../components/AuthorBio';
 
-import DisqusComments from '../../components/DisqusComments';
-
 const NammuSoilAnalysisResearch = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
@@ -354,12 +352,7 @@ const NammuSoilAnalysisResearch = () => {
       </div>
 
       {/* Blog interactions */}
-      <DisqusComments
-        postId="nammu-soil-analysis-research"
-        postUrl="https://kumarsite.netlify.app/blog/nammu-soil-analysis-research"
-        postTitle="revolutionizing soil analysis: laser vs traditional methods - Kumar's Blog"
-      />
-    </motion.div>
+          </motion.div>
   );
 };
 

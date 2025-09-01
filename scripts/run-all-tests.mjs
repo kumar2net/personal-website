@@ -64,14 +64,7 @@ function runUnitTests() {
   console.log(`\n📋 ${TEST_CATEGORIES.UNIT_TESTS}`);
   console.log('='.repeat(50));
 
-  // Test DisqusComments component
-  const disqusComponentPath = 'src/components/DisqusComments.jsx';
-  if (fs.existsSync(disqusComponentPath)) {
-    const content = fs.readFileSync(disqusComponentPath, 'utf8');
-
-    // Test required features
-    const unitTests = [
-      { name: 'Error handling', pattern: /setError\(/, required: true },
+  // Test 
       { name: 'Loading states', pattern: /isLoading/, required: true },
       { name: 'Retry functionality', pattern: /handleRetry/, required: true },
       {
@@ -105,143 +98,7 @@ function runUnitTests() {
   } else {
     logTestResult(
       TEST_CATEGORIES.UNIT_TESTS,
-      'DisqusComments component',
-      'FAIL',
-      'Component not found'
-    );
-  }
-
-  // Test other critical components
-  const criticalComponents = [
-    'src/App.jsx',
-    'src/pages/Blog.jsx',
-    'src/pages/Contact.jsx',
-  ];
-
-  criticalComponents.forEach((componentPath) => {
-    if (fs.existsSync(componentPath)) {
-      logTestResult(
-        TEST_CATEGORIES.UNIT_TESTS,
-        `${path.basename(componentPath)} exists`,
-        'PASS'
-      );
-    } else {
-      logTestResult(
-        TEST_CATEGORIES.UNIT_TESTS,
-        `${path.basename(componentPath)} exists`,
-        'FAIL',
-        'Component not found'
-      );
-    }
-  });
-}
-
-// 2. INTEGRATION TESTS
-function runIntegrationTests() {
-  console.log(`\n🔗 ${TEST_CATEGORIES.INTEGRATION_TESTS}`);
-  console.log('='.repeat(50));
-
-  // Test Disqus integration across blog posts
-  const blogDir = 'src/pages/blog';
-  if (fs.existsSync(blogDir)) {
-    const blogFiles = fs
-      .readdirSync(blogDir)
-      .filter((file) => file.endsWith('.jsx'));
-
-    let totalPosts = 0;
-    let postsWithDisqus = 0;
-    let postsWithProperConfig = 0;
-
-    blogFiles.forEach((file) => {
-      totalPosts++;
-      const filePath = path.join(blogDir, file);
-      const content = fs.readFileSync(filePath, 'utf8');
-
-      if (content.includes('DisqusComments')) {
-        postsWithDisqus++;
-
-        const hasPostId = /postId="[^"]+"/.test(content);
-        const hasPostUrl = /postUrl="[^"]+"/.test(content);
-        const hasPostTitle = /postTitle="[^"]+"/.test(content);
-
-        if (hasPostId && hasPostUrl && hasPostTitle) {
-          postsWithProperConfig++;
-        }
-      }
-    });
-
-    logTestResult(
-      TEST_CATEGORIES.INTEGRATION_TESTS,
-      'Blog posts with Disqus',
-      postsWithDisqus === totalPosts ? 'PASS' : 'FAIL',
-      `${postsWithDisqus}/${totalPosts} posts`
-    );
-
-    logTestResult(
-      TEST_CATEGORIES.INTEGRATION_TESTS,
-      'Blog posts properly configured',
-      postsWithProperConfig >= totalPosts * 0.8 ? 'PASS' : 'FAIL',
-      `${postsWithProperConfig}/${totalPosts} posts (${Math.round((postsWithProperConfig / totalPosts) * 100)}%)`
-    );
-  }
-
-  // Test build process
-  const buildResult = runCommand('npm run build', 'Build process');
-  logTestResult(
-    TEST_CATEGORIES.INTEGRATION_TESTS,
-    'Build process',
-    buildResult.success ? 'PASS' : 'FAIL',
-    buildResult.success ? 'Build successful' : buildResult.output
-  );
-}
-
-// 3. E2E TESTS
-function runE2ETests() {
-  console.log(`\n🌐 ${TEST_CATEGORIES.E2E_TESTS}`);
-  console.log('='.repeat(50));
-
-  // Test critical user flows
-  const e2eTests = [
-    { name: 'Home page loads', url: 'http://localhost:5173/', critical: true },
-    {
-      name: 'Blog page loads',
-      url: 'http://localhost:5173/blog',
-      critical: true,
-    },
-    {
-      name: 'Contact page loads',
-      url: 'http://localhost:5173/contact',
-      critical: true,
-    },
-    { name: 'Navigation works', url: 'http://localhost:5173/', critical: true },
-    {
-      name: 'Blog post with Disqus loads',
-      url: 'http://localhost:5173/blog/habit',
-      critical: true,
-    },
-  ];
-
-  // Note: In a real environment, these would use Playwright or Cypress
-  // For now, we'll simulate the tests
-  e2eTests.forEach((test) => {
-    // Simulate E2E test - in reality, this would make actual HTTP requests
-    const simulatedSuccess = Math.random() > 0.1; // 90% success rate simulation
-    logTestResult(
-      TEST_CATEGORIES.E2E_TESTS,
-      test.name,
-      simulatedSuccess ? 'PASS' : 'FAIL',
-      simulatedSuccess ? 'Page loads successfully' : 'Page failed to load'
-    );
-  });
-}
-
-// 4. ACCESSIBILITY TESTS
-function runAccessibilityTests() {
-  console.log(`\n♿ ${TEST_CATEGORIES.ACCESSIBILITY_TESTS}`);
-  console.log('='.repeat(50));
-
-  const accessibilityTests = [
-    { name: 'Alt text for images', pattern: /alt="[^"]*"/, required: true },
+      '
     { name: 'ARIA labels', pattern: /aria-label/, required: false },
     {
       name: 'Semantic HTML',
@@ -304,29 +161,7 @@ function runPerformanceTests() {
 
   // Test lazy loading implementation
   const hasLazyLoading =
-    fs.existsSync('src/components/DisqusComments.jsx') &&
-    fs
-      .readFileSync('src/components/DisqusComments.jsx', 'utf8')
-      .includes('IntersectionObserver');
-  logTestResult(
-    TEST_CATEGORIES.PERFORMANCE_TESTS,
-    'Lazy loading implemented',
-    hasLazyLoading ? 'PASS' : 'FAIL'
-  );
-}
-
-// 6. SECURITY TESTS
-function runSecurityTests() {
-  console.log(`\n🔒 ${TEST_CATEGORIES.SECURITY_TESTS}`);
-  console.log('='.repeat(50));
-
-  const securityTests = [
-    {
-      name: 'No hardcoded secrets',
-      pattern: /password|secret|key|token/,
-      required: false,
-    },
-    { name: 'HTTPS URLs', pattern: /https:\/\//, required: true },
+    fs.existsSync('src/components/
     {
       name: 'External links have rel="noopener"',
       pattern: /rel="noopener"/,
