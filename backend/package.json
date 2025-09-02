@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "gcp:setup": "bash scripts/gcp_setup.sh ${GCP_PROJECT_ID:-} ${GCP_LOCATION:-us-central1} blog-recommender-sa ${GA4_DATASET:-} ${GA4_TABLE:-events_*}",
+    "gcp:smoke": "bash scripts/gcp_smoke.sh"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^8.1.1",
