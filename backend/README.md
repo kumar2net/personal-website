@@ -1,6 +1,6 @@
-# (Archived) Analytics Backend
+# Analytics Backend + GA4 Topic Recommender
 
-This backend was used for a custom analytics system and is now archived. The live site uses Google Analytics 4 (GA4).
+Adds a GA4-driven blog topic recommendation system using BigQuery and Vertex AI.
 
 ## Features
 
@@ -56,6 +56,39 @@ The server will start on `http://localhost:3001`
 - `GET /api/analytics/metrics/daily` - Daily metrics
 - `GET /api/analytics/pages/top` - Top pages
 - `POST /api/analytics/reset` - Reset data
+
+### GA4 Topic Recommendations
+
+- `GET /api/recommendations/topics`
+  - Query params: `days` (default 14), `limit` (default 10, max 25), `language` (default `en`)
+  - Response:
+
+```
+{
+  "success": true,
+  "data": {
+    "topics": [
+      {"title": "...", "rationale": "...", "keywords": ["..."]}
+    ],
+    "inputs": {"days": 14, "limit": 10, "language": "en"}
+  }
+}
+```
+
+### Environment variables
+
+Copy `.env.example` to `.env` and set:
+
+```
+GOOGLE_APPLICATION_CREDENTIALS=/abs/path/to/service-account.json
+GCP_PROJECT_ID=your-project
+GCP_LOCATION=us-central1
+GA4_DATASET=analytics_XXXXXXXX
+GA4_TABLE=events_*
+RECOMMENDER_MODEL=gemini-1.5-pro
+RECOMMENDER_SYSTEM_INSTRUCTION=You are a blog topic recommender.
+CACHE_TTL_SECONDS=3600
+```
 
 ## After Deployment (If Using Your Own Backend)
 
