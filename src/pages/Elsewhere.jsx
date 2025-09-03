@@ -83,12 +83,25 @@ export default function Elsewhere() {
 
         <section>
           <h2 className="text-2xl font-semibold mb-4">On X (Twitter)</h2>
-          <TwitterTimeline username="kumar2net" height={700} />
+          <div className="bg-white rounded-lg shadow p-4 ring-1 ring-gray-100">
+            <TwitterTimeline username="kumar2net" height={700} />
+          </div>
+          <div className="mt-3 text-right">
+            <a
+              href="https://twitter.com/kumar2net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-blue-600 hover:text-blue-800"
+            >
+              Open on Twitter →
+            </a>
+          </div>
         </section>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-10 flex justify-between text-sm">
         <Link to="/blog" className="text-blue-600 hover:text-blue-800">← Back to Blog</Link>
+        <Link to="/" className="text-gray-600 hover:text-gray-800">Home</Link>
       </div>
     </div>
   );
