@@ -161,7 +161,7 @@ npm run test:pre-deploy # Pre-deployment checks
 ### **Environment Variables**
 Create a `.env` file for local development:
 ```env
-VITE_GA_MEASUREMENT_ID=your-ga-id
+VITE_GA_MEASUREMENT_ID=G-HWQM1TCFWQ
 VITE_SEMANTIC_SEARCH_API=your-api-url
 ```
 
@@ -224,9 +224,33 @@ netlify deploy --prod --dir=dist
 - Custom event tracking
 
 ### **GA4 Topic Recommender (New)**
-- Branch: `feature/ga4-topics-recommender`
-- Backend endpoint: `GET /api/recommendations/topics?days=14&limit=8&language=en`
-- Setup in `backend/` with `.env.example` and README
+- Branch: merged to `master`
+- Backend endpoint: `GET /api/recommendations/topics?days={1|7|14}&limit={1..25}&language=en`
+- Backend lives in `backend/` (Express). See `backend/README.md` for full details.
+- Vertex model: `gemini-2.5-flash-lite` (us-central1)
+- GA4 → BigQuery (US): dataset `analytics_12010944378`, table pattern `events*` (daily + intraday)
+
+Quick start (local):
+```bash
+# 1) Backend env (backend/.env)
+GCP_PROJECT_ID=my-project-74001686249
+GCP_LOCATION=us-central1
+GA4_DATASET=analytics_12010944378
+GA4_TABLE=events*
+BIGQUERY_LOCATION=US
+RECOMMENDER_MODEL=gemini-2.5-flash-lite
+
+# 2) Run backend (from backend/)
+cd backend && PORT=3001 node server.js
+
+# 3) Test endpoints
+curl -s "http://localhost:3001/api/health"
+curl -s "http://localhost:3001/api/recommendations/topics?days=7&limit=8&language=en"
+```
+
+Notes:
+- Until GA4 export creates tables, the endpoint returns an empty `topics: []` (no placeholders).
+- GA measurement ID embedded in `index.html`: `G-HWQM1TCFWQ` (SPA `send_page_view: false`, route-level PVs recommended).
 
 ### **Performance Monitoring**
 - Core Web Vitals tracking
