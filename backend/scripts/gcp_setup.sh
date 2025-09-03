@@ -23,7 +23,9 @@ fi
 
 echo "Configuring gcloud for project=${PROJECT_ID}, location=${LOCATION}..."
 gcloud -q config set project "${PROJECT_ID}"
-gcloud -q config set ai/location "${LOCATION}"
+# Older/newer gcloud versions differ: ai/region vs ai/location. Try both, ignore failures.
+gcloud -q config set ai/location "${LOCATION}" >/dev/null 2>&1 || \
+  gcloud -q config set ai/region "${LOCATION}" >/dev/null 2>&1 || true
 
 echo "Enabling required APIs..."
 gcloud -q services enable \

@@ -6,8 +6,11 @@ function getBigQueryClient() {
 }
 
 function getGa4TableReference() {
-  const dataset = process.env.GA4_DATASET;
-  const table = process.env.GA4_TABLE || 'events_*';
+  // Allow GA4_DATASET to be either full dataset name (e.g., analytics_12010944378)
+  // or just the numeric property ID (e.g., 12010944378)
+  const raw = process.env.GA4_DATASET;
+  const dataset = /^\d+$/.test(raw || '') ? `analytics_${raw}` : raw;
+  const table = process.env.GA4_TABLE || 'events*'; // include daily and intraday
   if (!dataset) {
     throw new Error('GA4_DATASET env var is required');
   }
@@ -25,8 +28,8 @@ async function fetchTopPages(days) {
       COUNT(1) AS page_views
     FROM ${tableRef}
     WHERE event_name = 'page_view'
-      AND _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
-                            AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+      AND event_date BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
+                         AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
     GROUP BY page_location, page_title, page_referrer
     HAVING page_location IS NOT NULL
     ORDER BY page_views DESC
@@ -35,16 +38,24 @@ async function fetchTopPages(days) {
   const options = {
     query,
     params: { days },
-    location: process.env.GCP_LOCATION || 'us-central1',
+    // GA4 BigQuery export commonly uses multi-region 'US' or 'EU'
+    location: process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
-  const [job] = await client.createQueryJob(options);
-  const [rows] = await job.getQueryResults();
-  return rows.map(r => ({
-    pageLocation: r.page_location,
-    pageTitle: r.page_title,
-    pageReferrer: r.page_referrer,
-    pageViews: Number(r.page_views) || 0,
-  }));
+  try {
+    const [job] = await client.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+    return rows.map(r => ({
+      pageLocation: r.page_location,
+      pageTitle: r.page_title,
+      pageReferrer: r.page_referrer,
+      pageViews: Number(r.page_views) || 0,
+    }));
+  } catch (error) {
+    if (/Not found/i.test(error.message) || /No matching tables/i.test(error.message)) {
+      return [];
+    }
+    throw error;
+  }
 }
 
 async function fetchTopSearchTerms(days) {
@@ -56,8 +67,8 @@ async function fetchTopSearchTerms(days) {
       COUNT(1) AS occurrences
     FROM ${tableRef}
     WHERE event_name IN ('view_search_results', 'search')
-      AND _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
-                            AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+      AND event_date BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
+                         AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
     GROUP BY search_term
     HAVING search_term IS NOT NULL
     ORDER BY occurrences DESC
@@ -66,11 +77,18 @@ async function fetchTopSearchTerms(days) {
   const options = {
     query,
     params: { days },
-    location: process.env.GCP_LOCATION || 'us-central1',
+    location: process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
-  const [job] = await client.createQueryJob(options);
-  const [rows] = await job.getQueryResults();
-  return rows.map(r => ({ term: r.search_term, occurrences: Number(r.occurrences) || 0 }));
+  try {
+    const [job] = await client.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+    return rows.map(r => ({ term: r.search_term, occurrences: Number(r.occurrences) || 0 }));
+  } catch (error) {
+    if (/Not found/i.test(error.message) || /No matching tables/i.test(error.message)) {
+      return [];
+    }
+    throw error;
+  }
 }
 
 module.exports = {
