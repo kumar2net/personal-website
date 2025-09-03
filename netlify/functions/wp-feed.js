@@ -1,12 +1,11 @@
 // Netlify Function: Fetch and normalize WordPress.com RSS feed
 // GET /.netlify/functions/wp-feed
 
-import fetch from 'node-fetch';
-import { XMLParser } from 'fast-xml-parser';
+const { XMLParser } = require('fast-xml-parser');
 
 const FEED_URL = 'https://kumar2net.wordpress.com/feed/';
 
-export const handler = async () => {
+exports.handler = async () => {
   try {
     const res = await fetch(FEED_URL, { headers: { 'User-Agent': 'wp-feed-function' } });
     if (!res.ok) {
@@ -17,7 +16,7 @@ export const handler = async () => {
     const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '' });
     const data = parser.parse(xml);
 
-    const channel = data?.rss?.channel || {};
+    const channel = (data && data.rss && data.rss.channel) || {};
     const items = Array.isArray(channel.item) ? channel.item : channel.item ? [channel.item] : [];
 
     const posts = items.map((it) => ({
@@ -44,7 +43,7 @@ export const handler = async () => {
       }),
     };
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'Unexpected error', details: String(err?.message || err) }) };
+    return { statusCode: 500, body: JSON.stringify({ error: 'Unexpected error', details: String((err && err.message) || err) }) };
   }
 };
 
