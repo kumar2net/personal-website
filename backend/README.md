@@ -115,6 +115,37 @@ production: {
 - `PORT` - Server port (default: 3001)
 - `NODE_ENV` - Environment (development/production)
 
+### Project defaults (from your GA4 link)
+
+Use these values in your `.env` (create `backend/.env` if missing):
+
+```
+GCP_PROJECT_ID=my-project-74001686249
+GCP_LOCATION=us-central1
+
+# GA4 → BigQuery (US)
+# GA4 property ID: 12010944378 (stream: kumarsite)
+# GA4-managed dataset GA writes to:
+GA4_DATASET=analytics_12010944378
+
+# Read both daily and intraday tables
+GA4_TABLE=events*
+BIGQUERY_LOCATION=US
+
+# Vertex AI model confirmed for this project/region
+RECOMMENDER_MODEL=gemini-2.5-flash-lite
+
+# Cache TTL for API responses (seconds)
+CACHE_TTL_SECONDS=3600
+```
+
+Notes:
+- Always start the backend from the `backend/` directory:
+  - `cd backend && PORT=3001 node server.js`
+- GA4 tables may take 15–60 minutes to appear after linking. Check for intraday tables:
+  - `bq --location=US ls analytics_12010944378 | grep '^\s*events_intraday_' || true`
+- The backend is configured to read both daily and intraday via `events*` and will work with either `analytics_12010944378` or numeric `12010944378` for `GA4_DATASET`.
+
 ## Security
 
 - CORS configured for your domain
