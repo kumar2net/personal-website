@@ -2,6 +2,8 @@ import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
+import SEO from '../../components/SEO';
+import { getBlogSeo } from '../../data/blogIndex';
 
 const jsxModules = import.meta.glob('/src/pages/blog/*.jsx');
 const mdModules = import.meta.glob('/src/pages/blog/*.md', {
@@ -33,6 +35,16 @@ export default function PostDynamic() {
   if (LazyComponent) {
     return (
       <Suspense fallback={<div>Loading…</div>}>
+        <SEO
+          title={getBlogSeo(slug)?.title}
+          description={getBlogSeo(slug)?.description}
+          canonicalPath={`/blog/${slug}`}
+          image={getBlogSeo(slug)?.image}
+          type="article"
+          publishedTime={getBlogSeo(slug)?.datePublished}
+          modifiedTime={getBlogSeo(slug)?.dateModified}
+          tags={getBlogSeo(slug)?.tags}
+        />
         <LazyComponent />
       </Suspense>
     );
@@ -41,6 +53,16 @@ export default function PostDynamic() {
   if (markdown) {
     return (
       <div className="prose max-w-none">
+        <SEO
+          title={getBlogSeo(slug)?.title || slug.replace(/-/g, ' ')}
+          description={getBlogSeo(slug)?.description}
+          canonicalPath={`/blog/${slug}`}
+          image={getBlogSeo(slug)?.image}
+          type="article"
+          publishedTime={getBlogSeo(slug)?.datePublished}
+          modifiedTime={getBlogSeo(slug)?.dateModified}
+          tags={getBlogSeo(slug)?.tags}
+        />
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
       </div>
     );
