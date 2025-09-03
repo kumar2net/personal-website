@@ -72,6 +72,7 @@ personal-website/
 ├── docs/                   # Documentation
 ├── netlify/
 │   └── functions/          # Serverless functions
+├── backend/                 # Express backend (GA4 topic recommender)
 └── public/                 # Static assets
 ```
 
@@ -221,6 +222,11 @@ netlify deploy --prod --dir=dist
 - User behavior analysis
 - Performance monitoring
 - Custom event tracking
+
+### **GA4 Topic Recommender (New)**
+- Branch: `feature/ga4-topics-recommender`
+- Backend endpoint: `GET /api/recommendations/topics?days=14&limit=8&language=en`
+- Setup in `backend/` with `.env.example` and README
 
 ### **Performance Monitoring**
 - Core Web Vitals tracking

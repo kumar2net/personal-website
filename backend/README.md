@@ -1,6 +1,6 @@
-# (Archived) Analytics Backend
+# Analytics Backend + GA4 Topic Recommender
 
-This backend was used for a custom analytics system and is now archived. The live site uses Google Analytics 4 (GA4).
+Adds a GA4-driven blog topic recommendation system using BigQuery and Vertex AI.
 
 ## Features
 
@@ -57,6 +57,39 @@ The server will start on `http://localhost:3001`
 - `GET /api/analytics/pages/top` - Top pages
 - `POST /api/analytics/reset` - Reset data
 
+### GA4 Topic Recommendations
+
+- `GET /api/recommendations/topics`
+  - Query params: `days` (default 14), `limit` (default 10, max 25), `language` (default `en`)
+  - Response:
+
+```
+{
+  "success": true,
+  "data": {
+    "topics": [
+      {"title": "...", "rationale": "...", "keywords": ["..."]}
+    ],
+    "inputs": {"days": 14, "limit": 10, "language": "en"}
+  }
+}
+```
+
+### Environment variables
+
+Copy `.env.example` to `.env` and set:
+
+```
+GOOGLE_APPLICATION_CREDENTIALS=/abs/path/to/service-account.json
+GCP_PROJECT_ID=your-project
+GCP_LOCATION=us-central1
+GA4_DATASET=analytics_XXXXXXXX
+GA4_TABLE=events_*
+RECOMMENDER_MODEL=gemini-1.5-pro
+RECOMMENDER_SYSTEM_INSTRUCTION=You are a blog topic recommender.
+CACHE_TTL_SECONDS=3600
+```
+
 ## After Deployment (If Using Your Own Backend)
 
 1. **Get your backend URL** (e.g., `https://your-app.railway.app`)
@@ -81,6 +114,37 @@ production: {
 
 - `PORT` - Server port (default: 3001)
 - `NODE_ENV` - Environment (development/production)
+
+### Project defaults (from your GA4 link)
+
+Use these values in your `.env` (create `backend/.env` if missing):
+
+```
+GCP_PROJECT_ID=my-project-74001686249
+GCP_LOCATION=us-central1
+
+# GA4 → BigQuery (US)
+# GA4 property ID: 12010944378 (stream: kumarsite)
+# GA4-managed dataset GA writes to:
+GA4_DATASET=analytics_12010944378
+
+# Read both daily and intraday tables
+GA4_TABLE=events*
+BIGQUERY_LOCATION=US
+
+# Vertex AI model confirmed for this project/region
+RECOMMENDER_MODEL=gemini-2.5-flash-lite
+
+# Cache TTL for API responses (seconds)
+CACHE_TTL_SECONDS=3600
+```
+
+Notes:
+- Always start the backend from the `backend/` directory:
+  - `cd backend && PORT=3001 node server.js`
+- GA4 tables may take 15–60 minutes to appear after linking. Check for intraday tables:
+  - `bq --location=US ls analytics_12010944378 | grep '^\s*events_intraday_' || true`
+- The backend is configured to read both daily and intraday via `events*` and will work with either `analytics_12010944378` or numeric `12010944378` for `GA4_DATASET`.
 
 ## Security
 
