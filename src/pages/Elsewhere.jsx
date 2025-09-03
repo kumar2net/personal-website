@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import TwitterTimeline from '../components/TwitterTimeline';
 import SEO from '../components/SEO';
 
 export default function Elsewhere() {
@@ -39,7 +38,7 @@ export default function Elsewhere() {
         type="website"
       />
       <h1 className="text-4xl font-bold mb-6">Elsewhere</h1>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-600 mb-4">
         I also write at{' '}
         <a className="text-blue-600 hover:text-blue-800" href="https://kumar2net.wordpress.com/" target="_blank" rel="noopener noreferrer">
           WordPress
@@ -51,7 +50,18 @@ export default function Elsewhere() {
         .
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="mb-8">
+        <a
+          href="https://twitter.com/kumar2net"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Follow on X
+        </a>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8">
         <section>
           <h2 className="text-2xl font-semibold mb-4">Latest on WordPress</h2>
           {loading && <div className="text-gray-500">Loading posts…</div>}
@@ -81,22 +91,7 @@ export default function Elsewhere() {
           </div>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">On X (Twitter)</h2>
-          <div className="bg-white rounded-lg shadow p-4 ring-1 ring-gray-100">
-            <TwitterTimeline username="kumar2net" height={700} />
-          </div>
-          <div className="mt-3 text-right">
-            <a
-              href="https://twitter.com/kumar2net"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:text-blue-800"
-            >
-              Open on Twitter →
-            </a>
-          </div>
-        </section>
+        
       </div>
 
       <div className="mt-10 flex justify-between text-sm">
