@@ -70,13 +70,19 @@ All blog posts including:
 
 ## 🔧 **Technical Implementation**
 
-### Files Created
-1. **`public/sitemap.html`** - Primary HTML sitemap (works best with Google Search Console)
-2. **`public/sitemap.xml`** - XML sitemap
-3. **`public/robots.txt`** - Robots file
-4. **`scripts/generate-sitemap.mjs`** - Sitemap generator script
-5. **`netlify/functions/sitemap.js`** - Netlify function sitemap
-6. **`netlify.toml`** - Netlify configuration with redirect rules
+### Files & Components
+1. **`src/components/SEO.jsx`** - Reusable SEO component
+   - Props: `title`, `description`, `canonicalPath`, `image`, `type`, `publishedTime`, `modifiedTime`, `tags`
+   - Injects Open Graph, Twitter Card, canonical, and JSON-LD (Article + Person)
+2. **`src/main.jsx`** - Wraps app with `HelmetProvider` (react-helmet-async)
+3. **Route usage** - `src/App.jsx` adds `<SEO />` per route (About, Projects, Blog, etc.)
+4. **Dynamic posts** - `src/pages/blog/PostDynamic.jsx` sets `<SEO />` based on `src/data/blogIndex.js`
+5. **Sitemaps**
+   - `public/sitemap.html` (primary)
+   - `public/sitemap.xml` and `netlify/functions/sitemap.js`
+   - `scripts/generate-sitemap.mjs`
+6. **Robots** - `public/robots.txt`
+7. **`netlify.toml`** - Netlify configuration with redirect rules
 
 ### Sitemap Generator Script
 ```bash
