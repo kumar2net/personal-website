@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { FaHome } from 'react-icons/fa';
+import { FaTwitter, FaWordpress } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary';
+import SEO from './components/SEO';
+import { getBlogSeo } from './data/blogIndex';
 import Logo from './components/Logo';
 import ScrollToTop from './components/ScrollToTop';
 import About from './pages/About';
@@ -59,6 +62,7 @@ import Trends from './pages/Trends';
 import UtilitiesDashboard from './pages/UtilitiesDashboard';
 import VocabAdditions from './pages/VocabAdditions';
 import NaruviWaterIssues from './pages/naruvi';
+import Elsewhere from './pages/Elsewhere';
 
 // Admin CMS removed
 
@@ -166,6 +170,13 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-100 mobile-fix">
+        <SEO
+          title="My Personal Portfolio"
+          description="AI enthusiast. Projects, blog, books, music, learning resources, and more."
+          canonicalPath="/"
+          image="/vite.svg"
+          type="website"
+        />
         <ScrollToTop />
         {/* Navigation */}
         <nav className="bg-white shadow-lg">
@@ -199,6 +210,13 @@ function App() {
                   onClick={() => trackClick('nav_about')}
                 >
                   About
+                </Link>
+                <Link
+                  to="/elsewhere"
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                  onClick={() => trackClick('nav_elsewhere')}
+                >
+                  Elsewhere
                 </Link>
                 <Link
                   to="/projects"
@@ -287,6 +305,16 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     About
+                  </Link>
+                  <Link
+                    to="/elsewhere"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick('nav_elsewhere_mobile');
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    Elsewhere
                   </Link>
                   <Link
                     to="/projects"
@@ -456,17 +484,42 @@ function App() {
                       — Friedrich Nietzsche
                     </p>
                   </motion.div>
+
+                  {/* Elsewhere icons */}
+                  <div className="mt-8 flex items-center justify-center gap-6">
+                    <a
+                      href="https://kumar2net.wordpress.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="WordPress"
+                      className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white shadow ring-1 ring-gray-200 hover:ring-blue-400 hover:shadow-md transition"
+                      title="WordPress"
+                    >
+                      <FaWordpress className="h-6 w-6 text-gray-800" />
+                    </a>
+                    <a
+                      href="https://twitter.com/kumar2net"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="X (Twitter)"
+                      className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white shadow ring-1 ring-gray-200 hover:ring-blue-400 hover:shadow-md transition"
+                      title="X (Twitter)"
+                    >
+                      <FaTwitter className="h-6 w-6 text-gray-800" />
+                    </a>
+                  </div>
                 </motion.div>
               }
             />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/trends" element={<Trends />} />
-            <Route path="/learning" element={<Learning />} />
-            <Route path="/music" element={<MusicPage />} />
-            <Route path="/album" element={<Album />} />
-            <Route path="/books" element={<Books />} />
+            <Route path="/about" element={<><SEO title="About" description="About Kumar and this website." canonicalPath="/about" type="website" /><About /></>} />
+            <Route path="/projects" element={<><SEO title="Projects" description="Selected projects and experiments." canonicalPath="/projects" type="website" /><Projects /></>} />
+            <Route path="/blog" element={<><SEO title="Blog" description="Latest posts on technology, learning, and life." canonicalPath="/blog" type="website" /><Blog /></>} />
+            <Route path="/trends" element={<><SEO title="Trends" description="Trends and insights." canonicalPath="/trends" type="website" /><Trends /></>} />
+            <Route path="/learning" element={<><SEO title="Learning" description="Learning hub: flashcards, notes, and more." canonicalPath="/learning" type="website" /><Learning /></>} />
+            <Route path="/music" element={<><SEO title="Music" description="Favorite tracks and playlists." canonicalPath="/music" type="website" /><MusicPage /></>} />
+            <Route path="/album" element={<><SEO title="Album" description="Travel albums and photos." canonicalPath="/album" type="website" /><Album /></>} />
+            <Route path="/elsewhere" element={<><SEO title="Elsewhere" description="WordPress posts and X timeline." canonicalPath="/elsewhere" type="website" /><Elsewhere /></>} />
+            <Route path="/books" element={<><SEO title="Books" description="Books I’m reading and notes." canonicalPath="/books" type="website" /><Books /></>} />
             <Route
               path="/books/applying-cornell-method"
               element={<ApplyingCornellMethodMd />}
@@ -476,13 +529,13 @@ function App() {
               element={<TheBrainStoryContent />}
             />
             <Route path="/books/pdf-extractor" element={<PDFExtractorPage />} />
-            <Route path="/books/atheism" element={<Atheism />} />
+            <Route path="/books/atheism" element={<><SEO title="Atheism" description="Atheism book notes and excerpts." canonicalPath="/books/atheism" type="article" /><Atheism /></>} />
             <Route path="/books/:slug" element={<BookDynamic />} />
             <Route path="/learning/:setId" element={<FlashcardSetPage />} />
-            <Route path="/learning/shortcuts" element={<Shortcuts />} />
+            <Route path="/learning/shortcuts" element={<><SEO title="Shortcuts" description="Keyboard shortcuts and practice." canonicalPath="/learning/shortcuts" type="website" /><Shortcuts /></>} />
             <Route
               path="/learning/vocab-additions"
-              element={<VocabAdditions />}
+              element={<><SEO title="Vocab Additions" description="Vocabulary additions and notes." canonicalPath="/learning/vocab-additions" type="website" /><VocabAdditions /></>}
             />
             <Route
               path="/blog/spine-implant-dashboard"
@@ -594,12 +647,12 @@ function App() {
               path="/blog/sobering-week-august-2025"
               element={<SoberingWeekAugust2025 />}
             />
-            <Route path="/dossier" element={<DossierPage />} />
-            <Route path="/utilities" element={<UtilitiesDashboard />} />
-            <Route path="/naruvi" element={<NaruviWaterIssues />} />
+            <Route path="/dossier" element={<><SEO title="Dossier" description="Weekly dossiers and research notes." canonicalPath="/dossier" type="website" /><DossierPage /></>} />
+            <Route path="/utilities" element={<><SEO title="Utilities" description="Utilities dashboard and tools." canonicalPath="/utilities" type="website" /><UtilitiesDashboard /></>} />
+            <Route path="/naruvi" element={<><SEO title="Naruvi Water Issues" description="Naruvi water issues dashboard and notes." canonicalPath="/naruvi" type="website" /><NaruviWaterIssues /></>} />
             {/* Admin route removed */}
             <Route path="/blog/:slug" element={<PostDynamic />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/contact" element={<><SEO title="Contact" description="Get in touch with Kumar." canonicalPath="/contact" type="website" /><Contact /></>} />
             {/* Admin route is handled by static files, not React Router */}
           </Routes>
         </main>
@@ -614,11 +667,16 @@ function App() {
               </p>
               {/* <p className="text-gray-600">© 2025 My Portfolio. All rights reserved.</p> */}
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-600 hover:text-gray-800">
-                  LinkedIn
+                <a
+                  href="https://kumar2net.wordpress.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  WordPress
                 </a>
                 <a
-                  href="https://x.com/kumar2net"
+                  href="https://twitter.com/kumar2net"
                   className="text-gray-600 hover:text-gray-800"
                   target="_blank"
                   rel="noopener noreferrer"

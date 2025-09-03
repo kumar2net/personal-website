@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ContentBadge from '../components/ContentBadge';
+import SEO from '../components/SEO';
 import SemanticSearch from '../components/SemanticSearch';
 import { addLastModifiedIfMissing } from '../utils/contentDates';
 
@@ -505,6 +506,12 @@ const Blog = () => {
       transition={{ duration: 0.5 }}
       className="max-w-6xl mx-auto px-4 py-8"
     >
+      <SEO
+        title="Blog"
+        description="Latest posts on technology, learning, notes, and personal writing."
+        canonicalPath="/blog"
+        type="website"
+      />
       <h1 className="text-4xl font-bold mb-6">Blog</h1>
       <SemanticSearch />
       <h2 className="text-2xl font-semibold mb-6">Latest Posts</h2>
