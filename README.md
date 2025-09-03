@@ -251,6 +251,7 @@ curl -s "http://localhost:3001/api/recommendations/topics?days=7&limit=8&languag
 Notes:
 - Until GA4 export creates tables, the endpoint returns an empty `topics: []` (no placeholders).
 - GA measurement ID embedded in `index.html`: `G-HWQM1TCFWQ` (SPA `send_page_view: false`, route-level PVs recommended).
+- Tag Assistant: Connected on September 3, 2025. Use Tag Assistant Connect; GTM preview is not applicable (no GTM container on the site).
 
 ### **Performance Monitoring**
 - Core Web Vitals tracking
@@ -302,5 +303,5 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Last Updated**: January 2025 (Updated: January 17, 2025)  
+**Last Updated**: September 3, 2025  
 **Status**: Production ready, optimized, and actively maintained
