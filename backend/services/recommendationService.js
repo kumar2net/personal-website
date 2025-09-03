@@ -73,47 +73,18 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en' }) 
     fetchTopSearchTerms(days).catch(() => []),
   ]);
 
-  function capitalize(text) {
-    if (!text || typeof text !== 'string') return '';
-    return text.charAt(0).toUpperCase() + text.slice(1);
+  // If there is no GA4 signal yet, do not fabricate topics
+  if ((topPages?.length || 0) === 0 && (topSearchTerms?.length || 0) === 0) {
+    const payload = { topics: [], inputs: { days, limit, language } };
+    cache.set(cacheKey, payload);
+    return payload;
   }
-
-  function extractPathName(url) {
-    try {
-      const u = new URL(url);
-      const parts = u.pathname.split('/').filter(Boolean);
-      return parts[parts.length - 1] || u.hostname;
-    } catch (_) {
-      return url || '';
-    }
-  }
-
-  const buildHeuristic = () => {
-    const topicsFromTerms = (topSearchTerms || []).slice(0, Math.ceil(limit / 2)).map((s) => ({
-      title: `${capitalize(s.term)}: What It Means and Why It Matters`,
-      rationale: `High interest in the search term "${s.term}" suggests readers want practical guidance.`,
-      keywords: [s.term, 'guide', 'examples'],
-    }));
-    const topicsFromPages = (topPages || []).slice(0, Math.floor(limit / 2)).map((p) => ({
-      title: `Deep Dive: ${p.pageTitle || extractPathName(p.pageLocation)}`,
-      rationale: 'Popular page indicates demand for a deeper exploration and follow-ups.',
-      keywords: [p.pageTitle || extractPathName(p.pageLocation) || 'topic', 'deep dive', 'follow-up'],
-    }));
-    const seeds = [
-      { title: 'Actionable GA4 Reporting Playbook', rationale: 'Provide hands-on recipes aligned with user intent.', keywords: ['GA4', 'reports', 'how-to'] },
-      { title: 'AI Topic Ideation for Content Sites', rationale: 'Bridge analytics with generative ideation methods.', keywords: ['AI', 'ideation', 'content'] },
-      { title: 'Improving Time-on-Page: Proven Patterns', rationale: 'Visitors care about engagement; demonstrate practical improvements.', keywords: ['engagement', 'UX', 'content'] },
-    ];
-    const fill = Array.from({ length: Math.max(0, limit - (topicsFromTerms.length + topicsFromPages.length)) })
-      .map((_, i) => seeds[i % seeds.length]);
-    return [...topicsFromTerms, ...topicsFromPages, ...fill].slice(0, limit);
-  };
 
   try {
     const prompt = buildPrompt({ topPages, topSearchTerms, language, limit });
     const raw = await generateTopicsPrompted(prompt);
     const parsed = tryParseTopics(raw);
-    const topics = (parsed.length > 0 ? parsed : buildHeuristic()).slice(0, limit).map(item => ({
+    const topics = parsed.slice(0, limit).map(item => ({
       title: item.title || item.topic || '',
       rationale: item.rationale || item.reason || '',
       keywords: item.keywords || item.tags || [],
@@ -122,8 +93,8 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en' }) 
     cache.set(cacheKey, payload);
     return payload;
   } catch (_) {
-    const topics = buildHeuristic();
-    const payload = { topics, inputs: { days, limit, language }, fallback: 'heuristic' };
+    // On error, return empty rather than placeholders
+    const payload = { topics: [], inputs: { days, limit, language } };
     cache.set(cacheKey, payload);
     return payload;
   }
