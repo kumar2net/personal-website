@@ -12,7 +12,8 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 - **Responsive Blog** - Modern blog with markdown support
 - **Portfolio Showcase** - Professional portfolio section
 - **Interactive Components** - Dynamic content and animations
-- **SEO Optimized** - Search engine friendly with meta tags
+- **SEO Optimized** - Route-level titles, descriptions, canonical, OG/Twitter, JSON-LD
+- **Elsewhere Hub** - WordPress posts feed + prominent X (Twitter) link
 - **Performance Focused** - Fast loading and optimized bundle
 
 ### **Technical Features**
@@ -55,6 +56,11 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 - **Netlify** - Hosting and CDN
 - **Netlify Functions** - Serverless functions
 - **GitHub** - Version control
+
+### **SEO**
+- **react-helmet-async** provider and a reusable `SEO` component
+- Structured data: Person + Article JSON-LD
+- Internal linking and canonical URLs
 
 ## 📁 **Project Structure**
 
@@ -163,6 +169,8 @@ Create a `.env` file for local development:
 ```env
 VITE_GA_MEASUREMENT_ID=G-HWQM1TCFWQ
 VITE_SEMANTIC_SEARCH_API=your-api-url
+# X API (optional, used for graceful Elsewhere fallback)
+X_BEARER_TOKEN=your-x-bearer-token
 ```
 
 ### **Netlify Configuration**
@@ -281,6 +289,7 @@ Notes:
 - `docs/CONTENT_STYLE_GUIDE.md` - Content guidelines
 - `docs/DEPLOYMENT_STATUS.md` - Deployment information
 - `docs/SEO_SETUP.md` - SEO configuration
+- `docs/ELSEWHERE_INTEGRATION.md` - WordPress + X integration (Elsewhere)
 - `docs/naruviwater/` - Naruvi Water Management Report documentation
 
 ### **Specialized Reports**
