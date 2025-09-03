@@ -1,9 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+require('dotenv').config();
+const { getRecommendedTopics } = require('./services/recommendationService');
+const NodeCache = require('node-cache');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const apiCache = new NodeCache({ stdTTL: parseInt(process.env.CACHE_TTL_SECONDS || '3600') });
 
 // Middleware
 app.use(helmet());
@@ -159,7 +163,11 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     data_points: analyticsData.pageViews.length,
     unique_visitors: analyticsData.visitors.size,
-    backend: 'Express.js'
+    backend: 'Express.js',
+    gcp: {
+      project: process.env.GCP_PROJECT_ID || null,
+      location: process.env.GCP_LOCATION || 'us-central1'
+    }
   });
 });
 
@@ -248,6 +256,25 @@ app.post('/api/analytics/reset', (req, res) => {
       success: false,
       error: error.message
     });
+  }
+});
+
+// New: Topic recommendations endpoint
+app.get('/api/recommendations/topics', async (req, res) => {
+  try {
+    const days = parseInt(req.query.days || '14');
+    const limit = Math.min(parseInt(req.query.limit || '10'), 25);
+    const language = (req.query.language || 'en').toString();
+    const cacheKey = `api:topics:${days}:${limit}:${language}`;
+    const cached = apiCache.get(cacheKey);
+    if (cached) {
+      return res.json({ success: true, data: cached, cached: true });
+    }
+    const data = await getRecommendedTopics({ days, limit, language });
+    apiCache.set(cacheKey, data);
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
