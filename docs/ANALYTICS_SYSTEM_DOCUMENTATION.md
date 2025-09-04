@@ -1,6 +1,6 @@
 # Analytics System Documentation
 
-**Last Updated:** August 10, 2025
+**Last Updated:** September 4, 2025
 
 ## Overview
 
@@ -296,6 +296,11 @@ const headers = {
 ## Testing and Validation
 
 Use GA4 Realtime and DebugView to validate page_view events while navigating between routes. Ensure only one GA tag is present and `send_page_view: false` is set in `index.html`.
+
+### GA4 → BigQuery Export Status (Sep 4, 2025)
+- Linked to `my-project-74001686249` (US), dataset `analytics_12010944378`.  
+- Streaming + Daily enabled; no `events_intraday_*` yet. Monitoring continues every 2 minutes.  
+- Follow [GA4 BigQuery Export](https://support.google.com/analytics/answer/9358801?hl=en) and re-link if needed; see prepared support ticket content for escalation.
 
 ## Performance Considerations
 

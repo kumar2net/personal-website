@@ -1,6 +1,6 @@
 # GA4 Analytics System Documentation
 
-**Last Updated:** September 3, 2025
+**Last Updated:** September 4, 2025
 **Project:** Personal Website Analytics
 **GA4 Property ID:** 500563672
 
@@ -110,6 +110,12 @@ This shows your current GA4 configuration and settings.
 
 ### Verification (Tag Assistant)
 - Tag Assistant connected successfully on September 3, 2025 using Connect. GTM preview links are not applicable since the site does not use a GTM container.
+
+### GA4 → BigQuery Export Status (Sep 4, 2025)
+- Dataset `analytics_12010944378` (US) exists; billing enabled.  
+- Streaming + Daily export enabled for Web stream `G-HWQM1TCFWQ`.  
+- Intraday tables not yet created; active monitor checks every 2 minutes.  
+- If no tables after re-link + traffic, escalate to Google per support ticket template.
 
 ### **Google Cloud Project:**
 - **ID:** my-project-74001686249

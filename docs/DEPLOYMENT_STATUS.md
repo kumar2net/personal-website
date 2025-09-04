@@ -4,10 +4,12 @@
 
 **Production URL**: https://kumarsite.netlify.app  
 **Status**: ✅ **LIVE AND OPTIMIZED**  
-**Last Deploy**: September 3, 2025  
+**Last Deploy**: September 4, 2025  
 **Branch**: `master`
 
-**Analytics Verification**: GA4 tag `G-HWQM1TCFWQ` installed and Tag Assistant connected (September 3, 2025).
+**Analytics Verification**: 
+- GA4 tag `G-HWQM1TCFWQ` installed and Tag Assistant connected (Sep 3, 2025).
+- GA4 → BigQuery: Link configured (US, Streaming + Daily). As of Sep 4, 2025, no `events_intraday_*` tables yet; monitoring every 2 minutes. If not created after re-link, support ticket ready.
 
 ## 📊 **Deployment Metrics**
 
