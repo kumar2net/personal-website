@@ -221,8 +221,38 @@ const CommonSenseRareCommodity = () => {
             />
             <p className="text-sm text-gray-500 mt-4 italic max-w-3xl mx-auto">
               This word cloud visualizes the complex landscape of India-US trade relations, highlighting key concepts, 
-              affected industries, and the broader economic implications of current tariff policies. Ofcourse all this GST slab rationalization happened because of this imbroglio but not sure of its overall impact.
+              affected industries, and the broader economic implications of current tariff policies.
             </p>
+          </div>
+
+          {/* GST Rationalization Impact - Prominent Section */}
+          <div className="bg-gradient-to-r from-orange-50 to-red-50 p-8 rounded-lg border-l-4 border-orange-500 mb-8 mt-8">
+            <h3 className="text-2xl font-bold mb-4 text-orange-800">
+              🏛️ The GST Rationalization Question
+            </h3>
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-orange-200">
+              <p className="text-lg text-gray-800 font-medium mb-4">
+                <strong>Of course, all this GST slab rationalization happened because of this imbroglio, but not sure of its overall impact.</strong>
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-blue-800 mb-2">🤔 The Uncertainty</h4>
+                  <p className="text-sm text-gray-700">
+                    While GST rationalization was implemented as a response to trade tensions, 
+                    the long-term economic impact remains unclear. Did it actually help or create 
+                    additional complexity for businesses and consumers?
+                  </p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-green-800 mb-2">📊 The Broader Question</h4>
+                  <p className="text-sm text-gray-700">
+                    This highlights a fundamental issue: policy changes made in response to 
+                    international pressure may not always serve domestic economic interests. 
+                    Common sense would suggest evaluating impact before implementation.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <h2 className="text-3xl font-bold mb-6 text-gray-800">
