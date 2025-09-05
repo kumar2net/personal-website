@@ -4,6 +4,21 @@
   publish = "dist"
   environment = { SECRETS_SCAN_ENABLED = "false", NODE_VERSION = "20" }
 
+# Form processing
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
 # Netlify functions for security and CSP headers
 [functions]
   directory = "netlify/functions"
