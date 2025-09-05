@@ -32,9 +32,9 @@ export default function BlogSentimentSummary() {
             </tr>
           </thead>
           <tbody>
-            {summary.map(({ title, score, label }, idx) => (
+            {summary.map(({ title, score, label }) => (
               <tr
-                key={idx}
+                key={`${title}-${score}`}
                 className="border-b last:border-b-0 hover:bg-gray-50 transition"
               >
                 <td className="py-2 px-4 font-medium">{title}</td>

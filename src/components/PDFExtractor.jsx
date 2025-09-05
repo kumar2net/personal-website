@@ -126,6 +126,7 @@ function PDFExtractor({ pdfUrl, onExtract }) {
       <div className="space-y-4">
         {pdfUrl && (
           <button
+            type="button"
             onClick={extractFromUrl}
             disabled={isExtracting}
             className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
@@ -148,6 +149,7 @@ function PDFExtractor({ pdfUrl, onExtract }) {
             className="hidden"
           />
           <button
+            type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={isExtracting}
             className="w-full px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 disabled:opacity-50"

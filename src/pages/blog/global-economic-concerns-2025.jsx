@@ -298,8 +298,7 @@ const GlobalEconomicConcerns = () => {
           </div>
         </div>
       </div>
-
-          </motion.div>
+    </motion.div>
   );
 };
 

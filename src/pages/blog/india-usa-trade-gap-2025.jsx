@@ -323,7 +323,7 @@ const IndiaUSATradeGap = () => {
         </div>
 
         {/* Blog Interactions Component */}
-              </div>
+      </div>
     </motion.div>
   );
 };

@@ -272,7 +272,7 @@ const BoyWithMusicInVeins = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

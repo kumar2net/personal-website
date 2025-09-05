@@ -54,5 +54,3 @@ export const blogIndex = {
 export function getBlogSeo(slug) {
   return blogIndex[slug];
 }
-
-

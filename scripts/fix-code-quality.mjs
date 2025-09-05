@@ -40,11 +40,7 @@ try {
   // Check for specific security issues
   console.log('🔒 Checking for security issues...');
 
-  const filesToCheck = [
-
-    'src/main.jsx',
-    'src/App.jsx',
-  ];
+  const filesToCheck = ['src/main.jsx', 'src/App.jsx'];
 
   let securityIssues = 0;
 

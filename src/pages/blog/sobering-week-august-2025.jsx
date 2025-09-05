@@ -166,12 +166,11 @@ const SoberingWeekAugust2025 = () => {
               Stay Curious & Persistent
             </p>
           </section>
-
         </div>
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

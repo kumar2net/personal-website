@@ -643,7 +643,7 @@ const TnpdclAutomatedMeterReading = () => {
       </div>
 
       {/* Likes and Comments */}
-          </motion.div>
+    </motion.div>
   );
 };
 

@@ -3,7 +3,8 @@ import path from 'node:path';
 import * as pdfjsLib from 'pdfjs-dist';
 
 // Set up PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 async function extractPDFContent() {
   const projectRoot = path.resolve(process.cwd());
@@ -33,12 +34,10 @@ async function extractPDFContent() {
       console.log(`📃 Processing page ${pageNum}/${pdf.numPages}...`);
       const page = await pdf.getPage(pageNum);
       const textContent = await page.getTextContent();
-      
-      const pageText = textContent.items
-        .map(item => item.str)
-        .join(' ');
-      
-      fullText += pageText + '\n\n';
+
+      const pageText = textContent.items.map((item) => item.str).join(' ');
+
+      fullText += `${pageText}\n\n`;
     }
 
     console.log(`📊 Text length: ${fullText.length} characters`);

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet-async';
 
-const SITE_NAME = 'Kumar\'s Personal Website';
+const SITE_NAME = "Kumar's Personal Website";
 const SITE_URL = 'https://kumarsite.netlify.app';
 const DEFAULT_IMAGE = `${SITE_URL}/vite.svg`;
 
@@ -22,25 +22,30 @@ export default function SEO({
 }) {
   const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const url = canonicalPath ? `${SITE_URL}${canonicalPath}` : SITE_URL;
-  const ogImage = image ? (image.startsWith('http') ? image : `${SITE_URL}${image}`) : DEFAULT_IMAGE;
+  const ogImage = image
+    ? image.startsWith('http')
+      ? image
+      : `${SITE_URL}${image}`
+    : DEFAULT_IMAGE;
 
-  const jsonLdArticle = type === 'article'
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: title || SITE_NAME,
-        description: description || undefined,
-        image: ogImage,
-        author: { '@type': 'Person', name: authorName },
-        datePublished: publishedTime || undefined,
-        dateModified: modifiedTime || publishedTime || undefined,
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': url,
-        },
-        keywords: tags.join(', '),
-      }
-    : null;
+  const jsonLdArticle =
+    type === 'article'
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: title || SITE_NAME,
+          description: description || undefined,
+          image: ogImage,
+          author: { '@type': 'Person', name: authorName },
+          datePublished: publishedTime || undefined,
+          dateModified: modifiedTime || publishedTime || undefined,
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': url,
+          },
+          keywords: tags.join(', '),
+        }
+      : null;
 
   const jsonLdPerson = {
     '@context': 'https://schema.org',
@@ -72,7 +77,9 @@ export default function SEO({
 
       {/* JSON-LD */}
       {jsonLdArticle && (
-        <script type="application/ld+json">{JSON.stringify(jsonLdArticle)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLdArticle)}
+        </script>
       )}
       <script type="application/ld+json">{JSON.stringify(jsonLdPerson)}</script>
     </Helmet>
@@ -90,5 +97,3 @@ SEO.propTypes = {
   authorName: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
 };
-
-

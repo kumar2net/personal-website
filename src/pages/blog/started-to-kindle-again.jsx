@@ -326,7 +326,7 @@ const StartedToKindleAgain = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

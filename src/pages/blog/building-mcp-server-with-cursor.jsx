@@ -341,7 +341,7 @@ const BuildingMcpServerWithCursor = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

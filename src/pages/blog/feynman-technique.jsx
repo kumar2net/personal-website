@@ -229,7 +229,7 @@ const FeynmanTechnique = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

@@ -722,7 +722,7 @@ const MicrosoftMaiDxIndia = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

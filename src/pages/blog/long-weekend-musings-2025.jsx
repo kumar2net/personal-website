@@ -174,7 +174,7 @@ const LongWeekendMusings2025 = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

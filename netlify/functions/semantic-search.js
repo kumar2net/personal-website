@@ -4,8 +4,8 @@
   - Response: { results: [{ id, title, url, excerpt, score }], tookMs }
 */
 
-const { v1: aiplatform } = require('@google-cloud/aiplatform');
-const { GoogleAuth } = require('google-auth-library');
+import { v1 as aiplatform } from '@google-cloud/aiplatform';
+import { GoogleAuth } from 'google-auth-library';
 
 function jsonResponse(statusCode, body, extraHeaders = {}) {
   return {
@@ -48,22 +48,22 @@ async function embedQuery(text) {
   return values;
 }
 
-function loadMapping() {
+async function loadMapping() {
   try {
-    // Use require to load json at runtime in Netlify env
-    const mapping = require('../../src/data/semantic-mapping.json');
-    if (!Array.isArray(mapping)) return [];
-    return mapping;
+    // Use import to load json at runtime in Netlify env
+    const mapping = await import('../../src/data/semantic-mapping.json', { with: { type: 'json' } });
+    if (!Array.isArray(mapping.default)) return [];
+    return mapping.default;
   } catch (e) {
     return [];
   }
 }
 
-function loadEmbeddings() {
+async function loadEmbeddings() {
   try {
-    const embeddings = require('../../src/data/semantic-embeddings.json');
-    if (!Array.isArray(embeddings)) return [];
-    return embeddings;
+    const embeddings = await import('../../src/data/semantic-embeddings.json', { with: { type: 'json' } });
+    if (!Array.isArray(embeddings.default)) return [];
+    return embeddings.default;
   } catch (e) {
     return [];
   }
@@ -85,7 +85,7 @@ function cosineSimilarity(a, b) {
   return dot / (Math.sqrt(na) * Math.sqrt(nb));
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   const started = Date.now();
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
@@ -112,7 +112,7 @@ exports.handler = async (event) => {
   try {
     const queryEmbedding = await embedQuery(q);
 
-    const mapping = loadMapping();
+    const mapping = await loadMapping();
     const byId = new Map(mapping.map((m) => [m.id, m]));
 
     // Try Vertex AI if GCP variables are available
@@ -157,7 +157,7 @@ exports.handler = async (event) => {
     }
 
     // Local fallback using cosine similarity
-    const embeddings = loadEmbeddings();
+    const embeddings = await loadEmbeddings();
     if (embeddings.length > 0) {
       const scored = embeddings.map((e) => ({ id: e.id, score: cosineSimilarity(queryEmbedding, e.vector) }));
       scored.sort((a, b) => b.score - a.score);

@@ -49,7 +49,7 @@ function logTestResult(category, testName, status, details = '') {
   }
 }
 
-function runCommand(command, description) {
+function _runCommand(command, description) {
   try {
     console.log(`\n🔧 Running: ${description}`);
     const result = execSync(command, { encoding: 'utf8', stdio: 'pipe' });
@@ -64,40 +64,48 @@ function runUnitTests() {
   console.log(`\n📋 ${TEST_CATEGORIES.UNIT_TESTS}`);
   console.log('='.repeat(50));
 
-  // Test 
-      { name: 'Loading states', pattern: /isLoading/, required: true },
-      { name: 'Retry functionality', pattern: /handleRetry/, required: true },
-      {
-        name: 'Script error handling',
-        pattern: /script\.onerror/,
-        required: true,
-      },
-      {
-        name: 'Script load handling',
-        pattern: /script\.onload/,
-        required: true,
-      },
-      {
-        
-        required: true,
-      },
-      { name: 'Proper initialization', pattern: /setTimeout/, required: true },
-      {
-        name: 'Script management',
-        pattern: /scriptRef\.current|script\.onload/,
-        required: true,
-      },
-    ];
+  // Test unit test features
+  const unitTests = [
+    { name: 'Loading states', pattern: /isLoading/, required: true },
+    { name: 'Retry functionality', pattern: /handleRetry/, required: true },
+    {
+      name: 'Script error handling',
+      pattern: /script\.onerror/,
+      required: true,
+    },
+    {
+      name: 'Script load handling',
+      pattern: /script\.onload/,
+      required: true,
+    },
+    { name: 'Proper initialization', pattern: /setTimeout/, required: true },
+    {
+      name: 'Script management',
+      pattern: /scriptRef\.current|script\.onload/,
+      required: true,
+    },
+  ];
 
+  // Check if test files exist
+  const testFile = 'scripts/test-unit.mjs';
+  if (fs.existsSync(testFile)) {
+    const content = fs.readFileSync(testFile, 'utf8');
     unitTests.forEach((test) => {
       const hasFeature = test.pattern.test(content);
       const status = hasFeature ? 'PASS' : test.required ? 'FAIL' : 'SKIP';
       logTestResult(TEST_CATEGORIES.UNIT_TESTS, test.name, status);
     });
   } else {
-    logTestResult(
-      TEST_CATEGORIES.UNIT_TESTS,
-      '
+    logTestResult(TEST_CATEGORIES.UNIT_TESTS, 'Unit tests skipped', 'SKIP');
+  }
+}
+
+// 2. ACCESSIBILITY TESTS
+function runAccessibilityTests() {
+  console.log(`\n♿ ${TEST_CATEGORIES.ACCESSIBILITY}`);
+  console.log('='.repeat(50));
+
+  const accessibilityTests = [
     { name: 'ARIA labels', pattern: /aria-label/, required: false },
     {
       name: 'Semantic HTML',
@@ -159,8 +167,9 @@ function runPerformanceTests() {
   }
 
   // Test lazy loading implementation
-  const hasLazyLoading =
-    fs.existsSync('src/components/
+  const _hasLazyLoading = fs.existsSync('src/components/LazyImage.jsx');
+
+  const securityTests = [
     {
       name: 'External links have rel="noopener"',
       pattern: /rel="noopener"/,

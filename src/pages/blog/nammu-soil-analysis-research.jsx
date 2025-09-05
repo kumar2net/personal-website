@@ -352,7 +352,7 @@ const NammuSoilAnalysisResearch = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

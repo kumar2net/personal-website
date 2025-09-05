@@ -511,15 +511,132 @@ function App() {
                 </motion.div>
               }
             />
-            <Route path="/about" element={<><SEO title="About" description="About Kumar and this website." canonicalPath="/about" type="website" /><About /></>} />
-            <Route path="/projects" element={<><SEO title="Projects" description="Selected projects and experiments." canonicalPath="/projects" type="website" /><Projects /></>} />
-            <Route path="/blog" element={<><SEO title="Blog" description="Latest posts on technology, learning, and life." canonicalPath="/blog" type="website" /><Blog /></>} />
-            <Route path="/trends" element={<><SEO title="Trends" description="Trends and insights." canonicalPath="/trends" type="website" /><Trends /></>} />
-            <Route path="/learning" element={<><SEO title="Learning" description="Learning hub: flashcards, notes, and more." canonicalPath="/learning" type="website" /><Learning /></>} />
-            <Route path="/music" element={<><SEO title="Music" description="Favorite tracks and playlists." canonicalPath="/music" type="website" /><MusicPage /></>} />
-            <Route path="/album" element={<><SEO title="Album" description="Travel albums and photos." canonicalPath="/album" type="website" /><Album /></>} />
-            <Route path="/elsewhere" element={<><SEO title="Elsewhere" description="WordPress posts and X timeline." canonicalPath="/elsewhere" type="website" /><Elsewhere /></>} />
-            <Route path="/books" element={<><SEO title="Books" description="Books I’m reading and notes." canonicalPath="/books" type="website" /><Books /></>} />
+            <Route
+              path="/about"
+              element={
+                <>
+                  <SEO
+                    title="About"
+                    description="About Kumar and this website."
+                    canonicalPath="/about"
+                    type="website"
+                  />
+                  <About />
+                </>
+              }
+            />
+            <Route
+              path="/projects"
+              element={
+                <>
+                  <SEO
+                    title="Projects"
+                    description="Selected projects and experiments."
+                    canonicalPath="/projects"
+                    type="website"
+                  />
+                  <Projects />
+                </>
+              }
+            />
+            <Route
+              path="/blog"
+              element={
+                <>
+                  <SEO
+                    title="Blog"
+                    description="Latest posts on technology, learning, and life."
+                    canonicalPath="/blog"
+                    type="website"
+                  />
+                  <Blog />
+                </>
+              }
+            />
+            <Route
+              path="/trends"
+              element={
+                <>
+                  <SEO
+                    title="Trends"
+                    description="Trends and insights."
+                    canonicalPath="/trends"
+                    type="website"
+                  />
+                  <Trends />
+                </>
+              }
+            />
+            <Route
+              path="/learning"
+              element={
+                <>
+                  <SEO
+                    title="Learning"
+                    description="Learning hub: flashcards, notes, and more."
+                    canonicalPath="/learning"
+                    type="website"
+                  />
+                  <Learning />
+                </>
+              }
+            />
+            <Route
+              path="/music"
+              element={
+                <>
+                  <SEO
+                    title="Music"
+                    description="Favorite tracks and playlists."
+                    canonicalPath="/music"
+                    type="website"
+                  />
+                  <MusicPage />
+                </>
+              }
+            />
+            <Route
+              path="/album"
+              element={
+                <>
+                  <SEO
+                    title="Album"
+                    description="Travel albums and photos."
+                    canonicalPath="/album"
+                    type="website"
+                  />
+                  <Album />
+                </>
+              }
+            />
+            <Route
+              path="/elsewhere"
+              element={
+                <>
+                  <SEO
+                    title="Elsewhere"
+                    description="WordPress posts and X timeline."
+                    canonicalPath="/elsewhere"
+                    type="website"
+                  />
+                  <Elsewhere />
+                </>
+              }
+            />
+            <Route
+              path="/books"
+              element={
+                <>
+                  <SEO
+                    title="Books"
+                    description="Books I’m reading and notes."
+                    canonicalPath="/books"
+                    type="website"
+                  />
+                  <Books />
+                </>
+              }
+            />
             <Route
               path="/books/applying-cornell-method"
               element={<ApplyingCornellMethodMd />}
@@ -529,13 +646,49 @@ function App() {
               element={<TheBrainStoryContent />}
             />
             <Route path="/books/pdf-extractor" element={<PDFExtractorPage />} />
-            <Route path="/books/atheism" element={<><SEO title="Atheism" description="Atheism book notes and excerpts." canonicalPath="/books/atheism" type="article" /><Atheism /></>} />
+            <Route
+              path="/books/atheism"
+              element={
+                <>
+                  <SEO
+                    title="Atheism"
+                    description="Atheism book notes and excerpts."
+                    canonicalPath="/books/atheism"
+                    type="article"
+                  />
+                  <Atheism />
+                </>
+              }
+            />
             <Route path="/books/:slug" element={<BookDynamic />} />
             <Route path="/learning/:setId" element={<FlashcardSetPage />} />
-            <Route path="/learning/shortcuts" element={<><SEO title="Shortcuts" description="Keyboard shortcuts and practice." canonicalPath="/learning/shortcuts" type="website" /><Shortcuts /></>} />
+            <Route
+              path="/learning/shortcuts"
+              element={
+                <>
+                  <SEO
+                    title="Shortcuts"
+                    description="Keyboard shortcuts and practice."
+                    canonicalPath="/learning/shortcuts"
+                    type="website"
+                  />
+                  <Shortcuts />
+                </>
+              }
+            />
             <Route
               path="/learning/vocab-additions"
-              element={<><SEO title="Vocab Additions" description="Vocabulary additions and notes." canonicalPath="/learning/vocab-additions" type="website" /><VocabAdditions /></>}
+              element={
+                <>
+                  <SEO
+                    title="Vocab Additions"
+                    description="Vocabulary additions and notes."
+                    canonicalPath="/learning/vocab-additions"
+                    type="website"
+                  />
+                  <VocabAdditions />
+                </>
+              }
             />
             <Route
               path="/blog/spine-implant-dashboard"
@@ -647,12 +800,64 @@ function App() {
               path="/blog/sobering-week-august-2025"
               element={<SoberingWeekAugust2025 />}
             />
-            <Route path="/dossier" element={<><SEO title="Dossier" description="Weekly dossiers and research notes." canonicalPath="/dossier" type="website" /><DossierPage /></>} />
-            <Route path="/utilities" element={<><SEO title="Utilities" description="Utilities dashboard and tools." canonicalPath="/utilities" type="website" /><UtilitiesDashboard /></>} />
-            <Route path="/naruvi" element={<><SEO title="Naruvi Water Issues" description="Naruvi water issues dashboard and notes." canonicalPath="/naruvi" type="website" /><NaruviWaterIssues /></>} />
+            <Route
+              path="/dossier"
+              element={
+                <>
+                  <SEO
+                    title="Dossier"
+                    description="Weekly dossiers and research notes."
+                    canonicalPath="/dossier"
+                    type="website"
+                  />
+                  <DossierPage />
+                </>
+              }
+            />
+            <Route
+              path="/utilities"
+              element={
+                <>
+                  <SEO
+                    title="Utilities"
+                    description="Utilities dashboard and tools."
+                    canonicalPath="/utilities"
+                    type="website"
+                  />
+                  <UtilitiesDashboard />
+                </>
+              }
+            />
+            <Route
+              path="/naruvi"
+              element={
+                <>
+                  <SEO
+                    title="Naruvi Water Issues"
+                    description="Naruvi water issues dashboard and notes."
+                    canonicalPath="/naruvi"
+                    type="website"
+                  />
+                  <NaruviWaterIssues />
+                </>
+              }
+            />
             {/* Admin route removed */}
             <Route path="/blog/:slug" element={<PostDynamic />} />
-            <Route path="/contact" element={<><SEO title="Contact" description="Get in touch with Kumar." canonicalPath="/contact" type="website" /><Contact /></>} />
+            <Route
+              path="/contact"
+              element={
+                <>
+                  <SEO
+                    title="Contact"
+                    description="Get in touch with Kumar."
+                    canonicalPath="/contact"
+                    type="website"
+                  />
+                  <Contact />
+                </>
+              }
+            />
             {/* Admin route is handled by static files, not React Router */}
           </Routes>
         </main>

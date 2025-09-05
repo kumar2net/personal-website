@@ -64,11 +64,11 @@ class BookCoverService {
       const response = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=3`
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
 
       if (data.items && data.items.length > 0) {
@@ -107,11 +107,11 @@ class BookCoverService {
       const response = await fetch(
         `https://openlibrary.org/search.json?title=${query}&limit=1`
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
 
       if (data.docs?.[0]) {
@@ -134,11 +134,11 @@ class BookCoverService {
       const response = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=1`
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
 
       if (data.items?.[0]) {
@@ -152,11 +152,11 @@ class BookCoverService {
           const isbnResponse = await fetch(
             `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
           );
-          
+
           if (!isbnResponse.ok) {
             throw new Error(`HTTP error! status: ${isbnResponse.status}`);
           }
-          
+
           const isbnData = await isbnResponse.json();
           const bookData = isbnData[`ISBN:${isbn}`];
           if (bookData?.cover) {

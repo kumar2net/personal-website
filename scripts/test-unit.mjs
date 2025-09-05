@@ -27,7 +27,6 @@ function testComponent(componentPath, componentName, requiredFeatures) {
   if (!fs.existsSync(componentPath)) {
     logTestResult(`${componentName} exists`, 'FAIL', 'Component not found');
     return;
-    return;
   }
 
   logTestResult(`${componentName} exists`, 'PASS');
@@ -40,7 +39,6 @@ function testComponent(componentPath, componentName, requiredFeatures) {
     logTestResult(feature.name, status);
   });
 }
-
 
 // Test App component
 function testAppComponent() {
@@ -96,8 +94,6 @@ function testContactComponent() {
   testComponent('src/pages/Contact.jsx', 'Contact', contactFeatures);
 }
 
-
-
 // Test utility functions
 function testUtilityFunctions() {
   console.log('\n📋 Testing Utility Functions:');
@@ -146,7 +142,7 @@ function testConfigurationFiles() {
 function runUnitTests() {
   console.log('🚀 Starting Unit Test Suite\n');
 
-    testAppComponent();
+  testAppComponent();
   testBlogComponent();
   testContactComponent();
 

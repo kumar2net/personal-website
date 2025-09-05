@@ -102,8 +102,6 @@ function testCriticalUserFlows() {
   );
 }
 
-
-
 // Test responsive design
 function testResponsiveDesign() {
   console.log('\n📋 Testing Responsive Design:');
@@ -237,8 +235,6 @@ function testErrorHandling() {
       hasLoadingStates ? 'PASS' : 'FAIL'
     );
   }
-
-
 }
 
 // Main E2E test runner

@@ -262,7 +262,7 @@ const Autophagy = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

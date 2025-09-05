@@ -175,7 +175,7 @@ const AcronymSoupRevisited2025 = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

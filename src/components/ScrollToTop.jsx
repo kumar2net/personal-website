@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function ScrollToTop() {
   const location = useLocation();
-  const { pathname, search, hash } = location;
+  const { hash } = location;
 
   useEffect(() => {
     if (typeof window === 'undefined') {
