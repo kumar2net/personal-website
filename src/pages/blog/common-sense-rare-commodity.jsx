@@ -9,8 +9,9 @@ const CommonSenseRareCommodity = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
-  const [loadingComments, setLoadingComments] = useState(false);
+  const [name, setName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
 
   const handleLike = () => {
     if (isLiked) {
@@ -26,79 +27,42 @@ const CommonSenseRareCommodity = () => {
     setShowCommentForm(!showCommentForm);
   };
 
-  const fetchComments = async () => {
-    setLoadingComments(true);
-    try {
-      const response = await fetch('/.netlify/functions/store-comment?postSlug=common-sense-rare-commodity');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        setComments(result.comments || []);
-      }
-    } catch (error) {
-      console.error('Error fetching comments:', error);
-      // In development with Vite, Netlify functions aren't available
-      // This is expected behavior - functions only work with 'netlify dev'
-      if (error.message.includes('404') || error.message.includes('Unexpected token')) {
-        console.log('Netlify functions not available in Vite dev mode. Use "npm run dev:netlify" to test functions.');
-      }
-    } finally {
-      setLoadingComments(false);
-    }
-  };
-
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    if (!comment.trim()) return;
+    if (!comment.trim() || !name.trim()) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus('');
 
     try {
-      const response = await fetch('/.netlify/functions/store-comment', {
+      const formData = new FormData();
+      formData.append('form-name', 'blog-comments');
+      formData.append('post-slug', 'common-sense-rare-commodity');
+      formData.append('name', name.trim());
+      formData.append('comment', comment.trim());
+      formData.append('timestamp', new Date().toISOString());
+
+      const response = await fetch('/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          postSlug: 'common-sense-rare-commodity',
-          comment: comment.trim(),
-          author: 'Anonymous' // You could add a name field if needed
-        }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString(),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert('Thank you for your comment! It has been saved successfully.');
+      if (response.ok) {
+        setSubmitStatus('success');
         setComment('');
+        setName('');
         setShowCommentForm(false);
-        // Refresh comments to show the new one
-        fetchComments();
       } else {
-        alert('Sorry, there was an error saving your comment. Please try again.');
+        setSubmitStatus('error');
       }
     } catch (error) {
       console.error('Error submitting comment:', error);
-      // In development with Vite, Netlify functions aren't available
-      if (error.message.includes('404') || error.message.includes('Unexpected token')) {
-        alert('Comments feature requires Netlify dev server. Run "npm run dev:netlify" to test this functionality.');
-      } else {
-        alert('Sorry, there was an error saving your comment. Please try again.');
-      }
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  // Load comments when component mounts
-  useEffect(() => {
-    fetchComments();
-  }, []);
 
   return (
     <motion.div
@@ -404,70 +368,84 @@ const CommonSenseRareCommodity = () => {
             {showCommentForm && (
               <div className="max-w-2xl mx-auto">
                 <form onSubmit={handleCommentSubmit} className="space-y-4">
-                  <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Share your thoughts on common sense in international relations..."
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                    rows="4"
-                  />
+                  {/* Hidden fields for Netlify Forms */}
+                  <input type="hidden" name="form-name" value="blog-comments" />
+                  <input type="hidden" name="post-slug" value="common-sense-rare-commodity" />
+                  
+                  <div>
+                    <input
+                      type="text"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <textarea
+                      name="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Share your thoughts on common sense in international relations..."
+                      className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                      rows="4"
+                      required
+                    />
+                  </div>
+                  
+                  {/* Status Messages */}
+                  {submitStatus === 'success' && (
+                    <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                      Thank you for your comment! It has been submitted successfully.
+                    </div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                      Sorry, there was an error submitting your comment. Please try again.
+                    </div>
+                  )}
+                  
                   <div className="flex justify-end space-x-3">
                     <button
                       type="button"
                       onClick={() => setShowCommentForm(false)}
                       className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                      disabled={isSubmitting}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      disabled={!comment.trim()}
-                      className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={!comment.trim() || !name.trim() || isSubmitting}
+                      className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                     >
-                      Post Comment
+                      {isSubmitting ? (
+                        <>
+                          <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Submitting...
+                        </>
+                      ) : (
+                        'Post Comment'
+                      )}
                     </button>
                   </div>
                 </form>
               </div>
             )}
 
-            {/* Comments Display */}
-            <div className="max-w-4xl mx-auto mt-8">
-              <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                Comments ({comments.length})
-              </h4>
-              
-              
-              {loadingComments ? (
-                <div className="text-center py-4">
-                  <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>
-                  <p className="text-gray-600 mt-2">Loading comments...</p>
-                </div>
-              ) : comments.length > 0 ? (
-                <div className="space-y-4">
-                  {comments.map((commentItem) => (
-                    <div key={commentItem.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="font-medium text-gray-800">{commentItem.author}</span>
-                        <span className="text-sm text-gray-500">
-                          {new Date(commentItem.timestamp).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </span>
-                      </div>
-                      <p className="text-gray-700 leading-relaxed">{commentItem.comment}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <p>No comments yet. Be the first to share your thoughts!</p>
-                </div>
-              )}
+            {/* Comment Info */}
+            <div className="max-w-4xl mx-auto mt-8 text-center">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-blue-800 mb-2">
+                  💬 Share Your Thoughts
+                </h4>
+                <p className="text-blue-700">
+                  Comments are submitted via Netlify Forms and will be reviewed before being displayed. 
+                  Your thoughts help create meaningful discussions about these important topics.
+                </p>
+              </div>
             </div>
           </div>
         </div>
