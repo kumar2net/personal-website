@@ -207,7 +207,7 @@ export default function Elsewhere() {
                     </div>
                     
                     {/* Title with hover effect */}
-                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-200 pr-12 sm:pr-32 mb-3">
+                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-200 pr-12 sm:pr-32 mb-3 mt-8">
                       {decodeEntities(p.title)}
                     </h3>
                     
@@ -253,7 +253,7 @@ export default function Elsewhere() {
                     
                     {/* Sparkle effect for new posts (within 7 days) */}
                     {new Date() - new Date(p.pubDate) < 7 * 24 * 60 * 60 * 1000 && (
-                      <div className="absolute top-4 left-4 flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                      <div className="absolute top-4 left-4 flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm z-10">
                         <Sparkles className="w-3 h-3" />
                         NEW
                       </div>
