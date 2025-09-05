@@ -41,6 +41,20 @@ curl -s "http://localhost:8888/.netlify/functions/x-latest?username=kumar2net" |
 - Elsewhere uses the shared `SEO` component for titles/description/canonical
 - `SEO` injects Person JSON-LD with `sameAs` links to WordPress and X
 
+## Recent Updates (September 2025)
+
+### UI/UX Improvements
+- **Fixed NEW badge overlapping**: Added proper spacing (`mt-8`) to post titles and z-index (`z-10`) to NEW badges
+- **Enhanced visual hierarchy**: Improved spacing and layering of post cards for better readability
+- **Elegant link styling**: Implemented sophisticated hover effects and animations for "Click to read the original post" links
+- **Responsive design**: Optimized layout for mobile and desktop viewing
+
+### Technical Changes
+- Updated `src/pages/Elsewhere.jsx` with improved CSS classes and positioning
+- Enhanced post card animations and hover states
+- Better error handling and loading states
+
 ## Notes
 - If X embed is re-enabled in the future, prefer click-to-load and visibility-based rendering to minimize 429s
 - Keep the WordPress link and X link visible at the top for discoverability
+- NEW badges appear for posts published within the last 7 days

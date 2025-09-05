@@ -6,6 +6,21 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 
 **Production URL**: https://kumarsite.netlify.app
 
+## 📝 **Recent Updates (September 2025)**
+
+### **Elsewhere Page Enhancements**
+- ✅ **Fixed NEW badge overlapping** - Resolved visual overlap between "NEW" badges and post titles
+- ✅ **Enhanced visual hierarchy** - Improved spacing and layering for better readability
+- ✅ **Elegant link styling** - Added sophisticated hover effects and animations
+- ✅ **Responsive optimization** - Better mobile and desktop layout
+- ✅ **Production deployment** - Successfully deployed and tested on live site
+
+### **Technical Improvements**
+- Updated CSS positioning and z-index management
+- Enhanced post card animations and hover states
+- Improved error handling and loading states
+- Better responsive design patterns
+
 ## 🎯 **Features**
 
 ### **Core Features**
