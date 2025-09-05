@@ -364,6 +364,14 @@ const CommonSenseRareCommodity = () => {
               </button>
             </div>
 
+            {/* Hidden form for Netlify Forms detection */}
+            <form name="blog-comments" netlify netlify-honeypot="bot-field" hidden>
+              <input type="text" name="name" />
+              <input type="text" name="comment" />
+              <input type="text" name="post-slug" />
+              <input type="text" name="timestamp" />
+            </form>
+
             {/* Comment Form */}
             {showCommentForm && (
               <div className="max-w-2xl mx-auto">
@@ -371,6 +379,11 @@ const CommonSenseRareCommodity = () => {
                   {/* Hidden fields for Netlify Forms */}
                   <input type="hidden" name="form-name" value="blog-comments" />
                   <input type="hidden" name="post-slug" value="common-sense-rare-commodity" />
+                  <div style={{ display: 'none' }}>
+                    <label>
+                      Don't fill this out if you're human: <input name="bot-field" />
+                    </label>
+                  </div>
                   
                   <div>
                     <input
