@@ -35,16 +35,11 @@ export const handler = async (event) => {
     }
 
     try {
-      // Configure store with explicit siteID and token if available
-      const storeOptions = {};
-      
-      // Use environment variables if available (for production)
-      if (process.env.NETLIFY_SITE_ID) {
-        storeOptions.siteID = process.env.NETLIFY_SITE_ID;
-      }
-      if (process.env.NETLIFY_BLOBS_TOKEN) {
-        storeOptions.token = process.env.NETLIFY_BLOBS_TOKEN;
-      }
+      // Configure store with explicit siteID and token
+      const storeOptions = {
+        siteID: process.env.NETLIFY_SITE_ID,
+        token: process.env.NETLIFY_BLOBS_TOKEN
+      };
       
       const store = getStore('comments', storeOptions);
       const comments = await store.get(postSlug);
@@ -104,16 +99,11 @@ export const handler = async (event) => {
   }
 
   try {
-    // Configure store with explicit siteID and token if available
-    const storeOptions = {};
-    
-    // Use environment variables if available (for production)
-    if (process.env.NETLIFY_SITE_ID) {
-      storeOptions.siteID = process.env.NETLIFY_SITE_ID;
-    }
-    if (process.env.NETLIFY_BLOBS_TOKEN) {
-      storeOptions.token = process.env.NETLIFY_BLOBS_TOKEN;
-    }
+    // Configure store with explicit siteID and token
+    const storeOptions = {
+      siteID: process.env.NETLIFY_SITE_ID,
+      token: process.env.NETLIFY_BLOBS_TOKEN
+    };
     
     const store = getStore('comments', storeOptions);
     const commentId = `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
