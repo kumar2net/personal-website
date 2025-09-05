@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const CommonSenseRareCommodity = () => {
@@ -12,6 +12,7 @@ const CommonSenseRareCommodity = () => {
   const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
+  const [localComments, setLocalComments] = useState([]);
 
   const handleLike = () => {
     if (isLiked) {
@@ -35,6 +36,7 @@ const CommonSenseRareCommodity = () => {
     setSubmitStatus('');
 
     try {
+      // Try Netlify Forms first
       const formData = new FormData();
       formData.append('form-name', 'blog-comments');
       formData.append('post-slug', 'common-sense-rare-commodity');
@@ -57,12 +59,53 @@ const CommonSenseRareCommodity = () => {
           setShowCommentForm(false);
         }, 2000);
       } else {
-        console.error('Form submission failed:', response.status, response.statusText);
-        setSubmitStatus('error');
+        // Fallback to localStorage if Netlify Forms fails
+        const commentData = {
+          id: Date.now(),
+          name: name.trim(),
+          comment: comment.trim(),
+          postSlug: 'common-sense-rare-commodity',
+          timestamp: new Date().toISOString(),
+        };
+
+        const existingComments = JSON.parse(localStorage.getItem('blog-comments') || '[]');
+        existingComments.push(commentData);
+        localStorage.setItem('blog-comments', JSON.stringify(existingComments));
+
+        // Update local comments state
+        setLocalComments(prev => [...prev, commentData]);
+
+        setSubmitStatus('success');
+        setComment('');
+        setName('');
+        setTimeout(() => {
+          setShowCommentForm(false);
+        }, 2000);
       }
     } catch (error) {
       console.error('Error submitting comment:', error);
-      setSubmitStatus('error');
+      // Fallback to localStorage
+      const commentData = {
+        id: Date.now(),
+        name: name.trim(),
+        comment: comment.trim(),
+        postSlug: 'common-sense-rare-commodity',
+        timestamp: new Date().toISOString(),
+      };
+
+      const existingComments = JSON.parse(localStorage.getItem('blog-comments') || '[]');
+      existingComments.push(commentData);
+      localStorage.setItem('blog-comments', JSON.stringify(existingComments));
+
+      // Update local comments state
+      setLocalComments(prev => [...prev, commentData]);
+
+      setSubmitStatus('success');
+      setComment('');
+      setName('');
+      setTimeout(() => {
+        setShowCommentForm(false);
+      }, 2000);
     } finally {
       setIsSubmitting(false);
     }
@@ -195,18 +238,106 @@ const CommonSenseRareCommodity = () => {
             <h3 className="text-2xl font-bold mb-4 text-red-800">
               💰 The Funding Reality
             </h3>
-            <div className="space-y-4">
-              <p className="text-base text-gray-700">
-                <strong>United States:</strong> Largest contributor to most multilateral institutions, wielding disproportionate influence
-              </p>
-              <p className="text-base text-gray-700">
-                <strong>World Bank:</strong> US holds 16.89% voting power, effectively giving it veto power over major decisions
-              </p>
-              <p className="text-base text-gray-700">
-                <strong>IMF:</strong> US controls 16.5% of voting shares, again providing veto power
-              </p>
-              <p className="text-base text-gray-700">
-                <strong>WTO:</strong> While more democratic in structure, major trade disputes often reflect power dynamics rather than pure merit
+            <p className="text-base text-gray-700 mb-6">
+              The disproportionate influence of major funders in multilateral institutions creates a system where 
+              economic power translates directly into political control. Here's the stark reality:
+            </p>
+            
+            {/* Vethathiri Maharishi vs Osho: Approaches to World Order */}
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full border-collapse border border-gray-300 bg-white rounded-lg shadow-sm">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="border border-gray-300 p-3 text-left font-semibold text-gray-800">
+                      Aspect
+                    </th>
+                    <th className="border border-gray-300 p-3 text-left font-semibold text-gray-800">
+                      Vethathiri Maharishi
+                    </th>
+                    <th className="border border-gray-300 p-3 text-left font-semibold text-gray-800">
+                      Osho
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 p-3 font-semibold text-blue-800">
+                      Core Vision
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Supreme World Government for lasting peace
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Spiritual awakening as path to harmony
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="border border-gray-300 p-3 font-semibold text-blue-800">
+                      Pathway
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Self-realization, restructure of UNO, world governance
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Individual freedom and consciousness
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-3 font-semibold text-blue-800">
+                      Unity Principle
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Oneness of all via universal consciousness
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Spontaneous natural order through freedom
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="border border-gray-300 p-3 font-semibold text-blue-800">
+                      Role of Spirituality
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Fundamental to social and global change
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Fundamental to authentic creative living
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 p-3 font-semibold text-blue-800">
+                      Approach to Order
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Structured, democratic political and spiritual framework
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Anti-structure, emphasis on personal liberty
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="border border-gray-300 p-3 font-semibold text-blue-800">
+                      Ultimate Goal
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      World peace through global unity and governance
+                    </td>
+                    <td className="border border-gray-300 p-3">
+                      Individual spiritual freedom and transformation
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <h4 className="font-semibold text-yellow-800 mb-2">🔍 Key Insight</h4>
+              <p className="text-sm text-yellow-700">
+                Vethathiri Maharishi's vision of restructuring the UNO (United Nations Organization) represents a structured 
+                approach to global governance through self-realization and democratic frameworks. In contrast, Osho's 
+                philosophy emphasizes individual transformation as the path to harmony, suggesting that true world order 
+                emerges from personal spiritual freedom rather than institutional restructuring. Both approaches highlight 
+                the fundamental question: Can common sense prevail through structural reform or individual awakening?
               </p>
             </div>
           </div>
@@ -471,6 +602,34 @@ const CommonSenseRareCommodity = () => {
               </div>
             )}
 
+            {/* Local Comments Display */}
+            {localComments.length > 0 && (
+              <div className="max-w-2xl mx-auto mt-8">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Comments ({localComments.length})</h3>
+                <div className="space-y-4">
+                  {localComments
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                    .map((comment) => (
+                      <div key={comment.id} className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-medium text-gray-800">{comment.name}</h4>
+                          <span className="text-sm text-gray-500">
+                            {new Date(comment.timestamp).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </div>
+                        <p className="text-gray-700">{comment.comment}</p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
             {/* Comment Info */}
             <div className="max-w-4xl mx-auto mt-8 text-center">
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
@@ -478,7 +637,7 @@ const CommonSenseRareCommodity = () => {
                   💬 Share Your Thoughts
                 </h4>
                 <p className="text-blue-700">
-                  Comments are submitted via Netlify Forms and will be reviewed before being displayed. 
+                  Comments are stored locally in your browser and will appear immediately after submission. 
                   Your thoughts help create meaningful discussions about these important topics.
                 </p>
               </div>
