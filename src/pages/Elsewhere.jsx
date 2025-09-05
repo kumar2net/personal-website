@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import OriginalPostCallout from '../components/OriginalPostCallout';
+import { trackEvent } from '../utils/analytics';
 
 export default function Elsewhere() {
   const [posts, setPosts] = useState([]);
@@ -118,25 +120,31 @@ export default function Elsewhere() {
             </div>
           )}
           {!loading && !error && posts.length > 0 && (
-            <ul className="space-y-4">
+            <ul className="space-y-6">
               {posts.slice(0, 10).map((p) => (
-                <li key={p.guid} className="bg-white p-4 rounded-lg shadow">
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg font-semibold text-blue-700 hover:text-blue-800"
-                  >
-                    {decodeEntities(p.title)}
-                  </a>
-                  <div className="text-sm text-gray-500">
-                    {new Date(p.pubDate).toLocaleDateString()}
+                <li key={p.guid} className="bg-white p-5 rounded-xl shadow border border-gray-100">
+                  <div className="flex flex-col gap-3">
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEvent('elsewhere_post_title_click', { url: p.link })}
+                      className="text-lg font-semibold text-blue-700 hover:text-blue-800"
+                    >
+                      {decodeEntities(p.title)}
+                    </a>
+                    <div className="text-sm text-gray-500">
+                      {new Date(p.pubDate).toLocaleDateString()}
+                    </div>
+                    {p.excerpt && (
+                      <p className="text-gray-700 mt-1">
+                        {decodeEntities(p.excerpt)}…
+                      </p>
+                    )}
+                    <div className="pt-2">
+                      <OriginalPostCallout url={p.link} source="WordPress" compact />
+                    </div>
                   </div>
-                  {p.excerpt && (
-                    <p className="text-gray-700 mt-2">
-                      {decodeEntities(p.excerpt)}…
-                    </p>
-                  )}
                 </li>
               ))}
             </ul>
