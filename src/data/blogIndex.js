@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'common-sense-rare-commodity': {
+    title: 'Common Sense is a Rare Commodity',
+    description:
+      'With all this rhetoric about tariffs from both sides—the great country and ours—where are we heading to? Unnecessary tension and so much management time wasted. Political rhetoric at the expense of common sense.',
+    image: '/media/tandtTagcloud.png',
+    tags: ['Trade Relations', 'International Politics', 'Economic Policy', 'Global Governance', 'Common Sense', 'Social Commentary'],
+    datePublished: new Date().toISOString().split('T')[0],
+    dateModified: new Date().toISOString().split('T')[0],
+  },
   'sobering-week-august-2025': {
     title: 'A Sobering Week: Reflections on Loss, Life, and Learning',
     description:

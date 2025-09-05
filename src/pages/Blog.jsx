@@ -7,6 +7,31 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Common Sense is a Rare Commodity',
+    date: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    }),
+    lastModified: new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    }),
+    excerpt:
+      'With all this rhetoric about tariffs from both sides—the great country and ours—where are we heading to? Unnecessary tension and so much management time wasted. Political rhetoric at the expense of common sense.',
+    tags: [
+      'Trade Relations',
+      'International Politics',
+      'Economic Policy',
+      'Global Governance',
+      'Common Sense',
+      'Social Commentary',
+    ],
+    image: '/media/tandtTagcloud.png',
+    link: '/blog/common-sense-rare-commodity',
+  },
+  {
     title: 'A Sobering Week: Reflections on Loss, Life, and Learning',
     date: 'August 2025',
     lastModified: 'August 2025',

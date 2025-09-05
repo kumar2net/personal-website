@@ -43,6 +43,7 @@
     "@google-analytics/data": "^5.2.0",
     "@google-cloud/aiplatform": "^5.4.0",
     "@heroicons/react": "^2.2.0",
+    "@netlify/blobs": "^10.0.10",
     "@tailwindcss/typography": "^0.5.16",
     "docx-preview": "^0.3.6",
     "dotenv": "^17.2.1",
