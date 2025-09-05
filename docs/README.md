@@ -7,7 +7,9 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 ## 🚀 Features
 
 - **Portfolio Showcase** - Display projects and skills
-- **Blog System** - Share thoughts and experiences with Disqus comments and AI-generated TL;DR summaries
+- **Blog System** - Share thoughts and experiences with interactive comments (Netlify Forms + localStorage) and AI-generated TL;DR summaries
+- **Interactive Comments** - Robust comment system with dual storage (Netlify Forms + localStorage fallback)
+- **Like Functionality** - Interactive like buttons with visual feedback and counters
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Music Curation** - Personal music journey with favorite tracks and artists
 - **Learning Hub** - Educational resources and shortcuts

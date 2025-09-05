@@ -6,25 +6,31 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 
 **Production URL**: https://kumarsite.netlify.app
 
-## 📝 **Recent Updates (September 2025)**
+## 📝 **Recent Updates (January 2025)**
 
-### **Elsewhere Page Enhancements**
-- ✅ **Fixed NEW badge overlapping** - Resolved visual overlap between "NEW" badges and post titles
-- ✅ **Enhanced visual hierarchy** - Improved spacing and layering for better readability
-- ✅ **Elegant link styling** - Added sophisticated hover effects and animations
-- ✅ **Responsive optimization** - Better mobile and desktop layout
+### **New Blog Post: "Common Sense is a Rare Commodity"**
+- ✅ **Created comprehensive blog post** - Analysis of India-US trade relations and tariff policies
+- ✅ **Interactive comment system** - Netlify Forms with localStorage fallback for reliability
+- ✅ **Like functionality** - Interactive like button with visual feedback
+- ✅ **Accessibility compliance** - Full WCAG guidelines with ARIA labels and screen reader support
+- ✅ **SEO optimization** - Integrated into blog array and SEO index with dynamic dates
+- ✅ **Image integration** - Tag cloud visualization of trade relations concepts
 - ✅ **Production deployment** - Successfully deployed and tested on live site
 
 ### **Technical Improvements**
-- Updated CSS positioning and z-index management
-- Enhanced post card animations and hover states
-- Improved error handling and loading states
-- Better responsive design patterns
+- Implemented hybrid comment storage (Netlify Forms + localStorage fallback)
+- Enhanced form validation and error handling
+- Added comprehensive accessibility features
+- Improved user experience with loading states and success messages
+- Fixed React warnings and console errors
+- Added proper ARIA labels and live regions for dynamic content
 
 ## 🎯 **Features**
 
 ### **Core Features**
-- **Responsive Blog** - Modern blog with markdown support
+- **Responsive Blog** - Modern blog with markdown support and interactive comments
+- **Interactive Comment System** - Netlify Forms with localStorage fallback for reliability
+- **Like Functionality** - Interactive like buttons with visual feedback
 - **Portfolio Showcase** - Professional portfolio section
 - **Interactive Components** - Dynamic content and animations
 - **SEO Optimized** - Route-level titles, descriptions, canonical, OG/Twitter, JSON-LD
