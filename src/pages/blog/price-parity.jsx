@@ -65,7 +65,7 @@ const PriceParity = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

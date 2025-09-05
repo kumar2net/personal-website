@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function TwitterTimeline({ username = 'kumar2net', height = 600 }) {
+export default function TwitterTimeline({
+  username = 'kumar2net',
+  height = 600,
+}) {
   const containerRef = useRef(null);
   const hasCreatedRef = useRef(false);
   const [failed, setFailed] = useState(false);
@@ -10,8 +13,12 @@ export default function TwitterTimeline({ username = 'kumar2net', height = 600 }
   useEffect(() => {
     const ensureScript = () => {
       return new Promise((resolve) => {
-        if (window.twttr && window.twttr.widgets) return resolve(window.twttr);
-        const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+        if (window.twttr?.widgets) {
+          return resolve(window.twttr);
+        }
+        const existing = document.querySelector(
+          'script[src="https://platform.twitter.com/widgets.js"]'
+        );
         if (existing) {
           existing.addEventListener('load', () => resolve(window.twttr));
           return;
@@ -62,14 +69,17 @@ export default function TwitterTimeline({ username = 'kumar2net', height = 600 }
     ensureScript().then((twttr) => {
       if (!containerRef.current) return;
       // Lazy render when visible to reduce requests
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            renderOnce(twttr);
-            observer.disconnect();
-          }
-        });
-      }, { threshold: 0.1 });
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              renderOnce(twttr);
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
       observer.observe(containerRef.current);
     });
 
@@ -81,14 +91,18 @@ export default function TwitterTimeline({ username = 'kumar2net', height = 600 }
   // API fallback: fetch latest posts to show links if embed fails
   useEffect(() => {
     let active = true;
-    fetch(`/.netlify/functions/x-latest?username=${encodeURIComponent(username)}`)
+    fetch(
+      `/.netlify/functions/x-latest?username=${encodeURIComponent(username)}`
+    )
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error('x api error'))))
       .then((data) => {
         if (!active) return;
         setApiItems(Array.isArray(data.items) ? data.items : []);
       })
       .catch(() => {});
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [username]);
 
   return (
@@ -102,7 +116,9 @@ export default function TwitterTimeline({ username = 'kumar2net', height = 600 }
           >
             Load Timeline
           </button>
-          <div className="mt-2 text-xs text-gray-500">Loads on demand to avoid X rate limits.</div>
+          <div className="mt-2 text-xs text-gray-500">
+            Loads on demand to avoid X rate limits.
+          </div>
         </div>
       )}
       <div ref={containerRef} className="w-full" />
@@ -128,12 +144,14 @@ export default function TwitterTimeline({ username = 'kumar2net', height = 600 }
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:text-blue-800"
                   >
-                    {it.text.length > 140 ? it.text.slice(0, 140) + '…' : it.text}
+                    {it.text.length > 140
+                      ? it.text.slice(0, 140) + '…'
+                      : it.text}
                   </a>
                   <span className="ml-2 text-xs text-gray-500">
                     {new Date(it.created_at).toLocaleDateString()}
                   </span>
-                </li)
+                </li>
               ))}
             </ul>
           )}

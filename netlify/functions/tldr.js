@@ -4,7 +4,7 @@
   - Response: { summary: string, model: string, created: number, inputHash: string }
 */
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 // Avoid embedding the model value as a static literal to prevent secrets scanning false-positives
@@ -41,7 +41,7 @@ function makeFallbackSummary(text) {
   return combined;
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   console.log('[tldr] Function started');
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });

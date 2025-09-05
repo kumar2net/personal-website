@@ -138,7 +138,7 @@ const PortfolioWebsitePost = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

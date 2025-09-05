@@ -20,7 +20,21 @@ async function xFetch(path, token) {
   return res.json();
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
+  // Handle CORS preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
+      },
+      body: '',
+    };
+  }
+
   try {
     const token = process.env.X_BEARER_TOKEN;
     const username = (event.queryStringParameters && event.queryStringParameters.username) || 'kumar2net';
@@ -52,12 +66,24 @@ exports.handler = async (event) => {
         'content-type': 'application/json',
         // cache for 5 minutes
         'cache-control': 'public, max-age=300',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
       body: JSON.stringify({ username, items }),
     };
   } catch (err) {
     const status = err && err.status ? err.status : 500;
-    return { statusCode: status, body: JSON.stringify({ error: 'Failed to fetch X posts', details: String(err && err.details || err && err.message || err) }) };
+    return { 
+      statusCode: status, 
+      headers: {
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+      body: JSON.stringify({ error: 'Failed to fetch X posts', details: String(err && err.details || err && err.message || err) }) 
+    };
   }
 };
 

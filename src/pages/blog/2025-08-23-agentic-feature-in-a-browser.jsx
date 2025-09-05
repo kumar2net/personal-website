@@ -45,7 +45,7 @@ const AgenticFeatureInABrowser = () => {
       />
 
       {/* Blog interactions */}
-      
+
       <div className="mt-12 pt-8 border-t border-gray-200">
         <div className="flex justify-between items-center">
           <Link to="/blog" className="text-blue-600 hover:text-blue-800">

@@ -3,7 +3,8 @@ import path from 'node:path';
 import * as pdfjsLib from 'pdfjs-dist';
 
 // Set up PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 async function extractUtilityBillData() {
   const projectRoot = process.cwd();
@@ -31,12 +32,12 @@ async function extractUtilityBillData() {
           for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
             const textContent = await page.getTextContent();
-            
+
             const pageText = textContent.items
-              .map(item => item.str)
+              .map((item) => item.str)
               .join(' ');
-            
-            fullText += pageText + '\n\n';
+
+            fullText += `${pageText}\n\n`;
           }
 
           results.push({

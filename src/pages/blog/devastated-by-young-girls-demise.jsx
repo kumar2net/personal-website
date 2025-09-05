@@ -307,8 +307,7 @@ const DevastatedByYoungGirlsDemise = () => {
             life is?
           </p>
         </div>
-
-              </div>
+      </div>
     </motion.div>
   );
 };

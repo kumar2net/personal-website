@@ -71,7 +71,9 @@ try {
 
   if (potentiallyUnused.length > 0) {
     console.log('⚠️ Potentially unused dependencies found:');
-    potentiallyUnused.forEach((dep) => console.log(`   - ${dep}`));
+    potentiallyUnused.forEach((dep) => {
+      console.log(`   - ${dep}`);
+    });
   }
 
   // Step 3: Find and remove unused files
@@ -118,7 +120,9 @@ try {
 
   if (unusedFiles.length > 0) {
     console.log('🗑️ Potentially unused files found:');
-    unusedFiles.forEach((file) => console.log(`   - ${file}`));
+    unusedFiles.forEach((file) => {
+      console.log(`   - ${file}`);
+    });
   }
 
   // Step 4: Remove console.log statements
@@ -146,11 +150,7 @@ try {
   };
 
   // Clean specific files
-  const specificFiles = [
-    'src/main.jsx',
-    'src/App.jsx',
-
-  ];
+  const specificFiles = ['src/main.jsx', 'src/App.jsx'];
 
   specificFiles.forEach(cleanConsoleLogs);
 

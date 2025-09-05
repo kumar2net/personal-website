@@ -1,4 +1,4 @@
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Get the response from the origin
   const response = event.Records[0].cf.response;
   const headers = response.headers;

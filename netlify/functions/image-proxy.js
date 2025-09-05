@@ -1,7 +1,7 @@
 // Simple image proxy to avoid CORS/CORB on external CDNs
 // Usage: /.netlify/functions/image-proxy?url=<encoded-URL>
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,

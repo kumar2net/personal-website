@@ -10,7 +10,9 @@ console.log(
 
 console.log('🚨 MANDATORY: Before deployment, you MUST:');
 console.log('   1. Open Chrome DevTools (F12)');
-console.log('   2. Navigate to latest blog post: http://localhost:5173/blog/sobering-week-august-2025');
+console.log(
+  '   2. Navigate to latest blog post: http://localhost:5173/blog/sobering-week-august-2025'
+);
 console.log('   3. Check Console tab for ANY errors');
 console.log('   4. Verify zero JavaScript errors before proceeding');
 console.log('   5. Test on mobile Chrome browser\n');
@@ -56,8 +58,10 @@ function runCommand(command, _description) {
 function getLatestBlogPostUrl() {
   try {
     const blogContent = fs.readFileSync('src/pages/Blog.jsx', 'utf8');
-    const blogPostsMatch = blogContent.match(/const blogPosts = \[([\s\S]*?)\];/);
-    
+    const blogPostsMatch = blogContent.match(
+      /const blogPosts = \[([\s\S]*?)\];/
+    );
+
     if (blogPostsMatch) {
       const blogPostsStr = blogPostsMatch[1];
       // Find the first link in the blogPosts array (latest post)
@@ -69,7 +73,7 @@ function getLatestBlogPostUrl() {
   } catch (error) {
     console.warn('Could not parse latest blog post:', error.message);
   }
-  
+
   // Fallback to known latest post
   return 'http://localhost:5173/blog/sobering-week-august-2025';
 }
@@ -94,8 +98,6 @@ function runCriticalChecks() {
       logChecklistItem(`CRITICAL: ${file} exists`, 'FAIL', 'File missing');
     }
   });
-
-
 
   // Check build process
   const buildResult = runCommand('npm run build', 'Build process');
@@ -125,7 +127,7 @@ function runUnitTestChecks() {
     if (fs.existsSync(component.path)) {
       const content = fs.readFileSync(component.path, 'utf8');
       const hasReactImports =
-        content.includes('import React') || 
+        content.includes('import React') ||
         content.includes("from 'react'") ||
         content.includes("from 'react-router-dom'") ||
         content.includes("from 'framer-motion'") ||

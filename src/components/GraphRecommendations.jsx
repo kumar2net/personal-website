@@ -15,6 +15,18 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
       : 'https://your-gnn-backend.netlify.app'; // Update this for production
 
   // Check system status on mount
+  const checkSystemStatus = useCallback(async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/status`);
+      if (response.ok) {
+        const data = await response.json();
+        setSystemStatus(data);
+      }
+    } catch (error) {
+      console.error('Failed to check system status:', error);
+    }
+  }, []);
+
   useEffect(() => {
     checkSystemStatus();
   }, [checkSystemStatus]);
@@ -26,20 +38,7 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
     }
   }, [currentPostId, systemStatus.initialized, fetchRecommendations]);
 
-  const checkSystemStatus = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/status`);
-      if (response.ok) {
-        const status = await response.json();
-        setSystemStatus(status);
-      }
-    } catch (err) {
-      console.log('GNN system not available:', err.message);
-      setSystemStatus({ initialized: false, error: 'System not available' });
-    }
-  };
-
-  const fetchRecommendations = async () => {
+  const fetchRecommendations = useCallback(async () => {
     setLoading(true);
     setError('');
 
@@ -66,7 +65,7 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPostId]);
 
   const hasValidRecommendations = useMemo(() => {
     return recommendations && recommendations.length > 0;
@@ -173,9 +172,9 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
                         {/* Tags */}
                         {rec.tags && rec.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-2">
-                            {rec.tags.slice(0, 3).map((tag, tagIndex) => (
+                            {rec.tags.slice(0, 3).map((tag) => (
                               <span
-                                key={tagIndex}
+                                key={tag}
                                 className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full"
                               >
                                 {tag}

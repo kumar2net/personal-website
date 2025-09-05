@@ -339,7 +339,7 @@ const ExperienceUsingApiInAiCodeEditor = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 

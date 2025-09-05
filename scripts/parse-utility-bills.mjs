@@ -21,7 +21,9 @@ async function parseUtilityBills() {
       if (bill.content && bill.content.length > 0) {
         const parsed = parseBillContent(bill.filename, bill.content);
         if (Array.isArray(parsed)) {
-          parsed.forEach((row) => parsedBills.push(row));
+          parsed.forEach((row) => {
+            parsedBills.push(row);
+          });
         } else if (parsed) {
           parsedBills.push(parsed);
         }

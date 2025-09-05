@@ -326,7 +326,7 @@ const TheGreatPivot = () => {
       </div>
 
       {/* Blog interactions */}
-          </motion.div>
+    </motion.div>
   );
 };
 
