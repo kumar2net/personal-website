@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const CommonSenseRareCommodity = () => {
@@ -52,8 +52,12 @@ const CommonSenseRareCommodity = () => {
         setSubmitStatus('success');
         setComment('');
         setName('');
-        setShowCommentForm(false);
+        // Keep form open for a moment to show success message
+        setTimeout(() => {
+          setShowCommentForm(false);
+        }, 2000);
       } else {
+        console.error('Form submission failed:', response.status, response.statusText);
         setSubmitStatus('error');
       }
     } catch (error) {
@@ -386,7 +390,11 @@ const CommonSenseRareCommodity = () => {
                   </div>
                   
                   <div>
+                    <label htmlFor="comment-name" className="sr-only">
+                      Your name
+                    </label>
                     <input
+                      id="comment-name"
                       type="text"
                       name="name"
                       value={name}
@@ -394,10 +402,18 @@ const CommonSenseRareCommodity = () => {
                       placeholder="Your name"
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       required
+                      aria-describedby="name-help"
                     />
+                    <div id="name-help" className="sr-only">
+                      Enter your name for the comment
+                    </div>
                   </div>
                   <div>
+                    <label htmlFor="comment-text" className="sr-only">
+                      Your comment
+                    </label>
                     <textarea
+                      id="comment-text"
                       name="comment"
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
@@ -405,17 +421,29 @@ const CommonSenseRareCommodity = () => {
                       className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                       rows="4"
                       required
+                      aria-describedby="comment-help"
                     />
+                    <div id="comment-help" className="sr-only">
+                      Share your thoughts about the blog post
+                    </div>
                   </div>
                   
                   {/* Status Messages */}
                   {submitStatus === 'success' && (
-                    <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <div 
+                      className="p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg"
+                      role="status"
+                      aria-live="polite"
+                    >
                       Thank you for your comment! It has been submitted successfully.
                     </div>
                   )}
                   {submitStatus === 'error' && (
-                    <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                    <div 
+                      className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg"
+                      role="alert"
+                      aria-live="assertive"
+                    >
                       Sorry, there was an error submitting your comment. Please try again.
                     </div>
                   )}
@@ -426,6 +454,7 @@ const CommonSenseRareCommodity = () => {
                       onClick={() => setShowCommentForm(false)}
                       className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
                       disabled={isSubmitting}
+                      aria-label="Cancel comment submission"
                     >
                       Cancel
                     </button>
@@ -433,10 +462,11 @@ const CommonSenseRareCommodity = () => {
                       type="submit"
                       disabled={!comment.trim() || !name.trim() || isSubmitting}
                       className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                      aria-label={isSubmitting ? "Submitting comment" : "Submit comment"}
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" aria-hidden="true"></div>
                           Submitting...
                         </>
                       ) : (
