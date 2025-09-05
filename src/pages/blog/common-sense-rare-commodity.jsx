@@ -178,7 +178,7 @@ const CommonSenseRareCommodity = () => {
             />
             <p className="text-sm text-gray-500 mt-4 italic max-w-3xl mx-auto">
               This word cloud visualizes the complex landscape of India-US trade relations, highlighting key concepts, 
-              affected industries, and the broader economic implications of current tariff policies.
+              affected industries, and the broader economic implications of current tariff policies. Ofcourse all this GST slab rationalization happened because of this imbroglio but not sure of its overall impact.
             </p>
           </div>
 
@@ -368,13 +368,13 @@ const CommonSenseRareCommodity = () => {
               </button>
             </div>
 
-            {/* Hidden form for Netlify Forms detection */}
-            <form name="blog-comments" netlify netlify-honeypot="bot-field" hidden>
-              <input type="text" name="name" />
-              <input type="text" name="comment" />
-              <input type="text" name="post-slug" />
-              <input type="text" name="timestamp" />
-            </form>
+                    {/* Hidden form for Netlify Forms detection */}
+        <form name="blog-comments" netlify="true" netlify-honeypot="bot-field" hidden>
+          <input type="text" name="name" />
+          <input type="text" name="comment" />
+          <input type="text" name="post-slug" />
+          <input type="text" name="timestamp" />
+        </form>
 
             {/* Comment Form */}
             {showCommentForm && (
