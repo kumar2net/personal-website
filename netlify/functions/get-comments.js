@@ -111,6 +111,10 @@ export const handler = async (event) => {
                          data['postId'] === postId ||
                          data['post-title'] === postId;
         
+        // Debug: Log the data to see what fields are available
+        console.log('Submission data:', JSON.stringify(data, null, 2));
+        console.log('Looking for postId:', postId);
+        
         // If we have required fields and it's approved, include it
         // (for now, let's show all comments to debug the structure)
         return hasRequiredFields && isApproved;
