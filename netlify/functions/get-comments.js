@@ -126,7 +126,8 @@ export const handler = async (event) => {
         // If we have required fields and it's approved, include it
         // For now, show all comments to see the 2 existing ones
         // Also include comments that might be in different states
-        return hasRequiredFields && (isApproved || submission.state === 'spam' || submission.state === 'unverified' || submission.state === 'pending' || submission.state === 'new');
+        // TEMPORARILY: Show ALL submissions to debug
+        return true; // Show everything for debugging
       })
       .map(submission => ({
         id: submission.id,
