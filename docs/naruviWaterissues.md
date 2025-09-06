@@ -65,7 +65,7 @@ For retrofit in existing homes, using the single plumbing line with valves and b
 
 Clear signage, user education, and periodic supervision are critical to avoid misuse or contamination.
 insert ~/personal-website/docs/naruviwater/costEstimiate.csv
-Total Estimated Cost Range: ₹5,75,000 to ₹6,75,000 (~USD 7,000 - 8,200)
+Total Estimated TNPDCL Cost: ₹49,757 (based on energy consumption analysis from NaruviWatercalc.csv)
 Additional Remarks:
 Costs are approximate and can vary based on contractors, material quality, and market fluctuations in Coimbatore.
 

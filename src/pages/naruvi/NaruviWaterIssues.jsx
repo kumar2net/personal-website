@@ -276,17 +276,16 @@ const NaruviWaterIssues = () => {
             </h2>
             <div className="bg-green-50 border-l-4 border-green-400 p-6">
               <h3 className="text-xl font-semibold text-green-800 mb-3">
-                Total Estimated Cost Range
+                Total Estimated TNPDCL Cost
               </h3>
               <p className="text-2xl font-bold text-green-700 mb-2">
-                ₹5,75,000 to ₹6,75,000
+                ₹49,757
               </p>
               <div className="text-sm text-green-600 space-y-1">
                 <p>
-                  • Covers equipment, materials, installation, and control
-                  systems
+                  • Based on energy consumption analysis from NaruviWatercalc.csv
                 </p>
-                <p>• Includes plumbing retrofit inside homes</p>
+                <p>• Includes monthly energy costs (45,477 kWh) + fixed costs (₹4,280)</p>
                 <p>
                   • ROI expected in 2-3 years based on current water tariffs
                 </p>
