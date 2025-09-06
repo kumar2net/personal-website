@@ -218,6 +218,67 @@ npm run build
 netlify deploy --prod --dir=dist
 ```
 
+### **🔧 Deployment Troubleshooting**
+
+#### **Critical Issue: "vite: not found" Error**
+
+**Problem:** Netlify deployment fails with `sh: 1: vite: not found`
+
+**Root Cause:** Vite was in `devDependencies`, but Netlify only installs production dependencies by default.
+
+**Solution:**
+1. **Move build tools to dependencies:**
+   ```json
+   {
+     "dependencies": {
+       "vite": "^5.0.12"
+     }
+   }
+   ```
+
+2. **Update netlify.toml:**
+   ```toml
+   [build]
+   command = "npm ci --include=dev && npm run build"
+   environment = { NPM_FLAGS = "--include=dev" }
+   ```
+
+**Prevention:** Always put build tools (vite, webpack, etc.) in `dependencies`, not `devDependencies`.
+
+#### **Function Deployment Issues**
+
+**Problem:** Functions not updating after code changes
+
+**Solutions:**
+1. **Force redeployment:**
+   ```bash
+   git commit --amend --no-edit
+   git push --force-with-lease
+   ```
+
+2. **Clear function cache:**
+   - Go to Netlify Dashboard → Functions
+   - Manually redeploy functions
+
+3. **Wait for deployment:**
+   - Function deployments take 2-5 minutes
+   - Check function logs in Netlify dashboard
+
+#### **Environment Variables**
+
+**Common Issues:**
+- Variables not set in production
+- Case sensitivity in variable names
+- Variables not accessible in functions
+
+**Debug:**
+```bash
+# Test environment variables
+curl https://kumarsite.netlify.app/.netlify/functions/test-token
+```
+
+**For Critical Issues:** See `docs/DEPLOYMENT_TROUBLESHOOTING.md` for detailed solutions to complex deployment problems encountered during a 2-day debugging session.
+
 ## 📊 **Performance**
 
 ### **Optimizations**

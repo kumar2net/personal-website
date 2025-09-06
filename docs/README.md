@@ -183,6 +183,9 @@ The blog system supports:
 ### Documentation
 - **Book Conversion Guide**: `docs/BOOK_CONVERSION_GUIDE.md` - Detailed guide for converting PDF/DOCX files to website content
 - **Book Cover Images Guide**: `docs/BOOK_COVER_IMAGES_GUIDE.md` - How to find and implement actual book cover images
+- **Deployment Troubleshooting**: `docs/DEPLOYMENT_TROUBLESHOOTING.md` - Critical deployment issues and solutions from 2-day debugging session
+- **Netlify Comments System**: `docs/NETLIFY_COMMENTS_SYSTEM.md` - Complete guide for Netlify Forms-based commenting system
+- **Comments Setup Guide**: `docs/COMMENTS_SETUP.md` - Implementation and troubleshooting for blog comments
 
 ## 🌐 Deployment
 
@@ -191,6 +194,12 @@ The blog system supports:
 - Branch: Deployed from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your workflow (main or master).
 - Build command: `npm run build`
 - Publish directory: `dist`
+
+### 🚨 Deployment Issues? See Troubleshooting Guide
+For critical deployment problems like "vite: not found" errors or function versioning conflicts, see:
+- **Deployment Troubleshooting**: `docs/DEPLOYMENT_TROUBLESHOOTING.md`
+- Covers 2-day debugging session with root cause analysis and solutions
+- Includes prevention measures and best practices
 
 ## 🧠 AI TL;DR Summaries
 
