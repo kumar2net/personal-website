@@ -1,0 +1,128 @@
+/*
+  Netlify Function: get-comments
+  - Fetches comments from Netlify Forms for a specific blog post
+  - Returns approved comments for display
+*/
+
+const NETLIFY_ACCESS_TOKEN = process.env.NETLIFY_ACCESS_TOKEN;
+const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID || 'kumarsite';
+
+function jsonResponse(statusCode, body, extraHeaders = {}) {
+  return {
+    statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      ...extraHeaders,
+    },
+    body: JSON.stringify(body),
+  };
+}
+
+export const handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return jsonResponse(200, { ok: true });
+  }
+
+  if (event.httpMethod !== 'POST') {
+    return jsonResponse(405, { error: 'Method Not Allowed' });
+  }
+
+  if (!NETLIFY_ACCESS_TOKEN) {
+    return jsonResponse(500, { 
+      success: false, 
+      error: 'NETLIFY_ACCESS_TOKEN not configured' 
+    });
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(event.body || '{}');
+  } catch {
+    return jsonResponse(400, { 
+      success: false, 
+      error: 'Invalid JSON body' 
+    });
+  }
+
+  const { postId, formName } = payload;
+  if (!postId || !formName) {
+    return jsonResponse(400, { 
+      success: false, 
+      error: 'postId and formName are required' 
+    });
+  }
+
+  try {
+    // First, get the form ID
+    const formsResponse = await fetch(`https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/forms`, {
+      headers: {
+        'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!formsResponse.ok) {
+      throw new Error(`Failed to fetch forms: ${formsResponse.status}`);
+    }
+
+    const forms = await formsResponse.json();
+    const targetForm = forms.find(form => form.name === formName);
+    
+    if (!targetForm) {
+      return jsonResponse(404, { 
+        success: false, 
+        error: `Form '${formName}' not found` 
+      });
+    }
+
+    // Fetch submissions for this form
+    const submissionsResponse = await fetch(`https://api.netlify.com/api/v1/forms/${targetForm.id}/submissions`, {
+      headers: {
+        'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!submissionsResponse.ok) {
+      throw new Error(`Failed to fetch submissions: ${submissionsResponse.status}`);
+    }
+
+    const submissions = await submissionsResponse.json();
+    
+    // Filter comments for this specific post and approved ones
+    const postComments = submissions
+      .filter(submission => {
+        const data = submission.data;
+        return data['post-id'] === postId && 
+               data['post-title'] && 
+               data.name && 
+               data.comment &&
+               submission.state === 'received'; // Only approved/received comments
+      })
+      .map(submission => ({
+        id: submission.id,
+        name: submission.data.name,
+        email: submission.data.email,
+        comment: submission.data.comment,
+        timestamp: submission.created_at,
+        approved: true
+      }))
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort by newest first
+
+    return jsonResponse(200, {
+      success: true,
+      comments: postComments,
+      total: postComments.length
+    });
+
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    return jsonResponse(500, {
+      success: false,
+      error: 'Failed to fetch comments from Netlify Forms'
+    });
+  }
+};
