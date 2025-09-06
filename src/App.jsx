@@ -38,6 +38,7 @@ import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcu
 import MyRandomThoughtsThisWeek from './pages/blog/my-random-thoughts-this-week';
 import NammuSoilAnalysisResearch from './pages/blog/nammu-soil-analysis-research';
 import NepalAnnapurnaCircuit from './pages/blog/nepal-annapurna-circuit';
+import SemanticSearchExplained from './pages/blog/semantic-search-explained';
 import PostDynamic from './pages/blog/PostDynamic';
 import PortfolioWebsite from './pages/blog/portfolio-website';
 import PriceParity from './pages/blog/price-parity';
@@ -796,6 +797,10 @@ function App() {
             />
             <Route path="/blog/joy-of-writing" element={<JoyOfWriting />} />
             <Route path="/blog/habit" element={<Habit />} />
+            <Route
+              path="/blog/semantic-search-explained"
+              element={<SemanticSearchExplained />}
+            />
             <Route
               path="/blog/sobering-week-august-2025"
               element={<SoberingWeekAugust2025 />}

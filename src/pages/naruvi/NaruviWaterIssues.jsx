@@ -101,6 +101,19 @@ const NaruviWaterIssues = () => {
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Proposed Solution: Dual Water System
             </h2>
+            
+            {/* Technical Context */}
+            <div className="bg-orange-50 border-l-4 border-orange-400 p-6 mb-6">
+              <h3 className="text-lg font-semibold text-orange-800 mb-3">
+                Technical Context
+              </h3>
+              <div className="space-y-2 text-orange-700">
+                <p>• <strong>RO Efficiency:</strong> RO systems typically have 50% efficiency - permeate (clean water) is 50% of input, reject water is 50%</p>
+                <p>• <strong>Borewell Depth:</strong> Borewells are typically sunk to 300-500 feet depth to access groundwater</p>
+                <p>• <strong>Current Issue:</strong> System uses 100% RO water, resulting in significant waste of reject water</p>
+              </div>
+            </div>
+            
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-blue-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-blue-700 mb-2">

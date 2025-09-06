@@ -481,6 +481,16 @@ const blogPosts = [
     link: '/blog/my-experience-with-windsurf',
   },
   {
+    title: 'Search Explained: How Semantic Search Transforms Content Discovery',
+    date: 'January 15, 2025',
+    excerpt:
+      'Discover how semantic search goes beyond keyword matching to understand meaning, context, and intent - transforming how we find relevant content online.',
+    tags: ['Technology', 'AI', 'Search', 'Machine Learning', 'Web Development', 'User Experience'],
+    image:
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/semantic-search-explained',
+  },
+  {
     title: 'Building My Personal Portfolio Website',
     date: 'June 16, 2025',
     excerpt:

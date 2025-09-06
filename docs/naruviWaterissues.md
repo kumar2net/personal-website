@@ -19,6 +19,12 @@ Optimal indoor service: >100 L/person/day
 Then we need to add delta for plants waterring, car and outdoor area cleaning etc..
 
 What is the Solution: Use Borewell water untreated for non-potable uses and RO water for potable uses.
+
+**Technical Context:**
+- RO systems typically have 50% efficiency - permeate (clean water) is 50% of input, reject water is 50%
+- Borewells are typically sunk to 300-500 feet depth to access groundwater
+- Current system uses 100% RO water, resulting in significant waste of reject water
+
 Potable use: Cooking, bathing, washing, drinking
 Non-potable use: Plants watering, car washing, outdoor area cleaning etc..
 insert the image ~/personal-website/docs/naruviwater/naruviSolution1.jpg

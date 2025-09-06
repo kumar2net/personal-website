@@ -58,6 +58,16 @@ export const blogIndex = {
     tags: ['Global Economy', 'Survey'],
     datePublished: '2025-08-25',
   },
+  'semantic-search-explained': {
+    title: 'Search Explained: How Semantic Search Transforms Content Discovery',
+    description:
+      'Discover how semantic search goes beyond keyword matching to understand meaning, context, and intent - transforming how we find relevant content online.',
+    image:
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    tags: ['Technology', 'AI', 'Search', 'Machine Learning', 'Web Development', 'User Experience'],
+    datePublished: '2025-01-15',
+    dateModified: '2025-01-15',
+  },
 };
 
 export function getBlogSeo(slug) {
