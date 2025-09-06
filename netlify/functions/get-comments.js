@@ -97,6 +97,7 @@ export const handler = async (event) => {
     
     // Debug: Log all submissions to see what fields are available
     console.log('All submissions:', JSON.stringify(submissions, null, 2));
+    console.log('Total submissions found:', submissions.length);
     
     // Filter comments for this specific post and approved ones
     const postComments = submissions
