@@ -191,7 +191,7 @@ npm run test:pre-deploy # Pre-deployment checks
 ### **Environment Variables**
 Create a `.env` file for local development:
 ```env
-VITE_GA_MEASUREMENT_ID=G-HWQM1TCFWQ
+VITE_GA_MEASUREMENT_ID=G-PZ37S6E5BL
 VITE_SEMANTIC_SEARCH_API=your-api-url
 # X API (optional, used for graceful Elsewhere fallback)
 X_BEARER_TOKEN=your-x-bearer-token
@@ -283,7 +283,7 @@ curl -s "http://localhost:3001/api/recommendations/topics?days=7&limit=8&languag
 
 Notes:
 - Until GA4 export creates tables, the endpoint returns an empty `topics: []` (no placeholders).
-- GA measurement ID embedded in `index.html`: `G-HWQM1TCFWQ` (SPA `send_page_view: false`, route-level PVs recommended).
+- GA measurement ID embedded in `index.html`: `G-PZ37S6E5BL` (immediately after `<head>` element as per Google instructions).
 - Tag Assistant: Connected on September 3, 2025. Use Tag Assistant Connect; GTM preview is not applicable (no GTM container on the site).
 
 ### **Performance Monitoring**
