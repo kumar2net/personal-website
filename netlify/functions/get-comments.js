@@ -128,9 +128,8 @@ export const handler = async (event) => {
         console.log('Looking for postId:', postId);
         
         // If we have required fields and it's approved, include it
-        // Filter by post ID to show only relevant comments
-        // Only show comments that have a post ID field and match the requested post
-        return hasRequiredFields && isApproved && hasPostIdField && hasPostId;
+        // TEMPORARILY: Show all comments to debug deployment issue
+        return hasRequiredFields && isApproved;
       })
       .map(submission => ({
         id: submission.id,
