@@ -37,7 +37,11 @@
     "clean:all": "npm run cleanup && npm run biome:fix && npm run test:all",
     "cleanup:quick": "node scripts/quick-cleanup.mjs",
     "cleanup:full": "node scripts/cleanup-codebase.mjs",
-    "clean:whistle": "npm run cleanup:quick && npm run biome:fix && npm run test:all"
+    "clean:whistle": "npm run cleanup:quick && npm run biome:fix && npm run test:all",
+    "fetch:comments": "node scripts/fetch-comments-build.mjs",
+    "build:with-comments": "npm run fetch:comments && npm run build",
+    "comments:stats": "node -e \"import('./src/data/comments.js').then(m => console.log(JSON.stringify(m.getCommentStats(), null, 2)))\"",
+    "test:comment-env": "node scripts/test-comment-env.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.0",
