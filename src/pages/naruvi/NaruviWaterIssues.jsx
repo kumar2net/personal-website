@@ -274,9 +274,11 @@ const NaruviWaterIssues = () => {
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Cost Analysis
             </h2>
-            <div className="bg-green-50 border-l-4 border-green-400 p-6">
+            
+            {/* TNPDCL Energy Cost */}
+            <div className="bg-green-50 border-l-4 border-green-400 p-6 mb-6">
               <h3 className="text-xl font-semibold text-green-800 mb-3">
-                Total Estimated TNPDCL Cost
+                Monthly TNPDCL Energy Cost
               </h3>
               <p className="text-2xl font-bold text-green-700 mb-2">
                 ₹49,757
@@ -287,7 +289,26 @@ const NaruviWaterIssues = () => {
                 </p>
                 <p>• Includes monthly energy costs (45,477 kWh) + fixed costs (₹4,280)</p>
                 <p>
-                  • ROI expected in 2-3 years based on current water tariffs
+                  • Current operational cost for existing system
+                </p>
+              </div>
+            </div>
+
+            {/* Implementation Cost */}
+            <div className="bg-blue-50 border-l-4 border-blue-400 p-6">
+              <h3 className="text-xl font-semibold text-blue-800 mb-3">
+                Implementation Cost (One-time)
+              </h3>
+              <p className="text-2xl font-bold text-blue-700 mb-2">
+                ₹5,75,000 to ₹6,75,000
+              </p>
+              <div className="text-sm text-blue-600 space-y-1">
+                <p>
+                  • Equipment, materials, installation, and control systems
+                </p>
+                <p>• Includes plumbing retrofit inside homes</p>
+                <p>
+                  • ROI expected in 2-3 years based on energy savings
                 </p>
               </div>
             </div>
@@ -449,9 +470,8 @@ const NaruviWaterIssues = () => {
 
             <div className="mt-4 text-sm text-gray-600">
               <p className="font-bold">
-                Note: Costs – <span className="font-extrabold">₹7,00,000</span>{' '}
-                are approximate and may vary based on contractors, material
-                quality, and market fluctuations in Coimbatore. RO (Reverse
+                Note: TNPDCL costs – <span className="font-extrabold">₹49,757</span>{' '}
+                are based on energy consumption analysis and may vary based on actual usage patterns. RO (Reverse
                 Osmosis) plant operational costs (power, membrane replacement)
                 are additional.
               </p>
