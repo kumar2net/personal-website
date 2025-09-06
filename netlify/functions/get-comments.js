@@ -130,8 +130,8 @@ export const handler = async (event) => {
         console.log('Looking for postId:', postId);
         
         // If we have required fields and it's approved, include it
-        // TEMPORARILY: Show all comments to debug deployment issue
-        return hasRequiredFields && isApproved;
+        // TEMPORARILY: Show ALL submissions to debug the 4 comments
+        return true; // Show everything for debugging
       })
       .map(submission => ({
         id: submission.id,
