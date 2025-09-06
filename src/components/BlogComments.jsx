@@ -1,29 +1,38 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-const BlogComments = ({ postId, postTitle }) => {
-  const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
+/**
+ * Enhanced BlogComments Component
+ * - Fetches verified comments from Netlify Forms
+ * - Filters by postSlug and excludes spam
+ * - Production-ready with comprehensive error handling
+ * - Supports both client-side and build-time rendering
+ */
+const BlogComments = ({ postSlug, postTitle, initialComments = [] }) => {
+  const [comments, setComments] = useState(initialComments);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showComments, setShowComments] = useState(false);
+  const [lastFetch, setLastFetch] = useState(null);
 
-  useEffect(() => {
-    if (showComments) {
-      fetchComments();
+  // Memoized fetch function to prevent unnecessary re-renders
+  const fetchComments = useCallback(async (forceRefresh = false) => {
+    // Skip if we have recent data and not forcing refresh
+    if (!forceRefresh && comments.length > 0 && lastFetch && 
+        (Date.now() - lastFetch) < 300000) { // 5 minutes
+      return;
     }
-  }, [showComments, postId]);
 
-  const fetchComments = async () => {
     try {
       setLoading(true);
+      setError('');
       
-      // Fetch comments from Netlify Forms
       const response = await fetch('/.netlify/functions/get-comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          postId: postId,
+          postSlug: postSlug,
           formName: 'blog-comments'
         })
       });
@@ -36,44 +45,79 @@ const BlogComments = ({ postId, postTitle }) => {
       
       if (data.success) {
         setComments(data.comments || []);
+        setLastFetch(Date.now());
       } else {
         throw new Error(data.error || 'Failed to fetch comments');
       }
       
-      setLoading(false);
     } catch (err) {
       console.error('Error fetching comments:', err);
       setError('Failed to load comments. Please try again later.');
+    } finally {
       setLoading(false);
+    }
+  }, [postSlug, comments.length, lastFetch]);
+
+  useEffect(() => {
+    if (showComments && comments.length === 0) {
+      fetchComments();
+    }
+  }, [showComments, fetchComments, comments.length]);
+
+  const formatDate = (timestamp) => {
+    try {
+      return new Date(timestamp).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch (error) {
+      return 'Invalid date';
     }
   };
 
-  const formatDate = (timestamp) => {
-    return new Date(timestamp).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+  const getInitials = (name) => {
+    if (!name) return 'A';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
   };
 
-  const getInitials = (name) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  const handleRefresh = () => {
+    fetchComments(true);
   };
 
   return (
     <div className="mt-12 border-t pt-8">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-bold text-gray-900">
-          Comments ({comments.length})
-        </h3>
-        <button
-          onClick={() => setShowComments(!showComments)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          {showComments ? 'Hide Comments' : 'Show Comments'}
-        </button>
+        <div className="flex items-center space-x-4">
+          <h3 className="text-2xl font-bold text-gray-900">
+            Comments ({comments.length})
+          </h3>
+          {lastFetch && (
+            <span className="text-sm text-gray-500">
+              Last updated: {formatDate(lastFetch)}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center space-x-2">
+          {showComments && (
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors disabled:opacity-50"
+              title="Refresh comments"
+            >
+              {loading ? 'Refreshing...' : 'Refresh'}
+            </button>
+          )}
+          <button
+            onClick={() => setShowComments(!showComments)}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            {showComments ? 'Hide Comments' : 'Show Comments'}
+          </button>
+        </div>
       </div>
 
       {showComments && (
@@ -148,7 +192,7 @@ const BlogComments = ({ postId, postTitle }) => {
               className="space-y-4"
             >
               <input type="hidden" name="form-name" value="blog-comments" />
-              <input type="hidden" name="post-id" value={postId} />
+              <input type="hidden" name="post-slug" value={postSlug} />
               <input type="hidden" name="post-title" value={postTitle} />
               
               <div className="hidden">

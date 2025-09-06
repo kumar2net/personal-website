@@ -679,7 +679,7 @@ const CommonSenseRareCommodity = () => {
 
       {/* Comments Section */}
       <BlogComments 
-        postId="common-sense-rare-commodity" 
+        postSlug="common-sense-rare-commodity" 
         postTitle="Common Sense is a Rare Commodity"
       />
     </motion.div>

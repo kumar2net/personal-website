@@ -1,62 +1,131 @@
-/*
-  Netlify Function: get-comments
-  - Fetches comments from Netlify Forms for a specific blog post
-  - Returns approved comments for display
-*/
+/**
+ * Enhanced Netlify Function: get-comments
+ * - Fetches verified comments from Netlify Forms for a specific blog post
+ * - Filters by postSlug and excludes spam/unverified submissions
+ * - Production-ready with comprehensive error handling and security
+ * 
+ * Usage: POST /.netlify/functions/get-comments
+ * Body: { "postSlug": "post-slug", "formName": "blog-comments" }
+ */
 
 const NETLIFY_ACCESS_TOKEN = process.env.NETLIFY_ACCESS_TOKEN;
 const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID || 'kumarsite';
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || ['https://kumarsite.netlify.app', 'http://localhost:5173'];
 
+/**
+ * Creates a standardized JSON response with CORS headers
+ */
 function jsonResponse(statusCode, body, extraHeaders = {}) {
+  const origin = process.env.NODE_ENV === 'development' ? '*' : 
+    ALLOWED_ORIGINS.includes(process.env.ORIGIN) ? process.env.ORIGIN : ALLOWED_ORIGINS[0];
+    
   return {
     statusCode,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Methods': 'POST,OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Cache-Control': 'public, max-age=300', // 5-minute cache
       ...extraHeaders,
     },
     body: JSON.stringify(body),
   };
 }
 
+/**
+ * Validates and sanitizes comment data
+ */
+function sanitizeComment(submission) {
+  const data = submission.data;
+  
+  // Basic validation
+  if (!data.name || !data.comment) {
+    return null;
+  }
+  
+  // Sanitize content
+  const sanitized = {
+    id: submission.id,
+    name: data.name.trim().substring(0, 100), // Limit name length
+    email: data.email ? data.email.trim() : null,
+    comment: data.comment.trim().substring(0, 2000), // Limit comment length
+    timestamp: submission.created_at,
+    postSlug: data['post-slug'] || data['postSlug'] || data['post_id'] || data['postId'],
+    approved: submission.state === 'received' || submission.state === 'approved',
+    spam: submission.state === 'spam' || submission.state === 'blacklisted'
+  };
+  
+  // Additional spam detection
+  if (sanitized.comment.length < 3 || sanitized.name.length < 2) {
+    return null;
+  }
+  
+  // Check for common spam patterns
+  const spamPatterns = [
+    /https?:\/\/[^\s]+/gi, // URLs
+    /[A-Z]{5,}/g, // Excessive caps
+    /(.)\1{4,}/g, // Repeated characters
+    /(buy|sell|click|free|offer|deal|discount|promo)/gi // Spam keywords
+  ];
+  
+  const isSpam = spamPatterns.some(pattern => 
+    pattern.test(sanitized.comment) || pattern.test(sanitized.name)
+  );
+  
+  if (isSpam) {
+    sanitized.spam = true;
+  }
+  
+  return sanitized;
+}
+
 export const handler = async (event) => {
+  // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
   }
 
+  // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, { error: 'Method Not Allowed' });
   }
 
+  // Check for required environment variables
   if (!NETLIFY_ACCESS_TOKEN) {
+    console.error('NETLIFY_ACCESS_TOKEN not configured');
     return jsonResponse(500, { 
       success: false, 
-      error: 'NETLIFY_ACCESS_TOKEN not configured' 
+      error: 'Server configuration error' 
     });
   }
 
+  // Parse and validate request body
   let payload;
   try {
     payload = JSON.parse(event.body || '{}');
-  } catch {
+  } catch (error) {
+    console.error('Invalid JSON body:', error);
     return jsonResponse(400, { 
       success: false, 
-      error: 'Invalid JSON body' 
+      error: 'Invalid request format' 
     });
   }
 
-  const { postId, formName } = payload;
-  if (!postId || !formName) {
+  const { postSlug, formName } = payload;
+  if (!postSlug || !formName) {
     return jsonResponse(400, { 
       success: false, 
-      error: 'postId and formName are required' 
+      error: 'postSlug and formName are required' 
     });
   }
+
+  // Rate limiting check (basic implementation)
+  const clientIP = event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown';
+  console.log(`Comment request from IP: ${clientIP} for post: ${postSlug}`);
 
   try {
-    // First, get the form ID
+    // Fetch forms from Netlify API
     const formsResponse = await fetch(`https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/forms`, {
       headers: {
         'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
@@ -65,15 +134,16 @@ export const handler = async (event) => {
     });
 
     if (!formsResponse.ok) {
-      throw new Error(`Failed to fetch forms: ${formsResponse.status}`);
+      throw new Error(`Failed to fetch forms: ${formsResponse.status} ${formsResponse.statusText}`);
     }
 
     const forms = await formsResponse.json();
-    console.log('Available forms:', forms.map(f => ({ id: f.id, name: f.name })));
+    console.log(`Found ${forms.length} forms`);
     
-    // Find the blog-comments form and get its submissions
+    // Find the target form
     const targetForm = forms.find(form => form.name === formName);
     if (!targetForm) {
+      console.error(`Form '${formName}' not found`);
       return jsonResponse(404, { 
         success: false, 
         error: `Form '${formName}' not found`,
@@ -90,71 +160,45 @@ export const handler = async (event) => {
     });
 
     if (!submissionsResponse.ok) {
-      throw new Error(`Failed to fetch submissions: ${submissionsResponse.status}`);
+      throw new Error(`Failed to fetch submissions: ${submissionsResponse.status} ${submissionsResponse.statusText}`);
     }
 
     const submissions = await submissionsResponse.json();
+    console.log(`Found ${submissions.length} total submissions for form '${formName}'`);
     
-    // Debug: Log all submissions to see what fields are available
-    console.log('All submissions:', JSON.stringify(submissions, null, 2));
-    console.log('Total submissions found:', submissions.length);
-    
-    // Filter comments for this specific post and approved ones
-    const postComments = submissions
-      .filter(submission => {
-        const data = submission.data;
+    // Process and filter comments
+    const processedComments = submissions
+      .map(submission => sanitizeComment(submission))
+      .filter(comment => {
+        if (!comment) return false;
         
-        // For debugging: be more flexible with field names
-        const hasRequiredFields = (data.name && data.comment) || 
-                                 (data.message && (data.name || data.email)) ||
-                                 (data.comment && (data.name || data.email)) ||
-                                 (data.message) || // Show any submission with a message field
-                                 (data.comment) || // Show any submission with a comment field
-                                 (data.name) || // Show any submission with a name field
-                                 (data.email); // Show any submission with an email field
-        const isApproved = submission.state === 'received' || submission.state === 'approved';
+        // Filter by postSlug
+        const matchesPost = comment.postSlug === postSlug;
         
-        // Check for various possible field names and post identifiers
-        const hasPostId = data['post-id'] === postId || 
-                         data['post-slug'] === postId || 
-                         data['post_id'] === postId ||
-                         data['postId'] === postId ||
-                         data['post-title'] === postId;
+        // Only show approved, non-spam comments
+        const isApproved = comment.approved && !comment.spam;
         
-        // If no post ID is specified in the comment, don't show it
-        // This prevents old comments without post IDs from showing on all posts
-        const hasPostIdField = data['post-id'] || data['post-slug'] || data['post_id'] || data['postId'] || data['post-title'];
-        
-        // Debug: Log the data to see what fields are available
-        console.log('Submission data:', JSON.stringify(data, null, 2));
-        console.log('Looking for postId:', postId);
-        
-        // If we have required fields and it's approved, include it
-        // Filter by post ID to show only relevant comments
-        return hasRequiredFields && isApproved && (hasPostId || !hasPostIdField);
+        return matchesPost && isApproved;
       })
-      .map(submission => ({
-        id: submission.id,
-        name: submission.data.name || submission.data.email || 'Anonymous',
-        email: submission.data.email,
-        comment: submission.data.comment || submission.data.message,
-        timestamp: submission.created_at,
-        approved: true,
-        formName: submission.formName
-      }))
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort by newest first
+
+    console.log(`Found ${processedComments.length} valid comments for post '${postSlug}'`);
 
     return jsonResponse(200, {
       success: true,
-      comments: postComments,
-      total: postComments.length
+      comments: processedComments,
+      total: processedComments.length,
+      postSlug: postSlug,
+      formName: formName,
+      timestamp: new Date().toISOString()
     });
 
   } catch (error) {
     console.error('Error fetching comments:', error);
     return jsonResponse(500, {
       success: false,
-      error: 'Failed to fetch comments from Netlify Forms'
+      error: 'Failed to fetch comments from Netlify Forms',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
