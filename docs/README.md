@@ -34,18 +34,17 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 ## 🎵 Music Curation
 
 - Page: `/music`
-- Features current favorite tracks with emotional descriptions
-- Includes complete lyrics for special tracks
-- Highlights favorite artists with personal commentary
+- Features latest additions to KUMAR_2005 playlist
+- Showcases newest tracks with artist information
 - Links to YouTube Music playlists
-- Current favorites: "Ab Na Jao Chod Kar" and "Narumugaye"
-- Featured artists: Karthick Iyer (Indo Soul), Mahesh (Master of Medley)
+- Current newest additions: "Janaab-e-Aali" and "Jo Zindagi Tha Meri"
+- Featured artists: Sachet Parampara, Saaj Bhatt, Pritam, Shaan, Daboo Malik
 
 **Current Music Features:**
-- **This Week's Melting Tracks** - Tracks that "melt me completely - wanting to just vaporize"
-- **Complete Lyrics** - Full lyrics display for special tracks
-- **Artist Spotlights** - Personal favorites with authentic reactions
-- **Playlist Integration** - Direct links to KUMAR_2025 YouTube Music playlist
+- **Latest Additions** - The 2 newest tracks added to KUMAR_2005 playlist
+- **Artist Information** - Complete artist details and collaboration info
+- **Playlist Integration** - Direct links to KUMAR_2005 YouTube Music playlist
+- **Clean Design** - Focused presentation of newest musical discoveries
 
 ## 📸 Photo Album
 

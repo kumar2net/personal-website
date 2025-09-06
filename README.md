@@ -32,6 +32,7 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 - **Interactive Comment System** - Netlify Forms with localStorage fallback for reliability
 - **Like Functionality** - Interactive like buttons with visual feedback
 - **Portfolio Showcase** - Professional portfolio section
+- **Music Curation** - Latest additions to KUMAR_2005 playlist with artist information
 - **Interactive Components** - Dynamic content and animations
 - **SEO Optimized** - Route-level titles, descriptions, canonical, OG/Twitter, JSON-LD
 - **Elsewhere Hub** - WordPress posts feed + prominent X (Twitter) link
