@@ -12,6 +12,49 @@ function Books() {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Link
+          to="/books/the-subtle-art"
+          aria-label="Read The Subtle Art of Not Giving a F***"
+          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+        >
+          <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-orange-100 to-red-100 border overflow-hidden relative">
+            <BookCover
+              bookId="the-subtle-art"
+              title="The Subtle Art of Not Giving a F***"
+              author="Mark Manson"
+              className="w-full h-full group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge
+              publishDate="January 16, 2025"
+              lastModified="January 16, 2025"
+            />
+          </div>
+          <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              The Subtle Art of Not Giving a F***
+            </h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <img
+                src="https://img.shields.io/badge/Self--Help-Personal%20Development-green"
+                alt="Self-help badge"
+              />
+              <img
+                src="https://img.shields.io/badge/Philosophy-Counterintuitive-blue"
+                alt="Philosophy badge"
+              />
+            </div>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              A generation-defining self-help guide that cuts through the crap to show us how to stop trying to be 'positive' all the time so that we can truly become better, happier people.
+            </p>
+            <div className="mt-4">
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read Book
+              </span>
+            </div>
+          </div>
+        </Link>
+
+        <Link
           to="/books/the-stoic-art-manual"
           aria-label="Read The Stoic Art Manual"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
