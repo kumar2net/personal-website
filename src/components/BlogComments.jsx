@@ -15,41 +15,34 @@ const BlogComments = ({ postId, postTitle }) => {
   const fetchComments = async () => {
     try {
       setLoading(true);
-      // In a real implementation, you would fetch from your Netlify forms
-      // For now, we'll simulate with some sample comments to demonstrate
-      const sampleComments = [
-        {
-          id: 1,
-          name: "Sarah Chen",
-          email: "sarah@example.com",
-          comment: "This is a fantastic explanation of semantic search! The 'where to invest' example really helped me understand how it works differently from traditional search.",
-          timestamp: "2025-09-06T10:30:00Z",
-          approved: true
-        },
-        {
-          id: 2,
-          name: "Mike Rodriguez",
-          email: "mike@example.com", 
-          comment: "Great post! I've been wondering about semantic search for a while. The technical details about vector embeddings were really helpful.",
-          timestamp: "2025-09-06T14:15:00Z",
-          approved: true
-        },
-        {
-          id: 3,
-          name: "Alex Johnson",
-          email: "alex@example.com",
-          comment: "The comparison between traditional and semantic search is spot on. I can see how this would be much more useful for finding relevant content.",
-          timestamp: "2025-09-06T16:45:00Z",
-          approved: true
-        }
-      ];
       
-      // Simulate API delay
-      setTimeout(() => {
-        setComments(sampleComments);
-        setLoading(false);
-      }, 1000);
+      // Fetch comments from Netlify Forms
+      const response = await fetch('/.netlify/functions/get-comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          postId: postId,
+          formName: 'blog-comments'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setComments(data.comments || []);
+      } else {
+        throw new Error(data.error || 'Failed to fetch comments');
+      }
+      
+      setLoading(false);
     } catch (err) {
+      console.error('Error fetching comments:', err);
       setError('Failed to load comments. Please try again later.');
       setLoading(false);
     }
@@ -102,7 +95,14 @@ const BlogComments = ({ postId, postTitle }) => {
                 </svg>
               </div>
               <h4 className="text-lg font-semibold text-gray-600 mb-2">No comments yet</h4>
-              <p className="text-gray-500">Be the first to share your thoughts on this post!</p>
+              <p className="text-gray-500 mb-4">Be the first to share your thoughts on this post!</p>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                <p className="text-sm text-blue-700">
+                  💡 <strong>Tip:</strong> Comments are fetched from your Netlify forms. 
+                  Make sure to set up the NETLIFY_ACCESS_TOKEN environment variable 
+                  to see real comments from users.
+                </p>
+              </div>
             </div>
           ) : (
             <div className="space-y-6">
