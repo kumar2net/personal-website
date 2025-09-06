@@ -7,6 +7,16 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Search Explained: How Semantic Search Transforms Content Discovery',
+    date: 'September 06, 2025',
+    excerpt:
+      'Discover how semantic search goes beyond keyword matching to understand meaning, context, and intent - transforming how we find relevant content online.',
+    tags: ['Technology', 'AI', 'Search', 'Machine Learning', 'Web Development', 'User Experience'],
+    image:
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/semantic-search-explained',
+  },
+  {
     title: 'Common Sense is a Rare Commodity',
     date: new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
@@ -479,16 +489,6 @@ const blogPosts = [
     image:
       '/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D5',
     link: '/blog/my-experience-with-windsurf',
-  },
-  {
-    title: 'Search Explained: How Semantic Search Transforms Content Discovery',
-    date: 'September 06, 2025',
-    excerpt:
-      'Discover how semantic search goes beyond keyword matching to understand meaning, context, and intent - transforming how we find relevant content online.',
-    tags: ['Technology', 'AI', 'Search', 'Machine Learning', 'Web Development', 'User Experience'],
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-    link: '/blog/semantic-search-explained',
   },
   {
     title: 'Building My Personal Portfolio Website',
