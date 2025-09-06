@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BlogComments from '../../components/BlogComments';
 
 const CommonSenseRareCommodity = () => {
   const navigate = useNavigate();
@@ -675,6 +676,12 @@ const CommonSenseRareCommodity = () => {
           </div>
         </div>
       </div>
+
+      {/* Comments Section */}
+      <BlogComments 
+        postId="common-sense-rare-commodity" 
+        postTitle="Common Sense is a Rare Commodity"
+      />
     </motion.div>
   );
 };
