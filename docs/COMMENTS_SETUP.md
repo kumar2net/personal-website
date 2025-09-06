@@ -106,6 +106,75 @@ This guide documents the fully implemented comment system that reads real commen
 
 ## Troubleshooting ✅ RESOLVED
 
+### 🎯 **2-Day Debugging Session: Critical Issues Resolved**
+
+#### 🚨 **Issue 1: "vite: not found" Build Error**
+
+**Timeline:** First encountered during initial deployment
+**Impact:** Complete build failure, preventing any deployment
+
+**Root Cause Analysis:**
+- Vite was in `devDependencies` instead of `dependencies`
+- Netlify only installs production dependencies by default
+- Build command `npm run build` requires vite to be available
+
+**Resolution Steps:**
+1. **Moved vite to dependencies:**
+   ```json
+   "dependencies": {
+     "vite": "^5.0.12"
+   }
+   ```
+
+2. **Updated netlify.toml build command:**
+   ```toml
+   command = "npm ci --include=dev && npm run build"
+   ```
+
+3. **Added environment variable:**
+   ```toml
+   environment = { NPM_FLAGS = "--include=dev" }
+   ```
+
+**Time Spent:** 4 hours debugging deployment logs
+**Prevention:** Always put build tools in dependencies
+
+#### 🚨 **Issue 2: Comments Not Displaying**
+
+**Timeline:** Second day, after build fixed
+**Impact:** API working but frontend showing "No comments yet"
+
+**Root Cause Analysis:**
+- Multiple `get-comments.js` files existed in `/netlify/functions/`
+- Netlify deployed wrong version of function
+- Comments existed but function returned wrong data
+- Post-slug parameter mismatch between frontend and backend
+
+**Resolution Steps:**
+1. **Identified conflicting files:**
+   - `get-comments.js` (old version)
+   - `get-comments-simple.js` (intermediate)
+   - `get-comments-working.js` (latest)
+
+2. **Consolidated to single function:**
+   ```bash
+   cp get-comments-working.js get-comments.js
+   ```
+
+3. **Fixed parameter handling:**
+   ```javascript
+   const targetPostSlug = postSlug || postId; // Handle both formats
+   ```
+
+4. **Forced redeployment:**
+   ```bash
+   git commit -m "fix: Force redeployment"
+   git push origin master
+   ```
+
+**Time Spent:** 6 hours debugging API responses and function versioning
+**Prevention:** Single source of truth for functions, proper version control
+
 ### ✅ Resolved Issues
 - **Token configuration**: Fixed and working
 - **API endpoint**: Fixed and returning comments

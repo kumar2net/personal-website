@@ -239,6 +239,78 @@ npm run test:unit
 
 ## 🐛 Troubleshooting
 
+### Critical Issues & Solutions
+
+#### 🚨 **Build Error: "vite: not found" (Exit Code 127)**
+
+**Symptoms:**
+- Netlify deployment fails with `sh: 1: vite: not found`
+- Build command returns exit code 127
+- Functions deploy successfully but frontend build fails
+
+**Root Cause:**
+- Vite was listed in `devDependencies` instead of `dependencies`
+- Netlify's default build process only installs production dependencies
+- Build tools like Vite are not available during the build phase
+
+**Solutions Applied:**
+1. **Move Vite to dependencies:**
+   ```json
+   // package.json
+   {
+     "dependencies": {
+       "vite": "^5.0.12"
+     }
+   }
+   ```
+
+2. **Update Netlify build command:**
+   ```toml
+   # netlify.toml
+   [build]
+   command = "npm ci --include=dev && npm run build"
+   ```
+
+3. **Add environment variables:**
+   ```toml
+   environment = { NPM_FLAGS = "--include=dev" }
+   ```
+
+**Prevention:** Always include build tools in `dependencies`, not `devDependencies`.
+
+#### 🚨 **Comments Not Displaying**
+
+**Symptoms:**
+- API returns success but 0 comments
+- Frontend shows "No comments yet"
+- Some posts work, others don't
+
+**Root Causes Identified:**
+1. **Function versioning conflict:** Multiple `get-comments.js` files existed
+2. **Deployment caching:** Old function version cached in Netlify
+3. **Post-slug mismatch:** Comments stored with different slug formats
+4. **Missing comments:** New posts had no comments submitted yet
+
+**Solutions Applied:**
+1. **Consolidate functions:**
+   - Remove duplicate function files
+   - Use single `get-comments.js` as the source of truth
+   - Add version control to prevent conflicts
+
+2. **Force redeployment:**
+   ```bash
+   # Make small change to force redeployment
+   git commit -m "fix: Force redeployment"
+   git push origin master
+   ```
+
+3. **Handle multiple post-slug formats:**
+   ```javascript
+   const targetPostSlug = postSlug || postId;
+   ```
+
+**Prevention:** Use single function files, implement proper version control, test deployments.
+
 ### Common Issues
 
 #### 1. "NETLIFY_ACCESS_TOKEN not configured"
@@ -259,6 +331,14 @@ npm run test:unit
 #### 4. CORS errors
 
 **Solution**: Update `ALLOWED_ORIGINS` environment variable with your domain.
+
+#### 5. Function returns old version
+
+**Solution**: Force redeployment by making a small change to the function file.
+
+#### 6. Build succeeds but comments don't work
+
+**Check deployment status:** Wait for function deployment to complete (2-5 minutes).
 
 ### Debug Mode
 
