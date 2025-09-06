@@ -113,7 +113,7 @@ This shows your current GA4 configuration and settings.
 
 ### GA4 → BigQuery Export Status (Sep 4, 2025)
 - Dataset `analytics_12010944378` (US) exists; billing enabled.  
-- Streaming + Daily export enabled for Web stream `G-HWQM1TCFWQ`.  
+- Streaming + Daily export enabled for Web stream `G-PZ37S6E5BL`.  
 - Intraday tables not yet created; active monitor checks every 2 minutes.  
 - If no tables after re-link + traffic, escalate to Google per support ticket template.
 

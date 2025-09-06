@@ -8,7 +8,7 @@
 **Branch**: `master`
 
 **Analytics Verification**: 
-- GA4 tag `G-HWQM1TCFWQ` installed and Tag Assistant connected (Sep 3, 2025).
+- GA4 tag `G-PZ37S6E5BL` installed and Tag Assistant connected (Jan 2025).
 - GA4 → BigQuery: Link configured (US, Streaming + Daily). As of Sep 4, 2025, no `events_intraday_*` tables yet; monitoring every 2 minutes. If not created after re-link, support ticket ready.
 
 ## 📊 **Deployment Metrics**

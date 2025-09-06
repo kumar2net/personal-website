@@ -64,8 +64,8 @@ In `src/App.jsx` send `page_view` on route changes with React Router.
 3. Navigate a few pages; verify events in GA4 Realtime/DebugView.
 
 Notes:
-- This site uses GA4 directly (no GTM). GTM preview links such as [this example](https://tagassistant.google.com/?hl=en-GB&utm_source=gtm#/?id=G-HWQM1TCFWQ&source=GTE&gtm_auth=RdLF3qmcDxNnZVkoV_wdCQ&gtm_preview=env-2&cb=2635257316959896) will not detect tags here. Use Connect or DebugView instead.
-- Optional: enable debug mode by adding `debug_mode: true` to `gtag('config', 'G-HWQM1TCFWQ', ...)` in `index.html` during testing.
+- This site uses GA4 directly (no GTM). GTM preview links will not detect tags here. Use Connect or DebugView instead.
+- Optional: enable debug mode by adding `debug_mode: true` to `gtag('config', 'G-PZ37S6E5BL', ...)` in `index.html` during testing.
 ## Analytics Features
 
 - **Page view analytics**
