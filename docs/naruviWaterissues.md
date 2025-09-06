@@ -25,6 +25,29 @@ What is the Solution: Use Borewell water untreated for non-potable uses and RO w
 - Borewells are typically sunk to 300-500 feet depth to access groundwater
 - Current system uses 100% RO water, resulting in significant waste of reject water
 
+**Energy Consumption Analysis:**
+| Component | Power (kW) | Hours/Day | Energy/Day (kWh) | Monthly Energy (kWh) |
+|-----------|------------|-----------|------------------|---------------------|
+| Borewell Pump | 4 | 10 | 37.3 | 9,567 |
+| RO High-Pressure Pump | 10 | 10 | 100 | 25,650 |
+| Common Area Lighting | 4 | 10 | 40 | 10,260 |
+| **Total** | | | **177.3** | **45,477** |
+
+**Key Parameters:**
+- Electricity Tariff (Rs/kWh) - TNPDCL Energy: ₹9
+- TNPDCL Fixed Charge: ₹214 per kW per 2 months
+- Fixed cost TNPDCL: ₹4,280
+- Total estimate TNPDCL cost: ₹49,757
+- RO Plant Daily Output: 29,000 litres permeate (58,000 litres input)
+- Pump Runtime to meet Output: 10 hours actual
+- Common Area Lighting Runtime: 10 hours
+
+**RO Efficiency Calculation:**
+With 50% efficiency, we need 58,000 litres of input water to get 29,000 litres of permeate per day.
+
+**Cost Analysis:**
+Electricity cost for RO Water: 67% of total energy consumption
+
 Potable use: Cooking, bathing, washing, drinking
 Non-potable use: Plants watering, car washing, outdoor area cleaning etc..
 insert the image ~/personal-website/docs/naruviwater/naruviSolution1.jpg

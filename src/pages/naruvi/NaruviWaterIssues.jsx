@@ -21,7 +21,7 @@ const NaruviWaterIssues = () => {
               🚨 Pressing Issue: High RO Water Consumption
             </h2>
             <p className="text-blue-700">
-              Current daily consumption: <strong>26,000 litres</strong> across
+              Current daily consumption: <strong>29,000 litres</strong> across
               35 occupied villas
             </p>
           </div>
@@ -37,10 +37,10 @@ const NaruviWaterIssues = () => {
                   Current Metrics
                 </h3>
                 <ul className="space-y-2 text-gray-600">
-                  <li>• Total daily consumption: 26,000 litres</li>
+                  <li>• Total daily consumption: 29,000 litres</li>
                   <li>• Occupied villas: 35</li>
                   <li>• Assumed residents per villa: 3</li>
-                  <li>• Current usage per person: 248 litres/day</li>
+                  <li>• Current usage per person: 276 litres/day</li>
                 </ul>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
@@ -111,6 +111,80 @@ const NaruviWaterIssues = () => {
                 <p>• <strong>RO Efficiency:</strong> RO systems typically have 50% efficiency - permeate (clean water) is 50% of input, reject water is 50%</p>
                 <p>• <strong>Borewell Depth:</strong> Borewells are typically sunk to 300-500 feet depth to access groundwater</p>
                 <p>• <strong>Current Issue:</strong> System uses 100% RO water, resulting in significant waste of reject water</p>
+              </div>
+            </div>
+
+            {/* Energy Consumption Analysis */}
+            <div className="bg-purple-50 border-l-4 border-purple-400 p-6 mb-6">
+              <h3 className="text-lg font-semibold text-purple-800 mb-4">
+                Energy Consumption Analysis
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border border-gray-300 rounded-lg">
+                  <thead className="bg-purple-100">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Component</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Power (kW)</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Hours/Day</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Energy/Day (kWh)</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Monthly Energy (kWh)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    <tr className="hover:bg-gray-50">
+                      <td className="px-4 py-3 text-sm text-gray-900">Borewell Pump</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">4</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">37.3</td>
+                      <td className="px-4 py-3 text-sm font-medium text-purple-600">9,567</td>
+                    </tr>
+                    <tr className="hover:bg-gray-50">
+                      <td className="px-4 py-3 text-sm text-gray-900">RO High-Pressure Pump</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">100</td>
+                      <td className="px-4 py-3 text-sm font-medium text-purple-600">25,650</td>
+                    </tr>
+                    <tr className="hover:bg-gray-50">
+                      <td className="px-4 py-3 text-sm text-gray-900">Common Area Lighting</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">4</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
+                      <td className="px-4 py-3 text-sm text-gray-600">40</td>
+                      <td className="px-4 py-3 text-sm font-medium text-purple-600">10,260</td>
+                    </tr>
+                    <tr className="hover:bg-gray-50 bg-purple-50">
+                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">Total</td>
+                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
+                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
+                      <td className="px-4 py-3 text-sm font-semibold text-purple-700">177.3</td>
+                      <td className="px-4 py-3 text-sm font-semibold text-purple-700">45,477</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="mt-4 grid md:grid-cols-2 gap-4">
+                <div className="bg-white p-4 rounded-lg border">
+                  <h4 className="font-semibold text-purple-800 mb-2">Key Parameters</h4>
+                  <ul className="space-y-1 text-sm text-purple-700">
+                    <li>• Electricity Tariff: ₹9/kWh (TNPDCL)</li>
+                    <li>• Fixed Charge: ₹214/kW per 2 months</li>
+                    <li>• Fixed cost TNPDCL: ₹4,280</li>
+                    <li>• Total estimate TNPDCL cost: ₹49,757</li>
+                    <li>• RO Plant Daily Output: 29,000 litres permeate (58,000 litres input)</li>
+                    <li>• Pump Runtime: 10 hours actual</li>
+                    <li>• Lighting Runtime: 10 hours</li>
+                  </ul>
+                </div>
+                <div className="bg-white p-4 rounded-lg border">
+                  <h4 className="font-semibold text-purple-800 mb-2">RO Efficiency Calculation</h4>
+                  <p className="text-sm text-purple-700 mb-2">
+                    With 50% efficiency, we need <strong>58,000 litres</strong> of input water to get <strong>29,000 litres</strong> of permeate per day.
+                  </p>
+                  <p className="text-sm text-purple-700">
+                    <strong>Cost Impact:</strong> Electricity cost for RO Water represents <strong>67%</strong> of total energy consumption.
+                  </p>
+                </div>
               </div>
             </div>
             
