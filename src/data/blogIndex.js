@@ -65,8 +65,8 @@ export const blogIndex = {
     image:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
     tags: ['Technology', 'AI', 'Search', 'Machine Learning', 'Web Development', 'User Experience'],
-    datePublished: '2025-01-15',
-    dateModified: '2025-01-15',
+    datePublished: '2025-09-06',
+    dateModified: '2025-09-06',
   },
 };
 

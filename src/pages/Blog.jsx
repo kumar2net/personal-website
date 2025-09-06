@@ -482,7 +482,7 @@ const blogPosts = [
   },
   {
     title: 'Search Explained: How Semantic Search Transforms Content Discovery',
-    date: 'January 15, 2025',
+    date: 'September 06, 2025',
     excerpt:
       'Discover how semantic search goes beyond keyword matching to understand meaning, context, and intent - transforming how we find relevant content online.',
     tags: ['Technology', 'AI', 'Search', 'Machine Learning', 'Web Development', 'User Experience'],
