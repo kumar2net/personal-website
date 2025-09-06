@@ -109,7 +109,9 @@ export const handler = async (event) => {
                                  (data.message && (data.name || data.email)) ||
                                  (data.comment && (data.name || data.email)) ||
                                  (data.message) || // Show any submission with a message field
-                                 (data.comment); // Show any submission with a comment field
+                                 (data.comment) || // Show any submission with a comment field
+                                 (data.name) || // Show any submission with a name field
+                                 (data.email); // Show any submission with an email field
         const isApproved = submission.state === 'received' || submission.state === 'approved';
         
         // Check for various possible field names and post identifiers
