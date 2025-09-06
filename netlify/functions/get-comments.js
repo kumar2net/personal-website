@@ -119,15 +119,18 @@ export const handler = async (event) => {
                          data['postId'] === postId ||
                          data['post-title'] === postId;
         
+        // If no post ID is specified in the comment, don't show it
+        // This prevents old comments without post IDs from showing on all posts
+        const hasPostIdField = data['post-id'] || data['post-slug'] || data['post_id'] || data['postId'] || data['post-title'];
+        
         // Debug: Log the data to see what fields are available
         console.log('Submission data:', JSON.stringify(data, null, 2));
         console.log('Looking for postId:', postId);
         
         // If we have required fields and it's approved, include it
-        // For now, show all comments to see the 2 existing ones
-        // Also include comments that might be in different states
-        // TEMPORARILY: Show ALL submissions to debug
-        return true; // Show everything for debugging
+        // Filter by post ID to show only relevant comments
+        // Only show comments that have a post ID field and match the requested post
+        return hasRequiredFields && isApproved && hasPostIdField && hasPostId;
       })
       .map(submission => ({
         id: submission.id,

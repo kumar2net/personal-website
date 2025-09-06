@@ -127,7 +127,7 @@ const NaruviWaterIssues = () => {
                       <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Power (kW)</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Hours/Day</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Energy/Day (kWh)</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Monthly Energy (kWh)</th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Monthly Energy Cost (₹)</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -287,7 +287,7 @@ const NaruviWaterIssues = () => {
                 <p>
                   • Based on energy consumption analysis from NaruviWatercalc.csv
                 </p>
-                <p>• Includes monthly energy costs (45,477 kWh) + fixed costs (₹4,280)</p>
+                <p>• Includes monthly energy costs (₹45,477) + fixed costs (₹4,280)</p>
                 <p>
                   • Current operational cost for existing system
                 </p>

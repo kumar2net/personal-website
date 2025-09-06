@@ -1,4 +1,4 @@
-Component	Power_kW	Hours_per_day	Energy_per_day_kWh	Monthly_Energy_kWh
+Component	Power_kW	Hours_per_day	Energy_per_day_kWh	Monthly_Energy_Cost
 Borewell Pump	4	10	37.3	9567
 RO High-Pressure Pump	10	10	100	25650
 Common Area Lighting	4	10	40	10260
