@@ -1,0 +1,16 @@
+Component	Power_kW	Hours_per_day	Energy_per_day_kWh	Monthly_Energy_kWh
+Borewell Pump	4	10	37.3	9567
+RO High-Pressure Pump	10	10	100	25650
+Common Area Lighting	4	10	40	10260
+Total			177.3	45477
+			Fixed cost TNPDCL	4280
+Parameters			Total estimate TNPDCL cost	49757
+Electricity Tariff (Rs/kWh) - Actual	74462			
+Electricity Tariff (Rs/kWh) - TNPDCL Energy	9			
+TNPDCL Fixed Charge (₹214 per kW per 2 months)				
+RO Plant Daily Output (litres)	29000	58000		
+Pump Runtime to meet Output (hours) actual	10	6000		
+Common Area Lighting Runtime (hours)	10	10		
+				
+With 50% efficiency, we need 58,000 litres of input water to get 29,000 litres of permeate per day.				
+Electricity cost for RO Water in percentage	67%			

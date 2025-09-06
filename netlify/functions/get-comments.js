@@ -92,15 +92,23 @@ export const handler = async (event) => {
 
     const submissions = await submissionsResponse.json();
     
+    // Debug: Log all submissions to see what fields are available
+    console.log('All submissions:', JSON.stringify(submissions, null, 2));
+    
     // Filter comments for this specific post and approved ones
     const postComments = submissions
       .filter(submission => {
         const data = submission.data;
-        return data['post-id'] === postId && 
-               data['post-title'] && 
-               data.name && 
-               data.comment &&
-               submission.state === 'received'; // Only approved/received comments
+        // Check for various possible field names and post identifiers
+        const hasPostId = data['post-id'] === postId || 
+                         data['post-slug'] === postId || 
+                         data['post_id'] === postId ||
+                         data['postId'] === postId;
+        
+        const hasRequiredFields = data.name && data.comment;
+        const isApproved = submission.state === 'received' || submission.state === 'approved';
+        
+        return hasPostId && hasRequiredFields && isApproved;
       })
       .map(submission => ({
         id: submission.id,
