@@ -32,7 +32,7 @@ const BlogComments = ({ postSlug, postTitle, initialComments = [] }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          postSlug: postSlug,
+          postId: postSlug,  // Temporary: use postId until deployment completes
           formName: 'blog-comments'
         })
       });
