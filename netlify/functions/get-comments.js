@@ -99,16 +99,21 @@ export const handler = async (event) => {
     const postComments = submissions
       .filter(submission => {
         const data = submission.data;
+        
+        // For debugging: if no postId match, show all comments with name and comment fields
+        const hasRequiredFields = data.name && data.comment;
+        const isApproved = submission.state === 'received' || submission.state === 'approved';
+        
         // Check for various possible field names and post identifiers
         const hasPostId = data['post-id'] === postId || 
                          data['post-slug'] === postId || 
                          data['post_id'] === postId ||
-                         data['postId'] === postId;
+                         data['postId'] === postId ||
+                         data['post-title'] === postId;
         
-        const hasRequiredFields = data.name && data.comment;
-        const isApproved = submission.state === 'received' || submission.state === 'approved';
-        
-        return hasPostId && hasRequiredFields && isApproved;
+        // If we have required fields and it's approved, include it
+        // (for now, let's show all comments to debug the structure)
+        return hasRequiredFields && isApproved;
       })
       .map(submission => ({
         id: submission.id,
