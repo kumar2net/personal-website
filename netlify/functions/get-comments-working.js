@@ -70,6 +70,7 @@ export const handler = async (event) => {
       }
     ];
   } else if (targetPostSlug === 'semantic-search-explained') {
+    // Force redeployment test
     // Include comments without post-slug (they show on all posts) AND any with matching slug
     comments = [
       {
