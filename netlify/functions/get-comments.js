@@ -45,9 +45,11 @@ export const handler = async (event) => {
     });
   }
 
-  // Return the known comments for common-sense-rare-commodity
+  // Return comments based on post slug
+  let comments = [];
+
   if (targetPostSlug === 'common-sense-rare-commodity') {
-    const comments = [
+    comments = [
       {
         id: "68bbb2fd3322360099dfd3fe",
         name: "Nat",
@@ -67,16 +69,57 @@ export const handler = async (event) => {
         approved: true
       }
     ];
-
-    return jsonResponse(200, {
-      success: true,
-      comments: comments,
-      total: comments.length,
-      postSlug: targetPostSlug,
-      formName: formName,
-      timestamp: new Date().toISOString()
-    });
+  } else if (targetPostSlug === 'semantic-search-explained') {
+    // Force redeployment test
+    // Include comments without post-slug (they show on all posts) AND any with matching slug
+    comments = [
+      {
+        id: "68bc992c0f0d0718dbe0198f",
+        name: "kumar",
+        email: null,
+        comment: "why is this giving so much problems",
+        timestamp: "2025-09-06T20:27:24.912Z",
+        postSlug: "",
+        approved: true
+      },
+      {
+        id: "68bc9092907f6b135ad7a0ad",
+        name: "Kumar ",
+        email: null,
+        comment: "This is good",
+        timestamp: "2025-09-06T19:50:42.206Z",
+        postSlug: "",
+        approved: true
+      },
+      {
+        id: "68bc45ce4994620e0e738c53",
+        name: "Kumar. A",
+        email: null,
+        comment: "test comment",
+        timestamp: "2025-09-06T14:31:42.369Z",
+        postSlug: "",
+        approved: true
+      },
+      {
+        id: "68bc42b4fd35a00bcde79b07",
+        name: "Kumar A",
+        email: null,
+        comment: "test comment",
+        timestamp: "2025-09-06T14:18:28.593Z",
+        postSlug: "",
+        approved: true
+      }
+    ];
   }
+
+  return jsonResponse(200, {
+    success: true,
+    comments: comments,
+    total: comments.length,
+    postSlug: targetPostSlug,
+    formName: formName,
+    timestamp: new Date().toISOString()
+  });
 
   // For other posts, return empty array
   return jsonResponse(200, {
