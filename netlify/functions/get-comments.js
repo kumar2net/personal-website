@@ -71,29 +71,29 @@ export const handler = async (event) => {
     const forms = await formsResponse.json();
     console.log('Available forms:', forms.map(f => ({ id: f.id, name: f.name })));
     
-    // Search in all forms to find the 2 comments
-    let allSubmissions = [];
-    
-    for (const form of forms) {
-      try {
-        const submissionsResponse = await fetch(`https://api.netlify.com/api/v1/forms/${form.id}/submissions`, {
-          headers: {
-            'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (submissionsResponse.ok) {
-          const submissions = await submissionsResponse.json();
-          console.log(`Form "${form.name}" has ${submissions.length} submissions`);
-          allSubmissions = allSubmissions.concat(submissions.map(s => ({ ...s, formName: form.name })));
-        }
-      } catch (err) {
-        console.log(`Error fetching submissions for form "${form.name}":`, err.message);
-      }
+    // Find the blog-comments form and get its submissions
+    const targetForm = forms.find(form => form.name === formName);
+    if (!targetForm) {
+      return jsonResponse(404, { 
+        success: false, 
+        error: `Form '${formName}' not found`,
+        availableForms: forms.map(f => f.name)
+      });
     }
-    
-    const submissions = allSubmissions;
+
+    // Fetch submissions for this form
+    const submissionsResponse = await fetch(`https://api.netlify.com/api/v1/forms/${targetForm.id}/submissions`, {
+      headers: {
+        'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!submissionsResponse.ok) {
+      throw new Error(`Failed to fetch submissions: ${submissionsResponse.status}`);
+    }
+
+    const submissions = await submissionsResponse.json();
     
     // Debug: Log all submissions to see what fields are available
     console.log('All submissions:', JSON.stringify(submissions, null, 2));
