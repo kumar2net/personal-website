@@ -107,7 +107,9 @@ export const handler = async (event) => {
         // For debugging: be more flexible with field names
         const hasRequiredFields = (data.name && data.comment) || 
                                  (data.message && (data.name || data.email)) ||
-                                 (data.comment && (data.name || data.email));
+                                 (data.comment && (data.name || data.email)) ||
+                                 (data.message) || // Show any submission with a message field
+                                 (data.comment); // Show any submission with a comment field
         const isApproved = submission.state === 'received' || submission.state === 'approved';
         
         // Check for various possible field names and post identifiers
@@ -124,7 +126,7 @@ export const handler = async (event) => {
         // If we have required fields and it's approved, include it
         // For now, show all comments to see the 2 existing ones
         // Also include comments that might be in different states
-        return hasRequiredFields && (isApproved || submission.state === 'spam' || submission.state === 'unverified');
+        return hasRequiredFields && (isApproved || submission.state === 'spam' || submission.state === 'unverified' || submission.state === 'pending' || submission.state === 'new');
       })
       .map(submission => ({
         id: submission.id,
