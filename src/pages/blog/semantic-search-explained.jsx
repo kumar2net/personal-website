@@ -432,8 +432,8 @@ const SemanticSearchExplained = () => {
       </div>
 
       {/* Comments Section */}
-      <BlogComments 
-        postId="semantic-search-explained" 
+      <BlogComments
+        postSlug="semantic-search-explained"
         postTitle="Search Explained: How Semantic Search Transforms Content Discovery"
       />
     </motion.div>
