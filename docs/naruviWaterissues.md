@@ -26,8 +26,8 @@ What is the Solution: Use Borewell water untreated for non-potable uses and RO w
 - Current system uses 100% RO water, resulting in significant waste of reject water
 
 **Energy Consumption Analysis:**
-| Component | Power (kW) | Hours/Day | Energy/Day (kWh) | Monthly Energy (kWh) |
-|-----------|------------|-----------|------------------|---------------------|
+| Component | Power (kW) | Hours/Day | Energy/Day (kWh) | Monthly Energy Cost (₹) |
+|-----------|------------|-----------|------------------|------------------------|
 | Borewell Pump | 4 | 10 | 37.3 | 9,567 |
 | RO High-Pressure Pump | 10 | 10 | 100 | 25,650 |
 | Common Area Lighting | 4 | 10 | 40 | 10,260 |
