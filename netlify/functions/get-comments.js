@@ -103,8 +103,10 @@ export const handler = async (event) => {
       .filter(submission => {
         const data = submission.data;
         
-        // For debugging: if no postId match, show all comments with name and comment fields
-        const hasRequiredFields = data.name && data.comment;
+        // For debugging: be more flexible with field names
+        const hasRequiredFields = (data.name && data.comment) || 
+                                 (data.message && (data.name || data.email)) ||
+                                 (data.comment && (data.name || data.email));
         const isApproved = submission.state === 'received' || submission.state === 'approved';
         
         // Check for various possible field names and post identifiers
@@ -124,11 +126,12 @@ export const handler = async (event) => {
       })
       .map(submission => ({
         id: submission.id,
-        name: submission.data.name,
+        name: submission.data.name || submission.data.email || 'Anonymous',
         email: submission.data.email,
-        comment: submission.data.comment,
+        comment: submission.data.comment || submission.data.message,
         timestamp: submission.created_at,
-        approved: true
+        approved: true,
+        formName: submission.formName
       }))
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort by newest first
 
