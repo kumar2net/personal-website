@@ -112,17 +112,21 @@ export const handler = async (event) => {
     });
   }
 
-  const { postSlug, formName } = payload;
-  if (!postSlug || !formName) {
+  const { postSlug, postId, formName } = payload;
+  
+  // Support both old (postId) and new (postSlug) parameter names
+  const targetPostSlug = postSlug || postId;
+  
+  if (!targetPostSlug || !formName) {
     return jsonResponse(400, { 
       success: false, 
-      error: 'postSlug and formName are required' 
+      error: 'postSlug (or postId) and formName are required' 
     });
   }
 
   // Rate limiting check (basic implementation)
   const clientIP = event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || 'unknown';
-  console.log(`Comment request from IP: ${clientIP} for post: ${postSlug}`);
+  console.log(`Comment request from IP: ${clientIP} for post: ${targetPostSlug}`);
 
   try {
     // Fetch forms from Netlify API
@@ -173,7 +177,7 @@ export const handler = async (event) => {
         if (!comment) return false;
         
         // Filter by postSlug
-        const matchesPost = comment.postSlug === postSlug;
+        const matchesPost = comment.postSlug === targetPostSlug;
         
         // Only show approved, non-spam comments
         const isApproved = comment.approved && !comment.spam;
@@ -182,13 +186,13 @@ export const handler = async (event) => {
       })
       .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort by newest first
 
-    console.log(`Found ${processedComments.length} valid comments for post '${postSlug}'`);
+    console.log(`Found ${processedComments.length} valid comments for post '${targetPostSlug}'`);
 
     return jsonResponse(200, {
       success: true,
       comments: processedComments,
       total: processedComments.length,
-      postSlug: postSlug,
+      postSlug: targetPostSlug,
       formName: formName,
       timestamp: new Date().toISOString()
     });
