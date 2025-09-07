@@ -14,6 +14,16 @@ const NaruviWaterIssues = () => {
           Naruvi Gated Community Water Management Report
         </h1>
 
+        {/* Positive Update */}
+        <div className="bg-green-50 border-l-4 border-green-400 p-6 mb-8">
+          <h2 className="text-xl font-semibold text-green-800 mb-3">
+            ✅ Good News Update
+          </h2>
+          <p className="text-green-700">
+            Happy to note that Borewell 1 is being revived and it can now augment our water supply. Kudos Executive team. Appreciate this.
+          </p>
+        </div>
+
         <div className="prose prose-lg max-w-none">
           {/* Executive Summary */}
           <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
