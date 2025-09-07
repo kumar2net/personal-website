@@ -36,7 +36,7 @@ const BlogComments = ({ postSlug, postTitle, initialComments = [] }) => {
       setLoading(prev => prev !== true ? true : prev);
       setError(prev => prev !== '' ? '' : prev);
 
-      const response = await fetch('http://localhost:8888/.netlify/functions/get-comments', {
+      const response = await fetch('/.netlify/functions/get-comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
