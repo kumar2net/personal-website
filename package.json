@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
-    "dev:netlify": "netlify dev",
+    "dev": "netlify dev",
+    "dev:vite": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
