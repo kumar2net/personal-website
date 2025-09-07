@@ -8,12 +8,6 @@ const CommonSenseRareCommodity = () => {
   const articleRef = useRef(null);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
-  const [showCommentForm, setShowCommentForm] = useState(false);
-  const [comment, setComment] = useState('');
-  const [name, setName] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState('');
-  const [localComments, setLocalComments] = useState([]);
 
   const handleLike = () => {
     if (isLiked) {
@@ -25,92 +19,6 @@ const CommonSenseRareCommodity = () => {
     }
   };
 
-  const handleShareThoughts = () => {
-    setShowCommentForm(!showCommentForm);
-  };
-
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (!comment.trim() || !name.trim()) return;
-
-    setIsSubmitting(true);
-    setSubmitStatus('');
-
-    try {
-      // Try Netlify Forms first
-      const formData = new FormData();
-      formData.append('form-name', 'blog-comments');
-      formData.append('post-slug', 'common-sense-rare-commodity');
-      formData.append('name', name.trim());
-      formData.append('comment', comment.trim());
-      formData.append('timestamp', new Date().toISOString());
-
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString(),
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setComment('');
-        setName('');
-        // Keep form open for a moment to show success message
-        setTimeout(() => {
-          setShowCommentForm(false);
-        }, 2000);
-      } else {
-        // Fallback to localStorage if Netlify Forms fails
-        const commentData = {
-          id: Date.now(),
-          name: name.trim(),
-          comment: comment.trim(),
-          postSlug: 'common-sense-rare-commodity',
-          timestamp: new Date().toISOString(),
-        };
-
-        const existingComments = JSON.parse(localStorage.getItem('blog-comments') || '[]');
-        existingComments.push(commentData);
-        localStorage.setItem('blog-comments', JSON.stringify(existingComments));
-
-        // Update local comments state
-        setLocalComments(prev => [...prev, commentData]);
-
-        setSubmitStatus('success');
-        setComment('');
-        setName('');
-        setTimeout(() => {
-          setShowCommentForm(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.error('Error submitting comment:', error);
-      // Fallback to localStorage
-      const commentData = {
-        id: Date.now(),
-        name: name.trim(),
-        comment: comment.trim(),
-        postSlug: 'common-sense-rare-commodity',
-        timestamp: new Date().toISOString(),
-      };
-
-      const existingComments = JSON.parse(localStorage.getItem('blog-comments') || '[]');
-      existingComments.push(commentData);
-      localStorage.setItem('blog-comments', JSON.stringify(existingComments));
-
-      // Update local comments state
-      setLocalComments(prev => [...prev, commentData]);
-
-      setSubmitStatus('success');
-      setComment('');
-      setName('');
-      setTimeout(() => {
-        setShowCommentForm(false);
-      }, 2000);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <motion.div
@@ -508,11 +416,11 @@ const CommonSenseRareCommodity = () => {
               create a more equitable global order.
             </p>
             <div className="flex justify-center space-x-4 mb-6">
-              <button 
+              <button
                 onClick={handleLike}
                 className={`px-6 py-2 rounded-lg transition-colors flex items-center space-x-2 ${
-                  isLiked 
-                    ? 'bg-red-500 text-white hover:bg-red-600' 
+                  isLiked
+                    ? 'bg-red-500 text-white hover:bg-red-600'
                     : 'bg-blue-500 text-white hover:bg-blue-600'
                 }`}
               >
@@ -522,144 +430,10 @@ const CommonSenseRareCommodity = () => {
                 <span>{isLiked ? 'Liked' : 'Like this post'}</span>
                 {likeCount > 0 && <span>({likeCount})</span>}
               </button>
-              <button 
-                onClick={handleShareThoughts}
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-              >
-                {showCommentForm ? 'Cancel' : 'Share your thoughts'}
-              </button>
             </div>
 
 
-            {/* Comment Form */}
-            {showCommentForm && (
-              <div className="max-w-2xl mx-auto">
-                <form onSubmit={handleCommentSubmit} className="space-y-4">
-                  {/* Hidden fields for Netlify Forms */}
-                  <input type="hidden" name="form-name" value="blog-comments" />
-                  <input type="hidden" name="post-slug" value="common-sense-rare-commodity" />
-                  <div style={{ display: 'none' }}>
-                    <label>
-                      Don't fill this out if you're human: <input name="bot-field" />
-                    </label>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="comment-name" className="sr-only">
-                      Your name
-                    </label>
-                    <input
-                      id="comment-name"
-                      type="text"
-                      name="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      required
-                      aria-describedby="name-help"
-                    />
-                    <div id="name-help" className="sr-only">
-                      Enter your name for the comment
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="comment-text" className="sr-only">
-                      Your comment
-                    </label>
-                    <textarea
-                      id="comment-text"
-                      name="comment"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      placeholder="Share your thoughts on common sense in international relations..."
-                      className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                      rows="4"
-                      required
-                      aria-describedby="comment-help"
-                    />
-                    <div id="comment-help" className="sr-only">
-                      Share your thoughts about the blog post
-                    </div>
-                  </div>
-                  
-                  {/* Status Messages */}
-                  {submitStatus === 'success' && (
-                    <div 
-                      className="p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg"
-                      role="status"
-                      aria-live="polite"
-                    >
-                      Thank you for your comment! It has been submitted successfully.
-                    </div>
-                  )}
-                  {submitStatus === 'error' && (
-                    <div 
-                      className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg"
-                      role="alert"
-                      aria-live="assertive"
-                    >
-                      Sorry, there was an error submitting your comment. Please try again.
-                    </div>
-                  )}
-                  
-                  <div className="flex justify-end space-x-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowCommentForm(false)}
-                      className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                      disabled={isSubmitting}
-                      aria-label="Cancel comment submission"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={!comment.trim() || !name.trim() || isSubmitting}
-                      className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-                      aria-label={isSubmitting ? "Submitting comment" : "Submit comment"}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" aria-hidden="true"></div>
-                          Submitting...
-                        </>
-                      ) : (
-                        'Post Comment'
-                      )}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
 
-            {/* Local Comments Display */}
-            {localComments.length > 0 && (
-              <div className="max-w-2xl mx-auto mt-8">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Comments ({localComments.length})</h3>
-                <div className="space-y-4">
-                  {localComments
-                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-                    .map((comment) => (
-                      <div key={comment.id} className="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-medium text-gray-800">{comment.name}</h4>
-                          <span className="text-sm text-gray-500">
-                            {new Date(comment.timestamp).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
-                          </span>
-                        </div>
-                        <p className="text-gray-700">{comment.comment}</p>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            )}
 
             {/* Comment Info */}
             <div className="max-w-4xl mx-auto mt-8 text-center">
@@ -668,8 +442,9 @@ const CommonSenseRareCommodity = () => {
                   💬 Share Your Thoughts
                 </h4>
                 <p className="text-blue-700">
-                  Comments are stored locally in your browser and will appear immediately after submission. 
-                  Your thoughts help create meaningful discussions about these important topics.
+                  Use the comment system below to share your thoughts. Comments are managed through Netlify Forms
+                  and will be moderated before being published. Your insights help create meaningful discussions
+                  about these important topics.
                 </p>
               </div>
             </div>

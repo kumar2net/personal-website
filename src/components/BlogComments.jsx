@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /**
  * Enhanced BlogComments Component
@@ -14,25 +14,35 @@ const BlogComments = ({ postSlug, postTitle, initialComments = [] }) => {
   const [showComments, setShowComments] = useState(false);
   const [lastFetch, setLastFetch] = useState(null);
 
-  // Memoized fetch function to prevent unnecessary re-renders
-  const fetchComments = useCallback(async (forceRefresh = false) => {
+  // Use refs to prevent infinite loops
+  const isFetchingRef = useRef(false);
+  const hasFetchedRef = useRef(false);
+
+  // Fetch comments function - no dependencies to prevent recreation
+  const fetchComments = async (forceRefresh = false) => {
+    // Prevent multiple simultaneous requests
+    if (isFetchingRef.current && !forceRefresh) {
+      return;
+    }
+
     // Skip if we have recent data and not forcing refresh
-    if (!forceRefresh && comments.length > 0 && lastFetch && 
+    if (!forceRefresh && hasFetchedRef.current && lastFetch &&
         (Date.now() - lastFetch) < 300000) { // 5 minutes
       return;
     }
 
     try {
-      setLoading(true);
-      setError('');
-      
-      const response = await fetch('/.netlify/functions/get-comments', {
+      isFetchingRef.current = true;
+      setLoading(prev => prev !== true ? true : prev);
+      setError(prev => prev !== '' ? '' : prev);
+
+      const response = await fetch('http://localhost:8888/.netlify/functions/get-comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          postId: postSlug,  // Temporary: use postId until deployment completes
+          postSlug: postSlug,
           formName: 'blog-comments'
         })
       });
@@ -42,27 +52,44 @@ const BlogComments = ({ postSlug, postTitle, initialComments = [] }) => {
       }
 
       const data = await response.json();
-      
+
       if (data.success) {
-        setComments(data.comments || []);
+        const newComments = data.comments || [];
+        // Only update state if comments have actually changed
+        setComments(prevComments => {
+          if (JSON.stringify(prevComments) !== JSON.stringify(newComments)) {
+            return newComments;
+          }
+          return prevComments;
+        });
         setLastFetch(Date.now());
+        hasFetchedRef.current = true;
       } else {
         throw new Error(data.error || 'Failed to fetch comments');
       }
-      
+
     } catch (err) {
       console.error('Error fetching comments:', err);
       setError('Failed to load comments. Please try again later.');
     } finally {
-      setLoading(false);
+      setLoading(prev => prev !== false ? false : prev);
+      isFetchingRef.current = false;
     }
-  }, [postSlug, comments.length, lastFetch]);
+  };
 
   useEffect(() => {
-    if (showComments && comments.length === 0) {
+    // Only fetch on mount if we don't have comments and haven't fetched before
+    if (comments.length === 0 && !hasFetchedRef.current && !isFetchingRef.current) {
       fetchComments();
     }
-  }, [showComments, fetchComments, comments.length]);
+  }, []); // Empty dependency array to run only once on mount
+
+  useEffect(() => {
+    // Fetch when showComments becomes true and we don't have comments
+    if (showComments && comments.length === 0 && !hasFetchedRef.current && !isFetchingRef.current) {
+      fetchComments();
+    }
+  }, [showComments]); // Only depend on showComments
 
   const formatDate = (timestamp) => {
     try {
@@ -84,6 +111,8 @@ const BlogComments = ({ postSlug, postTitle, initialComments = [] }) => {
   };
 
   const handleRefresh = () => {
+    // Force refresh by resetting refs
+    hasFetchedRef.current = false;
     fetchComments(true);
   };
 

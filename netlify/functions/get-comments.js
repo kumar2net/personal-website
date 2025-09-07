@@ -1,6 +1,22 @@
 /**
- * Working Comments Function - Returns the known comments
+ * Comments Function - Fetches from Netlify Forms API with caching
+ * Automatically syncs with Netlify dashboard changes
+ * Includes rate limiting protection and caching
  */
+
+const NETLIFY_ACCESS_TOKEN = process.env.NETLIFY_ACCESS_TOKEN;
+const NETLIFY_SITE_ID = process.env.NETLIFY_SITE_ID || 'kumarsite';
+
+// Cache configuration
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+let cache = {
+  forms: null,
+  submissions: {},
+  lastFetch: {
+    forms: 0,
+    submissions: {}
+  }
+};
 
 function jsonResponse(statusCode, body, extraHeaders = {}) {
   return {
@@ -16,6 +32,40 @@ function jsonResponse(statusCode, body, extraHeaders = {}) {
   };
 }
 
+// Check if cache is still valid
+function isCacheValid(cacheKey, cacheType = 'forms') {
+  const now = Date.now();
+  const lastFetch = cache.lastFetch[cacheType];
+
+  if (cacheType === 'submissions') {
+    return cache.lastFetch.submissions[cacheKey] &&
+           (now - cache.lastFetch.submissions[cacheKey]) < CACHE_DURATION;
+  }
+
+  return lastFetch && (now - lastFetch) < CACHE_DURATION;
+}
+
+// Get cached data
+function getCachedData(cacheKey, cacheType = 'forms') {
+  if (cacheType === 'submissions') {
+    return cache.submissions[cacheKey] || null;
+  }
+  return cache.forms;
+}
+
+// Set cached data
+function setCachedData(data, cacheKey, cacheType = 'forms') {
+  const now = Date.now();
+
+  if (cacheType === 'submissions') {
+    cache.submissions[cacheKey] = data;
+    cache.lastFetch.submissions[cacheKey] = now;
+  } else {
+    cache.forms = data;
+    cache.lastFetch.forms = now;
+  }
+}
+
 export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return jsonResponse(200, { ok: true });
@@ -25,109 +75,130 @@ export const handler = async (event) => {
     return jsonResponse(405, { error: 'Method Not Allowed' });
   }
 
+  if (!NETLIFY_ACCESS_TOKEN) {
+    return jsonResponse(500, {
+      success: false,
+      error: 'NETLIFY_ACCESS_TOKEN not configured'
+    });
+  }
+
   let payload;
   try {
     payload = JSON.parse(event.body || '{}');
   } catch (error) {
-    return jsonResponse(400, { 
-      success: false, 
-      error: 'Invalid JSON body' 
+    return jsonResponse(400, {
+      success: false,
+      error: 'Invalid JSON body'
     });
   }
 
   const { postSlug, postId, formName } = payload;
   const targetPostSlug = postSlug || postId;
-  
+
   if (!targetPostSlug || !formName) {
-    return jsonResponse(400, { 
-      success: false, 
-      error: 'postSlug (or postId) and formName are required' 
+    return jsonResponse(400, {
+      success: false,
+      error: 'postSlug (or postId) and formName are required'
     });
   }
 
-  // Return comments based on post slug
-  let comments = [];
+  try {
+    // Check cache for forms data first
+    let forms = getCachedData('forms');
+    let targetForm = null;
 
-  if (targetPostSlug === 'common-sense-rare-commodity') {
-    comments = [
-      {
-        id: "68bbb2fd3322360099dfd3fe",
-        name: "Nat",
-        email: null,
-        comment: "Thanks for sharing your thoughtful and insightful analysis. Common sense is indeed a rare commodity and especially when it comes to people in power and position as the dynamics and their agenda can obliterate the common sense based actions.\nVethathiri Maharishi's concept looks similar to the ultimate interstellar universe peace that comes through the effort of the super Robot Daneel Oliwah starting at planet Gaia in Isac Asimov's Foundation science fiction series (now a teleseries in apple tv though I don't like all the changes they do for the televise version.from the original).\nMany of Asimov's stories have come true through progress in science and I wish & hope this also can come true for everlasting peace and prosperity to humanity.",
-        timestamp: "2025-09-06T04:05:17.135Z",
-        postSlug: "common-sense-rare-commodity",
-        approved: true
-      },
-      {
-        id: "68bb75f9f3ea91006e836857",
-        name: "Kumar A",
-        email: null,
-        comment: "Hoping that some resolution is found quickly",
-        timestamp: "2025-09-05T23:44:57.343Z",
-        postSlug: "common-sense-rare-commodity",
-        approved: true
+    if (!forms || !isCacheValid('forms')) {
+      // Fetch forms from Netlify API if not cached or cache expired
+      console.log('Fetching forms from Netlify API (cache miss or expired)');
+      const formsResponse = await fetch(`https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/forms`, {
+        headers: {
+          'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!formsResponse.ok) {
+        throw new Error(`Failed to fetch forms: ${formsResponse.status} ${formsResponse.statusText}`);
       }
-    ];
-  } else if (targetPostSlug === 'semantic-search-explained') {
-    // Force redeployment test
-    // Include comments without post-slug (they show on all posts) AND any with matching slug
-    comments = [
-      {
-        id: "68bc992c0f0d0718dbe0198f",
-        name: "kumar",
-        email: null,
-        comment: "why is this giving so much problems",
-        timestamp: "2025-09-06T20:27:24.912Z",
-        postSlug: "",
-        approved: true
-      },
-      {
-        id: "68bc9092907f6b135ad7a0ad",
-        name: "Kumar ",
-        email: null,
-        comment: "This is good",
-        timestamp: "2025-09-06T19:50:42.206Z",
-        postSlug: "",
-        approved: true
-      },
-      {
-        id: "68bc45ce4994620e0e738c53",
-        name: "Kumar. A",
-        email: null,
-        comment: "test comment",
-        timestamp: "2025-09-06T14:31:42.369Z",
-        postSlug: "",
-        approved: true
-      },
-      {
-        id: "68bc42b4fd35a00bcde79b07",
-        name: "Kumar A",
-        email: null,
-        comment: "test comment",
-        timestamp: "2025-09-06T14:18:28.593Z",
-        postSlug: "",
-        approved: true
+
+      forms = await formsResponse.json();
+      setCachedData(forms, 'forms');
+    } else {
+      console.log('Using cached forms data');
+    }
+
+    targetForm = forms.find(form => form.name === formName);
+
+    if (!targetForm) {
+      return jsonResponse(404, {
+        success: false,
+        error: `Form '${formName}' not found`,
+        availableForms: forms.map(f => f.name)
+      });
+    }
+
+    // Check cache for submissions data
+    const submissionsCacheKey = targetForm.id;
+    let submissions = getCachedData(submissionsCacheKey, 'submissions');
+
+    if (!submissions || !isCacheValid(submissionsCacheKey, 'submissions')) {
+      // Fetch submissions from the target form if not cached or cache expired
+      console.log(`Fetching submissions for form ${targetForm.id} from Netlify API (cache miss or expired)`);
+      const submissionsResponse = await fetch(`https://api.netlify.com/api/v1/forms/${targetForm.id}/submissions`, {
+        headers: {
+          'Authorization': `Bearer ${NETLIFY_ACCESS_TOKEN}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!submissionsResponse.ok) {
+        throw new Error(`Failed to fetch submissions: ${submissionsResponse.status} ${submissionsResponse.statusText}`);
       }
-    ];
+
+      submissions = await submissionsResponse.json();
+      setCachedData(submissions, submissionsCacheKey, 'submissions');
+    } else {
+      console.log(`Using cached submissions data for form ${targetForm.id}`);
+    }
+
+    // Filter and format comments for the specific post
+    const comments = submissions
+      .filter(submission => {
+        const data = submission.data;
+
+        // Basic validation - must have name and comment
+        if (!data.name || !data.comment) return false;
+
+        // Match post slug - check various possible field names
+        const submissionPostSlug = data['post-slug'] || data['postSlug'] || data['post_id'] || data['postId'];
+        return submissionPostSlug === targetPostSlug;
+      })
+      .map(submission => ({
+        id: submission.id,
+        name: submission.data.name,
+        email: submission.data.email || null,
+        comment: submission.data.comment,
+        timestamp: submission.created_at,
+        postSlug: submission.data['post-slug'] || submission.data['postSlug'] || targetPostSlug,
+        approved: true // All Netlify form submissions are considered approved
+      }))
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    return jsonResponse(200, {
+      success: true,
+      comments: comments,
+      total: comments.length,
+      postSlug: targetPostSlug,
+      formName: formName,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    return jsonResponse(500, {
+      success: false,
+      error: 'Failed to fetch comments from Netlify Forms',
+      details: error.message
+    });
   }
-
-  return jsonResponse(200, {
-    success: true,
-    comments: comments,
-    total: comments.length,
-    postSlug: targetPostSlug,
-    formName: formName,
-    timestamp: new Date().toISOString()
-  });
-
-  // For other posts, return empty array
-  return jsonResponse(200, {
-    success: true,
-    comments: [],
-    total: 0,
-    postSlug: targetPostSlug,
-    formName: formName,
-    timestamp: new Date().toISOString()
-  });
 };
