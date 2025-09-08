@@ -3,7 +3,8 @@
 ## Overview
 The `/reco` page provides an interactive interface for discovering blog content through AI-powered recommendations using the Neural Graph Recommender system.
 
-**Live URL**: https://kumarsite.netlify.app/reco
+**Live URL**: https://kumarsite.netlify.app/reco  
+**Access**: Direct URL only (not shown in navigation menu)
 
 ## ✨ Features
 
@@ -33,9 +34,9 @@ The `/reco` page provides an interactive interface for discovering blog content 
 ## 🎨 User Interface
 
 ### Navigation
-- Added to main navigation with "AI Reco" label
-- "NEW" badge to highlight the feature
-- Mobile-responsive menu integration
+- **Hidden from menu** - Direct URL access only
+- No navigation links (as per requirement)
+- Access via: https://kumarsite.netlify.app/reco
 
 ### Page Layout
 ```
@@ -234,7 +235,7 @@ const API_BASE_URL = process.env.NODE_ENV === 'development'
 
 - [x] Component created and tested
 - [x] Route added to App.jsx
-- [x] Navigation links added
+- [x] ~~Navigation links added~~ Hidden as requested
 - [x] Mobile responsive design
 - [x] Interaction tracking integrated
 - [x] SEO tags configured
