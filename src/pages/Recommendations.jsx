@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useInteractionTracking } from '../hooks/useInteractionTracking';
 import GraphVisualization from '../components/GraphVisualization';
+import { 
+  getSystemStatus, 
+  getTrendingPosts, 
+  getRecommendations 
+} from '../utils/recommendationService';
 
 const Recommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
@@ -14,75 +19,60 @@ const Recommendations = () => {
   const [activeTab, setActiveTab] = useState('trending');
   const { trackClick, trackView } = useInteractionTracking();
 
-  // API configuration
-  const API_BASE_URL = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8000'
-    : '/api'; // Update for production
-
-  // Fetch system status
-  const fetchSystemStatus = useCallback(async () => {
+  // Fetch system status (using local service)
+  const fetchSystemStatus = useCallback(() => {
     try {
-      const response = await fetch(`${API_BASE_URL}/status`);
-      if (response.ok) {
-        const data = await response.json();
-        setSystemStatus(data);
-      }
+      const status = getSystemStatus();
+      setSystemStatus(status);
     } catch (error) {
       console.error('Failed to fetch system status:', error);
     }
-  }, [API_BASE_URL]);
+  }, []);
 
-  // Fetch trending posts
-  const fetchTrendingPosts = useCallback(async () => {
+  // Fetch trending posts (using local service)
+  const fetchTrendingPosts = useCallback(() => {
     try {
-      const response = await fetch(`${API_BASE_URL}/trending`);
-      if (response.ok) {
-        const data = await response.json();
-        setTrendingPosts(data.trending_posts || []);
-        
-        // Track views for trending posts
-        data.trending_posts?.forEach(post => {
-          trackView(post.id, 'recommendations-page');
-        });
-      }
+      const trending = getTrendingPosts(10);
+      setTrendingPosts(trending);
+      
+      // Track views for trending posts
+      trending.forEach(post => {
+        trackView(post.id, 'recommendations-page');
+      });
     } catch (error) {
       console.error('Failed to fetch trending posts:', error);
+      setTrendingPosts([]);
     }
-  }, [API_BASE_URL, trackView]);
+  }, [trackView]);
 
-  // Fetch recommendations for a specific post
-  const fetchPostRecommendations = useCallback(async (postId) => {
+  // Fetch recommendations for a specific post (using local service)
+  const fetchPostRecommendations = useCallback((postId) => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/recommendations/${postId}?num_recommendations=5`);
-      if (response.ok) {
-        const data = await response.json();
-        setPostRecommendations(data.recommendations || []);
+      // Simulate async behavior for better UX
+      setTimeout(() => {
+        const recs = getRecommendations(postId, 5);
+        setPostRecommendations(recs);
         
         // Track views for recommendations
-        data.recommendations?.forEach(rec => {
+        recs.forEach(rec => {
           trackView(rec.id, postId);
         });
-      }
+        setLoading(false);
+      }, 300);
     } catch (error) {
       console.error('Failed to fetch recommendations:', error);
       setPostRecommendations([]);
-    } finally {
       setLoading(false);
     }
-  }, [API_BASE_URL, trackView]);
+  }, [trackView]);
 
   // Initial data fetch
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      await Promise.all([
-        fetchSystemStatus(),
-        fetchTrendingPosts()
-      ]);
-      setLoading(false);
-    };
-    loadData();
+    setLoading(true);
+    fetchSystemStatus();
+    fetchTrendingPosts();
+    setLoading(false);
   }, [fetchSystemStatus, fetchTrendingPosts]);
 
   // Handle post selection
