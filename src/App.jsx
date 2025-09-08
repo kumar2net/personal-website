@@ -241,14 +241,6 @@ function App() {
                 >
                   Blog
                 </Link>
-                <Link
-                  to="/reco"
-                  className="text-gray-600 hover:text-gray-800 transition-colors flex items-center gap-1"
-                  onClick={() => trackClick('nav_reco')}
-                >
-                  <span>AI Reco</span>
-                  <span className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white px-1.5 py-0.5 rounded-full">NEW</span>
-                </Link>
 
                 <Link
                   to="/learning"
@@ -355,19 +347,6 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     Blog
-                  </Link>
-                  <Link
-                    to="/reco"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick('nav_reco_mobile');
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    <span className="flex items-center gap-1">
-                      <span>AI Reco</span>
-                      <span className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white px-1.5 py-0.5 rounded-full">NEW</span>
-                    </span>
                   </Link>
 
                   <Link
