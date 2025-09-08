@@ -64,6 +64,7 @@ import UtilitiesDashboard from './pages/UtilitiesDashboard';
 import VocabAdditions from './pages/VocabAdditions';
 import NaruviWaterIssues from './pages/naruvi';
 import Elsewhere from './pages/Elsewhere';
+import TopicSuggestions from './pages/TopicSuggestions';
 
 // Admin CMS removed
 
@@ -220,6 +221,13 @@ function App() {
                   Elsewhere
                 </Link>
                 <Link
+                  to="/topics"
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                  onClick={() => trackClick('nav_topics')}
+                >
+                  Topics
+                </Link>
+                <Link
                   to="/projects"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick('nav_projects')}
@@ -316,6 +324,16 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     Elsewhere
+                  </Link>
+                  <Link
+                    to="/topics"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick('nav_topics_mobile');
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    Topics
                   </Link>
                   <Link
                     to="/projects"
@@ -523,6 +541,20 @@ function App() {
                     type="website"
                   />
                   <About />
+                </>
+              }
+            />
+            <Route
+              path="/topics"
+              element={
+                <>
+                  <SEO
+                    title="Topic Suggestions"
+                    description="3–4 blog topic ideas from GA4 analytics."
+                    canonicalPath="/topics"
+                    type="website"
+                  />
+                  <TopicSuggestions />
                 </>
               }
             />
