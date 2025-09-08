@@ -1,12 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useInteractionTracking } from '../hooks/useInteractionTracking';
 
 const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [systemStatus, setSystemStatus] = useState({ initialized: false });
+  
+  // Initialize interaction tracking
+  const { trackClick, trackView } = useInteractionTracking();
 
   // API base URL - adjust for your setup
   const API_BASE_URL =
@@ -55,6 +59,10 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
 
       if (data.success) {
         setRecommendations(data.recommendations || []);
+        // Track that recommendations were viewed
+        data.recommendations.forEach(rec => {
+          trackView(rec.id, currentPostId);
+        });
       } else {
         setError(data.message || 'Failed to get recommendations');
       }
@@ -156,6 +164,7 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
                 >
                   <Link
                     to={rec.url}
+                    onClick={() => trackClick(rec.id, currentPostId)}
                     className="block p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-200"
                   >
                     <div className="flex items-start justify-between">
