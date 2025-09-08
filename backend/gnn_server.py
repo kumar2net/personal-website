@@ -5,9 +5,16 @@ from typing import List, Dict, Optional
 import os
 import json
 from graph_recommender import NeuralGraphRecommenderMVP
+from analytics_integration import GA4BehaviorAnalyzer, EnhancedGraphRecommender
+from realtime_learning import RealtimeLearningEngine
 import asyncio
 import threading
 import time
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Neural Graph Recommender MVP", version="1.0.0")
 
@@ -20,9 +27,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global recommender instance
+# Global recommender instances
 recommender = None
-initialization_status = {"initialized": False, "error": None}
+enhanced_recommender = None
+ga4_analyzer = None
+realtime_engine = None
+initialization_status = {"initialized": False, "error": None, "ga4_enabled": False, "realtime_learning": False}
 
 class RecommendationRequest(BaseModel):
     post_id: str
@@ -34,15 +44,23 @@ class RecommendationResponse(BaseModel):
     success: bool
     message: Optional[str] = None
 
+class InteractionRequest(BaseModel):
+    user_id: Optional[str] = None
+    post_id: str
+    action: str  # view, click, like, share, skip
+    context: Optional[Dict] = None
+
 class StatusResponse(BaseModel):
     initialized: bool
     error: Optional[str] = None
     num_posts: Optional[int] = None
     num_edges: Optional[int] = None
+    ga4_enabled: Optional[bool] = False
+    features: Optional[List[str]] = None
 
 def initialize_recommender():
     """Initialize the recommender system in background"""
-    global recommender, initialization_status
+    global recommender, enhanced_recommender, ga4_analyzer, initialization_status
     
     try:
         # Paths to your existing semantic data
@@ -55,6 +73,7 @@ def initialize_recommender():
         if not os.path.exists(semantic_embeddings_path):
             raise FileNotFoundError(f"Semantic embeddings file not found: {semantic_embeddings_path}")
         
+        # Initialize base recommender
         recommender = NeuralGraphRecommenderMVP(
             semantic_mapping_path=semantic_mapping_path,
             semantic_embeddings_path=semantic_embeddings_path
@@ -63,15 +82,35 @@ def initialize_recommender():
         success = recommender.initialize()
         
         if success:
-            initialization_status = {"initialized": True, "error": None}
-            print("✅ Neural Graph Recommender MVP initialized successfully!")
+            initialization_status = {"initialized": True, "error": None, "ga4_enabled": False}
+            logger.info("✅ Neural Graph Recommender MVP initialized successfully!")
+            
+            # Try to initialize GA4 integration
+            try:
+                ga4_analyzer = GA4BehaviorAnalyzer()
+                enhanced_recommender = EnhancedGraphRecommender(recommender, ga4_analyzer)
+                initialization_status["ga4_enabled"] = True
+                logger.info("✅ GA4 integration enabled successfully!")
+            except Exception as ga4_error:
+                logger.warning(f"⚠️ GA4 integration not available: {ga4_error}")
+                logger.info("Continuing with base recommender only")
+            
+            # Initialize real-time learning engine
+            try:
+                global realtime_engine
+                realtime_engine = RealtimeLearningEngine(recommender)
+                asyncio.create_task(realtime_engine.start())
+                initialization_status["realtime_learning"] = True
+                logger.info("✅ Real-time learning engine started successfully!")
+            except Exception as rt_error:
+                logger.warning(f"⚠️ Real-time learning not available: {rt_error}")
         else:
-            initialization_status = {"initialized": False, "error": "Failed to initialize recommender"}
-            print("❌ Failed to initialize Neural Graph Recommender MVP")
+            initialization_status = {"initialized": False, "error": "Failed to initialize recommender", "ga4_enabled": False}
+            logger.error("❌ Failed to initialize Neural Graph Recommender MVP")
             
     except Exception as e:
-        initialization_status = {"initialized": False, "error": str(e)}
-        print(f"❌ Error initializing recommender: {e}")
+        initialization_status = {"initialized": False, "error": str(e), "ga4_enabled": False}
+        logger.error(f"❌ Error initializing recommender: {e}")
 
 @app.on_event("startup")
 async def startup_event():
@@ -90,8 +129,18 @@ async def get_status():
     
     status = {
         "initialized": initialization_status["initialized"],
-        "error": initialization_status["error"]
+        "error": initialization_status["error"],
+        "ga4_enabled": initialization_status.get("ga4_enabled", False)
     }
+    
+    # Add available features
+    features = ["graph_recommendations", "trending_posts", "similarity_scoring"]
+    if initialization_status.get("ga4_enabled"):
+        features.extend(["ga4_engagement", "user_journeys", "enhanced_trending"])
+    if initialization_status.get("realtime_learning"):
+        features.extend(["realtime_learning", "interaction_tracking", "online_updates"])
+    status["features"] = features
+    status["realtime_learning"] = initialization_status.get("realtime_learning", False)
     
     if recommender and initialization_status["initialized"]:
         status["num_posts"] = len(recommender.graph_builder.posts)
@@ -103,7 +152,7 @@ async def get_status():
 @app.post("/recommendations", response_model=RecommendationResponse)
 async def get_recommendations(request: RecommendationRequest):
     """Get GNN-based recommendations for a blog post"""
-    global recommender, initialization_status
+    global recommender, enhanced_recommender, initialization_status
     
     # Check if recommender is initialized
     if not initialization_status["initialized"]:
@@ -119,16 +168,25 @@ async def get_recommendations(request: RecommendationRequest):
             )
     
     try:
-        recommendations = recommender.get_recommendations(
-            post_id=request.post_id,
-            num_recommendations=request.num_recommendations
-        )
+        # Use enhanced recommender if GA4 is enabled
+        if initialization_status.get("ga4_enabled") and enhanced_recommender:
+            recommendations = await enhanced_recommender.get_enhanced_recommendations(
+                post_id=request.post_id,
+                num_recommendations=request.num_recommendations
+            )
+            message = f"Found {len(recommendations)} GA4-enhanced recommendations"
+        else:
+            recommendations = recommender.get_recommendations(
+                post_id=request.post_id,
+                num_recommendations=request.num_recommendations
+            )
+            message = f"Found {len(recommendations)} recommendations"
         
         return RecommendationResponse(
             recommendations=recommendations,
             post_id=request.post_id,
             success=True,
-            message=f"Found {len(recommendations)} recommendations"
+            message=message
         )
         
     except Exception as e:
@@ -145,18 +203,25 @@ async def get_recommendations_get(post_id: str, num_recommendations: int = 5):
 
 @app.get("/trending")
 async def get_trending_posts():
-    """Get trending posts based on graph centrality scores"""
-    global recommender, initialization_status
+    """Get trending posts based on graph centrality scores and GA4 data"""
+    global recommender, enhanced_recommender, initialization_status
     
     if not initialization_status["initialized"]:
         raise HTTPException(status_code=503, detail="Recommender not initialized")
     
     try:
-        trending_posts = recommender.get_all_posts_with_scores()
+        # Use GA4 trending if available
+        if initialization_status.get("ga4_enabled") and enhanced_recommender:
+            trending_posts = await enhanced_recommender.get_trending_recommendations(limit=10)
+            message = "Found GA4-powered trending posts"
+        else:
+            trending_posts = recommender.get_all_posts_with_scores()[:10]
+            message = f"Found {len(trending_posts)} posts with centrality scores"
+        
         return {
-            "trending_posts": trending_posts[:10],  # Top 10
+            "trending_posts": trending_posts,
             "success": True,
-            "message": f"Found {len(trending_posts)} posts with centrality scores"
+            "message": message
         }
         
     except Exception as e:
@@ -191,6 +256,120 @@ async def get_all_posts():
         raise HTTPException(status_code=500, detail=f"Error getting posts: {str(e)}")
 
 
+
+@app.post("/interaction")
+async def track_interaction(interaction: InteractionRequest):
+    """Track user interaction for real-time learning"""
+    global realtime_engine, initialization_status
+    
+    if not initialization_status.get("realtime_learning"):
+        # Still track interaction even if real-time learning is disabled
+        logger.info(f"Interaction tracked (learning disabled): {interaction.action} on {interaction.post_id}")
+        return {
+            "success": True,
+            "message": "Interaction tracked (real-time learning not enabled)"
+        }
+    
+    try:
+        # Record interaction for learning
+        realtime_engine.record_interaction({
+            "user_id": interaction.user_id or "anonymous",
+            "post_id": interaction.post_id,
+            "action": interaction.action,
+            "context": interaction.context or {}
+        })
+        
+        return {
+            "success": True,
+            "message": f"Interaction recorded: {interaction.action} on {interaction.post_id}"
+        }
+        
+    except Exception as e:
+        logger.error(f"Error tracking interaction: {e}")
+        raise HTTPException(status_code=500, detail=f"Error tracking interaction: {str(e)}")
+
+@app.get("/learning/stats")
+async def get_learning_stats():
+    """Get real-time learning statistics"""
+    global realtime_engine, initialization_status
+    
+    if not initialization_status.get("realtime_learning"):
+        return {
+            "enabled": False,
+            "message": "Real-time learning not enabled"
+        }
+    
+    try:
+        stats = realtime_engine.get_learning_stats()
+        return {
+            "enabled": True,
+            "stats": stats,
+            "success": True
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting learning stats: {str(e)}")
+
+@app.post("/learning/update")
+async def trigger_model_update():
+    """Manually trigger a model update"""
+    global realtime_engine, initialization_status
+    
+    if not initialization_status.get("realtime_learning"):
+        raise HTTPException(
+            status_code=503,
+            detail="Real-time learning not enabled"
+        )
+    
+    try:
+        await realtime_engine.update_model()
+        return {
+            "success": True,
+            "message": "Model update triggered successfully"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error updating model: {str(e)}")
+
+@app.get("/analytics/engagement")
+async def get_engagement_metrics(days: int = 7):
+    """Get page engagement metrics from GA4"""
+    global ga4_analyzer, initialization_status
+    
+    if not initialization_status.get("ga4_enabled"):
+        raise HTTPException(
+            status_code=503,
+            detail="GA4 integration is not enabled"
+        )
+    
+    try:
+        metrics = await ga4_analyzer.get_page_engagement_metrics(days=days)
+        return {
+            "engagement_metrics": metrics,
+            "days": days,
+            "success": True
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching engagement metrics: {str(e)}")
+
+@app.get("/analytics/journeys")
+async def get_user_journeys(days: int = 7):
+    """Get user journey patterns from GA4"""
+    global ga4_analyzer, initialization_status
+    
+    if not initialization_status.get("ga4_enabled"):
+        raise HTTPException(
+            status_code=503,
+            detail="GA4 integration is not enabled"
+        )
+    
+    try:
+        journeys = await ga4_analyzer.get_user_journey_patterns(days=days)
+        return {
+            "journey_patterns": journeys,
+            "days": days,
+            "success": True
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching journey patterns: {str(e)}")
 
 @app.get("/graph/stats")
 async def get_graph_stats():
