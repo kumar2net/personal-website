@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import time
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 import re
 
 class BlogPostGraphBuilder:
@@ -379,3 +379,20 @@ class NeuralGraphRecommenderMVP:
         except Exception as e:
             print(f"Error getting post scores: {e}")
             return []
+    
+    def get_post_details(self, post_id: str) -> Optional[Dict]:
+        """Get details for a specific post"""
+        if not self.graph_builder or not self.graph_builder.posts:
+            return None
+        
+        for post in self.graph_builder.posts:
+            if post.get('id') == post_id:
+                return {
+                    'id': post['id'],
+                    'title': post.get('title', 'Untitled'),
+                    'url': post.get('url', ''),
+                    'excerpt': post.get('excerpt', ''),
+                    'tags': post.get('extracted_tags', [])
+                }
+        
+        return None
