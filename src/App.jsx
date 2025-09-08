@@ -13,6 +13,7 @@ import About from './pages/About';
 import Album from './pages/Album';
 import Blog from './pages/Blog';
 import Books from './pages/Books';
+import Recommendations from './pages/Recommendations';
 import AgenticFeatureInABrowser from './pages/blog/2025-08-23-agentic-feature-in-a-browser';
 import AcronymSoup from './pages/blog/acronym-soup';
 import AcronymSoupRevisited2025 from './pages/blog/acronym-soup-revisited-2025';
@@ -240,6 +241,14 @@ function App() {
                 >
                   Blog
                 </Link>
+                <Link
+                  to="/reco"
+                  className="text-gray-600 hover:text-gray-800 transition-colors flex items-center gap-1"
+                  onClick={() => trackClick('nav_reco')}
+                >
+                  <span>AI Reco</span>
+                  <span className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white px-1.5 py-0.5 rounded-full">NEW</span>
+                </Link>
 
                 <Link
                   to="/learning"
@@ -346,6 +355,19 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     Blog
+                  </Link>
+                  <Link
+                    to="/reco"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick('nav_reco_mobile');
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    <span className="flex items-center gap-1">
+                      <span>AI Reco</span>
+                      <span className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white px-1.5 py-0.5 rounded-full">NEW</span>
+                    </span>
                   </Link>
 
                   <Link
@@ -551,6 +573,20 @@ function App() {
                     type="website"
                   />
                   <Blog />
+                </>
+              }
+            />
+            <Route
+              path="/reco"
+              element={
+                <>
+                  <SEO
+                    title="AI Recommendations"
+                    description="Get AI-powered content recommendations using Neural Graph Intelligence. Discover trending topics and personalized suggestions."
+                    canonicalPath="/reco"
+                    type="website"
+                  />
+                  <Recommendations />
                 </>
               }
             />
