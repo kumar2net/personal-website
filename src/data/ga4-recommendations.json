@@ -1,0 +1,774 @@
+{
+  "source": "GA4_Simulation",
+  "measurement_id": "G-PZ37S6E5BL",
+  "generated_at": "2025-09-08T14:23:15.420988",
+  "data_period": "Last 7 days (simulated)",
+  "trending_posts": [
+    {
+      "id": "microsoft-mai-dx-india",
+      "title": "Microsoft Mai Dx India",
+      "url": "/blog/microsoft-mai-dx-india",
+      "views": 1655,
+      "unique_users": 1158,
+      "avg_time": 53.8,
+      "engagement_score": 865.4,
+      "trend_rank": 1
+    },
+    {
+      "id": "acronym-soup-revisited-2025",
+      "title": "Acronym Soup Revisited 2025",
+      "url": "/blog/acronym-soup-revisited-2025",
+      "views": 790,
+      "unique_users": 553,
+      "avg_time": 116.4,
+      "engagement_score": 449.5,
+      "trend_rank": 2
+    },
+    {
+      "id": "nepal-annapurna-circuit",
+      "title": "Nepal Annapurna Circuit",
+      "url": "/blog/nepal-annapurna-circuit",
+      "views": 537,
+      "unique_users": 375,
+      "avg_time": 118.4,
+      "engagement_score": 321.0,
+      "trend_rank": 3
+    },
+    {
+      "id": "top-9-famous-rules",
+      "title": "Top 9 Famous Rules",
+      "url": "/blog/top-9-famous-rules",
+      "views": 375,
+      "unique_users": 262,
+      "avg_time": 72.9,
+      "engagement_score": 220.2,
+      "trend_rank": 4
+    },
+    {
+      "id": "compare",
+      "title": "Compare",
+      "url": "/blog/compare",
+      "views": 329,
+      "unique_users": 240,
+      "avg_time": 156.7,
+      "engagement_score": 233.4,
+      "trend_rank": 5
+    },
+    {
+      "id": "the-great-pivot",
+      "title": "The Great Pivot",
+      "url": "/blog/the-great-pivot",
+      "views": 327,
+      "unique_users": 228,
+      "avg_time": 89.3,
+      "engagement_score": 202.2,
+      "trend_rank": 6
+    },
+    {
+      "id": "my-experience-with-windsurf",
+      "title": "My Experience With Windsurf",
+      "url": "/blog/my-experience-with-windsurf",
+      "views": 272,
+      "unique_users": 190,
+      "avg_time": 73.4,
+      "engagement_score": 168.0,
+      "trend_rank": 7
+    },
+    {
+      "id": "india-usa-trade-gap-2025",
+      "title": "India Usa Trade Gap 2025",
+      "url": "/blog/india-usa-trade-gap-2025",
+      "views": 258,
+      "unique_users": 187,
+      "avg_time": 179.7,
+      "engagement_score": 205.4,
+      "trend_rank": 8
+    },
+    {
+      "id": "andrej-karpathy-yc-ai-startup-school",
+      "title": "Andrej Karpathy Yc Ai Startup School",
+      "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+      "views": 216,
+      "unique_users": 156,
+      "avg_time": 56.8,
+      "engagement_score": 134.3,
+      "trend_rank": 9
+    },
+    {
+      "id": "building-mcp-server-with-cursor",
+      "title": "Building Mcp Server With Cursor",
+      "url": "/blog/building-mcp-server-with-cursor",
+      "views": 204,
+      "unique_users": 172,
+      "avg_time": 62.2,
+      "engagement_score": 137.7,
+      "trend_rank": 10
+    }
+  ],
+  "recommendations": {
+    "building-mcp-server-with-cursor": [
+      {
+        "url": "/blog/kumblogtipsaug3",
+        "title": "Kumblogtipsaug3",
+        "score": 0.65,
+        "users_navigated": 65,
+        "engagement_score": 123.2,
+        "avg_time": 80.8,
+        "views": 180,
+        "reason": "65 users also read this"
+      },
+      {
+        "url": "/blog/experience-using-api-in-ai-code-editor",
+        "title": "Experience Using Api In Ai Code Editor",
+        "score": 0.35,
+        "users_navigated": 35,
+        "engagement_score": 125.4,
+        "avg_time": 68.9,
+        "views": 195,
+        "reason": "35 users also read this"
+      },
+      {
+        "url": "/blog/compare",
+        "title": "Compare",
+        "score": 0.2,
+        "users_navigated": 20,
+        "engagement_score": 233.4,
+        "avg_time": 156.7,
+        "views": 329,
+        "reason": "20 users also read this"
+      }
+    ],
+    "kumblogtipsaug3": [
+      {
+        "url": "/blog/building-mcp-server-with-cursor",
+        "title": "Building Mcp Server With Cursor",
+        "score": 0.62,
+        "users_navigated": 62,
+        "engagement_score": 137.7,
+        "avg_time": 62.2,
+        "views": 204,
+        "reason": "62 users also read this"
+      },
+      {
+        "url": "/blog/Compelling-india-story",
+        "title": "Compelling India Story",
+        "score": 0.37,
+        "users_navigated": 37,
+        "engagement_score": 108.1,
+        "avg_time": 113.5,
+        "views": 122,
+        "reason": "37 users also read this"
+      },
+      {
+        "url": "/blog/marketnewsfetch",
+        "title": "Marketnewsfetch",
+        "score": 0.32,
+        "users_navigated": 32,
+        "engagement_score": 83.9,
+        "avg_time": 51.4,
+        "views": 128,
+        "reason": "32 users also read this"
+      }
+    ],
+    "Compelling-india-story": [
+      {
+        "url": "/blog/marketnewsfetch",
+        "title": "Marketnewsfetch",
+        "score": 0.59,
+        "users_navigated": 59,
+        "engagement_score": 83.9,
+        "avg_time": 51.4,
+        "views": 128,
+        "reason": "59 users also read this"
+      },
+      {
+        "url": "/blog/india-usa-trade-gap-2025",
+        "title": "India Usa Trade Gap 2025",
+        "score": 0.24,
+        "users_navigated": 24,
+        "engagement_score": 205.4,
+        "avg_time": 179.7,
+        "views": 258,
+        "reason": "24 users also read this"
+      },
+      {
+        "url": "/blog/kumblogtipsaug3",
+        "title": "Kumblogtipsaug3",
+        "score": 0.11,
+        "users_navigated": 11,
+        "engagement_score": 123.2,
+        "avg_time": 80.8,
+        "views": 180,
+        "reason": "11 users also read this"
+      }
+    ],
+    "started-to-kindle-again": [
+      {
+        "url": "/blog/experience-using-api-in-ai-code-editor",
+        "title": "Experience Using Api In Ai Code Editor",
+        "score": 0.58,
+        "users_navigated": 58,
+        "engagement_score": 125.4,
+        "avg_time": 68.9,
+        "views": 195,
+        "reason": "58 users also read this"
+      },
+      {
+        "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+        "title": "Andrej Karpathy Yc Ai Startup School",
+        "score": 0.24,
+        "users_navigated": 24,
+        "engagement_score": 134.3,
+        "avg_time": 56.8,
+        "views": 216,
+        "reason": "24 users also read this"
+      },
+      {
+        "url": "/blog/compare",
+        "title": "Compare",
+        "score": 0.23,
+        "users_navigated": 23,
+        "engagement_score": 233.4,
+        "avg_time": 156.7,
+        "views": 329,
+        "reason": "23 users also read this"
+      }
+    ],
+    "memory-evolution": [
+      {
+        "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+        "title": "Andrej Karpathy Yc Ai Startup School",
+        "score": 0.57,
+        "users_navigated": 57,
+        "engagement_score": 134.3,
+        "avg_time": 56.8,
+        "views": 216,
+        "reason": "57 users also read this"
+      },
+      {
+        "url": "/blog/experience-using-api-in-ai-code-editor",
+        "title": "Experience Using Api In Ai Code Editor",
+        "score": 0.5,
+        "users_navigated": 50,
+        "engagement_score": 125.4,
+        "avg_time": 68.9,
+        "views": 195,
+        "reason": "50 users also read this"
+      },
+      {
+        "url": "/blog/compare",
+        "title": "Compare",
+        "score": 0.2,
+        "users_navigated": 20,
+        "engagement_score": 233.4,
+        "avg_time": 156.7,
+        "views": 329,
+        "reason": "20 users also read this"
+      }
+    ],
+    "microsoft-mai-dx-india": [
+      {
+        "url": "/blog/Compelling-india-story",
+        "title": "Compelling India Story",
+        "score": 0.53,
+        "users_navigated": 53,
+        "engagement_score": 108.1,
+        "avg_time": 113.5,
+        "views": 122,
+        "reason": "53 users also read this"
+      },
+      {
+        "url": "/blog/compare",
+        "title": "Compare",
+        "score": 0.33,
+        "users_navigated": 33,
+        "engagement_score": 233.4,
+        "avg_time": 156.7,
+        "views": 329,
+        "reason": "33 users also read this"
+      },
+      {
+        "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+        "title": "Andrej Karpathy Yc Ai Startup School",
+        "score": 0.15,
+        "users_navigated": 15,
+        "engagement_score": 134.3,
+        "avg_time": 56.8,
+        "views": 216,
+        "reason": "15 users also read this"
+      }
+    ],
+    "compare": [
+      {
+        "url": "/blog/experience-using-api-in-ai-code-editor",
+        "title": "Experience Using Api In Ai Code Editor",
+        "score": 0.52,
+        "users_navigated": 52,
+        "engagement_score": 125.4,
+        "avg_time": 68.9,
+        "views": 195,
+        "reason": "52 users also read this"
+      },
+      {
+        "url": "/blog/building-mcp-server-with-cursor",
+        "title": "Building Mcp Server With Cursor",
+        "score": 0.31,
+        "users_navigated": 31,
+        "engagement_score": 137.7,
+        "avg_time": 62.2,
+        "views": 204,
+        "reason": "31 users also read this"
+      },
+      {
+        "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+        "title": "Andrej Karpathy Yc Ai Startup School",
+        "score": 0.16,
+        "users_navigated": 16,
+        "engagement_score": 134.3,
+        "avg_time": 56.8,
+        "views": 216,
+        "reason": "16 users also read this"
+      }
+    ],
+    "andrej-karpathy-yc-ai-startup-school": [
+      {
+        "url": "/blog/memory-evolution",
+        "title": "Memory Evolution",
+        "score": 0.49,
+        "users_navigated": 49,
+        "engagement_score": 137.3,
+        "avg_time": 152.7,
+        "views": 140,
+        "reason": "49 users also read this"
+      },
+      {
+        "url": "/blog/compare",
+        "title": "Compare",
+        "score": 0.4,
+        "users_navigated": 40,
+        "engagement_score": 233.4,
+        "avg_time": 156.7,
+        "views": 329,
+        "reason": "40 users also read this"
+      },
+      {
+        "url": "/blog/experience-using-api-in-ai-code-editor",
+        "title": "Experience Using Api In Ai Code Editor",
+        "score": 0.13,
+        "users_navigated": 13,
+        "engagement_score": 125.4,
+        "avg_time": 68.9,
+        "views": 195,
+        "reason": "13 users also read this"
+      }
+    ],
+    "experience-using-api-in-ai-code-editor": [
+      {
+        "url": "/blog/compare",
+        "title": "Compare",
+        "score": 0.43,
+        "users_navigated": 43,
+        "engagement_score": 233.4,
+        "avg_time": 156.7,
+        "views": 329,
+        "reason": "43 users also read this"
+      },
+      {
+        "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+        "title": "Andrej Karpathy Yc Ai Startup School",
+        "score": 0.32,
+        "users_navigated": 32,
+        "engagement_score": 134.3,
+        "avg_time": 56.8,
+        "views": 216,
+        "reason": "32 users also read this"
+      },
+      {
+        "url": "/blog/building-mcp-server-with-cursor",
+        "title": "Building Mcp Server With Cursor",
+        "score": 0.16,
+        "users_navigated": 16,
+        "engagement_score": 137.7,
+        "avg_time": 62.2,
+        "views": 204,
+        "reason": "16 users also read this"
+      }
+    ],
+    "india-usa-trade-gap-2025": [
+      {
+        "url": "/blog/marketnewsfetch",
+        "title": "Marketnewsfetch",
+        "score": 0.41,
+        "users_navigated": 41,
+        "engagement_score": 83.9,
+        "avg_time": 51.4,
+        "views": 128,
+        "reason": "41 users also read this"
+      },
+      {
+        "url": "/blog/kumblogtipsaug3",
+        "title": "Kumblogtipsaug3",
+        "score": 0.28,
+        "users_navigated": 28,
+        "engagement_score": 123.2,
+        "avg_time": 80.8,
+        "views": 180,
+        "reason": "28 users also read this"
+      },
+      {
+        "url": "/blog/Compelling-india-story",
+        "title": "Compelling India Story",
+        "score": 0.06,
+        "users_navigated": 6,
+        "engagement_score": 108.1,
+        "avg_time": 113.5,
+        "views": 122,
+        "reason": "6 users also read this"
+      }
+    ],
+    "marketnewsfetch": [
+      {
+        "url": "/blog/Compelling-india-story",
+        "title": "Compelling India Story",
+        "score": 0.36,
+        "users_navigated": 36,
+        "engagement_score": 108.1,
+        "avg_time": 113.5,
+        "views": 122,
+        "reason": "36 users also read this"
+      },
+      {
+        "url": "/blog/building-mcp-server-with-cursor",
+        "title": "Building Mcp Server With Cursor",
+        "score": 0.22,
+        "users_navigated": 22,
+        "engagement_score": 137.7,
+        "avg_time": 62.2,
+        "views": 204,
+        "reason": "22 users also read this"
+      },
+      {
+        "url": "/blog/kumblogtipsaug3",
+        "title": "Kumblogtipsaug3",
+        "score": 0.17,
+        "users_navigated": 17,
+        "engagement_score": 123.2,
+        "avg_time": 80.8,
+        "views": 180,
+        "reason": "17 users also read this"
+      }
+    ],
+    "nammu-soil-analysis-research": [
+      {
+        "url": "/blog/marketnewsfetch",
+        "title": "Marketnewsfetch",
+        "score": 0.31,
+        "users_navigated": 31,
+        "engagement_score": 83.9,
+        "avg_time": 51.4,
+        "views": 128,
+        "reason": "31 users also read this"
+      }
+    ]
+  },
+  "engagement_metrics": {
+    "microsoft-mai-dx-india": {
+      "views": 1655,
+      "unique_users": 1158,
+      "avg_time": 53.8,
+      "bounce_rate": 0.53,
+      "engagement_score": 865.4
+    },
+    "acronym-soup-revisited-2025": {
+      "views": 790,
+      "unique_users": 553,
+      "avg_time": 116.4,
+      "bounce_rate": 0.42,
+      "engagement_score": 449.5
+    },
+    "nepal-annapurna-circuit": {
+      "views": 537,
+      "unique_users": 375,
+      "avg_time": 118.4,
+      "bounce_rate": 0.53,
+      "engagement_score": 321.0
+    },
+    "top-9-famous-rules": {
+      "views": 375,
+      "unique_users": 262,
+      "avg_time": 72.9,
+      "bounce_rate": 0.33,
+      "engagement_score": 220.2
+    },
+    "compare": {
+      "views": 329,
+      "unique_users": 240,
+      "avg_time": 156.7,
+      "bounce_rate": 0.47,
+      "engagement_score": 233.4
+    },
+    "the-great-pivot": {
+      "views": 327,
+      "unique_users": 228,
+      "avg_time": 89.3,
+      "bounce_rate": 0.25,
+      "engagement_score": 202.2
+    },
+    "my-experience-with-windsurf": {
+      "views": 272,
+      "unique_users": 190,
+      "avg_time": 73.4,
+      "bounce_rate": 0.38,
+      "engagement_score": 168.0
+    },
+    "india-usa-trade-gap-2025": {
+      "views": 258,
+      "unique_users": 187,
+      "avg_time": 179.7,
+      "bounce_rate": 0.28,
+      "engagement_score": 205.4
+    },
+    "andrej-karpathy-yc-ai-startup-school": {
+      "views": 216,
+      "unique_users": 156,
+      "avg_time": 56.8,
+      "bounce_rate": 0.51,
+      "engagement_score": 134.3
+    },
+    "building-mcp-server-with-cursor": {
+      "views": 204,
+      "unique_users": 172,
+      "avg_time": 62.2,
+      "bounce_rate": 0.51,
+      "engagement_score": 137.7
+    },
+    "started-to-kindle-again": {
+      "views": 201,
+      "unique_users": 127,
+      "avg_time": 85.5,
+      "bounce_rate": 0.32,
+      "engagement_score": 132.6
+    },
+    "drug-suggestion-app": {
+      "views": 200,
+      "unique_users": 158,
+      "avg_time": 173.6,
+      "bounce_rate": 0.25,
+      "engagement_score": 176.8
+    },
+    "nammu-soil-analysis-research": {
+      "views": 197,
+      "unique_users": 120,
+      "avg_time": 124.9,
+      "bounce_rate": 0.57,
+      "engagement_score": 145.1
+    },
+    "experience-using-api-in-ai-code-editor": {
+      "views": 195,
+      "unique_users": 131,
+      "avg_time": 68.9,
+      "bounce_rate": 0.45,
+      "engagement_score": 125.4
+    },
+    "portfolio-website": {
+      "views": 187,
+      "unique_users": 120,
+      "avg_time": 160.0,
+      "bounce_rate": 0.21,
+      "engagement_score": 156.1
+    },
+    "kumblogtipsaug3": {
+      "views": 180,
+      "unique_users": 123,
+      "avg_time": 80.8,
+      "bounce_rate": 0.36,
+      "engagement_score": 123.2
+    },
+    "my-random-thoughts-this-week": {
+      "views": 179,
+      "unique_users": 138,
+      "avg_time": 50.7,
+      "bounce_rate": 0.33,
+      "engagement_score": 115.4
+    },
+    "autophagy": {
+      "views": 160,
+      "unique_users": 130,
+      "avg_time": 92.4,
+      "bounce_rate": 0.31,
+      "engagement_score": 124.0
+    },
+    "price-parity": {
+      "views": 157,
+      "unique_users": 104,
+      "avg_time": 71.0,
+      "bounce_rate": 0.52,
+      "engagement_score": 106.7
+    },
+    "acronym-soup": {
+      "views": 153,
+      "unique_users": 122,
+      "avg_time": 84.7,
+      "bounce_rate": 0.44,
+      "engagement_score": 116.4
+    },
+    "feynman-technique": {
+      "views": 141,
+      "unique_users": 113,
+      "avg_time": 127.7,
+      "bounce_rate": 0.45,
+      "engagement_score": 127.3
+    },
+    "memory-evolution": {
+      "views": 140,
+      "unique_users": 114,
+      "avg_time": 152.7,
+      "bounce_rate": 0.43,
+      "engagement_score": 137.3
+    },
+    "applying-robinson-method": {
+      "views": 133,
+      "unique_users": 112,
+      "avg_time": 170.5,
+      "bounce_rate": 0.28,
+      "engagement_score": 141.7
+    },
+    "marketnewsfetch": {
+      "views": 128,
+      "unique_users": 83,
+      "avg_time": 51.4,
+      "bounce_rate": 0.59,
+      "engagement_score": 83.9
+    },
+    "Compelling-india-story": {
+      "views": 122,
+      "unique_users": 87,
+      "avg_time": 113.5,
+      "bounce_rate": 0.39,
+      "engagement_score": 108.1
+    },
+    "PostDynamic": {
+      "views": 73,
+      "unique_users": 61,
+      "avg_time": 173.6,
+      "bounce_rate": 0.57,
+      "engagement_score": 109.6
+    },
+    "spine-implant-dashboard": {
+      "views": 52,
+      "unique_users": 33,
+      "avg_time": 82.9,
+      "bounce_rate": 0.56,
+      "engagement_score": 58.7
+    },
+    "my-fascination-with-shortcuts": {
+      "views": 50,
+      "unique_users": 30,
+      "avg_time": 138.6,
+      "bounce_rate": 0.39,
+      "engagement_score": 79.4
+    }
+  },
+  "user_journeys": [
+    {
+      "from": "/blog/building-mcp-server-with-cursor",
+      "to": "/blog/kumblogtipsaug3",
+      "users": 65
+    },
+    {
+      "from": "/blog/kumblogtipsaug3",
+      "to": "/blog/building-mcp-server-with-cursor",
+      "users": 62
+    },
+    {
+      "from": "/blog/Compelling-india-story",
+      "to": "/blog/marketnewsfetch",
+      "users": 59
+    },
+    {
+      "from": "/blog/started-to-kindle-again",
+      "to": "/blog/experience-using-api-in-ai-code-editor",
+      "users": 58
+    },
+    {
+      "from": "/blog/memory-evolution",
+      "to": "/blog/andrej-karpathy-yc-ai-startup-school",
+      "users": 57
+    },
+    {
+      "from": "/blog/microsoft-mai-dx-india",
+      "to": "/blog/Compelling-india-story",
+      "users": 53
+    },
+    {
+      "from": "/blog/compare",
+      "to": "/blog/experience-using-api-in-ai-code-editor",
+      "users": 52
+    },
+    {
+      "from": "/blog/memory-evolution",
+      "to": "/blog/experience-using-api-in-ai-code-editor",
+      "users": 50
+    },
+    {
+      "from": "/blog/andrej-karpathy-yc-ai-startup-school",
+      "to": "/blog/memory-evolution",
+      "users": 49
+    },
+    {
+      "from": "/blog/experience-using-api-in-ai-code-editor",
+      "to": "/blog/compare",
+      "users": 43
+    },
+    {
+      "from": "/blog/india-usa-trade-gap-2025",
+      "to": "/blog/marketnewsfetch",
+      "users": 41
+    },
+    {
+      "from": "/blog/andrej-karpathy-yc-ai-startup-school",
+      "to": "/blog/compare",
+      "users": 40
+    },
+    {
+      "from": "/blog/kumblogtipsaug3",
+      "to": "/blog/Compelling-india-story",
+      "users": 37
+    },
+    {
+      "from": "/blog/marketnewsfetch",
+      "to": "/blog/Compelling-india-story",
+      "users": 36
+    },
+    {
+      "from": "/blog/building-mcp-server-with-cursor",
+      "to": "/blog/experience-using-api-in-ai-code-editor",
+      "users": 35
+    },
+    {
+      "from": "/blog/microsoft-mai-dx-india",
+      "to": "/blog/compare",
+      "users": 33
+    },
+    {
+      "from": "/blog/experience-using-api-in-ai-code-editor",
+      "to": "/blog/andrej-karpathy-yc-ai-startup-school",
+      "users": 32
+    },
+    {
+      "from": "/blog/kumblogtipsaug3",
+      "to": "/blog/marketnewsfetch",
+      "users": 32
+    },
+    {
+      "from": "/blog/compare",
+      "to": "/blog/building-mcp-server-with-cursor",
+      "users": 31
+    },
+    {
+      "from": "/blog/nammu-soil-analysis-research",
+      "to": "/blog/marketnewsfetch",
+      "users": 31
+    }
+  ]
+}
