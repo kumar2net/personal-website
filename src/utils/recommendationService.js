@@ -1,6 +1,6 @@
 // Recommendation service that works without backend API
 import semanticMapping from '../data/semantic-mapping.json';
-import semanticEmbeddings from '../data/semantic-embeddings.json';
+// Note: semantic-embeddings.json is empty, so we'll use text-based similarity
 
 // Calculate cosine similarity between two vectors
 function cosineSimilarity(vecA, vecB) {
@@ -87,56 +87,96 @@ export function getTrendingPosts(limit = 10) {
     .slice(0, limit);
 }
 
+// Calculate text-based similarity between two posts
+function calculateTextSimilarity(text1, text2) {
+  if (!text1 || !text2) return 0;
+  
+  // Convert to lowercase and split into words
+  const words1 = text1.toLowerCase().split(/\W+/).filter(w => w.length > 2);
+  const words2 = text2.toLowerCase().split(/\W+/).filter(w => w.length > 2);
+  
+  // Create word frequency maps
+  const freq1 = {};
+  const freq2 = {};
+  
+  words1.forEach(word => {
+    freq1[word] = (freq1[word] || 0) + 1;
+  });
+  
+  words2.forEach(word => {
+    freq2[word] = (freq2[word] || 0) + 1;
+  });
+  
+  // Calculate Jaccard similarity
+  const allWords = new Set([...Object.keys(freq1), ...Object.keys(freq2)]);
+  let intersection = 0;
+  
+  allWords.forEach(word => {
+    if (freq1[word] && freq2[word]) {
+      intersection += Math.min(freq1[word], freq2[word]);
+    }
+  });
+  
+  const union = words1.length + words2.length - intersection;
+  return union > 0 ? intersection / union : 0;
+}
+
 // Get recommendations for a specific post
 export function getRecommendations(postId, limit = 5) {
-  // Find the post index
-  const postIndex = semanticMapping.findIndex(
+  // Find the current post
+  const currentPost = semanticMapping.find(
     p => p.id === postId || p.slug === postId || p.title === postId
   );
   
-  if (postIndex === -1) {
+  if (!currentPost) {
     console.warn('Post not found:', postId);
     return [];
   }
   
-  // Get the embedding for this post
-  const postEmbedding = semanticEmbeddings[postIndex]?.vector;
-  if (!postEmbedding) {
-    console.warn('No embedding found for post:', postId);
-    return [];
-  }
+  const currentContent = (currentPost.title + ' ' + currentPost.excerpt).toLowerCase();
   
-  // Calculate similarities with all other posts
-  const similarities = semanticMapping.map((otherPost, otherIndex) => {
-    if (otherIndex === postIndex) return null; // Skip self
+  // Calculate similarities with all other posts using text-based similarity
+  const similarities = semanticMapping.map((otherPost) => {
+    // Skip the same post
+    if (otherPost.id === currentPost.id) return null;
     
-    const otherEmbedding = semanticEmbeddings[otherIndex]?.vector;
-    if (!otherEmbedding) return null;
+    const otherContent = (otherPost.title + ' ' + otherPost.excerpt).toLowerCase();
     
-    const similarity = cosineSimilarity(postEmbedding, otherEmbedding);
+    // Calculate text similarity
+    const textSimilarity = calculateTextSimilarity(currentContent, otherContent);
     
-    // Extract tags
-    const content = (otherPost.title + ' ' + otherPost.excerpt).toLowerCase();
-    const tags = [];
-    const keywords = ['ai', 'api', 'india', 'usa', 'trade', 'startup', 'analysis', 'research', 'technology', 'healthcare', 'react'];
+    // Boost similarity for shared keywords
+    const keywords = ['ai', 'api', 'india', 'usa', 'trade', 'startup', 'analysis', 'research', 'technology', 'healthcare', 'react', 'python', 'data'];
+    let keywordBoost = 0;
+    
     keywords.forEach(keyword => {
-      if (content.includes(keyword)) {
+      if (currentContent.includes(keyword) && otherContent.includes(keyword)) {
+        keywordBoost += 0.1;
+      }
+    });
+    
+    // Extract tags for the other post
+    const tags = [];
+    keywords.forEach(keyword => {
+      if (otherContent.includes(keyword)) {
         tags.push(keyword);
       }
     });
     
+    const finalScore = Math.min(textSimilarity + keywordBoost, 1.0);
+    
     return {
-      id: otherPost.id || otherPost.slug || `post-${otherIndex}`,
+      id: otherPost.id || otherPost.slug,
       title: otherPost.title || 'Untitled',
-      url: otherPost.url || `/blog/${otherPost.slug || otherPost.id}`,
+      url: otherPost.url || `/blog/${otherPost.id}`,
       excerpt: otherPost.excerpt || '',
-      score: similarity,
+      score: finalScore,
       tags: tags.slice(0, 3),
       // Add some mock enhanced metrics
-      engagement_score: Math.random() * 100,
+      engagement_score: 50 + Math.random() * 50,
       is_trending: Math.random() > 0.7
     };
-  }).filter(item => item !== null);
+  }).filter(item => item !== null && item.score > 0);
   
   // Sort by similarity and return top N
   return similarities
