@@ -33,6 +33,11 @@ async function fetchTopPages(days, { projectId, dataset, table, location } = {})
     WHERE event_name = 'page_view'
       AND event_date BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
                          AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+      AND (
+        (@host_regex IS NOT NULL AND REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), @host_regex))
+        OR
+        (@host_regex IS NULL AND NOT REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'^https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|[^/]+:(5173|8888))'))
+      )
     GROUP BY page_location, page_title, page_referrer
     HAVING page_location IS NOT NULL
     ORDER BY page_views DESC
@@ -40,7 +45,7 @@ async function fetchTopPages(days, { projectId, dataset, table, location } = {})
   `;
   const options = {
     query,
-    params: { days },
+    params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null },
     // GA4 BigQuery export commonly uses multi-region 'US' or 'EU'
     location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
@@ -72,6 +77,11 @@ async function fetchTopSearchTerms(days, { projectId, dataset, table, location }
     WHERE event_name IN ('view_search_results', 'search')
       AND event_date BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
                          AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+      AND (
+        (@host_regex IS NOT NULL AND REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), @host_regex))
+        OR
+        (@host_regex IS NULL AND NOT REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'^https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|[^/]+:(5173|8888))'))
+      )
     GROUP BY search_term
     HAVING search_term IS NOT NULL
     ORDER BY occurrences DESC
@@ -79,7 +89,7 @@ async function fetchTopSearchTerms(days, { projectId, dataset, table, location }
   `;
   const options = {
     query,
-    params: { days },
+    params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null },
     location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
   try {
