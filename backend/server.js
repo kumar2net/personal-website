@@ -265,14 +265,20 @@ app.get('/api/recommendations/topics', async (req, res) => {
     const days = parseInt(req.query.days || '14');
     const limit = Math.min(parseInt(req.query.limit || '10'), 25);
     const language = (req.query.language || 'en').toString();
+    const noCache = String(req.query.no_cache || req.query.noCache || 'false') === 'true';
     const cacheKey = `api:topics:${days}:${limit}:${language}`;
-    const cached = apiCache.get(cacheKey);
-    if (cached) {
-      return res.json({ success: true, data: cached, cached: true });
+
+    if (!noCache) {
+      const cached = apiCache.get(cacheKey);
+      if (cached) {
+        return res.json({ success: true, data: cached, cached: true });
+      }
     }
+
     const data = await getRecommendedTopics({ days, limit, language });
+    // Refresh cache with latest data even when bypassed
     apiCache.set(cacheKey, data);
-    res.json({ success: true, data });
+    res.json({ success: true, data, cached: false, no_cache: noCache });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
