@@ -118,7 +118,9 @@ production: {
 }
 ```
 
-3. Note: Production site uses GA4 BigQuery export. The backend reads `events*` and auto-falls back to the latest daily table if needed.
+3. Production options:
+   - Backend: point your frontend to `https://your-backend/api/recommendations/topics`
+   - Netlify-only: use built-in function at `/api/recommendations/topics` (set env: `GCP_PROJECT_ID`, `GA4_DATASET`, `GA4_TABLE`, `BIGQUERY_LOCATION`, and either `GOOGLE_SERVICE_ACCOUNT_JSON` or Netlify GCP addon)
 
 4. Client-side custom tracker has been removed from the live site.
 
