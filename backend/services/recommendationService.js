@@ -1,5 +1,5 @@
 const NodeCache = require('node-cache');
-const { fetchTopPages, fetchTopSearchTerms } = require('./bigqueryService');
+const { fetchTopPages, fetchTopSearchTerms, findLatestEventsTable } = require('./bigqueryService');
 const { generateTopicsPrompted } = require('./vertexService');
 
 const cacheTtlSeconds = parseInt(process.env.CACHE_TTL_SECONDS || '3600');
@@ -41,9 +41,46 @@ function tryParseTopics(text) {
   }
 }
 
-async function getRecommendedTopics({ days = 14, limit = 10, language = 'en' }) {
-  const cacheKey = `topics:${days}:${limit}:${language}`;
-  const cached = cache.get(cacheKey);
+function synthesizeTopics(topPages, topSearchTerms, limit) {
+  const topics = [];
+  const titleSeen = new Set();
+  const candidates = topPages
+    .filter(p => p?.pageTitle)
+    .slice(0, 50)
+    .map((p, i) => ({
+      title: String(p.pageTitle).trim() || `Idea ${i + 1}`,
+      rationale: `High engagement on ${p.pageLocation} (${p.pageViews} views).` ,
+      keywords: (topSearchTerms || []).slice(0, 5).map(t => t.term),
+    }));
+  for (const c of candidates) {
+    if (topics.length >= limit) break;
+    const key = c.title.toLowerCase();
+    if (titleSeen.has(key)) continue;
+    titleSeen.add(key);
+    topics.push(c);
+  }
+  // If still short, backfill with generic themes from search terms
+  if (topics.length < limit && Array.isArray(topSearchTerms)) {
+    for (const s of topSearchTerms.slice(0, 20)) {
+      if (topics.length >= limit) break;
+      const t = (s.term || '').trim();
+      if (!t) continue;
+      const key = `about ${t}`;
+      if (titleSeen.has(key)) continue;
+      titleSeen.add(key);
+      topics.push({
+        title: `About ${t}`,
+        rationale: `Frequent searches for “${t}”.` ,
+        keywords: [t],
+      });
+    }
+  }
+  return topics.slice(0, limit);
+}
+
+async function getRecommendedTopics({ days = 14, limit = 10, language = 'en', projectId, dataset, table, location, noCache = false } = {}) {
+  const cacheKey = `topics:${days}:${limit}:${language}:${projectId || ''}:${dataset || ''}:${table || ''}:${location || ''}`;
+  const cached = !noCache ? cache.get(cacheKey) : null;
   if (cached) return cached;
 
   // Dev mock mode: bypass external services for local development
@@ -68,14 +105,59 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en' }) 
     return payload;
   }
 
-  const [topPages, topSearchTerms] = await Promise.all([
-    fetchTopPages(days).catch(() => []),
-    fetchTopSearchTerms(days).catch(() => []),
+  const overrides = { projectId, dataset, table, location };
+  let [topPages, topSearchTerms] = await Promise.all([
+    fetchTopPages(days, overrides).catch(() => []),
+    fetchTopSearchTerms(days, overrides).catch(() => []),
   ]);
 
   // If there is no GA4 signal yet, do not fabricate topics
   if ((topPages?.length || 0) === 0 && (topSearchTerms?.length || 0) === 0) {
-    const payload = { topics: [], inputs: { days, limit, language } };
+    // Fallback A: try yesterday's daily table explicitly
+    try {
+      const now = new Date();
+      const y = new Date(now);
+      y.setDate(now.getDate() - 1);
+      const yyyy = y.getFullYear();
+      const mm = String(y.getMonth() + 1).padStart(2, '0');
+      const dd = String(y.getDate()).padStart(2, '0');
+      const fallbackTable = `events_${yyyy}${mm}${dd}`;
+      const fbOverrides = { ...overrides, table: fallbackTable };
+      const [fbPages, fbTerms] = await Promise.all([
+        fetchTopPages(days, fbOverrides).catch(() => []),
+        fetchTopSearchTerms(days, fbOverrides).catch(() => []),
+      ]);
+      if ((fbPages?.length || 0) > 0 || (fbTerms?.length || 0) > 0) {
+        topPages = fbPages;
+        topSearchTerms = fbTerms;
+      }
+    } catch (_) {
+      // ignore fallback errors
+    }
+
+    // Fallback B: discover latest daily table from BigQuery and try it
+    if ((topPages?.length || 0) === 0 && (topSearchTerms?.length || 0) === 0) {
+      try {
+        const latest = await findLatestEventsTable({ projectId, dataset });
+        if (latest) {
+          const discOverrides = { ...overrides, table: latest };
+          const [dp, dt] = await Promise.all([
+            fetchTopPages(days, discOverrides).catch(() => []),
+            fetchTopSearchTerms(days, discOverrides).catch(() => []),
+          ]);
+          if ((dp?.length || 0) > 0 || (dt?.length || 0) > 0) {
+            topPages = dp;
+            topSearchTerms = dt;
+          }
+        }
+      } catch (_) {
+        // ignore discovery errors
+      }
+    }
+  }
+
+  if ((topPages?.length || 0) === 0 && (topSearchTerms?.length || 0) === 0) {
+    const payload = { topics: [], inputs: { days, limit, language, projectId, dataset, table, location } };
     cache.set(cacheKey, payload);
     return payload;
   }
@@ -84,17 +166,21 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en' }) 
     const prompt = buildPrompt({ topPages, topSearchTerms, language, limit });
     const raw = await generateTopicsPrompted(prompt);
     const parsed = tryParseTopics(raw);
-    const topics = parsed.slice(0, limit).map(item => ({
+    let topics = parsed.slice(0, limit).map(item => ({
       title: item.title || item.topic || '',
       rationale: item.rationale || item.reason || '',
       keywords: item.keywords || item.tags || [],
     }));
-    const payload = { topics, inputs: { days, limit, language } };
+    if (!Array.isArray(topics) || topics.length === 0) {
+      topics = synthesizeTopics(topPages, topSearchTerms, limit);
+    }
+    const payload = { topics, inputs: { days, limit, language, projectId, dataset, table, location } };
     cache.set(cacheKey, payload);
     return payload;
   } catch (_) {
-    // On error, return empty rather than placeholders
-    const payload = { topics: [], inputs: { days, limit, language } };
+    // Fallback to synthesized topics if model fails
+    const topics = synthesizeTopics(topPages, topSearchTerms, limit);
+    const payload = { topics, inputs: { days, limit, language, projectId, dataset, table, location } };
     cache.set(cacheKey, payload);
     return payload;
   }
