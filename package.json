@@ -44,6 +44,7 @@
     "test:comment-env": "node scripts/test-comment-env.mjs"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^8.1.1",
     "@google-analytics/data": "^5.2.0",
     "@google-cloud/aiplatform": "^5.4.0",
     "@heroicons/react": "^2.2.0",
