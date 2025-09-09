@@ -62,6 +62,13 @@
   status = 200
   force = true
 
+# API proxy to Netlify function for topics
+[[redirects]]
+  from = "/api/recommendations/topics"
+  to = "/.netlify/functions/api-recommendations-topics"
+  status = 200
+  force = true
+
 # SPA fallback - redirect all other requests to index.html (lowest priority)
 [[redirects]]
   from = "/*"
