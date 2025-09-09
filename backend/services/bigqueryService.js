@@ -1,25 +1,28 @@
 const { BigQuery } = require('@google-cloud/bigquery');
 
-function getBigQueryClient() {
-  const projectId = process.env.GCP_PROJECT_ID;
+function getBigQueryClient(projectIdOverride) {
+  const projectId = projectIdOverride || process.env.GCP_PROJECT_ID;
   return new BigQuery({ projectId });
 }
 
-function getGa4TableReference() {
-  // Allow GA4_DATASET to be either full dataset name (e.g., analytics_12010944378)
-  // or just the numeric property ID (e.g., 12010944378)
-  const raw = process.env.GA4_DATASET;
-  const dataset = /^\d+$/.test(raw || '') ? `analytics_${raw}` : raw;
-  const table = process.env.GA4_TABLE || 'events*'; // include daily and intraday
-  if (!dataset) {
-    throw new Error('GA4_DATASET env var is required');
-  }
-  return `\`${process.env.GCP_PROJECT_ID}.${dataset}.${table}\``;
+function resolveDataset(rawDataset) {
+  const raw = rawDataset ?? process.env.GA4_DATASET;
+  return /^\d+$/.test(raw || '') ? `analytics_${raw}` : raw;
 }
 
-async function fetchTopPages(days) {
-  const client = getBigQueryClient();
-  const tableRef = getGa4TableReference();
+function getGa4TableReference({ projectId, dataset, table } = {}) {
+  const ds = resolveDataset(dataset);
+  const tbl = table || process.env.GA4_TABLE || 'events*';
+  if (!ds) {
+    throw new Error('GA4 dataset is required (env GA4_DATASET or override)');
+  }
+  const proj = projectId || process.env.GCP_PROJECT_ID;
+  return `\`${proj}.${ds}.${tbl}\``;
+}
+
+async function fetchTopPages(days, { projectId, dataset, table, location } = {}) {
+  const client = getBigQueryClient(projectId);
+  const tableRef = getGa4TableReference({ projectId, dataset, table });
   const query = `
     SELECT
       (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location') AS page_location,
@@ -39,7 +42,7 @@ async function fetchTopPages(days) {
     query,
     params: { days },
     // GA4 BigQuery export commonly uses multi-region 'US' or 'EU'
-    location: process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
+    location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
   try {
     const [job] = await client.createQueryJob(options);
@@ -58,9 +61,9 @@ async function fetchTopPages(days) {
   }
 }
 
-async function fetchTopSearchTerms(days) {
-  const client = getBigQueryClient();
-  const tableRef = getGa4TableReference();
+async function fetchTopSearchTerms(days, { projectId, dataset, table, location } = {}) {
+  const client = getBigQueryClient(projectId);
+  const tableRef = getGa4TableReference({ projectId, dataset, table });
   const query = `
     SELECT
       (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'search_term') AS search_term,
@@ -77,7 +80,7 @@ async function fetchTopSearchTerms(days) {
   const options = {
     query,
     params: { days },
-    location: process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
+    location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
   try {
     const [job] = await client.createQueryJob(options);
@@ -94,5 +97,21 @@ async function fetchTopSearchTerms(days) {
 module.exports = {
   fetchTopPages,
   fetchTopSearchTerms,
+  /**
+   * Find latest GA4 daily events table like events_YYYYMMDD
+   */
+  findLatestEventsTable: async function findLatestEventsTable({ projectId, dataset } = {}) {
+    const proj = projectId || process.env.GCP_PROJECT_ID;
+    const ds = resolveDataset(dataset);
+    const client = getBigQueryClient(proj);
+    const [tables] = await client.dataset(ds).getTables();
+    const suffixes = tables
+      .map(t => t.id)
+      .filter(id => /^events_\d{8}$/.test(id))
+      .map(id => id.replace('events_', ''))
+      .sort((a, b) => b.localeCompare(a));
+    if (suffixes.length === 0) return null;
+    return `events_${suffixes[0]}`;
+  }
 };
 

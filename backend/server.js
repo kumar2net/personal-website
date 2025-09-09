@@ -3,7 +3,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
 const { getRecommendedTopics } = require('./services/recommendationService');
+const { fetchTopPages, fetchTopSearchTerms } = require('./services/bigqueryService');
 const NodeCache = require('node-cache');
+const { BigQuery } = require('@google-cloud/bigquery');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,7 +14,7 @@ const apiCache = new NodeCache({ stdTTL: parseInt(process.env.CACHE_TTL_SECONDS 
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: ['https://kumarsite.netlify.app', 'http://localhost:3000'],
+  origin: ['https://kumarsite.netlify.app', 'http://localhost:3000', 'http://localhost:5173'],
   credentials: true
 }));
 app.use(express.json());
@@ -259,20 +261,115 @@ app.post('/api/analytics/reset', (req, res) => {
   }
 });
 
+// Debug: BigQuery event counts for a specific table/date
+app.get('/api/debug/bq_counts', async (req, res) => {
+  try {
+    const projectId = req.query.projectId || process.env.GCP_PROJECT_ID;
+    const dataset = req.query.dataset || process.env.GA4_DATASET;
+    const table = req.query.table || process.env.GA4_TABLE || 'events*';
+    const location = req.query.location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US';
+    const eventDate = req.query.event_date; // e.g., 20250908
+
+    if (!projectId || !dataset || !table) {
+      return res.status(400).json({ success: false, error: 'projectId, dataset, and table are required (via env or query)' });
+    }
+
+    const client = new BigQuery({ projectId });
+    const tableRef = `\`${projectId}.${/^\d+$/.test(dataset) ? `analytics_${dataset}` : dataset}.${table}\``;
+    const dateClause = eventDate ? `WHERE event_date = @event_date` : '';
+    const query = `
+      SELECT event_name, COUNT(1) AS c
+      FROM ${tableRef}
+      ${dateClause}
+      GROUP BY event_name
+      ORDER BY c DESC
+      LIMIT 50
+    `;
+    const options = {
+      query,
+      params: eventDate ? { event_date: eventDate } : {},
+      location,
+    };
+    const [job] = await client.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+    res.json({ success: true, projectId, dataset, table, location, event_date: eventDate || null, rows });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Debug: List datasets in a project
+app.get('/api/debug/bq_datasets', async (req, res) => {
+  try {
+    const projectId = req.query.projectId || process.env.GCP_PROJECT_ID;
+    if (!projectId) return res.status(400).json({ success: false, error: 'projectId required' });
+    const client = new BigQuery({ projectId });
+    const [datasets] = await client.getDatasets();
+    res.json({ success: true, projectId, datasets: datasets.map(d => d.id) });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Debug: List tables in a dataset
+app.get('/api/debug/bq_tables', async (req, res) => {
+  try {
+    const projectId = req.query.projectId || process.env.GCP_PROJECT_ID;
+    const datasetId = req.query.dataset;
+    if (!projectId || !datasetId) return res.status(400).json({ success: false, error: 'projectId and dataset required' });
+    const client = new BigQuery({ projectId });
+    const dataset = client.dataset(datasetId);
+    const [tables] = await dataset.getTables();
+    res.json({ success: true, projectId, dataset: datasetId, tables: tables.map(t => t.id) });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Debug: Return raw top signals (pages and search terms)
+app.get('/api/debug/top_signals', async (req, res) => {
+  try {
+    const days = parseInt(req.query.days || '14');
+    const projectId = req.query.projectId || req.query.project_id;
+    const dataset = req.query.dataset || req.query.ga4_dataset;
+    const table = req.query.table || req.query.ga4_table;
+    const location = req.query.location || req.query.bigquery_location || req.query.ga4_location;
+    const overrides = { projectId, dataset, table, location };
+    const [pages, terms] = await Promise.all([
+      fetchTopPages(days, overrides).catch(() => []),
+      fetchTopSearchTerms(days, overrides).catch(() => []),
+    ]);
+    res.json({ success: true, days, projectId, dataset, table, location, pages, terms });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // New: Topic recommendations endpoint
 app.get('/api/recommendations/topics', async (req, res) => {
   try {
     const days = parseInt(req.query.days || '14');
     const limit = Math.min(parseInt(req.query.limit || '10'), 25);
     const language = (req.query.language || 'en').toString();
-    const cacheKey = `api:topics:${days}:${limit}:${language}`;
-    const cached = apiCache.get(cacheKey);
-    if (cached) {
-      return res.json({ success: true, data: cached, cached: true });
+    const noCache = String(req.query.no_cache || req.query.noCache || 'false') === 'true';
+    // Optional BigQuery/Vertex overrides via query params
+    const projectId = req.query.projectId || req.query.project_id;
+    const dataset = req.query.dataset || req.query.ga4_dataset;
+    const table = req.query.table || req.query.ga4_table;
+    const location = req.query.location || req.query.bigquery_location || req.query.ga4_location;
+    const cacheKey = `api:topics:${days}:${limit}:${language}:${projectId || ''}:${dataset || ''}:${table || ''}:${location || ''}`;
+
+    if (!noCache) {
+      const cached = apiCache.get(cacheKey);
+      if (cached) {
+        return res.json({ success: true, data: cached, cached: true });
+      }
     }
-    const data = await getRecommendedTopics({ days, limit, language });
+
+    const data = await getRecommendedTopics({ days, limit, language, projectId, dataset, table, location, noCache });
+    // Refresh cache with latest data even when bypassed
     apiCache.set(cacheKey, data);
-    res.json({ success: true, data });
+    res.json({ success: true, data, cached: false, no_cache: noCache });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
