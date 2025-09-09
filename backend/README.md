@@ -60,7 +60,16 @@ The server will start on `http://localhost:3001`
 ### GA4 Topic Recommendations
 
 - `GET /api/recommendations/topics`
-  - Query params: `days` (default 14), `limit` (default 10, max 25), `language` (default `en`)
+  - Query params: 
+    - `days` (default 14)
+    - `limit` (default 10, max 25)
+    - `language` (default `en`)
+    - `no_cache=true` to bypass server cache
+    - Optional BigQuery overrides: `projectId`, `dataset` (or GA4 numeric property ID), `table` (e.g. `events_20250908` or `events*`), `location` (e.g. `US`)
+  - Fallbacks:
+    - If wildcard returns no signals, tries yesterday’s `events_YYYYMMDD`
+    - If still empty, discovers latest daily `events_YYYYMMDD`
+    - If the model yields no JSON, synthesizes topics from top pages/search terms
   - Response:
 
 ```
@@ -85,9 +94,12 @@ GCP_PROJECT_ID=your-project
 GCP_LOCATION=us-central1
 GA4_DATASET=analytics_XXXXXXXX
 GA4_TABLE=events_*
-RECOMMENDER_MODEL=gemini-1.5-pro
+BIGQUERY_LOCATION=US
+RECOMMENDER_MODEL=gemini-2.5-flash-lite
 RECOMMENDER_SYSTEM_INSTRUCTION=You are a blog topic recommender.
 CACHE_TTL_SECONDS=3600
+GOOGLE_CLOUD_QUOTA_PROJECT=your-project
+RECOMMENDER_DEV_MODE=false
 ```
 
 ## After Deployment (If Using Your Own Backend)
@@ -106,7 +118,7 @@ production: {
 }
 ```
 
-3. Note: Production site now uses GA4. This backend is optional for experiments.
+3. Note: Production site uses GA4 BigQuery export. The backend reads `events*` and auto-falls back to the latest daily table if needed.
 
 4. Client-side custom tracker has been removed from the live site.
 
