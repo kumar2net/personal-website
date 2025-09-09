@@ -30,11 +30,16 @@ async function fetchTopPages(client, opts, days) {
     WHERE event_name = 'page_view'
       AND event_date BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
                          AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+      AND (
+        (@host_regex IS NOT NULL AND REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), @host_regex))
+        OR
+        (@host_regex IS NULL AND NOT REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'^https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|[^/]+:(5173|8888))'))
+      )
     GROUP BY page_location, page_title, page_referrer
     HAVING page_location IS NOT NULL
     ORDER BY page_views DESC
     LIMIT 500`;
-  const [job] = await client.createQueryJob({ query, params: { days }, location: process.env.BIGQUERY_LOCATION || 'US' });
+  const [job] = await client.createQueryJob({ query, params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null }, location: process.env.BIGQUERY_LOCATION || 'US' });
   const [rows] = await job.getQueryResults();
   return rows.map(r => ({
     pageLocation: r.page_location,
@@ -53,11 +58,16 @@ async function fetchTopSearchTerms(client, opts, days) {
     WHERE event_name IN ('view_search_results', 'search')
       AND event_date BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL @days DAY))
                          AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+      AND (
+        (@host_regex IS NOT NULL AND REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), @host_regex))
+        OR
+        (@host_regex IS NULL AND NOT REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'^https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|[^/]+:(5173|8888))'))
+      )
     GROUP BY search_term
     HAVING search_term IS NOT NULL
     ORDER BY occurrences DESC
     LIMIT 200`;
-  const [job] = await client.createQueryJob({ query, params: { days }, location: process.env.BIGQUERY_LOCATION || 'US' });
+  const [job] = await client.createQueryJob({ query, params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null }, location: process.env.BIGQUERY_LOCATION || 'US' });
   const [rows] = await job.getQueryResults();
   return rows.map(r => ({ term: r.search_term, occurrences: Number(r.occurrences) || 0 }));
 }
