@@ -1,0 +1,9 @@
+{
+  "name": "netlify-functions",
+  "private": true,
+  "dependencies": {
+    "@google-cloud/bigquery": "^8.1.1"
+  }
+}
+
+
