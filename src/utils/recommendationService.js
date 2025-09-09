@@ -65,5 +65,35 @@ function extractTags(title) {
 }
 
 // Keep original functions as fallback
-const originalGetTrendingPosts = ${getTrendingPosts.toString()};
-const originalGetRecommendations = ${getRecommendations.toString()};
+const originalGetTrendingPosts = function(limit = 10) {
+  const items = Array.isArray(semanticMapping) ? semanticMapping.slice(0, limit) : [];
+  return items.map((post, index) => {
+    const title = post?.title || `Post ${index + 1}`;
+    const slug = post?.slug || title.toLowerCase().replace(/\s+/g, '-');
+    const url = post?.url || `/blog/${slug}`;
+    return {
+      id: post?.id || slug,
+      title,
+      url,
+      centrality_score: 0,
+      tags: extractTags(title),
+    };
+  });
+};
+
+const originalGetRecommendations = function(postId, limit = 5) {
+  const items = Array.isArray(semanticMapping) ? semanticMapping : [];
+  const recs = items.filter(p => (p?.id || p?.slug) !== postId).slice(0, limit);
+  return recs.map((post, index) => {
+    const title = post?.title || `Post ${index + 1}`;
+    const slug = post?.slug || title.toLowerCase().replace(/\s+/g, '-');
+    const url = post?.url || `/blog/${slug}`;
+    return {
+      id: post?.id || slug,
+      title,
+      url,
+      score: 0,
+      tags: extractTags(title),
+    };
+  });
+};
