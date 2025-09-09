@@ -2,8 +2,8 @@
 const { BigQuery } = require('@google-cloud/bigquery');
 
 function getBigQueryClient() {
-  const projectId = process.env.GCP_PROJECT_ID;
-  const saJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  const projectId = String(process.env.GCP_PROJECT_ID || '').trim();
+  const saJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON || process.env.GCP_SERVICE_ACCOUNT_JSON;
   if (saJson) {
     const creds = JSON.parse(saJson);
     return new BigQuery({ projectId, credentials: { client_email: creds.client_email, private_key: creds.private_key } });
