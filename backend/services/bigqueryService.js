@@ -46,6 +46,7 @@ async function fetchTopPages(days, { projectId, dataset, table, location } = {})
   const options = {
     query,
     params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null },
+    types: { days: 'INT64', host_regex: 'STRING' },
     // GA4 BigQuery export commonly uses multi-region 'US' or 'EU'
     location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
@@ -90,6 +91,7 @@ async function fetchTopSearchTerms(days, { projectId, dataset, table, location }
   const options = {
     query,
     params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null },
+    types: { days: 'INT64', host_regex: 'STRING' },
     location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
   };
   try {
