@@ -22,9 +22,9 @@ function getTableRef({ projectId, dataset, table }) {
 async function fetchTopPages(client, opts, days) {
   const query = `
     SELECT
-      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location') AS page_location,
-      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_title') AS page_title,
-      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_referrer') AS page_referrer,
+      REGEXP_EXTRACT((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'https?://[^/]+(/[^?#]*)') AS page_location,
+      ANY_VALUE((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_title')) AS page_title,
+      ANY_VALUE((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_referrer')) AS page_referrer,
       COUNT(1) AS page_views
     FROM ${getTableRef(opts)}
     WHERE event_name = 'page_view'
@@ -35,7 +35,7 @@ async function fetchTopPages(client, opts, days) {
         OR
         (@host_regex IS NULL AND NOT REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'^https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|[^/]+:(5173|8888))'))
       )
-    GROUP BY page_location, page_title, page_referrer
+    GROUP BY page_location
     HAVING page_location IS NOT NULL
     ORDER BY page_views DESC
     LIMIT 500`;

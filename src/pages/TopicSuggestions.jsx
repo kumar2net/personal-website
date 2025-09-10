@@ -32,7 +32,7 @@ function TopicCard({ topic }) {
 }
 
 export default function TopicSuggestions() {
-  const [days, setDays] = useState(14);
+  const [days, setDays] = useState(21);
   const [limit, setLimit] = useState(4);
   const [language, setLanguage] = useState('en');
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ export default function TopicSuggestions() {
             value={days}
             onChange={(e) => setDays(Number(e.target.value))}
           >
-            {[7, 14, 30, 60, 90].map((d) => (
+            {[7, 14, 21, 30, 60, 90].map((d) => (
               <option key={d} value={d}>{d}</option>
             ))}
           </select>

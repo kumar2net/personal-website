@@ -23,11 +23,12 @@ function getGa4TableReference({ projectId, dataset, table } = {}) {
 async function fetchTopPages(days, { projectId, dataset, table, location } = {}) {
   const client = getBigQueryClient(projectId);
   const tableRef = getGa4TableReference({ projectId, dataset, table });
+  const defaultHostRegex = process.env.GA4_ALLOWED_HOST_REGEX || '^https?://([a-z0-9-]+--)?kumarsite\\.netlify\\.app(/|$)';
   const query = `
     SELECT
-      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location') AS page_location,
-      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_title') AS page_title,
-      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_referrer') AS page_referrer,
+      REGEXP_EXTRACT((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'https?://[^/]+(/[^?#]*)') AS page_location,
+      ANY_VALUE((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_title')) AS page_title,
+      ANY_VALUE((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_referrer')) AS page_referrer,
       COUNT(1) AS page_views
     FROM ${tableRef}
     WHERE event_name = 'page_view'
@@ -38,14 +39,14 @@ async function fetchTopPages(days, { projectId, dataset, table, location } = {})
         OR
         (@host_regex IS NULL AND NOT REGEXP_CONTAINS((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location'), r'^https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|[^/]+:(5173|8888))'))
       )
-    GROUP BY page_location, page_title, page_referrer
+    GROUP BY page_location
     HAVING page_location IS NOT NULL
     ORDER BY page_views DESC
     LIMIT 500
   `;
   const options = {
     query,
-    params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null },
+    params: { days, host_regex: defaultHostRegex || null },
     types: { days: 'INT64', host_regex: 'STRING' },
     // GA4 BigQuery export commonly uses multi-region 'US' or 'EU'
     location: location || process.env.BIGQUERY_LOCATION || process.env.GA4_LOCATION || 'US',
