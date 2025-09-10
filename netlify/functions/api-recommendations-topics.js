@@ -39,7 +39,7 @@ async function fetchTopPages(client, opts, days) {
     HAVING page_location IS NOT NULL
     ORDER BY page_views DESC
     LIMIT 500`;
-  const [job] = await client.createQueryJob({ query, params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null }, location: process.env.BIGQUERY_LOCATION || 'US' });
+  const [job] = await client.createQueryJob({ query, params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null }, types: { days: 'INT64', host_regex: 'STRING' }, location: process.env.BIGQUERY_LOCATION || 'US' });
   const [rows] = await job.getQueryResults();
   return rows.map(r => ({
     pageLocation: r.page_location,
@@ -67,7 +67,7 @@ async function fetchTopSearchTerms(client, opts, days) {
     HAVING search_term IS NOT NULL
     ORDER BY occurrences DESC
     LIMIT 200`;
-  const [job] = await client.createQueryJob({ query, params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null }, location: process.env.BIGQUERY_LOCATION || 'US' });
+  const [job] = await client.createQueryJob({ query, params: { days, host_regex: process.env.GA4_ALLOWED_HOST_REGEX || null }, types: { days: 'INT64', host_regex: 'STRING' }, location: process.env.BIGQUERY_LOCATION || 'US' });
   const [rows] = await job.getQueryResults();
   return rows.map(r => ({ term: r.search_term, occurrences: Number(r.occurrences) || 0 }));
 }

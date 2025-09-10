@@ -43,7 +43,7 @@ exports.handler = async (event) => {
       ORDER BY event_date DESC, c DESC
       LIMIT 100`;
 
-    const [job1] = await client.createQueryJob({ query: qCounts, params: { days, host_regex: hostRegex }, location });
+    const [job1] = await client.createQueryJob({ query: qCounts, params: { days, host_regex: hostRegex }, types: { days: 'INT64', host_regex: 'STRING' }, location });
     const [counts] = await job1.getQueryResults();
 
     const qTopPages = `
@@ -64,7 +64,7 @@ exports.handler = async (event) => {
       ORDER BY page_views DESC
       LIMIT 50`;
 
-    const [job2] = await client.createQueryJob({ query: qTopPages, params: { days, host_regex: hostRegex }, location });
+    const [job2] = await client.createQueryJob({ query: qTopPages, params: { days, host_regex: hostRegex }, types: { days: 'INT64', host_regex: 'STRING' }, location });
     const [pages] = await job2.getQueryResults();
 
     return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ success: true, projectId, dataset, table, days, hostRegex, counts, pages }) };
