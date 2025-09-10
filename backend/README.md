@@ -66,6 +66,9 @@ The server will start on `http://localhost:3001`
     - `language` (default `en`)
     - `no_cache=true` to bypass server cache
     - Optional BigQuery overrides: `projectId`, `dataset` (or GA4 numeric property ID), `table` (e.g. `events_20250908` or `events*`), `location` (e.g. `US`)
+  - Data scope & normalization:
+    - Host filtering: excludes localhost/dev by default. Set `GA4_ALLOWED_HOST_REGEX` to explicitly allow production hosts (example below).
+    - Aggregation by path: views are grouped by normalized `page_path` (scheme/host/query stripped) to consolidate counts across hosts and query strings.
   - Fallbacks:
     - If wildcard returns no signals, tries yesterday’s `events_YYYYMMDD`
     - If still empty, discovers latest daily `events_YYYYMMDD`
@@ -100,6 +103,8 @@ RECOMMENDER_SYSTEM_INSTRUCTION=You are a blog topic recommender.
 CACHE_TTL_SECONDS=3600
 GOOGLE_CLOUD_QUOTA_PROJECT=your-project
 RECOMMENDER_DEV_MODE=false
+# Optional: restrict to production hosts (example includes Netlify previews)
+GA4_ALLOWED_HOST_REGEX=^https?://([a-z0-9-]+--)?kumarsite\.netlify\.app(/|$)
 ```
 
 ## After Deployment (If Using Your Own Backend)
@@ -121,6 +126,14 @@ production: {
 3. Production options:
    - Backend: point your frontend to `https://your-backend/api/recommendations/topics`
    - Netlify-only: use built-in function at `/api/recommendations/topics` (set env: `GCP_PROJECT_ID`, `GA4_DATASET`, `GA4_TABLE`, `BIGQUERY_LOCATION`, and either `GOOGLE_SERVICE_ACCOUNT_JSON` or Netlify GCP addon)
+
+### Debugging GA4 Signals
+
+- Netlify function: `GET /api/debug/top-signals?days=21`
+  - Returns `counts` by `event_name` and top `pages` after filters/normalization.
+  - Common errors:
+    - Missing/insufficient service account: ensure `GCP_SERVICE_ACCOUNT_JSON` (or `GOOGLE_SERVICE_ACCOUNT_JSON`) is set with roles `roles/bigquery.dataViewer` and `roles/bigquery.jobUser`.
+    - Host filter too strict: adjust `GA4_ALLOWED_HOST_REGEX`.
 
 4. Client-side custom tracker has been removed from the live site.
 

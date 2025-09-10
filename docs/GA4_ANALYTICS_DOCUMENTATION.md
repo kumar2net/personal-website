@@ -21,7 +21,7 @@
 - **Bounce Rate:** 6.8%
 - **Pages Per Session:** 22.1
 
-## 🎯 **Content Topic Recommendations**
+## 🎯 **Content Topic Recommendations (GA4 → BigQuery)**
 
 ### **High Priority Topics to Write About:**
 
@@ -146,6 +146,15 @@ This shows your current GA4 configuration and settings.
 - `ANALYTICS_PRODUCTION_SETUP.md` - Production deployment guide
 
 ## ✅ **Status Confirmation**
+
+## 🧪 Live Topic API & Debug
+
+- Topic Recommendations API (Netlify function): `/api/recommendations/topics?days=21&limit=6&language=en&no_cache=true`
+- Debug GA4 signals after filters/normalization: `/api/debug/top-signals?days=21`
+
+Notes:
+- Host filtering excludes localhost/dev; set `GA4_ALLOWED_HOST_REGEX` to include production hosts (e.g., `^https?://([a-z0-9-]+--)?kumarsite\.netlify\.app(/|$)`).
+- Aggregation by `page_path` consolidates views across hosts and querystrings.
 
 ### **✅ Working Components:**
 - [x] GA4 tracking implementation
