@@ -69,6 +69,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/debug/top-signals"
+  to = "/.netlify/functions/debug-top-signals"
+  status = 200
+  force = true
+
 # SPA fallback - redirect all other requests to index.html (lowest priority)
 [[redirects]]
   from = "/*"
