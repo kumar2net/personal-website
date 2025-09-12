@@ -101,18 +101,26 @@ const NammuSoilAnalysisResearch = () => {
           {/* Company/Tech badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Sieve_Hydrometer-Traditional_Method-8B5CF6?style=for-the-badge&logo=laboratory&logoColor=white"
               alt="Sieve Hydrometer Method"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Laser_Diffraction-Advanced_Tech-EF4444?style=for-the-badge&logo=laser&logoColor=white"
               alt="Laser Diffraction Method"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Florida-Research_Sites-10B981?style=for-the-badge&logo=location&logoColor=white"
               alt="Florida Research"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/75_Samples-Comprehensive_Study-F59E0B?style=for-the-badge&logo=data&logoColor=white"
               alt="75 Samples Study"
             />
@@ -274,6 +282,8 @@ const NammuSoilAnalysisResearch = () => {
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div className="bg-white p-4 rounded-lg shadow-lg border">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/media/image2.png"
                   alt="Soil classification comparison between SHM and LDM methods"
                   className="w-full h-auto rounded-lg"
@@ -286,6 +296,8 @@ const NammuSoilAnalysisResearch = () => {
 
               <div className="bg-white p-4 rounded-lg shadow-lg border">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/media/image3.png"
                   alt="Fine particle detection analysis"
                   className="w-full h-auto rounded-lg"
@@ -299,6 +311,8 @@ const NammuSoilAnalysisResearch = () => {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white p-4 rounded-lg shadow-lg border">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/media/image4.png"
                   alt="Processing time comparison between methods"
                   className="w-full h-auto rounded-lg"
@@ -310,6 +324,8 @@ const NammuSoilAnalysisResearch = () => {
 
               <div className="bg-white p-4 rounded-lg shadow-lg border">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/media/image1.png"
                   alt="Geographical distribution of soil samples across Florida"
                   className="w-full h-auto rounded-lg"

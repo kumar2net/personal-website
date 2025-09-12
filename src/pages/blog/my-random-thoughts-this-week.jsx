@@ -95,18 +95,26 @@ const MyRandomThoughtsThisWeek = () => {
           {/* Company/Tech badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Da_Vinci_Xi-Surgical_Robot-FF6B6B?style=for-the-badge&logo=medical&logoColor=white"
               alt="Da Vinci Xi Surgical Robot"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/T%26T-Trump_Tariff-4ECDC4?style=for-the-badge&logo=politics&logoColor=white"
               alt="T&T - Trump & Tariff"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Tamil_Nadu-Power-45B7D1?style=for-the-badge&logo=energy&logoColor=white"
               alt="Tamil Nadu Power"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/India-Economy-FF9F43?style=for-the-badge&logo=rupee&logoColor=white"
               alt="India Economy"
             />
@@ -115,6 +123,8 @@ const MyRandomThoughtsThisWeek = () => {
           {/* Hero Image */}
           <div className="mb-10">
             <img
+              loading="lazy"
+              decoding="async"
               src={`/.netlify/functions/image-proxy?url=${encodeURIComponent('https://picsum.photos/1200/400?random=tech')}`}
               alt="Technology and innovation concept"
               className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"

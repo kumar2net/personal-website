@@ -60,26 +60,38 @@ const TnpdclAutomatedMeterReading = () => {
       {/* Shields.io badges */}
       <div className="flex flex-wrap gap-3 mb-6">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/India-FF9933?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="India"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Utilities-111827?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Utilities"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/TNPDCL-1D4ED8?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="TNPDCL"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Smart_Metering-059669?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Smart Metering"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/AMR%2FAMI-7C3AED?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="AMR/AMI"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/NFC-F97316?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="NFC"
         />

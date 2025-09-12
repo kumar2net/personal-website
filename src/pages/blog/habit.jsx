@@ -74,26 +74,38 @@ const Habit = () => {
       {/* Shields.io badges */}
       <div className="flex flex-wrap gap-3 mb-6">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Habits-FF6B6B?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Habits"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Productivity-4ECDC4?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Productivity"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Technology-45B7D1?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Technology"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Philosophy-9B59B6?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Philosophy"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Zen-E74C3C?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Zen"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Feedback-000000?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Feedback"
         />
@@ -252,6 +264,8 @@ const Habit = () => {
         {/* Donald Image */}
         <section className="text-center">
           <img
+            loading="lazy"
+            decoding="async"
             src="/media/donald_nanobanana.png"
             alt="Donald with nanobanana"
             className="max-w-full h-auto rounded-lg shadow-lg mx-auto"

@@ -58,26 +58,38 @@ const BoyWithMusicInVeins = () => {
       {/* Shields.io badges */}
       <div className="flex flex-wrap gap-3 mb-6">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Music-FF6B6B?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Music"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Piano-4ECDC4?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Piano"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Composition-45B7D1?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Composition"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Trinity-9B59B6?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Trinity"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Yamaha-E74C3C?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Yamaha"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Logic_Pro-000000?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Logic Pro"
         />
@@ -105,7 +117,7 @@ const BoyWithMusicInVeins = () => {
               Hear Dharun discuss his musical journey, composition process, and
               passion for piano in this exclusive interview.
             </p>
-            <audio controls className="w-full" preload="metadata">
+            <audio controls className="w-full" preload="none">
               <source src="/media/AKDStalk.wav" type="audio/wav" />
               Your browser does not support the audio element.
             </audio>
@@ -118,6 +130,8 @@ const BoyWithMusicInVeins = () => {
           {/* Dharun at the Piano */}
           <div className="mt-8 text-center">
             <img
+              loading="lazy"
+              decoding="async"
               src="/media/Dharun_keys.jpg"
               alt="Dharun playing the piano"
               className="max-w-full h-auto rounded-lg shadow-lg mx-auto"

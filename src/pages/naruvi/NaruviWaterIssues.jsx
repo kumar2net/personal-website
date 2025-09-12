@@ -230,6 +230,8 @@ const NaruviWaterIssues = () => {
               </h3>
               <div className="bg-gray-50 p-6 rounded-lg">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="/media/naruviSolution1.png"
                   alt="Naruvi Water Solution Diagram"
                   className="max-w-full h-auto mx-auto rounded-lg shadow-md"

@@ -27,22 +27,32 @@ const JoyOfWriting = () => {
         {/* Shields.io badges */}
         <div className="flex flex-wrap gap-2 mb-6">
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Writing-111827?style=for-the-badge&labelColor=1F2937&color=111827"
             alt="Writing"
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Natural_Speech_UI-2563EB?style=for-the-badge&labelColor=1F2937&logoColor=white"
             alt="Natural Speech UI"
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/UX-7C3AED?style=for-the-badge&labelColor=1F2937&logoColor=white"
             alt="UX"
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/AI-059669?style=for-the-badge&labelColor=1F2937&logoColor=white"
             alt="AI"
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Voice_Agents-F97316?style=for-the-badge&labelColor=1F2937&logoColor=white"
             alt="Voice Agents"
           />

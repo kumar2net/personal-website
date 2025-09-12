@@ -93,18 +93,26 @@ const SemanticSearchExplained = () => {
           {/* Technology badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Google_Gemini-AI_Embeddings-4285F4?style=for-the-badge&logo=google&logoColor=white"
               alt="Google Gemini AI"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Vertex_AI-Vector_Search-FF6B6B?style=for-the-badge&logo=google-cloud&logoColor=white"
               alt="Vertex AI Vector Search"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Netlify-Functions-00C7B7?style=for-the-badge&logo=netlify&logoColor=white"
               alt="Netlify Functions"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=white"
               alt="React Frontend"
             />
@@ -113,6 +121,8 @@ const SemanticSearchExplained = () => {
           {/* Hero Image */}
           <div className="mb-10">
             <img
+              loading="lazy"
+              decoding="async"
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80"
               alt="Data visualization and search analytics"
               className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"

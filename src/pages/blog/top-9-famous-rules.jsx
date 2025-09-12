@@ -66,22 +66,32 @@ const Top9FamousRules = () => {
       {/* Badges (shields) */}
       <div className="flex flex-wrap gap-2 mb-4">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Mental%20Models-1F2937?style=for-the-badge&labelColor=111827&color=1F2937"
           alt="Mental Models"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Decision%20Making-2563EB?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Decision Making"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Productivity-065F46?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Productivity"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Statistics-9333EA?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Statistics"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Economics-DC2626?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Economics"
         />
@@ -90,6 +100,8 @@ const Top9FamousRules = () => {
       {/* Hero image */}
       <div className="mb-8">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&w=1600&q=80"
           alt="Notebook with rules and ideas"
           className="w-full h-64 object-cover rounded-lg shadow"

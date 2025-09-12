@@ -64,30 +64,44 @@ const TheGreatPivot = () => {
       {/* Badges (shields) */}
       <div className="flex flex-wrap gap-2 mb-4">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Manufacturing-1F2937?style=for-the-badge&labelColor=111827&color=1F2937"
           alt="Manufacturing"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/US%20Economy-2563EB?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="US Economy"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Tariffs-DC2626?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Tariffs"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Global%20Trade-059669?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Global Trade"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Economic%20Policy-7C3AED?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Economic Policy"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Job%20Creation-0891B2?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Job Creation"
         />
         <img
+          loading="lazy"
+          decoding="async"
           src="https://img.shields.io/badge/Supply%20Chain-D97706?style=for-the-badge&labelColor=1F2937&logoColor=white"
           alt="Supply Chain"
         />
@@ -96,6 +110,8 @@ const TheGreatPivot = () => {
       {/* Hero Image */}
       <div className="mb-8">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
           alt="US Manufacturing and Industrial Growth"
           className="w-full h-64 object-cover rounded-lg shadow-lg"

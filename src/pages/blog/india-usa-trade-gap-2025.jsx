@@ -261,6 +261,8 @@ const IndiaUSATradeGap = () => {
               src="/media/India_usa_spat.jpg"
               alt="India-USA Trade Relations"
               className="max-w-full h-auto rounded-lg shadow-lg mx-auto"
+              loading="lazy"
+              decoding="async"
             />
             <p className="text-sm text-gray-500 mt-2 italic">
               Appeared in The Hindu dated 7th August 2025
@@ -309,6 +311,8 @@ const IndiaUSATradeGap = () => {
               src="/media/theHindu_GSTslabs.jpg"
               alt="Recent announcement"
               className="max-w-full h-auto rounded-lg shadow-lg mx-auto"
+              loading="lazy"
+              decoding="async"
             />
             <p className="text-sm text-gray-500 mt-2 italic">
               Recent announcement
