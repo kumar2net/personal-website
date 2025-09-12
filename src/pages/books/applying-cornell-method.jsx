@@ -31,10 +31,14 @@ function ApplyingCornellMethodMd() {
         </h1>
         <div className="mt-3 flex flex-wrap gap-2 justify-center">
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue"
             alt="Cornell Method badge"
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Study%20Skills-Productivity-green"
             alt="Study skills badge"
           />

@@ -124,6 +124,8 @@ const CommonSenseRareCommodity = () => {
           {/* Tag Cloud Image */}
           <div className="mt-8 mb-8 text-center">
             <img
+              loading="lazy"
+              decoding="async"
               src="/media/tandtTagcloud.png"
               alt="India-US Trade Relations Word Cloud - showing key concepts like tariffs, exports, economic impact, and various industries affected"
               className="max-w-full h-auto rounded-lg shadow-lg mx-auto"

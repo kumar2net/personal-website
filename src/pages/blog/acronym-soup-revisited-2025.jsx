@@ -63,30 +63,44 @@ const AcronymSoupRevisited2025 = () => {
           {/* Company badges */}
           <div className="flex flex-wrap gap-3">
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Apple-000000?style=for-the-badge&logo=apple&logoColor=white"
               alt="Apple"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Microsoft-0078D7?style=for-the-badge&logo=microsoft&logoColor=white"
               alt="Microsoft"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Alphabet-4285F4?style=for-the-badge&logo=google&logoColor=white"
               alt="Alphabet"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Amazon-FF9900?style=for-the-badge&logo=amazon&logoColor=black"
               alt="Amazon"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Meta-1877F2?style=for-the-badge&logo=meta&logoColor=white"
               alt="Meta"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/NVIDIA-76B900?style=for-the-badge&logo=nvidia&logoColor=white"
               alt="Nvidia"
             />
             <img
+              loading="lazy"
+              decoding="async"
               src="https://img.shields.io/badge/Tesla-CC0000?style=for-the-badge&logo=tesla&logoColor=white"
               alt="Tesla"
             />

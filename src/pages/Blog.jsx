@@ -562,6 +562,8 @@ const Blog = () => {
           >
             <div className="relative h-48">
               <img
+                loading="lazy"
+                decoding="async"
                 src={post.image}
                 alt={post.title}
                 className="w-full h-full object-cover"

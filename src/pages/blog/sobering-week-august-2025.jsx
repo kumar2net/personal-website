@@ -118,6 +118,8 @@ const SoberingWeekAugust2025 = () => {
           {/* Temple Vahanas Image */}
           <div className="mb-10">
             <img
+              loading="lazy"
+              decoding="async"
               src="/media/templeVahanas.jpg"
               alt="Temple vahanas - traditional temple vehicles representing cultural heritage"
               className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"

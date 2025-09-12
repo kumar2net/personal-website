@@ -82,7 +82,7 @@ const FAQBuddingDentist = () => {
             </h2>
 
             <div className="bg-white rounded-lg p-6 shadow-sm">
-              <audio controls className="w-full h-12" preload="metadata">
+              <audio controls className="w-full h-12" preload="none">
                 <source src="/media/AKSVtalk.wav" type="audio/wav" />
                 Your browser does not support the audio element.
               </audio>

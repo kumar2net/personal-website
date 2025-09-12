@@ -9,63 +9,64 @@ import SEO from './components/SEO';
 import { getBlogSeo } from './data/blogIndex';
 import Logo from './components/Logo';
 import ScrollToTop from './components/ScrollToTop';
+import React, { Suspense, lazy } from 'react';
 import About from './pages/About';
-import Album from './pages/Album';
-import Blog from './pages/Blog';
-import Books from './pages/Books';
-import Recommendations from './pages/Recommendations';
-import AgenticFeatureInABrowser from './pages/blog/2025-08-23-agentic-feature-in-a-browser';
-import AcronymSoup from './pages/blog/acronym-soup';
-import AcronymSoupRevisited2025 from './pages/blog/acronym-soup-revisited-2025';
-import AndrejKarpathyYcAiStartupSchool from './pages/blog/andrej-karpathy-yc-ai-startup-school';
-import ApplyingRobinsonMethod from './pages/blog/applying-robinson-method';
-import Autophagy from './pages/blog/autophagy';
-import BuildingMcpServerWithCursor from './pages/blog/building-mcp-server-with-cursor';
-import CompellingIndiaStory from './pages/blog/Compelling-india-story';
-import DevastatedByYoungGirlsDemise from './pages/blog/devastated-by-young-girls-demise';
-import DrugSuggestionApp from './pages/blog/drug-suggestion-app';
-import ExperienceUsingApiInAiCodeEditor from './pages/blog/experience-using-api-in-ai-code-editor';
-import FAQBuddingDentist from './pages/blog/faq-budding-dentist';
-import FeynmanTechnique from './pages/blog/feynman-technique';
-import GlobalEconomicConcerns from './pages/blog/global-economic-concerns-2025';
-import Habit from './pages/blog/habit';
-import IndiaUSATradeGap from './pages/blog/india-usa-trade-gap-2025';
-import JoyOfWriting from './pages/blog/joy-of-writing';
-import LongWeekendMusings2025 from './pages/blog/long-weekend-musings-2025';
-import MemoryEvolution from './pages/blog/memory-evolution';
-import MicrosoftMaiDxIndia from './pages/blog/microsoft-mai-dx-india';
-import MyExperienceWithWindsurfPost from './pages/blog/my-experience-with-windsurf';
-import MyFascinationWithShortcuts from './pages/blog/my-fascination-with-shortcuts';
-import MyRandomThoughtsThisWeek from './pages/blog/my-random-thoughts-this-week';
-import NammuSoilAnalysisResearch from './pages/blog/nammu-soil-analysis-research';
-import NepalAnnapurnaCircuit from './pages/blog/nepal-annapurna-circuit';
-import SemanticSearchExplained from './pages/blog/semantic-search-explained';
-import PostDynamic from './pages/blog/PostDynamic';
-import PortfolioWebsite from './pages/blog/portfolio-website';
-import PriceParity from './pages/blog/price-parity';
-import SoberingWeekAugust2025 from './pages/blog/sobering-week-august-2025';
-import SpineImplantDashboard from './pages/blog/spine-implant-dashboard';
-import StartedToKindleAgain from './pages/blog/started-to-kindle-again';
-import TheGreatPivot from './pages/blog/the-great-pivot';
-import Top9FamousRules from './pages/blog/top-9-famous-rules';
-import ApplyingCornellMethodMd from './pages/books/applying-cornell-method';
-import Atheism from './pages/books/atheism';
-import BookDynamic from './pages/books/BookDynamic';
-import PDFExtractorPage from './pages/books/pdf-extractor';
-import TheBrainStoryContent from './pages/books/the-brain-story-content';
-import Contact from './pages/Contact';
-import DossierPage from './pages/Dossier';
-import FlashcardSetPage from './pages/FlashcardSetPage';
-import Learning from './pages/Learning';
-import MusicPage from './pages/Music';
-import Projects from './pages/Projects';
-import Shortcuts from './pages/Shortcuts';
-import Trends from './pages/Trends';
-import UtilitiesDashboard from './pages/UtilitiesDashboard';
-import VocabAdditions from './pages/VocabAdditions';
-import NaruviWaterIssues from './pages/naruvi';
-import Elsewhere from './pages/Elsewhere';
-import TopicSuggestions from './pages/TopicSuggestions';
+const Album = lazy(() => import('./pages/Album'));
+const Blog = lazy(() => import('./pages/Blog'));
+const Books = lazy(() => import('./pages/Books'));
+const Recommendations = lazy(() => import('./pages/Recommendations'));
+const AgenticFeatureInABrowser = lazy(() => import('./pages/blog/2025-08-23-agentic-feature-in-a-browser'));
+const AcronymSoup = lazy(() => import('./pages/blog/acronym-soup'));
+const AcronymSoupRevisited2025 = lazy(() => import('./pages/blog/acronym-soup-revisited-2025'));
+const AndrejKarpathyYcAiStartupSchool = lazy(() => import('./pages/blog/andrej-karpathy-yc-ai-startup-school'));
+const ApplyingRobinsonMethod = lazy(() => import('./pages/blog/applying-robinson-method'));
+const Autophagy = lazy(() => import('./pages/blog/autophagy'));
+const BuildingMcpServerWithCursor = lazy(() => import('./pages/blog/building-mcp-server-with-cursor'));
+const CompellingIndiaStory = lazy(() => import('./pages/blog/Compelling-india-story'));
+const DevastatedByYoungGirlsDemise = lazy(() => import('./pages/blog/devastated-by-young-girls-demise'));
+const DrugSuggestionApp = lazy(() => import('./pages/blog/drug-suggestion-app'));
+const ExperienceUsingApiInAiCodeEditor = lazy(() => import('./pages/blog/experience-using-api-in-ai-code-editor'));
+const FAQBuddingDentist = lazy(() => import('./pages/blog/faq-budding-dentist'));
+const FeynmanTechnique = lazy(() => import('./pages/blog/feynman-technique'));
+const GlobalEconomicConcerns = lazy(() => import('./pages/blog/global-economic-concerns-2025'));
+const Habit = lazy(() => import('./pages/blog/habit'));
+const IndiaUSATradeGap = lazy(() => import('./pages/blog/india-usa-trade-gap-2025'));
+const JoyOfWriting = lazy(() => import('./pages/blog/joy-of-writing'));
+const LongWeekendMusings2025 = lazy(() => import('./pages/blog/long-weekend-musings-2025'));
+const MemoryEvolution = lazy(() => import('./pages/blog/memory-evolution'));
+const MicrosoftMaiDxIndia = lazy(() => import('./pages/blog/microsoft-mai-dx-india'));
+const MyExperienceWithWindsurfPost = lazy(() => import('./pages/blog/my-experience-with-windsurf'));
+const MyFascinationWithShortcuts = lazy(() => import('./pages/blog/my-fascination-with-shortcuts'));
+const MyRandomThoughtsThisWeek = lazy(() => import('./pages/blog/my-random-thoughts-this-week'));
+const NammuSoilAnalysisResearch = lazy(() => import('./pages/blog/nammu-soil-analysis-research'));
+const NepalAnnapurnaCircuit = lazy(() => import('./pages/blog/nepal-annapurna-circuit'));
+const SemanticSearchExplained = lazy(() => import('./pages/blog/semantic-search-explained'));
+const PostDynamic = lazy(() => import('./pages/blog/PostDynamic'));
+const PortfolioWebsite = lazy(() => import('./pages/blog/portfolio-website'));
+const PriceParity = lazy(() => import('./pages/blog/price-parity'));
+const SoberingWeekAugust2025 = lazy(() => import('./pages/blog/sobering-week-august-2025'));
+const SpineImplantDashboard = lazy(() => import('./pages/blog/spine-implant-dashboard'));
+const StartedToKindleAgain = lazy(() => import('./pages/blog/started-to-kindle-again'));
+const TheGreatPivot = lazy(() => import('./pages/blog/the-great-pivot'));
+const Top9FamousRules = lazy(() => import('./pages/blog/top-9-famous-rules'));
+const ApplyingCornellMethodMd = lazy(() => import('./pages/books/applying-cornell-method'));
+const Atheism = lazy(() => import('./pages/books/atheism'));
+const BookDynamic = lazy(() => import('./pages/books/BookDynamic'));
+const PDFExtractorPage = lazy(() => import('./pages/books/pdf-extractor'));
+const TheBrainStoryContent = lazy(() => import('./pages/books/the-brain-story-content'));
+const Contact = lazy(() => import('./pages/Contact'));
+const DossierPage = lazy(() => import('./pages/Dossier'));
+const FlashcardSetPage = lazy(() => import('./pages/FlashcardSetPage'));
+const Learning = lazy(() => import('./pages/Learning'));
+const MusicPage = lazy(() => import('./pages/Music'));
+const Projects = lazy(() => import('./pages/Projects'));
+const Shortcuts = lazy(() => import('./pages/Shortcuts'));
+const Trends = lazy(() => import('./pages/Trends'));
+const UtilitiesDashboard = lazy(() => import('./pages/UtilitiesDashboard'));
+const VocabAdditions = lazy(() => import('./pages/VocabAdditions'));
+const NaruviWaterIssues = lazy(() => import('./pages/naruvi'));
+const Elsewhere = lazy(() => import('./pages/Elsewhere'));
+const TopicSuggestions = lazy(() => import('./pages/TopicSuggestions'));
 
 // Admin CMS removed
 
@@ -428,6 +429,7 @@ function App() {
 
         {/* Main content */}
         <main className="max-w-6xl mx-auto px-4 py-8">
+          <Suspense fallback={<div className="py-16 text-center text-gray-600">Loading...</div>}>
           <Routes>
             <Route
               path="/"
@@ -912,6 +914,7 @@ function App() {
             />
             {/* Admin route is handled by static files, not React Router */}
           </Routes>
+          </Suspense>
         </main>
 
         {/* Footer */}

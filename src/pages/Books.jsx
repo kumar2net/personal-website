@@ -35,10 +35,14 @@ function Books() {
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Self--Help-Personal%20Development-green"
                 alt="Self-help badge"
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Philosophy-Counterintuitive-blue"
                 alt="Philosophy badge"
               />
@@ -86,10 +90,14 @@ function Books() {
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Philosophy-Stoicism-brown"
                 alt="Stoicism badge"
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Notes-Verbatim-blue"
                 alt="Notes badge"
               />
@@ -128,10 +136,14 @@ function Books() {
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Philosophy-Atheism-purple"
                 alt="Philosophy badge"
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Worldview-Secular-orange"
                 alt="Worldview badge"
               />
@@ -173,10 +185,14 @@ function Books() {
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple"
                 alt="Neuroscience badge"
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange"
                 alt="AI Technology badge"
               />
@@ -219,10 +235,14 @@ function Books() {
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue"
                 alt="Cornell Method badge"
               />
               <img
+                loading="lazy"
+                decoding="async"
                 src="https://img.shields.io/badge/Study%20Skills-Productivity-green"
                 alt="Study skills badge"
               />

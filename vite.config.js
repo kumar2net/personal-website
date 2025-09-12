@@ -11,6 +11,18 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
+      },
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          vendor: [
+            'framer-motion',
+            'react-helmet-async',
+            'react-markdown',
+            'remark-gfm',
+            'remark-frontmatter'
+          ]
+        }
       }
     },
     // Copy public directory to dist

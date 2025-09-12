@@ -75,6 +75,8 @@ const LongWeekendMusings2025 = () => {
           {/* Hero Image */}
           <div className="mb-10">
             <img
+              loading="lazy"
+              decoding="async"
               src={`/.netlify/functions/image-proxy?url=${encodeURIComponent('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')}`}
               alt="Mountain landscape representing adventure and reflection"
               className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg"
@@ -124,6 +126,8 @@ const LongWeekendMusings2025 = () => {
             {/* The Hindu Article Image */}
             <div className="my-8">
               <img
+                loading="lazy"
+                decoding="async"
                 src="/media/theHinduKJ.jpg"
                 alt="The Hindu article about AI and technology"
                 className="w-full max-w-2xl mx-auto rounded-lg"

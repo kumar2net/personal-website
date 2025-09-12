@@ -46,10 +46,14 @@ function BookCornellMethod() {
         </h1>
         <div className="mt-3 flex flex-wrap gap-2 justify-center">
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Note--Taking-Cornell%20Method-blue"
             alt="Cornell Method badge"
           />
           <img
+            loading="lazy"
+            decoding="async"
             src="https://img.shields.io/badge/Study%20Skills-Productivity-green"
             alt="Study skills badge"
           />
@@ -58,6 +62,8 @@ function BookCornellMethod() {
 
       <div className="w-full">
         <img
+          loading="lazy"
+          decoding="async"
           src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1400&auto=format&fit=crop"
           alt="Applying the Cornell Method cover"
           className="rounded-md w-full max-h-96 object-cover"

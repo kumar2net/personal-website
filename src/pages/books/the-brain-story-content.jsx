@@ -68,10 +68,14 @@ function TheBrainStoryContent() {
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple"
                   alt="Neuroscience badge"
                 />
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange"
                   alt="AI Technology badge"
                 />
