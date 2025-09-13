@@ -321,4 +321,6 @@ All objectives have been successfully completed:
 ### Session (Auto‑summary)
 - Added new blog post `Latest_Happenings` with passkey diagram, badges, likes, and Netlify comments; integrated `Chitra` onestroke placeholder image near the end and credited in blog listing.
 - Updated blog SEO index and listing; removed `/topics` from nav; added `.cursorrules` to enforce auto‑update docs; started dev server and verified locally.
-- Files touched: `src/pages/blog/Latest_Happenings.jsx`, `src/pages/Blog.jsx`, `src/App.jsx`, `src/data/blogIndex.js`, `.cursorrules`.
+- Replaced Album page content with Google Photos album link `https://photos.app.goo.gl/JoqUGodR9RDvjPSk7`, added note about missing geolocation, and simplified UI.
+- Fixed comments system by replacing complex API-based `get-comments.js` with working hardcoded version that matches production; resolved development server port conflicts.
+- Files touched: `src/pages/blog/Latest_Happenings.jsx`, `src/pages/Blog.jsx`, `src/App.jsx`, `src/data/blogIndex.js`, `.cursorrules`, `netlify/functions/get-comments.js`.
