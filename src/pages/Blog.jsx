@@ -7,6 +7,26 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Starting Up Your Own Company',
+    date: new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    lastModified: new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    excerpt:
+      'Understanding the difference between startups and small businesses, the venture capital ecosystem, and how to leverage India\'s startup ecosystem for exponential growth.',
+    tags: ['Entrepreneurship', 'Startups', 'Venture Capital', 'Business', 'Innovation', 'India Startup Ecosystem'],
+    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/expanding-startups',
+    author: 'Natarajan. S',
+    authorBio: 'Mentor in Residence, IISc Bangalore',
+  },
+  {
     title: 'Latest Happenings',
     date: new Date().toLocaleDateString('en-US', {
       year: 'numeric',
