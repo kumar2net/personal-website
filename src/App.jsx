@@ -10,63 +10,40 @@ import { getBlogSeo } from './data/blogIndex';
 import Logo from './components/Logo';
 import ScrollToTop from './components/ScrollToTop';
 import React, { Suspense, lazy } from 'react';
+
+// Eagerly load critical components
 import About from './pages/About';
+
+// Lazy load all other components
 const Album = lazy(() => import('./pages/Album'));
 const Blog = lazy(() => import('./pages/Blog'));
 const Books = lazy(() => import('./pages/Books'));
 const Recommendations = lazy(() => import('./pages/Recommendations'));
-const AgenticFeatureInABrowser = lazy(() => import('./pages/blog/2025-08-23-agentic-feature-in-a-browser'));
-const AcronymSoup = lazy(() => import('./pages/blog/acronym-soup'));
-const AcronymSoupRevisited2025 = lazy(() => import('./pages/blog/acronym-soup-revisited-2025'));
-const AndrejKarpathyYcAiStartupSchool = lazy(() => import('./pages/blog/andrej-karpathy-yc-ai-startup-school'));
-const ApplyingRobinsonMethod = lazy(() => import('./pages/blog/applying-robinson-method'));
-const Autophagy = lazy(() => import('./pages/blog/autophagy'));
-const BuildingMcpServerWithCursor = lazy(() => import('./pages/blog/building-mcp-server-with-cursor'));
-const CompellingIndiaStory = lazy(() => import('./pages/blog/Compelling-india-story'));
-const DevastatedByYoungGirlsDemise = lazy(() => import('./pages/blog/devastated-by-young-girls-demise'));
-const DrugSuggestionApp = lazy(() => import('./pages/blog/drug-suggestion-app'));
-const ExperienceUsingApiInAiCodeEditor = lazy(() => import('./pages/blog/experience-using-api-in-ai-code-editor'));
-const FAQBuddingDentist = lazy(() => import('./pages/blog/faq-budding-dentist'));
-const FeynmanTechnique = lazy(() => import('./pages/blog/feynman-technique'));
-const GlobalEconomicConcerns = lazy(() => import('./pages/blog/global-economic-concerns-2025'));
-const Habit = lazy(() => import('./pages/blog/habit'));
-const IndiaUSATradeGap = lazy(() => import('./pages/blog/india-usa-trade-gap-2025'));
-const JoyOfWriting = lazy(() => import('./pages/blog/joy-of-writing'));
-const LongWeekendMusings2025 = lazy(() => import('./pages/blog/long-weekend-musings-2025'));
-const MemoryEvolution = lazy(() => import('./pages/blog/memory-evolution'));
-const MicrosoftMaiDxIndia = lazy(() => import('./pages/blog/microsoft-mai-dx-india'));
-const MyExperienceWithWindsurfPost = lazy(() => import('./pages/blog/my-experience-with-windsurf'));
-const MyFascinationWithShortcuts = lazy(() => import('./pages/blog/my-fascination-with-shortcuts'));
-const MyRandomThoughtsThisWeek = lazy(() => import('./pages/blog/my-random-thoughts-this-week'));
-const NammuSoilAnalysisResearch = lazy(() => import('./pages/blog/nammu-soil-analysis-research'));
-const NepalAnnapurnaCircuit = lazy(() => import('./pages/blog/nepal-annapurna-circuit'));
-const SemanticSearchExplained = lazy(() => import('./pages/blog/semantic-search-explained'));
-const PostDynamic = lazy(() => import('./pages/blog/PostDynamic'));
-const PortfolioWebsite = lazy(() => import('./pages/blog/portfolio-website'));
-const PriceParity = lazy(() => import('./pages/blog/price-parity'));
-const SoberingWeekAugust2025 = lazy(() => import('./pages/blog/sobering-week-august-2025'));
-const SpineImplantDashboard = lazy(() => import('./pages/blog/spine-implant-dashboard'));
-const StartedToKindleAgain = lazy(() => import('./pages/blog/started-to-kindle-again'));
-const TheGreatPivot = lazy(() => import('./pages/blog/the-great-pivot'));
-const Top9FamousRules = lazy(() => import('./pages/blog/top-9-famous-rules'));
-const ApplyingCornellMethodMd = lazy(() => import('./pages/books/applying-cornell-method'));
-const Atheism = lazy(() => import('./pages/books/atheism'));
-const BookDynamic = lazy(() => import('./pages/books/BookDynamic'));
-const PDFExtractorPage = lazy(() => import('./pages/books/pdf-extractor'));
-const TheBrainStoryContent = lazy(() => import('./pages/books/the-brain-story-content'));
 const Contact = lazy(() => import('./pages/Contact'));
-const DossierPage = lazy(() => import('./pages/Dossier'));
-const FlashcardSetPage = lazy(() => import('./pages/FlashcardSetPage'));
+const Projects = lazy(() => import('./pages/Projects'));
 const Learning = lazy(() => import('./pages/Learning'));
 const MusicPage = lazy(() => import('./pages/Music'));
-const Projects = lazy(() => import('./pages/Projects'));
-const Shortcuts = lazy(() => import('./pages/Shortcuts'));
+const Elsewhere = lazy(() => import('./pages/Elsewhere'));
+const TopicSuggestions = lazy(() => import('./pages/TopicSuggestions'));
 const Trends = lazy(() => import('./pages/Trends'));
+
+// Lazy load blog posts
+const PostDynamic = lazy(() => import('./pages/blog/PostDynamic'));
+
+// Lazy load book pages
+const BookDynamic = lazy(() => import('./pages/books/BookDynamic'));
+const ApplyingCornellMethodMd = lazy(() => import('./pages/books/applying-cornell-method'));
+const Atheism = lazy(() => import('./pages/books/atheism'));
+const PDFExtractorPage = lazy(() => import('./pages/books/pdf-extractor'));
+const TheBrainStoryContent = lazy(() => import('./pages/books/the-brain-story-content'));
+
+// Lazy load other pages
+const DossierPage = lazy(() => import('./pages/Dossier'));
+const FlashcardSetPage = lazy(() => import('./pages/FlashcardSetPage'));
+const Shortcuts = lazy(() => import('./pages/Shortcuts'));
 const UtilitiesDashboard = lazy(() => import('./pages/UtilitiesDashboard'));
 const VocabAdditions = lazy(() => import('./pages/VocabAdditions'));
 const NaruviWaterIssues = lazy(() => import('./pages/naruvi'));
-const Elsewhere = lazy(() => import('./pages/Elsewhere'));
-const TopicSuggestions = lazy(() => import('./pages/TopicSuggestions'));
 
 // Admin CMS removed
 
@@ -113,11 +90,8 @@ function App() {
 
   // Handle app loading and error states
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
+    // Remove artificial delay for faster loading
+    setIsLoading(false);
   }, []);
 
   // Error boundary for mobile browsers
@@ -163,6 +137,7 @@ function App() {
           <button
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            aria-label="Refresh the page to try again"
           >
             Refresh Page
           </button>
@@ -300,6 +275,8 @@ function App() {
                   });
                 }}
                 className="md:hidden"
+                aria-label={isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
+                aria-expanded={isMobileMenuOpen}
               >
                 <HiMenu className="h-6 w-6" />
               </button>
@@ -431,7 +408,12 @@ function App() {
 
         {/* Main content */}
         <main className="max-w-6xl mx-auto px-4 py-8">
-          <Suspense fallback={<div className="py-16 text-center text-gray-600">Loading...</div>}>
+          <Suspense fallback={
+            <div className="py-16 text-center">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <p className="mt-2 text-gray-600">Loading...</p>
+            </div>
+          }>
           <Routes>
             <Route
               path="/"
@@ -450,44 +432,44 @@ function App() {
                   <div className="flex flex-wrap gap-4 justify-center">
                     <Link
                       to="/about"
-                      className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                      className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
                     >
                       About Me
                     </Link>
                     <Link
                       to="/projects"
-                      className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
+                      className="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition-colors"
                     >
                       My Projects
                     </Link>
                     <Link
                       to="/books"
-                      className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+                      className="px-6 py-3 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition-colors"
                     >
                       Books
                     </Link>
                     <Link
                       to="/blog"
-                      className="px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+                      className="px-6 py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition-colors"
                     >
                       Blog
                     </Link>
 
                     <Link
                       to="/learning"
-                      className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                      className="px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors"
                     >
                       Learning Hub
                     </Link>
                     <Link
                       to="/music"
-                      className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                      className="px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors"
                     >
                       Music
                     </Link>
                     <Link
                       to="/album"
-                      className="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+                      className="px-6 py-3 bg-pink-700 text-white rounded-lg hover:bg-pink-800 transition-colors"
                     >
                       Album
                     </Link>
@@ -742,120 +724,7 @@ function App() {
                 </>
               }
             />
-            <Route
-              path="/blog/spine-implant-dashboard"
-              element={<SpineImplantDashboard />}
-            />
-            <Route
-              path="/blog/building-mcp-server-with-cursor"
-              element={<BuildingMcpServerWithCursor />}
-            />
-            <Route
-              path="/blog/drug-suggestion-app"
-              element={<DrugSuggestionApp />}
-            />
-            <Route
-              path="/blog/portfolio-website"
-              element={<PortfolioWebsite />}
-            />
-            <Route
-              path="/blog/my-experience-with-windsurf"
-              element={<MyExperienceWithWindsurfPost />}
-            />
-            <Route
-              path="/blog/experience-using-api-in-ai-code-editor"
-              element={<ExperienceUsingApiInAiCodeEditor />}
-            />
-            <Route path="/blog/acronym-soup" element={<AcronymSoup />} />
-            <Route
-              path="/blog/andrej-karpathy-yc-ai-startup-school"
-              element={<AndrejKarpathyYcAiStartupSchool />}
-            />
-            <Route
-              path="/blog/my-fascination-with-shortcuts"
-              element={<MyFascinationWithShortcuts />}
-            />
-            <Route
-              path="/blog/compelling-india-story"
-              element={<CompellingIndiaStory />}
-            />
-            <Route
-              path="/blog/microsoft-mai-dx-india"
-              element={<MicrosoftMaiDxIndia />}
-            />
-            <Route
-              path="/blog/acronym-soup-revisited-2025"
-              element={<AcronymSoupRevisited2025 />}
-            />
-            <Route path="/blog/price-parity" element={<PriceParity />} />
-            <Route
-              path="/blog/started-to-kindle-again"
-              element={<StartedToKindleAgain />}
-            />
-            <Route path="/blog/autophagy" element={<Autophagy />} />
-            <Route
-              path="/blog/feynman-technique"
-              element={<FeynmanTechnique />}
-            />
-            <Route
-              path="/blog/applying-robinson-method"
-              element={<ApplyingRobinsonMethod />}
-            />
-            <Route
-              path="/blog/memory-evolution"
-              element={<MemoryEvolution />}
-            />
-            <Route
-              path="/blog/nepal-annapurna-circuit"
-              element={<NepalAnnapurnaCircuit />}
-            />
-            <Route
-              path="/blog/my-random-thoughts-this-week"
-              element={<MyRandomThoughtsThisWeek />}
-            />
-            <Route
-              path="/blog/nammu-soil-analysis-research"
-              element={<NammuSoilAnalysisResearch />}
-            />
-            <Route
-              path="/blog/india-usa-trade-gap-2025"
-              element={<IndiaUSATradeGap />}
-            />
-            <Route
-              path="/blog/top-9-famous-rules"
-              element={<Top9FamousRules />}
-            />
-            <Route path="/blog/the-great-pivot" element={<TheGreatPivot />} />
-            <Route
-              path="/blog/long-weekend-musings-2025"
-              element={<LongWeekendMusings2025 />}
-            />
-            <Route
-              path="/blog/faq-budding-dentist"
-              element={<FAQBuddingDentist />}
-            />
-            <Route
-              path="/blog/devastated-by-young-girls-demise"
-              element={<DevastatedByYoungGirlsDemise />}
-            />
-            <Route
-              path="/blog/global-economic-concerns-2025"
-              element={<GlobalEconomicConcerns />}
-            />
-            <Route
-              path="/blog/2025-08-23-agentic-feature-in-a-browser"
-              element={<AgenticFeatureInABrowser />}
-            />
-            <Route path="/blog/joy-of-writing" element={<JoyOfWriting />} />
-            <Route path="/blog/habit" element={<Habit />} />
-            <Route
-              path="/blog/semantic-search-explained"
-              element={<SemanticSearchExplained />}
-            />
-            <Route
-              path="/blog/sobering-week-august-2025"
-              element={<SoberingWeekAugust2025 />}
-            />
+            {/* All blog posts now handled by PostDynamic */}
             <Route
               path="/dossier"
               element={

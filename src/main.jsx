@@ -84,8 +84,5 @@ const renderApp = () => {
   }
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderApp);
-} else {
-  renderApp();
-}
+// Render immediately for faster startup
+renderApp();

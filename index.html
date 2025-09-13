@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Critical resource hints -->
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ37S6E5BL"></script>
     <script>
@@ -22,12 +25,15 @@
     <meta name="msvalidate.01" content="779D92B78E4F7E9476793C0B87A8819C" />
     <title>My Personal Portfolio</title>
     <style>
-      /* Mobile-specific fixes */
+      /* Critical CSS for faster rendering */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: #f9fafb;
+        color: #1f2937;
       }
       #root {
         min-height: 100vh;
@@ -40,6 +46,19 @@
         transform: translateZ(0);
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+      }
+      /* Loading spinner for better UX */
+      .loading-spinner {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border: 3px solid #e5e7eb;
+        border-radius: 50%;
+        border-top-color: #3b82f6;
+        animation: spin 1s ease-in-out infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
       }
     </style>
     <!-- Removed legacy custom analytics tracker in favor of GA4 -->
