@@ -77,6 +77,16 @@ export const blogIndex = {
     datePublished: '2025-09-06',
     dateModified: '2025-09-06',
   },
+  'expanding-startups': {
+    title: 'Starting Up Your Own Company',
+    description:
+      'Understanding the difference between startups and small businesses, the venture capital ecosystem, and how to leverage India\'s startup ecosystem for exponential growth.',
+    image:
+      'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80',
+    tags: ['Entrepreneurship', 'Startups', 'Venture Capital', 'Business', 'Innovation', 'India Startup Ecosystem'],
+    datePublished: new Date().toISOString().split('T')[0],
+    dateModified: new Date().toISOString().split('T')[0],
+  },
 };
 
 export function getBlogSeo(slug) {

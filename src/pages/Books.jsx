@@ -12,6 +12,59 @@ function Books() {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Link
+          to="/books/its-not-about-you"
+          aria-label="Read It's Not About You: A Brief Guide to a Meaningful Life"
+          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+        >
+          <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-teal-100 to-cyan-100 border overflow-hidden relative">
+            <BookCover
+              bookId="its-not-about-you"
+              title="It's Not About You: A Brief Guide to a Meaningful Life"
+              author="Tom Rath"
+              className="w-full h-full group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge
+              publishDate="September 13, 2025"
+              lastModified="September 13, 2025"
+            />
+          </div>
+          <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              It's Not About You: A Brief Guide to a Meaningful Life
+            </h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <img
+                loading="lazy"
+                decoding="async"
+                src="https://img.shields.io/badge/Self--Help-Personal%20Development-purple"
+                alt="Self-Help badge"
+              />
+              <img
+                loading="lazy"
+                decoding="async"
+                src="https://img.shields.io/badge/Philosophy-Meaning%20%26%20Purpose-blue"
+                alt="Philosophy badge"
+              />
+              <img
+                loading="lazy"
+                decoding="async"
+                src="https://img.shields.io/badge/Service-Contributing%20to%20Others-green"
+                alt="Service badge"
+              />
+            </div>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              A powerful guide on finding meaning through service to others rather than self-focused pursuits. Rath shares personal insights about living with a rare genetic condition while emphasizing how our contributions to others create lasting impact.
+            </p>
+            <div className="mt-4">
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read Book
+              </span>
+            </div>
+          </div>
+        </Link>
+
+        <Link
           to="/books/the-subtle-art"
           aria-label="Read The Subtle Art of Not Giving a F***"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"

@@ -9,6 +9,7 @@ class BookCoverService {
         'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
       'cornell-method':
         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'its-not-about-you': '/media/bookitsnotaboutu.jpeg',
     };
   }
 
