@@ -1,23 +1,10 @@
 import { motion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BlogComments from '../../components/BlogComments';
 
 const CommonSenseRareCommodity = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-
-  const handleLike = () => {
-    if (isLiked) {
-      setLikeCount(prev => prev - 1);
-      setIsLiked(false);
-    } else {
-      setLikeCount(prev => prev + 1);
-      setIsLiked(true);
-    }
-  };
 
 
   return (
@@ -408,57 +395,8 @@ const CommonSenseRareCommodity = () => {
             </p>
           </div>
 
-          {/* Call to Action */}
-          <div className="mt-12 p-6 bg-gray-50 rounded-lg text-center">
-            <h3 className="text-xl font-bold mb-4 text-gray-800">
-              What's Your Take?
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Do you think common sense can prevail in international relations? Share your thoughts on how we can 
-              create a more equitable global order.
-            </p>
-            <div className="flex justify-center space-x-4 mb-6">
-              <button
-                onClick={handleLike}
-                className={`px-6 py-2 rounded-lg transition-colors flex items-center space-x-2 ${
-                  isLiked
-                    ? 'bg-red-500 text-white hover:bg-red-600'
-                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                </svg>
-                <span>{isLiked ? 'Liked' : 'Like this post'}</span>
-                {likeCount > 0 && <span>({likeCount})</span>}
-              </button>
-            </div>
-
-
-
-
-            {/* Comment Info */}
-            <div className="max-w-4xl mx-auto mt-8 text-center">
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-blue-800 mb-2">
-                  💬 Share Your Thoughts
-                </h4>
-                <p className="text-blue-700">
-                  Use the comment system below to share your thoughts. Comments are managed through Netlify Forms
-                  and will be moderated before being published. Your insights help create meaningful discussions
-                  about these important topics.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-
-      {/* Comments Section */}
-      <BlogComments 
-        postSlug="common-sense-rare-commodity" 
-        postTitle="Common Sense is a Rare Commodity"
-      />
     </motion.div>
   );
 };

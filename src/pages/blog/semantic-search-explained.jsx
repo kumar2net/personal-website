@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BlogComments from '../../components/BlogComments';
 
 const SemanticSearchExplained = () => {
   const navigate = useNavigate();
@@ -441,11 +440,6 @@ const SemanticSearchExplained = () => {
         </div>
       </div>
 
-      {/* Comments Section */}
-      <BlogComments
-        postSlug="semantic-search-explained"
-        postTitle="Search Explained: How Semantic Search Transforms Content Discovery"
-      />
     </motion.div>
   );
 };

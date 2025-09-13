@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import BlogComments from '../../components/BlogComments';
 
 const LatestHappenings = () => {
   const today = new Date().toLocaleDateString('en-US', {
@@ -9,18 +8,6 @@ const LatestHappenings = () => {
     day: 'numeric',
   });
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-
-  const handleLike = () => {
-    if (isLiked) {
-      setLikeCount((prev) => prev - 1);
-      setIsLiked(false);
-    } else {
-      setLikeCount((prev) => prev + 1);
-      setIsLiked(true);
-    }
-  };
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -120,26 +107,6 @@ const LatestHappenings = () => {
           </p>
         </div>
 
-        {/* Like and Comments */}
-        <div className="mt-12 p-6 bg-gray-50 rounded-lg text-center">
-          <div className="flex justify-center mb-6">
-            <button
-              onClick={handleLike}
-              className={`px-6 py-2 rounded-lg transition-colors flex items-center space-x-2 ${
-                isLiked ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-              aria-pressed={isLiked}
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-              </svg>
-              <span>{isLiked ? 'Liked' : 'Like this post'}</span>
-              {likeCount > 0 && <span>({likeCount})</span>}
-            </button>
-          </div>
-        </div>
-
-        <BlogComments postSlug="Latest_Happenings" postTitle="Latest Happenings" />
       </article>
     </motion.div>
   );

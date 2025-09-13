@@ -1,14 +1,14 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** January 2025
+**Last Updated:** September 2025
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, Music curation, and integrated analytics.
 
 ## 🚀 Features
 
 - **Portfolio Showcase** - Display projects and skills
-- **Blog System** - Share thoughts and experiences with interactive comments (Netlify Forms + localStorage) and AI-generated TL;DR summaries
-- **Interactive Comments** - Robust comment system with dual storage (Netlify Forms + localStorage fallback)
+- **Blog System** - Share thoughts and experiences with interactive comments (Netlify Forms) and AI-generated TL;DR summaries
+- **Interactive Comments** - Netlify Forms with enhanced caching; comments open by default
 - **Like Functionality** - Interactive like buttons with visual feedback and counters
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Music Curation** - Personal music journey with favorite tracks and artists
@@ -49,13 +49,13 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 ## 📸 Photo Album
 
 - Page: `/album`
-- Google Photos integration with video content
+- Google Photos album link with video content
 - Mobile-optimized navigation with device-specific handling
 - Clear video indicators with play button overlays
 - Preview section showing content types (photos/videos)
 - Enhanced button with "Watch Videos & View Photos" text
 - Background music by Dharun
-- URL: https://photos.app.goo.gl/FFPhBFVeacvZm1dc6
+- URL: https://photos.app.goo.gl/JoqUGodR9RDvjPSk7
 
 ## 📚 Books
 
@@ -153,7 +153,7 @@ The blog system supports:
 - SEO optimization
 - Reading time estimation
 - AI-generated TL;DR summaries
-- **Disqus Comments** - Third-party comment system with lazy loading
+- **Comments** - Netlify Forms-based comments (no Disqus)
 - Semantic search integration
 - Shields.io badges for topics
 - Hero images with Unsplash attribution
