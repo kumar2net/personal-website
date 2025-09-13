@@ -483,11 +483,10 @@ function App() {
                     className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
                   >
                     <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                      "You must have chaos within you to give birth to a dancing
-                      star."
+                      "Learn to sell. Learn to build. If you can do both, you will be unstoppable."
                     </blockquote>
                     <p className="mt-4 text-gray-600 italic text-right">
-                      — Friedrich Nietzsche
+                      — Naval Ravikant
                     </p>
                   </motion.div>
 
