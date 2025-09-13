@@ -7,6 +7,25 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Latest Happenings',
+    date: new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    lastModified: new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    excerpt:
+      'A quick visual guide to WebAuthn passkeys: client challenge signing and server public-key verification.',
+    tags: ['Security', 'WebAuthn', 'Passkeys', 'Authentication'],
+    image: '/media/chitra_onestroke1.jpg',
+    imageCredit: "Chitra's recent Onestroke artistry",
+    link: '/blog/Latest_Happenings',
+  },
+  {
     title: 'Search Explained: How Semantic Search Transforms Content Discovery',
     date: 'September 06, 2025',
     excerpt:

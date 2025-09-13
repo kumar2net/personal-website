@@ -222,13 +222,15 @@ function App() {
                 >
                   Elsewhere
                 </Link>
-                <Link
-                  to="/topics"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick('nav_topics')}
-                >
-                  Topics
-                </Link>
+                {false && (
+                  <Link
+                    to="/topics"
+                    className="text-gray-600 hover:text-gray-800 transition-colors"
+                    onClick={() => trackClick('nav_topics')}
+                  >
+                    Topics
+                  </Link>
+                )}
                 <Link
                   to="/projects"
                   className="text-gray-600 hover:text-gray-800 transition-colors"

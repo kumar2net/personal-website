@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'Latest_Happenings': {
+    title: 'Latest Happenings',
+    description:
+      'A quick visual guide to WebAuthn passkeys: client challenge signing and server-side public-key verification.',
+    image: '/media/chitra_onestroke1.jpg',
+    tags: ['Security', 'WebAuthn', 'Passkeys', 'Authentication'],
+    datePublished: new Date().toISOString().split('T')[0],
+    dateModified: new Date().toISOString().split('T')[0],
+  },
   'common-sense-rare-commodity': {
     title: 'Common Sense is a Rare Commodity',
     description:
