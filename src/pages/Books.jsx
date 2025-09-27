@@ -12,6 +12,59 @@ function Books() {
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <Link
+          to="/books/how-to-stop-caring"
+          aria-label="Read How to STOP Caring What People Think of You!"
+          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+        >
+          <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-pink-100 to-purple-100 border overflow-hidden relative">
+            <img
+              src="/media/how-to-stop-caring-cover.png"
+              alt="How to STOP Caring What People Think of You! by Russell Jamieson"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            <ContentBadge
+              publishDate="January 16, 2025"
+              lastModified="January 16, 2025"
+            />
+          </div>
+          <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+              How to STOP Caring What People Think of You!
+            </h2>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <img
+                loading="lazy"
+                decoding="async"
+                src="https://img.shields.io/badge/Self--Help-Personal%20Development-purple"
+                alt="Self-Help badge"
+              />
+              <img
+                loading="lazy"
+                decoding="async"
+                src="https://img.shields.io/badge/Confidence-Authenticity-green"
+                alt="Confidence badge"
+              />
+              <img
+                loading="lazy"
+                decoding="async"
+                src="https://img.shields.io/badge/Psychology-Mindset-orange"
+                alt="Psychology badge"
+              />
+            </div>
+            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+              A concise guide to breaking free from others' opinions and living authentically. Jamieson provides practical strategies for developing self-confidence and embracing your true self.
+            </p>
+            <div className="mt-4">
+              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                Read Book
+              </span>
+            </div>
+          </div>
+        </Link>
+
+        <Link
           to="/books/its-not-about-you"
           aria-label="Read It's Not About You: A Brief Guide to a Meaningful Life"
           className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"

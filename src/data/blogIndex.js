@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'fortnight-that-went-by-september-2025': {
+    title: 'Fortnight That Went By - September 2025',
+    description:
+      'Reflections on Jevons paradox, AI in education, homelessness in San Francisco, and Golu celebrations - a fortnight of learning and observations.',
+    image: '/media/Marapachi_dolls_1.jpg',
+    tags: ['Jevons Paradox', 'AI Education', 'Renewable Energy', 'Social Issues', 'Tamil Culture', 'Personal Reflections'],
+    datePublished: '2025-09-27',
+    dateModified: '2025-09-27',
+  },
   'Latest_Happenings': {
     title: 'Latest Happenings',
     description:
