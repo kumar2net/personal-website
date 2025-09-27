@@ -34,6 +34,7 @@ const PostDynamic = lazy(() => import('./pages/blog/PostDynamic'));
 const BookDynamic = lazy(() => import('./pages/books/BookDynamic'));
 const ApplyingCornellMethodMd = lazy(() => import('./pages/books/applying-cornell-method'));
 const Atheism = lazy(() => import('./pages/books/atheism'));
+const HowToStopCaring = lazy(() => import('./pages/books/how-to-stop-caring'));
 const PDFExtractorPage = lazy(() => import('./pages/books/pdf-extractor'));
 const TheBrainStoryContent = lazy(() => import('./pages/books/the-brain-story-content'));
 
@@ -483,10 +484,10 @@ function App() {
                     className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
                   >
                     <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                      "Learn to sell. Learn to build. If you can do both, you will be unstoppable."
+                      "You can eat all the protein you want but your muscles won't grow if you don't use them. It's the same for the brain. You can live a healthy lifestyle but if you don't engage in critical thinking those skills will atrophy."
                     </blockquote>
                     <p className="mt-4 text-gray-600 italic text-right">
-                      — Naval Ravikant
+                      — Dr. Julie
                     </p>
                   </motion.div>
 
@@ -690,6 +691,20 @@ function App() {
                     type="article"
                   />
                   <Atheism />
+                </>
+              }
+            />
+            <Route
+              path="/books/how-to-stop-caring"
+              element={
+                <>
+                  <SEO
+                    title="How to STOP Caring What People Think of You!"
+                    description="A concise guide to breaking free from others' opinions and living authentically. Russell Jamieson provides practical strategies for developing self-confidence."
+                    canonicalPath="/books/how-to-stop-caring"
+                    type="article"
+                  />
+                  <HowToStopCaring />
                 </>
               }
             />

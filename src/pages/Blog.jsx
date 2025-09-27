@@ -7,6 +7,16 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Fortnight That Went By - September 2025',
+    date: 'September 27, 2025',
+    lastModified: 'September 27, 2025',
+    excerpt:
+      'Reflections on Jevons paradox, AI in education, homelessness in San Francisco, and Golu celebrations - a fortnight of learning and observations.',
+    tags: ['Jevons Paradox', 'AI Education', 'Renewable Energy', 'Social Issues', 'Tamil Culture', 'Personal Reflections'],
+    image: '/media/Marapachi_dolls_1.jpg',
+    link: '/blog/fortnight-that-went-by-september-2025',
+  },
+  {
     title: 'Starting Up Your Own Company',
     date: new Date().toLocaleDateString('en-US', {
       year: 'numeric',

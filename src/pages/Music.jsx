@@ -17,7 +17,72 @@ const MusicPage = () => {
       </div>
 
       <div className="space-y-8">
-        {/* Latest Additions to KUMAR_2005 Playlist */}
+        {/* Recent Music Playlist */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="bg-gradient-to-r from-purple-50 to-blue-50 p-8 rounded-xl border-l-4 border-purple-500"
+        >
+          <div className="flex items-center mb-6">
+            <MusicIcon className="h-8 w-8 text-purple-600 mr-3" />
+            <h2 className="text-2xl font-bold text-gray-800">The music I enjoyed listening recently</h2>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p className="text-gray-600 mb-6">
+              A curated selection of tracks that have been on repeat lately, featuring a beautiful mix of Bollywood hits, Tamil classics, and spiritual melodies.
+            </p>
+
+            <div className="bg-gray-900 rounded-lg p-4 mb-4">
+              <img 
+                src="/media/mymusicSep.png" 
+                alt="Recent music playlist showing tracks: Janaab-e-Aali, Jo Zindagi Tha Meri, Anthichoppu Maayum, Chanakya, Idhuvum Kadandhu Pogum, Krish Theme, and Sri Varalakshmi Namastubhyam"
+                className="w-full h-auto rounded-lg"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'block';
+                }}
+              />
+              <div className="hidden text-center text-gray-400 py-8">
+                <MusicIcon className="h-12 w-12 mx-auto mb-4 text-gray-500" />
+                <p className="text-lg font-medium mb-2">Recent Music Playlist</p>
+                <p className="text-sm">Loading playlist image...</p>
+                <div className="mt-4 text-left text-sm space-y-1">
+                  <p>• Janaab-e-Aali - Sachet Parampara, Saaj Bhatt & Pritam</p>
+                  <p>• Jo Zindagi Tha Meri - Shaan & Daboo Malik</p>
+                  <p>• Anthichoppu Maayum - Ilaiyaraaja, M.G. Sreekumar & K.S. Chithra</p>
+                  <p>• Chanakya - Rishab Rikhiram Sharma</p>
+                  <p>• Idhuvum Kadandhu Pogum - Sid Sriram</p>
+                  <p>• Krish Theme - kiran Baral</p>
+                  <p>• Sri Varalakshmi Namastubhyam - Purva Dhanashree Cotah & Paavani Cotah</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="space-y-2">
+                <h4 className="font-semibold text-gray-800">Featured Tracks:</h4>
+                <ul className="space-y-1 text-gray-600">
+                  <li>• Janaab-e-Aali</li>
+                  <li>• Jo Zindagi Tha Meri</li>
+                  <li>• Anthichoppu Maayum</li>
+                  <li>• Chanakya</li>
+                </ul>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-semibold text-gray-800">More Tracks:</h4>
+                <ul className="space-y-1 text-gray-600">
+                  <li>• Idhuvum Kadandhu Pogum</li>
+                  <li>• Krish Theme</li>
+                  <li>• Sri Varalakshmi Namastubhyam</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Kumar Playlist */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -26,60 +91,24 @@ const MusicPage = () => {
         >
           <div className="flex items-center mb-6">
             <MusicIcon className="h-8 w-8 text-red-600 mr-3" />
-            <h2 className="text-2xl font-bold text-gray-800">Latest Additions</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Kumar Playlist</h2>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">
-              Newest Tracks in KUMAR_2005
-            </h3>
             <p className="text-gray-600 mb-6">
-              The 2 newest additions to my playlist. They will appear at the fag end of the playlist
+              My complete curated playlist featuring a diverse collection of tracks from Bollywood hits to Tamil classics and spiritual melodies.
             </p>
 
-            <div className="space-y-6">
-              {/* Track 1 - Janaab-e-Aali */}
-              <div className="border-l-4 border-red-400 pl-4">
-                <h4 className="font-semibold text-lg text-gray-800">
-                  Janaab-e-Aali
-                </h4>
-                <p className="text-sm text-gray-600 mb-2">
-                  A beautiful collaboration featuring Sachet Parampara, Saaj Bhatt & Pritam. 
-                  This track brings together exceptional vocal talent with Pritam's signature musical style.
-                </p>
-                <a
-                  href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=Wxt3p7_meOmIYilq"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
-                >
-                  <Play className="h-4 w-4 mr-2" />
-                  Find in KUMAR_2005 Playlist
-                  <ExternalLink className="h-3 w-3 ml-2" />
-                </a>
-              </div>
-
-              {/* Track 2 - Jo Zindagi Tha Meri */}
-              <div className="border-l-4 border-red-400 pl-4">
-                <h4 className="font-semibold text-lg text-gray-800">
-                  Jo Zindagi Tha Meri
-                </h4>
-                <p className="text-sm text-gray-600 mb-2">
-                  A soulful composition by Shaan & Daboo Malik. This track captures the essence 
-                  of life's journey with beautiful melodies and heartfelt lyrics.
-                </p>
-                <a
-                  href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=Wxt3p7_meOmIYilq"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
-                >
-                  <Play className="h-4 w-4 mr-2" />
-                  Find in KUMAR_2005 Playlist
-                  <ExternalLink className="h-3 w-3 ml-2" />
-                </a>
-              </div>
-            </div>
+            <a
+              href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=bb_bAFMsmnMXfRWr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-lg font-medium"
+            >
+              <Play className="h-5 w-5 mr-3" />
+              Listen to Kumar Playlist
+              <ExternalLink className="h-4 w-4 ml-3" />
+            </a>
           </div>
         </motion.div>
       </div>
