@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FaExternalLinkAlt, FaImages, FaPlay, FaVideo } from 'react-icons/fa';
 
 const Album = () => {
-  const albumUrl = 'https://photos.app.goo.gl/JoqUGodR9RDvjPSk7';
+  const albumUrl = 'https://photos.app.goo.gl/DRSrd1SqpRgHRdfF6';
   const [isMobile] = useState(() => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -43,10 +43,10 @@ const Album = () => {
       {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">Photo Album</h1>
-        <p className="text-xl text-gray-600 mb-6">Scotland, West Coast CA Trip by RJ & AJ</p>
-        <div className="bg-yellow-50 border-l-4 border-yellow-600 rounded-lg p-4 text-left max-w-3xl mx-auto">
+        <p className="text-xl text-gray-600 mb-6">BJ Phuket Vacation</p>
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 text-left max-w-3xl mx-auto">
           <p className="text-gray-800">
-            These 2 boys didnt enable geo location and hence I am not able to use the meta tag to update the Info for the respective image. Edinburg, Isle of Skye, Port orford, yosemite, lassen volcanic national park, umpqua national forest - are the locations these 2 fams went for vacation. Love the way AJ pitch tent and enjoy outdoors
+            Bro is inbetween jobs and took a brief vacation to Phuket. With boys away pursuing their career and education they now need to find peace with themselves. There is a saying "Sometimes you must loose the string to let the arrow fly."
           </p>
         </div>
       </div>
