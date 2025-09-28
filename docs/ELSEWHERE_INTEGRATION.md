@@ -21,6 +21,7 @@ curl -s http://localhost:8888/.netlify/functions/wp-feed | jq '.posts[0]'
 
 ## X (Twitter) Integration
 - We show a prominent "Follow on X" link on `/elsewhere` for reliability
+- Updated X link target: `https://twitter.com/x?ref_src=twsrc%5Etfw`
 - X embed (widgets.js) can trigger 429 rate limits; we removed the panel to keep console clean
 - Optional API fallback is available for links-only previews:
   - Function: `netlify/functions/x-latest.js` (X API v2)
