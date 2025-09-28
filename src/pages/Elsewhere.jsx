@@ -117,7 +117,7 @@ export default function Elsewhere() {
         and post updates on{' '}
         <a
           className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1 transition-colors duration-200"
-          href="https://twitter.com/kumar2net"
+          href="https://twitter.com/x?ref_src=twsrc%5Etfw"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -129,7 +129,7 @@ export default function Elsewhere() {
 
       <div className="mb-8 flex gap-4">
         <a
-          href="https://twitter.com/kumar2net"
+          href="https://twitter.com/x?ref_src=twsrc%5Etfw"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
