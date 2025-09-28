@@ -22,7 +22,11 @@ curl -s http://localhost:8888/.netlify/functions/wp-feed | jq '.posts[0]'
 ## X (Twitter) Integration
 - We show a prominent "Follow on X" link on `/elsewhere` for reliability
 - Updated X link target: `https://twitter.com/x?ref_src=twsrc%5Etfw`
-- X embed (widgets.js) can trigger 429 rate limits; we removed the panel to keep console clean
+- X feed section on `/elsewhere` fetches recent posts via serverless function:
+  - Endpoint: `/.netlify/functions/x-latest?username=<handle>`
+  - Default handle: `kumar2net`
+  - Renders a simple card list with date and excerpt, linking to the original post
+- X embed (widgets.js) can trigger 429 rate limits; we keep a lightweight, API-based feed instead
 - Optional API fallback is available for links-only previews:
   - Function: `netlify/functions/x-latest.js` (X API v2)
   - Requires env var `X_BEARER_TOKEN` in Netlify
