@@ -8,6 +8,9 @@ export default function Elsewhere() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [xItems, setXItems] = useState([]);
+  const [xLoading, setXLoading] = useState(true);
+  const [xError, setXError] = useState('');
 
   const decodeEntities = (input) => {
     if (!input) return '';
@@ -50,6 +53,33 @@ export default function Elsewhere() {
         setError(e.message);
       })
       .finally(() => setLoading(false));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    const isDev =
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1';
+    const base = isDev
+      ? `${window.location.protocol}//${window.location.hostname}:8888`
+      : '';
+    const xUrl = `${base}/.netlify/functions/x-latest?username=kumar2net`;
+
+    fetch(xUrl)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+      .then((data) => {
+        if (!active) return;
+        setXItems(Array.isArray(data?.items) ? data.items : []);
+      })
+      .catch((e) => {
+        console.error('X feed error:', e);
+        setXError('Unable to load X posts right now.');
+      })
+      .finally(() => setXLoading(false));
+
     return () => {
       active = false;
     };
@@ -117,7 +147,7 @@ export default function Elsewhere() {
         and post updates on{' '}
         <a
           className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1 transition-colors duration-200"
-          href="https://twitter.com/kumar2net"
+          href="https://twitter.com/x?ref_src=twsrc%5Etfw"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -129,7 +159,7 @@ export default function Elsewhere() {
 
       <div className="mb-8 flex gap-4">
         <a
-          href="https://twitter.com/kumar2net"
+          href="https://twitter.com/x?ref_src=twsrc%5Etfw"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
@@ -275,6 +305,85 @@ export default function Elsewhere() {
               <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
             </a>
           </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">Latest on X</h2>
+          {xLoading && (
+            <div className="space-y-6">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="shimmer h-7 w-2/3 rounded-lg bg-gray-200"></div>
+                    <div className="shimmer h-5 w-16 rounded bg-gray-200"></div>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    <div className="shimmer h-4 w-full rounded bg-gray-200"></div>
+                    <div className="shimmer h-4 w-5/6 rounded bg-gray-200"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {xError && (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="text-yellow-800">
+                <strong>Unable to load latest X posts.</strong>
+              </div>
+              <div className="text-sm text-yellow-700 mt-2">
+                You can still view updates directly on X using the link above.
+              </div>
+            </div>
+          )}
+          {!xLoading && !xError && xItems.length === 0 && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+              <div className="text-gray-600">No recent posts available at the moment.</div>
+            </div>
+          )}
+          {!xLoading && !xError && xItems.length > 0 && (
+            <div className="space-y-6">
+              {xItems.map((t, index) => (
+                <article
+                  key={t.id}
+                  className="group relative bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200"
+                  style={{ animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both` }}
+                >
+                  <a
+                    href={t.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-6 relative"
+                  >
+                    <div className="absolute top-6 right-6 flex items-center gap-2 text-gray-400 group-hover:text-blue-500 transition-colors duration-300">
+                      <span className="inline text-xs font-medium uppercase tracking-wider">X</span>
+                    </div>
+
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors duration-200 pr-12 sm:pr-32 mb-2 mt-8">
+                      {t.text.length > 160 ? t.text.slice(0, 160) + '…' : t.text}
+                    </h3>
+
+                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                      <Calendar className="w-4 h-4" />
+                      <time dateTime={t.created_at}>
+                        {new Date(t.created_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </time>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-blue-600 font-medium group-hover:text-blue-700 transition-colors duration-200">
+                        <span className="text-sm">View on X</span>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-blue-600" />
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
         </section>
       </div>
 

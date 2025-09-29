@@ -364,6 +364,14 @@ All objectives have been successfully completed:
 - Files touched: `src/pages/blog/Latest_Happenings.jsx`, `src/pages/Blog.jsx`, `src/App.jsx`, `src/data/blogIndex.js`, `.cursorrules`, `netlify/functions/get-comments.js`, `vite.config.js`, `netlify.toml`, `index.html`, `src/index.css`, `src/main.jsx`.
  - September 2025: Fixed site not loading by removing forced `Content-Encoding: gzip` headers for `*.js` and `*.css` in `netlify.toml` to avoid double compression. Verified dev and preview servers. Built successfully with Vite.
 
+### Session: Elsewhere X Link Update (September 28, 2025)
+- Replaced X profile links on `/elsewhere` with `https://twitter.com/x?ref_src=twsrc%5Etfw` in `src/pages/Elsewhere.jsx`.
+- Updated `docs/ELSEWHERE_INTEGRATION.md` to document the new X link target and rationale (avoid widgets.js rate limits).
+
+### Session: Elsewhere X Feed (September 28, 2025)
+- Added lightweight X feed section on `/elsewhere` consuming `/.netlify/functions/x-latest?username=kumar2net` and rendering recent posts with date and link.
+- Updated `docs/ELSEWHERE_INTEGRATION.md` with feed details and reasons for API-based approach over embeds.
+
 ### Session: Blog Post Creation from Expanding_Startups.md
 - Created new blog post `expanding-startups.jsx` using content verbatim from `docs/Expanding_Startups.md` with author bio for Natarajan. S, Mentor in Residence, IISc Bangalore.
 - Implemented comprehensive blog post structure with SEO metadata, shields.io badges, AuthorBio component integration, and responsive design following project standards.
