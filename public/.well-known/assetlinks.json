@@ -1,8 +1,0 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.kumar.portfolio",
-    "sha256_cert_fingerprints": ["AA:86:26:31:7D:7D:CA:CB:4F:BA:F7:73:EC:4F:DA:61:31:78:99:FA:54:FC:E8:D8:2E:3B:D9:1C:F2:23:14:4A"]
-  }
-}]

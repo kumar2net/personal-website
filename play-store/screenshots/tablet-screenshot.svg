@@ -1,6 +1,0 @@
-<svg width="1024" height="768" viewBox="0 0 1024 768" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="1024" height="768" fill="#f9fafb"/>
-        <rect x="20" y="20" width="984" height="728" fill="white" stroke="#e5e7eb" stroke-width="2" rx="8"/>
-        <text x="512" y="384" dominant-baseline="middle" text-anchor="middle" fill="#374151" font-family="Arial" font-size="24" font-weight="bold">Tablet View</text>
-        <text x="512" y="424" dominant-baseline="middle" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="16">1024x768</text>
-      </svg>
