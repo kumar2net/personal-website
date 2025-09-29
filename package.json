@@ -52,6 +52,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "docx-preview": "^0.3.6",
     "dotenv": "^17.2.1",
+    "execa": "^9.6.0",
     "fast-xml-parser": "^5.2.5",
     "framer-motion": "^11.0.3",
     "google-auth-library": "^9.13.0",
