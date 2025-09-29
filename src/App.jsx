@@ -45,6 +45,7 @@ const Shortcuts = lazy(() => import('./pages/Shortcuts'));
 const UtilitiesDashboard = lazy(() => import('./pages/UtilitiesDashboard'));
 const VocabAdditions = lazy(() => import('./pages/VocabAdditions'));
 const NaruviWaterIssues = lazy(() => import('./pages/naruvi'));
+const Notifications = lazy(() => import('./pages/Notifications'));
 
 // Admin CMS removed
 
@@ -261,6 +262,13 @@ function App() {
                 </a>
 
                 <Link
+                  to="/notifications"
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                  onClick={() => trackClick('nav_notifications')}
+                >
+                  Notifications
+                </Link>
+                <Link
                   to="/contact"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick('nav_contact')}
@@ -391,6 +399,16 @@ function App() {
                     DeepDive
                   </a>
 
+                  <Link
+                    to="/notifications"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick('nav_notifications_mobile');
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    Notifications
+                  </Link>
                   <Link
                     to="/contact"
                     onClick={() => {
@@ -783,6 +801,20 @@ function App() {
             />
             {/* Admin route removed */}
             <Route path="/blog/:slug" element={<PostDynamic />} />
+            <Route
+              path="/notifications"
+              element={
+                <>
+                  <SEO
+                    title="Notification Settings"
+                    description="Manage your push notification preferences for blog updates, comments, and more."
+                    canonicalPath="/notifications"
+                    type="website"
+                  />
+                  <Notifications />
+                </>
+              }
+            />
             <Route
               path="/contact"
               element={
