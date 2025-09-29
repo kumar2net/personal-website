@@ -2,7 +2,7 @@
   base = "."
   command = "npm ci --include=dev && npm run build"
   publish = "dist"
-  environment = { SECRETS_SCAN_ENABLED = "false", NODE_VERSION = "20", NPM_FLAGS = "--include=dev" }
+  environment = { SECRETS_SCAN_ENABLED = "false", NODE_VERSION = "20", NPM_FLAGS = "--include=dev", VAPID_PUBLIC_KEY = "BELKiWd8WXb2XDBaUZspzdYNeXxSZqL6gRqfgZCl9V1f6NsiBSgCyHU_1ML0GTxwtiE98bUY4HyIriItcGDo3Jg", VAPID_PRIVATE_KEY = "Sf7aQeY6YNeF0a2ys_kDP2bjBXVjDHYVFmx_Y-gU62Q", VAPID_EMAIL = "kumar@example.com" }
 
 # Form processing
 [build.processing]
@@ -68,6 +68,24 @@
   [headers.values]
     Cache-Control = "public, max-age=2592000"
 
+# PWA Headers
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+    Cache-Control = "public, max-age=0"
+
+[[headers]]
+  for = "/offline.html"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
 # Netlify functions for security and CSP headers
 [functions]
   directory = "netlify/functions"
@@ -84,6 +102,8 @@
 [[edge_functions]]
   function = "csp-headers"
   path = "/*"
+
+# PWA Configuration - VAPID keys added to build.environment above
 
 # Serve static files directly (PDFs, images, etc.)
 [[redirects]]

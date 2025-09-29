@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App.jsx';
 import './output.css';
+import serviceWorkerService from './services/serviceWorkerService';
 
 // Global error handler for DOM manipulation errors
 const handleGlobalError = (event) => {
@@ -86,3 +87,12 @@ const renderApp = () => {
 
 // Render immediately for faster startup
 renderApp();
+
+// Register service worker after app renders
+if ('serviceWorker' in navigator) {
+  serviceWorkerService.initialize().then(() => {
+    console.log('Service Worker initialized successfully');
+  }).catch((error) => {
+    console.error('Service Worker initialization failed:', error);
+  });
+}
