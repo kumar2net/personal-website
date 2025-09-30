@@ -64,28 +64,29 @@ git push origin main
 npm run test:pwa
 ```
 
-### 5. Android Play Store Preparation
+### 5. PWA Installation Testing
 ```bash
-# Install Android Studio
-# Create TWA project
-# Configure asset statements
-# Generate signed APK
+# Test installation on various devices
+# Verify app icon appears correctly
+# Test full-screen mode
+# Verify offline functionality
 ```
 
 ## 📱 Mobile Testing
 
 ### Test on Real Devices
-- [ ] Install PWA on Android device
+- [ ] Install PWA on mobile device
 - [ ] Test push notifications on mobile
 - [ ] Verify offline functionality
 - [ ] Test app shortcuts
 - [ ] Check notification permissions
+- [ ] Test app-like experience
 
 ### Browser Testing
-- [ ] Chrome (Android/Desktop)
-- [ ] Safari (iOS)
-- [ ] Firefox (Android/Desktop)
-- [ ] Edge (Android/Desktop)
+- [ ] Chrome (Mobile/Desktop)
+- [ ] Safari (iOS/macOS)
+- [ ] Firefox (Mobile/Desktop)
+- [ ] Edge (Mobile/Desktop)
 
 ## 🔍 Post-Deployment Verification
 
