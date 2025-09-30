@@ -75,24 +75,23 @@
 
 ### Next Steps for Production
 1. **Replace Placeholder Icons**: Use actual app icons instead of generated ones
-2. **Take Screenshots**: Create actual app screenshots for Play Store
-3. **Install Lighthouse PWA Plugin**: For proper PWA auditing
-4. **Android TWA Setup**: Configure Trusted Web Activity for Play Store
-5. **Production VAPID Keys**: Use production keys instead of development ones
+2. **Install Lighthouse PWA Plugin**: For proper PWA auditing
+3. **Production VAPID Keys**: Use production keys instead of development ones
+4. **Custom Install Prompt**: Implement custom install prompt component
+5. **Performance Optimization**: Achieve Lighthouse PWA score > 90
 
-## 📱 Android Play Store Preparation
+## 📱 PWA Installation & Usage
 
-### TWA Configuration Ready
-- Manifest configured for TWA
-- Asset statements prepared
-- Deep linking configured
-- App icons generated
+### Installation Methods
+- **Browser Install Prompt**: Automatic prompt in supported browsers
+- **Manual Installation**: Add to home screen from browser menu
+- **Desktop Installation**: Install as desktop app on Windows/Mac/Linux
 
-### Required for Play Store
-1. **Android Studio Setup**: Create TWA project
-2. **App Signing**: Generate signed APK
-3. **Play Store Assets**: Screenshots and descriptions
-4. **Privacy Policy**: Required for push notifications
+### User Experience
+- **Native App Feel**: Full-screen experience without browser UI
+- **Offline Access**: Core functionality works without internet
+- **Push Notifications**: Real-time updates for blog posts and comments
+- **Fast Loading**: Cached resources for quick access
 
 ## 🔧 Technical Architecture
 
