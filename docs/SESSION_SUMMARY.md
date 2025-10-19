@@ -400,3 +400,5 @@ All objectives have been successfully completed:
   - **Decision**: Focused on PWA-only approach (no Android app development needed)
 - **Technical Stack**: React.js, Netlify Functions, VAPID keys, Service Workers, PWA standards
 - **Status**: ✅ **COMPLETE** - PWA deployed to production with full push notification capabilities
+
+Oct 19, 2025 — Added preview blog post `preview-story-last-drop-check-e764` for quick content verification; accessible at `/blog/preview-story-last-drop-check-e764`.

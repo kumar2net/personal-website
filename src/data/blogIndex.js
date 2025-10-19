@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'preview-story-last-drop-check-e764': {
+    title: 'Is this the Last Drop? Oh No',
+    description:
+      'Temporary preview post for content verification.',
+    image: '/vite.svg',
+    tags: ['Preview'],
+    datePublished: '2025-10-19',
+    dateModified: '2025-10-19',
+  },
   'fortnight-that-went-by-september-2025': {
     title: 'Fortnight That Went By - September 2025',
     description:
