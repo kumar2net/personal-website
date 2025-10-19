@@ -401,4 +401,4 @@ All objectives have been successfully completed:
 - **Technical Stack**: React.js, Netlify Functions, VAPID keys, Service Workers, PWA standards
 - **Status**: ✅ **COMPLETE** - PWA deployed to production with full push notification capabilities
 
-Oct 19, 2025 — Added preview blog post `preview-story-last-drop-check-e764` for quick content verification; accessible at `/blog/preview-story-last-drop-check-e764`.
+Oct 19, 2025 — Added preview entry in Books: `preview-story-last-drop-check-e764` at `/books/preview-story-last-drop-check-e764`, with card added to `src/pages/Books.jsx` following house style.
