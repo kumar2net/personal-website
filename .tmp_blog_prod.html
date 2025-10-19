@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Critical resource hints -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ37S6E5BL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PZ37S6E5BL');
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Kumar Portfolio" />
+    <meta name="theme-color" content="#3b82f6" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <meta name="msvalidate.01" content="779D92B78E4F7E9476793C0B87A8819C" />
+    <title>My Personal Portfolio</title>
+    <style>
+      /* Critical CSS for faster rendering */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: #f9fafb;
+        color: #1f2937;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Prevent blank screen on mobile */
+      .mobile-fix {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+      /* Loading spinner for better UX */
+      .loading-spinner {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border: 3px solid #e5e7eb;
+        border-radius: 50%;
+        border-top-color: #3b82f6;
+        animation: spin 1s ease-in-out infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <!-- Removed legacy custom analytics tracker in favor of GA4 -->
+    <!-- Auth0 will be configured via Netlify Auth0 extension -->
+    <script type="module" crossorigin src="/assets/index-pFCrZN5X.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-BIa_0xzi.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-hsO04AWw.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BS3qovT3.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Hidden form for Netlify Forms detection -->
+    <form hidden method='post' name='blog-comments'><input type='hidden' name='form-name' value='blog-comments' />
+      <input type="text" name="name" />
+      <input type="text" name="comment" />
+      <input type="text" name="post-slug" />
+      <input type="text" name="timestamp" />
+    </form>
+  </body>
+</html>
