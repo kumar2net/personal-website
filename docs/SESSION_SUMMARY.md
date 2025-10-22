@@ -499,3 +499,22 @@ All objectives have been successfully completed:
   - `public/media/darkling-beetle.jpg` - Book cover image
 - **Content Style**: Follows content style guide with proper capitalization, expanded acronyms, and clickable links
 - **Final Status**: ✅ **PUBLISHED** - Book now live at /books/the-last-drop-of-water with complete styling and SEO optimization
+
+---
+
+## Session: October 22, 2025 - Blog Post Development & System Fixes
+
+**Summary**: Created new blog post "The Educator of Highest Calibre" covering Andrej Karpathy's podcast interview. Fixed critical development environment issues including Netlify CLI crashes, manifest icon errors, and Service Worker interference. Enhanced codebase hygiene with comprehensive .gitignore updates.
+
+**Key Achievements**:
+- **New Blog Post**: Published detailed notes from Andrej Karpathy's interview on Dwarkesh Podcast covering LLM SLOPs, Reinforcement Learning pitfalls, AWS-US-East1 outage reflections, bare metal server nostalgia, and staying relevant with family through tech conversations
+- **Development Fixes**: Resolved Netlify CLI memory crashes by switching to direct Vite server (`npm run dev:vite`), fixed manifest.json to use SVG icons, updated Service Worker to skip caching in development mode
+- **Code Quality**: Fixed multiple JSX parsing errors, improved content grammar and flow, added beautiful gradient backgrounds, hover animations, and clickable podcast link
+- **Repository Cleanup**: Updated .gitignore to exclude cache directories (.cache, .npm, Library), KDP/eBook project files, temporary artifacts, and video project files
+
+**Technical Details**:
+- Blog file: `src/pages/blog/2025-10-22-the-educator-of-highest-calibre.jsx`
+- Shields.io badges for topics: Andrej Karpathy, Dwarkesh Patel, LLM SLOPs, Reinforcement Learning, AWS US-East-1, DNS Operations
+- Beautiful sectioned layout with gradient call-out boxes
+- Fixed manifest: Changed PNG references to SVG for all icons
+- Service Worker: Added development mode detection to prevent caching issues
