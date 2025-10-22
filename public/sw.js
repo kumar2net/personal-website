@@ -167,7 +167,7 @@ self.addEventListener('push', event => {
   console.log('Push event received:', event);
   
   let notificationData = {
-    title: 'Kumar\'s Portfolio',
+    title: 'Kumar\'s Stories',
     body: 'New update available!',
     icon: '/icons/icon-192x192.png',
     badge: '/icons/badge-72x72.png',

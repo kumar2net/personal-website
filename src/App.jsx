@@ -153,7 +153,7 @@ function App() {
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-100 mobile-fix">
         <SEO
-          title="My Personal Portfolio"
+          title="My Stories"
           description="AI enthusiast. Projects, blog, books, music, learning resources, and more."
           canonicalPath="/"
           image="/vite.svg"
@@ -503,10 +503,10 @@ function App() {
                     className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
                   >
                     <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                      "You can eat all the protein you want but your muscles won't grow if you don't use them. It's the same for the brain. You can live a healthy lifestyle but if you don't engage in critical thinking those skills will atrophy."
+                      "Aiyoo Sār Oru Malayāḷi āṇu"
                     </blockquote>
                     <p className="mt-4 text-gray-600 italic text-right">
-                      — Dr. Julie
+                      — Sister talk
                     </p>
                   </motion.div>
 
@@ -856,9 +856,9 @@ function App() {
             <div className="flex justify-between items-center">
               <p className="text-gray-600">
                 {' '}
-                2025 My Portfolio. All rights reserved.
+                2025 My Stories. All rights reserved.
               </p>
-              {/* <p className="text-gray-600">© 2025 My Portfolio. All rights reserved.</p> */}
+              {/* <p className="text-gray-600">© 2025 My Stories. All rights reserved.</p> */}
               <div className="flex space-x-4">
                 <a
                   href="https://kumar2net.wordpress.com/"
