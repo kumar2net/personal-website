@@ -103,82 +103,107 @@ const TheEducatorOfHighestCalibre = () => {
 
       <div className="space-y-10 prose prose-lg max-w-none">
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900">
-            Andrej Karpathy the teacher
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            Andrej Karpathy the Teacher
           </h2>
-          <p>
+          <p className="text-lg leading-relaxed">
             I was so impressed by Andrej Karpathy&apos;s podcast with Dwarkesh Patel. The 2 hours 45 minutes
             interview is one of the best I have listened to.
           </p>
-          <p>
-            He just shred things — LLM SLOPs, Reinforcement Learning pitfalls — so much that he covered. If at
-            all one thing you will listen to, this is it this week.
-          </p>
-          <div className="bg-slate-900 text-slate-100 rounded-xl p-6 shadow-lg">
-            <h3 className="text-xl font-semibold mb-3">Takeaways I scribbled while listening</h3>
-            <ul className="list-disc pl-5 space-y-2 text-slate-200">
-              <li>LLM SLOPs, the way he shred things live.</li>
-              <li>Reinforcement Learning pitfalls that he kept calling out.</li>
-              <li>The full 2 hours 45 minutes masterclass vibe.</li>
-            </ul>
+          
+          <div className="my-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg p-6 shadow-sm">
+            <p className="text-blue-900 font-medium mb-3">
+              🎧 Listen to the full podcast:
+            </p>
+            <a 
+              href="https://www.dwarkesh.com/p/andrej-karpathy?utm_campaign=post&utm_medium=web"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 underline font-medium break-all"
+            >
+              Andrej Karpathy on Dwarkesh Podcast
+            </a>
           </div>
+
+          <p className="leading-relaxed">
+            He just shreds things — <strong>LLM SLOPs</strong>, <strong>Reinforcement Learning pitfalls</strong> — so much that he covered. If 
+            there&apos;s one thing you will listen to this week, this is it.
+          </p>
+          <p className="text-gray-700 italic leading-relaxed">
+            The full 2 hours 25 minutes masterclass from an educator par excellence.
+          </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900">AWS outage flashbacks</h2>
-          <p>
-            And then the AWS-US-East1 outage which brought almost half of internet down reminded me of stuff we
-            used to face during my days working for Private Indian Internet Service Provider. DNS issue it seems
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">AWS Outage Flashbacks</h2>
+          <p className="leading-relaxed">
+            And then the <strong>AWS-US-East1 outage</strong> which brought almost half of the internet down reminded me of stuff we
+            used to face during my days working for a private Indian Internet Service Provider. DNS issue it seems
             is the root cause.
           </p>
-          <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6">
-            <p className="mb-3">
-              It was the same scramble feeling — the phone calls, the why-is-DNS-like-this question hanging in the
-              air — just like in those Private Indian Internet Service Provider days.
+          <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6 my-6 shadow-sm">
+            <p className="mb-4 text-amber-900 leading-relaxed">
+              It was the same scramble feeling — the phone calls, the <em>why-is-DNS-like-this</em> question hanging in the
+              air — just like in those private Indian Internet Service Provider days.
             </p>
-            <blockquote className="text-amber-900 font-medium italic">
+            <blockquote className="text-amber-900 font-semibold italic border-l-2 border-amber-400 pl-4">
               &ldquo;Same chaos, different decade. AWS status page instead of our knock-on-doors style updates.&rdquo;
             </blockquote>
           </div>
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-gray-900">Bare metal memories</h2>
-          <p>
-            In those early days hosting our applications and scripts in Redhat or CentOS bare metal servers used
-            to be an adventure, before we moved to cloud.
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Bare Metal Memories</h2>
+          <p className="leading-relaxed">
+            In those early days, hosting our applications and scripts in <strong>RedHat</strong> or <strong>CentOS</strong> bare metal servers used
+            to be an adventure — taking half a working day, before we moved to the cloud.
           </p>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-semibold text-gray-900">Dogfooding the blog</h2>
-          <p>
-            This is my first blog post eating my dog food! Just getting my feet wet. While I learn this is also an
-            opportunity to crib to boy about his company product. At least it will keep the conversation going with
-            him.
-          </p>
-          <p>
-            To retain the attention span of my young folks in family is difficult these days. I need to be relevant
-            to them.
-          </p>
-          <div className="bg-sky-50 border border-sky-200 rounded-xl p-6 shadow-sm">
-            <p className="font-medium text-sky-900">
-              At least it will keep the conversation going with him and maybe the young folks will see why I need to
-              be relevant to them.
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 mt-4 text-gray-700">
+            <p className="text-sm font-mono">
+              💻 The days of SSH-ing into physical servers, manually deploying code, and hoping nothing breaks.
             </p>
           </div>
         </section>
 
         <section>
-          <h3 className="text-xl font-semibold text-gray-900">Tags</h3>
-          <p className="space-x-2">
-            <code>#PodcastNotes</code>
-            <code>#LLMs</code>
-            <code>#AWSOutage</code>
-            <code>#DNSOps</code>
-            <code>#BareMetalDays</code>
-            <code>#FamilyConversations</code>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Dogfooding the Blog</h2>
+          <p className="leading-relaxed">
+            Now I need to eat my own dog food, so that I can crib to him when he calls about his company products. 
+            Checking out their daily pulse and connectors (for agentic workflow experimentation).
           </p>
+          <p className="leading-relaxed">
+            To retain the attention span of the young folks in my family is difficult these days. I need to be relevant 
+            and on the buzzer with topics and careers of interest to them. Talking to them in their language and not mine.
+          </p>
+          <div className="bg-gradient-to-r from-sky-50 to-cyan-50 border-l-4 border-sky-500 rounded-xl p-6 shadow-sm mt-4">
+            <p className="font-medium text-sky-900 leading-relaxed">
+              💡 Staying relevant means understanding their world — from daily standups to AI agent workflows.
+            </p>
+          </div>
+        </section>
+
+        <section className="border-t border-gray-200 pt-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-4">Tags</h3>
+          <div className="flex flex-wrap gap-2">
+            <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+              #PodcastNotes
+            </span>
+            <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors">
+              #LLMs
+            </span>
+            <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium hover:bg-orange-200 transition-colors">
+              #AWSOutage
+            </span>
+            <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium hover:bg-green-200 transition-colors">
+              #DNSOps
+            </span>
+            <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium hover:bg-purple-200 transition-colors">
+              #BareMetalDays
+            </span>
+            <span className="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-medium hover:bg-pink-200 transition-colors">
+              #FamilyConversations
+            </span>
+          </div>
         </section>
       </div>
     </motion.div>
