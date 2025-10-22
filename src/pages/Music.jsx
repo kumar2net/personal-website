@@ -35,9 +35,9 @@ const MusicPage = () => {
             </p>
 
             <div className="bg-gray-900 rounded-lg p-4 mb-4">
-              <img 
-                src="/media/mymusicSep.png" 
-                alt="Recent music playlist showing tracks: Janaab-e-Aali, Jo Zindagi Tha Meri, Anthichoppu Maayum, Chanakya, Idhuvum Kadandhu Pogum, Krish Theme, and Sri Varalakshmi Namastubhyam"
+              <img
+                src="/media/music_snapshot.png"
+                alt="Recent music playlist snapshot showing tracks: Rise from Fire - Janaki Version, Never Enough (Nils Hoffmann Remix), ABOUT YOU, Tell Me (feat. Hero Baldwin)"
                 className="w-full h-auto rounded-lg"
                 onError={(e) => {
                   e.target.style.display = 'none';
@@ -49,35 +49,30 @@ const MusicPage = () => {
                 <p className="text-lg font-medium mb-2">Recent Music Playlist</p>
                 <p className="text-sm">Loading playlist image...</p>
                 <div className="mt-4 text-left text-sm space-y-1">
-                  <p>• Janaab-e-Aali - Sachet Parampara, Saaj Bhatt & Pritam</p>
-                  <p>• Jo Zindagi Tha Meri - Shaan & Daboo Malik</p>
-                  <p>• Anthichoppu Maayum - Ilaiyaraaja, M.G. Sreekumar & K.S. Chithra</p>
-                  <p>• Chanakya - Rishab Rikhiram Sharma</p>
-                  <p>• Idhuvum Kadandhu Pogum - Sid Sriram</p>
-                  <p>• Krish Theme - kiran Baral</p>
-                  <p>• Sri Varalakshmi Namastubhyam - Purva Dhanashree Cotah & Paavani Cotah</p>
+                  <p>• Rise from Fire (Janaki Version) — Sarath Santosh, Ghibran</p>
+                  <p>• Never Enough (Nils Hoffmann Remix) — TWO LANES</p>
+                  <p>• ABOUT YOU — AVAION</p>
+                  <p>• Tell Me (feat. Hero Baldwin) — Tinlicker & Helsloot</p>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="space-y-2">
-                <h4 className="font-semibold text-gray-800">Featured Tracks:</h4>
-                <ul className="space-y-1 text-gray-600">
-                  <li>• Janaab-e-Aali</li>
-                  <li>• Jo Zindagi Tha Meri</li>
-                  <li>• Anthichoppu Maayum</li>
-                  <li>• Chanakya</li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-semibold text-gray-800">More Tracks:</h4>
-                <ul className="space-y-1 text-gray-600">
-                  <li>• Idhuvum Kadandhu Pogum</li>
-                  <li>• Krish Theme</li>
-                  <li>• Sri Varalakshmi Namastubhyam</li>
-                </ul>
-              </div>
+            <div className="mt-6 text-sm">
+              <h4 className="font-semibold text-gray-800 mb-2">Quick notes on each track:</h4>
+              <ul className="list-disc list-inside space-y-1 text-gray-700">
+                <li>
+                  <span className="font-medium">Rise from Fire — Janaki Version</span>: stirring South Indian vocal over epic, uplifting orchestration.
+                </li>
+                <li>
+                  <span className="font-medium">Never Enough (Nils Hoffmann Remix)</span>: polished melodic house; airy pads with a clean, satisfying drop.
+                </li>
+                <li>
+                  <span className="font-medium">ABOUT YOU</span>: moody deep house from AVAION with emotive hooks and warm bass.
+                </li>
+                <li>
+                  <span className="font-medium">Tell Me (feat. Hero Baldwin)</span>: progressive, melodic techno; shimmering synths and a soaring chorus.
+                </li>
+              </ul>
             </div>
           </div>
         </motion.div>

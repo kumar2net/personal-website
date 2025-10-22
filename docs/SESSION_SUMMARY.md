@@ -518,3 +518,7 @@ All objectives have been successfully completed:
 - Beautiful sectioned layout with gradient call-out boxes
 - Fixed manifest: Changed PNG references to SVG for all icons
 - Service Worker: Added development mode detection to prevent caching issues
+
+### Session: Music Page Snapshot Update (October 22, 2025)
+- Replaced music snapshot image on `/music` to reflect latest playlist view; new file referenced as `/media/music_snapshot.png`.
+- Added concise notes under the image summarizing the four highlighted tracks: "Rise from Fire — Janaki Version", "Never Enough (Nils Hoffmann Remix)", "ABOUT YOU", and "Tell Me (feat. Hero Baldwin)".
