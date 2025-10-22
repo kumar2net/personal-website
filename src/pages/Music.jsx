@@ -30,13 +30,9 @@ const MusicPage = () => {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-gray-600 mb-6">
-              A curated selection of tracks that have been on repeat lately, featuring a beautiful mix of Bollywood hits, Tamil classics, and spiritual melodies.
-            </p>
-
             <div className="bg-gray-900 rounded-lg p-4 mb-4">
               <img 
-                src="/media/mymusicSep.png" 
+                src="/media/AK_latest.png" 
                 alt="Recent music playlist showing tracks: Janaab-e-Aali, Jo Zindagi Tha Meri, Anthichoppu Maayum, Chanakya, Idhuvum Kadandhu Pogum, Krish Theme, and Sri Varalakshmi Namastubhyam"
                 className="w-full h-auto rounded-lg"
                 onError={(e) => {
@@ -57,26 +53,6 @@ const MusicPage = () => {
                   <p>• Krish Theme - kiran Baral</p>
                   <p>• Sri Varalakshmi Namastubhyam - Purva Dhanashree Cotah & Paavani Cotah</p>
                 </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="space-y-2">
-                <h4 className="font-semibold text-gray-800">Featured Tracks:</h4>
-                <ul className="space-y-1 text-gray-600">
-                  <li>• Janaab-e-Aali</li>
-                  <li>• Jo Zindagi Tha Meri</li>
-                  <li>• Anthichoppu Maayum</li>
-                  <li>• Chanakya</li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-semibold text-gray-800">More Tracks:</h4>
-                <ul className="space-y-1 text-gray-600">
-                  <li>• Idhuvum Kadandhu Pogum</li>
-                  <li>• Krish Theme</li>
-                  <li>• Sri Varalakshmi Namastubhyam</li>
-                </ul>
               </div>
             </div>
           </div>
