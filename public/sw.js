@@ -7,6 +7,13 @@ const VAPID_PUBLIC_KEY = 'BELKiWd8WXb2XDBaUZspzdYNeXxSZqL6gRqfgZCl9V1f6NsiBSgCyH
 // Install event - cache static assets
 self.addEventListener('install', event => {
   console.log('Service Worker installing...');
+  // Skip caching in development
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    console.log('Development mode - skipping cache');
+    self.skipWaiting();
+    return;
+  }
+  
   event.waitUntil(
     caches.open(STATIC_CACHE).then(cache => {
       return cache.addAll([
@@ -16,8 +23,8 @@ self.addEventListener('install', event => {
         '/contact',
         '/notifications',
         '/manifest.json',
-        '/icons/icon-192x192.png',
-        '/icons/icon-512x512.png',
+        '/icons/icon-192x192.svg',
+        '/icons/icon-512x512.svg',
         '/offline.html'
       ]);
     })
