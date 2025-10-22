@@ -130,7 +130,7 @@ const TheEducatorOfHighestCalibre = () => {
             there&apos;s one thing you will listen to this week, this is it.
           </p>
           <p className="text-gray-700 italic leading-relaxed">
-            The full 2 hours 25 minutes masterclass from an educator par excellence.
+            The full 2 hours 45 minutes masterclass from an educator par excellence.
           </p>
         </section>
 
@@ -144,7 +144,7 @@ const TheEducatorOfHighestCalibre = () => {
           <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6 my-6 shadow-sm">
             <p className="mb-4 text-amber-900 leading-relaxed">
               It was the same scramble feeling — the phone calls, the <em>why-is-DNS-like-this</em> question hanging in the
-              air — just like in those private Indian Internet Service Provider days.
+              air — just like in those private Indian Internet Service Provider days. I used to remove the default DNS servers typically set by ISP and used to use OpenDNS and Google DNS servers for my broadband router config.
             </p>
             <blockquote className="text-amber-900 font-semibold italic border-l-2 border-amber-400 pl-4">
               &ldquo;Same chaos, different decade. AWS status page instead of our knock-on-doors style updates.&rdquo;
@@ -177,7 +177,7 @@ const TheEducatorOfHighestCalibre = () => {
           </p>
           <div className="bg-gradient-to-r from-sky-50 to-cyan-50 border-l-4 border-sky-500 rounded-xl p-6 shadow-sm mt-4">
             <p className="font-medium text-sky-900 leading-relaxed">
-              💡 Staying relevant means understanding their world — from daily standups to AI agent workflows.
+              💡 Staying relevant means understanding their world — to AI agent workflows or whatever new & exciting stuff that comes up.
             </p>
           </div>
         </section>

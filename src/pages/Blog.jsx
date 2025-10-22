@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Rise from Fire',
+    date: 'October 22, 2025',
+    lastModified: 'October 22, 2025',
+    excerpt:
+      'A deeply inspiring Malayalam song exploring the path of spiritual liberation, duty, and the journey of the soul from fire to absolute freedom.',
+    tags: ['Malayalam Music', 'Philosophy', 'Spiritual Journey', 'Liberation', 'Sanskrit Wisdom', 'Karma'],
+    image:
+      'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/2025-10-22-rise-from-fire',
+  },
+  {
     title: 'The Educator of Highest Calibre',
     date: 'October 22, 2025',
     lastModified: 'October 22, 2025',
