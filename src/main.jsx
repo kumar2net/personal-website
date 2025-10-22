@@ -1,3 +1,15 @@
+/**
+ * ⚠️ CRITICAL: Service Worker Registration Logic
+ * 
+ * DO NOT MODIFY the Service Worker registration code below.
+ * It ensures Service Worker ONLY registers in production.
+ * 
+ * - DEV MODE: Service Worker unregisters automatically
+ * - PROD MODE: Service Worker registers for PWA functionality
+ * 
+ * See: docs/SERVICE_WORKER_DEV_MODE_GUIDE.md for details
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';

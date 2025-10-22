@@ -64,14 +64,20 @@ npm run preview
 - **DEVELOPMENT_READY.md** - Complete environment guide
 - **FIX_INSTRUCTIONS.md** - Quick fixes reference
 - **ESBUILD_FIX_SUMMARY.md** - Technical overview
+- **docs/SERVICE_WORKER_DEV_MODE_GUIDE.md** - ⚠️ **READ THIS** to prevent SW issues
 
 ### Deep Dive
 - **docs/ESBUILD_CRASH_FIX.md** - Detailed technical analysis
 - **CHROME_DEVTOOLS_FIX.md** - Browser fixes explained
 - **NETLIFY_BUG_REPORT.md** - Bug report for Netlify team
+- **docs/SERVICE_WORKER_DEV_MODE_GUIDE.md** - Service Worker prevention guide
 
 ### Reporting
 - **REPORT_TO_NETLIFY_INSTRUCTIONS.md** - How to report the bug
+
+### Browser Issues
+- **CLEAR_BROWSER_CACHE.md** - Clear cache instructions
+- **CHROME_DEVTOOLS_CLEAR_STEPS.md** - Visual step-by-step guide
 
 ## Automated Tests
 
