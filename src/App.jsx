@@ -37,6 +37,7 @@ const Atheism = lazy(() => import('./pages/books/atheism'));
 const HowToStopCaring = lazy(() => import('./pages/books/how-to-stop-caring'));
 const PDFExtractorPage = lazy(() => import('./pages/books/pdf-extractor'));
 const TheBrainStoryContent = lazy(() => import('./pages/books/the-brain-story-content'));
+const TheLastDropOfWater = lazy(() => import('./pages/books/TheLastDropOfWater'));
 
 // Lazy load other pages
 const DossierPage = lazy(() => import('./pages/Dossier'));
@@ -723,6 +724,21 @@ function App() {
                     type="article"
                   />
                   <HowToStopCaring />
+                </>
+              }
+            />
+            <Route
+              path="/books/the-last-drop-of-water"
+              element={
+                <>
+                  <SEO
+                    title="The Last Drop of Water, oh no - A True Story of Compassion"
+                    description="A profound true story about compassion and reflection. When a dying darkling beetle crosses paths with Kumar.A on a Sunday morning in Coimbatore, a simple act of kindness becomes a meditation on mortality and empathy."
+                    canonicalPath="/books/the-last-drop-of-water"
+                    type="article"
+                    image="/media/darkling-beetle.jpg"
+                  />
+                  <TheLastDropOfWater />
                 </>
               }
             />
