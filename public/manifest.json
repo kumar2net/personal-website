@@ -1,7 +1,7 @@
 {
-  "name": "Kumar's Personal Portfolio",
-  "short_name": "Kumar Portfolio",
-  "description": "Personal portfolio with push notifications for blog updates and comments",
+  "name": "Kumar's Stories",
+  "short_name": "Kumar Stories",
+  "description": "Personal stories with push notifications for blog updates and comments",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f9fafb",
@@ -92,7 +92,7 @@
     {
       "name": "Projects",
       "short_name": "Projects",
-      "description": "View portfolio projects",
+      "description": "View projects",
       "url": "/projects",
       "icons": [{ "src": "/icons/projects-shortcut.svg", "sizes": "96x96", "type": "image/svg+xml" }]
     }
