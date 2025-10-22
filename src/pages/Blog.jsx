@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'The Educator of Highest Calibre',
+    date: 'October 22, 2025',
+    lastModified: 'October 22, 2025',
+    excerpt:
+      "Impressed by Andrej Karpathy's marathon chat with Dwarkesh Patel, an AWS US-East-1 outage flashback, and my first dogfooding post to stay relevant with the kids.",
+    tags: ['Podcast', 'LLMs', 'Reinforcement Learning', 'AWS Outage', 'DNS', 'Family Conversations'],
+    image:
+      'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/2025-10-22-the-educator-of-highest-calibre',
+  },
+  {
     title: 'Fortnight That Went By - September 2025',
     date: 'September 27, 2025',
     lastModified: 'September 27, 2025',
