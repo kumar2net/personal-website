@@ -37,3 +37,46 @@ frontend/
 
 # Scripts with sensitive data
 kumscripts/
+
+# Cache directories
+.cache/
+.config/
+.configstore/
+.npm/
+Library/
+
+# Temporary and build artifacts
+*.log
+lh_*.json
+*-report.json
+transcription_*.json
+transcription_*.txt
+eng.traineddata
+bug*.jpg
+
+# KDP/eBook project files
+KDP_*.md
+KDP_*.html
+KDP_*.txt
+EPUB/
+KPF/
+The_Last_Drop_of_Water*
+*_KDP_Ready*
+kdp_story_manuscript.md
+BEAUTIFIED_*.html
+BEAUTIFIED_*.md
+CLEAN_FINAL_*.html
+FINAL_*.html
+FINAL_*.txt
+MASTER_EDITING_GUIDE.md
+VIEWING_GUIDE.md
+
+# Video/Movie project files
+kumar_life_teaser/
+
+# Publishing automation docs (keep in docs/ if needed)
+AUTOMATED_PUBLISHING_GUIDE.md
+PUBLISHING_AUTOMATION_SCRIPT.md
+
+# Miscellaneous temporary files
+docs_plan.txt
