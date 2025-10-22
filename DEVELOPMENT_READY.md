@@ -92,15 +92,18 @@ Browser will auto-open at: http://localhost:5173
 - ✅ `netlify.toml` - Dev environment config
 
 ### Source Code
-- ✅ `src/main.jsx` - Service Worker dev mode handling
+- ✅ `src/main.jsx` - Service Worker dev mode handling (**⚠️ CRITICAL: Do not modify**)
 
 ### Documentation
 - ✅ `NETLIFY_BUG_REPORT.md` - Bug report for Netlify team
 - ✅ `docs/ESBUILD_CRASH_FIX.md` - Technical documentation
+- ✅ `docs/SERVICE_WORKER_DEV_MODE_GUIDE.md` - **⚠️ Prevention guide**
 - ✅ `CHROME_DEVTOOLS_FIX.md` - Browser fixes guide
 - ✅ `FIX_INSTRUCTIONS.md` - Quick reference
 - ✅ `ESBUILD_FIX_SUMMARY.md` - Executive summary
 - ✅ `REPORT_TO_NETLIFY_INSTRUCTIONS.md` - Bug reporting guide
+- ✅ `CLEAR_BROWSER_CACHE.md` - Cache clearing guide
+- ✅ `CHROME_DEVTOOLS_CLEAR_STEPS.md` - Visual DevTools guide
 - ✅ `scripts/test-chrome-devtools.mjs` - Automated testing
 - ✅ `docs/SESSION_SUMMARY.md` - Session notes
 
