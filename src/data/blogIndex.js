@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  '2025-10-22-rise-from-fire': {
+    title: 'Rise from Fire',
+    description:
+      'A deeply inspiring Malayalam song exploring the path of spiritual liberation, duty, and the journey of the soul from fire to absolute freedom.',
+    image: 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=800&q=80',
+    tags: ['Malayalam Music', 'Philosophy', 'Spiritual Journey', 'Liberation', 'Sanskrit Wisdom', 'Karma'],
+    datePublished: '2025-10-22',
+    dateModified: '2025-10-22',
+  },
   'preview-story-last-drop-check-e764': {
     title: 'Is this the Last Drop? Oh No',
     description:

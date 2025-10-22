@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "netlify dev",
-    "dev:vite": "vite --open",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' netlify dev",
+    "dev:vite": "NODE_OPTIONS='--max-old-space-size=4096' vite --open",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",

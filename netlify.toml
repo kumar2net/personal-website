@@ -97,6 +97,9 @@
   port = 8888
   publish = "dist"
   autoLaunch = true
+  
+  [dev.env]
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 # Add security headers via edge functions
 [[edge_functions]]

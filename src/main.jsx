@@ -88,11 +88,19 @@ const renderApp = () => {
 // Render immediately for faster startup
 renderApp();
 
-// Register service worker after app renders
-if ('serviceWorker' in navigator) {
+// Register service worker only in production
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
   serviceWorkerService.initialize().then(() => {
     console.log('Service Worker initialized successfully');
   }).catch((error) => {
     console.error('Service Worker initialization failed:', error);
+  });
+} else if ('serviceWorker' in navigator && import.meta.env.DEV) {
+  // Unregister service worker in development to prevent caching issues
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    registrations.forEach((registration) => {
+      registration.unregister();
+      console.log('Service Worker unregistered in development mode');
+    });
   });
 }
