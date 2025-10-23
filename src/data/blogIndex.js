@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'openai-ecosystem-explained': {
+    title: 'The OpenAI Ecosystem Explained: A Complete Guide to Products, Features, and Competition',
+    description:
+      'A comprehensive deep dive into OpenAI\'s complete product ecosystem, exploring how each service works, their competitive landscape, user adoption, and how developers can leverage these tools to build the next generation of AI-powered applications.',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+    tags: ['Artificial Intelligence', 'OpenAI', 'Large Language Models', 'Machine Learning', 'Technology', 'Innovation', 'ChatGPT', 'GPT-4', 'DALL-E', 'API Development'],
+    datePublished: '2025-10-23',
+    dateModified: '2025-10-23',
+  },
   'bitcoin-disintermediation': {
     title: 'Bitcoin and Disintermediation: Reimagining the Future of Finance',
     description:

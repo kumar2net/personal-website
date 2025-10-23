@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'The OpenAI Ecosystem Explained: A Complete Guide to Products, Features, and Competition',
+    date: 'October 23, 2025',
+    lastModified: 'October 23, 2025',
+    excerpt:
+      'A comprehensive deep dive into OpenAI\'s complete product ecosystem, exploring how each service works, their competitive landscape, user adoption, and how developers can leverage these tools to build the next generation of AI-powered applications.',
+    tags: ['Artificial Intelligence', 'OpenAI', 'Large Language Models', 'Machine Learning', 'Technology', 'Innovation'],
+    image:
+      'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/openai-ecosystem-explained',
+  },
+  {
     title: 'Bitcoin and Disintermediation: Reimagining the Future of Finance',
     date: 'October 23, 2025',
     lastModified: 'October 23, 2025',
