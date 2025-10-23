@@ -1,4 +1,4 @@
-const { BigQuery } = require('@google-cloud/bigquery');
+import { BigQuery } from '@google-cloud/bigquery';
 
 function getClient() {
   const projectId = String(process.env.GCP_PROJECT_ID || '').trim();
@@ -13,7 +13,7 @@ function getClient() {
 function resolveDataset(raw) { return /^\d+$/.test(raw || '') ? `analytics_${raw}` : raw; }
 function tableRef({ projectId, dataset, table }) { return `\`${projectId}.${resolveDataset(dataset)}.${table || 'events*'}\``; }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   try {
     const url = new URL(event.rawUrl || 'http://localhost');
     const days = parseInt(url.searchParams.get('days') || '14');

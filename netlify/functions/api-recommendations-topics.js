@@ -1,5 +1,5 @@
 // Netlify function: topics from real GA4 BigQuery (no placeholders)
-const { BigQuery } = require('@google-cloud/bigquery');
+import { BigQuery } from '@google-cloud/bigquery';
 
 function getBigQueryClient() {
   const projectId = String(process.env.GCP_PROJECT_ID || '').trim();
@@ -101,7 +101,7 @@ function synthesizeTopics(topPages, topSearchTerms, limit) {
   return topics.slice(0, limit);
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   try {
     const url = new URL(event.rawUrl || 'http://localhost');
     const days = parseInt(url.searchParams.get('days') || '14');
