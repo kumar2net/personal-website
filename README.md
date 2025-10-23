@@ -8,7 +8,15 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 
 **Production URL**: https://kumarsite.netlify.app
 
-## 📝 **Latest Updates (January 2025)**
+## 📝 **Latest Updates**
+
+### **📊 Mobile-Responsive SVG Diagrams (October 2025)**
+- ✅ **Replaced Mermaid Diagrams**: Converted all 4 diagrams to custom SVG graphics
+- ✅ **Mobile-First Design**: Perfect scaling on all devices with responsive viewBox
+- ✅ **Performance Boost**: Removed 133 packages by eliminating Mermaid dependency
+- ✅ **Instant Rendering**: No JavaScript initialization delays
+- ✅ **Fixed CommonJS Errors**: Converted Netlify functions to ES modules
+- ✅ **Zero Warnings**: Clean dev server with no console errors
 
 ### **🧠 Neural Graph Recommender System - DEPLOYED**
 - ✅ **Graph Neural Network**: 28 posts analyzed, 822 connections mapped

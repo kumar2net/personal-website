@@ -275,3 +275,85 @@ npm run test:viewport
 **Status**: Current and actively maintained
 
 
+
+---
+
+## 📊 **Diagrams and Visual Content**
+
+### **SVG Diagrams (Preferred Method)**
+
+As of October 2025, we use custom SVG graphics instead of Mermaid diagrams for better mobile responsiveness and performance.
+
+#### **Advantages of SVG Diagrams:**
+- ✅ Perfect scaling on all devices (mobile-first responsive)
+- ✅ No external dependencies (removed Mermaid library)
+- ✅ Instant rendering without JavaScript initialization
+- ✅ Full control over styling and layout
+- ✅ Smaller bundle size (~133 packages saved)
+- ✅ Better performance and faster page loads
+
+#### **SVG Best Practices:**
+
+1. **Use viewBox for Responsive Scaling**
+   ```jsx
+   <svg viewBox="0 0 800 600" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+     {/* SVG content */}
+   </svg>
+   ```
+
+2. **Responsive Text Sizing**
+   ```jsx
+   <text className="text-xs sm:text-sm" fill="#1e40af" fontWeight="600">Label</text>
+   ```
+
+3. **Mobile-First Containers**
+   ```jsx
+   <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 sm:border-3 border-blue-400 rounded-xl p-4 sm:p-6 my-6 sm:my-10 shadow-xl">
+     <svg viewBox="0 0 800 600" className="w-full h-auto">
+       {/* SVG diagram */}
+     </svg>
+   </div>
+   ```
+
+4. **Arrow Markers for Flow Diagrams**
+   ```jsx
+   <defs>
+     <marker id="arrowblue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+       <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6" />
+     </marker>
+   </defs>
+   <line x1="100" y1="100" x2="200" y2="100" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+   ```
+
+5. **Color-Coded Elements**
+   - Use consistent color schemes matching the blog theme
+   - Blue (#3b82f6) for general elements
+   - Green (#16a34a) for positive/success states
+   - Orange (#f59e0b) for processing/active states
+   - Purple (#a855f7) for special features
+   - Red (#dc2626) for traditional/legacy systems
+
+#### **Example SVG Diagram Types:**
+
+1. **Flow Diagrams**: Traditional vs Bitcoin financial systems
+2. **Process Flows**: Step-by-step transaction flows
+3. **Architecture Diagrams**: Lightning Network structure
+4. **Comparison Diagrams**: Hierarchical vs P2P systems
+
+#### **Deprecated: Mermaid Diagrams**
+
+Mermaid.js diagrams have been replaced with custom SVG graphics. Do not use Mermaid for new content due to:
+- ❌ Poor mobile rendering
+- ❌ Large bundle size
+- ❌ Initialization delays
+- ❌ Limited styling control
+- ❌ JavaScript dependency
+
+If you encounter old Mermaid diagrams, convert them to SVG using the patterns demonstrated in `src/pages/blog/bitcoin-disintermediation.jsx`.
+
+---
+
+## 🔄 **Migration Notes**
+
+**October 23, 2025**: All Mermaid diagrams in bitcoin-disintermediation.jsx successfully converted to mobile-responsive SVG graphics with zero dependencies.
+
