@@ -1,7 +1,7 @@
-// Enhanced Service Worker with Push Notifications - Optimized for Performance
-const CACHE_NAME = 'kumar-portfolio-v2';
-const STATIC_CACHE = 'static-v2';
-const DYNAMIC_CACHE = 'dynamic-v2';
+// Enhanced Service Worker with Push Notifications - Navigation Bypass for Performance
+const CACHE_NAME = 'kumar-portfolio-v3';
+const STATIC_CACHE = 'static-v3';
+const DYNAMIC_CACHE = 'dynamic-v3';
 const VAPID_PUBLIC_KEY = 'BELKiWd8WXb2XDBaUZspzdYNeXxSZqL6gRqfgZCl9V1f6NsiBSgCyHU_1ML0GTxwtiE98bUY4HyIriItcGDo3Jg';
 
 // Install event - cache static assets
@@ -125,44 +125,11 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Handle HTML pages - use navigation preload for optimal performance
-  if (request.destination === 'document') {
-    event.respondWith(
-      (async () => {
-        try {
-          // Use preloaded response if available (navigation preload)
-          const preloadResponse = await event.preloadResponse;
-          if (preloadResponse) {
-            // Cache the preloaded response asynchronously (don't wait)
-            if (preloadResponse.ok) {
-              const responseClone = preloadResponse.clone();
-              caches.open(DYNAMIC_CACHE).then(cache => {
-                cache.put(request, responseClone);
-              }).catch(() => {}); // Silently fail cache writes
-            }
-            return preloadResponse;
-          }
-          
-          // Fallback to fetch if preload not available
-          const response = await fetch(request);
-          if (response.ok) {
-            const responseClone = response.clone();
-            caches.open(DYNAMIC_CACHE).then(cache => {
-              cache.put(request, responseClone);
-            }).catch(() => {});
-          }
-          return response;
-        } catch (error) {
-          // Network failed, try cache
-          const cachedResponse = await caches.match(request);
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          // Return offline page as last resort
-          return caches.match('/offline.html');
-        }
-      })()
-    );
+  // Handle HTML pages - bypass service worker for fastest performance
+  // This eliminates redirect delays while maintaining PWA capabilities for other resources
+  if (request.destination === 'document' || request.mode === 'navigate') {
+    // Don't intercept navigation requests to avoid performance penalties
+    // The service worker will still handle assets, API calls, and offline scenarios
     return;
   }
 
