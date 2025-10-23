@@ -248,6 +248,23 @@ button:focus-visible {
   background: #f9fafb;
 }
 
+/* Responsive Mermaid diagram wrapper */
+.mermaid-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.mermaid-container .mermaid {
+  margin: 0;
+}
+
+.mermaid-container .mermaid > svg {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
 /* Enhanced gradient backgrounds for summary cards */
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));

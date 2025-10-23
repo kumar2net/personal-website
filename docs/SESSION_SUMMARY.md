@@ -707,3 +707,16 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - `src/pages/blog/bitcoin-disintermediation.jsx` - Complete blog post with Mermaid diagrams
 
 **Status**: ✅ Blog post created successfully with zero linter errors, ready for routing and SEO index updates
+
+---
+
+## Session: Mermaid Diagram Responsive Wrapper (October 23, 2025)
+
+**Summary**: Implemented a responsive wrapper for Mermaid diagrams in the recent blog post so generated SVGs scale fluidly on mobile and desktop without horizontal scrolling.
+
+**Technical Details**:
+- Wrapped each `<pre class="mermaid">` in `src/pages/blog/bitcoin-disintermediation.jsx` with a `div.mermaid-container`.
+- Added global CSS to ensure `.mermaid > svg` uses `width: 100%` and `height: auto`.
+- No linter errors; build compatibility preserved.
+
+---

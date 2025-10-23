@@ -241,6 +241,7 @@ const BitcoinDisintermediation = () => {
               📊 Traditional Financial System Architecture
             </h4>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
+              <div className="mermaid-container">
               <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
 {`graph TB
     subgraph "Traditional Financial System"
@@ -263,6 +264,7 @@ const BitcoinDisintermediation = () => {
     style H fill:#fce4ec
     style I fill:#f3e5f5`}
               </pre>
+              </div>
             </div>
 
             <h3 className="text-2xl font-semibold mb-4 mt-8 text-gray-800">
@@ -420,6 +422,7 @@ const BitcoinDisintermediation = () => {
               ₿ Bitcoin Peer-to-Peer Network
             </h4>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
+              <div className="mermaid-container">
               <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
 {`graph TB
     subgraph "Bitcoin P2P Network"
@@ -442,6 +445,7 @@ const BitcoinDisintermediation = () => {
     style F fill:#e1bee7
     style J fill:#ffccbc`}
               </pre>
+              </div>
             </div>
 
             <h3 className="text-2xl font-semibold mb-4 mt-8 text-gray-800">
@@ -695,6 +699,7 @@ const BitcoinDisintermediation = () => {
               ⚡ Lightning Network Architecture
             </h4>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
+              <div className="mermaid-container">
               <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
 {`graph TB
     subgraph "Lightning Network Architecture"
@@ -718,6 +723,7 @@ const BitcoinDisintermediation = () => {
     style C fill:#fff3e0
     style F fill:#e1bee7`}
               </pre>
+              </div>
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-8">
@@ -809,6 +815,7 @@ const BitcoinDisintermediation = () => {
               🔄 Hierarchical vs. Peer-to-Peer Financial Systems
             </h4>
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
+              <div className="mermaid-container">
               <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
 {`graph LR
     subgraph "Old System - Hierarchical"
@@ -839,6 +846,7 @@ const BitcoinDisintermediation = () => {
     style B2 fill:#c8e6c9
     style F2 fill:#e1bee7`}
               </pre>
+              </div>
             </div>
 
             <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6 my-8">

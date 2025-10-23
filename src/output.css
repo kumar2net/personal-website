@@ -12,3 +12,20 @@
     font-weight: 400;
   }
 }
+
+/* Responsive Mermaid diagram wrapper */
+.mermaid-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.mermaid-container .mermaid {
+  margin: 0;
+}
+
+.mermaid-container .mermaid > svg {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
