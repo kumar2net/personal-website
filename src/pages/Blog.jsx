@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Bitcoin and Disintermediation: Reimagining the Future of Finance',
+    date: 'October 23, 2025',
+    lastModified: 'October 23, 2025',
+    excerpt:
+      'Exploring how Bitcoin challenges traditional financial intermediaries and paves the way for a new era of peer-to-peer value transfer without trusted third parties.',
+    tags: ['Bitcoin', 'Finance', 'Cryptocurrency', 'Blockchain', 'Decentralization', 'Economics'],
+    image:
+      'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/bitcoin-disintermediation',
+  },
+  {
     title: 'Rise from Fire',
     date: 'October 22, 2025',
     lastModified: 'October 22, 2025',

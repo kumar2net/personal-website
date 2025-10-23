@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'bitcoin-disintermediation': {
+    title: 'Bitcoin and Disintermediation: Reimagining the Future of Finance',
+    description:
+      'Exploring how Bitcoin challenges traditional financial intermediaries and paves the way for a new era of peer-to-peer value transfer without trusted third parties. Deep dive into traditional financial systems, Bitcoin mechanics, Lightning Network, and the future of decentralized finance.',
+    image: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=800&q=80',
+    tags: ['Bitcoin', 'Finance', 'Cryptocurrency', 'Blockchain', 'Decentralization', 'Economics', 'Financial Technology', 'Disintermediation'],
+    datePublished: '2025-10-23',
+    dateModified: '2025-10-23',
+  },
   '2025-10-22-rise-from-fire': {
     title: 'Rise from Fire',
     description:
