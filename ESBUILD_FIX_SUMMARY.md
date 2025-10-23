@@ -5,14 +5,17 @@ The `npm run dev` command was crashing with esbuild goroutine deadlocks. **This 
 
 ## Quick Start
 ```bash
-# Start the dev server with the fix
-npm run dev
+# Start the dev server with automatic port cleanup (RECOMMENDED)
+npm run dev:clean
 
-# Or use Vite directly
+# Or start Vite directly
 npm run dev:vite
+
+# Or use Netlify Dev
+npm run dev
 ```
 
-Both commands now include memory optimizations and will not crash.
+All commands include memory optimizations. The `dev:clean` command automatically frees up ports 8888 and 5173 before starting.
 
 ## What Was Changed?
 
@@ -138,6 +141,36 @@ Choose one or more:
 
 See `REPORT_TO_NETLIFY_INSTRUCTIONS.md` for detailed reporting guide.
 
+## Port Conflict Fix (NEW)
+
+### Problem: "Could not acquire required 'port'"
+If you see this error, a previous dev server process is still running.
+
+### Permanent Solution
+Use the new automatic cleanup command:
+```bash
+npm run dev:clean
+```
+
+This script automatically:
+- Checks ports 8888 and 5173
+- Kills any existing processes
+- Starts a fresh dev server
+- Opens your browser
+
+### Manual Port Cleanup
+If needed, run manually:
+```bash
+# Kill port 8888 (Netlify Dev)
+lsof -ti:8888 | xargs kill -9
+
+# Kill port 5173 (Vite)
+lsof -ti:5173 | xargs kill -9
+
+# Then start dev server
+npm run dev:vite
+```
+
 ## Troubleshooting
 
 ### If you still see issues:
@@ -250,4 +283,5 @@ Your development environment is now stable, optimized, and ready for use. The es
 **Status**: Production-Ready  
 **Impact**: Zero regression, improved dev experience  
 **Tested**: Comprehensive configuration verification complete  
+
 

@@ -19,10 +19,36 @@ export default defineConfig({
     target: 'es2020',
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-          vendor: ['framer-motion', 'react-helmet-async', 'react-markdown', 'remark-gfm']
-        }
+        manualChunks: (id) => {
+          // Split React core libraries
+          if (id.includes('react') || id.includes('react-dom')) {
+            return 'react-core';
+          }
+          // Split react-router separately for better caching
+          if (id.includes('react-router')) {
+            return 'react-router';
+          }
+          // Split framer-motion separately (large animation library)
+          if (id.includes('framer-motion')) {
+            return 'framer';
+          }
+          // Split markdown and related libraries
+          if (id.includes('react-markdown') || id.includes('remark-gfm') || id.includes('rehype')) {
+            return 'markdown';
+          }
+          // Split helmet and other small utilities
+          if (id.includes('react-helmet-async') || id.includes('lucide-react')) {
+            return 'utils';
+          }
+          // Everything else from node_modules goes to vendor
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+        // Optimize chunk naming for better caching
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     },
     // Copy public directory to dist
