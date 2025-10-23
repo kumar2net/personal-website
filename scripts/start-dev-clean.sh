@@ -27,5 +27,5 @@ echo "🚀 Starting dev server..."
 echo ""
 
 # Start the dev server with memory optimization
-NODE_OPTIONS='--max-old-space-size=4096' vite --open
+NODE_OPTIONS='--max-old-space-size=4096' npx vite --open
 
