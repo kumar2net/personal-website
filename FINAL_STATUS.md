@@ -125,6 +125,10 @@ Open http://localhost:5173 and check:
 
 ### Start Development
 ```bash
+# RECOMMENDED: Automatic port cleanup
+npm run dev:clean
+
+# Or directly:
 npm run dev:vite
 ```
 
@@ -293,4 +297,5 @@ If all checkboxes are ✅, your environment is perfect!
 **Command**: `npm run dev:vite`  
 
 **Start coding!** 🚀
+
 
