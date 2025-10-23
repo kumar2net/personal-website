@@ -1,47 +1,10 @@
 import { motion } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import mermaid from 'mermaid';
 
 const BitcoinDisintermediation = () => {
   const navigate = useNavigate();
   const articleRef = useRef(null);
-
-  useEffect(() => {
-    mermaid.initialize({ 
-      startOnLoad: true,
-      theme: 'default',
-      securityLevel: 'loose',
-      themeVariables: {
-        fontSize: '18px',
-        fontFamily: 'ui-sans-serif, system-ui, sans-serif',
-        primaryColor: '#dbeafe',
-        primaryTextColor: '#1e40af',
-        primaryBorderColor: '#3b82f6',
-        lineColor: '#6366f1',
-        secondaryColor: '#fef3c7',
-        tertiaryColor: '#d1fae5',
-        background: '#ffffff',
-        mainBkg: '#f0f9ff',
-        nodeBorder: '#2563eb',
-        clusterBkg: '#f8fafc',
-        clusterBorder: '#64748b',
-        titleColor: '#1e293b',
-        edgeLabelBackground: '#ffffff',
-        nodeTextColor: '#1e3a8a'
-      },
-      flowchart: {
-        useMaxWidth: true,
-        htmlLabels: true,
-        curve: 'basis',
-        padding: 20,
-        nodeSpacing: 80,
-        rankSpacing: 80,
-        diagramPadding: 20
-      }
-    });
-    mermaid.contentLoaded();
-  }, []);
 
   return (
     <motion.div
@@ -237,32 +200,90 @@ const BitcoinDisintermediation = () => {
               Here's how the current system operates when you make a simple payment:
             </p>
 
-            <h4 className="text-2xl font-bold text-center text-blue-700 mb-4 mt-8">
+            <h4 className="text-xl sm:text-2xl font-bold text-center text-blue-700 mb-4 mt-8">
               📊 Traditional Financial System Architecture
             </h4>
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
-              <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
-{`graph TB
-    subgraph "Traditional Financial System"
-    A[Alice - Sender] -->|1. Initiates Payment| B[Alice's Bank]
-    B -->|2. Verifies Funds & Identity| C[Payment Processor]
-    C -->|3. Routes Through Network| D[Central Clearinghouse]
-    D -->|4. Settlement| E[SWIFT/ACH Network]
-    E -->|5. Forwards Payment| F[Bob's Bank]
-    F -->|6. Verifies & Credits| G[Bob - Receiver]
-    
-    H[Central Bank] -.->|Regulates| B
-    H -.->|Regulates| F
-    I[Government Regulators] -.->|Oversees| D
-    I -.->|Compliance| E
-    end
-    
-    style A fill:#e3f2fd
-    style G fill:#c8e6c9
-    style D fill:#fff3e0
-    style H fill:#fce4ec
-    style I fill:#f3e5f5`}
-              </pre>
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 sm:border-3 border-blue-400 rounded-xl p-4 sm:p-6 my-6 sm:my-10 shadow-xl">
+              <svg viewBox="0 0 800 600" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                {/* Alice - Sender */}
+                <rect x="50" y="20" width="120" height="50" rx="8" fill="#e3f2fd" stroke="#2563eb" strokeWidth="2"/>
+                <text x="110" y="50" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="600">Alice - Sender</text>
+                
+                {/* Alice's Bank */}
+                <rect x="50" y="110" width="120" height="50" rx="8" fill="#f0f9ff" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="110" y="140" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Alice's Bank</text>
+                
+                {/* Payment Processor */}
+                <rect x="50" y="200" width="140" height="50" rx="8" fill="#f0f9ff" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="120" y="230" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Payment Processor</text>
+                
+                {/* Central Clearinghouse */}
+                <rect x="270" y="200" width="160" height="50" rx="8" fill="#fff3e0" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="350" y="225" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="600">Central</text>
+                <text x="350" y="242" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="600">Clearinghouse</text>
+                
+                {/* SWIFT/ACH Network */}
+                <rect x="490" y="200" width="140" height="50" rx="8" fill="#f0f9ff" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="560" y="230" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">SWIFT/ACH</text>
+                
+                {/* Bob's Bank */}
+                <rect x="630" y="110" width="120" height="50" rx="8" fill="#f0f9ff" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="690" y="140" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Bob's Bank</text>
+                
+                {/* Bob - Receiver */}
+                <rect x="630" y="20" width="120" height="50" rx="8" fill="#c8e6c9" stroke="#16a34a" strokeWidth="2"/>
+                <text x="690" y="50" textAnchor="middle" className="text-xs sm:text-sm" fill="#166534" fontWeight="600">Bob - Receiver</text>
+                
+                {/* Central Bank */}
+                <rect x="300" y="20" width="120" height="50" rx="8" fill="#fce4ec" stroke="#ec4899" strokeWidth="2"/>
+                <text x="360" y="50" textAnchor="middle" className="text-xs sm:text-sm" fill="#9f1239" fontWeight="600">Central Bank</text>
+                
+                {/* Government Regulators */}
+                <rect x="300" y="330" width="140" height="50" rx="8" fill="#f3e5f5" stroke="#a855f7" strokeWidth="2"/>
+                <text x="370" y="360" textAnchor="middle" className="text-xs sm:text-sm" fill="#6b21a8" fontWeight="600">Gov't Regulators</text>
+                
+                {/* Arrows - Payment Flow */}
+                <defs>
+                  <marker id="arrowblue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6" />
+                  </marker>
+                  <marker id="arrowdashed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#9ca3af" />
+                  </marker>
+                </defs>
+                
+                {/* Main flow */}
+                <line x1="110" y1="70" x2="110" y2="105" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+                <text x="125" y="90" className="text-xs" fill="#6366f1">1</text>
+                
+                <line x1="110" y1="160" x2="120" y2="195" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+                <text x="80" y="180" className="text-xs" fill="#6366f1">2</text>
+                
+                <line x1="190" y1="225" x2="265" y2="225" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+                <text x="220" y="220" className="text-xs" fill="#6366f1">3</text>
+                
+                <line x1="430" y1="225" x2="485" y2="225" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+                <text x="450" y="220" className="text-xs" fill="#6366f1">4</text>
+                
+                <line x1="630" y1="225" x2="680" y2="165" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+                <text x="670" y="200" className="text-xs" fill="#6366f1">5</text>
+                
+                <line x1="690" y1="110" x2="690" y2="75" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowblue)"/>
+                <text x="705" y="95" className="text-xs" fill="#6366f1">6</text>
+                
+                {/* Regulatory connections */}
+                <line x1="360" y1="70" x2="160" y2="115" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowdashed)"/>
+                <text x="240" y="90" className="text-xs" fill="#6b7280">Regulates</text>
+                
+                <line x1="400" y1="60" x2="640" y2="120" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowdashed)"/>
+                <text x="520" y="85" className="text-xs" fill="#6b7280">Regulates</text>
+                
+                <line x1="370" y1="330" x2="350" y2="255" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowdashed)"/>
+                <text x="310" y="290" className="text-xs" fill="#6b7280">Oversees</text>
+                
+                <line x1="405" y1="330" x2="550" y2="255" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowdashed)"/>
+                <text x="480" y="290" className="text-xs" fill="#6b7280">Compliance</text>
+              </svg>
             </div>
 
             <h3 className="text-2xl font-semibold mb-4 mt-8 text-gray-800">
@@ -416,32 +437,91 @@ const BitcoinDisintermediation = () => {
               Here's how a Bitcoin transaction works without intermediaries:
             </p>
 
-            <h4 className="text-2xl font-bold text-center text-orange-600 mb-4 mt-8">
+            <h4 className="text-xl sm:text-2xl font-bold text-center text-orange-600 mb-4 mt-8">
               ₿ Bitcoin Peer-to-Peer Network
             </h4>
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
-              <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
-{`graph TB
-    subgraph "Bitcoin P2P Network"
-    A[Alice - Sender] -->|1. Creates & Signs Transaction| B[Transaction Broadcast]
-    B -->|2. Propagates to Network| C[Memory Pool - Mempool]
-    C -->|3. Miners Select Transactions| D[Mining Nodes]
-    D -->|4. Compete to Solve Puzzle| E[Proof-of-Work]
-    E -->|5. Winner Adds Block| F[Blockchain]
-    F -->|6. Block Propagates| G[All Network Nodes]
-    G -->|7. Verify & Update| H[Bob Receives Payment]
-    
-    I[Thousands of Full Nodes] -.->|Validate| F
-    I -.->|Store Complete History| F
-    J[No Central Authority] -.->|Consensus Rules| D
-    end
-    
-    style A fill:#e3f2fd
-    style H fill:#c8e6c9
-    style E fill:#fff3e0
-    style F fill:#e1bee7
-    style J fill:#ffccbc`}
-              </pre>
+            <div className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 sm:border-3 border-orange-400 rounded-xl p-4 sm:p-6 my-6 sm:my-10 shadow-xl">
+              <svg viewBox="0 0 800 700" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                {/* Alice - Sender */}
+                <rect x="320" y="20" width="160" height="50" rx="8" fill="#e3f2fd" stroke="#2563eb" strokeWidth="2"/>
+                <text x="400" y="50" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="600">Alice - Sender</text>
+                
+                {/* Transaction Broadcast */}
+                <rect x="300" y="110" width="200" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="400" y="140" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Transaction Broadcast</text>
+                
+                {/* Memory Pool */}
+                <rect x="300" y="200" width="200" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="400" y="230" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Mempool</text>
+                
+                {/* Mining Nodes */}
+                <rect x="300" y="290" width="200" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="400" y="320" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Mining Nodes</text>
+                
+                {/* Proof-of-Work */}
+                <rect x="300" y="380" width="200" height="50" rx="8" fill="#fff3e0" stroke="#f97316" strokeWidth="2"/>
+                <text x="400" y="410" textAnchor="middle" className="text-xs sm:text-sm" fill="#9a3412" fontWeight="600">Proof-of-Work</text>
+                
+                {/* Blockchain */}
+                <rect x="300" y="470" width="200" height="50" rx="8" fill="#e1bee7" stroke="#a855f7" strokeWidth="2"/>
+                <text x="400" y="500" textAnchor="middle" className="text-xs sm:text-sm" fill="#6b21a8" fontWeight="600">Blockchain</text>
+                
+                {/* All Network Nodes */}
+                <rect x="300" y="560" width="200" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="400" y="590" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">All Network Nodes</text>
+                
+                {/* Bob - Receiver */}
+                <rect x="540" y="630" width="160" height="50" rx="8" fill="#c8e6c9" stroke="#16a34a" strokeWidth="2"/>
+                <text x="620" y="660" textAnchor="middle" className="text-xs sm:text-sm" fill="#166534" fontWeight="600">Bob Receives Payment</text>
+                
+                {/* Full Nodes (left) */}
+                <rect x="20" y="470" width="200" height="50" rx="8" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="120" y="495" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Thousands of</text>
+                <text x="120" y="512" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Full Nodes</text>
+                
+                {/* No Central Authority (right) */}
+                <rect x="580" y="290" width="180" height="50" rx="8" fill="#ffccbc" stroke="#f97316" strokeWidth="2"/>
+                <text x="670" y="315" textAnchor="middle" className="text-xs sm:text-sm" fill="#9a3412" fontWeight="600">No Central</text>
+                <text x="670" y="332" textAnchor="middle" className="text-xs sm:text-sm" fill="#9a3412" fontWeight="600">Authority</text>
+                
+                <defs>
+                  <marker id="arroworange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#f97316" />
+                  </marker>
+                  <marker id="arrowgray2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#9ca3af" />
+                  </marker>
+                </defs>
+                
+                {/* Main flow arrows */}
+                <line x1="400" y1="70" x2="400" y2="105" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="420" y="90" className="text-xs font-semibold" fill="#ea580c">1</text>
+                
+                <line x1="400" y1="160" x2="400" y2="195" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="420" y="180" className="text-xs font-semibold" fill="#ea580c">2</text>
+                
+                <line x1="400" y1="250" x2="400" y2="285" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="420" y="270" className="text-xs font-semibold" fill="#ea580c">3</text>
+                
+                <line x1="400" y1="340" x2="400" y2="375" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="420" y="360" className="text-xs font-semibold" fill="#ea580c">4</text>
+                
+                <line x1="400" y1="430" x2="400" y2="465" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="420" y="450" className="text-xs font-semibold" fill="#ea580c">5</text>
+                
+                <line x1="400" y1="520" x2="400" y2="555" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="420" y="540" className="text-xs font-semibold" fill="#ea580c">6</text>
+                
+                <line x1="480" y1="600" x2="535" y2="640" stroke="#f97316" strokeWidth="2.5" markerEnd="url(#arroworange)"/>
+                <text x="510" y="615" className="text-xs font-semibold" fill="#ea580c">7</text>
+                
+                {/* Validation connections */}
+                <line x1="220" y1="495" x2="295" y2="495" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowgray2)"/>
+                <text x="235" y="490" className="text-xs" fill="#6b7280">Validate</text>
+                
+                <line x1="575" y1="315" x2="505" y2="315" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowgray2)"/>
+                <text x="520" y="305" className="text-xs" fill="#6b7280">Consensus</text>
+              </svg>
             </div>
 
             <h3 className="text-2xl font-semibold mb-4 mt-8 text-gray-800">
@@ -691,33 +771,95 @@ const BitcoinDisintermediation = () => {
               near-instant, low-cost transactions off-chain, with the base blockchain serving as a settlement layer.
             </p>
 
-            <h4 className="text-2xl font-bold text-center text-purple-600 mb-4 mt-8">
+            <h4 className="text-xl sm:text-2xl font-bold text-center text-purple-600 mb-4 mt-8">
               ⚡ Lightning Network Architecture
             </h4>
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
-              <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
-{`graph TB
-    subgraph "Lightning Network Architecture"
-    A[Alice] -->|Opens Channel| B[Payment Channel]
-    B -->|Off-chain Transactions| C[Lightning Network]
-    C -->|Instant Payments| D[Payment Channel]
-    D -->|Closes Channel| E[Bob]
-    
-    B -.->|Settlement Layer| F[Bitcoin Blockchain]
-    D -.->|Settlement Layer| F
-    
-    G[Routing Nodes] -->|Forward Payments| C
-    C -->|Multi-hop Routing| G
-    
-    H[Channel Opening TX] -.->|On-chain| F
-    I[Channel Closing TX] -.->|On-chain| F
-    end
-    
-    style A fill:#e3f2fd
-    style E fill:#c8e6c9
-    style C fill:#fff3e0
-    style F fill:#e1bee7`}
-              </pre>
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 sm:border-3 border-purple-400 rounded-xl p-4 sm:p-6 my-6 sm:my-10 shadow-xl">
+              <svg viewBox="0 0 800 600" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                {/* Alice */}
+                <rect x="50" y="150" width="120" height="50" rx="8" fill="#e3f2fd" stroke="#2563eb" strokeWidth="2"/>
+                <text x="110" y="180" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="600">Alice</text>
+                
+                {/* Alice's Payment Channel */}
+                <rect x="220" y="150" width="140" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="290" y="175" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Payment</text>
+                <text x="290" y="192" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Channel A</text>
+                
+                {/* Lightning Network (center) */}
+                <rect x="320" y="50" width="160" height="60" rx="8" fill="#fff3e0" stroke="#f97316" strokeWidth="2.5"/>
+                <text x="400" y="77" textAnchor="middle" className="text-sm sm:text-base" fill="#9a3412" fontWeight="700">⚡ Lightning</text>
+                <text x="400" y="97" textAnchor="middle" className="text-sm sm:text-base" fill="#9a3412" fontWeight="700">Network</text>
+                
+                {/* Bob's Payment Channel */}
+                <rect x="440" y="150" width="140" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="510" y="175" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Payment</text>
+                <text x="510" y="192" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Channel B</text>
+                
+                {/* Bob */}
+                <rect x="630" y="150" width="120" height="50" rx="8" fill="#c8e6c9" stroke="#16a34a" strokeWidth="2"/>
+                <text x="690" y="180" textAnchor="middle" className="text-xs sm:text-sm" fill="#166534" fontWeight="600">Bob</text>
+                
+                {/* Bitcoin Blockchain */}
+                <rect x="280" y="350" width="240" height="60" rx="8" fill="#e1bee7" stroke="#a855f7" strokeWidth="2.5"/>
+                <text x="400" y="377" textAnchor="middle" className="text-sm sm:text-base" fill="#6b21a8" fontWeight="700">Bitcoin Blockchain</text>
+                <text x="400" y="397" textAnchor="middle" className="text-xs sm:text-sm" fill="#6b21a8" fontWeight="500">(Settlement Layer)</text>
+                
+                {/* Routing Nodes */}
+                <rect x="50" y="50" width="140" height="50" rx="8" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="120" y="80" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Routing Nodes</text>
+                
+                {/* Channel TX boxes */}
+                <rect x="150" y="450" width="160" height="45" rx="6" fill="#fff7ed" stroke="#fb923c" strokeWidth="1.5"/>
+                <text x="230" y="477" textAnchor="middle" className="text-xs" fill="#7c2d12">Channel Opening TX</text>
+                
+                <rect x="490" y="450" width="160" height="45" rx="6" fill="#fff7ed" stroke="#fb923c" strokeWidth="1.5"/>
+                <text x="570" y="477" textAnchor="middle" className="text-xs" fill="#7c2d12">Channel Closing TX</text>
+                
+                <defs>
+                  <marker id="arrowpurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#a855f7" />
+                  </marker>
+                  <marker id="arrowgray3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#9ca3af" />
+                  </marker>
+                  <marker id="arrowyellow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#f59e0b" />
+                  </marker>
+                </defs>
+                
+                {/* Payment flow */}
+                <line x1="170" y1="175" x2="215" y2="175" stroke="#a855f7" strokeWidth="2.5" markerEnd="url(#arrowpurple)"/>
+                <text x="185" y="165" className="text-xs" fill="#9333ea">Opens</text>
+                
+                <line x1="290" y1="150" x2="365" y2="115" stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrowyellow)"/>
+                <text x="300" y="125" className="text-xs" fill="#d97706">Off-chain</text>
+                
+                <line x1="435" y1="115" x2="510" y2="150" stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrowyellow)"/>
+                <text x="470" y="125" className="text-xs" fill="#d97706">Instant</text>
+                
+                <line x1="580" y1="175" x2="625" y2="175" stroke="#a855f7" strokeWidth="2.5" markerEnd="url(#arrowpurple)"/>
+                <text x="595" y="165" className="text-xs" fill="#9333ea">Closes</text>
+                
+                {/* Settlement connections */}
+                <line x1="290" y1="200" x2="350" y2="345" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowgray3)"/>
+                <text x="280" y="280" className="text-xs" fill="#6b7280" transform="rotate(-45 280 280)">Settlement</text>
+                
+                <line x1="510" y1="200" x2="450" y2="345" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrowgray3)"/>
+                <text x="500" y="280" className="text-xs" fill="#6b7280" transform="rotate(45 500 280)">Settlement</text>
+                
+                {/* Routing connections */}
+                <line x1="190" y1="75" x2="315" y2="75" stroke="#3b82f6" strokeWidth="2" strokeDasharray="5,5"/>
+                <line x1="170" y1="75" x2="160" y2="75" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrowgray3)"/>
+                <text x="235" y="65" className="text-xs" fill="#3b82f6">Routes</text>
+                
+                {/* On-chain TX connections */}
+                <line x1="230" y1="450" x2="330" y2="415" stroke="#fb923c" strokeWidth="1.5" strokeDasharray="3,3" markerEnd="url(#arrowgray3)"/>
+                <line x1="570" y1="450" x2="470" y2="415" stroke="#fb923c" strokeWidth="1.5" strokeDasharray="3,3" markerEnd="url(#arrowgray3)"/>
+                
+                {/* Labels */}
+                <text x="400" y="250" textAnchor="middle" className="text-xs" fill="#7c3aed" fontWeight="600">Thousands of instant, low-fee transactions</text>
+                <text x="400" y="535" textAnchor="middle" className="text-xs" fill="#6b7280" fontStyle="italic">Only opening & closing touch the blockchain</text>
+              </svg>
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-8">
@@ -805,40 +947,118 @@ const BitcoinDisintermediation = () => {
               Comparison: Old vs. New Financial System
             </h3>
 
-            <h4 className="text-2xl font-bold text-center text-green-600 mb-4 mt-8">
+            <h4 className="text-xl sm:text-2xl font-bold text-center text-green-600 mb-4 mt-8">
               🔄 Hierarchical vs. Peer-to-Peer Financial Systems
             </h4>
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-3 border-blue-400 rounded-xl p-8 my-10 overflow-x-auto shadow-xl">
-              <pre className="mermaid text-lg" style={{ minHeight: '500px' }}>
-{`graph LR
-    subgraph "Old System - Hierarchical"
-    A1[Central Bank] --> B1[Commercial Banks]
-    B1 --> C1[Payment Processors]
-    C1 --> D1[Merchants]
-    D1 --> E1[Consumers]
-    
-    F1[Regulators] -.->|Control| A1
-    F1 -.->|Oversight| B1
-    F1 -.->|Compliance| C1
-    end
-    
-    subgraph "New System - Peer-to-Peer"
-    A2[User A] <--> B2[Bitcoin Network]
-    C2[User B] <--> B2
-    D2[User C] <--> B2
-    E2[User D] <--> B2
-    
-    F2[Consensus Rules] -.->|Enforced by Code| B2
-    G2[Miners/Validators] -.->|Secure| B2
-    H2[Full Nodes] -.->|Verify| B2
-    end
-    
-    style A1 fill:#fce4ec
-    style B1 fill:#fff3e0
-    style E1 fill:#e3f2fd
-    style B2 fill:#c8e6c9
-    style F2 fill:#e1bee7`}
-              </pre>
+            <div className="bg-gradient-to-br from-gray-50 to-green-50 border-2 sm:border-3 border-green-400 rounded-xl p-4 sm:p-6 my-6 sm:my-10 shadow-xl">
+              <svg viewBox="0 0 900 600" className="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                {/* LEFT SIDE - OLD HIERARCHICAL SYSTEM */}
+                <text x="180" y="25" textAnchor="middle" className="text-sm sm:text-base" fill="#dc2626" fontWeight="700">Old System - Hierarchical</text>
+                
+                {/* Central Bank */}
+                <rect x="120" y="50" width="120" height="45" rx="6" fill="#fce4ec" stroke="#ec4899" strokeWidth="2"/>
+                <text x="180" y="77" textAnchor="middle" className="text-xs sm:text-sm" fill="#9f1239" fontWeight="600">Central Bank</text>
+                
+                {/* Commercial Banks */}
+                <rect x="120" y="140" width="120" height="45" rx="6" fill="#fff3e0" stroke="#f59e0b" strokeWidth="2"/>
+                <text x="180" y="167" textAnchor="middle" className="text-xs sm:text-sm" fill="#92400e" fontWeight="500">Commercial Banks</text>
+                
+                {/* Payment Processors */}
+                <rect x="110" y="230" width="140" height="45" rx="6" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="180" y="257" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">Payment Processors</text>
+                
+                {/* Merchants */}
+                <rect x="120" y="320" width="120" height="45" rx="6" fill="#e0f2fe" stroke="#0ea5e9" strokeWidth="2"/>
+                <text x="180" y="347" textAnchor="middle" className="text-xs sm:text-sm" fill="#0c4a6e" fontWeight="500">Merchants</text>
+                
+                {/* Consumers */}
+                <rect x="120" y="410" width="120" height="45" rx="6" fill="#e3f2fd" stroke="#2563eb" strokeWidth="2"/>
+                <text x="180" y="437" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="600">Consumers</text>
+                
+                {/* Regulators */}
+                <rect x="10" y="140" width="90" height="45" rx="6" fill="#f3e5f5" stroke="#a855f7" strokeWidth="2"/>
+                <text x="55" y="167" textAnchor="middle" className="text-xs" fill="#6b21a8" fontWeight="600">Regulators</text>
+                
+                {/* RIGHT SIDE - NEW P2P SYSTEM */}
+                <text x="650" y="25" textAnchor="middle" className="text-sm sm:text-base" fill="#16a34a" fontWeight="700">New System - Peer-to-Peer</text>
+                
+                {/* Bitcoin Network (center) */}
+                <ellipse cx="650" cy="250" rx="110" ry="90" fill="#c8e6c9" stroke="#16a34a" strokeWidth="3"/>
+                <text x="650" y="245" textAnchor="middle" className="text-sm sm:text-base" fill="#166534" fontWeight="700">Bitcoin</text>
+                <text x="650" y="265" textAnchor="middle" className="text-sm sm:text-base" fill="#166534" fontWeight="700">Network</text>
+                
+                {/* Users around the network */}
+                <rect x="530" y="80" width="80" height="40" rx="6" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="570" y="105" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">User A</text>
+                
+                <rect x="720" y="80" width="80" height="40" rx="6" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="760" y="105" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">User B</text>
+                
+                <rect x="530" y="400" width="80" height="40" rx="6" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="570" y="425" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">User C</text>
+                
+                <rect x="720" y="400" width="80" height="40" rx="6" fill="#dbeafe" stroke="#3b82f6" strokeWidth="2"/>
+                <text x="760" y="425" textAnchor="middle" className="text-xs sm:text-sm" fill="#1e40af" fontWeight="500">User D</text>
+                
+                {/* Supporting elements */}
+                <rect x="820" y="150" width="70" height="35" rx="4" fill="#e1bee7" stroke="#a855f7" strokeWidth="1.5"/>
+                <text x="855" y="168" textAnchor="middle" className="text-xs" fill="#6b21a8" fontWeight="500">Consensus</text>
+                <text x="855" y="182" textAnchor="middle" className="text-xs" fill="#6b21a8" fontWeight="500">Rules</text>
+                
+                <rect x="820" y="240" width="70" height="35" rx="4" fill="#fef3c7" stroke="#f59e0b" strokeWidth="1.5"/>
+                <text x="855" y="263" textAnchor="middle" className="text-xs" fill="#92400e" fontWeight="500">Miners</text>
+                
+                <rect x="820" y="330" width="70" height="35" rx="4" fill="#dbeafe" stroke="#3b82f6" strokeWidth="1.5"/>
+                <text x="855" y="353" textAnchor="middle" className="text-xs" fill="#1e40af" fontWeight="500">Full Nodes</text>
+                
+                <defs>
+                  <marker id="arrowred" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#dc2626" />
+                  </marker>
+                  <marker id="arrowgreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#16a34a" />
+                  </marker>
+                  <marker id="arrowgraydash" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#9ca3af" />
+                  </marker>
+                </defs>
+                
+                {/* LEFT SIDE ARROWS */}
+                <line x1="180" y1="95" x2="180" y2="135" stroke="#dc2626" strokeWidth="2.5" markerEnd="url(#arrowred)"/>
+                <line x1="180" y1="185" x2="180" y2="225" stroke="#dc2626" strokeWidth="2.5" markerEnd="url(#arrowred)"/>
+                <line x1="180" y1="275" x2="180" y2="315" stroke="#dc2626" strokeWidth="2.5" markerEnd="url(#arrowred)"/>
+                <line x1="180" y1="365" x2="180" y2="405" stroke="#dc2626" strokeWidth="2.5" markerEnd="url(#arrowred)"/>
+                
+                {/* Regulator connections */}
+                <line x1="100" y1="162" x2="115" y2="162" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4,4" markerEnd="url(#arrowgraydash)"/>
+                <line x1="55" y1="140" x2="145" y2="85" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4,4" markerEnd="url(#arrowgraydash)"/>
+                <line x1="70" y1="185" x2="110" y2="240" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4,4" markerEnd="url(#arrowgraydash)"/>
+                
+                {/* RIGHT SIDE ARROWS - bidirectional */}
+                <line x1="588" y1="120" x2="605" y2="180" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                <line x1="595" y1="190" x2="578" y2="125" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                
+                <line x1="720" y1="120" x2="695" y2="180" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                <line x1="705" y1="190" x2="730" y2="125" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                
+                <line x1="588" y1="400" x2="605" y2="330" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                <line x1="595" y1="320" x2="578" y2="395" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                
+                <line x1="720" y1="400" x2="695" y2="330" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                <line x1="705" y1="320" x2="730" y2="395" stroke="#16a34a" strokeWidth="2.5" markerEnd="url(#arrowgreen)"/>
+                
+                {/* Supporting elements connections */}
+                <line x1="820" y1="167" x2="765" y2="220" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4,4" markerEnd="url(#arrowgraydash)"/>
+                <line x1="820" y1="257" x2="765" y2="257" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4,4" markerEnd="url(#arrowgraydash)"/>
+                <line x1="820" y1="347" x2="765" y2="290" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4,4" markerEnd="url(#arrowgraydash)"/>
+                
+                {/* Divider line */}
+                <line x1="420" y1="40" x2="420" y2="560" stroke="#9ca3af" strokeWidth="2" strokeDasharray="10,5"/>
+                
+                {/* Labels */}
+                <text x="180" y="540" textAnchor="middle" className="text-xs" fill="#dc2626" fontWeight="600">Top-Down Control</text>
+                <text x="650" y="540" textAnchor="middle" className="text-xs" fill="#16a34a" fontWeight="600">Distributed & Equal Access</text>
+              </svg>
             </div>
 
             <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6 my-8">

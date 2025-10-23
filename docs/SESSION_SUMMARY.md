@@ -707,3 +707,46 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - `src/pages/blog/bitcoin-disintermediation.jsx` - Complete blog post with Mermaid diagrams
 
 **Status**: ✅ Blog post created successfully with zero linter errors, ready for routing and SEO index updates
+
+---
+
+## Session: October 23, 2025 - Mobile-Responsive SVG Diagrams & CommonJS Fix
+
+**Summary**: Converted all Mermaid diagrams in bitcoin-disintermediation.jsx to mobile-first responsive SVG graphics for better mobile rendering, and fixed CommonJS module errors in Netlify functions by converting to ES module syntax.
+
+**Changes Made**:
+1. **SVG Diagram Conversion** (4 diagrams replaced):
+   - Traditional Financial System Architecture: Custom SVG with flow showing Alice→Bank→Processors→SWIFT→Bob's Bank→Bob, with regulatory oversight
+   - Bitcoin P2P Network: Vertical flow diagram showing transaction broadcast→mempool→mining→blockchain→network nodes→Bob receives payment
+   - Lightning Network Architecture: Payment channel system showing off-chain transactions with Bitcoin blockchain as settlement layer
+   - Hierarchical vs P2P Systems: Side-by-side comparison showing top-down control vs distributed equal access
+
+2. **Mobile-First Design**:
+   - All SVGs use `viewBox` for perfect scaling across devices
+   - Responsive text sizing with `className="text-xs sm:text-sm"`
+   - Arrow markers with proper orientation and colors
+   - Color-coded elements matching original Mermaid theme
+   - Optimized padding `p-4 sm:p-6` for mobile screens
+
+3. **Module System Fix**:
+   - Converted `netlify/functions/api-recommendations-topics.js` from CommonJS to ES modules
+   - Converted `netlify/functions/debug-top-signals.js` from CommonJS to ES modules
+   - Changed `const { BigQuery } = require(...)` → `import { BigQuery } from ...`
+   - Changed `exports.handler = ...` → `export const handler = ...`
+   - Removed mermaid dependency from package.json (saved ~133 packages)
+
+**Technical Benefits**:
+- ✅ Zero dependencies on Mermaid library (performance improvement)
+- ✅ Perfect mobile rendering with SVG scaling
+- ✅ No more CommonJS warnings in Netlify CLI
+- ✅ Smaller bundle size (removed 133 packages)
+- ✅ Full control over diagram styling and responsiveness
+- ✅ All diagrams render instantly without JavaScript initialization
+
+**Files Modified**:
+- `src/pages/blog/bitcoin-disintermediation.jsx` - Replaced 4 Mermaid diagrams with custom SVGs
+- `netlify/functions/api-recommendations-topics.js` - Converted to ES modules
+- `netlify/functions/debug-top-signals.js` - Converted to ES modules
+- `package.json` - Removed mermaid dependency
+
+**Status**: ✅ All changes deployed successfully with zero linter errors, dev server running clean with no warnings
