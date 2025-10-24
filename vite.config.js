@@ -68,6 +68,9 @@ export default defineConfig({
   // Ensure Vite treats .docx as static assets when imported with ?url
   assetsInclude: ['**/*.docx'],
   server: {
+    port: 5173,
+    host: true,
+    open: true,
     historyApiFallback: true,
     watch: {
       // Exclude heavy directories from file watching to prevent esbuild crashes
@@ -95,6 +98,8 @@ export default defineConfig({
     fs: {
       strict: false,
     },
+    // Add CORS headers for development
+    cors: true,
   },
   // Optimize dependencies to prevent esbuild crashes
   optimizeDeps: {
