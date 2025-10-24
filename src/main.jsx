@@ -81,12 +81,7 @@ const renderApp = () => {
     ReactDOM.createRoot(rootElement).render(
       <React.StrictMode>
         <HelmetProvider>
-          <BrowserRouter
-            future={{
-              v7_startTransition: true,
-              v7_relativeSplatPath: true,
-            }}
-          >
+          <BrowserRouter>
             <App />
           </BrowserRouter>
         </HelmetProvider>
