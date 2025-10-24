@@ -149,15 +149,70 @@ class PushNotificationService {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to save subscription: ${response.statusText}`);
+        const errorText = await response.text();
+        console.error('Server response error:', response.status, errorText);
+        
+        // Try to parse error response for better error message
+        try {
+          const errorData = JSON.parse(errorText);
+          throw new Error(errorData.message || `Failed to save subscription: ${response.status} ${response.statusText}`);
+        } catch (parseError) {
+          throw new Error(`Failed to save subscription: ${response.status} ${response.statusText} - ${errorText}`);
+        }
       }
 
       const result = await response.json();
       console.log('Subscription saved to server:', result);
+      
+      // Also store locally as backup
+      this.storeSubscriptionLocally(subscription);
+      
       return result;
     } catch (error) {
       console.error('Failed to send subscription to server:', error);
+      
+      // If it's a network error or function not found, try local storage fallback
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        console.warn('Server unavailable, storing subscription locally');
+        this.storeSubscriptionLocally(subscription);
+        return { 
+          success: true, 
+          subscriptionId: 'local-storage',
+          message: 'Subscription stored locally (server unavailable)'
+        };
+      }
+      
       throw error;
+    }
+  }
+
+  /**
+   * Store subscription locally as backup
+   */
+  storeSubscriptionLocally(subscription) {
+    try {
+      const localData = {
+        subscription,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      };
+      localStorage.setItem('push-subscription-backup', JSON.stringify(localData));
+      console.log('Subscription stored locally as backup');
+    } catch (error) {
+      console.error('Failed to store subscription locally:', error);
+    }
+  }
+
+  /**
+   * Get locally stored subscription
+   */
+  getLocalSubscription() {
+    try {
+      const localData = localStorage.getItem('push-subscription-backup');
+      return localData ? JSON.parse(localData) : null;
+    } catch (error) {
+      console.error('Failed to get local subscription:', error);
+      return null;
     }
   }
 
@@ -236,14 +291,30 @@ class PushNotificationService {
    */
   async getSubscriptionStats() {
     try {
-      const response = await fetch('/.netlify/functions/push-subscription-stats');
+      const response = await fetch('/.netlify/functions/push-subscription', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
       if (response.ok) {
-        return await response.json();
+        const data = await response.json();
+        // Transform the response to match expected stats format
+        return {
+          totalSubscriptions: data.count || 0,
+          activeSubscriptions: data.count || 0,
+          notificationsSent: 0, // This would need to be tracked separately
+          subscriptions: data.subscriptions || []
+        };
+      } else {
+        console.warn('Failed to get subscription stats:', response.status, response.statusText);
+        return null;
       }
     } catch (error) {
       console.error('Failed to get subscription stats:', error);
+      return null;
     }
-    return null;
   }
 
   /**

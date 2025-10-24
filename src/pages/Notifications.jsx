@@ -21,7 +21,12 @@ const Notifications = () => {
     setPermission(pushNotificationService.getPermissionStatus());
     
     // Get subscription stats (if available)
-    pushNotificationService.getSubscriptionStats().then(setStats);
+    pushNotificationService.getSubscriptionStats()
+      .then(setStats)
+      .catch(error => {
+        console.warn('Could not load subscription stats:', error);
+        // Don't set stats if there's an error, let it remain null
+      });
   }, []);
 
   const handleSettingChange = (setting, value) => {

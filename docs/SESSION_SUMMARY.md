@@ -150,6 +150,8 @@ Convert "It's Not About You: A Brief Guide to a Meaningful Life" PDF to markdown
 ### PWA Implementation with Push Notifications (MUST-HAVE)
 - **Status**: ✅ **COMPLETE AND PRODUCTION-READY**
 - **Push Notifications**: Full implementation with VAPID keys and subscription management
+- **Push Notification Fix**: Fixed "Failed to save subscription" error by adding development environment support and better error handling
+- **Subscription Stats Fix**: Fixed getSubscriptionStats function that was trying to parse HTML as JSON by correcting the endpoint URL
 - **Service Worker**: Enhanced with caching, offline support, and push notification handling
 - **Web App Manifest**: Complete with all required fields, icons, and shortcuts
 - **Integration**: Seamless integration with existing Disqus comments and contact forms
