@@ -7,6 +7,15 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Migrating to VS Code',
+    date: 'October 25, 2025',
+    lastModified: 'October 25, 2025',
+    excerpt: 'A reflective journey on transitioning to Visual Studio Code, exploring how this powerful editor enhanced productivity and transformed the development workflow through its extensive features and vibrant community.',
+    tags: ['VS Code', 'Development Tools', 'Productivity', 'Software Development', 'IDE', 'Developer Experience'],
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/MigratingToVsSCode',
+  },
+  {
     title: 'My Reminiscences',
     date: 'October 24, 2025',
     lastModified: 'October 24, 2025',
