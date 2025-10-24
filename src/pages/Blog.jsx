@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'Bitcoin Rails: Value Moves on Math, Not Promises',
+    date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    lastModified: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    excerpt:
+      'A Feynman-style explanation of how Bitcoin works as mathematical rails for value transfer. Explore the base layer, Lightning Network, and the revolutionary concept of trustless verification through cryptographic proof.',
+    tags: ['Bitcoin', 'Blockchain', 'Lightning Network', 'Cryptocurrency', 'Education', 'Mathematics', 'Cryptography', 'Decentralization'],
+    image:
+      'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=800&q=80',
+    link: '/blog/bitcoin-rails-explained',
+  },
+  {
     title: 'The OpenAI Ecosystem Explained: A Complete Guide to Products, Features, and Competition',
     date: 'October 23, 2025',
     lastModified: 'October 23, 2025',

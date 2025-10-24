@@ -132,6 +132,16 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split('T')[0],
     dateModified: new Date().toISOString().split('T')[0],
   },
+  'bitcoin-rails-explained': {
+    title: 'Bitcoin Rails: Value Moves on Math, Not Promises',
+    description:
+      'A Feynman-style explanation of how Bitcoin works as mathematical rails for value transfer. Explore the base layer, Lightning Network, and the revolutionary concept of trustless verification through cryptographic proof.',
+    image:
+      'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=800&q=80',
+    tags: ['Bitcoin', 'Blockchain', 'Lightning Network', 'Cryptocurrency', 'Education', 'Mathematics', 'Cryptography', 'Decentralization'],
+    datePublished: new Date().toISOString().split('T')[0],
+    dateModified: new Date().toISOString().split('T')[0],
+  },
 };
 
 export function getBlogSeo(slug) {

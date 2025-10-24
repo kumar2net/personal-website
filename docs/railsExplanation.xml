@@ -1,0 +1,153 @@
+Awesome—here’s a clean, copy-pasteable SVG you can drop into any HTML file (or open as a .svg) to see a Feynman-style sketch of Bitcoin rails + Lightning. It’s self-contained—no external fonts or CSS.
+
+<svg width="980" height="620" viewBox="0 0 980 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Bitcoin Rails — Feynman-style Diagram</title>
+  <desc id="desc">Shows value flow from sender wallet through nodes and miners to blockchain and receiver wallet; includes Lightning channel as an express track.</desc>
+  <defs>
+    <!-- Arrowheads -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+    <!-- Subtle shadow -->
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-opacity="0.2"/>
+    </filter>
+    <!-- Box style -->
+    <style>
+      .box{ fill:#fff; stroke:#333; stroke-width:1.5; rx:10; }
+      .title{ font:700 18px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; fill:#111;}
+      .text{ font:500 14px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; fill:#333;}
+      .muted{ fill:#666; font:12px ui-sans-serif, system-ui;}
+      .note{ fill:#0b6; font:600 12px ui-sans-serif, system-ui;}
+      .rail{ stroke:#555; stroke-width:3; stroke-dasharray:6 6; }
+      .arrow{ stroke:#333; stroke-width:2; fill:none; marker-end:url(#arrow);}
+      .hl{ fill:#f6ffef; stroke:#0b6; }
+      .chain{ fill:#f7f7ff; stroke:#4453ff; }
+      .pow{ fill:#fff7eb; stroke:#ff9900; }
+      .chip{ fill:#fafafa; stroke:#bbb; rx:6;}
+    </style>
+  </defs>
+
+  <!-- Header -->
+  <text x="20" y="36" class="title">Bitcoin rails: value moves on math, not promises</text>
+  <text x="20" y="58" class="muted">Base layer = slow but final settlement • Lightning = instant micropayments that settle back to base</text>
+
+  <!-- Base rail (dashed track) -->
+  <line x1="40" y1="210" x2="940" y2="210" class="rail"/>
+  <text x="45" y="198" class="muted">Base Layer (Bitcoin)</text>
+
+  <!-- Sender Wallet -->
+  <g transform="translate(60,120)" filter="url(#softShadow)">
+    <rect class="box" width="180" height="120"/>
+    <text x="90" y="28" text-anchor="middle" class="title">Wallet (Sender)</text>
+    <rect x="16" y="42" width="148" height="28" class="chip"/>
+    <text x="90" y="61" text-anchor="middle" class="text">Private Key</text>
+    <text x="90" y="94" text-anchor="middle" class="muted">Signs a transaction</text>
+  </g>
+
+  <!-- Arrow to Nodes -->
+  <path d="M 240 180 C 300 180, 320 180, 360 180" class="arrow"/>
+
+  <!-- Network Nodes -->
+  <g transform="translate(360,110)" filter="url(#softShadow)">
+    <rect class="box" width="210" height="140"/>
+    <text x="105" y="28" text-anchor="middle" class="title">Full Nodes</text>
+    <text x="105" y="52" text-anchor="middle" class="text">• Validate signature</text>
+    <text x="105" y="72" text-anchor="middle" class="text">• Check UTXOs (you own it?)</text>
+    <text x="105" y="92" text-anchor="middle" class="text">• Enforce consensus rules</text>
+    <text x="105" y="114" text-anchor="middle" class="muted">If valid → relay to miners</text>
+  </g>
+
+  <!-- Arrow to Miners -->
+  <path d="M 570 180 C 610 180, 630 180, 660 180" class="arrow"/>
+
+  <!-- Miners / PoW -->
+  <g transform="translate(660,110)" filter="url(#softShadow)">
+    <rect class="box pow" width="220" height="140"/>
+    <text x="110" y="28" text-anchor="middle" class="title">Miners (Proof-of-Work)</text>
+    <text x="110" y="54" text-anchor="middle" class="text">• Pack valid txs into a block</text>
+    <text x="110" y="76" text-anchor="middle" class="text">• Find nonce → lowest hash</text>
+    <text x="110" y="98" text-anchor="middle" class="text">• Broadcast winning block</text>
+    <text x="110" y="120" text-anchor="middle" class="muted">Security = expended energy</text>
+  </g>
+
+  <!-- Down arrow to Blockchain -->
+  <path d="M 770 250 L 770 310" class="arrow"/>
+
+  <!-- Blockchain Ledger -->
+  <g transform="translate(610,310)" filter="url(#softShadow)">
+    <rect class="box chain" width="320" height="150"/>
+    <text x="160" y="28" text-anchor="middle" class="title">Blockchain (Public Ledger)</text>
+    <!-- Stylized blocks -->
+    <rect x="20" y="50" width="80" height="30" class="chip"/>
+    <rect x="110" y="50" width="80" height="30" class="chip"/>
+    <rect x="200" y="50" width="80" height="30" class="chip"/>
+    <text x="160" y="104" text-anchor="middle" class="text">Immutable history of transfers</text>
+    <text x="160" y="126" text-anchor="middle" class="muted">Finality grows with confirmations</text>
+  </g>
+
+  <!-- Arrow from chain to Receiver -->
+  <path d="M 610 385 C 540 385, 520 385, 470 385" class="arrow"/>
+  <path d="M 470 385 C 420 385, 380 320, 320 320" class="arrow"/>
+
+  <!-- Receiver Wallet -->
+  <g transform="translate(120,320)" filter="url(#softShadow)">
+    <rect class="box" width="200" height="140"/>
+    <text x="100" y="28" text-anchor="middle" class="title">Wallet (Receiver)</text>
+    <text x="100" y="58" text-anchor="middle" class="text">UTXO now controlled by</text>
+    <text x="100" y="78" text-anchor="middle" class="text">receiver’s public key</text>
+    <text x="100" y="106" text-anchor="middle" class="muted">Spendable after confirmations</text>
+  </g>
+
+  <!-- Lightning Section -->
+  <g transform="translate(40,480)">
+    <text x="0" y="-18" class="muted">Layer 2 (Lightning) — express track for small/fast payments</text>
+    <!-- Lightning rail -->
+    <line x1="0" y1="0" x2="900" y2="0" class="rail" stroke="#0b6"/>
+    <!-- Channel box -->
+    <g transform="translate(70,-70)" filter="url(#softShadow)">
+      <rect class="box hl" width="320" height="110"/>
+      <text x="160" y="24" text-anchor="middle" class="title">Payment Channel</text>
+      <text x="160" y="48" text-anchor="middle" class="text">Lock BTC on-chain ➜ trade IOUs off-chain</text>
+      <text x="160" y="70" text-anchor="middle" class="muted">Only open/close hit the blockchain</text>
+    </g>
+    <!-- Hop nodes -->
+    <g transform="translate(440,-38)" filter="url(#softShadow)">
+      <rect class="box" width="120" height="46"/>
+      <text x="60" y="28" text-anchor="middle" class="text">Routing Node</text>
+    </g>
+    <g transform="translate(590,-38)" filter="url(#softShadow)">
+      <rect class="box" width="120" height="46"/>
+      <text x="60" y="28" text-anchor="middle" class="text">Routing Node</text>
+    </g>
+    <!-- Lightning arrows -->
+    <path d="M 390 -15 L 440 -15" class="arrow" stroke="#0b6"/>
+    <path d="M 560 -15 L 590 -15" class="arrow" stroke="#0b6"/>
+    <path d="M 710 -15 L 860 -15" class="arrow" stroke="#0b6"/>
+    <!-- S/R labels -->
+    <text x="30" y="-24" class="note">Sender</text>
+    <text x="880" y="-24" class="note" text-anchor="end">Receiver</text>
+    <!-- Notes -->
+    <text x="0" y="32" class="muted">• Instant, low-fee updates secured by HTLCs</text>
+    <text x="0" y="52" class="muted">• Final settlement occurs when channels close on base layer</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(20,78)">
+    <rect x="0" y="0" width="14" height="14" class="box"/>
+    <text x="24" y="12" class="muted">Component</text>
+    <line x1="120" y1="7" x2="150" y2="7" class="arrow"/>
+    <text x="158" y="12" class="muted">Flow of messages/value</text>
+    <rect x="330" y="0" width="14" height="14" class="pow"/>
+    <text x="350" y="12" class="muted">Proof-of-Work miner</text>
+    <rect x="520" y="0" width="14" height="14" class="chain"/>
+    <text x="540" y="12" class="muted">Blockchain (ledger)</text>
+    <rect x="730" y="0" width="14" height="14" class="hl"/>
+    <text x="750" y="12" class="muted">Lightning channel</text>
+  </g>
+
+  <!-- Feynman-style takeaway -->
+  <text x="20" y="600" class="text">Feynman takeaway: “If many strangers can verify it, you don’t need to trust a middleman.”</text>
+</svg>
+
+Want a version with your brand colors or a darker theme? Say the word and I’ll tweak the palette or export a lightweight .png too.
