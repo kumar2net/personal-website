@@ -78,7 +78,7 @@ const MyReminiscences = () => {
                   <div className="bg-green-100 p-4 rounded-lg">
                     <p className="text-green-800 text-sm italic">
                       🏦 Two decades in finance is a lifetime of witnessing transformation, and the current wave 
-                      of disintermediation is reshaping the very foundations of traditional banking. These 2 kins of our Bhishma Pitamaha Sir are doing well in their respective fields.
+                      of disintermediation is reshaping the very foundations of traditional banking.
                     </p>
                   </div>
                 </div>
@@ -189,13 +189,32 @@ const MyReminiscences = () => {
                 </div>
               </div>
 
+              {/* Section 8 */}
+              <div className="mb-8">
+                <h2 className="text-3xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <span className="w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">8</span>
+                  Never know Nat had this talent!
+                </h2>
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Nat's cover of <em>Sabari Malayil Vanna Chandrodayam</em> on StarMaker,
+                    and it feels both thrilling and a little surreal for me to share it. <a className="text-blue-600 hover:text-blue-800" href="https://m.starmakerstudios.com/a-vue3/playrecording?app=sm&amp;from_sid=100114940153&amp;guide_type=2&amp;pg_rf_ca_vn=20&amp;pid=recordingsharing&amp;recordingId=1970324913924732&amp;share_type=whatsapp" target="_blank" rel="noopener noreferrer"></a>
+                  </p>
+                  <div className="bg-pink-100 p-4 rounded-lg">
+                    <p className="text-pink-800 text-sm italic">
+                      🎶 Sometimes the quietest passions surprise even ourselves—turns out the startup mentor loves a good melody too.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Conclusion */}
               <div className="mt-12 p-8 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl border-l-4 border-gray-400">
                 <h3 className="text-2xl font-semibold text-gray-800 mb-4">Reflections</h3>
                 <p className="text-gray-700 leading-relaxed">
                   These reminiscences capture moments of connection, observation, and reflection. They remind us 
                   that life's beauty lies not just in the big moments, but in the quiet observations of how our 
-                  loved ones navigate their journeys. Each story, each challenge, each adaptation tells a larger 
+                  loved ones navigate their journeys inspite of all the challenges. Each story, each challenge, each adaptation tells a larger 
                   story of human resilience and the ever-changing landscape of our world.
                 </p>
               </div>

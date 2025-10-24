@@ -10,6 +10,10 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 
 ## 📝 **Latest Updates**
 
+### **🛠️ My Reminiscences Maintenance (October 2025)**
+- ✅ Fixed a missing closing wrapper in the "My Reminiscences" blog post JSX so the page renders cleanly.
+- ✅ Refresh of supporting documentation (`docs/myReminiscices.md`, session and final status logs) to match the published structure.
+
 ### **📊 Mobile-Responsive SVG Diagrams (October 2025)**
 - ✅ **Replaced Mermaid Diagrams**: Converted all 4 diagrams to custom SVG graphics
 - ✅ **Mobile-First Design**: Perfect scaling on all devices with responsive viewBox
