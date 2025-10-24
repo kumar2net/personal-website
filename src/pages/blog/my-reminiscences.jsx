@@ -78,7 +78,7 @@ const MyReminiscences = () => {
                   <div className="bg-green-100 p-4 rounded-lg">
                     <p className="text-green-800 text-sm italic">
                       🏦 Two decades in finance is a lifetime of witnessing transformation, and the current wave 
-                      of disintermediation is reshaping the very foundations of traditional banking.
+                      of disintermediation is reshaping the very foundations of traditional banking. These 2 kins of our Bhishma Pitamaha Sir are doing well in their respective fields.
                     </p>
                   </div>
                 </div>
@@ -135,7 +135,7 @@ const MyReminiscences = () => {
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Senior most boy is coming to terms with the vagaries of hostile valley life and I am sure he 
                     will fight it out. JK too trying to get paper work sorted out to restart her CPA work life 
-                    adapting to the great country accounting standard & practices.
+                    adapting to the great country's accounting standard & practices.
                   </p>
                   <div className="bg-red-100 p-4 rounded-lg">
                     <p className="text-red-800 text-sm italic">
