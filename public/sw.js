@@ -1,7 +1,7 @@
 // Enhanced Service Worker with Push Notifications - Navigation Bypass for Performance
-const CACHE_NAME = 'kumar-portfolio-v4';
-const STATIC_CACHE = 'static-v4';
-const DYNAMIC_CACHE = 'dynamic-v4';
+const CACHE_NAME = 'kumar-portfolio-v5';
+const STATIC_CACHE = 'static-v5';
+const DYNAMIC_CACHE = 'dynamic-v5';
 const VAPID_PUBLIC_KEY = 'BELKiWd8WXb2XDBaUZspzdYNeXxSZqL6gRqfgZCl9V1f6NsiBSgCyHU_1ML0GTxwtiE98bUY4HyIriItcGDo3Jg';
 
 // Install event - cache static assets

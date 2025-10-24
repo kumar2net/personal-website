@@ -21,49 +21,34 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (!id.includes('node_modules')) {
-            return undefined
+            return undefined;
           }
 
-          // Core React runtime
-          if (id.includes('/node_modules/react/') || id.includes('/node_modules/react-dom/')) {
-            return 'react-core'
-          }
-
-          // Router utilities
           if (id.includes('/node_modules/react-router/')) {
-            return 'react-router'
+            return 'react-router';
           }
 
-          // Animation libraries
           if (id.includes('/node_modules/framer-motion/')) {
-            return 'framer'
+            return 'framer';
           }
 
-          // Markdown pipeline
           if (
             id.includes('/node_modules/react-markdown/') ||
             id.includes('/node_modules/remark-') ||
             id.includes('/node_modules/rehype-')
           ) {
-            return 'markdown'
+            return 'markdown';
           }
 
-          // Icon libraries in their own chunk
           if (
             id.includes('/node_modules/react-icons/') ||
             id.includes('/node_modules/@heroicons/') ||
             id.includes('/node_modules/lucide-react/')
           ) {
-            return 'icons'
+            return 'icons';
           }
 
-          // Helmet and other small utilities
-          if (id.includes('/node_modules/react-helmet-async/')) {
-            return 'helmet'
-          }
-
-          // Everything else from node_modules goes to vendor
-          return 'vendor'
+          return 'vendor';
         },
         // Optimize chunk naming for better caching
         chunkFileNames: 'assets/[name]-[hash].js',
