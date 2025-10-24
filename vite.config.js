@@ -20,30 +20,50 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Split React core libraries
-          if (id.includes('react') || id.includes('react-dom')) {
-            return 'react-core';
+          if (!id.includes('node_modules')) {
+            return undefined
           }
-          // Split react-router separately for better caching
-          if (id.includes('react-router')) {
-            return 'react-router';
+
+          // Core React runtime
+          if (id.includes('/node_modules/react/') || id.includes('/node_modules/react-dom/')) {
+            return 'react-core'
           }
-          // Split framer-motion separately (large animation library)
-          if (id.includes('framer-motion')) {
-            return 'framer';
+
+          // Router utilities
+          if (id.includes('/node_modules/react-router/')) {
+            return 'react-router'
           }
-          // Split markdown and related libraries
-          if (id.includes('react-markdown') || id.includes('remark-gfm') || id.includes('rehype')) {
-            return 'markdown';
+
+          // Animation libraries
+          if (id.includes('/node_modules/framer-motion/')) {
+            return 'framer'
           }
-          // Split helmet and other small utilities
-          if (id.includes('react-helmet-async') || id.includes('lucide-react')) {
-            return 'utils';
+
+          // Markdown pipeline
+          if (
+            id.includes('/node_modules/react-markdown/') ||
+            id.includes('/node_modules/remark-') ||
+            id.includes('/node_modules/rehype-')
+          ) {
+            return 'markdown'
           }
+
+          // Icon libraries in their own chunk
+          if (
+            id.includes('/node_modules/react-icons/') ||
+            id.includes('/node_modules/@heroicons/') ||
+            id.includes('/node_modules/lucide-react/')
+          ) {
+            return 'icons'
+          }
+
+          // Helmet and other small utilities
+          if (id.includes('/node_modules/react-helmet-async/')) {
+            return 'helmet'
+          }
+
           // Everything else from node_modules goes to vendor
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
+          return 'vendor'
         },
         // Optimize chunk naming for better caching
         chunkFileNames: 'assets/[name]-[hash].js',
