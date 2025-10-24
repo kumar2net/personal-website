@@ -114,7 +114,7 @@ const MyReminiscences = () => {
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Our Data Scientist boy in Birmingham is coming up with nice insights/actionable data in charts 
-                    for his company sales, marketing team folk and dabbling around with ML algo's too which is very critical.
+                    for his company sales, marketing team folks and dabbling around with ML algo's too which is very critical.
                   </p>
                   <div className="bg-purple-100 p-4 rounded-lg">
                     <p className="text-purple-800 text-sm italic">
