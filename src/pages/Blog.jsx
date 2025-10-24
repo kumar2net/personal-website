@@ -15,7 +15,7 @@ const blogPosts = [
     tags: ['Family', 'Technology', 'AI & ML', 'Cryptocurrency', 'Data Science', 'Personal Reflections', 'Mobile Services', 'Finance'],
     image:
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
-    link: '/my-reminiscences',
+    link: '/blog/my-reminiscences',
   },
   {
     title: 'Bitcoin Rails: Value Moves on Math, Not Promises',

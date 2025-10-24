@@ -2,7 +2,7 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
-  'my-reminiscences': {
+  'blog/my-reminiscences': {
     title: 'My Reminiscences',
     description:
       'Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections - these reminiscences capture moments of growth, resilience, and the ever-changing landscape of our world.',
