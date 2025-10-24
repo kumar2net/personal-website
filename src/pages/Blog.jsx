@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from '../utils/contentDates';
 
 const blogPosts = [
   {
+    title: 'My Reminiscences',
+    date: 'October 24, 2025',
+    lastModified: 'October 24, 2025',
+    excerpt:
+      'Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections - these reminiscences capture moments of growth, resilience, and the ever-changing landscape of our world.',
+    tags: ['Family', 'Technology', 'AI & ML', 'Cryptocurrency', 'Data Science', 'Personal Reflections', 'Mobile Services', 'Finance'],
+    image:
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+    link: '/my-reminiscences',
+  },
+  {
     title: 'Bitcoin Rails: Value Moves on Math, Not Promises',
     date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     lastModified: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),

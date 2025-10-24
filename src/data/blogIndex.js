@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  'my-reminiscences': {
+    title: 'My Reminiscences',
+    description:
+      'Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections - these reminiscences capture moments of growth, resilience, and the ever-changing landscape of our world.',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80',
+    tags: ['Family', 'Technology', 'AI & ML', 'Cryptocurrency', 'Data Science', 'Personal Reflections', 'Mobile Services', 'Finance'],
+    datePublished: '2025-10-24',
+    dateModified: '2025-10-24',
+  },
   'openai-ecosystem-explained': {
     title: 'The OpenAI Ecosystem Explained: A Complete Guide to Products, Features, and Competition',
     description:

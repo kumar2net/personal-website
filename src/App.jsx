@@ -47,6 +47,7 @@ const UtilitiesDashboard = lazy(() => import('./pages/UtilitiesDashboard'));
 const VocabAdditions = lazy(() => import('./pages/VocabAdditions'));
 const NaruviWaterIssues = lazy(() => import('./pages/naruvi'));
 const Notifications = lazy(() => import('./pages/Notifications'));
+const MyReminiscences = lazy(() => import('./pages/MyReminiscences'));
 
 // Admin CMS removed
 
@@ -589,6 +590,20 @@ function App() {
                     type="website"
                   />
                   <Blog />
+                </>
+              }
+            />
+            <Route
+              path="/my-reminiscences"
+              element={
+                <>
+                  <SEO
+                    title="My Reminiscences"
+                    description="Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections."
+                    canonicalPath="/my-reminiscences"
+                    type="article"
+                  />
+                  <MyReminiscences />
                 </>
               }
             />
