@@ -10,6 +10,14 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 
 ## 📝 **Latest Updates**
 
+### **⚙️ Build Chunk Optimization (October 2025)**
+- ✅ Reworked manual chunk splits in `vite.config.js` to isolate React core, router, animations, markdown tooling, and icon libraries for better caching and bundle size control.
+- ✅ Added a flashcard icon map helper so the Learning pages only reference the specific Lucide icons they render, reducing the default icons bundle in production builds.
+
+### **🛡️ Service Worker Cache Refresh (October 2025)**
+- ✅ Switched navigation requests to a network-first strategy and bumped cache versions so new deployments always serve the latest HTML.
+- ✅ Retained offline fallback support while preventing stale bundles that previously caused `createContext` errors.
+
 ### **🛠️ My Reminiscences Maintenance (October 2025)**
 - ✅ Fixed a missing closing wrapper in the "My Reminiscences" blog post JSX so the page renders cleanly.
 - ✅ Refresh of supporting documentation (`docs/myReminiscices.md`, session and final status logs) to match the published structure.

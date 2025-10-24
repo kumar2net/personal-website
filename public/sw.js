@@ -1,7 +1,7 @@
 // Enhanced Service Worker with Push Notifications - Navigation Bypass for Performance
-const CACHE_NAME = 'kumar-portfolio-v3';
-const STATIC_CACHE = 'static-v3';
-const DYNAMIC_CACHE = 'dynamic-v3';
+const CACHE_NAME = 'kumar-portfolio-v4';
+const STATIC_CACHE = 'static-v4';
+const DYNAMIC_CACHE = 'dynamic-v4';
 const VAPID_PUBLIC_KEY = 'BELKiWd8WXb2XDBaUZspzdYNeXxSZqL6gRqfgZCl9V1f6NsiBSgCyHU_1ML0GTxwtiE98bUY4HyIriItcGDo3Jg';
 
 // Install event - cache static assets
@@ -96,6 +96,29 @@ self.addEventListener('fetch', event => {
               }
             );
           });
+        })
+    );
+    return;
+  }
+
+  // Handle navigation/document requests - network first to avoid stale HTML
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          const responseClone = response.clone();
+          caches.open(STATIC_CACHE).then(cache => {
+            cache.put(request, responseClone);
+          });
+          return response;
+        })
+        .catch(async () => {
+          const cachedResponse = await caches.match(request);
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          const offlineFallback = await caches.match('/offline.html');
+          return offlineFallback || Response.error();
         })
     );
     return;

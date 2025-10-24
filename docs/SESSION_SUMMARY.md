@@ -10,6 +10,9 @@ Created "My Reminiscences" blog post from personal content with minimal paraphra
 ## October 25, 2025
 Updated the supporting documentation after fixing the JSX wrapper on "My Reminiscences." Cleaned up the source notes in `docs/myReminiscices.md` so the outline matches the published post and recorded the maintenance work for future reference.
 
+## October 26, 2025
+Addressed the Vite build chunk warning by refining the manual chunk strategy in `vite.config.js` and adding a dedicated flashcard icon map so Learning pages only pull the icons they need. Production builds now keep each chunk under the 500 kB threshold. Also updated the service worker to use a network-first strategy for navigation requests (with fresh cache versions) to prevent stale HTML from serving outdated bundles.
+
 ## 🎯 Objectives
 1. Replace custom comment system with Disqus integration
 2. Fix mobile Chrome blank screen issue

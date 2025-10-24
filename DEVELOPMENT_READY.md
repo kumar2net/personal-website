@@ -11,6 +11,7 @@
 - **Problem**: Cached resources interfering with HMR
 - **Solution**: Service Worker disabled in development mode
 - **Status**: Auto-unregisters on dev server start
+- **Production Update**: Navigation requests use network-first caching so fresh HTML arrives after each deploy
 
 ### 3. WebSocket Errors - RESOLVED ✅
 - **Problem**: Netlify Dev proxy issues
@@ -21,6 +22,11 @@
 - **Problem**: Service Worker cache conflicts
 - **Solution**: Dev mode cache bypass
 - **Status**: All modules load cleanly
+
+### 5. Chunk Size Warnings - RESOLVED ✅
+- **Problem**: Vite production builds flagged chunks above the 500 kB limit
+- **Solution**: Refined manual chunk configuration and trimmed icon imports to keep bundles smaller
+- **Status**: Build completes without chunk warnings
 
 ## Test Results
 
@@ -237,4 +243,3 @@ All browser errors fixed, performance optimized, and documentation complete.
 **Last Tested**: October 22, 2025  
 **Environment**: macOS 25.0.0, Node 20, Vite 5.0.12  
 **Next Action**: Start developing with confidence  
-
