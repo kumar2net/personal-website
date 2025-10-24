@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ContentBadge from '../components/ContentBadge';
 import SEO from '../components/SEO';
@@ -659,12 +658,7 @@ const Blog = () => {
   const processedPosts = blogPosts.map(addLastModifiedIfMissing);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-6xl mx-auto px-4 py-8"
-    >
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <SEO
         title="Blog"
         description="Latest posts on technology, learning, notes, and personal writing."
@@ -755,7 +749,7 @@ const Blog = () => {
           Load More
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
