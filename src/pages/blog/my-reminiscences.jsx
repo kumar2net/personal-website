@@ -8,7 +8,7 @@ const MyReminiscences = () => {
         <title>My Reminiscences - Kumar's Personal Website</title>
         <meta name="description" content="Personal reflections on family, technology, and life changes over the years" />
         <meta name="keywords" content="family, technology, mobile services, AI, cryptocurrency, data science, reminiscences" />
-        <link rel="canonical" href="https://kumar.website/my-reminiscences" />
+        <link rel="canonical" href="https://kumar.website/blog/my-reminiscences" />
       </Helmet>
       
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
