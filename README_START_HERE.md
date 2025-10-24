@@ -116,6 +116,8 @@ $ npm run dev:vite
 # ✅ Zero errors
 # ✅ Clean console
 # ✅ Smooth development
+# ✅ Production bundles stay below Vite chunk warning threshold
+# ✅ Service worker always pulls fresh HTML (no more stale bundle errors)
 ```
 
 ## Chrome DevTools Verification
@@ -227,4 +229,3 @@ DO NOT DELETE:
 **Last Tested**: October 22, 2025  
 
 **Questions?** Check `DEVELOPMENT_READY.md` for complete guide.
-
