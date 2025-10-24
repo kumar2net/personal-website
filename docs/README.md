@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** September 2025
+**Last Updated:** October 2025 (documentation refresh for "My Reminiscences")
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, Music curation, and integrated analytics.
 
