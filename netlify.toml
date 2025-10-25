@@ -3,22 +3,17 @@
   command = "npm ci --include=dev && npm run build"
   publish = "dist"
   environment = { SECRETS_SCAN_ENABLED = "false", NODE_VERSION = "20", NPM_FLAGS = "--include=dev", VAPID_PUBLIC_KEY = "BELKiWd8WXb2XDBaUZspzdYNeXxSZqL6gRqfgZCl9V1f6NsiBSgCyHU_1ML0GTxwtiE98bUY4HyIriItcGDo3Jg", VAPID_PRIVATE_KEY = "Sf7aQeY6YNeF0a2ys_kDP2bjBXVjDHYVFmx_Y-gU62Q", VAPID_EMAIL = "kumar@example.com" }
-
 # Form processing
 [build.processing]
   skip_processing = false
-
 [build.processing.css]
   bundle = true
   minify = true
-
 [build.processing.js]
   bundle = true
   minify = true
-
 [build.processing.html]
   pretty_urls = true
-
 # Headers for performance optimization
 [[headers]]
   for = "/*"
@@ -27,69 +22,56 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
 [[headers]]
   for = "*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
 [[headers]]
   for = "*.woff2"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
 [[headers]]
   for = "*.png"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
-
 [[headers]]
   for = "*.jpg"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
-
 [[headers]]
   for = "*.jpeg"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
-
 [[headers]]
   for = "*.webp"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
-
 # PWA Headers
 [[headers]]
   for = "/manifest.json"
   [headers.values]
     Content-Type = "application/manifest+json"
     Cache-Control = "public, max-age=31536000"
-
 [[headers]]
   for = "/sw.js"
   [headers.values]
     Content-Type = "application/javascript"
     Cache-Control = "public, max-age=0"
-
 [[headers]]
   for = "/offline.html"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
-
 # Netlify functions for security and CSP headers
 [functions]
   directory = "netlify/functions"
-
 [dev]
   framework = "#custom"
   command = "vite"
@@ -100,53 +82,22 @@
   
   [dev.env]
   NODE_OPTIONS = "--max-old-space-size=4096"
-
 # Add security headers via edge functions
 [[edge_functions]]
   function = "csp-headers"
   path = "/*"
-
 # PWA Configuration - VAPID keys added to build.environment above
-
-# Serve static files directly (PDFs, images, etc.)
-[[redirects]]
-  from = "/docs/*"
-  to = "/docs/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/public/*"
-  to = "/public/:splat"
-  status = 200
-  force = true
-
-# Serve static files directly (PDFs, images, etc.)
-[[redirects]]
-  from = "/docs/*"
-  to = "/docs/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/public/*"
-  to = "/public/:splat"
-  status = 200
-  force = true
-
 # API proxy to Netlify function for topics
 [[redirects]]
   from = "/api/recommendations/topics"
   to = "/.netlify/functions/api-recommendations-topics"
   status = 200
   force = true
-
 [[redirects]]
   from = "/api/debug/top-signals"
   to = "/.netlify/functions/debug-top-signals"
   status = 200
   force = true
-
 # SPA fallback - redirect all other requests to index.html (lowest priority)
 [[redirects]]
   from = "/*"
