@@ -1,5 +1,14 @@
+// Ensure React is loaded first to prevent context issues
 import React from "react";
 import ReactDOM from "react-dom/client";
+
+// Verify React is properly loaded before importing Router
+if (typeof React.createContext !== "function") {
+  throw new Error(
+    "React createContext is not available. Please check React installation.",
+  );
+}
+
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App.jsx";
@@ -64,6 +73,12 @@ const renderApp = () => {
     return;
   }
 
+  // Additional React Router context verification
+  if (typeof React.createContext !== "function") {
+    console.error("React createContext is not available");
+    return;
+  }
+
   try {
     ReactDOM.createRoot(rootElement).render(
       <React.StrictMode>
@@ -76,6 +91,17 @@ const renderApp = () => {
     );
   } catch (error) {
     console.error("Error rendering app:", error);
+    // Fallback error display
+    rootElement.innerHTML = `
+      <div style="padding: 20px; color: red; font-family: monospace;">
+        <h2>Application Error</h2>
+        <p>Failed to load the application. Please refresh the page.</p>
+        <details>
+          <summary>Error Details</summary>
+          <pre>${error.message}</pre>
+        </details>
+      </div>
+    `;
   }
 };
 
