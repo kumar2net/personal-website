@@ -22,6 +22,8 @@ export default defineConfig({
       "react-router": resolve("node_modules/react-router"),
       react: resolve("node_modules/react"),
       "react-dom": resolve("node_modules/react-dom"),
+      // Prevent duplicate scheduler instances
+      scheduler: resolve("node_modules/scheduler"),
     },
   },
   define: {
@@ -35,7 +37,7 @@ export default defineConfig({
     minify: "terser",
     cssMinify: true,
     sourcemap: false,
-    target: "es2020",
+    target: "es2022",
     rollupOptions: {
       output: {
         manualChunks: (id) => {
@@ -43,34 +45,52 @@ export default defineConfig({
             return undefined;
           }
 
-          // Keep React Router in its own chunk to prevent context issues
-          if (
-            id.includes("/node_modules/react-router-dom/") ||
-            id.includes("/node_modules/react-router/")
-          ) {
-            return "react-router";
-          }
-
-          // Keep React core in its own chunk
+          // Keep React core dependencies together first
           if (
             id.includes("/node_modules/react/") ||
-            id.includes("/node_modules/react-dom/")
+            id.includes("/node_modules/react-dom/") ||
+            id.includes("/node_modules/scheduler/") ||
+            id.includes("/node_modules/react-reconciler/")
           ) {
             return "react-core";
           }
 
-          if (id.includes("/node_modules/framer-motion/")) {
-            return "framer";
+          // Keep React Router separate but after React core
+          if (
+            id.includes("/node_modules/react-router-dom/") ||
+            id.includes("/node_modules/react-router/") ||
+            id.includes("/node_modules/@remix-run/router/")
+          ) {
+            return "react-router";
           }
 
+          // Separate large UI libraries
+          if (id.includes("/node_modules/framer-motion/")) {
+            return "framer-motion";
+          }
+
+          // Group markdown processing libraries
           if (
             id.includes("/node_modules/react-markdown/") ||
             id.includes("/node_modules/remark-") ||
-            id.includes("/node_modules/rehype-")
+            id.includes("/node_modules/rehype-") ||
+            id.includes("/node_modules/unified/") ||
+            id.includes("/node_modules/micromark/") ||
+            id.includes("/node_modules/mdast-") ||
+            id.includes("/node_modules/hast-")
           ) {
             return "markdown";
           }
 
+          // Group helmet separately to prevent React context issues
+          if (
+            id.includes("/node_modules/react-helmet-async/") ||
+            id.includes("/node_modules/react-helmet/")
+          ) {
+            return "helmet";
+          }
+
+          // Group all icon libraries
           if (
             id.includes("/node_modules/react-icons/") ||
             id.includes("/node_modules/@heroicons/") ||
@@ -79,6 +99,17 @@ export default defineConfig({
             return "icons";
           }
 
+          // Group utility libraries that might cause circular deps
+          if (
+            id.includes("/node_modules/lodash") ||
+            id.includes("/node_modules/classnames") ||
+            id.includes("/node_modules/clsx") ||
+            id.includes("/node_modules/prop-types")
+          ) {
+            return "utils";
+          }
+
+          // Everything else goes to vendor
           return "vendor";
         },
         // Optimize chunk naming for better caching
@@ -148,25 +179,38 @@ export default defineConfig({
     // Add CORS headers for development
     cors: true,
   },
-  // Optimize dependencies to prevent esbuild crashes
+  // Optimize dependencies to prevent esbuild crashes and circular deps
   optimizeDeps: {
     include: [
-      "react-router-dom",
-      "react-router",
       "react",
       "react-dom",
       "react/jsx-runtime",
+      "react-router-dom",
+      "react-router",
+      "framer-motion",
     ],
-    exclude: ["docx-preview", "tesseract.js", "pdfjs-dist"],
+    exclude: [
+      "docx-preview",
+      "tesseract.js",
+      "pdfjs-dist",
+      "react-icons",
+      "@heroicons/react",
+      "lucide-react",
+      "react-helmet-async",
+    ],
     esbuildOptions: {
       // Increase memory limit for esbuild
-      target: "es2020",
+      target: "es2022",
       loader: {
         ".js": "jsx",
       },
       define: {
         global: "globalThis",
       },
+      // Prevent circular dependency issues
+      treeShaking: true,
+      // Handle module resolution more carefully
+      mainFields: ["browser", "module", "main"],
     },
     force: true, // Force re-optimization of dependencies
   },
