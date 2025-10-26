@@ -1,60 +1,60 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
-import { readdirSync } from 'fs'
-import { fileURLToPath } from 'url'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { resolve } from "path";
+import { readdirSync } from "fs";
+import { fileURLToPath } from "url";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     // Ensure single React instance to prevent useContext errors
-    dedupe: ['react', 'react-dom', 'framer-motion'],
+    dedupe: ["react", "react-dom", "react-router-dom", "framer-motion"],
   },
   build: {
-    outDir: 'dist',
-    minify: 'terser',
+    outDir: "dist",
+    minify: "terser",
     cssMinify: true,
     sourcemap: false,
-    target: 'es2020',
+    target: "es2020",
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (!id.includes('node_modules')) {
+          if (!id.includes("node_modules")) {
             return undefined;
           }
 
-          if (id.includes('/node_modules/react-router/')) {
-            return 'react-router';
+          if (id.includes("/node_modules/react-router/")) {
+            return "react-router";
           }
 
-          if (id.includes('/node_modules/framer-motion/')) {
-            return 'framer';
-          }
-
-          if (
-            id.includes('/node_modules/react-markdown/') ||
-            id.includes('/node_modules/remark-') ||
-            id.includes('/node_modules/rehype-')
-          ) {
-            return 'markdown';
+          if (id.includes("/node_modules/framer-motion/")) {
+            return "framer";
           }
 
           if (
-            id.includes('/node_modules/react-icons/') ||
-            id.includes('/node_modules/@heroicons/') ||
-            id.includes('/node_modules/lucide-react/')
+            id.includes("/node_modules/react-markdown/") ||
+            id.includes("/node_modules/remark-") ||
+            id.includes("/node_modules/rehype-")
           ) {
-            return 'icons';
+            return "markdown";
           }
 
-          return 'vendor';
+          if (
+            id.includes("/node_modules/react-icons/") ||
+            id.includes("/node_modules/@heroicons/") ||
+            id.includes("/node_modules/lucide-react/")
+          ) {
+            return "icons";
+          }
+
+          return "vendor";
         },
         // Optimize chunk naming for better caching
-        chunkFileNames: 'assets/[name]-[hash].js',
-        entryFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]",
+      },
     },
     // Copy public directory to dist
     copyPublicDir: true,
@@ -65,13 +65,18 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
-      }
-    }
+        pure_funcs: [
+          "console.log",
+          "console.info",
+          "console.debug",
+          "console.warn",
+        ],
+      },
+    },
   },
-  publicDir: 'public',
+  publicDir: "public",
   // Ensure Vite treats .docx as static assets when imported with ?url
-  assetsInclude: ['**/*.docx'],
+  assetsInclude: ["**/*.docx"],
   server: {
     port: 5173,
     host: true,
@@ -80,22 +85,22 @@ export default defineConfig({
     watch: {
       // Exclude heavy directories from file watching to prevent esbuild crashes
       ignored: [
-        '**/node_modules/**',
-        '**/dist/**',
-        '**/docs/**',
-        '**/backend/**',
-        '**/Library/**',
-        '**/scripts/**',
-        '**/.git/**',
-        '**/EPUB/**',
-        '**/KPF/**',
-        '**/kumar_life_teaser/**',
-        '**/The_Last_Drop_of_Water_KDP_Ready_KC/**',
-        '**/*.md',
-        '**/*.pdf',
-        '**/*.docx',
-        '**/*.log',
-        '**/*.json',
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/docs/**",
+        "**/backend/**",
+        "**/Library/**",
+        "**/scripts/**",
+        "**/.git/**",
+        "**/EPUB/**",
+        "**/KPF/**",
+        "**/kumar_life_teaser/**",
+        "**/The_Last_Drop_of_Water_KDP_Ready_KC/**",
+        "**/*.md",
+        "**/*.pdf",
+        "**/*.docx",
+        "**/*.log",
+        "**/*.json",
       ],
       usePolling: false,
     },
@@ -108,13 +113,14 @@ export default defineConfig({
   },
   // Optimize dependencies to prevent esbuild crashes
   optimizeDeps: {
-    exclude: ['docx-preview', 'tesseract.js', 'pdfjs-dist'],
+    include: ["react-router-dom"],
+    exclude: ["docx-preview", "tesseract.js", "pdfjs-dist"],
     esbuildOptions: {
       // Increase memory limit for esbuild
-      target: 'es2020',
+      target: "es2020",
       loader: {
-        '.js': 'jsx',
+        ".js": "jsx",
       },
     },
   },
-})
+});
