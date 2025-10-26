@@ -9,7 +9,26 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     // Ensure single React instance to prevent useContext errors
-    dedupe: ["react", "react-dom", "react-router-dom", "framer-motion"],
+    dedupe: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "react-router",
+      "framer-motion",
+    ],
+    alias: {
+      // Force single React Router instance to prevent context errors
+      "react-router-dom": resolve("node_modules/react-router-dom"),
+      "react-router": resolve("node_modules/react-router"),
+      react: resolve("node_modules/react"),
+      "react-dom": resolve("node_modules/react-dom"),
+    },
+  },
+  define: {
+    // Ensure NODE_ENV is properly defined for production
+    "process.env.NODE_ENV": JSON.stringify(
+      process.env.NODE_ENV || "production",
+    ),
   },
   build: {
     outDir: "dist",
@@ -24,8 +43,20 @@ export default defineConfig({
             return undefined;
           }
 
-          if (id.includes("/node_modules/react-router/")) {
+          // Keep React Router in its own chunk to prevent context issues
+          if (
+            id.includes("/node_modules/react-router-dom/") ||
+            id.includes("/node_modules/react-router/")
+          ) {
             return "react-router";
+          }
+
+          // Keep React core in its own chunk
+          if (
+            id.includes("/node_modules/react/") ||
+            id.includes("/node_modules/react-dom/")
+          ) {
+            return "react-core";
           }
 
           if (id.includes("/node_modules/framer-motion/")) {
@@ -55,6 +86,8 @@ export default defineConfig({
         entryFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
       },
+      // Ensure external dependencies are properly handled
+      external: [],
     },
     // Copy public directory to dist
     copyPublicDir: true,
@@ -71,6 +104,10 @@ export default defineConfig({
           "console.debug",
           "console.warn",
         ],
+      },
+      mangle: {
+        // Preserve React Router function names to prevent context issues
+        reserved: ["createContext", "useContext", "Router", "BrowserRouter"],
       },
     },
   },
@@ -113,7 +150,13 @@ export default defineConfig({
   },
   // Optimize dependencies to prevent esbuild crashes
   optimizeDeps: {
-    include: ["react-router-dom"],
+    include: [
+      "react-router-dom",
+      "react-router",
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+    ],
     exclude: ["docx-preview", "tesseract.js", "pdfjs-dist"],
     esbuildOptions: {
       // Increase memory limit for esbuild
@@ -121,6 +164,12 @@ export default defineConfig({
       loader: {
         ".js": "jsx",
       },
+      define: {
+        global: "globalThis",
+      },
     },
+    force: true, // Force re-optimization of dependencies
   },
+  // Ensure proper environment variables
+  envPrefix: ["VITE_", "NODE_ENV"],
 });

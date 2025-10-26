@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Router Context Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .pass {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <h1>React Router Context Test</h1>
+    <p>This page tests if React Router's createContext error is resolved in production.</p>
+
+    <div id="test-results">
+        <div class="test-result loading">
+            🔄 Loading tests...
+        </div>
+    </div>
+
+    <script>
+        // Test if React is available
+        function testReactAvailability() {
+            try {
+                // Try to access React from the built bundle
+                if (typeof window.React !== 'undefined' && typeof window.React.createContext === 'function') {
+                    return { success: true, message: 'React.createContext is available' };
+                }
+                return { success: false, message: 'React.createContext not found on window.React' };
+            } catch (error) {
+                return { success: false, message: `React test failed: ${error.message}` };
+            }
+        }
+
+        // Test if React Router works
+        function testReactRouter() {
+            try {
+                // Try to access React Router from the built bundle
+                if (typeof window.ReactRouterDOM !== 'undefined') {
+                    return { success: true, message: 'React Router DOM is available' };
+                }
+                return { success: false, message: 'React Router DOM not found' };
+            } catch (error) {
+                return { success: false, message: `React Router test failed: ${error.message}` };
+            }
+        }
+
+        // Check if the main app bundle loads without errors
+        function testMainAppBundle() {
+            const scripts = document.querySelectorAll('script[src*="assets/index-"]');
+            if (scripts.length > 0) {
+                return { success: true, message: 'Main app bundle script found' };
+            }
+            return { success: false, message: 'Main app bundle script not found' };
+        }
+
+        // Check console for specific React Router errors
+        function testConsoleErrors() {
+            const originalError = console.error;
+            const errors = [];
+
+            console.error = function(...args) {
+                errors.push(args.join(' '));
+                originalError.apply(console, args);
+            };
+
+            // Restore after 2 seconds
+            setTimeout(() => {
+                console.error = originalError;
+            }, 2000);
+
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const routerErrors = errors.filter(error =>
+                        error.includes('createContext') ||
+                        error.includes('react-router')
+                    );
+
+                    if (routerErrors.length === 0) {
+                        resolve({ success: true, message: 'No React Router context errors detected' });
+                    } else {
+                        resolve({ success: false, message: `React Router errors found: ${routerErrors.join(', ')}` });
+                    }
+                }, 2000);
+            });
+        }
+
+        function displayResult(testName, result) {
+            const resultsDiv = document.getElementById('test-results');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${result.success ? 'pass' : 'fail'}`;
+            resultDiv.innerHTML = `
+                <strong>${testName}:</strong>
+                ${result.success ? '✅' : '❌'}
+                ${result.message}
+            `;
+            resultsDiv.appendChild(resultDiv);
+        }
+
+        // Run tests
+        async function runTests() {
+            // Clear loading message
+            document.getElementById('test-results').innerHTML = '';
+
+            // Test 1: Check if main bundle loads
+            displayResult('Bundle Load Test', testMainAppBundle());
+
+            // Test 2: Test React availability
+            displayResult('React Availability Test', testReactAvailability());
+
+            // Test 3: Test React Router availability
+            displayResult('React Router Availability Test', testReactRouter());
+
+            // Test 4: Monitor console errors
+            const consoleTest = await testConsoleErrors();
+            displayResult('Console Error Test', consoleTest);
+
+            // Test 5: Try to navigate and check for errors
+            setTimeout(() => {
+                try {
+                    // Simulate navigation by changing hash
+                    window.location.hash = '#/test';
+                    setTimeout(() => {
+                        window.location.hash = '#/';
+                        displayResult('Navigation Test', {
+                            success: true,
+                            message: 'Navigation completed without errors'
+                        });
+                    }, 500);
+                } catch (error) {
+                    displayResult('Navigation Test', {
+                        success: false,
+                        message: `Navigation failed: ${error.message}`
+                    });
+                }
+            }, 3000);
+        }
+
+        // Load the production bundle and run tests
+        function loadProductionBundle() {
+            // Try to load the main CSS file first
+            const cssFiles = [
+                '/dist/assets/index-D3pdLowD.css'
+            ];
+
+            const jsFiles = [
+                '/dist/assets/react-core-DjguCKQQ.js',
+                '/dist/assets/react-router-AQxKKVHp.js',
+                '/dist/assets/index-CqhB6WxF.js'
+            ];
+
+            // Load CSS
+            cssFiles.forEach(cssFile => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = cssFile;
+                document.head.appendChild(link);
+            });
+
+            // Load JS files in sequence
+            function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.type = 'module';
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            }
+
+            // Load scripts sequentially to maintain dependency order
+            async function loadAllScripts() {
+                try {
+                    for (const jsFile of jsFiles) {
+                        await loadScript(jsFile);
+                        console.log(`Loaded: ${jsFile}`);
+                    }
+                    console.log('All scripts loaded successfully');
+                    runTests();
+                } catch (error) {
+                    console.error('Script loading failed:', error);
+                    displayResult('Bundle Loading', {
+                        success: false,
+                        message: `Failed to load scripts: ${error.message}`
+                    });
+                }
+            }
+
+            loadAllScripts();
+        }
+
+        // Start the test when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(loadProductionBundle, 1000);
+        });
+
+        // Also add a root div for the React app
+        const rootDiv = document.createElement('div');
+        rootDiv.id = 'root';
+        document.body.appendChild(rootDiv);
+    </script>
+</body>
+</html>
