@@ -1,67 +1,323 @@
-import { motion } from 'framer-motion';
-import BlogSentimentSummary from '../components/BlogSentimentSummary';
+import { motion } from "framer-motion";
+import BlogSentimentSummary from "../components/BlogSentimentSummary";
 
 const projects = [
   {
-    title: 'Kumar News - News Aggregation Platform',
-    description:
-      'A comprehensive news aggregation platform that provides real-time news from various categories including technology, business, sports, entertainment, and more. Built with NewsAPI integration to deliver fresh, relevant content to users.',
-    tech: ['React', 'Node.js', 'NewsAPI', 'Tailwind CSS', 'Netlify'],
+    title: "AI-Powered Blog Content Recommender",
+    description: (
+      <div>
+        <p className="mb-4">
+          This Python script analyzes Google Analytics 4 (GA4) data from
+          BigQuery to recommend new blog topics. It uses machine learning to
+          identify content themes, analyze user behavior, and generate three
+          types of recommendations: content-based, trending, and personalized.
+        </p>
+        <h4 className="font-semibold text-lg mb-2">How it Works:</h4>
+        <p className="mb-4">
+          The system fetches page view data, processes the blog titles using
+          TF-IDF to understand their content, and then applies K-Means
+          clustering to group similar posts into themes. By analyzing user
+          interaction data, it also identifies trending topics and individual
+          user preferences to provide tailored suggestions.
+        </p>
+        <h4 className="font-semibold text-lg mb-2">Data Flow Diagram:</h4>
+        <div className="flex justify-center my-4">
+          <svg
+            width="100%"
+            viewBox="0 0 600 180"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g fontFamily="sans-serif" fontSize="14" fontWeight="bold">
+              {/* Nodes */}
+              <rect
+                x="10"
+                y="50"
+                width="120"
+                height="50"
+                rx="10"
+                fill="#e0f2fe"
+                stroke="#0284c7"
+                strokeWidth="2"
+              />
+              <text x="70" y="75" textAnchor="middle" fill="#0369a1">
+                GA4 BigQuery
+              </text>
+
+              <rect
+                x="170"
+                y="50"
+                width="120"
+                height="50"
+                rx="10"
+                fill="#f1f5f9"
+                stroke="#64748b"
+                strokeWidth="2"
+              />
+              <text x="230" y="75" textAnchor="middle" fill="#334155">
+                Python Script
+              </text>
+
+              <rect
+                x="330"
+                y="10"
+                width="120"
+                height="50"
+                rx="10"
+                fill="#dcfce7"
+                stroke="#16a34a"
+                strokeWidth="2"
+              />
+              <text x="390" y="35" textAnchor="middle" fill="#15803d">
+                TF-IDF & KMeans
+              </text>
+
+              <rect
+                x="330"
+                y="90"
+                width="120"
+                height="50"
+                rx="10"
+                fill="#dcfce7"
+                stroke="#16a34a"
+                strokeWidth="2"
+              />
+              <text x="390" y="115" textAnchor="middle" fill="#15803d">
+                User Analysis
+              </text>
+
+              <rect
+                x="490"
+                y="50"
+                width="100"
+                height="50"
+                rx="10"
+                fill="#fef9c3"
+                stroke="#eab308"
+                strokeWidth="2"
+              />
+              <text x="540" y="75" textAnchor="middle" fill="#b45309">
+                Topics
+              </text>
+
+              {/* Arrows */}
+              <path
+                d="M130 75 L160 75"
+                stroke="#64748b"
+                strokeWidth="2"
+                markerEnd="url(#arrow)"
+              />
+              <path
+                d="M290 65 L320 45"
+                stroke="#16a34a"
+                strokeWidth="2"
+                markerEnd="url(#arrow)"
+              />
+              <path
+                d="M290 85 L320 105"
+                stroke="#16a34a"
+                strokeWidth="2"
+                markerEnd="url(#arrow)"
+              />
+              <path
+                d="M450 45 L480 65"
+                stroke="#eab308"
+                strokeWidth="2"
+                markerEnd="url(#arrow)"
+              />
+              <path
+                d="M450 105 L480 85"
+                stroke="#eab308"
+                strokeWidth="2"
+                markerEnd="url(#arrow)"
+              />
+            </g>
+            <defs>
+              <marker
+                id="arrow"
+                viewBox="0 0 10 10"
+                refX="5"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <h4 className="font-semibold text-lg mb-2">
+          Machine Learning Models Used:
+        </h4>
+        <ul className="list-disc list-inside mb-4">
+          <li>
+            <strong>TF-IDF (Term Frequency-Inverse Document Frequency):</strong>{" "}
+            Converts text from blog titles into numerical vectors, allowing the
+            machine to understand content similarity.
+          </li>
+          <li>
+            <strong>K-Means Clustering:</strong> An unsupervised algorithm that
+            groups the vectorized titles into clusters based on their content,
+            revealing underlying themes.
+          </li>
+        </ul>
+        <h4 className="font-semibold text-lg mb-2">Code Snippet:</h4>
+        <div className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
+          <pre>
+            <code>
+              {`# Vectorize existing content titles for similarity analysis
+self.content_vectors = self.content_vectorizer.fit_transform(unique_topics)
+
+# Use K-means clustering to find content themes
+n_clusters = min(3, len(self.blog_topics))
+kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+cluster_labels = kmeans.fit_predict(self.content_vectors)`}
+            </code>
+          </pre>
+        </div>
+
+        <h4 className="font-semibold text-lg mt-6 mb-2">
+          Live Output from the Recommender:
+        </h4>
+        <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div className="mb-4">
+            <h5 className="font-bold text-md mb-2">🔥 Most Popular Topics</h5>
+            <ul className="list-disc list-inside text-slate-700">
+              <li>My Stories: 347 interactions</li>
+              <li>Blog | Kumar's Personal Website: 244 interactions</li>
+              <li>My Stories | Kumar's Personal Website: 89 interactions</li>
+              <li>
+                My Reminiscences - Kumar's Personal Website: 57 interactions
+              </li>
+              <li>Books | Kumar's Personal Website: 39 interactions</li>
+            </ul>
+          </div>
+
+          <div className="mb-4">
+            <h5 className="font-bold text-md mb-2">
+              💡 Content-Based Recommendations
+            </h5>
+            <ul className="list-disc list-inside text-slate-700">
+              <li>AI Ethics and Responsible Development</li>
+              <li>API Development with FastAPI</li>
+              <li>Building Scalable Machine Learning Pipelines</li>
+              <li>Understanding Large Language Models</li>
+              <li>Modern JavaScript Frameworks Comparison</li>
+            </ul>
+          </div>
+
+          <div className="mb-4">
+            <h5 className="font-bold text-md mb-2">
+              🔥 Trending Recommendations
+            </h5>
+            <ul className="list-disc list-inside text-slate-700">
+              <li>Advanced Guide to My Stories</li>
+              <li>Advanced Guide to Blog | Kumar's Personal Website</li>
+              <li>Advanced Guide to My Stories | Kumar's Personal Website</li>
+              <li>Generative AI for Content Creation</li>
+              <li>Kubernetes for Beginners</li>
+            </ul>
+          </div>
+
+          <div>
+            <h5 className="font-bold text-md mb-2">
+              👤 Personalized Recommendations for User 822094028.1761481696
+            </h5>
+            <ul className="list-disc list-inside text-slate-700">
+              <li>API Development with FastAPI</li>
+              <li>Deep Learning with TensorFlow 2024</li>
+              <li>Prompt Engineering for Better AI Results</li>
+              <li>Web Performance Optimization</li>
+              <li>Progressive Web Apps Development</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    ),
+    tech: ["Python", "BigQuery", "Pandas", "Scikit-learn", "Plotly"],
     image:
-      'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80',
-    link: 'https://kumarnews.netlify.app',
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    link: "/projects/ai-recommender-code",
     features: [
-      'Real-time news aggregation from multiple sources via NewsAPI',
-      'News categorization by topics (technology, business, sports, etc.)',
-      'Responsive design optimized for all devices',
-      'Fast loading times with optimized performance',
-      'Clean, intuitive user interface for easy navigation',
-      'Regular updates with latest news from around the world',
+      "Connects to Google BigQuery to fetch GA4 data.",
+      "Analyzes page view events from the last 21 days.",
+      "Uses TF-IDF to vectorize blog post titles.",
+      "Applies K-Means clustering to identify content themes.",
+      "Generates content-based, trending, and personalized topic recommendations.",
+      "Creates a word cloud visualization of popular topics.",
     ],
     highlights: [
-      'Built with React for dynamic user experience',
-      'Integrated with NewsAPI for comprehensive news coverage',
-      'Deployed on Netlify for reliable hosting and fast CDN',
-      'Mobile-first responsive design approach',
-      'Optimized for search engines and accessibility',
-      'Real-time data processing and content management',
+      "Classic machine learning, not deep learning, is used for efficiency.",
+      "TF-IDF for feature extraction from text data.",
+      "K-Means for unsupervised content clustering.",
+      "Direct integration with Google Cloud Platform services.",
+      "Combines content analysis with user behavior for better recommendations.",
     ],
-    category: 'News Aggregation',
+    category: "Machine Learning",
     impact:
-      'Providing users with timely, relevant news from various categories to keep them informed about current events and developments worldwide',
+      "Provides data-driven insights for content strategy by automatically generating relevant and engaging blog topic ideas based on real user data.",
   },
   {
-    title: 'MedicineChk App',
+    title: "Kumar News - News Aggregation Platform",
     description:
-      'The MedicineChk App leverages AI to check interactions between drugs. That used to be my biggest mental block - all these medicines I am being prescribed, are they tested together in a cat or rat, or am I the guinea pig! This app helps identify potential drug interactions using nC2 combinations to ensure safety.',
-    tech: [
-      'React',
-      'Node.js',
-      'Express',
-      'Machine Learning',
-      'Drug Interaction API',
-    ],
+      "A comprehensive news aggregation platform that provides real-time news from various categories including technology, business, sports, entertainment, and more. Built with NewsAPI integration to deliver fresh, relevant content to users.",
+    tech: ["React", "Node.js", "NewsAPI", "Tailwind CSS", "Netlify"],
     image:
-      'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=800&q=80',
+      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+    link: "https://kumarnews.netlify.app",
     features: [
-      'Drug interaction checking using nC2 combinations',
-      'Real-time interaction warnings and severity levels',
-      'Privacy-focused - runs locally for data protection',
-      'Backend database updates with latest interaction data',
-      'Family member testing and validation',
-      'Personalized medicine safety recommendations',
+      "Real-time news aggregation from multiple sources via NewsAPI",
+      "News categorization by topics (technology, business, sports, etc.)",
+      "Responsive design optimized for all devices",
+      "Fast loading times with optimized performance",
+      "Clean, intuitive user interface for easy navigation",
+      "Regular updates with latest news from around the world",
     ],
     highlights: [
-      'Built with React and Node.js for seamless user experience',
-      'Machine learning models for intelligent interaction detection',
-      'Privacy-first approach - runs on local machine only',
-      'Regular API updates for current drug interaction data',
-      'Real-world testing with family members for validation',
-      'nC2 algorithm implementation for comprehensive checking',
+      "Built with React for dynamic user experience",
+      "Integrated with NewsAPI for comprehensive news coverage",
+      "Deployed on Netlify for reliable hosting and fast CDN",
+      "Mobile-first responsive design approach",
+      "Optimized for search engines and accessibility",
+      "Real-time data processing and content management",
     ],
-    category: 'Healthcare AI',
+    category: "News Aggregation",
     impact:
-      'Providing peace of mind by checking drug interactions before taking multiple medications, ensuring patient safety through comprehensive interaction analysis.',
+      "Providing users with timely, relevant news from various categories to keep them informed about current events and developments worldwide",
+  },
+  {
+    title: "MedicineChk App",
+    description:
+      "The MedicineChk App leverages AI to check interactions between drugs. That used to be my biggest mental block - all these medicines I am being prescribed, are they tested together in a cat or rat, or am I the guinea pig! This app helps identify potential drug interactions using nC2 combinations to ensure safety.",
+    tech: [
+      "React",
+      "Node.js",
+      "Express",
+      "Machine Learning",
+      "Drug Interaction API",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=800&q=80",
+    features: [
+      "Drug interaction checking using nC2 combinations",
+      "Real-time interaction warnings and severity levels",
+      "Privacy-focused - runs locally for data protection",
+      "Backend database updates with latest interaction data",
+      "Family member testing and validation",
+      "Personalized medicine safety recommendations",
+    ],
+    highlights: [
+      "Built with React and Node.js for seamless user experience",
+      "Machine learning models for intelligent interaction detection",
+      "Privacy-first approach - runs on local machine only",
+      "Regular API updates for current drug interaction data",
+      "Real-world testing with family members for validation",
+      "nC2 algorithm implementation for comprehensive checking",
+    ],
+    category: "Healthcare AI",
+    impact:
+      "Providing peace of mind by checking drug interactions before taking multiple medications, ensuring patient safety through comprehensive interaction analysis.",
   },
 ];
 
@@ -88,14 +344,14 @@ const Projects = () => {
                 <h2 className="text-2xl font-bold text-gray-800">
                   {project.title}
                 </h2>
-                {project.title !== 'MedicineChk App' && (
+                {project.title !== "MedicineChk App" && (
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
                   >
-                    View Project{' '}
+                    View Project{" "}
                     <svg
                       className="w-4 h-4 ml-2"
                       fill="none"
@@ -112,9 +368,9 @@ const Projects = () => {
                   </a>
                 )}
               </div>
-              <p className="text-gray-600 mb-6">{project.description}</p>
+              <div className="text-gray-600 mb-6">{project.description}</div>
               {/* Data Flow SVG for MedicineChk App */}
-              {project.title === 'MedicineChk App' && (
+              {project.title === "MedicineChk App" && (
                 <div className="flex justify-center mb-6">
                   <svg
                     width="340"

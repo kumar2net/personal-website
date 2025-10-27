@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const blogPosts = [
   {
+    title: "Markets and Morals: A Dialogue with Michael Sandel",
+    date: "October 27, 2025",
+    lastModified: "October 27, 2025",
+    excerpt:
+      "A dialogue with Michael Sandel's teachings on the moral limits of markets. Can markets corrupt moral values? Should everything be for sale? Exploring the fine line between a market economy and a market society.",
+    tags: ["Philosophy", "Ethics", "Markets", "Morality", "Michael Sandel"],
+    image:
+      "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=800&q=80",
+    link: "/blog/2025-10-27-markets-and-morals",
+  },
+  {
     title:
       "What Money Can't Buy: Lessons from Michael Sandel on Market Morality",
     date: new Date().toLocaleDateString("en-US", {
