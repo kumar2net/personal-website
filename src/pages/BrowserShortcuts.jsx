@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
   Globe,
   Home,
   RotateCcw,
-} from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const BrowserShortcuts = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,25 +17,25 @@ const BrowserShortcuts = () => {
 
   // Browser keyboard shortcuts flashcards for Safari and Chrome
   const flashcards = [
-    { front: '⌘ + T', back: 'Open new tab (Safari & Chrome)' },
-    { front: '⌘ + W', back: 'Close current tab (Safari & Chrome)' },
+    { front: "⌘ + T", back: "Open new tab (Safari & Chrome)" },
+    { front: "⌘ + W", back: "Close current tab (Safari & Chrome)" },
     {
-      front: '⌘ + Shift + T',
-      back: 'Reopen recently closed tab (Safari & Chrome)',
+      front: "⌘ + Shift + T",
+      back: "Reopen recently closed tab (Safari & Chrome)",
     },
-    { front: '⌘ + L', back: 'Focus address bar to type URL (Safari & Chrome)' },
-    { front: '⌘ + R', back: 'Reload/refresh current page (Safari & Chrome)' },
-    { front: '⌘ + F', back: 'Find text on current page (Safari & Chrome)' },
-    { front: '⌘ + 1-9', back: 'Switch to tab by number (Safari & Chrome)' },
+    { front: "⌘ + L", back: "Focus address bar to type URL (Safari & Chrome)" },
+    { front: "⌘ + R", back: "Reload/refresh current page (Safari & Chrome)" },
+    { front: "⌘ + F", back: "Find text on current page (Safari & Chrome)" },
+    { front: "⌘ + 1-9", back: "Switch to tab by number (Safari & Chrome)" },
     {
-      front: '⌘ + Shift + N',
-      back: 'Open incognito/private browsing window (Safari & Chrome)',
+      front: "⌘ + Shift + N",
+      back: "Open incognito/private browsing window (Safari & Chrome)",
     },
     {
-      front: '⌘ + Ctrl + F',
-      back: 'Toggle full screen (Safari & Chrome on macOS)',
+      front: "⌘ + Ctrl + F",
+      back: "Toggle full screen (Safari & Chrome on macOS)",
     },
-    { front: '⌘ + D', back: 'Bookmark current page (Safari & Chrome)' },
+    { front: "⌘ + D", back: "Bookmark current page (Safari & Chrome)" },
   ];
   const reversedFlashcards = flashcards.slice().reverse();
 
@@ -71,30 +71,30 @@ const BrowserShortcuts = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'ArrowLeft') {
+    if (e.key === "ArrowLeft") {
       handlePrevious();
     }
-    if (e.key === 'ArrowRight') {
+    if (e.key === "ArrowRight") {
       handleNext();
     }
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
       handleFlip();
     }
-    if (e.key === 'r' || e.key === 'R') {
+    if (e.key === "r" || e.key === "R") {
       handleReset();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
   // Scroll to card on mobile when card changes
   useEffect(() => {
     if (cardRef.current && window.innerWidth < 768) {
-      cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, []);
 
@@ -157,7 +157,7 @@ const BrowserShortcuts = () => {
       {/* Flashcard */}
       <div
         className="flex justify-center mb-8"
-        style={{ perspective: '1000px' }}
+        style={{ perspective: "1000px" }}
       >
         <div
           ref={cardRef}
@@ -165,25 +165,21 @@ const BrowserShortcuts = () => {
           role="button"
           aria-pressed={flipped}
           className={`relative w-full max-w-2xl h-96 transition-all duration-700 transform-style-preserve-3d cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-400 ${
-            flipped ? 'rotate-x-180' : ''
-          } ${animating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+            flipped ? "rotate-x-180" : ""
+          } ${animating ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
           onClick={(_e) => {
             handleFlip();
             cardRef.current?.focus();
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               handleFlip();
             }
           }}
-          style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Front of card */}
-          <div
-            className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100">
             <div className="text-center flex-1 flex items-center justify-center">
               <h2 className="text-6xl font-mono font-bold text-gray-800 tracking-wider">
                 {currentCard.front}
@@ -198,8 +194,7 @@ const BrowserShortcuts = () => {
           <div
             className="absolute inset-0 bg-green-50 rounded-3xl shadow-xl flex items-center justify-center p-8 rotate-x-180 backface-hidden border border-green-100"
             style={{
-              backfaceVisibility: 'hidden',
-              transform: 'rotateX(180deg)',
+              transform: "rotateX(180deg)",
             }}
           >
             <div className="text-center">
@@ -221,8 +216,8 @@ const BrowserShortcuts = () => {
           disabled={currentIndex === 0}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === 0
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg"
           }`}
         >
           <ChevronLeft className="h-5 w-5 mr-2" />
@@ -241,8 +236,8 @@ const BrowserShortcuts = () => {
           disabled={currentIndex === reversedFlashcards.length - 1}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === reversedFlashcards.length - 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-green-500 text-white hover:bg-green-600 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-green-500 text-white hover:bg-green-600 shadow-md hover:shadow-lg"
           }`}
         >
           Next
