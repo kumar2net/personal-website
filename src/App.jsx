@@ -54,6 +54,10 @@ const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
 const MyReminiscences = lazy(() => import("./pages/blog/my-reminiscences"));
 
+const AiRecommenderCode = lazy(
+  () => import("./pages/projects/AiRecommenderCode"),
+);
+
 // Admin CMS removed
 
 function useGaPageViews() {
@@ -568,6 +572,20 @@ function App() {
                       type="website"
                     />
                     <Projects />
+                  </>
+                }
+              />
+              <Route
+                path="/projects/ai-recommender-code"
+                element={
+                  <>
+                    <SEO
+                      title="AI Recommender Code"
+                      description="Python code for the AI-powered blog content recommender."
+                      canonicalPath="/projects/ai-recommender-code"
+                      type="website"
+                    />
+                    <AiRecommenderCode />
                   </>
                 }
               />
