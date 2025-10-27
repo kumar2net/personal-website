@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
   Command,
   Home,
   RotateCcw,
-} from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const MacOSShortcuts = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,16 +17,16 @@ const MacOSShortcuts = () => {
 
   // macOS keyboard shortcuts flashcards
   const flashcards = [
-    { front: '⌘ + C', back: 'Copy selected item to clipboard' },
-    { front: '⌘ + V', back: 'Paste item from clipboard' },
-    { front: '⌘ + X', back: 'Cut selected item and copy to clipboard' },
-    { front: '⌘ + Z', back: 'Undo last action' },
-    { front: '⌘ + A', back: 'Select all items' },
-    { front: '⌘ + F', back: 'Find items in document or open Find window' },
-    { front: '⌘ + S', back: 'Save current document' },
-    { front: '⌘ + Tab', back: 'Switch between open applications' },
-    { front: '⌘ + Space', back: 'Open Spotlight search' },
-    { front: '⌘ + W', back: 'Close current window' },
+    { front: "⌘ + C", back: "Copy selected item to clipboard" },
+    { front: "⌘ + V", back: "Paste item from clipboard" },
+    { front: "⌘ + X", back: "Cut selected item and copy to clipboard" },
+    { front: "⌘ + Z", back: "Undo last action" },
+    { front: "⌘ + A", back: "Select all items" },
+    { front: "⌘ + F", back: "Find items in document or open Find window" },
+    { front: "⌘ + S", back: "Save current document" },
+    { front: "⌘ + Tab", back: "Switch between open applications" },
+    { front: "⌘ + Space", back: "Open Spotlight search" },
+    { front: "⌘ + W", back: "Close current window" },
   ];
   const reversedFlashcards = flashcards.slice().reverse();
 
@@ -62,30 +62,30 @@ const MacOSShortcuts = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'ArrowLeft') {
+    if (e.key === "ArrowLeft") {
       handlePrevious();
     }
-    if (e.key === 'ArrowRight') {
+    if (e.key === "ArrowRight") {
       handleNext();
     }
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
       handleFlip();
     }
-    if (e.key === 'r' || e.key === 'R') {
+    if (e.key === "r" || e.key === "R") {
       handleReset();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
   // Scroll to card on mobile when card changes
   useEffect(() => {
     if (cardRef.current && window.innerWidth < 768) {
-      cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, []);
 
@@ -148,7 +148,7 @@ const MacOSShortcuts = () => {
       {/* Flashcard */}
       <div
         className="flex justify-center mb-8"
-        style={{ perspective: '1000px' }}
+        style={{ perspective: "1000px" }}
       >
         <div
           ref={cardRef}
@@ -156,25 +156,21 @@ const MacOSShortcuts = () => {
           role="button"
           aria-pressed={flipped}
           className={`relative w-full max-w-2xl h-96 transition-all duration-700 transform-style-preserve-3d cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-            flipped ? 'rotate-x-180' : ''
-          } ${animating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+            flipped ? "rotate-x-180" : ""
+          } ${animating ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
           onClick={(_e) => {
             handleFlip();
             cardRef.current?.focus();
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               handleFlip();
             }
           }}
-          style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Front of card */}
-          <div
-            className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100">
             <div className="text-center flex-1 flex items-center justify-center">
               <h2 className="text-6xl font-mono font-bold text-gray-800 tracking-wider">
                 {currentCard.front}
@@ -189,8 +185,7 @@ const MacOSShortcuts = () => {
           <div
             className="absolute inset-0 bg-blue-50 rounded-3xl shadow-xl flex items-center justify-center p-8 rotate-x-180 backface-hidden border border-blue-100"
             style={{
-              backfaceVisibility: 'hidden',
-              transform: 'rotateX(180deg)',
+              transform: "rotateX(180deg)",
             }}
           >
             <div className="text-center">
@@ -212,8 +207,8 @@ const MacOSShortcuts = () => {
           disabled={currentIndex === 0}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === 0
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg"
           }`}
         >
           <ChevronLeft className="h-5 w-5 mr-2" />
@@ -232,8 +227,8 @@ const MacOSShortcuts = () => {
           disabled={currentIndex === reversedFlashcards.length - 1}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === reversedFlashcards.length - 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 text-white hover:bg-blue-600 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600 shadow-md hover:shadow-lg"
           }`}
         >
           Next
@@ -309,24 +304,5 @@ const MacOSShortcuts = () => {
     </motion.div>
   );
 };
-
-// CSS for 3D flip animation
-const style = document.createElement('style');
-style.textContent = `
-  .rotate-x-180 {
-    transform: rotateX(180deg);
-  }
-  .backface-hidden {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  .transform-style-preserve-3d {
-    transform-style: preserve-3d;
-  }
-`;
-if (!document.head.querySelector('style[data-flashcard-styles]')) {
-  style.setAttribute('data-flashcard-styles', 'true');
-  document.head.appendChild(style);
-}
 
 export default MacOSShortcuts;

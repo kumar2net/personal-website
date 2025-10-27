@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
   Home,
   RotateCcw,
   Terminal,
-} from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const VimShortcuts = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,31 +17,31 @@ const VimShortcuts = () => {
 
   // Essential Vim keyboard shortcuts flashcards
   const flashcards = [
-    { front: 'h j k l', back: 'Basic navigation: left, down, up, right' },
-    { front: 'i', back: 'Enter Insert mode (insert before cursor)' },
-    { front: 'a', back: 'Enter Insert mode (insert after cursor)' },
-    { front: 'o', back: 'Open new line below and enter Insert mode' },
-    { front: 'Esc', back: 'Exit Insert mode, return to Normal mode' },
-    { front: ':w', back: 'Save (write) the current file' },
-    { front: ':q', back: 'Quit Vim (fails if unsaved changes)' },
-    { front: ':wq', back: 'Save and quit Vim' },
-    { front: ':q!', back: 'Quit without saving (force quit)' },
-    { front: 'x', back: 'Delete character under cursor' },
-    { front: 'dd', back: 'Delete (cut) entire current line' },
-    { front: 'yy', back: 'Yank (copy) entire current line' },
-    { front: 'p', back: 'Paste after cursor/current line' },
-    { front: 'u', back: 'Undo last action' },
-    { front: 'Ctrl + r', back: 'Redo (opposite of undo)' },
-    { front: '/search', back: "Search for 'search' text in file" },
-    { front: 'n', back: 'Go to next search result' },
-    { front: 'N', back: 'Go to previous search result' },
-    { front: 'gg', back: 'Go to beginning of file' },
-    { front: 'G', back: 'Go to end of file' },
-    { front: '0', back: 'Go to beginning of current line' },
-    { front: '$', back: 'Go to end of current line' },
-    { front: 'w', back: 'Jump forward to start of next word' },
-    { front: 'b', back: 'Jump backward to start of previous word' },
-    { front: 'v', back: 'Enter Visual mode (character selection)' },
+    { front: "h j k l", back: "Basic navigation: left, down, up, right" },
+    { front: "i", back: "Enter Insert mode (insert before cursor)" },
+    { front: "a", back: "Enter Insert mode (insert after cursor)" },
+    { front: "o", back: "Open new line below and enter Insert mode" },
+    { front: "Esc", back: "Exit Insert mode, return to Normal mode" },
+    { front: ":w", back: "Save (write) the current file" },
+    { front: ":q", back: "Quit Vim (fails if unsaved changes)" },
+    { front: ":wq", back: "Save and quit Vim" },
+    { front: ":q!", back: "Quit without saving (force quit)" },
+    { front: "x", back: "Delete character under cursor" },
+    { front: "dd", back: "Delete (cut) entire current line" },
+    { front: "yy", back: "Yank (copy) entire current line" },
+    { front: "p", back: "Paste after cursor/current line" },
+    { front: "u", back: "Undo last action" },
+    { front: "Ctrl + r", back: "Redo (opposite of undo)" },
+    { front: "/search", back: "Search for 'search' text in file" },
+    { front: "n", back: "Go to next search result" },
+    { front: "N", back: "Go to previous search result" },
+    { front: "gg", back: "Go to beginning of file" },
+    { front: "G", back: "Go to end of file" },
+    { front: "0", back: "Go to beginning of current line" },
+    { front: "$", back: "Go to end of current line" },
+    { front: "w", back: "Jump forward to start of next word" },
+    { front: "b", back: "Jump backward to start of previous word" },
+    { front: "v", back: "Enter Visual mode (character selection)" },
   ];
   const reversedFlashcards = flashcards.slice().reverse();
 
@@ -77,30 +77,30 @@ const VimShortcuts = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'ArrowLeft') {
+    if (e.key === "ArrowLeft") {
       handlePrevious();
     }
-    if (e.key === 'ArrowRight') {
+    if (e.key === "ArrowRight") {
       handleNext();
     }
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
       handleFlip();
     }
-    if (e.key === 'r' || e.key === 'R') {
+    if (e.key === "r" || e.key === "R") {
       handleReset();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
   // Scroll to card on mobile when card changes
   useEffect(() => {
     if (cardRef.current && window.innerWidth < 768) {
-      cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, []);
 
@@ -163,7 +163,7 @@ const VimShortcuts = () => {
       {/* Flashcard */}
       <div
         className="flex justify-center mb-8"
-        style={{ perspective: '1000px' }}
+        style={{ perspective: "1000px" }}
       >
         <div
           ref={cardRef}
@@ -171,25 +171,21 @@ const VimShortcuts = () => {
           role="button"
           aria-pressed={flipped}
           className={`relative w-full max-w-2xl h-96 transition-all duration-700 transform-style-preserve-3d cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-400 ${
-            flipped ? 'rotate-x-180' : ''
-          } ${animating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+            flipped ? "rotate-x-180" : ""
+          } ${animating ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
           onClick={(_e) => {
             handleFlip();
             cardRef.current?.focus();
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               handleFlip();
             }
           }}
-          style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Front of card */}
-          <div
-            className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100">
             <div className="text-center flex-1 flex items-center justify-center">
               <h2 className="text-5xl font-mono font-bold text-gray-800 tracking-wider bg-gray-100 px-6 py-3 rounded-lg">
                 {currentCard.front}
@@ -204,8 +200,7 @@ const VimShortcuts = () => {
           <div
             className="absolute inset-0 bg-purple-50 rounded-3xl shadow-xl flex items-center justify-center p-8 rotate-x-180 backface-hidden border border-purple-100"
             style={{
-              backfaceVisibility: 'hidden',
-              transform: 'rotateX(180deg)',
+              transform: "rotateX(180deg)",
             }}
           >
             <div className="text-center">
@@ -227,8 +222,8 @@ const VimShortcuts = () => {
           disabled={currentIndex === 0}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === 0
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg"
           }`}
         >
           <ChevronLeft className="h-5 w-5 mr-2" />
@@ -247,8 +242,8 @@ const VimShortcuts = () => {
           disabled={currentIndex === reversedFlashcards.length - 1}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === reversedFlashcards.length - 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-purple-500 text-white hover:bg-purple-600 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-purple-500 text-white hover:bg-purple-600 shadow-md hover:shadow-lg"
           }`}
         >
           Next

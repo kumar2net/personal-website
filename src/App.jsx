@@ -50,7 +50,7 @@ const DossierPage = lazy(() => import("./pages/Dossier"));
 const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
-const VocabAdditions = lazy(() => import("./pages/VocabAdditions"));
+
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
 const MyReminiscences = lazy(() => import("./pages/blog/my-reminiscences"));
 
@@ -768,20 +768,7 @@ function App() {
                   </>
                 }
               />
-              <Route
-                path="/learning/vocab-additions"
-                element={
-                  <>
-                    <SEO
-                      title="Vocab Additions"
-                      description="Vocabulary additions and notes."
-                      canonicalPath="/learning/vocab-additions"
-                      type="website"
-                    />
-                    <VocabAdditions />
-                  </>
-                }
-              />
+
               {/* All blog posts now handled by PostDynamic */}
               <Route
                 path="/dossier"

@@ -1,19 +1,19 @@
-import React, { Suspense, useEffect, useMemo, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { useParams } from 'react-router-dom';
-import remarkGfm from 'remark-gfm';
-import SEO from '../../components/SEO';
-import { getBlogSeo } from '../../data/blogIndex';
+import React, { Suspense, useEffect, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { useParams } from "react-router-dom";
+import remarkGfm from "remark-gfm";
+import SEO from "../../components/SEO";
+import { getBlogSeo } from "../../data/blogIndex";
 
-const jsxModules = import.meta.glob('/src/pages/blog/*.jsx');
-const mdModules = import.meta.glob('/src/pages/blog/*.md', {
-  query: '?raw',
-  import: 'default',
+const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
+const mdModules = import.meta.glob("/src/pages/blog/*.md", {
+  query: "?raw",
+  import: "default",
 });
 
 export default function PostDynamic() {
   const { slug } = useParams();
-  const [markdown, setMarkdown] = useState('');
+  const [markdown, setMarkdown] = useState("");
 
   const LazyComponent = useMemo(() => {
     const path = `/src/pages/blog/${slug}.jsx`;
@@ -26,9 +26,9 @@ export default function PostDynamic() {
   useEffect(() => {
     const path = `/src/pages/blog/${slug}.md`;
     if (mdModules[path]) {
-      mdModules[path]().then((raw) => setMarkdown(raw || ''));
+      mdModules[path]().then((raw) => setMarkdown(raw || ""));
     } else {
-      setMarkdown('');
+      setMarkdown("");
     }
   }, [slug]);
 
@@ -52,9 +52,9 @@ export default function PostDynamic() {
 
   if (markdown) {
     return (
-      <div className="prose max-w-none">
+      <div className="prose max-w-none px-4 md:px-8">
         <SEO
-          title={getBlogSeo(slug)?.title || slug.replace(/-/g, ' ')}
+          title={getBlogSeo(slug)?.title || slug.replace(/-/g, " ")}
           description={getBlogSeo(slug)?.description}
           canonicalPath={`/blog/${slug}`}
           image={getBlogSeo(slug)?.image}

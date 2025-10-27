@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import {
   BookText,
   ChevronLeft,
   ChevronRight,
   Home,
   RotateCcw,
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const VocabAdditions = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,20 +17,20 @@ const VocabAdditions = () => {
   // Vocabulary flashcards
   const flashcards = [
     {
-      front: 'Cobot',
-      back: 'A collaborative robot designed to work alongside humans in a shared workspace, often in manufacturing or service industries.',
+      front: "Cobot",
+      back: "A collaborative robot designed to work alongside humans in a shared workspace, often in manufacturing or service industries.",
     },
     {
-      front: 'Hyborg',
-      back: 'A hybrid cyborg; a being that combines organic and biomechatronic body parts, often used to describe humans enhanced with both biological and robotic elements.',
+      front: "Hyborg",
+      back: "A hybrid cyborg; a being that combines organic and biomechatronic body parts, often used to describe humans enhanced with both biological and robotic elements.",
     },
     {
-      front: 'Zidd (Hinglish)',
-      back: 'A Hindi/Urdu word meaning stubbornness or persistence. In Hinglish, it often refers to a strong will or determination to achieve something, even against odds.',
+      front: "Zidd (Hinglish)",
+      back: "A Hindi/Urdu word meaning stubbornness or persistence. In Hinglish, it often refers to a strong will or determination to achieve something, even against odds.",
     },
     {
-      front: 'Autophagy',
-      back: 'A natural process in which the body breaks down and recycles its own cells and components, important for cellular health and longevity.',
+      front: "Autophagy",
+      back: "A natural process in which the body breaks down and recycles its own cells and components, important for cellular health and longevity.",
     },
   ];
 
@@ -66,24 +66,24 @@ const VocabAdditions = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'ArrowLeft') {
+    if (e.key === "ArrowLeft") {
       handlePrevious();
     }
-    if (e.key === 'ArrowRight') {
+    if (e.key === "ArrowRight") {
       handleNext();
     }
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
       handleFlip();
     }
-    if (e.key === 'r' || e.key === 'R') {
+    if (e.key === "r" || e.key === "R") {
       handleReset();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress]);
 
   const currentCard = flashcards[currentIndex];
@@ -143,20 +143,16 @@ const VocabAdditions = () => {
       {/* Flashcard */}
       <div
         className="flex justify-center mb-8"
-        style={{ perspective: '1000px' }}
+        style={{ perspective: "1000px" }}
       >
         <div
           className={`relative w-full max-w-2xl h-80 transition-all duration-700 transform-style-preserve-3d cursor-pointer ${
-            flipped ? 'rotate-x-180' : ''
-          } ${animating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+            flipped ? "rotate-x-180" : ""
+          } ${animating ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
           onClick={handleFlip}
-          style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Front of card */}
-          <div
-            className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 backface-hidden border border-gray-100">
             <div className="text-center flex-1 flex items-center justify-center">
               <h2 className="text-4xl font-bold text-orange-700 tracking-wide">
                 {currentCard.front}
@@ -171,8 +167,7 @@ const VocabAdditions = () => {
           <div
             className="absolute inset-0 bg-orange-50 rounded-3xl shadow-xl flex items-center justify-center p-8 rotate-x-180 backface-hidden border border-orange-100"
             style={{
-              backfaceVisibility: 'hidden',
-              transform: 'rotateX(180deg)',
+              transform: "rotateX(180deg)",
             }}
           >
             <div className="text-center">
@@ -194,8 +189,8 @@ const VocabAdditions = () => {
           disabled={currentIndex === 0}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === 0
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-white text-gray-700 hover:bg-gray-50 shadow-md hover:shadow-lg"
           }`}
         >
           <ChevronLeft className="h-5 w-5 mr-2" />
@@ -214,8 +209,8 @@ const VocabAdditions = () => {
           disabled={currentIndex === flashcards.length - 1}
           className={`flex items-center px-6 py-3 rounded-full transition-all ${
             currentIndex === flashcards.length - 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-orange-500 text-white hover:bg-orange-600 shadow-md hover:shadow-lg'
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-orange-500 text-white hover:bg-orange-600 shadow-md hover:shadow-lg"
           }`}
         >
           Next
