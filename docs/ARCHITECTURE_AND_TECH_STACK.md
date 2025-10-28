@@ -63,9 +63,10 @@ src/
 
 **Key Features:**
 - **Responsive Design**: Mobile-first approach with TailwindCSS
-- **Error Boundaries**: Global error handling for production resilience  
+- **Error Boundaries**: Global error handling for production resilience
 - **Route-based Code Splitting**: Optimized bundle loading
 - **Progressive Web App**: Offline-first with service worker
+- **Interactive Components**: Features like a real-time `WorldClock` on the homepage.
 
 ### **2. Serverless Functions Layer**
 
