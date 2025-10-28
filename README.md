@@ -10,6 +10,10 @@ A modern, responsive personal website built with React, featuring a blog, portfo
 
 ## 📝 **Latest Updates**
 
+### **Recent UI Changes (October 2025)**
+- ✅ **World Clock**: Added a world clock to the home page displaying the time in SGT, IST, UTC, EDT, and PDT.
+- ✅ **Status Page**: Created a new `/status` page to display the Netlify deployment status badge.
+
 ### **⚙️ Build Chunk Optimization (October 2025)**
 - ✅ Reworked manual chunk splits in `vite.config.js` to isolate React core, router, animations, markdown tooling, and icon libraries for better caching and bundle size control.
 - ✅ Added a flashcard icon map helper so the Learning pages only reference the specific Lucide icons they render, reducing the default icons bundle in production builds.
@@ -181,226 +185,21 @@ cd personal-website
 
 # Install dependencies
 npm install
+```
 
-# Create environment file
-cp .env.example .env
-# Edit .env with your Netlify tokens
-
-# Start development server (CRITICAL: Use only this command)
+### **Running the Development Server**
+For most development work, use the Vite server. If you need to test Netlify functions, use `dev:netlify`.
+```bash
+# Recommended for daily development
 npm run dev
+
+# Use if you need to test Netlify Functions
+npm run dev:netlify
 ```
 
-### **⚠️ Critical Development Setup**
+## 🔧 **Troubleshooting Guide**
 
-#### **Environment Variables (REQUIRED)**
-```bash
-# .env file - Required for comment system
-NETLIFY_ACCESS_TOKEN=your_personal_access_token_here
-NETLIFY_SITE_ID=kumarsite
-```
-
-#### **🚨 AVOID These Common Mistakes**
-```bash
-# ❌ WRONG - Causes 404 errors
-npm run dev              # Vite only (port 5173)
-npx netlify dev         # Netlify only (port 8888)
-
-# ✅ CORRECT - Single unified server
-npm run dev             # Everything on port 8888
-```
-
-**Why this matters:** The comment system requires Netlify functions. Running separate servers causes port conflicts and 404 errors.
-
-### **Development Commands**
-```bash
-# Development
-npm run dev              # Start dev server
-npm run dev:netlify      # Start with Netlify functions
-
-# Building
-npm run build           # Build for production
-npm run preview         # Preview production build
-
-# Testing
-npm run test:all        # Run all tests
-npm run test:unit       # Unit tests only
-npm run test:e2e        # End-to-end tests
-
-# Code Quality
-npm run biome:check     # Lint code
-npm run biome:format    # Format code
-npm run clean:whistle   # Full cleanup
-
-# Content Management
-npm run convert:books   # Convert DOCX to Markdown
-npm run semantic:index  # Index semantic search
-npm run sitemap         # Generate sitemap
-```
-
-## 📝 **Content Management**
-
-### **Adding Blog Posts**
-1. Create a new `.jsx` file in `src/pages/blog/`
-2. Use the existing blog post structure as template
-3. Add metadata and content
-4. Update the blog listing in `src/pages/Blog.jsx`
-
-### **Adding Books**
-1. Place PDF files in `docs/`
-2. Run `npm run convert:books` to extract content
-3. Create book pages in `src/pages/books/`
-
-### **Content Conversion**
-- **DOCX to Markdown**: `npm run convert:books`
-- **PDF Content Extraction**: Automated via scripts
-- **Image Optimization**: Manual optimization recommended
-
-## 🧪 **Testing**
-
-### **Test Types**
-- **Unit Tests**: Component functionality
-- **E2E Tests**: User workflows
-- **Accessibility Tests**: WCAG compliance
-- **Performance Tests**: Load times and responsiveness
-- **Security Tests**: Vulnerability scanning
-
-### **Running Tests**
-```bash
-npm run test:all        # All tests
-npm run test:unit       # Unit tests
-npm run test:e2e        # E2E tests
-npm run test:pre-deploy # Pre-deployment checks
-```
-
-## 🔧 **Configuration**
-
-### **Environment Variables**
-Create a `.env` file for local development:
-```env
-VITE_GA_MEASUREMENT_ID=G-PZ37S6E5BL
-VITE_SEMANTIC_SEARCH_API=your-api-url
-# X API (optional, used for graceful Elsewhere fallback)
-X_BEARER_TOKEN=your-x-bearer-token
-```
-
-### **Netlify Configuration**
-- `netlify.toml` - Build and deployment settings
-- `netlify/functions/` - Serverless functions
-- Edge functions for security headers
-
-## 🚀 **Deployment**
-
-### **Automatic Deployment**
-- **Production**: Automatic deployment on push to `master`
-- **Preview**: Automatic deployment on pull requests
-- **Functions**: Automatic deployment of serverless functions
-
-### **Manual Deployment**
-```bash
-# Build and deploy
-npm run build
-netlify deploy --prod --dir=dist
-```
-
-### **🔧 Troubleshooting Guide**
-
-#### **🚨 Comment System Errors (Most Common)**
-
-##### **Issue: "404 Not Found" on Comment API**
-```bash
-Error: POST http://localhost:5173/.netlify/functions/get-comments 404
-```
-
-**Root Cause:** Running separate Vite and Netlify servers causes port conflicts.
-
-**Solution:**
-```bash
-# ❌ WRONG
-npm run dev          # Vite on 5173
-npx netlify dev      # Netlify on 8888
-
-# ✅ CORRECT
-npm run dev          # Unified server on 8888
-```
-
-##### **Issue: "ERR_INSUFFICIENT_RESOURCES"**
-**Symptoms:** Screen flickering, multiple API calls, browser freezing
-
-**Root Cause:** Infinite re-rendering loops, duplicate comment systems
-
-**Solution:** Use only `BlogComments.jsx` component, remove duplicate systems
-
-##### **Issue: "429 Too Many Requests"**
-**Symptoms:** Rate limiting errors from Netlify API
-
-**Root Cause:** No caching, too many API calls
-
-**Solution:** System now has built-in 5-minute caching
-
-##### **Issue: Comments Not Loading**
-**Check:**
-1. Environment variables set: `NETLIFY_ACCESS_TOKEN`
-2. Using correct development command: `npm run dev`
-3. No duplicate comment systems in blog posts
-
-#### **Critical Issue: "vite: not found" Error**
-
-**Problem:** Netlify deployment fails with `sh: 1: vite: not found`
-
-**Root Cause:** Vite was in `devDependencies`, but Netlify only installs production dependencies by default.
-
-**Solution:**
-1. **Move build tools to dependencies:**
-   ```json
-   {
-     "dependencies": {
-       "vite": "^5.0.12"
-     }
-   }
-   ```
-
-2. **Update netlify.toml:**
-   ```toml
-   [build]
-   command = "npm ci --include=dev && npm run build"
-   environment = { NPM_FLAGS = "--include=dev" }
-   ```
-
-**Prevention:** Always put build tools (vite, webpack, etc.) in `dependencies`, not `devDependencies`.
-
-#### **Function Deployment Issues**
-
-**Problem:** Functions not updating after code changes
-
-**Solutions:**
-1. **Force redeployment:**
-   ```bash
-   git commit --amend --no-edit
-   git push --force-with-lease
-   ```
-
-2. **Clear function cache:**
-   - Go to Netlify Dashboard → Functions
-   - Manually redeploy functions
-
-3. **Wait for deployment:**
-   - Function deployments take 2-5 minutes
-   - Check function logs in Netlify dashboard
-
-#### **Environment Variables**
-
-**Common Issues:**
-- Variables not set in production
-- Case sensitivity in variable names
-- Variables not accessible in functions
-
-**Debug:**
-```bash
-# Test environment variables
-curl https://kumarsite.netlify.app/.netlify/functions/test-token
-```
-
-**For Critical Issues:** See `docs/DEPLOYMENT_TROUBLESHOOTING.md` for detailed solutions to complex deployment problems encountered during a 2-day debugging session.
+For common issues like port conflicts or caching problems, refer to the **[Development Workflow Guide](docs/DEVELOPMENT_WORKFLOW_GUIDE.md)**. It contains detailed solutions and best practices for maintaining a stable development environment.
 
 ## 📊 **Performance**
 
