@@ -1,6 +1,6 @@
 # Personal Website
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/38e812a5-b162-4c0a-a9c7-c59a4b497fcd/deploy-status)](https://app.netlify.com/projects/kumarsite/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/bfc9b371-d915-45d3-a051-c92d45dd1206/deploy-status)](https://app.netlify.com/projects/kumarweb/deploys)
 
 A modern, responsive personal website built with React, featuring a blog, portfolio, and various interactive features. The site is optimized for performance, security, and user experience.
 
