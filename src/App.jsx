@@ -9,6 +9,7 @@ import SEO from "./components/SEO";
 import { getBlogSeo } from "./data/blogIndex";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
+import WorldClock from "./components/WorldClock";
 import React, { Suspense, lazy } from "react";
 
 // Eagerly load critical components
@@ -50,6 +51,7 @@ const DossierPage = lazy(() => import("./pages/Dossier"));
 const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
+const Status = lazy(() => import("./pages/Status"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
 const MyReminiscences = lazy(() => import("./pages/blog/my-reminiscences"));
@@ -530,6 +532,7 @@ function App() {
                         <FaTwitter className="h-6 w-6 text-gray-800" />
                       </a>
                     </div>
+                    <WorldClock />
                   </motion.div>
                 }
               />
@@ -572,20 +575,6 @@ function App() {
                       type="website"
                     />
                     <Projects />
-                  </>
-                }
-              />
-              <Route
-                path="/projects/ai-recommender-code"
-                element={
-                  <>
-                    <SEO
-                      title="AI Recommender Code"
-                      description="Python code for the AI-powered blog content recommender."
-                      canonicalPath="/projects/ai-recommender-code"
-                      type="website"
-                    />
-                    <AiRecommenderCode />
                   </>
                 }
               />
@@ -844,6 +833,20 @@ function App() {
                       type="website"
                     />
                     <Contact />
+                  </>
+                }
+              />
+              <Route
+                path="/status"
+                element={
+                  <>
+                    <SEO
+                      title="Status"
+                      description="Deployment status of the website."
+                      canonicalPath="/status"
+                      type="website"
+                    />
+                    <Status />
                   </>
                 }
               />
