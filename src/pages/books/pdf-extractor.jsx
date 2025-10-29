@@ -85,7 +85,7 @@ date: "2025-01-16"
           {/* PDF Extractor */}
           <div>
             <PDFExtractor
-              pdfUrl="https://kumarsite.netlify.app/docs/The_Brain_The_Story.pdf"
+              pdfUrl="https://kumar2net.com/docs/The_Brain_The_Story.pdf"
               onExtract={handleExtract}
             />
           </div>

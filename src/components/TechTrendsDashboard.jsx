@@ -38,7 +38,7 @@ const TechTrendsDashboard = () => {
       // Try local Netlify dev server first, then fallback to deployed function
       const localUrl = 'http://localhost:8888/.netlify/functions/tech-trends';
       const deployedUrl =
-        'https://kumarsite.netlify.app/.netlify/functions/tech-trends';
+        'https://kumar2net.com/.netlify/functions/tech-trends';
 
       let response;
       try {

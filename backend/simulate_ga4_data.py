@@ -15,7 +15,7 @@ sys.path.append('/workspace/src/data')
 
 # Your GA4 configuration
 GA4_MEASUREMENT_ID = "G-PZ37S6E5BL"
-SITE_URL = "https://kumarsite.netlify.app"
+SITE_URL = "https://kumar2net.com"
 
 def load_blog_posts():
     """Load actual blog posts from semantic-mapping.json"""
@@ -388,7 +388,7 @@ def main():
         print(f"      {post['views']} views | {post['unique_users']} users")
     
     print("\n✨ The /reco page will now show this real data!")
-    print("   Visit: https://kumarsite.netlify.app/reco")
+    print("   Visit: https://kumar2net.com/reco")
 
 if __name__ == "__main__":
     main()

@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Base URL for your website
-const BASE_URL = 'https://kumarsite.netlify.app';
+const BASE_URL = 'https://kumar2net.com';
 
 // Static routes from your App.jsx
 const STATIC_ROUTES = [

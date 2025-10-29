@@ -86,7 +86,7 @@ try {
 // Test 4: Test comment function endpoint
 console.log('\n💬 Testing Comment Function:');
 try {
-  const response = await fetch('https://kumarsite.netlify.app/.netlify/functions/get-comments', {
+  const response = await fetch('https://kumar2net.com/.netlify/functions/get-comments', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
