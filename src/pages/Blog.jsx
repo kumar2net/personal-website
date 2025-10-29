@@ -7,6 +7,23 @@ import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const blogPosts = [
   {
+    title: "Digital Swadeshi Age: How India Could Outlast a U.S. Tech Blockade",
+    date: "October 29, 2025",
+    lastModified: "October 29, 2025",
+    excerpt:
+      "If the U.S. unplugged India from its tech stack tomorrow, the first months would be brutal. Yet the scaffolding for a sovereign digital ecosystem already exists. This playbook walks through the immediate collapse, the domestic arsenal, and the sprint toward a Swadeshi renaissance.",
+    tags: [
+      "Digital Sovereignty",
+      "Resilience",
+      "India",
+      "Cloud Infrastructure",
+      "AI Ecosystem",
+      "Trade Policy",
+    ],
+    image: "/media/ChatGPT%20Image%20Oct%2029,%202025,%2003_48_07%20PM.png",
+    link: "/blog/digital-swadeshi-age",
+  },
+  {
     title: "Markets and Morals: A Dialogue with Michael Sandel",
     date: "October 27, 2025",
     lastModified: "October 27, 2025",

@@ -185,6 +185,24 @@ export const blogIndex = {
     tags: ["Global Economy", "Survey"],
     datePublished: "2025-08-25",
   },
+  "india-key-stats-vs-usa": {
+    title:
+      "India Key Stats Vs USA: A Comprehensive Analysis of the Indian Economy",
+    description:
+      "Mobile-first macro dashboard comparing India and the United States across growth, inflation, external buffers, digital infrastructure, energy transition, and demographics with policy takeaways for India.",
+    image:
+      "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80",
+    tags: [
+      "Economics",
+      "India",
+      "United States",
+      "Macroeconomics",
+      "Digital Economy",
+      "Energy Transition",
+    ],
+    datePublished: "2024-06-01",
+    dateModified: "2024-06-01",
+  },
   "semantic-search-explained": {
     title: "Search Explained: How Semantic Search Transforms Content Discovery",
     description:
