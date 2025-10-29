@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = "Kumar's Personal Website";
-const SITE_URL = 'https://kumarsite.netlify.app';
-const DEFAULT_IMAGE = `${SITE_URL}/vite.svg`;
+const SITE_URL = 'https://kumar2net.com';
+const DEFAULT_IMAGE = `${SITE_URL}/preview.png`;
 
 export default function SEO({
   title,

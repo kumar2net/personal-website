@@ -6,7 +6,7 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
 
 ## Live Site
 
-- **Production**: https://kumarsite.netlify.app  
+- **Production**: https://kumar2net.com  
 - **Primary branch**: `master`
 
 ## Latest Highlights · October 29, 2025
@@ -108,4 +108,3 @@ npm run build
 - `docs/CHANGELOG.md` – Time-stamped record of code/content updates.
 
 For questions or follow-ups, open an issue or contact Kumar directly. Happy shipping!
-

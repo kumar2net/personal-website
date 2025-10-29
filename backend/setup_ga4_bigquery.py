@@ -15,7 +15,7 @@ import google.auth
 # GA4 Configuration from your setup
 GA4_PROPERTY_ID = "12124606870"  # Your Stream ID
 GA4_MEASUREMENT_ID = "G-PZ37S6E5BL"
-SITE_URL = "https://kumarsite.netlify.app/"
+SITE_URL = "https://kumar2net.com/"
 
 # BigQuery Configuration
 PROJECT_ID = "my-project-74001686249"  # From your backend/.env

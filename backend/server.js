@@ -14,7 +14,7 @@ const apiCache = new NodeCache({ stdTTL: parseInt(process.env.CACHE_TTL_SECONDS 
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: ['https://kumarsite.netlify.app', 'http://localhost:3000', 'http://localhost:5173'],
+  origin: ['https://kumar2net.com', 'http://localhost:3000', 'http://localhost:5173'],
   credentials: true
 }));
 app.use(express.json());
