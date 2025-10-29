@@ -457,7 +457,7 @@ function App() {
                       </Link>
                       <Link
                         to="/projects"
-                        className="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition-colors"
+                        className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition-colors"
                       >
                         My Projects
                       </Link>
