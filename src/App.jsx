@@ -27,6 +27,7 @@ const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
 const TopicSuggestions = lazy(() => import("./pages/TopicSuggestions"));
 const Trends = lazy(() => import("./pages/Trends"));
+const News = lazy(() => import("./pages/News"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -242,6 +243,13 @@ function App() {
                 >
                   Blog
                 </Link>
+                <Link
+                  to="/news"
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                  onClick={() => trackClick("nav_news")}
+                >
+                  News
+                </Link>
 
                 <Link
                   to="/learning"
@@ -264,16 +272,6 @@ function App() {
                 >
                   Album
                 </Link>
-                <a
-                  href="https://deepdivedl.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_deepdive")}
-                >
-                  DeepDive
-                </a>
-
                 <Link
                   to="/contact"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -363,6 +361,16 @@ function App() {
                   >
                     Blog
                   </Link>
+                  <Link
+                    to="/news"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick("nav_news_mobile");
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    News
+                  </Link>
 
                   <Link
                     to="/learning"
@@ -394,19 +402,6 @@ function App() {
                   >
                     Album
                   </Link>
-                  <a
-                    href="https://deepdivedl.netlify.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_deepdive_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    DeepDive
-                  </a>
-
                   <Link
                     to="/contact"
                     onClick={() => {
@@ -453,11 +448,11 @@ function App() {
                         to="/about"
                         className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
                       >
-                        About Me
+                        About
                       </Link>
                       <Link
                         to="/projects"
-                        className="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition-colors"
+                        className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition-colors"
                       >
                         My Projects
                       </Link>
@@ -478,7 +473,7 @@ function App() {
                         to="/learning"
                         className="px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors"
                       >
-                        Learning Hub
+                        Learning
                       </Link>
                       <Link
                         to="/music"
@@ -502,10 +497,10 @@ function App() {
                       className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
                     >
                       <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                        "Aiyoo Sār Oru Malayāḷi āṇu"
+                        "That which does not kill us makes us stronger."
                       </blockquote>
                       <p className="mt-4 text-gray-600 italic text-right">
-                        — Sister talk
+                        — Friedrich Nietzsche
                       </p>
                     </motion.div>
 
@@ -603,6 +598,20 @@ function App() {
                       type="website"
                     />
                     <Blog />
+                  </>
+                }
+              />
+              <Route
+                path="/news"
+                element={
+                  <>
+                    <SEO
+                      title="News"
+                      description="Latest updates from IMP News."
+                      canonicalPath="/news"
+                      type="website"
+                    />
+                    <News />
                   </>
                 }
               />
