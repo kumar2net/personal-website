@@ -7,4 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ["react-markdown"],
   },
+  build: {
+    chunkSizeWarningLimit: 1500,
+  },
 });
