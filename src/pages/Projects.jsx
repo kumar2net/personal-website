@@ -261,12 +261,25 @@ cluster_labels = kmeans.fit_predict(self.content_vectors)`}
   },
   {
     title: "Kumar News - News Aggregation Platform",
-    description:
-      "A comprehensive news aggregation platform that provides real-time news from various categories including technology, business, sports, entertainment, and more. Built with NewsAPI integration to deliver fresh, relevant content to users.",
-    tech: ["React", "Node.js", "NewsAPI", "Tailwind CSS", "Netlify"],
+    description: (
+      <div>
+        <p className="mb-4">
+          Kumar News is a comprehensive aggregation platform that surfaces
+          real-time stories from across technology, business, sports,
+          entertainment, and more. It builds on a NewsAPI integration to keep
+          readers informed with fresh, relevant updates.
+        </p>
+        <p>
+          Users can explore category-specific feeds, scan headlines quickly, and
+          dive into full articles with a clean, responsive interface designed
+          for desktop and mobile alike.
+        </p>
+      </div>
+    ),
+    tech: ["React", "Netlify", "Tailwind CSS", "NewsAPI"],
     image:
       "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
-    link: "https://kumarnews.netlify.app",
+    link: "/news",
     features: [
       "Real-time news aggregation from multiple sources via NewsAPI",
       "News categorization by topics (technology, business, sports, etc.)",
@@ -285,7 +298,7 @@ cluster_labels = kmeans.fit_predict(self.content_vectors)`}
     ],
     category: "News Aggregation",
     impact:
-      "Providing users with timely, relevant news from various categories to keep them informed about current events and developments worldwide",
+      "Keeps readers informed with timely, relevant stories across key categories through a single destination.",
   },
   {
     title: "MedicineChk App",
@@ -356,14 +369,14 @@ const Projects = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
-                      Visit Live Project
+                      View Project
                     </a>
                   ) : (
                     <Link
                       to={project.link}
                       className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
-                      View Full Code
+                      View Project
                     </Link>
                   )}
                 </div>
