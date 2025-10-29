@@ -6,5 +6,9 @@
       "destination": "https://kumar2net.com/$1",
       "permanent": true
     }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
