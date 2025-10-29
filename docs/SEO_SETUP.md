@@ -14,13 +14,13 @@ This document covers the complete SEO setup for the personal website, including 
 
 **Primary (HTML Sitemap):**
 ```
-https://kumarsite.netlify.app/sitemap.html
+https://kumar2net.com/sitemap.html
 ```
 
 **Alternative Options:**
-- XML Sitemap: [https://kumarsite.netlify.app/sitemap.xml](https://kumarsite.netlify.app/sitemap.xml)
-- Function Sitemap: [https://kumarsite.netlify.app/.netlify/functions/sitemap](https://kumarsite.netlify.app/.netlify/functions/sitemap)
-- Simple Sitemap: [https://kumarsite.netlify.app/sitemap-simple.xml](https://kumarsite.netlify.app/sitemap-simple.xml)
+- XML Sitemap: [https://kumar2net.com/sitemap.xml](https://kumar2net.com/sitemap.xml)
+- Function Sitemap: [https://kumar2net.com/.netlify/functions/sitemap](https://kumar2net.com/.netlify/functions/sitemap)
+- Simple Sitemap: [https://kumar2net.com/sitemap-simple.xml](https://kumar2net.com/sitemap-simple.xml)
 
 ## 📊 **Pages Included in Sitemap**
 
@@ -92,12 +92,12 @@ npm run sitemap
 ## 🚀 **Google Search Console Setup**
 
 ### 1. Property Verification
-- **Domain**: kumarsite.netlify.app
+- **Domain**: kumar2net.com
 - **Verification Method**: HTML tag
 - **Status**: ✅ Verified
 
 ### 2. Sitemap Submission
-- **URL**: [https://kumarsite.netlify.app/sitemap.html](https://kumarsite.netlify.app/sitemap.html)
+- **URL**: [https://kumar2net.com/sitemap.html](https://kumar2net.com/sitemap.html)
 - **Status**: ✅ Successfully submitted
 - **Type**: HTML sitemap
 - **Pages**: 37 discovered

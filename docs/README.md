@@ -190,7 +190,7 @@ The blog system supports:
 ## 🌐 Deployment
 
 - Host: Netlify
-- Live Site: https://kumarsite.netlify.app
+- Live Site: https://kumar2net.com
 - Branch: Deployed from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your workflow (main or master).
 - Build command: `npm run build`
 - Publish directory: `dist`

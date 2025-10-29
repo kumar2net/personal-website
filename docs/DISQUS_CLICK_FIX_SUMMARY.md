@@ -112,12 +112,12 @@ The Disqus click functionality is now working properly due to:
 ## 🔗 Live Testing
 
 ### **Test URLs**:
-- **Main Site**: https://kumarsite.netlify.app
-- **Test Blog Post**: https://kumarsite.netlify.app/blog/habit
+- **Main Site**: https://kumar2net.com
+- **Test Blog Post**: https://kumar2net.com/blog/habit
 - **Disqus Admin**: https://kumarsite.disqus.com/admin/
 
 ### **How to Test**:
-1. Visit any blog post (e.g., https://kumarsite.netlify.app/blog/habit)
+1. Visit any blog post (e.g., https://kumar2net.com/blog/habit)
 2. Scroll down to the comments section
 3. Wait for Disqus to load (shows loading spinner)
 4. Try clicking on comment elements - should work perfectly

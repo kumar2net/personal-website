@@ -94,7 +94,7 @@ async function publishToNetlify() {
   error.style.display = 'none';
   
   try {
-    const response = await fetch('https://kumarsite.netlify.app/.netlify/functions/wordpress-manual-publish', {
+    const response = await fetch('https://kumar2net.com/.netlify/functions/wordpress-manual-publish', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -275,12 +275,12 @@ Make direct API calls to the Netlify function to publish specific posts.
 
 ```bash
 # Publish post ID 123
-curl -X POST https://kumarsite.netlify.app/.netlify/functions/wordpress-manual-publish \
+curl -X POST https://kumar2net.com/.netlify/functions/wordpress-manual-publish \
   -H "Content-Type: application/json" \
   -d '{"postId": "123", "action": "publish"}'
 
 # Using JavaScript in browser console
-fetch('https://kumarsite.netlify.app/.netlify/functions/wordpress-manual-publish', {
+fetch('https://kumar2net.com/.netlify/functions/wordpress-manual-publish', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ postId: '123', action: 'publish' })
@@ -362,7 +362,7 @@ npm run wordpress:publisher
 
 ### **🎉 Live Cross-Published Post**
 - **WordPress Original**: https://kumar2net.wordpress.com/2025/08/23/agentic-feature-in-a-browser/
-- **Netlify Cross-Published**: https://kumarsite.netlify.app/blog/2025-08-23-agentic-feature-in-a-browser
+- **Netlify Cross-Published**: https://kumar2net.com/blog/2025-08-23-agentic-feature-in-a-browser
 - **Status**: ✅ **FULLY OPERATIONAL**
 
 ### **✅ System Components Verified**

@@ -148,9 +148,9 @@ Convert "It's Not About You: A Brief Guide to a Meaningful Life" PDF to markdown
 ```
 
 ### Live Site Testing
-- ✅ **New Blog Post**: https://kumarsite.netlify.app/blog/devastated-by-young-girls-demise
-- ✅ **India USA Trade Gap**: https://kumarsite.netlify.app/blog/india-usa-trade-gap-2025
-- ✅ **Acronym Soup**: https://kumarsite.netlify.app/blog/acronym-soup
+- ✅ **New Blog Post**: https://kumar2net.com/blog/devastated-by-young-girls-demise
+- ✅ **India USA Trade Gap**: https://kumar2net.com/blog/india-usa-trade-gap-2025
+- ✅ **Acronym Soup**: https://kumar2net.com/blog/acronym-soup
 - ✅ **UI Elements**: Like/Comment buttons with labels and counts
 - ✅ **Functionality**: All features working as expected
 
@@ -245,7 +245,7 @@ Convert "It's Not About You: A Brief Guide to a Meaningful Life" PDF to markdown
 9. `fix: Manually post full blog content to WordPress with complete medical information and blood test table`
 
 ### Netlify Deployments
-- ✅ **Production**: https://kumarsite.netlify.app
+- ✅ **Production**: https://kumar2net.com
 - ✅ **Functions**: All 6 functions deployed successfully
 - ✅ **Build**: No errors, all assets optimized
 
@@ -350,10 +350,10 @@ All objectives have been successfully completed:
 - ✅ Everything is deployed and operational
 
 ### Live URLs
-- **Personal Website**: https://kumarsite.netlify.app
-- **Album Page**: https://kumarsite.netlify.app/album
-- **Blog**: https://kumarsite.netlify.app/blog
-- **A Sobering Week**: https://kumarsite.netlify.app/blog/sobering-week-august-2025
+- **Personal Website**: https://kumar2net.com
+- **Album Page**: https://kumar2net.com/album
+- **Blog**: https://kumar2net.com/blog
+- **A Sobering Week**: https://kumar2net.com/blog/sobering-week-august-2025
 
 ### Key Learnings Captured
 - **Mobile Browser Compatibility**: DOM ready handling is crucial for mobile Chrome
@@ -627,7 +627,7 @@ All objectives have been successfully completed:
 - Modified file: `src/pages/Music.jsx`
 - Added new image: `public/media/AK_latest.png`
 - Git commit: 9f740ed - "Update Music page with new playlist image"
-- Production deployment successful at https://kumarsite.netlify.app
+- Production deployment successful at https://kumar2net.com
 - Build completed with no errors or warnings
 
 ---

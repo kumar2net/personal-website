@@ -6,7 +6,7 @@ Last updated: **October 29, 2025**
 
 | Item | Details |
 |------|---------|
-| **Production URL** | https://kumarsite.netlify.app |
+| **Production URL** | https://kumar2net.com |
 | **Status** | ✅ Online – new content waiting to be deployed |
 | **Branch** | `master` (auto-deploys via Netlify) |
 | **Latest change** | Added “Digital Swadeshi Age” blog post and refreshed documentation |

@@ -119,7 +119,7 @@ git push origin master
 
 3. **Test deployed function:**
    ```bash
-   curl https://kumarsite.netlify.app/.netlify/functions/get-comments
+   curl https://kumar2net.com/.netlify/functions/get-comments
    ```
 
 4. **Check Netlify function logs:**
@@ -172,7 +172,7 @@ git push origin master
 sleep 300
 
 # Test the function
-curl -X POST https://kumarsite.netlify.app/.netlify/functions/get-comments \
+curl -X POST https://kumar2net.com/.netlify/functions/get-comments \
   -H "Content-Type: application/json" \
   -d '{"postId": "test-post"}'
 ```
@@ -255,15 +255,15 @@ netlify functions:log get-comments
 ### Remote Testing
 ```bash
 # Test deployed function
-curl https://kumarsite.netlify.app/.netlify/functions/get-comments
+curl https://kumar2net.com/.netlify/functions/get-comments
 
 # Test with parameters
-curl -X POST https://kumarsite.netlify.app/.netlify/functions/get-comments \
+curl -X POST https://kumar2net.com/.netlify/functions/get-comments \
   -H "Content-Type: application/json" \
   -d '{"postId": "test"}'
 
 # Check site status
-curl -I https://kumarsite.netlify.app
+curl -I https://kumar2net.com
 ```
 
 ### Netlify CLI

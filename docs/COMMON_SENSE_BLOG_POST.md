@@ -110,7 +110,7 @@ src/pages/blog/common-sense-rare-commodity.jsx
 - ✅ **Performance**: Optimized loading and interaction
 
 ### **Live URL**
-https://kumarsite.netlify.app/blog/common-sense-rare-commodity
+https://kumar2net.com/blog/common-sense-rare-commodity
 
 ## 📈 **Analytics Integration**
 

@@ -4,7 +4,7 @@
 
 **Date**: January 2025  
 **Status**: ✅ SUCCESSFULLY DEPLOYED TO PRODUCTION  
-**Live URL**: https://kumarsite.netlify.app
+**Live URL**: https://kumar2net.com
 
 ## 📋 Deployment Summary
 
@@ -20,15 +20,15 @@
 - **Functions**: 8 Netlify functions deployed successfully
 
 ### ✅ Netlify Deployment
-- **Deploy URL**: https://kumarsite.netlify.app
-- **Unique Deploy**: https://68b3883ed231840b00e53878--kumarsite.netlify.app
+- **Deploy URL**: https://kumar2net.com
+- **Unique Deploy**: Migrated to Vercel (preview deployments managed in Vercel dashboard)
 - **Deploy Time**: 23.2s
 - **Status**: ✅ Live and accessible
 
 ## 🔍 Verification Results
 
 ### ✅ Site Accessibility
-- **Main Site**: https://kumarsite.netlify.app (HTTP 200)
+- **Main Site**: https://kumar2net.com (HTTP 200)
 - **Disqus Script**: https://kumarsite.disqus.com/embed.js (HTTP 200)
 - **Admin Panel**: https://kumarsite.disqus.com/admin/ (Accessible)
 
@@ -41,17 +41,17 @@
 ## 🚀 What's Now Live
 
 ### Blog Posts with Disqus Comments
-1. `joy-of-writing` - https://kumarsite.netlify.app/blog/joy-of-writing
-2. `devastated-by-young-girls-demise` - https://kumarsite.netlify.app/blog/devastated-by-young-girls-demise
-3. `india-usa-trade-gap-2025` - https://kumarsite.netlify.app/blog/india-usa-trade-gap-2025
-4. `acronym-soup` - https://kumarsite.netlify.app/blog/acronym-soup
-5. `global-economic-concerns-2025` - https://kumarsite.netlify.app/blog/global-economic-concerns-2025
-6. `kumblogtipsaug3` - https://kumarsite.netlify.app/blog/kumblogtipsaug3
-7. `marketnewsfetch` - https://kumarsite.netlify.app/blog/marketnewsfetch
-8. `compare` - https://kumarsite.netlify.app/blog/compare
-9. `boy-with-music-in-veins` - https://kumarsite.netlify.app/blog/boy-with-music-in-veins
-10. `habit` - https://kumarsite.netlify.app/blog/habit
-11. `tnpdcl-automated-meter-reading` - https://kumarsite.netlify.app/blog/tnpdcl-automated-meter-reading
+1. `joy-of-writing` - https://kumar2net.com/blog/joy-of-writing
+2. `devastated-by-young-girls-demise` - https://kumar2net.com/blog/devastated-by-young-girls-demise
+3. `india-usa-trade-gap-2025` - https://kumar2net.com/blog/india-usa-trade-gap-2025
+4. `acronym-soup` - https://kumar2net.com/blog/acronym-soup
+5. `global-economic-concerns-2025` - https://kumar2net.com/blog/global-economic-concerns-2025
+6. `kumblogtipsaug3` - https://kumar2net.com/blog/kumblogtipsaug3
+7. `marketnewsfetch` - https://kumar2net.com/blog/marketnewsfetch
+8. `compare` - https://kumar2net.com/blog/compare
+9. `boy-with-music-in-veins` - https://kumar2net.com/blog/boy-with-music-in-veins
+10. `habit` - https://kumar2net.com/blog/habit
+11. `tnpdcl-automated-meter-reading` - https://kumar2net.com/blog/tnpdcl-automated-meter-reading
 
 ### Features Now Available
 - ✅ Professional comment system with threading
@@ -91,7 +91,7 @@
 
 ## 🔗 Important Links
 
-- **Live Site**: https://kumarsite.netlify.app
+- **Live Site**: https://kumar2net.com
 - **Disqus Admin**: https://kumarsite.disqus.com/admin/
 - **GitHub Repo**: https://github.com/kumar2net/personal-website
 - **Netlify Dashboard**: https://app.netlify.com/projects/kumarsite
