@@ -28,13 +28,12 @@ export default function Elsewhere() {
 
   useEffect(() => {
     let active = true;
-    // Use Netlify dev server in development, production path in production
-    const isDev =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
-    const feedUrl = isDev
-      ? `${window.location.protocol}//${window.location.hostname}:8888/.netlify/functions/wp-feed`
-      : "/.netlify/functions/wp-feed";
+    const base = (() => {
+      const configured = import.meta.env.VITE_API_BASE;
+      if (!configured) return "";
+      return configured.endsWith("/") ? configured.slice(0, -1) : configured;
+    })();
+    const feedUrl = `${base}/api/wp-feed`;
 
     fetch(feedUrl)
       .then(async (r) => {
@@ -67,13 +66,12 @@ export default function Elsewhere() {
 
   useEffect(() => {
     let active = true;
-    const isDev =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
-    const base = isDev
-      ? `${window.location.protocol}//${window.location.hostname}:8888`
-      : "";
-    const xUrl = `${base}/.netlify/functions/x-latest?username=kumar2net`;
+    const base = (() => {
+      const configured = import.meta.env.VITE_API_BASE;
+      if (!configured) return "";
+      return configured.endsWith("/") ? configured.slice(0, -1) : configured;
+    })();
+    const xUrl = `${base}/api/x-latest?username=kumar2net`;
 
     fetch(xUrl)
       .then((r) =>
