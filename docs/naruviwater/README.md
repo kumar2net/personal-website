@@ -131,7 +131,7 @@ docs/naruviwater/
 
 - **Main Component**: `src/pages/naruvi/NaruviWaterIssues.jsx`
 - **Routing**: `src/App.jsx` (naruvi route)
-- **Website**: https://kumarsite.netlify.app/naruvi
+- **Website**: https://kumar2net.com/naruvi
 - **Documentation**: `docs/naruviwater/README.md`
 
 ## 📞 **Support and Updates**

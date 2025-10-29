@@ -27,7 +27,7 @@
 **Impact**: 3,370ms (3.37 seconds!)
 **Current**: Self-redirect loop detected
 ```
-https://kumarsite.netlify.app/ → (3.37s delay) → https://kumarsite.netlify.app/
+https://kumar2net.com/ → (3.37s delay) → https://kumar2net.com/
 ```
 
 **Root Cause**: Likely Service Worker fetch event causing artificial delay
@@ -66,7 +66,7 @@ https://kumarsite.netlify.app/ → (3.37s delay) → https://kumarsite.netlify.a
 
 **Verification**:
 ```bash
-curl -s https://kumarsite.netlify.app/manifest.json | jq .
+curl -s https://kumar2net.com/manifest.json | jq .
 # ✅ Returns valid manifest with all required fields
 ```
 
@@ -234,7 +234,7 @@ Your site is in excellent shape overall. The accessibility, best practices, and 
 ---
 
 **Report Generated**: October 23, 2025  
-**Audit URL**: https://kumarsite.netlify.app  
+**Audit URL**: https://kumar2net.com  
 **Report Files**: 
 - JSON: `lh_current.report.json`
 - HTML: `lh_current.report.html`

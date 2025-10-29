@@ -66,7 +66,7 @@ NETLIFY_ACCESS_TOKEN=your_netlify_personal_access_token
 NETLIFY_SITE_ID=kumarsite
 
 # Optional: CORS configuration
-ALLOWED_ORIGINS=https://kumarsite.netlify.app,http://localhost:5173
+ALLOWED_ORIGINS=https://kumar2net.com,http://localhost:5173
 ```
 
 #### Getting Netlify Access Token
@@ -211,7 +211,7 @@ All comments are sanitized before display:
 
 ```bash
 # Test comment fetching
-curl -X POST https://kumarsite.netlify.app/.netlify/functions/get-comments \
+curl -X POST https://kumar2net.com/.netlify/functions/get-comments \
   -H "Content-Type: application/json" \
   -d '{"postSlug": "common-sense-rare-commodity", "formName": "blog-comments"}'
 

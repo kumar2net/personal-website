@@ -143,7 +143,7 @@ const BACKEND_API_URL = window.location.hostname === 'localhost'
 
 ### 10. Webhook Service 404 Error (historical)
 
-**Problem:** `POST https://kumarsite.netlify.app/.netlify/functions/analytics/analytics 404 (Not Found)`
+**Problem:** `POST https://kumar2net.com/.netlify/functions/analytics/analytics 404 (Not Found)`
 
 **Root Cause:** Webhook service calling `/analytics` instead of `/analytics/track`.
 

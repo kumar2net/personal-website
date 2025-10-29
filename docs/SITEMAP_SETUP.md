@@ -18,7 +18,7 @@ The sitemap helps search engines discover and index all pages on your website. I
 
 **Copy this URL for Google Search Console:**
 ```
-https://kumarsite.netlify.app/sitemap.html
+https://kumar2net.com/sitemap.html
 ```
 
 **Note:** The HTML sitemap works better than XML sitemaps with Google Search Console due to redirect and caching issues with static XML files on Netlify.
@@ -27,9 +27,9 @@ https://kumarsite.netlify.app/sitemap.html
 
 ### 1. Submit to Google Search Console
 
-1. Go to [Google Search Console](https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fkumarsite.netlify.app%2F)
+1. Go to [Google Search Console](https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fkumar2net.com%2F)
 2. Add a new sitemap
-3. Enter: `https://kumarsite.netlify.app/sitemap.html` *(HTML sitemap works better)*
+3. Enter: `https://kumar2net.com/sitemap.html` *(HTML sitemap works better)*
 4. Click "Submit"
 
 **✅ Successfully tested and working!**
@@ -92,10 +92,10 @@ Each URL entry includes:
 ## Verification
 
 You can verify the sitemap is working by visiting:
-- [https://kumarsite.netlify.app/sitemap.html](https://kumarsite.netlify.app/sitemap.html) *(Primary - HTML sitemap)*
-- [https://kumarsite.netlify.app/sitemap.xml](https://kumarsite.netlify.app/sitemap.xml) *(XML sitemap)*
-- [https://kumarsite.netlify.app/robots.txt](https://kumarsite.netlify.app/robots.txt) *(Robots file)*
-- [https://kumarsite.netlify.app/.netlify/functions/sitemap](https://kumarsite.netlify.app/.netlify/functions/sitemap) *(Function-based sitemap)*
+- [https://kumar2net.com/sitemap.html](https://kumar2net.com/sitemap.html) *(Primary - HTML sitemap)*
+- [https://kumar2net.com/sitemap.xml](https://kumar2net.com/sitemap.xml) *(XML sitemap)*
+- [https://kumar2net.com/robots.txt](https://kumar2net.com/robots.txt) *(Robots file)*
+- [https://kumar2net.com/.netlify/functions/sitemap](https://kumar2net.com/.netlify/functions/sitemap) *(Function-based sitemap)*
 
 ## Adding New Pages
 
@@ -111,10 +111,10 @@ When you add new pages to your React app:
 ### Sitemap Not Found
 - Ensure the sitemap is in the `public/` directory
 - Check that Netlify is serving the file correctly
-- Verify the URL is accessible: [https://kumarsite.netlify.app/sitemap.html](https://kumarsite.netlify.app/sitemap.html)
+- Verify the URL is accessible: [https://kumar2net.com/sitemap.html](https://kumar2net.com/sitemap.html)
 
 ### Google Search Console Errors
-- **Use HTML sitemap instead of XML**: [https://kumarsite.netlify.app/sitemap.html](https://kumarsite.netlify.app/sitemap.html)
+- **Use HTML sitemap instead of XML**: [https://kumar2net.com/sitemap.html](https://kumar2net.com/sitemap.html)
 - XML sitemaps often have "Couldn't fetch" errors on Netlify due to redirect issues
 - HTML sitemaps are more reliable and easier for Google to process
 - Check that the XML is valid if using XML sitemap
@@ -137,7 +137,7 @@ After submitting to Google Search Console:
 ## ✅ **Success Status**
 
 - **✅ Sitemap submitted successfully** to Google Search Console
-- **✅ HTML sitemap working** - [https://kumarsite.netlify.app/sitemap.html](https://kumarsite.netlify.app/sitemap.html)
+- **✅ HTML sitemap working** - [https://kumar2net.com/sitemap.html](https://kumar2net.com/sitemap.html)
 - **✅ 37 pages ready** for indexing
 - **✅ All blog posts** discoverable by search engines
 - **✅ Website SEO-ready** and discoverable in Google search results

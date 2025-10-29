@@ -60,7 +60,7 @@ In `src/App.jsx` send `page_view` on route changes with React Router.
 ## Verification (Tag Assistant)
 
 1. Open [Tag Assistant](https://tagassistant.google.com).
-2. Enter `https://kumarsite.netlify.app` and click Connect.
+2. Enter `https://kumar2net.com` and click Connect.
 3. Navigate a few pages; verify events in GA4 Realtime/DebugView.
 
 Notes:

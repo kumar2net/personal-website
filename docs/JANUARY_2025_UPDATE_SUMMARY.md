@@ -84,7 +84,7 @@
 
 ## 🔗 **Useful Links**
 
-- **Live Site**: https://kumarsite.netlify.app
+- **Live Site**: https://kumar2net.com
 - **GitHub Repository**: https://github.com/kumar2net/personal-website
 - **Netlify Dashboard**: https://app.netlify.com/projects/kumarsite
 - **Documentation**: `/docs` directory

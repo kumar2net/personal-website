@@ -65,7 +65,7 @@ The webhook system provides the following endpoints:
 {
   "event_type": "page_view",
   "data": {
-    "page_url": "https://kumarsite.netlify.app/about",
+    "page_url": "https://kumar2net.com/about",
     "page_title": "About Me",
     "visitor_id": "visitor_1234567890_abc123",
     "session_id": "session_1234567890_def456",
@@ -351,7 +351,7 @@ Request Body:
 ## Deployment Notes
 
 - Netlify deploys from GitHub. Ensure Site settings → Build & deploy → Branch to deploy matches your active branch (recommend: `main`).
-- Live site: https://kumarsite.netlify.app
+- Live site: https://kumar2net.com
 - GA4 is the primary analytics platform for the site.
 
 ## Support

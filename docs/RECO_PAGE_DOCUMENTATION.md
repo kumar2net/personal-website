@@ -3,7 +3,7 @@
 ## Overview
 The `/reco` page provides an interactive interface for discovering blog content through AI-powered recommendations using the Neural Graph Recommender system.
 
-**Live URL**: https://kumarsite.netlify.app/reco  
+**Live URL**: https://kumar2net.com/reco  
 **Access**: Direct URL only (not shown in navigation menu)
 
 ## ✨ Features
@@ -36,7 +36,7 @@ The `/reco` page provides an interactive interface for discovering blog content 
 ### Navigation
 - **Hidden from menu** - Direct URL access only
 - No navigation links (as per requirement)
-- Access via: https://kumarsite.netlify.app/reco
+- Access via: https://kumar2net.com/reco
 
 ### Page Layout
 ```
@@ -258,4 +258,4 @@ The `/reco` page is now live and provides:
 
 **Created**: January 2025
 **Version**: 1.0.0
-**URL**: https://kumarsite.netlify.app/reco
+**URL**: https://kumar2net.com/reco

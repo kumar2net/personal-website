@@ -75,7 +75,7 @@ Graph Statistics:
 ### 5. **/reco Recommendations Page** ✅
 **Status**: Live in Production
 
-**URL**: https://kumarsite.netlify.app/reco (Hidden from navigation)
+**URL**: https://kumar2net.com/reco (Hidden from navigation)
 
 #### Features Implemented:
 - ✅ **Three Interactive Tabs**:
@@ -164,7 +164,7 @@ Data Sources
 
 ### Production Deployments ✅
 - ✅ Frontend components pushed to master
-- ✅ /reco page live at https://kumarsite.netlify.app/reco
+- ✅ /reco page live at https://kumar2net.com/reco
 - ✅ All documentation updated
 - ✅ Navigation hidden as requested
 
