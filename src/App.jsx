@@ -579,6 +579,20 @@ function App() {
                 }
               />
               <Route
+                path="/projects/ai-recommender-code"
+                element={
+                  <>
+                    <SEO
+                      title="AI Recommender Code"
+                      description="Full Colab notebook powering the AI-driven blog topic recommender."
+                      canonicalPath="/projects/ai-recommender-code"
+                      type="article"
+                    />
+                    <AiRecommenderCode />
+                  </>
+                }
+              />
+              <Route
                 path="/blog"
                 element={
                   <>

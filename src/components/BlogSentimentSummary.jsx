@@ -1,9 +1,9 @@
-import summary from '../data/blog-sentiment-summary.json';
+import summary from "../data/blog-sentiment-summary.json";
 
 const sentimentColors = {
-  positive: 'bg-green-100 text-green-800',
-  neutral: 'bg-yellow-100 text-yellow-800',
-  negative: 'bg-red-100 text-red-800',
+  positive: "bg-green-100 text-green-800",
+  neutral: "bg-yellow-100 text-yellow-800",
+  negative: "bg-red-100 text-red-800",
 };
 
 export default function BlogSentimentSummary() {
@@ -13,7 +13,7 @@ export default function BlogSentimentSummary() {
         <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
           <span role="img" aria-label="ml">
             🤖
-          </span>{' '}
+          </span>{" "}
           Blog Sentiment Analysis (ML Use Case)
         </h2>
       </div>
@@ -32,9 +32,9 @@ export default function BlogSentimentSummary() {
             </tr>
           </thead>
           <tbody>
-            {summary.map(({ title, score, label }) => (
+            {summary.map(({ title, score, label }, index) => (
               <tr
-                key={`${title}-${score}`}
+                key={`${title}-${score}-${index}`}
                 className="border-b last:border-b-0 hover:bg-gray-50 transition"
               >
                 <td className="py-2 px-4 font-medium">{title}</td>
@@ -43,9 +43,9 @@ export default function BlogSentimentSummary() {
                   <span
                     className={`inline-block px-3 py-1 rounded-full font-semibold text-sm ${sentimentColors[label]}`}
                   >
-                    {label === 'positive' && '😊'}
-                    {label === 'neutral' && '😐'}
-                    {label === 'negative' && '😞'}
+                    {label === "positive" && "😊"}
+                    {label === "neutral" && "😐"}
+                    {label === "negative" && "😞"}
                     <span className="ml-2 capitalize">{label}</span>
                   </span>
                 </td>
