@@ -2,6 +2,13 @@
 
 Chronological log of notable changes. Dates use **YYYY-MM-DD**.
 
+## 2025-10-30
+
+- Verified Bing Webmaster Tools ownership with the `msvalidate.01` meta tag in `index.html` and recorded the steps in the SEO guides.
+- Reconfirmed Google Search Console file verification (`public/googlebf1327678c448dd8.html`) and set `https://kumar2net.com/sitemap.xml` as the canonical submission URL.
+- Documented crawler guidance for LLM agents, covering `robots.txt`, `llm.txt`, and added the `ai.txt` alias.
+- Refreshed README, SEO setup notes, sitemap guide, and deployment status to reflect the current search tooling posture.
+
 ## 2025-10-29
 
 - Added blog post **“Digital Swadeshi Age: How India Could Outlast a U.S. Tech Blockade”** with new badge styling, structured tables, and locally hosted illustrations.
@@ -20,4 +27,3 @@ Chronological log of notable changes. Dates use **YYYY-MM-DD**.
 - Updated Netlify functions to align with the ES module linting rules introduced in ESLint 9.
 
 For older history, refer to archived documentation under `docs/` (e.g., `FINAL_SUMMARY.md`, `SESSION_SUMMARY.md`).
-

@@ -530,10 +530,13 @@ function App() {
                       className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
                     >
                       <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                        "That which does not kill us makes us stronger."
+                        "It is, therefore, only through a collaborative effort
+                        of mindful living that we can safeguard our planet’s
+                        present and future and manifest a just and habitable
+                        world for all."
                       </blockquote>
                       <p className="mt-4 text-gray-600 italic text-right">
-                        — Friedrich Nietzsche
+                        — Wendell Berry
                       </p>
                     </motion.div>
 

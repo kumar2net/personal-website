@@ -7,6 +7,24 @@ import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const blogPosts = [
   {
+    title:
+      "Quantum Computing vs Bitcoin & Banking Security — a Feynman-style explainer",
+    date: "October 30, 2025",
+    lastModified: "October 30, 2025",
+    excerpt:
+      "A plain-speak walkthrough of what quantum processors can and cannot do to contemporary cryptography, why SHA-256 stays resilient, and how post-quantum schemes will slot into banking and Bitcoin long before any realistic threat window.",
+    tags: [
+      "Quantum Computing",
+      "Bitcoin",
+      "Cybersecurity",
+      "Post-Quantum Crypto",
+      "Explainer",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/quantum-computing-vs-security",
+  },
+  {
     title: "Digital Swadeshi Age: How India Could Outlast a U.S. Tech Blockade",
     date: "October 29, 2025",
     lastModified: "October 29, 2025",

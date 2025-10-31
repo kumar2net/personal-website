@@ -53,6 +53,16 @@ export const blogIndex = {
     datePublished: "2025-10-23",
     dateModified: "2025-10-23",
   },
+  "quantum-computing-vs-security": {
+    title:
+      "Quantum Computing vs Banking & Bitcoin Security — Explained the Feynman Way",
+    description:
+      "Plain-English tour of where quantum helps and where it actually threatens cryptography — hashing vs signatures, realistic timelines, and the PQC path forward.",
+    image: "/media/quantum-security-ladder.svg",
+    tags: ["Quantum", "Bitcoin", "Security", "PQC", "Explainer"],
+    datePublished: "2025-10-30",
+    dateModified: "2025-10-30",
+  },
   "bitcoin-disintermediation": {
     title: "Bitcoin and Disintermediation: Reimagining the Future of Finance",
     description:

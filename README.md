@@ -9,12 +9,11 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
 - **Production**: https://kumar2net.com  
 - **Primary branch**: `master`
 
-## Latest Highlights · October 29, 2025
+## Latest Highlights · October 30, 2025
 
-- Added the long-form post **“Digital Swadeshi Age”**, including inline data tables and three supporting illustrations.
-- Retired the older **“India Key Stats vs USA”** article to keep the blog index focused on current analysis.
-- Updated documentation (README, deployment guide, architecture notes, changelog) to match the present stack and workflows.
-- Normalized Framer Motion usage inside blog pages to keep linting and animations consistent.
+- Verified Bing Webmaster Tools via the site-wide `msvalidate.01` meta tag and captured the workflow for future redeploys.
+- Reconfirmed Google Search Console file verification and standardized sitemap submissions on `https://kumar2net.com/sitemap.xml`.
+- Documented crawler guidance for LLMs (`robots.txt`, `llm.txt`, newly added `ai.txt`) across the SEO runbooks.
 
 See `docs/CHANGELOG.md` for a detailed history.
 
