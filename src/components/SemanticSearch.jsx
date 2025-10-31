@@ -1,17 +1,21 @@
-import { useCallback, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+
+const endpoint =
+  import.meta.env.VITE_SEMANTIC_SEARCH_ENDPOINT?.trim() ||
+  "/api/semantic-search";
 
 export default function SemanticSearch() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [topK, setTopK] = useState(5);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [results, setResults] = useState([]);
-  const [meta, setMeta] = useState({ tookMs: 0, provider: '' });
+  const [meta, setMeta] = useState({ tookMs: 0, provider: "" });
 
   const canSearch = useMemo(
     () => query.trim().length > 0 && !loading,
-    [query, loading]
+    [query, loading],
   );
 
   const onSubmit = useCallback(
@@ -21,13 +25,13 @@ export default function SemanticSearch() {
         return;
       }
       setLoading(true);
-      setError('');
+      setError("");
       setResults([]);
-      setMeta({ tookMs: 0, provider: '' });
+      setMeta({ tookMs: 0, provider: "" });
       try {
-        const res = await fetch('/.netlify/functions/semantic-search', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             q: query.trim(),
             topK: Math.max(1, Math.min(10, Number(topK) || 5)),
@@ -41,17 +45,17 @@ export default function SemanticSearch() {
         setResults(Array.isArray(data?.results) ? data.results : []);
         setMeta({
           tookMs: Number(data?.tookMs || 0),
-          provider: data?.provider || '',
+          provider: data?.provider || "",
         });
       } catch (err) {
         setError(
-          typeof err?.message === 'string' ? err.message : 'Search failed'
+          typeof err?.message === "string" ? err.message : "Search failed",
         );
       } finally {
         setLoading(false);
       }
     },
-    [canSearch, query, topK]
+    [canSearch, query, topK],
   );
 
   return (
@@ -84,9 +88,9 @@ export default function SemanticSearch() {
         <button
           type="submit"
           disabled={!canSearch}
-          className={`rounded px-4 py-2 text-white ${canSearch ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+          className={`rounded px-4 py-2 text-white ${canSearch ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
         >
-          {loading ? 'Searching…' : 'Search'}
+          {loading ? "Searching…" : "Search"}
         </button>
       </form>
 
@@ -119,8 +123,8 @@ export default function SemanticSearch() {
                   <div className="text-sm text-gray-600">{r.excerpt}</div>
                 ) : null}
                 <div className="mt-1 text-xs text-gray-400">
-                  score:{' '}
-                  {typeof r.score === 'number' ? r.score.toFixed(4) : r.score}
+                  score:{" "}
+                  {typeof r.score === "number" ? r.score.toFixed(4) : r.score}
                 </div>
               </li>
             ))}

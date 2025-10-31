@@ -260,45 +260,45 @@ cluster_labels = kmeans.fit_predict(self.content_vectors)`}
       "Provides data-driven insights for content strategy by automatically generating relevant and engaging blog topic ideas based on real user data.",
   },
   {
-    title: "Kumar News - News Aggregation Platform",
+    title: "Kumar Newssearch",
     description: (
       <div>
         <p className="mb-4">
-          Kumar News is a comprehensive aggregation platform that surfaces
-          real-time stories from across technology, business, sports,
-          entertainment, and more. It builds on a NewsAPI integration to keep
-          readers informed with fresh, relevant updates.
+          Kumar Newssearch focuses on one job: helping me track the niches I
+          care about. I can enter the topics I am following as a comma-separated
+          list, and the app instantly fetches the latest headlines for each
+          interest.
         </p>
         <p>
-          Users can explore category-specific feeds, scan headlines quickly, and
-          dive into full articles with a clean, responsive interface designed
-          for desktop and mobile alike.
+          Because the search list persists locally, I can close the tab and come
+          back later to pick up exactly where I left off. No feeds to wade
+          through—just the stories tied to the topics I told it to watch.
         </p>
       </div>
     ),
-    tech: ["React", "Netlify", "Tailwind CSS", "NewsAPI"],
+    tech: ["React", "Vercel", "Tailwind CSS", "NewsAPI"],
     image:
       "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
-    link: "/news",
+    link: "https://news.kumar2net.com",
     features: [
-      "Real-time news aggregation from multiple sources via NewsAPI",
-      "News categorization by topics (technology, business, sports, etc.)",
-      "Responsive design optimized for all devices",
-      "Fast loading times with optimized performance",
-      "Clean, intuitive user interface for easy navigation",
-      "Regular updates with latest news from around the world",
+      "Newssearch experience driven by comma-separated topic input",
+      "Persists saved interests locally so they are ready on return visits",
+      "Instantly fetches fresh headlines for the topics I am tracking",
+      "Responsive Tailwind CSS layout that keeps the search front and center",
+      "Deployed on Vercel for fast, globally cached responses",
+      "Single-page focus that keeps the interface minimal and distraction-free",
     ],
     highlights: [
-      "Built with React for dynamic user experience",
-      "Integrated with NewsAPI for comprehensive news coverage",
-      "Deployed on Netlify for reliable hosting and fast CDN",
-      "Mobile-first responsive design approach",
-      "Optimized for search engines and accessibility",
-      "Real-time data processing and content management",
+      "React hooks parse and normalize comma-separated topics before querying",
+      "Browser storage keeps the topic list synchronized across sessions",
+      "Migrated from Netlify to Vercel for better DX and edge performance",
+      "Lightweight integration with NewsAPI powers the search results",
+      "Tailwind CSS utilities keep the UI consistent on any screen",
+      "Lean client-side architecture keeps load times snappy",
     ],
     category: "News Aggregation",
     impact:
-      "Keeps readers informed with timely, relevant stories across key categories through a single destination.",
+      "Provides a personalized news starting point by remembering my topic list and surfacing the latest coverage on demand.",
   },
   {
     title: "MedicineChk App",
