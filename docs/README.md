@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** October 2025 (chunk optimization + service worker cache refresh)
+**Last Updated:** 2025-10-30 (search verification & crawler review)
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, Music curation, and integrated analytics.
 
@@ -15,7 +15,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Learning Hub** - Educational resources and shortcuts
 - **Photo Album** - Google Photos integration with video content
 - **Weekly Neurosurgical Dossier** - Professional medical intelligence briefings
-- **Analytics** - Google Analytics 4 (GA4) via `gtag.js` with SPA route tracking
+- **Analytics & Search** - Google Analytics 4 (GA4) plus verified Google Search Console & Bing Webmaster Tools coverage
 - **Semantic Search** - AI-powered search across blog content
 - **Content Badges** - Automatic NEW/UPDATED indicators based on system dates
 - **Responsive Design** - Works on all devices with mobile-first approach
@@ -126,6 +126,10 @@ src/
 The site uses Google Analytics 4 (GA4):
 - GA tag added in `index.html` with `send_page_view: false`
 - SPA route changes tracked in `src/App.jsx` using React Router
+- Google Search Console verification file: `public/googlebf1327678c448dd8.html` (keep published).
+- Bing verification meta tag: `<meta name="msvalidate.01" content="779D92B78E4F7E9476793C0B87A8819C" />` in `index.html`.
+- Canonical sitemap submitted to both consoles: https://kumar2net.com/sitemap.xml (HTML/function variants remain as backups).
+- LLM crawler guidance: `public/llm.txt` and `public/ai.txt` provide crawl directives for AI agents.
 
 ## 🎨 Customization
 

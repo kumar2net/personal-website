@@ -1,6 +1,6 @@
 # Deployment Status & Runbook
 
-Last updated: **October 29, 2025**
+Last updated: **October 30, 2025**
 
 ## Environment Snapshot
 
@@ -9,7 +9,7 @@ Last updated: **October 29, 2025**
 | **Production URL** | https://kumar2net.com |
 | **Status** | ✅ Online – new content waiting to be deployed |
 | **Branch** | `master` (auto-deploys via Netlify) |
-| **Latest change** | Added “Digital Swadeshi Age” blog post and refreshed documentation |
+| **Latest change** | Documented search verification (Google Search Console file, Bing meta) and crawler guidance |
 
 The repo currently contains unpublished content changes. After completing the checks below, run a production deploy to publish them.
 
@@ -74,8 +74,8 @@ netlify deploy --prod --dir=dist --message "Rollback to <commit>"
 
 ## Recent Release Notes
 
+- **Oct 30, 2025** – Verified Bing Webmaster Tools, reconfirmed Google Search Console file verification, refreshed sitemap/SEO documentation.
 - **Oct 29, 2025** – Digital Swadeshi Age post, blog index refresh, documentation overhaul.
 - **Sep–Oct 2025** – Tech trends dashboard uplift, AI recommender refinements, Projects page SVG updates.
 
 These entries are mirrored in `docs/CHANGELOG.md`.
-
