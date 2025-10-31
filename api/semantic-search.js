@@ -1,24 +1,11 @@
-/*
-  Netlify Function: semantic-search
-  - POST body: { q: string, topK?: number }
-  - Response: { results: [{ id, title, url, excerpt, score }], tookMs }
-*/
-
-import { v1 as aiplatform } from "@google-cloud/aiplatform";
 import { GoogleAuth } from "google-auth-library";
 
-function jsonResponse(statusCode, body, extraHeaders = {}) {
-  return {
-    statusCode,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST,OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      ...extraHeaders,
-    },
-    body: JSON.stringify(body),
-  };
+function jsonResponse(res, statusCode, body, extraHeaders = {}) {
+  res.status(statusCode).setHeader("Content-Type", "application/json");
+  Object.entries(extraHeaders).forEach(([key, value]) => {
+    res.setHeader(key, value);
+  });
+  res.send(JSON.stringify(body));
 }
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -52,25 +39,24 @@ async function embedQuery(text) {
 
 async function loadMapping() {
   try {
-    // Use import to load json at runtime in Netlify env
-    const mapping = await import("../../src/data/semantic-mapping.json", {
+    const mapping = await import("../src/data/semantic-mapping.json", {
       with: { type: "json" },
     });
     if (!Array.isArray(mapping.default)) return [];
     return mapping.default;
-  } catch (e) {
+  } catch {
     return [];
   }
 }
 
 async function loadEmbeddings() {
   try {
-    const embeddings = await import("../../src/data/semantic-embeddings.json", {
+    const embeddings = await import("../src/data/semantic-embeddings.json", {
       with: { type: "json" },
     });
     if (!Array.isArray(embeddings.default)) return [];
     return embeddings.default;
-  } catch (e) {
+  } catch {
     return [];
   }
 }
@@ -138,26 +124,39 @@ function lexicalResults(mapping, q, topK) {
   return scored.slice(0, topK);
 }
 
-export const handler = async (event) => {
+export default async function handler(req, res) {
   const started = Date.now();
-  if (event.httpMethod === "OPTIONS") {
-    return jsonResponse(200, { ok: true });
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
   }
 
-  if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { error: "Method Not Allowed" });
+  if (req.method !== "POST") {
+    jsonResponse(res, 405, { error: "Method Not Allowed" });
+    return;
   }
 
-  let payload;
-  try {
-    payload = JSON.parse(event.body || "{}");
-  } catch {
-    return jsonResponse(400, { error: "Invalid JSON body" });
+  let payload = req.body;
+  if (!payload || typeof payload !== "object") {
+    try {
+      payload = JSON.parse(req.body || "{}");
+    } catch {
+      jsonResponse(res, 400, { error: "Invalid JSON body" });
+      return;
+    }
   }
 
   const q = (payload?.q || "").toString().trim();
   const topK = Math.max(1, Math.min(10, Number(payload?.topK || 5)));
-  if (!q) return jsonResponse(400, { error: "q is required" });
+  if (!q) {
+    jsonResponse(res, 400, { error: "q is required" });
+    return;
+  }
 
   try {
     const mapping = await loadMapping();
@@ -165,6 +164,7 @@ export const handler = async (event) => {
 
     let queryEmbedding = null;
     let hadSemantic = false;
+
     if (GEMINI_API_KEY) {
       try {
         queryEmbedding = await embedQuery(q);
@@ -177,7 +177,6 @@ export const handler = async (event) => {
       }
     }
 
-    // Try Vertex AI if GCP variables are available
     if (
       hadSemantic &&
       GCP_PROJECT_ID &&
@@ -185,7 +184,6 @@ export const handler = async (event) => {
       VERTEX_INDEX_ENDPOINT_ID
     ) {
       try {
-        // Use REST call instead of gRPC for broader compatibility in serverless envs
         const credentials = JSON.parse(GCP_SERVICE_ACCOUNT_JSON);
         const auth = new GoogleAuth({
           credentials,
@@ -230,11 +228,12 @@ export const handler = async (event) => {
               score,
             };
           });
-          return jsonResponse(200, {
+          jsonResponse(res, 200, {
             results,
             tookMs: Date.now() - started,
             provider: "vertex",
           });
+          return;
         }
       } catch (err) {
         console.log(
@@ -244,7 +243,6 @@ export const handler = async (event) => {
       }
     }
 
-    // Local fallback using cosine similarity
     if (hadSemantic) {
       const embeddings = await loadEmbeddings();
       if (embeddings.length > 0) {
@@ -269,21 +267,22 @@ export const handler = async (event) => {
             score,
           };
         });
-        return jsonResponse(200, {
+        jsonResponse(res, 200, {
           results,
           tookMs: Date.now() - started,
           provider: "local",
         });
+        return;
       }
     }
 
     const lexical = lexicalResults(mapping, q, topK);
-    return jsonResponse(200, {
+    jsonResponse(res, 200, {
       results: lexical,
       tookMs: Date.now() - started,
       provider: hadSemantic ? "lexical-fallback" : "lexical",
     });
   } catch (err) {
-    return jsonResponse(500, { error: "Search failed", details: String(err) });
+    jsonResponse(res, 500, { error: "Search failed", details: String(err) });
   }
-};
+}
