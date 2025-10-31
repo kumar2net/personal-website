@@ -124,6 +124,28 @@ function lexicalResults(mapping, q, topK) {
   return scored.slice(0, topK);
 }
 
+function mergeWithLexical(primary, lexical, topK) {
+  const seen = new Set();
+  const merged = [];
+
+  primary.forEach((item) => {
+    if (item && item.id && !seen.has(item.id) && merged.length < topK) {
+      merged.push(item);
+      seen.add(item.id);
+    }
+  });
+
+  for (const item of lexical) {
+    if (merged.length >= topK) break;
+    if (item && item.id && !seen.has(item.id)) {
+      merged.push(item);
+      seen.add(item.id);
+    }
+  }
+
+  return merged;
+}
+
 export default async function handler(req, res) {
   const started = Date.now();
 
@@ -228,10 +250,14 @@ export default async function handler(req, res) {
               score,
             };
           });
+          const lexical = lexicalResults(mapping, q, topK);
+          const merged = mergeWithLexical(results, lexical, topK);
+          const provider =
+            merged.length > results.length ? "vertex+lexical" : "vertex";
           jsonResponse(res, 200, {
-            results,
+            results: merged,
             tookMs: Date.now() - started,
-            provider: "vertex",
+            provider,
           });
           return;
         }
@@ -267,10 +293,14 @@ export default async function handler(req, res) {
             score,
           };
         });
+        const lexical = lexicalResults(mapping, q, topK);
+        const merged = mergeWithLexical(results, lexical, topK);
+        const provider =
+          merged.length > results.length ? "local+lexical" : "local";
         jsonResponse(res, 200, {
-          results,
+          results: merged,
           tookMs: Date.now() - started,
-          provider: "local",
+          provider,
         });
         return;
       }

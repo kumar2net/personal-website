@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2025-10-31-bisibele-bhath-bangalore-to-oslo": {
+    title: "Bisibele Bhath – Bangalore to Oslo",
+    description:
+      "From MTR Lalbagh queues to 2-minute poha packs, a story of how patience, precision, and global vision built one of India’s most trusted kitchen brands.",
+    image: "/media/MTR_products.png",
+    tags: ["Food Economy", "India Stories", "Consumer Brands", "Kumar Writes"],
+    datePublished: "2025-10-31",
+    dateModified: "2025-10-31",
+  },
   "2025-10-27-markets-and-morals": {
     title: "Markets and Morals: A Dialogue with Michael Sandel",
     description:
