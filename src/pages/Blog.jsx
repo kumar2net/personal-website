@@ -7,6 +7,16 @@ import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const blogPosts = [
   {
+    title: "Bisibele Bhath – Bangalore to Oslo",
+    date: "October 31, 2025",
+    lastModified: "October 31, 2025",
+    excerpt:
+      "Bisibele Bhath to the Baltic Breeze — Orkla India’s century-long transformation from a Bengaluru tiffin room to a global FMCG platform, balancing impatience, craft, and regional nuance.",
+    tags: ["Food Economy", "India Stories", "Consumer Brands", "Kumar Writes"],
+    image: "/media/MTR_products.png",
+    link: "/blog/2025-10-31-bisibele-bhath-bangalore-to-oslo",
+  },
+  {
     title:
       "Quantum Computing vs Bitcoin & Banking Security — a Feynman-style explainer",
     date: "October 30, 2025",
