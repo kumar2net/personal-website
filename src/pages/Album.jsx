@@ -1,12 +1,12 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { FaExternalLinkAlt, FaImages, FaPlay, FaVideo } from 'react-icons/fa';
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { FaExternalLinkAlt, FaImages, FaPlay, FaVideo } from "react-icons/fa";
 
 const Album = () => {
-  const albumUrl = 'https://photos.app.goo.gl/DRSrd1SqpRgHRdfF6';
+  const albumUrl = "https://photos.app.goo.gl/ej2zF3go6NVt7Pgv6";
   const [isMobile] = useState(() => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
+      navigator.userAgent,
     );
   });
 
@@ -17,19 +17,19 @@ const Album = () => {
         // First, try to open in the same tab (better for Google Photos app)
         window.location.href = albumUrl;
       } catch (_error) {
-        console.log('Same tab failed, trying new tab...');
+        console.log("Same tab failed, trying new tab...");
         try {
           // Fallback to new tab
-          window.open(albumUrl, '_blank', 'noopener,noreferrer');
+          window.open(albumUrl, "_blank", "noopener,noreferrer");
         } catch (_fallbackError) {
-          console.log('New tab failed, trying direct navigation...');
+          console.log("New tab failed, trying direct navigation...");
           // Final fallback - direct navigation
           window.location.assign(albumUrl);
         }
       }
     } else {
       // For desktop, use new tab
-      window.open(albumUrl, '_blank', 'noopener,noreferrer');
+      window.open(albumUrl, "_blank", "noopener,noreferrer");
     }
   };
 
@@ -43,10 +43,14 @@ const Album = () => {
       {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">Photo Album</h1>
-        <p className="text-xl text-gray-600 mb-6">BJ Phuket Vacation</p>
+        <p className="text-xl text-gray-600 mb-6">Captured Moments</p>
         <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 text-left max-w-3xl mx-auto">
           <p className="text-gray-800">
-            Bro is inbetween jobs and took a brief vacation to Phuket. With boys away pursuing their career and education they now need to find peace with themselves. There is a saying "Sometimes you must loose the string to let the arrow fly."
+            A rolling gallery of family snapshots camp fire, DC visit by our
+            Duke boy, Mylapore Bhavan San jose - JK said the benne in her dosa
+            is her yearly quota!, and ofcourse the inimitable Reet - Darwinder &
+            Shreya's cutie pie. Tap through to wander the latest frames straight
+            from the phone roll.
           </p>
         </div>
       </div>
@@ -61,8 +65,12 @@ const Album = () => {
         className="bg-white rounded-xl shadow-lg p-8 text-center"
       >
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Open Google Photos Album</h2>
-          <p className="text-gray-600 mb-3">Opens in a new tab. You can add photos, view and share.</p>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Open Google Photos Album
+          </h2>
+          <p className="text-gray-600 mb-3">
+            Opens in a new tab. Scroll, zoom, and download any image you like.
+          </p>
 
           {isMobile && (
             <p className="text-sm text-blue-600 mt-2">
