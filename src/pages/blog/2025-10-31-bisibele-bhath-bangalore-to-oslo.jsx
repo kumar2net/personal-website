@@ -113,11 +113,12 @@ const BisibeleBhathBangaloreToOslo = () => {
 
         <section>
           <p className="text-lg leading-relaxed">
-            Bisibele Bhath to the Baltic Breeze — that&rsquo;s the arc Orkla
-            India has traced. From a steamy queue outside MTR Lalbagh to a
-            super-stocked kitchen shelf in Oslo, this is a story about patience,
-            long-term craft, and the quiet confidence of knowing you&rsquo;ve
-            already won the trust of someone&rsquo;s grandmother.
+            Channa Hidiya! Bisibele Bhath to the Baltic Breeze — that&rsquo;s
+            the arc Orkla India has traced. From a steamy queue outside MTR
+            Lalbagh to a super-stocked kitchen shelf in Oslo, this is a story
+            about patience, long-term craft, and the quiet confidence of knowing
+            you&rsquo;ve already won the trust of someone&rsquo;s grandmother.
+            mother et al
           </p>
         </section>
 
@@ -307,6 +308,41 @@ const BisibeleBhathBangaloreToOslo = () => {
             Next time you grab that red MTR pack, remember: you&rsquo;re not
             buying fast food. You&rsquo;re buying fast tradition, bottled
             nostalgia, and a hundred years of somebody else&rsquo;s patience.
+          </p>
+        </section>
+        <section>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            PS: How the IPO Fared
+          </h2>
+          <p className="text-lg leading-relaxed">
+            Orkla India&rsquo;s IPO ran from 29 October to 31 October 2025 with
+            a price band of INR 695 to INR 730 a share. It closed with the kind
+            of demand you would expect for a house of heritage brands.
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-lg leading-relaxed">
+            <li>
+              It was a pure Offer for Sale of roughly 2.28 crore shares
+              (approximately INR 1,667 crore), so no fresh capital entered the
+              business&mdash;existing shareholders pared stakes.
+            </li>
+            <li>
+              Final-day subscription touched about 48.73x, signalling deep buyer
+              appetite across investor classes.
+            </li>
+            <li>
+              Grey market chatter pointed to a 10&ndash;12 percent listing pop,
+              with the premium hovering between INR 70 and INR 86 over the issue
+              price.
+            </li>
+            <li>
+              At the upper band, the market capitalisation landed near INR
+              10,000 crore.
+            </li>
+          </ul>
+          <p className="text-lg leading-relaxed">
+            In short, the listing excitement was all about brand value and
+            execution potential rather than a cash infusion, and the market
+            seemed eager to pay for that lineage. Sources: Groww, Zerodha, Mint.
           </p>
         </section>
       </article>

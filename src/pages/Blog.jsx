@@ -7,6 +7,17 @@ import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const blogPosts = [
   {
+    title: "It Is Already November",
+    date: "November 1, 2025",
+    lastModified: "November 1, 2025",
+    excerpt:
+      "A The Hindu editorial sparks a closer look at UDAN's climate trade-offs, the hidden cost of subsidised short-haul flights, and the joy of reclaiming a personal domain with curated news, photos, and music.",
+    tags: ["Climate Policy", "Aviation", "India Stories", "Personal Log"],
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/2025-11-01-it-is-already-november",
+  },
+  {
     title: "Bisibele Bhath – Bangalore to Oslo",
     date: "October 31, 2025",
     lastModified: "October 31, 2025",
