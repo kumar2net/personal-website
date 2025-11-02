@@ -32,3 +32,11 @@ Implementation Notes
 - Blog page (`src/pages/Blog.jsx`) adds a "Show unread only" toggle and an "Unread" chip on cards.
 - Storage key: `user_read_posts_v1`; feature flag key: `feature_unread_v1` (defaults to on).
 - Normalization relies on `normalizePostId` from `src/utils/postUtils.js` to be resilient to slug variations.
+
+Phase 2 (optional, Vercel-friendly)
+- Goal: cross-device sync of read state.
+- Recommended: Vercel KV (`@vercel/kv`) keyed by anonymous `user_id`.
+  - API endpoints: `GET /api/unread?uid=<id>`, `PUT /api/unread` (merge strategy).
+  - Env: `KV_REST_API_URL`, `KV_REST_API_TOKEN` configured in Vercel.
+- Alternatives: Vercel Postgres or Vercel Blob (`@vercel/blob`) if KV isn’t available.
+- No Netlify-specific components; deployment target is Vercel.
