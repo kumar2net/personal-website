@@ -4,7 +4,7 @@ new feature: un read blog posts notification system
 
 # Feature: Unread Blog Posts Notifications
 
-Status: In progress
+Status: Live (Production)
 
 Decisions
 - Read trigger: dwell_3s
@@ -44,7 +44,20 @@ Implementation Notes
   - Badge count is capped to "9+" for large counts.
 
 Pull Request
-- https://github.com/kumar2net/personal-website/pull/17
+- https://github.com/kumar2net/personal-website/pull/17 (feature implementation)
+- https://github.com/kumar2net/personal-website/pull/18 (Vercel status page + strict gating)
+
+Production
+- Platform: Vercel (master branch → Production)
+- Env flag required (strict): set `VITE_FEATURE_UNREAD=on` in Vercel → Project → Settings → Environment Variables (Production and Preview if desired) and redeploy.
+- Local override (per browser): `localStorage.setItem('feature_unread_v1','on')` or `'off'`.
+
+Verification (Prod)
+- Navbar bell appears (desktop + mobile).
+- Popover lists up to 8 unread; “Mark all as read” clears.
+- Opening a post and waiting 3s decrements unread count.
+- Blog page “Show unread only” filters; unread chip on cards.
+- GA4 events (if configured): unread_badge_shown, unread_panel_open, unread_post_click, unread_toggle.
 
 Phase 2 (optional, Vercel-friendly)
 - Goal: cross-device sync of read state.
