@@ -26,6 +26,7 @@ Changelog
 - 2025-11-02: Fixed build error by adjusting `blogRegistry` to glob MD files with `?raw` (avoid Vite import analysis on markdown).
 - 2025-11-02: Build verified with `vite build` (no errors); ready for QA.
 - 2025-11-02: Added GA4 events (unread_badge_shown, unread_panel_open, unread_post_click) and mobile navbar bell; created PR.
+ - 2025-11-02: Env+localStorage feature flag gating added; badge capped to "9+"; GA4 event for Blog toggle.
 
 Implementation Notes
 - Read is marked after 3s dwell in `src/pages/blog/PostDynamic.jsx`.
@@ -35,6 +36,11 @@ Implementation Notes
 - Normalization relies on `normalizePostId` from `src/utils/postUtils.js` to be resilient to slug variations.
 - GA4 events fire only if `window.gtag` is present.
 - Mobile: Unread bell added next to the hamburger menu in `src/App.jsx`.
+- Feature flag gating:
+  - Env breaker: `VITE_FEATURE_UNREAD=on|off` (defaults to `on` when absent) — set in Vercel Project Settings.
+  - Local switch: `localStorage.setItem('feature_unread_v1','on|off')` — per‑browser override.
+  - Effective state = env AND local. See `isFeatureEnabled()` in `src/utils/unreadStore.js`.
+  - Badge count is capped to "9+" for large counts.
 
 Pull Request
 - https://github.com/kumar2net/personal-website/pull/17
