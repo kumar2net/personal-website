@@ -26,10 +26,10 @@ export function setLocalOn(on) {
 export function isEnvOn() {
   try {
     const v = import.meta?.env?.VITE_FEATURE_UNREAD;
-    // default to 'on' if not set
-    return (v ?? "on") === "on";
+    // strict gating: default to 'off' when unset
+    return v === "on";
   } catch {
-    return true;
+    return false;
   }
 }
 
