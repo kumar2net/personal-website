@@ -10,6 +10,7 @@ import { getBlogSeo } from "./data/blogIndex";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
+import UnreadBell from "./components/UnreadBell";
 import React, { Suspense, lazy } from "react";
 
 // Eagerly load critical components
@@ -272,6 +273,7 @@ function App() {
                 >
                   Blog
                 </Link>
+                <UnreadBell limit={8} />
                 <a
                   href="https://news.kumar2net.com"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -311,21 +313,24 @@ function App() {
                   Contact
                 </Link>
               </div>
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(!isMobileMenuOpen);
-                  trackClick("mobile_menu_toggle", {
-                    isOpen: !isMobileMenuOpen,
-                  });
-                }}
-                className="md:hidden"
-                aria-label={
-                  isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
-                }
-                aria-expanded={isMobileMenuOpen}
-              >
-                <HiMenu className="h-6 w-6" />
-              </button>
+              <div className="md:hidden flex items-center gap-3">
+                <UnreadBell limit={8} />
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(!isMobileMenuOpen);
+                    trackClick("mobile_menu_toggle", {
+                      isOpen: !isMobileMenuOpen,
+                    });
+                  }}
+                  className="md:hidden"
+                  aria-label={
+                    isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
+                  }
+                  aria-expanded={isMobileMenuOpen}
+                >
+                  <HiMenu className="h-6 w-6" />
+                </button>
+              </div>
             </div>
 
             {/* Mobile menu */}
