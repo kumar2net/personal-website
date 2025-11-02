@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import SEO from "../../components/SEO";
 import { getBlogSeo } from "../../data/blogIndex";
+import { markRead } from "../../utils/unreadStore";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
 const mdModules = import.meta.glob("/src/pages/blog/*.md", {
@@ -30,6 +31,17 @@ export default function PostDynamic() {
     } else {
       setMarkdown("");
     }
+  }, [slug]);
+
+  // Dwell-based read marking: 3 seconds after page/content resolves
+  useEffect(() => {
+    if (!slug) return undefined;
+    const t = setTimeout(() => {
+      try {
+        markRead(slug, { source: "auto" });
+      } catch {}
+    }, 3000);
+    return () => clearTimeout(t);
   }, [slug]);
 
   if (LazyComponent) {
