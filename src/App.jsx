@@ -313,21 +313,24 @@ function App() {
                   Contact
                 </Link>
               </div>
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(!isMobileMenuOpen);
-                  trackClick("mobile_menu_toggle", {
-                    isOpen: !isMobileMenuOpen,
-                  });
-                }}
-                className="md:hidden"
-                aria-label={
-                  isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
-                }
-                aria-expanded={isMobileMenuOpen}
-              >
-                <HiMenu className="h-6 w-6" />
-              </button>
+              <div className="md:hidden flex items-center gap-3">
+                <UnreadBell limit={8} />
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(!isMobileMenuOpen);
+                    trackClick("mobile_menu_toggle", {
+                      isOpen: !isMobileMenuOpen,
+                    });
+                  }}
+                  className="md:hidden"
+                  aria-label={
+                    isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
+                  }
+                  aria-expanded={isMobileMenuOpen}
+                >
+                  <HiMenu className="h-6 w-6" />
+                </button>
+              </div>
             </div>
 
             {/* Mobile menu */}
