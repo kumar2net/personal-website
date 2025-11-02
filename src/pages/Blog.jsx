@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import ContentBadge from "../components/ContentBadge";
 import SEO from "../components/SEO";
 import SemanticSearch from "../components/SemanticSearch";
 import { addLastModifiedIfMissing } from "../utils/contentDates";
+import useUnreadPosts from "../hooks/useUnreadPosts";
 
 const blogPosts = [
   {
@@ -821,6 +823,16 @@ const blogPosts = [
 const Blog = () => {
   // Ensure all posts have lastModified dates
   const processedPosts = blogPosts.map(addLastModifiedIfMissing);
+  const { isUnread } = useUnreadPosts();
+  const [showUnreadOnly, setShowUnreadOnly] = useState(false);
+
+  const visiblePosts = useMemo(() => {
+    if (!showUnreadOnly) return processedPosts;
+    return processedPosts.filter((post) => {
+      const slug = (post.link || "").replace("/blog/", "");
+      return isUnread(slug);
+    });
+  }, [processedPosts, showUnreadOnly, isUnread]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -832,10 +844,21 @@ const Blog = () => {
       />
       <h1 className="text-4xl font-bold mb-6">Blog</h1>
       <SemanticSearch />
-      <h2 className="text-2xl font-semibold mb-6">Latest Posts</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-semibold">Latest Posts</h2>
+        <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            className="h-4 w-4"
+            checked={showUnreadOnly}
+            onChange={(e) => setShowUnreadOnly(e.target.checked)}
+          />
+          Show unread only
+        </label>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {processedPosts.map((post, index) => (
+        {visiblePosts.map((post, index) => (
           <motion.div
             key={post.link}
             initial={{ opacity: 0, y: 20 }}
@@ -859,6 +882,17 @@ const Blog = () => {
                     : {}
                 }
               />
+              {(() => {
+                const slug = (post.link || "").replace("/blog/", "");
+                if (isUnread(slug)) {
+                  return (
+                    <span className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+                      Unread
+                    </span>
+                  );
+                }
+                return null;
+              })()}
               <ContentBadge
                 publishDate={post.date}
                 lastModified={post.lastModified}
