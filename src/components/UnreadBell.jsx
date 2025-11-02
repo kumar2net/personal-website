@@ -23,6 +23,7 @@ export default function UnreadBell({ limit = 8 }) {
   const { unreadCount, unreadPosts, markAllRead } = useUnreadPosts({ popoverLimit: limit });
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const badgeReportedRef = useRef(false);
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -31,6 +32,18 @@ export default function UnreadBell({ limit = 8 }) {
     document.addEventListener("click", onDocClick);
     return () => document.removeEventListener("click", onDocClick);
   }, []);
+
+  // Report badge shown once per mount when there are unread posts
+  useEffect(() => {
+    if (!badgeReportedRef.current && unreadCount > 0) {
+      try {
+        if (typeof window !== "undefined" && typeof window.gtag === "function") {
+          window.gtag("event", "unread_badge_shown", { count: unreadCount });
+        }
+      } catch {}
+      badgeReportedRef.current = true;
+    }
+  }, [unreadCount]);
 
   if (unreadCount === 0) {
     return (
@@ -51,7 +64,17 @@ export default function UnreadBell({ limit = 8 }) {
       <button
         type="button"
         className="relative text-gray-600 hover:text-gray-800"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          const next = !open;
+          setOpen(next);
+          if (next) {
+            try {
+              if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                window.gtag("event", "unread_panel_open", { count: unreadCount });
+              }
+            } catch {}
+          }
+        }}
         aria-haspopup="true"
         aria-expanded={open}
         aria-label={`You have ${unreadCount} unread posts`}
@@ -106,4 +129,3 @@ export default function UnreadBell({ limit = 8 }) {
     </div>
   );
 }
-
