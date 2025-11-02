@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 export const useInteractionTracking = () => {
   const API_BASE_URL = process.env.NODE_ENV === 'development'
     ? 'http://localhost:8000'
-    : 'https://your-gnn-backend.netlify.app'; // Update for production
+    : 'https://your-gnn-backend.vercel.app'; // Update for production (Vercel)
 
   const trackInteraction = useCallback(async (postId, action, context = {}) => {
     try {
