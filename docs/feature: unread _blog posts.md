@@ -24,6 +24,7 @@ Architecture
 Changelog
 - 2025-11-02: Implemented registry, store, hook, UnreadBell; wired into navbar and post dwell (3s); added Blog page toggle and Unread chip.
 - 2025-11-02: Fixed build error by adjusting `blogRegistry` to glob MD files with `?raw` (avoid Vite import analysis on markdown).
+- 2025-11-02: Build verified with `vite build` (no errors); ready for QA.
 
 Implementation Notes
 - Read is marked after 3s dwell in `src/pages/blog/PostDynamic.jsx`.
