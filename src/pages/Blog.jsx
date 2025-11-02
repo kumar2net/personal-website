@@ -6,6 +6,7 @@ import SEO from "../components/SEO";
 import SemanticSearch from "../components/SemanticSearch";
 import { addLastModifiedIfMissing } from "../utils/contentDates";
 import useUnreadPosts from "../hooks/useUnreadPosts";
+import { isFeatureEnabled } from "../utils/unreadStore";
 
 const blogPosts = [
   {
@@ -823,16 +824,17 @@ const blogPosts = [
 const Blog = () => {
   // Ensure all posts have lastModified dates
   const processedPosts = blogPosts.map(addLastModifiedIfMissing);
-  const { isUnread } = useUnreadPosts();
+  const { isUnread, unreadCount } = useUnreadPosts();
   const [showUnreadOnly, setShowUnreadOnly] = useState(false);
+  const unreadEnabled = isFeatureEnabled();
 
   const visiblePosts = useMemo(() => {
-    if (!showUnreadOnly) return processedPosts;
+    if (!unreadEnabled || !showUnreadOnly) return processedPosts;
     return processedPosts.filter((post) => {
       const slug = (post.link || "").replace("/blog/", "");
       return isUnread(slug);
     });
-  }, [processedPosts, showUnreadOnly, isUnread]);
+  }, [processedPosts, showUnreadOnly, isUnread, unreadEnabled]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -846,15 +848,28 @@ const Blog = () => {
       <SemanticSearch />
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-semibold">Latest Posts</h2>
-        <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            className="h-4 w-4"
-            checked={showUnreadOnly}
-            onChange={(e) => setShowUnreadOnly(e.target.checked)}
-          />
-          Show unread only
-        </label>
+        {unreadEnabled && (
+          <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              className="h-4 w-4"
+              checked={showUnreadOnly}
+              onChange={(e) => {
+                const on = e.target.checked;
+                setShowUnreadOnly(on);
+                try {
+                  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                    window.gtag("event", "unread_toggle", {
+                      state: on ? "on" : "off",
+                      unread_count: unreadCount,
+                    });
+                  }
+                } catch {}
+              }}
+            />
+            Show unread only
+          </label>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -882,7 +897,7 @@ const Blog = () => {
                     : {}
                 }
               />
-              {(() => {
+              {unreadEnabled && (() => {
                 const slug = (post.link || "").replace("/blog/", "");
                 if (isUnread(slug)) {
                   return (

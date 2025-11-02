@@ -1,7 +1,7 @@
 import { normalizePostId } from "./postUtils";
 
 const STORAGE_KEY = "user_read_posts_v1";
-const FEATURE_KEY = "feature_unread_v1";
+const FEATURE_KEY = "feature_unread_v1"; // 'on' | 'off' per-browser
 const LOCAL_EVENT = "unread_store_changed";
 
 function getNowIso() {
@@ -12,10 +12,29 @@ function getNowIso() {
   }
 }
 
-export function isFeatureOn() {
+export function isLocalOn() {
   if (typeof window === "undefined") return true; // default on in SSR-less env
   const v = window.localStorage.getItem(FEATURE_KEY);
   return v ? v === "on" : true;
+}
+
+export function setLocalOn(on) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(FEATURE_KEY, on ? "on" : "off");
+}
+
+export function isEnvOn() {
+  try {
+    const v = import.meta?.env?.VITE_FEATURE_UNREAD;
+    // default to 'on' if not set
+    return (v ?? "on") === "on";
+  } catch {
+    return true;
+  }
+}
+
+export function isFeatureEnabled() {
+  return isEnvOn() && isLocalOn();
 }
 
 export function enableFeature() {
@@ -115,4 +134,3 @@ export function subscribe(listener) {
     window.removeEventListener(LOCAL_EVENT, localHandler);
   };
 }
-

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import SEO from "../../components/SEO";
 import { getBlogSeo } from "../../data/blogIndex";
-import { markRead } from "../../utils/unreadStore";
+import { markRead, isFeatureEnabled } from "../../utils/unreadStore";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
 const mdModules = import.meta.glob("/src/pages/blog/*.md", {
@@ -35,7 +35,7 @@ export default function PostDynamic() {
 
   // Dwell-based read marking: 3 seconds after page/content resolves
   useEffect(() => {
-    if (!slug) return undefined;
+    if (!slug || !isFeatureEnabled()) return undefined;
     const t = setTimeout(() => {
       try {
         markRead(slug, { source: "auto" });

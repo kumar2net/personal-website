@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useUnreadPosts from "../hooks/useUnreadPosts";
+import { isFeatureEnabled } from "../utils/unreadStore";
 
 const BellIcon = ({ className = "w-5 h-5" }) => (
   <svg
@@ -24,6 +25,7 @@ export default function UnreadBell({ limit = 8 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const badgeReportedRef = useRef(false);
+  const enabled = isFeatureEnabled();
 
   useEffect(() => {
     const onDocClick = (e) => {
@@ -44,6 +46,12 @@ export default function UnreadBell({ limit = 8 }) {
       badgeReportedRef.current = true;
     }
   }, [unreadCount]);
+
+  if (!enabled) {
+    return null;
+  }
+
+  const displayCount = unreadCount > 9 ? "9+" : unreadCount;
 
   if (unreadCount === 0) {
     return (
@@ -82,7 +90,7 @@ export default function UnreadBell({ limit = 8 }) {
       >
         <BellIcon />
         <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 min-w-[1.25rem] h-5 rounded-full bg-red-600 text-white text-xs font-semibold">
-          {unreadCount}
+          {displayCount}
         </span>
       </button>
       {open && (
