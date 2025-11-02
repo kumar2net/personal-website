@@ -16,8 +16,13 @@ function pathToSlug(path) {
 }
 
 export function getAllSlugs() {
-  const modules = import.meta.glob("/src/pages/blog/*.{jsx,md}");
-  return Object.keys(modules)
+  // Keep MD files as raw to avoid build-time transform issues
+  const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
+  const mdModules = import.meta.glob("/src/pages/blog/*.md", { query: "?raw", import: "default" });
+  return [
+    ...Object.keys(jsxModules),
+    ...Object.keys(mdModules),
+  ]
     .map(pathToSlug)
     .filter(Boolean);
 }
@@ -36,4 +41,3 @@ export function getAllPosts() {
   cached = posts;
   return posts;
 }
-
