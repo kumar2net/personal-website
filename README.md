@@ -82,6 +82,9 @@ npm run lint
 # Biome static analysis
 npm run biome:check
 
+# Run Warp blog post tests
+npm run test:warp-blog
+
 # Test scripts (unit + e2e wrappers)
 npm run test:all
 ```
@@ -92,6 +95,16 @@ npm run test:all
 npm run build
 # Outputs to dist/
 ```
+
+## Unread Posts Badge (Bell)
+
+The unread bubble shows a count of posts you haven't opened yet.
+
+- Env flag: set `VITE_FEATURE_UNREAD=on` at build time (Production/Preview) in your host.
+- Local flag: browser `localStorage` key `feature_unread_v1` must be `on` (defaults to on).
+- Status page: visit `/status` to see env/local flags and computed enabled status; use buttons to toggle local flag or clear read history.
+- Clear state: remove `localStorage` key `user_read_posts_v1` (button available on `/status`).
+- Note: The bubble appears only if `unreadCount > 0` for known slugs.
 
 ## Deployment Notes
 
