@@ -6,6 +6,8 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 
 ## 🚀 Features
 
+- Unread posts bell with per-environment flagging (see /status)
+
 - **Portfolio Showcase** - Display projects and skills
 - **Blog System** - Share thoughts and experiences with interactive comments (Netlify Forms) and AI-generated TL;DR summaries
 - **Interactive Comments** - Netlify Forms with enhanced caching; comments open by default
@@ -73,6 +75,12 @@ Content pipeline:
 - Source files (PDF/DOCX) placed in `docs/`
 - Converted to Markdown with scripts (see Scripts)
 - Rendered via `react-markdown` + `remark-gfm`
+
+## 🔔 Unread Posts Badge
+
+- Controlled by env flag `VITE_FEATURE_UNREAD` (build-time) and local flag `feature_unread_v1`
+- Check `/status` for current env/local values and computed enablement
+- Clear read history from `/status` to re-surface the badge in development
 
 ## 🧠 Weekly Neurosurgical Dossier
 
