@@ -93,13 +93,23 @@ export const normalizePostId = (rawPostId) => {
     return null;
   }
 
-  // Check if we have a known mapping
-  if (KNOWN_POST_MAPPINGS[rawPostId]) {
-    return KNOWN_POST_MAPPINGS[rawPostId];
+  const trimmed = rawPostId.trim();
+  if (!trimmed) {
+    return null;
   }
 
-  // Default: use the raw post ID
-  return rawPostId;
+  const lowerCaseSlug = trimmed.toLowerCase();
+
+  // Check if we have a known mapping (support both exact + lower-case lookups)
+  if (KNOWN_POST_MAPPINGS[trimmed]) {
+    return KNOWN_POST_MAPPINGS[trimmed];
+  }
+  if (KNOWN_POST_MAPPINGS[lowerCaseSlug]) {
+    return KNOWN_POST_MAPPINGS[lowerCaseSlug];
+  }
+
+  // Default: use the lower-case slug so casing differences normalize consistently
+  return lowerCaseSlug;
 };
 
 /**
