@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { isFeatureEnabled } from "../utils/unreadStore";
+import { isFeatureEnabled, setLocalOn } from "../utils/unreadStore";
 
 const Status = () => {
   const [localFlag, setLocalFlag] = useState("unknown");
@@ -10,7 +10,8 @@ const Status = () => {
     try {
       const v = localStorage.getItem("feature_unread_v1");
       setLocalFlag(v ?? "unset");
-    } catch {
+    } catch (e) {
+      console.warn("Status: read localStorage error", e);
       setLocalFlag("unavailable");
     }
     setEnabled(isFeatureEnabled());
@@ -18,9 +19,21 @@ const Status = () => {
 
   const setLocal = (val) => {
     try {
-      localStorage.setItem("feature_unread_v1", val);
+      // Use shared store helper to keep behavior consistent
+      setLocalOn(val === "on");
       setLocalFlag(val);
-    } catch {}
+      // Recompute enabled immediately so users don't need to reload
+      setEnabled(isFeatureEnabled());
+      // Notify listeners similarly to other storage updates
+      try {
+        window.dispatchEvent(new Event("storage"));
+      } catch (e) {
+        console.warn("Status: dispatch storage event error", e);
+      }
+    } catch (e) {
+      // best-effort: localStorage may be unavailable
+      console.warn("Status: setLocal error", e);
+    }
   };
 
   return (
@@ -78,7 +91,9 @@ const Status = () => {
                 try {
                   localStorage.removeItem("user_read_posts_v1");
                   window.dispatchEvent(new Event("storage"));
-                } catch {}
+                } catch (e) {
+                  console.warn("Status:clear read history error", e);
+                }
               }}
               className="px-3 py-1 rounded bg-orange-600 text-white hover:bg-orange-700"
             >
