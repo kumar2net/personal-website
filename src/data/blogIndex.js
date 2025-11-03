@@ -283,6 +283,15 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
+  "2025-11-03-AIClimateBlindspot": {
+    title: "⚡ AI's Climate Blind Spot: When Progress Turns into Power Hunger",
+    description:
+      "Bill Gates preaches climate realism, but there's a glaring omission: the uncontrolled explosion of AI infrastructure. As hyperscalers build GPU gigacities consuming gigawatts 24×7, we examine the hidden climate cost of AI progress and the moral exam we're failing.",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    tags: ["AI", "Climate", "Hyperscalers", "Sustainability"],
+    datePublished: "2025-11-03",
+    dateModified: "2025-11-03",
+  },
 };
 
 export function getBlogSeo(slug) {
