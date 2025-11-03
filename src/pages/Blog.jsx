@@ -10,11 +10,21 @@ import { isFeatureEnabled } from "../utils/unreadStore";
 
 const blogPosts = [
   {
+    title: "⚡ AI's Climate Blind Spot: When Progress Turns into Power Hunger",
+    date: "November 3, 2025",
+    lastModified: "November 3, 2025",
+    excerpt:
+      "Bill Gates preaches climate realism, but there's a glaring omission: the uncontrolled explosion of AI infrastructure. As hyperscalers build GPU gigacities consuming gigawatts 24×7, we examine the hidden climate cost of AI progress and the moral exam we're failing.",
+    tags: ["AI", "Climate", "Hyperscalers", "Sustainability"],
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/2025-11-03-AIClimateBlindspot",
+  },
+  {
     title: "About Warp — the agentic terminal",
     date: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
     lastModified: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
     excerpt:
-      "What Warp is, how agents work in the terminal, and why it’s a new‑age terminal with agents, blocks UI, and developer‑friendly UX.",
+      "What Warp is, how agents work in the terminal, and why it's a new‑age terminal with agents, blocks UI, and developer‑friendly UX.",
     tags: ["Warp", "Agents", "Terminal", "Productivity"],
     image: "/vite.svg",
     link: "/blog/about-warp-the-agentic-terminal",
