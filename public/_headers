@@ -24,3 +24,13 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
+
+/sitemap.xml
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Type: application/xml; charset=UTF-8
+
+/sitemap.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/robots.txt
+  Cache-Control: no-cache, no-store, must-revalidate
