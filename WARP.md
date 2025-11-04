@@ -37,7 +37,7 @@ Platform and deployment
 Environment
 - Copy .env.example to .env for local development when using analytics/AI features
 - Example flags:
-  - VITE_FEATURE_UNREAD=on enables the unread posts bell/badge (local feature flag)
+  - `user_last_catchup_v1` localStorage entry powers the header catch-up pill; reset it from `/status` during QA
   - Google/Vertex AI and GA4/BigQuery credentials are required for recommender/semantic features
 
 Architecture overview (big picture)
@@ -60,7 +60,7 @@ Testing expectations (so agents don’t fight the suite)
 - The Warp blog test validates that the about-warp-the-agentic-terminal post exists with exact metadata and heading content.
 
 Notable docs to consult
-- README.md: live site, stack summary, local dev, and key flags (see “Unread Posts Badge (Bell)” and Deployment Notes)
+- README.md: live site, stack summary, local dev, and the catch-up posts overview (see Deployment Notes too)
 - docs/ARCHITECTURE_AND_TECH_STACK.md: system architecture, function inventory, and data flows
 - docs/DEPLOYMENT_STATUS.md: pre-deploy checklist and manual deploy commands
 

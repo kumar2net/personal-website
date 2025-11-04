@@ -6,7 +6,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 
 ## 🚀 Features
 
-- Unread posts bell with per-environment flagging (see /status)
+- Catch-up pill that tracks new posts since your last visit (see /status)
 
 - **Portfolio Showcase** - Display projects and skills
 - **Blog System** - Share thoughts and experiences with interactive comments (Netlify Forms) and AI-generated TL;DR summaries
@@ -76,11 +76,11 @@ Content pipeline:
 - Converted to Markdown with scripts (see Scripts)
 - Rendered via `react-markdown` + `remark-gfm`
 
-## 🔔 Unread Posts Badge
+## 📰 Catch-up posts
 
-- Controlled by env flag `VITE_FEATURE_UNREAD` (build-time) and local flag `feature_unread_v1`
-- Check `/status` for current env/local values and computed enablement
-- Clear read history from `/status` to re-surface the badge in development
+- Stores the last catch-up timestamp in `localStorage` (`user_last_catchup_v1`).
+- Header pill and blog banner highlight posts published after that timestamp.
+- `/status` shows the stored timestamp, queued posts, and actions to mark caught up or reset locally.
 
 ## 🧠 Weekly Neurosurgical Dossier
 

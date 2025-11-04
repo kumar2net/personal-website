@@ -96,15 +96,14 @@ npm run build
 # Outputs to dist/
 ```
 
-## Unread Posts Badge (Bell)
+## Catch-up posts
 
-The unread bubble shows a count of posts you haven't opened yet.
+The global "Catch up" pill highlights blog posts published since you last marked yourself as caught up.
 
-- Env flag: set `VITE_FEATURE_UNREAD=on` at build time (Production/Preview) in your host.
-- Local flag: browser `localStorage` key `feature_unread_v1` must be `on` (defaults to on).
-- Status page: visit `/status` to see env/local flags and computed enabled status; use buttons to toggle local flag or clear read history.
-- Clear state: remove `localStorage` key `user_read_posts_v1` (button available on `/status`).
-- Note: The bubble appears only if `unreadCount > 0` for known slugs.
+- Storage: the most recent catch-up time is stored in `localStorage` under `user_last_catchup_v1`.
+- Header UI: the navigation pill shows a badge with the number of new posts and opens a modal list capped at 12 items.
+- Blog page: a banner surfaces the same count, lets you filter to recent posts, and exposes a "Mark as caught up" action.
+- Status page: visit `/status` to review the stored timestamp, see the waiting posts, or reset the local timestamp during QA.
 
 ## Deployment Notes
 

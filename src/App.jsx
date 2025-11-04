@@ -10,7 +10,7 @@ import { getBlogSeo } from "./data/blogIndex";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
-import UnreadBell from "./components/UnreadBell";
+import CatchUpMenu from "./components/CatchUpMenu";
 import React, { Suspense, lazy } from "react";
 
 // Eagerly load critical components
@@ -273,7 +273,7 @@ function App() {
                 >
                   Blog
                 </Link>
-                <UnreadBell limit={8} />
+                <CatchUpMenu />
                 <a
                   href="https://news.kumar2net.com"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -314,7 +314,7 @@ function App() {
                 </Link>
               </div>
               <div className="md:hidden flex items-center gap-3">
-                <UnreadBell limit={8} />
+                <CatchUpMenu />
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(!isMobileMenuOpen);
