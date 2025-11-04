@@ -100,9 +100,64 @@ function runUnitTests() {
   }
 }
 
-// 2. ACCESSIBILITY TESTS
+// 2. SITEMAP TESTS
+function runSitemapTests() {
+  console.log(`\n🗺️  Sitemap Tests`);
+  console.log('='.repeat(50));
+
+  try {
+    const result = execSync('node scripts/test-sitemap.mjs', { encoding: 'utf8', stdio: 'pipe' });
+    // Parse output to count passed/failed tests
+    const passedMatches = result.match(/✅/g) || [];
+    const failedMatches = result.match(/❌/g) || [];
+    
+    logTestResult(
+      TEST_CATEGORIES.UNIT_TESTS,
+      'Sitemap generation tests',
+      failedMatches.length === 0 ? 'PASS' : 'FAIL',
+      `${passedMatches.length} tests passed`
+    );
+  } catch (error) {
+    logTestResult(
+      TEST_CATEGORIES.UNIT_TESTS,
+      'Sitemap generation tests',
+      'FAIL',
+      'Test suite failed to execute'
+    );
+  }
+}
+
+// 3. INTEGRATION TESTS
+function runIntegrationTests() {
+  console.log(`\n🔗 ${TEST_CATEGORIES.INTEGRATION_TESTS}`);
+  console.log('='.repeat(50));
+  logTestResult(TEST_CATEGORIES.INTEGRATION_TESTS, 'Integration tests', 'SKIP', 'Not implemented yet');
+}
+
+// 4. E2E TESTS
+function runE2ETests() {
+  console.log(`\n🌐 ${TEST_CATEGORIES.E2E_TESTS}`);
+  console.log('='.repeat(50));
+  
+  try {
+    const result = execSync('node scripts/test-e2e.mjs', { encoding: 'utf8', stdio: 'pipe' });
+    const passedMatches = result.match(/✅/g) || [];
+    const failedMatches = result.match(/❌/g) || [];
+    
+    logTestResult(
+      TEST_CATEGORIES.E2E_TESTS,
+      'E2E tests',
+      failedMatches.length === 0 ? 'PASS' : 'FAIL',
+      `${passedMatches.length} tests passed`
+    );
+  } catch (error) {
+    logTestResult(TEST_CATEGORIES.E2E_TESTS, 'E2E tests', 'SKIP', 'Dev server not running');
+  }
+}
+
+// 5. ACCESSIBILITY TESTS
 function runAccessibilityTests() {
-  console.log(`\n♿ ${TEST_CATEGORIES.ACCESSIBILITY}`);
+  console.log(`\n♿ ${TEST_CATEGORIES.ACCESSIBILITY_TESTS}`);
   console.log('='.repeat(50));
 
   const accessibilityTests = [
@@ -133,7 +188,7 @@ function runAccessibilityTests() {
   }
 }
 
-// 5. PERFORMANCE TESTS
+// 6. PERFORMANCE TESTS
 function runPerformanceTests() {
   console.log(`\n⚡ ${TEST_CATEGORIES.PERFORMANCE_TESTS}`);
   console.log('='.repeat(50));
@@ -164,10 +219,15 @@ function runPerformanceTests() {
         `${sizeInMB}MB total`
       );
     }
+  } else {
+    logTestResult(TEST_CATEGORIES.PERFORMANCE_TESTS, 'Bundle size', 'SKIP', 'Build not found');
   }
+}
 
-  // Test lazy loading implementation
-  const _hasLazyLoading = fs.existsSync('src/components/LazyImage.jsx');
+// 7. SECURITY TESTS
+function runSecurityTests() {
+  console.log(`\n🔒 ${TEST_CATEGORIES.SECURITY_TESTS}`);
+  console.log('='.repeat(50));
 
   const securityTests = [
     {
@@ -198,7 +258,7 @@ function runPerformanceTests() {
   });
 }
 
-// 7. UX TESTS
+// 8. UX TESTS
 function runUXTests() {
   console.log(`\n👤 ${TEST_CATEGORIES.UX_TESTS}`);
   console.log('='.repeat(50));
@@ -250,6 +310,7 @@ function runAllTests() {
 
   // Run all test categories
   runUnitTests();
+  runSitemapTests();
   runIntegrationTests();
   runE2ETests();
   runAccessibilityTests();

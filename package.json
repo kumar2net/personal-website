@@ -19,6 +19,7 @@
     "ga:all": "npm run ga:topics && npm run ga:topic-suggestions",
     "test:unit": "node scripts/test-unit.mjs",
     "test:e2e": "node scripts/test-e2e.mjs",
+    "test:sitemap": "node scripts/test-sitemap.mjs",
     "test:warp-blog": "node scripts/test-warp-blog-post.mjs",
     "test:all": "node scripts/run-all-tests.mjs",
     "test:pre-deploy": "npm run test:unit && npm run test:e2e && npm run build",
