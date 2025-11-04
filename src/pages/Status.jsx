@@ -1,38 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { isFeatureEnabled, setLocalOn } from "../utils/unreadStore";
+import React from "react";
+import useCatchUpPosts from "../hooks/useCatchUpPosts";
+
+function formatDateTime(iso) {
+  if (!iso) return "Never";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "Never";
+  return date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
 const Status = () => {
-  const [localFlag, setLocalFlag] = useState("unknown");
-  const envFlag = (import.meta?.env?.VITE_FEATURE_UNREAD ?? "unset").toString();
-  const [enabled, setEnabled] = useState(false);
+  const { lastCatchUpAt, newCount, newPosts, markCaughtUp } = useCatchUpPosts();
 
-  useEffect(() => {
+  const handleReset = () => {
     try {
-      const v = localStorage.getItem("feature_unread_v1");
-      setLocalFlag(v ?? "unset");
-    } catch (e) {
-      console.warn("Status: read localStorage error", e);
-      setLocalFlag("unavailable");
-    }
-    setEnabled(isFeatureEnabled());
-  }, []);
-
-  const setLocal = (val) => {
-    try {
-      // Use shared store helper to keep behavior consistent
-      setLocalOn(val === "on");
-      setLocalFlag(val);
-      // Recompute enabled immediately so users don't need to reload
-      setEnabled(isFeatureEnabled());
-      // Notify listeners similarly to other storage updates
-      try {
-        window.dispatchEvent(new Event("storage"));
-      } catch (e) {
-        console.warn("Status: dispatch storage event error", e);
-      }
-    } catch (e) {
-      // best-effort: localStorage may be unavailable
-      console.warn("Status: setLocal error", e);
+      localStorage.removeItem("user_last_catchup_v1");
+      window.location.reload();
+    } catch (error) {
+      console.warn("Status: failed to reset catch-up timestamp", error);
     }
   };
 
@@ -67,40 +57,44 @@ const Status = () => {
         </div>
 
         <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-lg font-semibold mb-2">Unread Feature Flags</h2>
-          <div className="text-sm text-gray-700 space-y-1">
-            <div>Env flag (Vercel): <code>VITE_FEATURE_UNREAD</code> = <span className="font-mono">{envFlag}</span></div>
-            <div>Local flag (this browser): <code>feature_unread_v1</code> = <span className="font-mono">{localFlag}</span></div>
-            <div>Computed enabled: <span className={`font-mono ${enabled ? 'text-green-700' : 'text-red-700'}`}>{enabled ? 'true' : 'false'}</span></div>
+          <h2 className="text-lg font-semibold mb-2">Catch-up state</h2>
+          <p className="text-sm text-gray-700">
+            Last marked caught up: <span className="font-medium">{formatDateTime(lastCatchUpAt)}</span>
+          </p>
+          <p className="text-sm text-gray-700 mt-1">
+            Posts waiting to catch up: <span className="font-medium">{newCount}</span>
+          </p>
+          {newPosts.length > 0 && (
+            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-gray-700">
+              {newPosts.slice(0, 5).map((post) => (
+                <li key={post.slug}>
+                  {post.title} — {formatDateTime((post.dateModified || post.datePublished || post.sortDate)?.toISOString?.() ?? "")}
+                </li>
+              ))}
+              {newPosts.length > 5 && (
+                <li className="text-xs text-gray-500">{newPosts.length - 5} more not shown…</li>
+              )}
+            </ul>
+          )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={markCaughtUp}
+              className="rounded bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Mark as caught up
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="rounded bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
+            >
+              Reset timestamp
+            </button>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button
-              onClick={() => setLocal("on")}
-              className="px-3 py-1 rounded bg-green-600 text-white hover:bg-green-700"
-            >
-              Set local ON
-            </button>
-            <button
-              onClick={() => setLocal("off")}
-              className="px-3 py-1 rounded bg-gray-600 text-white hover:bg-gray-700"
-            >
-              Set local OFF
-            </button>
-            <button
-              onClick={() => {
-                try {
-                  localStorage.removeItem("user_read_posts_v1");
-                  window.dispatchEvent(new Event("storage"));
-                } catch (e) {
-                  console.warn("Status:clear read history error", e);
-                }
-              }}
-              className="px-3 py-1 rounded bg-orange-600 text-white hover:bg-orange-700"
-            >
-              Clear read history
-            </button>
-          </div>
-          <p className="text-xs text-gray-500 mt-2">Reload the page after toggling local flag or clearing read history.</p>
+          <p className="mt-2 text-xs text-gray-500">
+            The catch-up experience replaces the deprecated unread posts bell.
+          </p>
         </div>
       </div>
     </div>

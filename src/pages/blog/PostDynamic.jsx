@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import SEO from "../../components/SEO";
 import { getBlogSeo } from "../../data/blogIndex";
-import { markRead, isFeatureEnabled } from "../../utils/unreadStore";
+import useCatchUpPosts from "../../hooks/useCatchUpPosts";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
 const mdModules = import.meta.glob("/src/pages/blog/*.md", {
@@ -15,6 +15,7 @@ const mdModules = import.meta.glob("/src/pages/blog/*.md", {
 export default function PostDynamic() {
   const { slug } = useParams();
   const [markdown, setMarkdown] = useState("");
+  const { markPostSeen } = useCatchUpPosts();
 
   const LazyComponent = useMemo(() => {
     const path = `/src/pages/blog/${slug}.jsx`;
@@ -33,16 +34,13 @@ export default function PostDynamic() {
     }
   }, [slug]);
 
-  // Dwell-based read marking: 3 seconds after page/content resolves
   useEffect(() => {
-    if (!slug || !isFeatureEnabled()) return undefined;
-    const t = setTimeout(() => {
-      try {
-        markRead(slug, { source: "auto" });
-      } catch {}
+    if (!slug) return undefined;
+    const timer = setTimeout(() => {
+      markPostSeen(slug);
     }, 3000);
-    return () => clearTimeout(t);
-  }, [slug]);
+    return () => clearTimeout(timer);
+  }, [slug, markPostSeen]);
 
   if (LazyComponent) {
     return (

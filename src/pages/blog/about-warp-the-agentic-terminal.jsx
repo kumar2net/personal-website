@@ -73,7 +73,7 @@ export default function AboutWarpAgenticTerminal() {
       <ol>
         <li>Start the dev server with <code>npm run dev</code>.</li>
         <li>Open <code>/blog/about-warp-the-agentic-terminal</code>.</li>
-        <li>Use the bell icon in the header to view unread posts and mark as read.</li>
+        <li>Use the Catch up pill in the header to review new posts and mark them as seen.</li>
       </ol>
 
       <h2>Warp user guide: useful commands for developers</h2>
@@ -132,8 +132,8 @@ export default function AboutWarpAgenticTerminal() {
       </ul>
 
       <p className="text-sm text-gray-500">
-        Tip: The unread badge is feature-gated; ensure <code>VITE_FEATURE_UNREAD=on</code> and the local
-        flag is ON via <code>/status</code>.
+        Tip: The header Catch up pill reads your local <code>user_last_catchup_v1</code> timestamp—reset it under
+        <code>/status</code> if you want to preview the full experience again.
       </p>
     </article>
   );
