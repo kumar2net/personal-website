@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { flashcardSets } from "../shared/flashcard-data";
 
 const Learning = () => {
+  const MotionDiv = motion.div;
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case "Beginner":
@@ -18,7 +19,7 @@ const Learning = () => {
   };
 
   return (
-    <motion.div
+    <MotionDiv
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -26,7 +27,7 @@ const Learning = () => {
     >
       {/* Header */}
       <div className="text-center mb-12">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -39,11 +40,11 @@ const Learning = () => {
             Interactive flashcards to master new skills and concepts. Learn at
             your own pace with spaced repetition.
           </p>
-        </motion.div>
+        </MotionDiv>
       </div>
 
       {/* Video Guide CTA */}
-      <motion.div
+      <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.15 }}
@@ -70,10 +71,10 @@ const Learning = () => {
             </a>
           </div>
         </div>
-      </motion.div>
+      </MotionDiv>
 
       {/* Stats */}
-      <motion.div
+      <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -105,10 +106,10 @@ const Learning = () => {
           </div>
           <div className="text-gray-600">Avg. Study Time</div>
         </div>
-      </motion.div>
+      </MotionDiv>
 
       {/* Flashcard Sets Grid */}
-      <motion.div
+      <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -117,7 +118,7 @@ const Learning = () => {
         {flashcardSets.map((set, index) => {
           const IconComponent = Icons[set.icon] || Icons.BookOpen;
           return (
-            <motion.div
+            <MotionDiv
               key={set.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -174,13 +175,13 @@ const Learning = () => {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </MotionDiv>
           );
         })}
-      </motion.div>
+      </MotionDiv>
 
       {/* Coming Soon Section */}
-      <motion.div
+      <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
@@ -205,8 +206,8 @@ const Learning = () => {
             </Link>
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </MotionDiv>
+    </MotionDiv>
   );
 };
 

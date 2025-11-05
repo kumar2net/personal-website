@@ -144,6 +144,7 @@ const openQuestions = [
 ];
 
 export default function CanariesInTheCoalMine() {
+  const MotionArticle = motion.article;
   const navigate = useNavigate();
   const publishedDate = new Date("2025-11-02T00:00:00Z");
   const formattedDate = publishedDate.toLocaleDateString("en-US", {
@@ -153,7 +154,7 @@ export default function CanariesInTheCoalMine() {
   });
 
   return (
-    <motion.article
+    <MotionArticle
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -231,9 +232,9 @@ export default function CanariesInTheCoalMine() {
 
       <section className="mt-12 space-y-6 text-lg leading-relaxed text-slate-900">
         <p>
-          The rapid rise of generative AI is more than a tech story; it is
-          already reshaping the labour market. Erik Brynjolfsson, Bharat
-          Chandar, and Ruyu Chen's working paper,{" "}
+          The rapid rise of generative artificial intelligence (AI) is more than
+          a tech story; it is already reshaping the labour market. Erik
+          Brynjolfsson, Bharat Chandar, and Ruyu Chen's working paper,{" "}
           <em>
             Canaries in the Coal Mine? Six Facts about the Recent Employment
             Effects of Artificial Intelligence
@@ -260,12 +261,12 @@ export default function CanariesInTheCoalMine() {
             Origin of the phrase
           </h2>
           <p className="mt-4 text-slate-800">
-            Miners once carried canaries- a type of birds underground because
-            the birds were more sensitive to toxic gases. If the canary showed
-            distress, it signaled danger and gave humans time to escape. The
-            metaphor now stands for early warning systems. In this study the
-            canaries are young workers in AI-exposed jobs whose employment
-            patterns may foreshadow deeper structural shifts.
+            Miners once carried canaries underground because the birds were more
+            sensitive to toxic gases. If the canary showed distress, it signaled
+            danger and gave humans time to escape. The metaphor now stands for
+            early warning systems. In this study the canaries are young workers
+            in AI-exposed jobs whose employment patterns may foreshadow deeper
+            structural shifts.
           </p>
         </div>
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -273,10 +274,11 @@ export default function CanariesInTheCoalMine() {
             What the researchers examined
           </h2>
           <p className="mt-4 text-slate-800">
-            The authors combine monthly ADP payroll data, covering millions of
-            U.S. workers, with occupational measures of AI exposure. They then
-            track employment trends by age, firm, and exposure level to isolate
-            how generative AI adoption may be altering hiring and retention.
+            The authors combine monthly Automatic Data Processing (ADP) payroll
+            data, covering millions of U.S. workers, with occupational measures
+            of AI exposure. They then track employment trends by age, firm, and
+            exposure level to isolate how generative AI adoption may be altering
+            hiring and retention.
           </p>
         </div>
       </section>
@@ -423,6 +425,6 @@ export default function CanariesInTheCoalMine() {
           </a>
         </p>
       </section>
-    </motion.article>
+    </MotionArticle>
   );
 }
