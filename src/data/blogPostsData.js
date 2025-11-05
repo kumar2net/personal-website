@@ -1,18 +1,57 @@
 export const blogPosts = [
   {
+    title: "Dirty Grid, Smart Grid: India’s AI Era Needs Storage and SMRs",
+    date: "November 4, 2025",
+    lastModified: "November 4, 2025",
+    excerpt:
+      "India’s coal-heavy grid is straining under AI-era demand spikes. This report breaks down peak pain points, storage economics, and why small modular reactors plus digital distribution are the fastest route to a resilient, low-carbon power stack.",
+    tags: [
+      "Energy Transition",
+      "India",
+      "Grid Modernisation",
+      "Storage",
+      "SMRs",
+      "AI Infrastructure",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1549923746-c502d488b3ea?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/2025-11-04-dirty-grid-smart-grid",
+  },
+  {
+    title:
+      "“Canaries in the Coal Mine?” — Entry-Level Signals in the AI Labour Shift",
+    date: "November 2, 2025",
+    lastModified: "November 2, 2025",
+    excerpt:
+      "Stanford Digital Economy Lab data shows young workers in AI-exposed roles experiencing the steepest employment drops. This post unpacks six facts from the study, why they matter for professionals, firms, and educators, and how builders can design AI that preserves human growth.",
+    tags: ["AI Labour", "Future of Work", "Early Career", "Policy"],
+    image:
+      "https://images.unsplash.com/photo-1477901492169-d59e6428fc90?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/2025-11-02-canaries-in-the-coal-mine",
+  },
+  {
     title: "⚡ AI's Climate Blind Spot: When Progress Turns into Power Hunger",
     date: "November 3, 2025",
     lastModified: "November 3, 2025",
     excerpt:
       "Bill Gates preaches climate realism, but there's a glaring omission: the uncontrolled explosion of AI infrastructure. As hyperscalers build GPU gigacities consuming gigawatts 24×7, we examine the hidden climate cost of AI progress and the moral exam we're failing.",
     tags: ["AI", "Climate", "Hyperscalers", "Sustainability"],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
     link: "/blog/2025-11-03-AIClimateBlindspot",
   },
   {
     title: "About Warp — the agentic terminal",
-    date: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
-    lastModified: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    lastModified: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
     excerpt:
       "What Warp is, how agents work in the terminal, and why it's a new‑age terminal with agents, blocks UI, and developer‑friendly UX.",
     tags: ["Warp", "Agents", "Terminal", "Productivity"],
