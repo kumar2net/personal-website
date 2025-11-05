@@ -1,19 +1,19 @@
-import { motion } from 'framer-motion';
-import * as Icons from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { flashcardSets } from '../shared/flashcard-data';
+import { motion } from "framer-motion";
+import * as Icons from "lucide-react";
+import { Link } from "react-router-dom";
+import { flashcardSets } from "../shared/flashcard-data";
 
 const Learning = () => {
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
-      case 'Beginner':
-        return 'text-green-600 bg-green-100';
-      case 'Intermediate':
-        return 'text-yellow-600 bg-yellow-100';
-      case 'Advanced':
-        return 'text-red-600 bg-red-100';
+      case "Beginner":
+        return "text-green-600 bg-green-100";
+      case "Intermediate":
+        return "text-yellow-600 bg-yellow-100";
+      case "Advanced":
+        return "text-red-600 bg-red-100";
       default:
-        return 'text-gray-600 bg-gray-100';
+        return "text-gray-600 bg-gray-100";
     }
   };
 
@@ -42,6 +42,36 @@ const Learning = () => {
         </motion.div>
       </div>
 
+      {/* Video Guide CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.15 }}
+        className="mb-12"
+      >
+        <div className="rounded-2xl bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-500 px-6 py-7 text-white shadow-lg">
+          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.25em] text-white/80">
+                New video shorts
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold">
+                Have added a couple of YouTube shorts that double as quick user
+                guides for this site.
+              </h2>
+            </div>
+            <a
+              href="https://www.youtube.com/@kumar2net"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full bg-white/10 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20"
+            >
+              Watch on YouTube →
+            </a>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Stats */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -67,10 +97,10 @@ const Learning = () => {
               ? Math.ceil(
                   flashcardSets.reduce(
                     (total, set) => total + parseInt(set.estimatedTime, 10),
-                    0
-                  ) / flashcardSets.length
+                    0,
+                  ) / flashcardSets.length,
                 )
-              : 0}{' '}
+              : 0}{" "}
             min
           </div>
           <div className="text-gray-600">Avg. Study Time</div>
@@ -166,7 +196,7 @@ const Learning = () => {
             more. Check back regularly for new content!
           </p>
           <div className="text-sm text-gray-500">
-            Suggestions for new flashcard topics?{' '}
+            Suggestions for new flashcard topics?{" "}
             <Link
               to="/contact"
               className="text-blue-600 hover:text-blue-800 underline"
