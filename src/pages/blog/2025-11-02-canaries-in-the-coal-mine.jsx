@@ -63,7 +63,8 @@ const builderSignals = [
   },
   {
     title: "From leverage to substitution",
-    summary: "AI’s trajectory is shifting from giving lift to replacing labour.",
+    summary:
+      "AI’s trajectory is shifting from giving lift to replacing labour.",
     bullets: [
       "Build for augmentation, not automation.",
       "Invite human intervention and reward original thinking.",
@@ -233,9 +234,12 @@ export default function CanariesInTheCoalMine() {
           The rapid rise of generative AI is more than a tech story; it is
           already reshaping the labour market. Erik Brynjolfsson, Bharat
           Chandar, and Ruyu Chen's working paper,{" "}
-          <em>Canaries in the Coal Mine? Six Facts about the Recent Employment
-          Effects of Artificial Intelligence</em> (Stanford Digital Economy Lab,
-          August 2025), offers early data on how that shift is playing out.
+          <em>
+            Canaries in the Coal Mine? Six Facts about the Recent Employment
+            Effects of Artificial Intelligence
+          </em>{" "}
+          (Stanford Digital Economy Lab, August 2025), offers early data on how
+          that shift is playing out.
         </p>
         <p>
           Canonical reference:{" "}
@@ -256,12 +260,12 @@ export default function CanariesInTheCoalMine() {
             Origin of the phrase
           </h2>
           <p className="mt-4 text-slate-800">
-            Miners once carried canaries underground because the birds were more
-            sensitive to toxic gases. If the canary showed distress, it signaled
-            danger and gave humans time to escape. The metaphor now stands for
-            early warning systems. In this study the canaries are young workers
-            in AI-exposed jobs whose employment patterns may foreshadow deeper
-            structural shifts.
+            Miners once carried canaries- a type of birds underground because
+            the birds were more sensitive to toxic gases. If the canary showed
+            distress, it signaled danger and gave humans time to escape. The
+            metaphor now stands for early warning systems. In this study the
+            canaries are young workers in AI-exposed jobs whose employment
+            patterns may foreshadow deeper structural shifts.
           </p>
         </div>
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -290,9 +294,7 @@ export default function CanariesInTheCoalMine() {
               <h3 className="text-lg font-semibold text-slate-900">
                 {fact.title}
               </h3>
-              <p className="mt-3 text-sm text-slate-700">
-                {fact.description}
-              </p>
+              <p className="mt-3 text-sm text-slate-700">{fact.description}</p>
             </div>
           ))}
         </div>
