@@ -347,7 +347,11 @@ function Convert() {
                 <code className="text-xs bg-gray-800 px-2 py-1 rounded">
                   {API_ENDPOINT}
                 </code>{" "}
-                with `{value, from, to}`.
+                with{" "}
+                <code className="text-xs bg-gray-800 px-2 py-1 rounded">
+                  {"{ value, from, to }"}
+                </code>
+                .
               </p>
               <pre className="text-xs bg-gray-800/80 rounded-xl p-4 overflow-x-auto">
 {`curl -X POST ${API_ENDPOINT} \\
