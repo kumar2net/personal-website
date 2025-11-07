@@ -1,4 +1,9 @@
 {
+  "rewrites": [
+    { "source": "/convert", "destination": "/api/convert" }
+  ]
+}
+{
   "redirects": [
     {
       "source": "/(.*)",

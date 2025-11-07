@@ -3,91 +3,98 @@
 ---
 
 ## 1. The Problem — Why India’s Grid Is Still “Dirty”
-- **Coal reliance:** ~73% of India’s power generation is still coal-fired, especially during evening peaks.  
-- **System inefficiency:** Aggregate Technical & Commercial (AT&C) losses = **16.12% (FY 2023–24)**; Transmission & Distribution (T&D) losses ≈ **16.6%**.  
-- **Curtailment:** Renewables lose ~2% of potential generation due to congestion and lack of storage.  
+- **Coal reliance:** ~73% of India’s power generation still comes from coal, especially during evening peaks.
+- **System inefficiency:** Aggregate technical and commercial (AT&C) losses = **16.12% (FY 2023–24)**; transmission and distribution (T&D) losses ≈ **16.6%**.
+- **Curtailment:** Renewables lose ~2% of potential generation due to congestion and lack of storage.
 
-**Grid Efficiency Factor (GEF):**  
+**Grid Efficiency Factor (GEF):**
 \[
-\text{GEF}_{India} = 1 - (\text{AT\&C} + \text{Curtailment}) \approx \textbf{82\%}
+\text{GEF}_{India} = 1 - (\text{AT\&C} + \text{Curtailment}) \pprox \textbf{82\%}
 \]
-Meaning: nearly one-fifth of generated electricity is *never* delivered to end-users.
+Nearly one-fifth of generated electricity never reaches end users.
 
 ---
 
 ## 2. The AI Era — A Power-Hungry Future
-- **AI datacenters are surging:** The International Energy Agency (IEA) projects global AI power use could hit **8 % of world electricity by 2030**.  
-- **In India:** With rapid AI, 5G, and cloud expansion, annual demand could grow **7–9 %**—well above historic averages.  
-- **Result:** Evening peak demand spikes even higher, worsening reliance on coal unless clean, firm capacity is added.
+- **AI datacentres are surging:** The International Energy Agency (IEA) projects AI, data centres, and crypto loads could consume **8% of global electricity by 2030**.
+- **India’s demand arc:** AI + 5G + hyperscale cloud pushes annual demand growth to **7–9%**, well above historic averages.
+- **Peak stress:** Evening demand spikes stretch coal ramps harder unless clean, firm capacity arrives.
 
 ---
 
 ## 3. The First Fix — Storage for Renewables
 - **Battery Energy Storage Systems (BESS):**
-  - 2024 tender price: **₹ 10.18 / kWh** (~US $ 0.12 / kWh).  
-  - Pack cost: **US $ 55–80 / kWh**, falling fast.  
+  - 2024 tender price: **₹10.18 / kWh** (~US$0.12 / kWh).
+  - Pack costs: **US$55–80 / kWh**, falling quickly.
 - **Pumped-Hydro Energy Storage (PHES):**
-  - Cost: **₹ 5–6 / kWh**; limited by topography.  
+  - Cost: **₹5–6 / kWh**; constrained by topography.
 
-**Effect:**  
-Shifts solar power from noon to evening, trims curtailment, reduces overload losses.
+**Effect:** Storage shifts solar from noon to evening, trims curtailment, and eases feeder overloads.
 
-| Rollout | Impact on GEF |
-|----------|---------------|
-| Moderate (BESS pilots) | +2 pp → **84 %** |
-| Aggressive (BESS + ToD tariffs + Demand-Side Management) | +4–5 pp → **86–87 %** |
+| Rollout scenario | Impact on GEF |
+|------------------|---------------|
+| Moderate (BESS pilots + basic time-of-day tariffs) | +2 pp → **84%** |
+| Aggressive (BESS + time-of-day tariffs + demand response) | +4–5 pp → **86–87%** |
 
 ---
 
 ## 4. The Second Fix — Small Modular Reactors (SMRs)
-- **SMR (Small Modular Reactor):** A compact nuclear unit (< 300 MWₑ) built in factories and installed near demand centers.  
-- **Benefits:**  
-  - High capacity factor (~ 90 %).  
-  - Dispatchable 24×7 baseload to complement renewables.  
-  - Reuses existing coal-plant sites, reducing transmission distance and losses.  
+- **SMR (small modular reactor):** Factory-built nuclear units (<300 MWₑ) that slot into existing transmission corridors.
+- **Benefits:**
+  - ~90% capacity factors with standardised QA.
+  - Dispatchable baseload that smooths solar and wind variability.
+  - Coal-to-nuclear site retrofits reuse skilled labour and evacuation corridors.
 
-| Scenario | Added GEF gain | Combined GEF |
-|-----------|----------------|--------------|
-| Replace aging coal with SMRs | +2 pp | 84 % |
-| SMRs + Storage + Digital Grid | +4–6 pp | **86–88 %** |
+| Scenario | Added GEF uplift | Combined GEF |
+|----------|-----------------|--------------|
+| Replace ageing coal with SMRs | +2 pp | 84% |
+| Storage + SMRs + digital grid stack | +4–6 pp | **86–88%** |
 
-**Synergy:** SMRs add reliability; BESS adds flexibility — together they make renewables viable at scale.
-
----
-
-## 5. Benchmark — How the U.S. Grid Performs
-- **T&D losses (2023, EIA):** ~**5 %**.  
-- **Curtailment:** < 1 % due to flexible, automated grids.  
-- **Resulting GEF₍USA₎ ≈ 95 %**.  
-- Low losses + modern control + diverse clean generation (gas, nuclear, renewables) keep the U.S. grid highly efficient.
-
-**India vs USA:**
-| Country | GEF | Main Bottlenecks |
-|----------|-----|------------------|
-| 🇮🇳 India | **82 %** | High losses, coal peaks, weak storage |
-| 🇺🇸 USA | **95 %** | Ageing sections but strong automation |
+SMRs add reliability; storage adds flexibility. Together they let renewables scale without leaning on diesel peakers.
 
 ---
 
-### 🔹 Visual Snapshot — GEF Comparison (SVG)
+## 5. Benchmark — How High-Performing Grids Operate
+- **USA:** T&D losses ≈ **5%** (EIA 2023) and curtailment <1% thanks to automation and diversified generation → **GEF ≈ 95%**.
+- **Denmark/Japan:** High voltage interconnects and strict reliability codes push GEF to the mid-90s.
 
-```svg
-<svg width="600" height="250" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .label { font: bold 18px sans-serif; fill: #333; }
-    .bar  { rx:10; ry:10; }
-    .pct  { font: bold 16px sans-serif; fill: #fff; }
-  </style>
-  <!-- Bars -->
-  <rect class="bar" x="100" y="40" width="300" height="50" fill="#f44336"/>
-  <rect class="bar" x="100" y="140" width="430" height="50" fill="#4caf50"/>
-  <!-- Labels -->
-  <text class="label" x="20" y="75">India</text>
-  <text class="label" x="20" y="175">USA</text>
-  <!-- Percentages -->
-  <text class="pct" x="370" y="75">82 %</text>
-  <text class="pct" x="490" y="175">95 %</text>
-  <text x="100" y="230" font-size="14" fill="#555">
-    Grid Efficiency Factor (GEF) — India vs USA, 2024
-  </text>
-</svg>
+| Country | GEF | Main bottlenecks |
+|---------|-----|------------------|
+| 🇮🇳 India | **82%** | Losses, congestion, coal-heavy peaks |
+| 🇺🇸 USA | **95%** | Ageing segments but strong automation |
+| 🇯🇵 Japan | **94%** | Dense urban grid, premium reliability |
+| 🇩🇰 Denmark | **97%** | Nordic interconnectors + offshore wind balancing |
+
+---
+
+### 🔹 Visual Snapshot — Updated SVG Asset
+
+The blog article now embeds a high-fidelity SVG at `public/media/grid-efficiency-factor.svg`. It contrasts India, the USA, Japan, and Denmark to highlight how close leading grids have moved toward 100% efficiency.
+
+```jsx
+<figure>
+  <img
+    src="/media/grid-efficiency-factor.svg"
+    alt="Grid Efficiency Factor benchmark chart for India, USA, Japan, and Denmark."
+    loading="lazy"
+    decoding="async"
+    className="w-full max-w-3xl"
+  />
+  <figcaption>
+    Grid Efficiency Factor (GEF) — 2024 benchmark comparison, now widened beyond the India/USA lens.
+  </figcaption>
+</figure>
+```
+
+---
+
+## 6. PS — Fuel Stewardship and Materials in Modern SMRs
+- **Interim cooling:** Fresh assemblies remain in on-site spent-fuel pools for 5–10 years before cask transfer.
+- **Dry storage:** Welded canisters shift into passive, air-cooled concrete overpacks rated for century-long durability with live telemetry.
+- **Material palette:**
+  - Light-water SMRs use uranium dioxide pellets (≤4.95% enrichment) with zirconium alloy cladding.
+  - Sodium fast reactors employ high-assay low-enriched uranium (HALEU, 5–19.75%) metal pins and ferritic-martensitic steels.
+  - High-temperature gas reactors encapsulate fuel in tristructural-isotropic (TRISO) particles inside graphite pebbles.
+- **Recycling pathway:** India’s roadmap emphasises pyroprocessing and mixed-oxide (MOX) options so HALEU and TRISO residues feed advanced burners, shrinking the eventual geological storage footprint.
+
+These talking points mirror the new “PS” section inside the blog post and equip policy, investor, or media briefings with succinct fuel-cycle context.

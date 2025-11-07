@@ -2,6 +2,13 @@
 
 Chronological log of notable changes. Dates use **YYYY-MM-DD**.
 
+## 2025-11-04
+
+- Added “Dirty Grid, Smart Grid” enhancements: new multi-country GEF SVG, fuel stewardship PS notes, and doc updates reflecting storage + SMR guidance.
+- Refreshed the “Canaries in the Coal Mine” briefing with expanded acronym explanations and photo gallery reference.
+- Introduced a YouTube shorts call-to-action on the Learning hub and documented the link for onboarding video guides.
+- Normalised Framer Motion usage in recent posts/pages to satisfy lint diagnostics (wrapped motion components).
+
 ## 2025-10-30
 
 - Verified Bing Webmaster Tools ownership with the `msvalidate.01` meta tag in `index.html` and recorded the steps in the SEO guides.
