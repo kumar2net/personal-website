@@ -1,6 +1,6 @@
 # Personal Website - Kumar's Portfolio
 
-**Last Updated:** 2025-10-30 (search verification & crawler review)
+**Last Updated:** 2025-11-04 (AI labour & grid posts, Learning video CTA)
 
 A modern, responsive personal website built with React, Vite, and Tailwind CSS. Features include a blog, projects showcase, learning resources, Books section, Music curation, and integrated analytics.
 
@@ -14,7 +14,7 @@ A modern, responsive personal website built with React, Vite, and Tailwind CSS. 
 - **Like Functionality** - Interactive like buttons with visual feedback and counters
 - **Books** - Long-form notes rendered from Markdown (with DOCX → MD conversion)
 - **Music Curation** - Personal music journey with favorite tracks and artists
-- **Learning Hub** - Educational resources and shortcuts
+- **Learning Hub** - Educational resources, shortcuts, and new YouTube shorts walkthroughs
 - **Photo Album** - Google Photos integration with video content
 - **Weekly Neurosurgical Dossier** - Professional medical intelligence briefings
 - **Analytics & Search** - Google Analytics 4 (GA4) plus verified Google Search Console & Bing Webmaster Tools coverage
