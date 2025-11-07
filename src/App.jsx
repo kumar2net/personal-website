@@ -53,6 +53,7 @@ const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const Status = lazy(() => import("./pages/Status"));
+const ConvertPage = lazy(() => import("./pages/Convert"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
 const MyReminiscences = lazy(() => import("./pages/blog/my-reminiscences"));
@@ -267,6 +268,13 @@ function App() {
                   Books
                 </Link>
                 <Link
+                  to="/convert"
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                  onClick={() => trackClick("nav_convert")}
+                >
+                  Convert
+                </Link>
+                <Link
                   to="/blog"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick("nav_blog")}
@@ -386,6 +394,16 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     Books
+                  </Link>
+                  <Link
+                    to="/convert"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick("nav_convert_mobile");
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    Convert
                   </Link>
                   <Link
                     to="/blog"
@@ -853,6 +871,20 @@ function App() {
                       type="website"
                     />
                     <UtilitiesDashboard />
+                  </>
+                }
+              />
+              <Route
+                path="/convert"
+                element={
+                  <>
+                    <SEO
+                      title="Unit Converter"
+                      description="Convert between U.S. lifestyle units and their metric counterparts."
+                      canonicalPath="/convert"
+                      type="website"
+                    />
+                    <ConvertPage />
                   </>
                 }
               />
