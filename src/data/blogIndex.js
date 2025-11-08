@@ -40,7 +40,7 @@ export const blogIndex = {
     datePublished: "2025-10-24",
     dateModified: "2025-10-24",
   },
-  "openai-ecosystem-explained": {
+  "2025-10-23-openai-ecosystem-explained": {
     title:
       "The OpenAI Ecosystem Explained: A Complete Guide to Products, Features, and Competition",
     description:
@@ -62,7 +62,7 @@ export const blogIndex = {
     datePublished: "2025-10-23",
     dateModified: "2025-10-23",
   },
-  "quantum-computing-vs-security": {
+  "2025-10-31-quantum-computing-vs-security": {
     title:
       "Quantum Computing vs Banking & Bitcoin Security — Explained the Feynman Way",
     description:
@@ -72,7 +72,7 @@ export const blogIndex = {
     datePublished: "2025-10-30",
     dateModified: "2025-10-30",
   },
-  "bitcoin-disintermediation": {
+  "2025-10-23-bitcoin-disintermediation": {
     title: "Bitcoin and Disintermediation: Reimagining the Future of Finance",
     description:
       "Exploring how Bitcoin challenges traditional financial intermediaries and paves the way for a new era of peer-to-peer value transfer without trusted third parties. Deep dive into traditional financial systems, Bitcoin mechanics, Lightning Network, and the future of decentralized finance.",
@@ -116,7 +116,7 @@ export const blogIndex = {
     datePublished: "2025-10-19",
     dateModified: "2025-10-19",
   },
-  "fortnight-that-went-by-september-2025": {
+  "2025-09-27-fortnight-that-went-by-september-2025": {
     title: "Fortnight That Went By - September 2025",
     description:
       "Reflections on Jevons paradox, AI in education, homelessness in San Francisco, and Golu celebrations - a fortnight of learning and observations.",
@@ -132,7 +132,7 @@ export const blogIndex = {
     datePublished: "2025-09-27",
     dateModified: "2025-09-27",
   },
-  Latest_Happenings: {
+  '2025-09-13-Latest_Happenings': {
     title: "Latest Happenings",
     description:
       "A quick visual guide to WebAuthn passkeys: client challenge signing and server-side public-key verification.",
@@ -141,7 +141,7 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
-  "common-sense-rare-commodity": {
+  "2025-09-13-common-sense-rare-commodity": {
     title: "Common Sense is a Rare Commodity",
     description:
       "With all this rhetoric about tariffs from both sides—the great country and ours—where are we heading to? Unnecessary tension and so much management time wasted. Political rhetoric at the expense of common sense.",
@@ -157,7 +157,7 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
-  "sobering-week-august-2025": {
+  "2025-09-13-sobering-week-august-2025": {
     title: "A Sobering Week: Reflections on Loss, Life, and Learning",
     description:
       "Reflections on loss, family, education, and staying curious; thoughts on fragility and meaning.",
@@ -166,7 +166,7 @@ export const blogIndex = {
     datePublished: "2025-08-29",
     dateModified: "2025-08-29",
   },
-  habit: {
+  '2025-09-13-habit': {
     title: "Habit",
     description:
       "A daily routine focused on learning, creating, mindfulness, honesty, and mentoring.",
@@ -176,7 +176,7 @@ export const blogIndex = {
     datePublished: "2025-08-29",
     dateModified: "2025-08-29",
   },
-  "joy-of-writing": {
+  "2025-09-13-joy-of-writing": {
     title: "Joy of Writing",
     description:
       "Why writing helps me organize thoughts and a note on voice-first UIs replacing screens.",
@@ -186,7 +186,7 @@ export const blogIndex = {
     datePublished: "2025-08-26",
     dateModified: "2025-08-26",
   },
-  "2025-08-23-agentic-feature-in-a-browser": {
+  "2025-09-13-agentic-feature-in-a-browser": {
     title: "Agentic feature in a browser",
     description:
       "Trying agentic features in Perplexity’s Comet browser and finance pages; quick impressions.",
@@ -195,7 +195,7 @@ export const blogIndex = {
     tags: ["Technology", "AI", "Browser"],
     datePublished: "2025-08-23",
   },
-  "global-economic-concerns-2025": {
+  "2025-09-13-global-economic-concerns-2025": {
     title: "Global Economic Concerns: A 2025 Pew Research Perspective",
     description:
       "Cross-country concerns and outlooks from Pew Research 2025; analysis and highlights.",
@@ -222,7 +222,7 @@ export const blogIndex = {
     datePublished: "2024-06-01",
     dateModified: "2024-06-01",
   },
-  "semantic-search-explained": {
+  "2025-09-13-semantic-search-explained": {
     title: "Search Explained: How Semantic Search Transforms Content Discovery",
     description:
       "Discover how semantic search goes beyond keyword matching to understand meaning, context, and intent - transforming how we find relevant content online.",
@@ -239,7 +239,7 @@ export const blogIndex = {
     datePublished: "2025-09-06",
     dateModified: "2025-09-06",
   },
-  "expanding-startups": {
+  "2025-09-13-expanding-startups": {
     title: "Starting Up Your Own Company",
     description:
       "Understanding the difference between startups and small businesses, the venture capital ecosystem, and how to leverage India's startup ecosystem for exponential growth.",
@@ -256,7 +256,7 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
-  "bitcoin-rails-explained": {
+  "2025-10-24-bitcoin-rails-explained": {
     title: "Bitcoin Rails: Value Moves on Math, Not Promises",
     description:
       "A Feynman-style explanation of how Bitcoin works as mathematical rails for value transfer. Explore the base layer, Lightning Network, and the revolutionary concept of trustless verification through cryptographic proof.",
@@ -275,7 +275,7 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
-  "about-warp-the-agentic-terminal": {
+  "2025-11-03-about-warp-the-agentic-terminal": {
     title: "About Warp — the agentic terminal",
     description: "What Warp is, how agents work in the terminal, and how it fits into this codebase.",
     image: "/vite.svg",
@@ -283,7 +283,7 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
-  ai_age_blog: {
+  '2025-11-08-ai_age_blog': {
     title: "When Machines Learn Balance and Humans Seek It",
     description:
       "A global reflection on technology, policy, and human intent — from Tesla’s robots and China’s rare-earth grip to Kerala’s poverty eradication, India’s energy paradox, and shifting youth sentiment in 2025.",

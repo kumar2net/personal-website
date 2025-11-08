@@ -72,7 +72,7 @@ export default function AboutWarpAgenticTerminal() {
       <h2>How to try it now</h2>
       <ol>
         <li>Start the dev server with <code>npm run dev</code>.</li>
-        <li>Open <code>/blog/about-warp-the-agentic-terminal</code>.</li>
+        <li>Open <code>/blog/2025-11-03-about-warp-the-agentic-terminal</code>.</li>
         <li>Use the Catch up pill in the header to review new posts and mark them as seen.</li>
       </ol>
 

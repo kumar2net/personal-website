@@ -222,7 +222,7 @@ Text-based similarity calculation
   {
     "id": "compelling-india-story",
     "title": "Compelling India Story",
-    "url": "/blog/compelling-india-story",
+    "url": "/blog/2025-09-13-compelling-india-story",
     "excerpt": "How Millennials Are Powering..."
   },
   // ... 27 more posts
@@ -294,7 +294,7 @@ const recommendations = getRecommendations(postId);  // Local calculation
 ### 1. Engagement Metrics
 ```json
 {
-  "/blog/compelling-india-story": {
+  "/blog/2025-09-13-compelling-india-story": {
     "unique_users": 1523,
     "avg_time_on_page": 185.3,  // seconds
     "bounce_rate": 0.23,
@@ -307,10 +307,10 @@ const recommendations = getRecommendations(postId);  // Local calculation
 ### 2. User Journeys
 ```json
 {
-  "/blog/compelling-india-story": {
+  "/blog/2025-09-13-compelling-india-story": {
     "common_next_pages": [
       { "page": "/blog/india-usa-trade", "count": 234 },
-      { "page": "/blog/the-great-pivot", "count": 189 }
+      { "page": "/blog/2025-09-13-the-great-pivot", "count": 189 }
     ]
   }
 }

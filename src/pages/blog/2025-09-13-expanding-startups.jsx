@@ -19,7 +19,7 @@ const ExpandingStartups = () => {
         <meta name="author" content="Natarajan. S" />
         <meta name="article:author" content="Natarajan. S" />
         <meta name="article:published_time" content={new Date().toISOString()} />
-        <link rel="canonical" href="https://your-domain.com/blog/expanding-startups" />
+        <link rel="canonical" href="https://your-domain.com/blog/2025-09-13-expanding-startups" />
       </Helmet>
 
       <motion.div

@@ -49,7 +49,7 @@ src/
 └── utils/             content/date helpers and generic functions
 ```
 
-The new **Digital Swadeshi Age** article (`src/pages/blog/digital-swadeshi-age.jsx`) demonstrates the current pattern: motion wrappers, badge chips, tables, and locally hosted media referenced from `/public/media`.
+The new **Digital Swadeshi Age** article (`src/pages/blog/2025-10-29-digital-swadeshi-age.jsx`) demonstrates the current pattern: motion wrappers, badge chips, tables, and locally hosted media referenced from `/public/media`.
 
 ## Netlify Functions Layer
 

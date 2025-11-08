@@ -6,7 +6,7 @@
 ## 📝 Blog Post Overview
 
 ### **Title**: "Bitcoin Rails: Value Moves on Math, Not Promises"
-### **URL**: `/blog/bitcoin-rails-explained`
+### **URL**: `/blog/2025-10-24-bitcoin-rails-explained`
 ### **Approach**: Feynman-style educational explanation with integrated SVG diagram
 
 ## 🎯 Content Features
@@ -33,7 +33,7 @@
 ## 🔧 Technical Implementation
 
 ### **Files Created**:
-- `src/pages/blog/bitcoin-rails-explained.jsx` - Main blog post component
+- `src/pages/blog/2025-10-24-bitcoin-rails-explained.jsx` - Main blog post component
 - `docs/railsExplanation.xml` - Source SVG diagram
 
 ### **Files Modified**:
@@ -159,7 +159,7 @@
 - ✅ **Mobile responsive** - Perfect on all devices
 - ✅ **Production ready** - Deployed and accessible
 
-**Live at**: `http://localhost:5173/blog/bitcoin-rails-explained`  
+**Live at**: `http://localhost:5173/blog/2025-10-24-bitcoin-rails-explained`  
 **Blog listing**: `http://localhost:5173/blog` (appears first)
 
 **Educational impact**: Clear, comprehensive Bitcoin explanation that makes complex concepts accessible to everyone.

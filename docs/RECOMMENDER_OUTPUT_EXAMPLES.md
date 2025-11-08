@@ -118,7 +118,7 @@ research, startup, technology, trade, usa
     {
       "id": "experience-using-api-in-ai-code-editor",
       "title": "Experience Using API in AI Code Editor",
-      "url": "/blog/experience-using-api-in-ai-code-editor",
+      "url": "/blog/2025-09-13-experience-using-api-in-ai-code-editor",
       "excerpt": "My journey with API integration in modern AI code editors...",
       "score": 0.6889,
       "tags": ["api", "ai"]
@@ -126,7 +126,7 @@ research, startup, technology, trade, usa
     {
       "id": "the-great-pivot",
       "title": "The Great Pivot",
-      "url": "/blog/the-great-pivot",
+      "url": "/blog/2025-09-13-the-great-pivot",
       "excerpt": "How businesses are transforming in the new economy...",
       "score": 0.6556,
       "tags": []
@@ -145,14 +145,14 @@ research, startup, technology, trade, usa
     {
       "id": "india-usa-trade-gap-2025",
       "title": "India USA Trade Gap 2025",
-      "url": "/blog/india-usa-trade-gap-2025",
+      "url": "/blog/2025-09-13-india-usa-trade-gap-2025",
       "centrality_score": 2121.1448,
       "tags": ["india", "usa", "trade"]
     },
     {
       "id": "andrej-karpathy-yc-ai-startup-school",
       "title": "Andrej Karpathy YC AI Startup School",
-      "url": "/blog/andrej-karpathy-yc-ai-startup-school",
+      "url": "/blog/2025-09-13-andrej-karpathy-yc-ai-startup-school",
       "centrality_score": 2068.9365,
       "tags": ["ai", "startup"]
     }

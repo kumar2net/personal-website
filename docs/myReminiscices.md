@@ -1,6 +1,6 @@
 # My Reminiscences - Source Notes
 
-These notes back up the published blog post at `src/pages/blog/my-reminiscences.jsx`. Typos from the raw voice memo were cleaned up and the structure mirrors the polished article so future edits stay in sync.
+These notes back up the published blog post at `src/pages/blog/2025-10-24-my-reminiscences.jsx`. Typos from the raw voice memo were cleaned up and the structure mirrors the polished article so future edits stay in sync.
 
 ## Outline
 

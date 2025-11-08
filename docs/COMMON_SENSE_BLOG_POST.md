@@ -29,7 +29,7 @@ Analysis of the ongoing tariff rhetoric between India and the US, questioning th
 
 ### **File Location**
 ```
-src/pages/blog/common-sense-rare-commodity.jsx
+src/pages/blog/2025-09-13-common-sense-rare-commodity.jsx
 ```
 
 ### **Integration Points**
@@ -73,7 +73,7 @@ src/pages/blog/common-sense-rare-commodity.jsx
   excerpt: 'With all this rhetoric about tariffs from both sides—the great country and ours—where are we heading to? Unnecessary tension and so much management time wasted. Political rhetoric at the expense of common sense.',
   tags: ['Trade Relations', 'International Politics', 'Economic Policy', 'Global Governance', 'Common Sense', 'Social Commentary'],
   image: '/media/tandtTagcloud.png',
-  link: '/blog/common-sense-rare-commodity',
+  link: '/blog/2025-09-13-common-sense-rare-commodity',
 }
 ```
 
@@ -110,7 +110,7 @@ src/pages/blog/common-sense-rare-commodity.jsx
 - ✅ **Performance**: Optimized loading and interaction
 
 ### **Live URL**
-https://kumar2net.com/blog/common-sense-rare-commodity
+https://kumar2net.com/blog/2025-09-13-common-sense-rare-commodity
 
 ## 📈 **Analytics Integration**
 
