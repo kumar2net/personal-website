@@ -1,5 +1,24 @@
 export const blogPosts = [
   {
+    title: "When Machines Learn Balance and Humans Seek It",
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    lastModified: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    excerpt:
+      "A global reflection on technology, policy, and human intent — from Tesla’s robots and China’s rare-earth grip to Kerala’s poverty eradication, India’s energy paradox, and shifting youth sentiment in 2025.",
+    tags: ["AI", "Policy", "Climate", "Society", "Global Trends"],
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/ai_age_blog",
+  },
+  {
     title: "Dirty Grid, Smart Grid: India’s AI Era Needs Storage and SMRs",
     date: "November 4, 2025",
     lastModified: "November 4, 2025",
@@ -16,16 +35,6 @@ export const blogPosts = [
     image:
       "https://images.unsplash.com/photo-1549923746-c502d488b3ea?auto=format&fit=crop&w=1200&q=80",
     link: "/blog/2025-11-04-dirty-grid-smart-grid",
-  },
-  {
-    title: "When Machines Learn Balance and Humans Seek It",
-    date: "November 2025",
-    lastModified: "November 2025",
-    excerpt:
-      "A global reflection on technology, policy, and human intent — from Tesla’s robots and China’s rare-earth grip to Kerala’s poverty eradication, India’s energy paradox, and shifting youth sentiment in 2025.",
-    tags: ["AI", "Policy", "Climate", "Society", "Global Trends"],
-    image: "/images/ai-age-banner.jpg",
-    link: "/blog/ai_age_blog",
   },
   {
     title:
