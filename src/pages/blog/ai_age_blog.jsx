@@ -1,6 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+const heroImage =
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80";
+
+const publishedDate = new Date().toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
 export default function BlogPost() {
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-8">
@@ -12,16 +21,22 @@ export default function BlogPost() {
         <Badge>Global Trends</Badge>
       </div>
 
-      <div className="rounded-2xl overflow-hidden shadow-md mt-4">
+      <div className="rounded-2xl overflow-hidden shadow-md mt-4 bg-gray-100">
         <img
-          src="/images/ai-age-banner.jpg"
+          src={heroImage}
           alt="AI Age Blog Banner"
           className="w-full h-64 object-cover"
+          loading="lazy"
         />
       </div>
 
       <h1 className="text-3xl font-bold mt-6">When Machines Learn Balance and Humans Seek It</h1>
-      <p className="text-gray-500">by Kumar A | November 2025 | <a href="https://kumar2net.com" className="text-blue-600 hover:underline">kumar2net.com</a></p>
+      <p className="text-gray-500">
+        by Kumar A | {publishedDate} |{" "}
+        <a href="https://kumar2net.com" className="text-blue-600 hover:underline">
+          kumar2net.com
+        </a>
+      </p>
 
       <section>
         <h2 className="text-xl font-semibold mt-6">The Week That Felt Like a Lifetime</h2>
