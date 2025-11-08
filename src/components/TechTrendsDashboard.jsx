@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const TechTrendsDashboard = () => {
   const [trends, setTrends] = useState([]);
@@ -26,11 +26,7 @@ const TechTrendsDashboard = () => {
     return `${day}-${month}-${year}`;
   };
 
-  useEffect(() => {
-    fetchTechTrends();
-  }, [fetchTechTrends]);
-
-  const fetchTechTrends = async () => {
+  const fetchTechTrends = useCallback(async () => {
     setLoading(true);
     setError('');
 
@@ -47,9 +43,10 @@ const TechTrendsDashboard = () => {
         if (!response.ok) {
           throw new Error(`Local server error: ${response.status}`);
         }
-      } catch (_localError) {
+      } catch (localError) {
         console.log(
-          'Local Netlify dev server not available, trying deployed function...'
+          'Local Netlify dev server not available, trying deployed function...',
+          localError.message
         );
         // Fallback to deployed function
         response = await fetch(deployedUrl);
@@ -73,7 +70,11 @@ const TechTrendsDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchTechTrends();
+  }, [fetchTechTrends]);
 
   const filteredTrends =
     selectedCategory === 'All'

@@ -123,7 +123,7 @@ export default async function handler(req, res) {
   let body;
   try {
     body = await readJsonBody(req);
-  } catch (error) {
+  } catch {
     return res.status(400).json({ error: "Invalid JSON body" });
   }
 

@@ -6,7 +6,6 @@ import { HiMenu } from "react-icons/hi";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
-import { getBlogSeo } from "./data/blogIndex";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
@@ -61,6 +60,7 @@ const MyReminiscences = lazy(() => import("./pages/blog/my-reminiscences"));
 const AiRecommenderCode = lazy(
   () => import("./pages/projects/AiRecommenderCode"),
 );
+const CarbonFootprint = lazy(() => import("./pages/CarbonFootprint"));
 
 // Admin CMS removed
 
@@ -244,15 +244,6 @@ function App() {
                 >
                   Elsewhere
                 </Link>
-                {false && (
-                  <Link
-                    to="/topics"
-                    className="text-gray-600 hover:text-gray-800 transition-colors"
-                    onClick={() => trackClick("nav_topics")}
-                  >
-                    Topics
-                  </Link>
-                )}
                 <Link
                   to="/projects"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -505,6 +496,12 @@ function App() {
                         className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
                       >
                         About
+                      </Link>
+                      <Link
+                        to="/carbon-footprint"
+                        className="px-6 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition-colors"
+                      >
+                        Carbon Footprint
                       </Link>
                       <Link
                         to="/projects"
@@ -871,6 +868,20 @@ function App() {
                       type="website"
                     />
                     <UtilitiesDashboard />
+                  </>
+                }
+              />
+              <Route
+                path="/carbon-footprint"
+                element={
+                  <>
+                    <SEO
+                      title="Carbon Footprint Calculator"
+                      description="Metric monthly footprint estimates powered by Climatiq."
+                      canonicalPath="/carbon-footprint"
+                      type="website"
+                    />
+                    <CarbonFootprint />
                   </>
                 }
               />

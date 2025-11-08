@@ -14,6 +14,7 @@ import crypto from 'crypto';
 
 const app = express();
 const PORT = 3002;
+const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 
 // Store received webhooks
 const receivedWebhooks = [];
@@ -39,7 +40,16 @@ function verifySignature(payload, signature, secret) {
 // Webhook endpoint
 app.post('/webhook', (req, res) => {
   const { event_type, data, source, timestamp } = req.body;
-  const signature = req.headers['x-webhook-signature'];
+  const signature = req.headers['x-webhook-signature'] || '';
+  const secret = WEBHOOK_SECRET;
+
+  if (secret && (!signature || !verifySignature(req.body, signature, secret))) {
+    res.status(401).json({
+      success: false,
+      message: 'Invalid webhook signature',
+    });
+    return;
+  }
   
   console.log('\n🔔 Webhook Received!');
   console.log('='.repeat(50));
@@ -47,6 +57,7 @@ app.post('/webhook', (req, res) => {
   console.log(`🎯 Event: ${event_type}`);
   console.log(`📡 Source: ${source}`);
   console.log(`🔐 Signature: ${signature ? 'Present' : 'None'}`);
+  console.log(`⏱️ Event timestamp: ${timestamp || 'N/A'}`);
   console.log('\n📊 Data:');
   console.log(JSON.stringify(data, null, 2));
   console.log('='.repeat(50));
@@ -58,7 +69,8 @@ app.post('/webhook', (req, res) => {
     event_type,
     data,
     source,
-    signature: signature ? 'Present' : 'None'
+    signature: signature ? 'Present' : 'None',
+    event_timestamp: timestamp || null,
   };
   
   receivedWebhooks.unshift(webhook);

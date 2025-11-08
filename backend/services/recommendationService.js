@@ -36,7 +36,7 @@ function tryParseTopics(text) {
     }
     const parsed = JSON.parse(text);
     return Array.isArray(parsed) ? parsed : [];
-  } catch (_) {
+  } catch {
     return [];
   }
 }
@@ -131,7 +131,7 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en', pr
         topPages = fbPages;
         topSearchTerms = fbTerms;
       }
-    } catch (_) {
+    } catch {
       // ignore fallback errors
     }
 
@@ -150,7 +150,7 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en', pr
             topSearchTerms = dt;
           }
         }
-      } catch (_) {
+      } catch {
         // ignore discovery errors
       }
     }
@@ -177,7 +177,7 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en', pr
     const payload = { topics, inputs: { days, limit, language, projectId, dataset, table, location } };
     cache.set(cacheKey, payload);
     return payload;
-  } catch (_) {
+  } catch {
     // Fallback to synthesized topics if model fails
     const topics = synthesizeTopics(topPages, topSearchTerms, limit);
     const payload = { topics, inputs: { days, limit, language, projectId, dataset, table, location } };
@@ -189,4 +189,3 @@ async function getRecommendedTopics({ days = 14, limit = 10, language = 'en', pr
 module.exports = {
   getRecommendedTopics,
 };
-

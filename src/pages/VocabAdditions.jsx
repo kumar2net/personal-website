@@ -6,7 +6,7 @@ import {
   Home,
   RotateCcw,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const VocabAdditions = () => {
@@ -34,57 +34,62 @@ const VocabAdditions = () => {
     },
   ];
 
-  const handleFlip = () => {
-    setFlipped(!flipped);
-  };
+  const totalCards = flashcards.length;
 
-  const handleNext = () => {
-    if (currentIndex < flashcards.length - 1 && !animating) {
-      setAnimating(true);
-      setTimeout(() => {
-        setFlipped(false);
-        setCurrentIndex(currentIndex + 1);
-        setTimeout(() => setAnimating(false), 50);
-      }, 150);
+  const handleFlip = useCallback(() => {
+    setFlipped((prev) => !prev);
+  }, []);
+
+  const handleNext = useCallback(() => {
+    if (animating || currentIndex >= totalCards - 1) {
+      return;
     }
-  };
+    setAnimating(true);
+    setTimeout(() => {
+      setFlipped(false);
+      setCurrentIndex((prev) => Math.min(prev + 1, totalCards - 1));
+      setTimeout(() => setAnimating(false), 50);
+    }, 150);
+  }, [animating, currentIndex, totalCards]);
 
-  const handlePrevious = () => {
-    if (currentIndex > 0 && !animating) {
-      setAnimating(true);
-      setTimeout(() => {
-        setFlipped(false);
-        setCurrentIndex(currentIndex - 1);
-        setTimeout(() => setAnimating(false), 50);
-      }, 150);
+  const handlePrevious = useCallback(() => {
+    if (animating || currentIndex <= 0) {
+      return;
     }
-  };
+    setAnimating(true);
+    setTimeout(() => {
+      setFlipped(false);
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+      setTimeout(() => setAnimating(false), 50);
+    }, 150);
+  }, [animating, currentIndex]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setCurrentIndex(0);
     setFlipped(false);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "ArrowLeft") {
-      handlePrevious();
-    }
-    if (e.key === "ArrowRight") {
-      handleNext();
-    }
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      e.preventDefault();
-      handleFlip();
-    }
-    if (e.key === "r" || e.key === "R") {
-      handleReset();
-    }
-  };
+    setAnimating(false);
+  }, []);
 
   useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "ArrowLeft") {
+        handlePrevious();
+      }
+      if (e.key === "ArrowRight") {
+        handleNext();
+      }
+      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault();
+        handleFlip();
+      }
+      if (e.key === "r" || e.key === "R") {
+        handleReset();
+      }
+    };
+
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [handleKeyPress]);
+  }, [handleFlip, handleNext, handlePrevious, handleReset]);
 
   const currentCard = flashcards[currentIndex];
   const progress = ((currentIndex + 1) / flashcards.length) * 100;

@@ -18,6 +18,16 @@ export const blogPosts = [
     link: "/blog/2025-11-04-dirty-grid-smart-grid",
   },
   {
+    title: "When Machines Learn Balance and Humans Seek It",
+    date: "November 2025",
+    lastModified: "November 2025",
+    excerpt:
+      "A global reflection on technology, policy, and human intent — from Tesla’s robots and China’s rare-earth grip to Kerala’s poverty eradication, India’s energy paradox, and shifting youth sentiment in 2025.",
+    tags: ["AI", "Policy", "Climate", "Society", "Global Trends"],
+    image: "/images/ai-age-banner.jpg",
+    link: "/blog/ai_age_blog",
+  },
+  {
     title:
       "“Canaries in the Coal Mine?” — Entry-Level Signals in the AI Labour Shift",
     date: "November 2, 2025",

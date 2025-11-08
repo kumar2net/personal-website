@@ -10,7 +10,6 @@ import {
 } from '../utils/recommendationService';
 
 const Recommendations = () => {
-  const [recommendations, setRecommendations] = useState([]);
   const [trendingPosts, setTrendingPosts] = useState([]);
   const [systemStatus, setSystemStatus] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
