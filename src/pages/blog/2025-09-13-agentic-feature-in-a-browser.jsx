@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import { getBlogPostDates } from '../../utils/blogPostDates';
+
+const { formattedPublishDate } = getBlogPostDates(import.meta.url);
 
 const AgenticFeatureInABrowser = () => {
   return (
@@ -14,7 +17,7 @@ const AgenticFeatureInABrowser = () => {
           agentic feature in a browser
         </h1>
         <div className="flex items-center text-gray-600 mb-6">
-          <span className="mr-4">Date: August 23, 2025</span>
+          <span className="mr-4">Date: {formattedPublishDate}</span>
           <span className="mr-4">By: kumar2net</span>
         </div>
 

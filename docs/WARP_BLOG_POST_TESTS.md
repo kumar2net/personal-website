@@ -131,7 +131,7 @@ Can be integrated into:
 
 To update tests when modifying the blog post:
 
-1. Update the component in `src/pages/blog/about-warp-the-agentic-terminal.jsx`
+1. Update the component in `src/pages/blog/2025-11-03-about-warp-the-agentic-terminal.jsx`
 2. Update metadata in `src/data/blogIndex.js`
 3. Run `npm run test:warp-blog` to verify changes
 4. Update test expectations in `test-warp-blog-post.mjs` if structure changes intentionally
@@ -170,7 +170,7 @@ To update tests when modifying the blog post:
 
 ## Related Files
 
-- Component: `src/pages/blog/about-warp-the-agentic-terminal.jsx`
+- Component: `src/pages/blog/2025-11-03-about-warp-the-agentic-terminal.jsx`
 - Metadata: `src/data/blogIndex.js`
 - Registry: `src/data/blogRegistry.js`
 - Test Suite: `scripts/test-warp-blog-post.mjs`

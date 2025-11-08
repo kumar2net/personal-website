@@ -30,7 +30,7 @@ npm run build
 ### Manual
 
 - [ ] Visit the local site via `npm run dev` and confirm:
-  - `/blog/digital-swadeshi-age` loads, images render, and tables respond on mobile.
+  - `/blog/2025-10-29-digital-swadeshi-age` loads, images render, and tables respond on mobile.
   - `/blog` index lists the new post at the top with the encoded media hero.
   - Navigation, Projects, and Utilities dashboards load with no console errors.
 - [ ] Run Lighthouse (desktop + mobile) against the local production build (`npm run build && npm run preview`) and capture scores.

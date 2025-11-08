@@ -112,7 +112,7 @@ Response:
 ### **🎯 Blog Posts with Comments**
 
 #### **Integrated Posts**
-1. **Common Sense** (`/blog/common-sense-rare-commodity`)
+1. **Common Sense** (`/blog/2025-09-13-common-sense-rare-commodity`)
    - 2 comments from Netlify Forms
    - Real-time sync with dashboard
    - Form submission working

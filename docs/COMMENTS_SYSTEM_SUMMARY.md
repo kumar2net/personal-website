@@ -39,8 +39,8 @@
 4. **"Hoping that some resolution is found quickly"** by Kumar A (2025-09-05 23:44:57)
 
 ### Blog Posts with Comments
-1. **Search Explained** (`/blog/semantic-search-explained`)
-2. **Common Sense** (`/blog/common-sense-rare-commodity`)
+1. **Search Explained** (`/blog/2025-09-13-semantic-search-explained`)
+2. **Common Sense** (`/blog/2025-09-13-common-sense-rare-commodity`)
 
 ## 🔧 Technical Architecture
 
