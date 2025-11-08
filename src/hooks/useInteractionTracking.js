@@ -1,13 +1,10 @@
 import { useCallback } from 'react';
+import { GNN_API_BASE_URL } from '../utils/gnnApi';
 
 /**
  * Hook for tracking user interactions with the GNN recommender system
  */
 export const useInteractionTracking = () => {
-  const API_BASE_URL = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8000'
-    : 'https://your-gnn-backend.vercel.app'; // Update for production (Vercel)
-
   const trackInteraction = useCallback(async (postId, action, context = {}) => {
     try {
       // Get user ID from localStorage or generate anonymous ID
@@ -25,7 +22,7 @@ export const useInteractionTracking = () => {
       };
 
       // Send interaction to backend
-      const response = await fetch(`${API_BASE_URL}/interaction`, {
+      const response = await fetch(`${GNN_API_BASE_URL}/interaction`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

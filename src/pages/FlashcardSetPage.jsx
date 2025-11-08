@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { flashcardSets } from "../shared/flashcard-data";
 
 const FlashcardSetPage = () => {
   const { setId } = useParams();
-  const _navigate = useNavigate();
   const set = flashcardSets.find((s) => s.id === setId);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,13 +16,6 @@ const FlashcardSetPage = () => {
     setCurrentIndex(0);
     setFlipped(false);
   }, []);
-
-  useEffect(() => {
-    const handleKeyPress = (e) => {};
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-    // eslint-disable-next-line
-  }, [handleFlip, handleNext, handlePrevious, handleReset]);
 
   if (!set) {
     return (

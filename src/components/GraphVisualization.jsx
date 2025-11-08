@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { GNN_API_BASE_URL } from '../utils/gnnApi';
 
 const GraphVisualization = ({ currentPostId }) => {
   const canvasRef = useRef(null);
@@ -7,17 +8,9 @@ const GraphVisualization = ({ currentPostId }) => {
   const [loading, setLoading] = useState(true);
   const [hoveredNode, setHoveredNode] = useState(null);
   
-  const API_BASE_URL = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8000'
-    : 'https://your-gnn-backend.netlify.app';
-
-  useEffect(() => {
-    fetchGraphData();
-  }, []);
-
-  const fetchGraphData = async () => {
+  const fetchGraphData = useCallback(async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/graph/stats`);
+      const response = await fetch(`${GNN_API_BASE_URL}/graph/stats`);
       if (response.ok) {
         const data = await response.json();
         setGraphData(data);
@@ -27,7 +20,11 @@ const GraphVisualization = ({ currentPostId }) => {
       console.error('Failed to fetch graph data:', error);
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchGraphData();
+  }, [fetchGraphData]);
 
   useEffect(() => {
     if (!graphData || !canvasRef.current) return;

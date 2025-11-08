@@ -16,13 +16,13 @@ const Album = () => {
       try {
         // First, try to open in the same tab (better for Google Photos app)
         window.location.href = albumUrl;
-      } catch (_error) {
-        console.log("Same tab failed, trying new tab...");
+      } catch (error) {
+        console.log("Same tab failed, trying new tab...", error);
         try {
           // Fallback to new tab
           window.open(albumUrl, "_blank", "noopener,noreferrer");
-        } catch (_fallbackError) {
-          console.log("New tab failed, trying direct navigation...");
+        } catch (fallbackError) {
+          console.log("New tab failed, trying direct navigation...", fallbackError);
           // Final fallback - direct navigation
           window.location.assign(albumUrl);
         }

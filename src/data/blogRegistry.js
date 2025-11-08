@@ -11,7 +11,7 @@ function prettifySlug(slug) {
 // Extract slug from an import.meta.glob path
 function pathToSlug(path) {
   // Examples: /src/pages/blog/my-post.jsx, /src/pages/blog/some-post.md
-  const match = path.match(/\/src\/pages\/blog\/([^\/]+)\.(jsx|md)$/);
+  const match = path.match(/\/src\/pages\/blog\/([^/]+)\.(jsx|md)$/);
   return match ? match[1] : null;
 }
 

@@ -1,13 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import InspiredBy from "../../components/InspiredBy";
 
 const SandelMarketMorality = () => {
   const navigate = useNavigate();
-  const articleRef = useRef(null);
 
   return (
     <>

@@ -283,6 +283,15 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
+  ai_age_blog: {
+    title: "When Machines Learn Balance and Humans Seek It",
+    description:
+      "A global reflection on technology, policy, and human intent — from Tesla’s robots and China’s rare-earth grip to Kerala’s poverty eradication, India’s energy paradox, and shifting youth sentiment in 2025.",
+    image: "/images/ai-age-banner.jpg",
+    tags: ["AI", "Policy", "Climate", "Society", "Global Trends"],
+    datePublished: "2025-11-05",
+    dateModified: "2025-11-05",
+  },
   "2025-11-03-AIClimateBlindspot": {
     title: "⚡ AI's Climate Blind Spot: When Progress Turns into Power Hunger",
     description:

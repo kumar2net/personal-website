@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import analyticsConfig from '../config/analytics';
 import webhookService from '../services/webhookService';
 
@@ -13,13 +13,7 @@ const WebhookIntegration = () => {
     description: '',
   });
 
-  // Load webhooks and health status
-  useEffect(() => {
-    loadWebhooks();
-    checkHealth();
-  }, [checkHealth, loadWebhooks]);
-
-  const loadWebhooks = async () => {
+  const loadWebhooks = useCallback(async () => {
     try {
       setLoading(true);
       const webhookList = await webhookService.listWebhooks();
@@ -29,16 +23,22 @@ const WebhookIntegration = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const checkHealth = async () => {
+  const checkHealth = useCallback(async () => {
     try {
       const healthStatus = await webhookService.checkHealth();
       setHealth(healthStatus);
     } catch (error) {
       console.error('Failed to check health:', error);
     }
-  };
+  }, []);
+
+  // Load webhooks and health status
+  useEffect(() => {
+    loadWebhooks();
+    checkHealth();
+  }, [checkHealth, loadWebhooks]);
 
   const handleRegisterWebhook = async (e) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ const WebhookIntegration = () => {
         secret: '',
         description: '',
       });
-      loadWebhooks();
+      await loadWebhooks();
     } catch (error) {
       console.error('Failed to register webhook:', error);
       alert(`Failed to register webhook: ${error.message}`);
@@ -74,7 +74,7 @@ const WebhookIntegration = () => {
     try {
       setLoading(true);
       await webhookService.unregisterWebhook(webhookId);
-      loadWebhooks();
+      await loadWebhooks();
     } catch (error) {
       console.error('Failed to unregister webhook:', error);
       alert(`Failed to unregister webhook: ${error.message}`);

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "NODE_OPTIONS='--max-old-space-size=4096' vite --open",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' vite --host 127.0.0.1 --open",
     "dev:clean": "bash scripts/start-dev-clean.sh",
     "build": "vite build",
     "lint": "eslint .",
@@ -86,6 +86,7 @@
     "autoprefixer": "^10.4.17",
     "codemon": "^0.1.31-development",
     "eslint": "^9.25.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "globals": "^16.0.0",

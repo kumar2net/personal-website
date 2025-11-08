@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useInteractionTracking } from '../hooks/useInteractionTracking';
+import { GNN_API_BASE_URL } from '../utils/gnnApi';
 
 const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
   const [recommendations, setRecommendations] = useState([]);
@@ -12,16 +13,10 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
   // Initialize interaction tracking
   const { trackClick, trackView } = useInteractionTracking();
 
-  // API base URL - adjust for your setup
-  const API_BASE_URL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'
-      : 'https://your-gnn-backend.netlify.app'; // Update this for production
-
   // Check system status on mount
   const checkSystemStatus = useCallback(async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/status`);
+      const response = await fetch(`${GNN_API_BASE_URL}/status`);
       if (response.ok) {
         const data = await response.json();
         setSystemStatus(data);
@@ -31,24 +26,13 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
     }
   }, []);
 
-  useEffect(() => {
-    checkSystemStatus();
-  }, [checkSystemStatus]);
-
-  // Fetch recommendations when currentPostId changes
-  useEffect(() => {
-    if (currentPostId && systemStatus.initialized) {
-      fetchRecommendations();
-    }
-  }, [currentPostId, systemStatus.initialized, fetchRecommendations]);
-
   const fetchRecommendations = useCallback(async () => {
     setLoading(true);
     setError('');
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/recommendations/${encodeURIComponent(currentPostId)}?num_recommendations=${maxRecommendations}`
+        `${GNN_API_BASE_URL}/recommendations/${encodeURIComponent(currentPostId)}?num_recommendations=${maxRecommendations}`
       );
 
       if (!response.ok) {
@@ -73,7 +57,18 @@ const GraphRecommendations = ({ currentPostId, maxRecommendations = 5 }) => {
     } finally {
       setLoading(false);
     }
-  }, [currentPostId]);
+  }, [currentPostId, maxRecommendations, trackView]);
+
+  useEffect(() => {
+    checkSystemStatus();
+  }, [checkSystemStatus]);
+
+  // Fetch recommendations when currentPostId changes
+  useEffect(() => {
+    if (currentPostId && systemStatus.initialized) {
+      fetchRecommendations();
+    }
+  }, [currentPostId, systemStatus.initialized, fetchRecommendations]);
 
   const hasValidRecommendations = useMemo(() => {
     return recommendations && recommendations.length > 0;

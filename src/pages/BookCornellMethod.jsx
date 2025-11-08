@@ -26,7 +26,8 @@ function BookCornellMethod() {
           });
           setIsLoading(false);
         }
-      } catch (_err) {
+      } catch (err) {
+        console.error('Failed to render Cornell method doc:', err);
         setError('Failed to render document. You can download it below.');
         setIsLoading(false);
       }

@@ -6,7 +6,7 @@ import {
   RotateCcw,
   Terminal,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const VimShortcuts = () => {
@@ -44,58 +44,62 @@ const VimShortcuts = () => {
     { front: "v", back: "Enter Visual mode (character selection)" },
   ];
   const reversedFlashcards = flashcards.slice().reverse();
+  const totalCards = reversedFlashcards.length;
 
-  const handleFlip = () => {
-    setFlipped(!flipped);
-  };
+  const handleFlip = useCallback(() => {
+    setFlipped((prev) => !prev);
+  }, []);
 
-  const handleNext = () => {
-    if (currentIndex < reversedFlashcards.length - 1 && !animating) {
-      setAnimating(true);
-      setTimeout(() => {
-        setFlipped(false);
-        setCurrentIndex(currentIndex + 1);
-        setTimeout(() => setAnimating(false), 50);
-      }, 150);
+  const handleNext = useCallback(() => {
+    if (animating || currentIndex >= totalCards - 1) {
+      return;
     }
-  };
+    setAnimating(true);
+    setTimeout(() => {
+      setFlipped(false);
+      setCurrentIndex((prev) => Math.min(prev + 1, totalCards - 1));
+      setTimeout(() => setAnimating(false), 50);
+    }, 150);
+  }, [animating, currentIndex, totalCards]);
 
-  const handlePrevious = () => {
-    if (currentIndex > 0 && !animating) {
-      setAnimating(true);
-      setTimeout(() => {
-        setFlipped(false);
-        setCurrentIndex(currentIndex - 1);
-        setTimeout(() => setAnimating(false), 50);
-      }, 150);
+  const handlePrevious = useCallback(() => {
+    if (animating || currentIndex <= 0) {
+      return;
     }
-  };
+    setAnimating(true);
+    setTimeout(() => {
+      setFlipped(false);
+      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+      setTimeout(() => setAnimating(false), 50);
+    }, 150);
+  }, [animating, currentIndex]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setCurrentIndex(0);
     setFlipped(false);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "ArrowLeft") {
-      handlePrevious();
-    }
-    if (e.key === "ArrowRight") {
-      handleNext();
-    }
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      e.preventDefault();
-      handleFlip();
-    }
-    if (e.key === "r" || e.key === "R") {
-      handleReset();
-    }
-  };
+    setAnimating(false);
+  }, []);
 
   useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "ArrowLeft") {
+        handlePrevious();
+      }
+      if (e.key === "ArrowRight") {
+        handleNext();
+      }
+      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault();
+        handleFlip();
+      }
+      if (e.key === "r" || e.key === "R") {
+        handleReset();
+      }
+    };
+
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [handleKeyPress]);
+  }, [handleFlip, handleNext, handlePrevious, handleReset]);
 
   // Scroll to card on mobile when card changes
   useEffect(() => {
@@ -173,7 +177,7 @@ const VimShortcuts = () => {
           className={`relative w-full max-w-2xl h-96 transition-all duration-700 transform-style-preserve-3d cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-400 ${
             flipped ? "rotate-x-180" : ""
           } ${animating ? "scale-95 opacity-0" : "scale-100 opacity-100"}`}
-          onClick={(_e) => {
+          onClick={() => {
             handleFlip();
             cardRef.current?.focus();
           }}
