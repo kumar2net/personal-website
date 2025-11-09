@@ -253,13 +253,6 @@ function App() {
                   Projects
                 </Link>
                 <Link
-                  to="/generations"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_generations")}
-                >
-                  Generations
-                </Link>
-                <Link
                   to="/books"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick("nav_books")}
@@ -381,16 +374,6 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     Projects
-                  </Link>
-                  <Link
-                    to="/generations"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_generations_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Generations
                   </Link>
                   <Link
                     to="/books"
