@@ -26,6 +26,7 @@ const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
 const TopicSuggestions = lazy(() => import("./pages/TopicSuggestions"));
 const Trends = lazy(() => import("./pages/Trends"));
+const GenerationsPage = lazy(() => import("./pages/generations"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -252,6 +253,13 @@ function App() {
                   Projects
                 </Link>
                 <Link
+                  to="/generations"
+                  className="text-gray-600 hover:text-gray-800 transition-colors"
+                  onClick={() => trackClick("nav_generations")}
+                >
+                  Generations
+                </Link>
+                <Link
                   to="/books"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick("nav_books")}
@@ -373,6 +381,16 @@ function App() {
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
                   >
                     Projects
+                  </Link>
+                  <Link
+                    to="/generations"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      trackClick("nav_generations_mobile");
+                    }}
+                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
+                  >
+                    Generations
                   </Link>
                   <Link
                     to="/books"
@@ -618,6 +636,20 @@ function App() {
                       type="website"
                     />
                     <Projects />
+                  </>
+                }
+              />
+              <Route
+                path="/generations"
+                element={
+                  <>
+                    <SEO
+                      title="Generations 2.0"
+                      description="Experiment with tiny reflections, tone detection, and intent-aware rewrites."
+                      canonicalPath="/generations"
+                      type="website"
+                    />
+                    <GenerationsPage />
                   </>
                 }
               />

@@ -1,0 +1,33 @@
+# Codex Batch Script: deploy.generations.codex
+# Purpose: Automate Generations 2.0 setup & deployment
+# Usage: /run deploy.generations
+
+/git branch create feature/generations-tiny-reflections
+/print Creating Generations components...
+
+/file write src/components/generations/HeroExplainerGenerations.tsx from https://chat.openai.com/c/textdoc/690f05c42af08191be4e76fb40b3e3ee
+/file write src/components/generations/PromptInputGenerations.tsx from https://chat.openai.com/c/textdoc/690f06031ac8819199ded3cfad8dd9e5
+/file write src/components/generations/ReflectionGalleryToneDetection.tsx from https://chat.openai.com/c/textdoc/690f0671dc048191afced634ad357c67
+
+/file write src/pages/generations/index.tsx "
+import GenerationsHero from '@/components/generations/HeroExplainerGenerations';
+import EntryInput from '@/components/generations/PromptInputGenerations';
+import ReflectionGallery from '@/components/generations/ReflectionGalleryToneDetection';
+
+export default function GenerationsPage() {
+  return (<>
+    <GenerationsHero />
+    <EntryInput />
+    <ReflectionGallery />
+  </>);
+}
+"
+
+/git add .
+/git commit "Add Generations 2.0 Tiny Reflections MVP"
+/git push origin feature/generations-tiny-reflections
+
+/print ✅ Files committed and pushed!
+/vercel deploy preview
+/print 🚀 Preview build started. Check Vercel dashboard for the deployment URL.
+
