@@ -11,6 +11,10 @@ export default function PublishChronicleButton({ promptId }: { promptId: string 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ promptId }),
       });
+      if (!res.ok) {
+        const errorPayload = await res.text();
+        throw new Error(`Merge failed (${res.status}): ${errorPayload.slice(0, 160)}`);
+      }
       const data = await res.json();
       if (data.ok) {
         setStatus("done");
