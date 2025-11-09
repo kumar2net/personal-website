@@ -122,7 +122,7 @@ function testConfigurationFiles() {
     { path: 'package.json', name: 'Package.json' },
     { path: 'vite.config.js', name: 'Vite Config' },
     { path: 'tailwind.config.js', name: 'Tailwind Config' },
-    { path: 'netlify.toml', name: 'Netlify Config' },
+    { path: 'vercel.json', name: 'Vercel Config' },
   ];
 
   configFiles.forEach((file) => {

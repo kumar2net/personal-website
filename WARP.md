@@ -20,11 +20,10 @@ Essential commands
 Tests and quality gates
 - Unit (static/unit checks via Node script): npm run test:unit
 - End-to-end (HTTP and source checks; requires dev or preview server): npm run test:e2e
-- Warp blog post suite (about Warp page integrity): npm run test:warp-blog
 - Run everything: npm run test:all
 - Pre-deploy gate (unit + e2e + build): npm run test:pre-deploy
 - Additional: viewport/mobile checks: npm run test:viewport
-- One test only: run the specific Node script directly, e.g. node scripts/test-warp-blog-post.mjs
+- One test only: run the specific Node script directly, e.g. node scripts/test-unit.mjs
   - Note: these are bespoke Node scripts, not a conventional Jest/Vitest suite; there is no pattern filter for subsets inside a script.
 
 Platform and deployment
@@ -57,7 +56,6 @@ Architecture overview (big picture)
 Testing expectations (so agents don’t fight the suite)
 - E2E scripts check HTTP 200s for key routes, navigation text, accessibility markers (ARIA/semantic tags), image alt coverage in blog pages, and bundle size (< ~3 MB across dist/assets/*.js)
 - Unit script asserts presence of core files/config (e.g., vite/tailwind/eslint) and key UI behaviors. If netlify.toml is absent locally, some checks may SKIP/FAIL.
-- The Warp blog test validates that the about-warp-the-agentic-terminal post exists with exact metadata and heading content.
 
 Notable docs to consult
 - README.md: live site, stack summary, local dev, and the catch-up posts overview (see Deployment Notes too)
