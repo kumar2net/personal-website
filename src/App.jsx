@@ -9,7 +9,6 @@ import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
-import CatchUpMenu from "./components/CatchUpMenu";
 import React, { Suspense, lazy } from "react";
 
 // Eagerly load critical components
@@ -55,7 +54,9 @@ const Status = lazy(() => import("./pages/Status"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
-const MyReminiscences = lazy(() => import("./pages/blog/my-reminiscences"));
+const MyReminiscences = lazy(
+  () => import("./pages/blog/2025-10-24-my-reminiscences"),
+);
 
 const AiRecommenderCode = lazy(
   () => import("./pages/projects/AiRecommenderCode"),
@@ -272,7 +273,6 @@ function App() {
                 >
                   Blog
                 </Link>
-                <CatchUpMenu />
                 <a
                   href="https://news.kumar2net.com"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -313,7 +313,6 @@ function App() {
                 </Link>
               </div>
               <div className="md:hidden flex items-center gap-3">
-                <CatchUpMenu />
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -659,13 +658,13 @@ function App() {
               />
               <Route path="/news" element={<ExternalNewsRedirect />} />
               <Route
-                path="/blog/my-reminiscences"
+                path="/blog/2025-10-24-my-reminiscences"
                 element={
                   <>
                     <SEO
                       title="My Reminiscences"
                       description="Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections."
-                      canonicalPath="/blog/my-reminiscences"
+                      canonicalPath="/blog/2025-10-24-my-reminiscences"
                       type="article"
                     />
                     <MyReminiscences />

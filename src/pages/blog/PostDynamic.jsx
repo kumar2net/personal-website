@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import SEO from "../../components/SEO";
 import { getBlogSeo } from "../../data/blogIndex";
-import useCatchUpPosts from "../../hooks/useCatchUpPosts";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
 const mdModules = import.meta.glob("/src/pages/blog/*.md", {
@@ -15,7 +14,6 @@ const mdModules = import.meta.glob("/src/pages/blog/*.md", {
 export default function PostDynamic() {
   const { slug } = useParams();
   const [markdown, setMarkdown] = useState("");
-  const { markPostSeen } = useCatchUpPosts();
 
   const LazyComponent = useMemo(() => {
     const path = `/src/pages/blog/${slug}.jsx`;
@@ -33,14 +31,6 @@ export default function PostDynamic() {
       setMarkdown("");
     }
   }, [slug]);
-
-  useEffect(() => {
-    if (!slug) return undefined;
-    const timer = setTimeout(() => {
-      markPostSeen(slug);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [slug, markPostSeen]);
 
   if (LazyComponent) {
     return (

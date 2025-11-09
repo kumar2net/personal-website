@@ -19,7 +19,7 @@ const FortnightThatWentBySeptember2025 = () => {
         <meta property="article:tag" content="Renewable energy" />
         <meta property="article:tag" content="Social issues" />
         <meta property="article:tag" content="Tamil culture" />
-        <link rel="canonical" href="https://kumarswamy.com/blog/fortnight-that-went-by-september-2025" />
+        <link rel="canonical" href="https://kumarswamy.com/blog/2025-09-27-fortnight-that-went-by-september-2025" />
       </Helmet>
 
       <div className="max-w-4xl mx-auto px-4 py-8">

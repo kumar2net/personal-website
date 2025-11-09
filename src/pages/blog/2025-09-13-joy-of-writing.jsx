@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 import ContentBadge from '../../components/ContentBadge';
+import { getBlogPostDates } from '../../utils/blogPostDates';
+
+const { formattedPublishDate, formattedLastModifiedDate } = getBlogPostDates(
+  import.meta.url,
+);
 
 const JoyOfWriting = () => {
   return (
@@ -7,8 +12,8 @@ const JoyOfWriting = () => {
       <div className="mb-8 relative">
         {/* NEW/UPDATED badge */}
         <ContentBadge
-          publishDate="August 26, 2025"
-          lastModified="August 26, 2025"
+          publishDate={formattedPublishDate}
+          lastModified={formattedLastModifiedDate}
         />
         <Link
           to="/blog"
@@ -20,7 +25,7 @@ const JoyOfWriting = () => {
           joy of writing
         </h1>
         <div className="flex items-center text-gray-600 mb-6">
-          <span className="mr-4">Date: August 26, 2025</span>
+          <span className="mr-4">Date: {formattedPublishDate}</span>
           <span className="mr-4">By: kumar2net</span>
         </div>
 

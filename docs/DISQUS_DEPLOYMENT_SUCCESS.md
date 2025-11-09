@@ -41,17 +41,17 @@
 ## 🚀 What's Now Live
 
 ### Blog Posts with Disqus Comments
-1. `joy-of-writing` - https://kumar2net.com/blog/joy-of-writing
-2. `devastated-by-young-girls-demise` - https://kumar2net.com/blog/devastated-by-young-girls-demise
-3. `india-usa-trade-gap-2025` - https://kumar2net.com/blog/india-usa-trade-gap-2025
+1. `joy-of-writing` - https://kumar2net.com/blog/2025-09-13-joy-of-writing
+2. `devastated-by-young-girls-demise` - https://kumar2net.com/blog/2025-09-13-devastated-by-young-girls-demise
+3. `india-usa-trade-gap-2025` - https://kumar2net.com/blog/2025-09-13-india-usa-trade-gap-2025
 4. `acronym-soup` - https://kumar2net.com/blog/acronym-soup
-5. `global-economic-concerns-2025` - https://kumar2net.com/blog/global-economic-concerns-2025
+5. `global-economic-concerns-2025` - https://kumar2net.com/blog/2025-09-13-global-economic-concerns-2025
 6. `kumblogtipsaug3` - https://kumar2net.com/blog/kumblogtipsaug3
 7. `marketnewsfetch` - https://kumar2net.com/blog/marketnewsfetch
 8. `compare` - https://kumar2net.com/blog/compare
-9. `boy-with-music-in-veins` - https://kumar2net.com/blog/boy-with-music-in-veins
-10. `habit` - https://kumar2net.com/blog/habit
-11. `tnpdcl-automated-meter-reading` - https://kumar2net.com/blog/tnpdcl-automated-meter-reading
+9. `boy-with-music-in-veins` - https://kumar2net.com/blog/2025-09-13-boy-with-music-in-veins
+10. `habit` - https://kumar2net.com/blog/2025-09-13-habit
+11. `tnpdcl-automated-meter-reading` - https://kumar2net.com/blog/2025-09-13-tnpdcl-automated-meter-reading
 
 ### Features Now Available
 - ✅ Professional comment system with threading
