@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 export default function PublishChronicleButton({ promptId }: { promptId: string }) {
   const [status, setStatus] = useState<"idle"|"running"|"done"|"error">("idle");
@@ -33,9 +32,9 @@ export default function PublishChronicleButton({ promptId }: { promptId: string 
 
   return (
     <div className="flex flex-col items-center py-8">
-      <Button onClick={publish} disabled={status === "running"} className="bg-amber-600 hover:bg-amber-700 text-white rounded-full px-8 py-3 text-lg shadow-md">
+      <button type="button" onClick={publish} disabled={status === "running"} className="bg-amber-600 hover:bg-amber-700 text-white rounded-full px-8 py-3 text-lg shadow-md disabled:opacity-60">
         {label}
-      </Button>
+      </button>
       <p className="mt-3 text-gray-500 text-sm">
         {status === "running" && "Collecting reflections → Weaving story → Saving chronicle..."}
         {status === "done" && "You can now view it under /generations/chronicle/[weekId]."}
