@@ -148,8 +148,8 @@ Convert "It's Not About You: A Brief Guide to a Meaningful Life" PDF to markdown
 ```
 
 ### Live Site Testing
-- ✅ **New Blog Post**: https://kumar2net.com/blog/devastated-by-young-girls-demise
-- ✅ **India USA Trade Gap**: https://kumar2net.com/blog/india-usa-trade-gap-2025
+- ✅ **New Blog Post**: https://kumar2net.com/blog/2025-09-13-devastated-by-young-girls-demise
+- ✅ **India USA Trade Gap**: https://kumar2net.com/blog/2025-09-13-india-usa-trade-gap-2025
 - ✅ **Acronym Soup**: https://kumar2net.com/blog/acronym-soup
 - ✅ **UI Elements**: Like/Comment buttons with labels and counts
 - ✅ **Functionality**: All features working as expected
@@ -353,7 +353,7 @@ All objectives have been successfully completed:
 - **Personal Website**: https://kumar2net.com
 - **Album Page**: https://kumar2net.com/album
 - **Blog**: https://kumar2net.com/blog
-- **A Sobering Week**: https://kumar2net.com/blog/sobering-week-august-2025
+- **A Sobering Week**: https://kumar2net.com/blog/2025-09-13-sobering-week-august-2025
 
 ### Key Learnings Captured
 - **Mobile Browser Compatibility**: DOM ready handling is crucial for mobile Chrome
@@ -373,7 +373,7 @@ All objectives have been successfully completed:
 - Replaced Album page content with Google Photos album link `https://photos.app.goo.gl/JoqUGodR9RDvjPSk7`, added note about missing geolocation, and simplified UI.
 - Fixed comments system by replacing complex API-based `get-comments.js` with working hardcoded version that matches production; resolved development server port conflicts.
 - **LIGHTHOUSE OPTIMIZATION SESSION**: Achieved exceptional performance improvements with 3/4 categories at 100% - Performance: 87% (from 56%), Accessibility: 100%, Best Practices: 100%, SEO: 100%. Implemented advanced code splitting, lazy loading, terser optimization, critical CSS inlining, accessibility fixes (button labels, color contrast), and comprehensive build optimization.
-- Files touched: `src/pages/blog/Latest_Happenings.jsx`, `src/pages/Blog.jsx`, `src/App.jsx`, `src/data/blogIndex.js`, `.cursorrules`, `netlify/functions/get-comments.js`, `vite.config.js`, `netlify.toml`, `index.html`, `src/index.css`, `src/main.jsx`.
+- Files touched: `src/pages/blog/2025-09-13-Latest_Happenings.jsx`, `src/pages/Blog.jsx`, `src/App.jsx`, `src/data/blogIndex.js`, `.cursorrules`, `netlify/functions/get-comments.js`, `vite.config.js`, `netlify.toml`, `index.html`, `src/index.css`, `src/main.jsx`.
  - September 2025: Fixed site not loading by removing forced `Content-Encoding: gzip` headers for `*.js` and `*.css` in `netlify.toml` to avoid double compression. Verified dev and preview servers. Built successfully with Vite.
 
 ### Session: Elsewhere X Link Update (September 28, 2025)
@@ -694,7 +694,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - Covered key topics: financial intermediaries, Bitcoin innovations, remittances, hyperinflation, financial inclusion, Lightning Network, DeFi principles, and environmental considerations
 
 **Technical Details**:
-- Blog file: `src/pages/blog/bitcoin-disintermediation.jsx`
+- Blog file: `src/pages/blog/2025-10-23-bitcoin-disintermediation.jsx`
 - Word count: ~6,500 words | 15 min read
 - 6 main sections with 15+ subsections
 - Shields.io badges: Bitcoin, Finance, Cryptocurrency, Blockchain, Decentralization, Economics
@@ -715,7 +715,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - Further reading section with Andreas Antonopoulos, Saifedean Ammous, Nic Carter, and Jameson Lopp resources
 
 **Files Created**:
-- `src/pages/blog/bitcoin-disintermediation.jsx` - Complete blog post with Mermaid diagrams
+- `src/pages/blog/2025-10-23-bitcoin-disintermediation.jsx` - Complete blog post with Mermaid diagrams
 
 **Status**: ✅ Blog post created successfully with zero linter errors, ready for routing and SEO index updates
 
@@ -755,7 +755,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - ✅ All diagrams render instantly without JavaScript initialization
 
 **Files Modified**:
-- `src/pages/blog/bitcoin-disintermediation.jsx` - Replaced 4 Mermaid diagrams with custom SVGs
+- `src/pages/blog/2025-10-23-bitcoin-disintermediation.jsx` - Replaced 4 Mermaid diagrams with custom SVGs
 - `netlify/functions/api-recommendations-topics.js` - Converted to ES modules
 - `netlify/functions/debug-top-signals.js` - Converted to ES modules
 - `package.json` - Removed mermaid dependency
@@ -783,7 +783,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - **Future Outlook**: GPT-5 predictions, autonomous agents, video/3D generation, personalized AI, scientific breakthroughs
 
 **Technical Details**:
-- Blog file: `src/pages/blog/openai-ecosystem-explained.jsx`
+- Blog file: `src/pages/blog/2025-10-23-openai-ecosystem-explained.jsx`
 - Word count: ~7,000 words | 18 min read
 - 10 main sections with 40+ subsections
 - Shields.io badges: ChatGPT, GPT-4, DALL-E, Whisper, OpenAI API
@@ -830,7 +830,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - Included Feynman's key insight: "If many strangers can verify it, you don't need to trust a middleman"
 
 **Technical Details**:
-- Blog file: `src/pages/blog/bitcoin-rails-explained.jsx`
+- Blog file: `src/pages/blog/2025-10-24-bitcoin-rails-explained.jsx`
 - Word count: ~2,500 words | 8 min read
 - 6 main sections: TL;DR, Introduction, Diagram, Component Breakdown, Lightning Network, Feynman Takeaway, Conclusion
 - Shields.io badges: Bitcoin, Blockchain, Lightning Network, Cryptocurrency, Education, Mathematics, Cryptography, Decentralization
@@ -845,7 +845,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - **Educational Value**: Clear explanations suitable for both beginners and those familiar with Bitcoin
 
 **Files Created/Modified**:
-- `src/pages/blog/bitcoin-rails-explained.jsx` - Complete blog post with integrated SVG diagram
+- `src/pages/blog/2025-10-24-bitcoin-rails-explained.jsx` - Complete blog post with integrated SVG diagram
 - `src/data/blogIndex.js` - Added SEO metadata and tags for the new blog post
 
 **Status**: ✅ Blog post created successfully with integrated SVG diagram, comprehensive Bitcoin education content, and proper SEO optimization. Zero linter errors, ready for production deployment
@@ -899,7 +899,7 @@ npm run dev:clean  # One command does it all: cleanup + start + open browser
 - Updated `docs/SESSION_SUMMARY.md` - Complete session documentation
 
 **Files Created/Modified**:
-- `src/pages/blog/bitcoin-rails-explained.jsx` - New blog post with SVG diagram
+- `src/pages/blog/2025-10-24-bitcoin-rails-explained.jsx` - New blog post with SVG diagram
 - `src/data/blogIndex.js` - Added SEO metadata and today's date
 - `src/pages/Blog.jsx` - Added to blog array (first position)
 - `package.json` - Updated dev scripts for stability

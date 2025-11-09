@@ -16,7 +16,7 @@ export const blogPosts = [
     tags: ["AI", "Policy", "Climate", "Society", "Global Trends"],
     image:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
-    link: "/blog/ai_age_blog",
+    link: "/blog/2025-11-08-ai_age_blog",
   },
   {
     title: "Dirty Grid, Smart Grid: India’s AI Era Needs Storage and SMRs",
@@ -34,7 +34,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1549923746-c502d488b3ea?auto=format&fit=crop&w=1200&q=80",
-    link: "/blog/2025-11-04-dirty-grid-smart-grid",
+    link: "/blog/2025-11-05-dirty-grid-smart-grid",
   },
   {
     title:
@@ -46,7 +46,7 @@ export const blogPosts = [
     tags: ["AI Labour", "Future of Work", "Early Career", "Policy"],
     image:
       "https://images.unsplash.com/photo-1477901492169-d59e6428fc90?auto=format&fit=crop&w=1200&q=80",
-    link: "/blog/2025-11-02-canaries-in-the-coal-mine",
+    link: "/blog/2025-11-05-canaries-in-the-coal-mine",
   },
   {
     title: "⚡ AI's Climate Blind Spot: When Progress Turns into Power Hunger",
@@ -75,7 +75,7 @@ export const blogPosts = [
       "What Warp is, how agents work in the terminal, and why it's a new‑age terminal with agents, blocks UI, and developer‑friendly UX.",
     tags: ["Warp", "Agents", "Terminal", "Productivity"],
     image: "/vite.svg",
-    link: "/blog/about-warp-the-agentic-terminal",
+    link: "/blog/2025-11-03-about-warp-the-agentic-terminal",
   },
   {
     title: "It Is Already November",
@@ -114,7 +114,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
-    link: "/blog/quantum-computing-vs-security",
+    link: "/blog/2025-10-31-quantum-computing-vs-security",
   },
   {
     title: "Digital Swadeshi Age: How India Could Outlast a U.S. Tech Blockade",
@@ -131,7 +131,7 @@ export const blogPosts = [
       "Trade Policy",
     ],
     image: "/media/ChatGPT%20Image%20Oct%2029,%202025,%2003_48_07%20PM.png",
-    link: "/blog/digital-swadeshi-age",
+    link: "/blog/2025-10-29-digital-swadeshi-age",
   },
   {
     title: "Markets and Morals: A Dialogue with Michael Sandel",
@@ -171,7 +171,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/sandel-market-morality",
+    link: "/blog/2025-10-26-sandel-market-morality",
   },
   {
     title: "My Reminiscences",
@@ -191,7 +191,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/my-reminiscences",
+    link: "/blog/2025-10-24-my-reminiscences",
   },
   {
     title: "Bitcoin Rails: Value Moves on Math, Not Promises",
@@ -219,7 +219,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/bitcoin-rails-explained",
+    link: "/blog/2025-10-24-bitcoin-rails-explained",
   },
   {
     title:
@@ -238,7 +238,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/openai-ecosystem-explained",
+    link: "/blog/2025-10-23-openai-ecosystem-explained",
   },
   {
     title: "Bitcoin and Disintermediation: Reimagining the Future of Finance",
@@ -256,7 +256,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/bitcoin-disintermediation",
+    link: "/blog/2025-10-23-bitcoin-disintermediation",
   },
   {
     title: "Rise from Fire",
@@ -309,7 +309,7 @@ export const blogPosts = [
       "Personal Reflections",
     ],
     image: "/media/Marapachi_dolls_1.jpg",
-    link: "/blog/fortnight-that-went-by-september-2025",
+    link: "/blog/2025-09-27-fortnight-that-went-by-september-2025",
   },
   {
     title: "Starting Up Your Own Company",
@@ -335,7 +335,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/expanding-startups",
+    link: "/blog/2025-09-13-expanding-startups",
     author: "Natarajan. S",
     authorBio: "Mentor in Residence, IISc Bangalore",
   },
@@ -356,7 +356,7 @@ export const blogPosts = [
     tags: ["Security", "WebAuthn", "Passkeys", "Authentication"],
     image: "/media/chitra_onestroke1.jpg",
     imageCredit: "Chitra's recent Onestroke artistry",
-    link: "/blog/Latest_Happenings",
+    link: "/blog/2025-09-13-Latest_Happenings",
   },
   {
     title: "Search Explained: How Semantic Search Transforms Content Discovery",
@@ -373,7 +373,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/semantic-search-explained",
+    link: "/blog/2025-09-13-semantic-search-explained",
   },
   {
     title: "Common Sense is a Rare Commodity",
@@ -398,7 +398,7 @@ export const blogPosts = [
       "Social Commentary",
     ],
     image: "/media/tandtTagcloud.png",
-    link: "/blog/common-sense-rare-commodity",
+    link: "/blog/2025-09-13-common-sense-rare-commodity",
   },
   {
     title: "A Sobering Week: Reflections on Loss, Life, and Learning",
@@ -415,7 +415,7 @@ export const blogPosts = [
       "Resilience",
     ],
     image: "/media/RamStripesStars.jpeg",
-    link: "/blog/sobering-week-august-2025",
+    link: "/blog/2025-09-13-sobering-week-august-2025",
   },
   {
     title: "Habit",
@@ -433,7 +433,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/habit",
+    link: "/blog/2025-09-13-habit",
   },
   {
     title: "Boy with Music in His Veins",
@@ -444,7 +444,7 @@ export const blogPosts = [
     tags: ["Music", "Piano", "Composition", "Trinity", "Yamaha", "Logic Pro"],
     image:
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/boy-with-music-in-veins",
+    link: "/blog/2025-09-13-boy-with-music-in-veins",
   },
   {
     title:
@@ -456,7 +456,7 @@ export const blogPosts = [
     tags: ["Utilities", "Smart Metering", "TNPDCL", "AMI", "Cellular"],
     image:
       "https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/tnpdcl-automated-meter-reading",
+    link: "/blog/2025-09-13-tnpdcl-automated-meter-reading",
   },
   {
     title: "joy of writing",
@@ -467,7 +467,7 @@ export const blogPosts = [
     tags: ["Writing", "AI", "Natural Language", "UX"],
     image:
       "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/joy-of-writing",
+    link: "/blog/2025-09-13-joy-of-writing",
   },
   {
     title: "agentic feature in a browser",
@@ -485,7 +485,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/2025-08-23-agentic-feature-in-a-browser",
+    link: "/blog/2025-09-13-agentic-feature-in-a-browser",
   },
   {
     title: "🌍 Global Economic Concerns: A 2025 Pew Research Perspective",
@@ -503,7 +503,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    link: "/blog/global-economic-concerns-2025",
+    link: "/blog/2025-09-13-global-economic-concerns-2025",
   },
   {
     title: "Devastated by the Young Girl's Sudden Demise",
@@ -529,7 +529,7 @@ export const blogPosts = [
     ],
     image:
       "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iMzgiIGZpbGw9IiNGRkY3RDAiLz4KPHN2ZyB4PSIyMCIgeT0iMjAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjRkY5NjAwIj4KPHBhdGggZD0iTTEyIDJMMiA3djEwYzAgNS41NSAzLjg0IDkuNzQgOSAxMSA1LjE2LTEuMjYgOS01LjQ1IDktMTFWN2wtMTAtNXoiLz4KPHBhdGggZD0iTTEyIDZjLTIuMjEgMC00IDEuNzktNCA0czEuNzkgNCA0IDQgNC0xLjc5IDQtNC0xLjc5LTQtNC00eiIvPgo8cGF0aCBkPSJNMTIgMTZjLTMuMzEgMC02LTIuNjktNi02czIuNjktNiA2LTYgNiAyLjY5IDYgNi0yLjY5IDYtNiA2eiIvPgo8L3N2Zz4KPC9zdmc+",
-    link: "/blog/devastated-by-young-girls-demise",
+    link: "/blog/2025-09-13-devastated-by-young-girls-demise",
   },
   {
     title: "FAQ with our budding dentist",
@@ -540,7 +540,7 @@ export const blogPosts = [
     tags: ["Dentistry", "Healthcare", "Education", "Audio Interview"],
     image:
       "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    link: "/blog/faq-budding-dentist",
+    link: "/blog/2025-09-13-faq-budding-dentist",
   },
   {
     title: "What to Write This Week?",
@@ -558,7 +558,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    link: "/blog/long-weekend-musings-2025",
+    link: "/blog/2025-09-13-long-weekend-musings-2025",
   },
   {
     title: "🚀 The Great Pivot — What's Behind All This T&T Hullabaloo!",
@@ -577,7 +577,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    link: "/blog/the-great-pivot",
+    link: "/blog/2025-09-13-the-great-pivot",
   },
   {
     title: "Top 10 Famous Rules (with Examples)",
@@ -593,7 +593,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/top-9-famous-rules",
+    link: "/blog/2025-09-13-top-9-famous-rules",
   },
   {
     title: "India-USA Trade Relations: A $212.3B Partnership Under Pressure",
@@ -610,7 +610,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/india-usa-trade-gap-2025",
+    link: "/blog/2025-09-13-india-usa-trade-gap-2025",
   },
   {
     title: "revolutionizing soil analysis: laser vs traditional methods",
@@ -628,7 +628,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-    link: "/blog/nammu-soil-analysis-research",
+    link: "/blog/2025-09-13-nammu-soil-analysis-research",
   },
   {
     title: "my random thoughts this week",
@@ -646,7 +646,7 @@ export const blogPosts = [
     ],
     image:
       "/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3Dtech",
-    link: "/blog/my-random-thoughts-this-week",
+    link: "/blog/2025-09-13-my-random-thoughts-this-week",
   },
   {
     title: "Nepal Journeys: An Annapurna Circuit Adventure",
@@ -663,7 +663,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/nepal-annapurna-circuit",
+    link: "/blog/2025-09-13-nepal-annapurna-circuit",
   },
   {
     title: "Memory Evolution: From Human Moments to AI Memories",
@@ -679,7 +679,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/memory-evolution",
+    link: "/blog/2025-09-13-memory-evolution",
   },
   {
     title:
@@ -696,7 +696,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/applying-robinson-method",
+    link: "/blog/2025-09-13-applying-robinson-method",
   },
   {
     title: "Feynman Techniques: Learning Like Richard Feynman",
@@ -706,7 +706,7 @@ export const blogPosts = [
     tags: ["Learning", "Feynman Technique", "Education", "Physics", "Teaching"],
     image:
       "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/feynman-technique",
+    link: "/blog/2025-09-13-feynman-technique",
   },
   {
     title: "Ekadasi morphs into IF and now Autophagy!",
@@ -723,7 +723,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/autophagy",
+    link: "/blog/2025-09-13-autophagy",
   },
   {
     title: "Started to Kindle Again",
@@ -733,7 +733,7 @@ export const blogPosts = [
     tags: ["Kindle", "Dopamine Detox", "Digital Wellness", "Focus", "Reading"],
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/started-to-kindle-again",
+    link: "/blog/2025-09-13-started-to-kindle-again",
   },
   {
     title: "Price/cost of essentials in places our folks live now",
@@ -743,7 +743,7 @@ export const blogPosts = [
     tags: ["Cost of Living", "Taxes", "Healthcare", "Global Cities"],
     image:
       "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/price-parity",
+    link: "/blog/2025-09-13-price-parity",
   },
   {
     title: "Acronym Soup Revisited: From FANG to the Magnificent 7",
@@ -753,7 +753,7 @@ export const blogPosts = [
     tags: ["Tech Trends", "Magnificent 7", "FAANG", "MAAMA"],
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/acronym-soup-revisited-2025",
+    link: "/blog/2025-09-13-acronym-soup-revisited-2025",
   },
   {
     title:
@@ -771,7 +771,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/microsoft-mai-dx-india",
+    link: "/blog/2025-09-13-microsoft-mai-dx-india",
   },
   {
     title:
@@ -782,7 +782,7 @@ export const blogPosts = [
     tags: ["Personal Finance", "SIP", "Millennials", "India Growth"],
     image:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/compelling-india-story",
+    link: "/blog/2025-09-13-compelling-india-story",
   },
   {
     title: "My Fascination with Shortcuts: The Art of Keyboard Navigation",
@@ -792,7 +792,7 @@ export const blogPosts = [
     tags: ["Productivity", "Vim", "macOS", "Browser", "Keyboard Shortcuts"],
     image:
       "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/my-fascination-with-shortcuts",
+    link: "/blog/2025-09-13-my-fascination-with-shortcuts",
   },
   {
     title: "Building a NewsAPI MCP Server with Cursor",
@@ -802,7 +802,7 @@ export const blogPosts = [
     tags: ["MCP", "Cursor IDE", "NewsAPI", "Node.js", "Netlify"],
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/building-mcp-server-with-cursor",
+    link: "/blog/2025-09-13-building-mcp-server-with-cursor",
   },
   {
     title:
@@ -819,7 +819,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/andrej-karpathy-yc-ai-startup-school",
+    link: "/blog/2025-09-13-andrej-karpathy-yc-ai-startup-school",
   },
   {
     title:
@@ -837,7 +837,7 @@ export const blogPosts = [
     ],
     image:
       "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
-    link: "/blog/experience-using-api-in-ai-code-editor",
+    link: "/blog/2025-09-13-experience-using-api-in-ai-code-editor",
   },
   {
     title: "My Experience with Windsurf",
@@ -847,7 +847,7 @@ export const blogPosts = [
     tags: ["AI Coding", "Windsurf", "Developer Tools", "Productivity"],
     image:
       "/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D5",
-    link: "/blog/my-experience-with-windsurf",
+    link: "/blog/2025-09-13-my-experience-with-windsurf",
   },
   {
     title: "Building My Personal Portfolio Website",
@@ -857,7 +857,7 @@ export const blogPosts = [
     tags: ["React", "Web Development", "Portfolio", "Frontend"],
     image:
       "/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D4",
-    link: "/blog/portfolio-website",
+    link: "/blog/2025-09-13-portfolio-website",
   },
   {
     title: "Building a Spine Implant Market Analytics Dashboard",
@@ -867,7 +867,7 @@ export const blogPosts = [
     tags: ["React", "Next.js", "Data Visualization", "Medical Analytics"],
     image:
       "/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D1",
-    link: "/blog/spine-implant-dashboard",
+    link: "/blog/2025-09-13-spine-implant-dashboard",
   },
   {
     title: "Smart Drug Suggestion App: Architecture and Implementation",
@@ -877,7 +877,7 @@ export const blogPosts = [
     tags: ["React", "TypeScript", "AI", "Pharmaceutical"],
     image:
       "/.netlify/functions/image-proxy?url=https%3A%2F%2Fpicsum.photos%2F800%2F400%3Frandom%3D2",
-    link: "/blog/drug-suggestion-app",
+    link: "/blog/2025-09-13-drug-suggestion-app",
   },
   /* {
     title: 'Optimizing React Applications for Performance',

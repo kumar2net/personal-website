@@ -349,7 +349,7 @@ Mermaid.js diagrams have been replaced with custom SVG graphics. Do not use Merm
 - ❌ Limited styling control
 - ❌ JavaScript dependency
 
-If you encounter old Mermaid diagrams, convert them to SVG using the patterns demonstrated in `src/pages/blog/bitcoin-disintermediation.jsx`.
+If you encounter old Mermaid diagrams, convert them to SVG using the patterns demonstrated in `src/pages/blog/2025-10-23-bitcoin-disintermediation.jsx`.
 
 ---
 

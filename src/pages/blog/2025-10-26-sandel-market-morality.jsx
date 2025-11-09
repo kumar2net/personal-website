@@ -24,7 +24,7 @@ const SandelMarketMorality = () => {
         />
         <link
           rel="canonical"
-          href="https://kumar.website/blog/sandel-market-morality"
+          href="https://kumar.website/blog/2025-10-26-sandel-market-morality"
         />
       </Helmet>
 

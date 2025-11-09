@@ -362,7 +362,7 @@ npm run wordpress:publisher
 
 ### **🎉 Live Cross-Published Post**
 - **WordPress Original**: https://kumar2net.wordpress.com/2025/08/23/agentic-feature-in-a-browser/
-- **Netlify Cross-Published**: https://kumar2net.com/blog/2025-08-23-agentic-feature-in-a-browser
+- **Netlify Cross-Published**: https://kumar2net.com/blog/2025-09-13-agentic-feature-in-a-browser
 - **Status**: ✅ **FULLY OPERATIONAL**
 
 ### **✅ System Components Verified**
