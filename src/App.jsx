@@ -206,7 +206,7 @@ function App() {
         />
         <ScrollToTop />
         {/* Navigation */}
-        <nav className="bg-white shadow-lg">
+        <nav className="bg-white shadow-lg" aria-label="primary navigation">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex justify-between items-center h-16">
               <div className="relative group">
