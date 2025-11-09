@@ -24,7 +24,15 @@ export const runtime = "nodejs";
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).json({ ok: false, error: "Method not allowed" });
 
-  const { promptId } = (req.body ?? {}) as { promptId?: string };
+  let payload: { promptId?: string } = {};
+  try {
+    payload = normalizeBody(req);
+  } catch (error) {
+    console.error("Invalid JSON payload for chronicle merge", error);
+    return res.status(400).json({ ok: false, error: "Invalid request body" });
+  }
+
+  const { promptId } = payload;
   if (!promptId) {
     return res.status(400).json({ ok: false, error: "Missing promptId" });
   }
@@ -104,4 +112,18 @@ function buildLocalChronicle(entries: ReflectionEntry[], promptId: string) {
     "Keep the rituals gentle, make the asks specific, and ship one bold experiment before Sunday resets the board.";
 
   return `${intro}\n\n${body}\n\n${close}`;
+}
+
+function normalizeBody(req: VercelRequest) {
+  if (!req.body) return {};
+  if (typeof req.body === "string") {
+    if (!req.body.trim()) return {};
+    return JSON.parse(req.body);
+  }
+  if (Buffer.isBuffer(req.body)) {
+    const raw = req.body.toString("utf8");
+    if (!raw.trim()) return {};
+    return JSON.parse(raw);
+  }
+  return req.body as Record<string, unknown>;
 }
