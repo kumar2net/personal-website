@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2025-11-09-myruminations": {
+    title: "My Ruminations: Magnets, Microbes, and Mindful Living",
+    description:
+      "Family tech tinkering, a rare-earths explainer, Happiest Health takeaways, the upgraded /convert utility with US/UK imperial context, plus music and Golden Gate nostalgia.",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80",
+    tags: ["AI", "Health", "Rare Earths", "Wellness", "Productivity"],
+    datePublished: "2025-11-09",
+    dateModified: "2025-11-09",
+  },
   "2025-10-31-bisibele-bhath-bangalore-to-oslo": {
     title: "Bisibele Bhath – Bangalore to Oslo",
     description:

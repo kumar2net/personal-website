@@ -1,5 +1,16 @@
 export const blogPosts = [
   {
+    title: "My Ruminations: Magnets, Microbes, and Mindful Living",
+    date: "November 9, 2025",
+    lastModified: "November 9, 2025",
+    excerpt:
+      "Family tech tinkering, a no-hype rare-earths explainer, Happiest Health takeaways, the smarter /convert utility, plus music and Golden Gate nostalgia wrapped into one reflective post.",
+    tags: ["AI", "Health", "Rare Earths", "Wellness", "Productivity"],
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+    link: "/blog/2025-11-09-myruminations",
+  },
+  {
     title: "When Machines Learn Balance and Humans Seek It",
     date: new Date().toLocaleDateString("en-US", {
       year: "numeric",
