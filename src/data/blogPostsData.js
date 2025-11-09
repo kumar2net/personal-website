@@ -60,24 +60,6 @@ export const blogPosts = [
     link: "/blog/2025-11-03-AIClimateBlindspot",
   },
   {
-    title: "About Warp — the agentic terminal",
-    date: new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-    lastModified: new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-    excerpt:
-      "What Warp is, how agents work in the terminal, and why it's a new‑age terminal with agents, blocks UI, and developer‑friendly UX.",
-    tags: ["Warp", "Agents", "Terminal", "Productivity"],
-    image: "/vite.svg",
-    link: "/blog/2025-11-03-about-warp-the-agentic-terminal",
-  },
-  {
     title: "It Is Already November",
     date: "November 1, 2025",
     lastModified: "November 1, 2025",

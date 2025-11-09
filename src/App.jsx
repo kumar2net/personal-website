@@ -61,7 +61,6 @@ const MyReminiscences = lazy(
 const AiRecommenderCode = lazy(
   () => import("./pages/projects/AiRecommenderCode"),
 );
-const CarbonFootprint = lazy(() => import("./pages/CarbonFootprint"));
 
 // Admin CMS removed
 
@@ -497,12 +496,6 @@ function App() {
                         About
                       </Link>
                       <Link
-                        to="/carbon-footprint"
-                        className="px-6 py-3 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition-colors"
-                      >
-                        Carbon Footprint
-                      </Link>
-                      <Link
                         to="/projects"
                         className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition-colors"
                       >
@@ -867,20 +860,6 @@ function App() {
                       type="website"
                     />
                     <UtilitiesDashboard />
-                  </>
-                }
-              />
-              <Route
-                path="/carbon-footprint"
-                element={
-                  <>
-                    <SEO
-                      title="Carbon Footprint Calculator"
-                      description="Metric monthly footprint estimates powered by Climatiq."
-                      canonicalPath="/carbon-footprint"
-                      type="website"
-                    />
-                    <CarbonFootprint />
                   </>
                 }
               />

@@ -82,9 +82,6 @@ npm run lint
 # Biome static analysis
 npm run biome:check
 
-# Run Warp blog post tests
-npm run test:warp-blog
-
 # Test scripts (unit + e2e wrappers)
 npm run test:all
 ```

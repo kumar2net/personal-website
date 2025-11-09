@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const CLIMATIQ_ESTIMATE_URL = "https://api.climatiq.io/estimate";
-const DATA_VERSION = "27.27";
+const CLIMATIQ_SEARCH_URL = "https://api.climatiq.io/search";
 const SAMPLE_INPUTS = {
   energy: "320",
   water: "8500",
@@ -15,40 +15,58 @@ const SAMPLE_INPUTS = {
   travelFlight: "0",
   travelTrain: "180",
   travelBus: "120",
-  customActivityId: "",
-  customLabel: "",
-  customAmount: "",
-  customUnit: "kg",
 };
 
-const TRAVEL_FACTORS = {
-  travelCar: {
-    label: "Personal car",
-    activity_id: "passenger_vehicle-vehicle",
+const DEFAULT_FACTOR_MAP = {
+  electricity: { activityId: "electricity_grid_mix", dataVersion: "27.27" },
+  water: {
+    RO: { activityId: "water_distribution_drinking", dataVersion: "27.27" },
+    Raw: {
+      activityId: "water_distribution_groundwater",
+      dataVersion: "27.27",
+    },
   },
-  travelFlight: {
-    label: "Flights",
-    activity_id: "flight_international", // economy class
+  lpg: { activityId: "lpg_consumption", dataVersion: "27.27" },
+  waste: {
+    wet: { activityId: "waste_disposal_organic", dataVersion: "27.27" },
+    dry: { activityId: "waste_disposal_material", dataVersion: "27.27" },
   },
-  travelTrain: {
-    label: "Train travel",
-    activity_id: "passenger_train",
-  },
-  travelBus: {
-    label: "City bus",
-    activity_id: "passenger_bus",
+  travel: {
+    travelCar: {
+      label: "Personal car",
+      activityId: "passenger_vehicle-vehicle",
+      dataVersion: "27.27",
+    },
+    travelFlight: {
+      label: "Flights",
+      activityId: "flight_international", // economy class
+      dataVersion: "27.27",
+    },
+    travelTrain: {
+      label: "Train travel",
+      activityId: "passenger_train",
+      dataVersion: "27.27",
+    },
+    travelBus: {
+      label: "City bus",
+      activityId: "passenger_bus",
+      dataVersion: "27.27",
+    },
   },
 };
 
-const WATER_FACTORS = {
-  RO: "water_distribution_drinking",
-  Raw: "water_distribution_groundwater",
-};
-
-const WASTE_FACTORS = {
-  wet: "waste_disposal_organic",
-  dry: "waste_disposal_material",
-};
+const FACTOR_SEARCH_CONFIG = [
+  { path: ["electricity"], query: "electricity grid mix" },
+  { path: ["water", "RO"], query: "water distribution drinking" },
+  { path: ["water", "Raw"], query: "water distribution groundwater" },
+  { path: ["lpg"], query: "liquefied petroleum gas combustion household" },
+  { path: ["waste", "wet"], query: "organic waste disposal household" },
+  { path: ["waste", "dry"], query: "mixed dry waste disposal" },
+  { path: ["travel", "travelCar"], query: "passenger car average" },
+  { path: ["travel", "travelFlight"], query: "commercial flight economy" },
+  { path: ["travel", "travelTrain"], query: "passenger train average" },
+  { path: ["travel", "travelBus"], query: "city bus passenger" },
+];
 
 const UNIT_TO_KG = {
   kg: 1,
@@ -83,7 +101,66 @@ function formatNumber(value, digits = 2) {
   return value.toFixed(digits);
 }
 
-function buildRequests(state) {
+async function fetchFactorMetadata(apiKey, query) {
+  const url = `${CLIMATIQ_SEARCH_URL}?query=${encodeURIComponent(query)}&page_size=1`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
+  if (!response.ok) {
+    const text = await response.text();
+    console.warn(`Climatiq search failed for "${query}":`, text);
+    return null;
+  }
+  const data = await response.json();
+  const match = data?.results?.[0];
+  if (!match?.activity_id) {
+    return null;
+  }
+  return {
+    activityId: match.activity_id,
+    dataVersion: match.data_version,
+  };
+}
+
+function cloneFactorMap() {
+  return JSON.parse(JSON.stringify(DEFAULT_FACTOR_MAP));
+}
+
+function applyFactorUpdate(map, path, factor) {
+  if (!factor?.activityId) {
+    return;
+  }
+  if (path[0] === "travel" && path[1]) {
+    const node = map.travel?.[path[1]];
+    if (node) {
+      node.activityId = factor.activityId;
+      if (factor.dataVersion) {
+        node.dataVersion = factor.dataVersion;
+      }
+    }
+    return;
+  }
+  if (["water", "waste"].includes(path[0]) && path[1]) {
+    const node = map[path[0]]?.[path[1]];
+    if (node) {
+      node.activityId = factor.activityId;
+      if (factor.dataVersion) {
+        node.dataVersion = factor.dataVersion;
+      }
+    }
+    return;
+  }
+  if (map[path[0]]) {
+    map[path[0]].activityId = factor.activityId;
+    if (factor.dataVersion) {
+      map[path[0]].dataVersion = factor.dataVersion;
+    }
+  }
+}
+
+function buildRequests(state, factors) {
   const requests = [];
   const push = (entry) => {
     if (entry.amount != null && entry.parameters) {
@@ -92,12 +169,14 @@ function buildRequests(state) {
   };
 
   const energy = toNumber(state.energy);
+  const electricityFactor = factors.electricity;
   push({
     label: "Electricity",
     friendlyLabel: "Electricity (kWh)",
     amount: energy,
     unit: "kWh",
-    emissionFactorId: "electricity_grid_mix",
+    emissionFactorId: electricityFactor.activityId,
+    dataVersion: electricityFactor.dataVersion,
     info: "Monthly grid electricity (kWh).",
     parameters: {
       energy,
@@ -107,16 +186,19 @@ function buildRequests(state) {
 
   const water = toNumber(state.water);
   if (water != null) {
+    const waterFactor =
+      factors.water[state.waterType] || factors.water.RO;
     push({
       label: `${state.waterType || "Water"}`,
       friendlyLabel: `Water (${state.waterType || "RO/raw"})`,
       amount: water,
       unit: "L",
-      emissionFactorId: WATER_FACTORS[state.waterType] || WATER_FACTORS.RO,
+      emissionFactorId: waterFactor.activityId,
+      dataVersion: waterFactor.dataVersion,
       info: "Monthly liters consumed of the selected water type.",
       parameters: {
         volume: water,
-        volume_unit: "L",
+        volume_unit: "l",
       },
     });
   }
@@ -130,7 +212,8 @@ function buildRequests(state) {
       friendlyLabel: `LPG (${lpgSize} kg cylinders)`,
       amount: totalKg,
       unit: "kg",
-      emissionFactorId: "lpg_consumption",
+      emissionFactorId: factors.lpg.activityId,
+      dataVersion: factors.lpg.dataVersion,
       info: "Multiply monthly cylinder count by the chosen size.",
       parameters: {
         weight: totalKg,
@@ -145,7 +228,8 @@ function buildRequests(state) {
     friendlyLabel: "Wet waste (kg)",
     amount: wetWaste,
     unit: "kg",
-    emissionFactorId: WASTE_FACTORS.wet,
+    emissionFactorId: factors.waste.wet.activityId,
+    dataVersion: factors.waste.wet.dataVersion,
     info: "Estimate of wet/organic waste in kilograms.",
     parameters: {
       weight: wetWaste,
@@ -159,7 +243,8 @@ function buildRequests(state) {
     friendlyLabel: "Dry waste (kg)",
     amount: dryWaste,
     unit: "kg",
-    emissionFactorId: WASTE_FACTORS.dry,
+    emissionFactorId: factors.waste.dry.activityId,
+    dataVersion: factors.waste.dry.dataVersion,
     info: "Estimate of dry/nonorganic waste in kilograms.",
     parameters: {
       weight: dryWaste,
@@ -167,15 +252,16 @@ function buildRequests(state) {
     },
   });
 
-  Object.keys(TRAVEL_FACTORS).forEach((travelKey) => {
+  Object.keys(factors.travel).forEach((travelKey) => {
     const amount = toNumber(state[travelKey]);
-    const travel = TRAVEL_FACTORS[travelKey];
+    const travel = factors.travel[travelKey];
     push({
       label: travel.label,
       friendlyLabel: `${travel.label} (km)`,
       amount,
       unit: "km",
-      emissionFactorId: travel.activity_id,
+      emissionFactorId: travel.activityId,
+      dataVersion: travel.dataVersion,
       info: `Monthly ${travel.label.toLowerCase()} distance in kilometers.`,
       parameters: {
         distance: amount,
@@ -184,22 +270,6 @@ function buildRequests(state) {
     });
   });
 
-  const customAmount = toNumber(state.customAmount);
-  if (customAmount != null && state.customActivityId?.trim()) {
-    push({
-      label: state.customLabel || state.customActivityId,
-      friendlyLabel: state.customLabel || state.customActivityId,
-      amount: customAmount,
-      unit: state.customUnit || "kg",
-      emissionFactorId: state.customActivityId.trim(),
-      info: "Custom Climatiq activity ID.",
-      parameters: {
-        amount: customAmount,
-        unit: state.customUnit || "kg",
-      },
-    });
-  }
-
   return requests.filter((req) => req.amount != null);
 }
 
@@ -207,7 +277,7 @@ async function requestEstimate(apiKey, request) {
   const payload = {
     emission_factor: {
       activity_id: request.emissionFactorId,
-      data_version: DATA_VERSION,
+      ...(request.dataVersion ? { data_version: request.dataVersion } : {}),
     },
     parameters: request.parameters,
   };
@@ -221,6 +291,10 @@ async function requestEstimate(apiKey, request) {
   });
   if (!response.ok) {
     const text = await response.text();
+    console.error(
+      `Climatiq API Error for ${request.friendlyLabel} (${request.emissionFactorId}):`,
+      text,
+    );
     throw new Error(text || `HTTP ${response.status}`);
   }
   const data = await response.json();
@@ -240,6 +314,10 @@ async function requestEstimate(apiKey, request) {
 }
 
 export default function CarbonFootprint() {
+  const envApiKey = import.meta.env.VITE_CLIMATIQ_API_KEY?.trim() || "";
+  const [factorMap, setFactorMap] = useState(() => cloneFactorMap());
+  const [isResolvingFactors, setIsResolvingFactors] = useState(false);
+  const [factorWarning, setFactorWarning] = useState("");
   const [formState, setFormState] = useState({
     energy: "",
     water: "",
@@ -252,17 +330,73 @@ export default function CarbonFootprint() {
     travelFlight: "",
     travelTrain: "",
     travelBus: "",
-    customActivityId: "",
-    customLabel: "",
-    customAmount: "",
-    customUnit: "kg",
   });
   const [results, setResults] = useState([]);
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const apiKey = import.meta.env.VITE_CLIMATIQ_API_KEY?.trim();
+  const [apiKeyInput, setApiKeyInput] = useState(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+    return window.localStorage.getItem("cf_api_key_local") || "";
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    if (apiKeyInput) {
+      window.localStorage.setItem("cf_api_key_local", apiKeyInput);
+    } else {
+      window.localStorage.removeItem("cf_api_key_local");
+    }
+  }, [apiKeyInput]);
+
+  const apiKey = envApiKey || apiKeyInput.trim();
+
+  useEffect(() => {
+    if (!apiKey) {
+      setFactorMap(cloneFactorMap());
+      setFactorWarning("");
+      setIsResolvingFactors(false);
+      return;
+    }
+    let isCancelled = false;
+    setIsResolvingFactors(true);
+    setFactorWarning("");
+    (async () => {
+      const nextMap = cloneFactorMap();
+      const failures = [];
+      for (const entry of FACTOR_SEARCH_CONFIG) {
+        try {
+          const result = await fetchFactorMetadata(apiKey, entry.query);
+          if (result?.activityId) {
+            applyFactorUpdate(nextMap, entry.path, result);
+          } else {
+            failures.push(entry.query);
+          }
+        } catch (err) {
+          failures.push(`${entry.query} (${err.message})`);
+        }
+      }
+      if (!isCancelled) {
+        setFactorMap(nextMap);
+        setIsResolvingFactors(false);
+        if (failures.length) {
+          setFactorWarning(
+            `Using fallback emission factors for: ${failures
+              .slice(0, 3)
+              .join(", ")}${failures.length > 3 ? "…" : ""}`,
+          );
+        }
+      }
+    })();
+    return () => {
+      isCancelled = true;
+    };
+  }, [apiKey]);
 
   const totalKg = useMemo(
     () => results.reduce((sum, item) => sum + (item.co2eKg || 0), 0),
@@ -297,12 +431,12 @@ export default function CarbonFootprint() {
 
     if (!apiKey) {
       setError(
-        "Set VITE_CLIMATIQ_API_KEY in your environment before running estimates.",
+        "Provide a Climatiq API key via .env (VITE_CLIMATIQ_API_KEY) or the field above before running estimates.",
       );
       return;
     }
 
-    const requests = buildRequests(formState);
+    const requests = buildRequests(formState, factorMap);
     if (!requests.length) {
       setError("Please provide at least one metric to estimate.");
       return;
@@ -360,8 +494,7 @@ export default function CarbonFootprint() {
         </p>
         <p className="text-xs text-gray-500">
           Metrics assume: energy (kWh), water (liters), LPG cylinders (kg),
-          waste (kg), and travel (km). You can also add one custom Climatiq
-          activity by ID.
+          waste (kg), and travel (km).
         </p>
       </motion.section>
 
@@ -388,6 +521,35 @@ export default function CarbonFootprint() {
               are missing.
             </div>
           </div>
+
+          {!envApiKey && (
+            <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-4 text-sm text-gray-700">
+              <label className="flex flex-col gap-1 font-semibold text-gray-800">
+                Climatiq API key
+                <input
+                  type="password"
+                  value={apiKeyInput}
+                  onChange={(event) => setApiKeyInput(event.target.value)}
+                  placeholder="Paste your local API key"
+                  className="rounded border border-gray-300 px-3 py-2 text-sm font-normal text-gray-700 focus:border-teal-500 focus:outline-none"
+                />
+              </label>
+              <p className="mt-2 text-xs text-gray-600">
+                Stored only in this browser (localStorage) for local testing. Leave blank to keep
+                requests disabled.
+              </p>
+            </div>
+          )}
+
+          {isResolvingFactors ? (
+            <div className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs text-blue-800">
+              Syncing emission factors from Climatiq…
+            </div>
+          ) : factorWarning ? (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
+              {factorWarning}
+            </div>
+          ) : null}
 
           <div className="grid gap-4 lg:grid-cols-2">
             <label className="text-sm text-gray-700">
@@ -516,55 +678,9 @@ export default function CarbonFootprint() {
             </p>
           </div>
 
-          <div className="space-y-2">
-            <p className="text-sm font-semibold text-gray-700">Custom Climatiq category</p>
-            <div className="grid gap-3 md:grid-cols-3">
-              <input
-                type="text"
-                value={formState.customActivityId}
-                onChange={handleInputChange("customActivityId")}
-                placeholder="activity_id (e.g., flight_domestic)"
-                className="rounded border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none"
-              />
-              <input
-                type="text"
-                value={formState.customLabel}
-                onChange={handleInputChange("customLabel")}
-                placeholder="Friendly label (optional)"
-                className="rounded border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none"
-              />
-              <div className="flex gap-2">
-                <input
-                  type="number"
-                  inputMode="decimal"
-                  min="0"
-                  value={formState.customAmount}
-                  onChange={handleInputChange("customAmount")}
-                  placeholder="Amount"
-                  className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm focus:border-teal-500 focus:outline-none"
-                />
-                <select
-                  value={formState.customUnit}
-                  onChange={handleInputChange("customUnit")}
-                  className="rounded border border-gray-300 bg-white px-2 text-sm text-gray-600 focus:border-teal-500 focus:outline-none"
-                >
-                  <option value="kg">kg</option>
-                  <option value="kWh">kWh</option>
-                  <option value="km">km</option>
-                  <option value="L">L</option>
-                </select>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500">
-              Enter one additional Climatiq activity ID and its monthly amount.
-              Exact IDs are listed at climatiq.io/emission-factors.
-            </p>
-          </div>
-
           {apiKey ? null : (
             <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-              Climatiq API key is missing. Set `VITE_CLIMATIQ_API_KEY` locally in
-              `.env` before running estimates.
+              Provide a Climatiq API key (via `.env` or the field above) before running estimates.
             </div>
           )}
 
@@ -576,10 +692,14 @@ export default function CarbonFootprint() {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || isResolvingFactors}
             className="w-full rounded-xl bg-teal-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:bg-teal-300"
           >
-            {isLoading ? "Estimating…" : "Estimate monthly footprint"}
+            {isLoading
+              ? "Estimating…"
+              : isResolvingFactors
+                ? "Syncing factors…"
+                : "Estimate monthly footprint"}
           </button>
           {notes ? (
             <p className="text-xs text-gray-500">{notes}</p>

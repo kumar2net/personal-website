@@ -275,14 +275,6 @@ export const blogIndex = {
     datePublished: new Date().toISOString().split("T")[0],
     dateModified: new Date().toISOString().split("T")[0],
   },
-  "2025-11-03-about-warp-the-agentic-terminal": {
-    title: "About Warp — the agentic terminal",
-    description: "What Warp is, how agents work in the terminal, and how it fits into this codebase.",
-    image: "/vite.svg",
-    tags: ["Warp", "Agents", "Terminal", "Productivity"],
-    datePublished: new Date().toISOString().split("T")[0],
-    dateModified: new Date().toISOString().split("T")[0],
-  },
   '2025-11-08-ai_age_blog': {
     title: "When Machines Learn Balance and Humans Seek It",
     description:
