@@ -43,9 +43,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ ok: false, error: "No reflections found for this week" });
     }
 
-    const text = hasOpenAIKey
-      ? await mergeWithOpenAI(entries)
-      : buildLocalChronicle(entries, promptId);
+    const text = await buildChronicleText(entries, promptId);
 
     const chronicle = {
       id: `chron_${Date.now()}`,
@@ -56,7 +54,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     persistChronicle(chronicle);
     if (hasKvConfig) {
-      await kv.set(`gen:chronicle:${promptId}`, JSON.stringify(chronicle));
+      try {
+        await kv.set(`gen:chronicle:${promptId}`, JSON.stringify(chronicle));
+      } catch (error) {
+        console.warn("KV chronicle cache failed", error);
+      }
     }
 
     return res.status(200).json({ ok: true, chronicle });
@@ -68,22 +70,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 async function loadEntries(promptId: string): Promise<ReflectionEntry[]> {
   if (hasKvConfig) {
-    const key = `gen:entries:${promptId}`;
-    const raw = await kv.lrange(key, 0, -1);
-    if (!raw) return [];
-    return raw
-      .map((entry) => {
-        try {
-          return JSON.parse(entry) as ReflectionEntry;
-        } catch (error) {
-          console.warn("Failed to parse reflection entry", error);
-          return null;
-        }
-      })
-      .filter((entry): entry is ReflectionEntry => Boolean(entry?.text));
+    try {
+      const key = `gen:entries:${promptId}`;
+      const raw = await kv.lrange(key, 0, -1);
+      if (!raw) return [];
+      return raw
+        .map((entry) => {
+          try {
+            return JSON.parse(entry) as ReflectionEntry;
+          } catch (error) {
+            console.warn("Failed to parse reflection entry", error);
+            return null;
+          }
+        })
+        .filter((entry): entry is ReflectionEntry => Boolean(entry?.text));
+    } catch (error) {
+      console.warn("KV reflections read failed, falling back to static entries", error);
+    }
   }
 
   return fallbackReflections;
+}
+
+async function buildChronicleText(entries: ReflectionEntry[], promptId: string) {
+  if (!hasOpenAIKey) return buildLocalChronicle(entries, promptId);
+  try {
+    return await mergeWithOpenAI(entries);
+  } catch (error) {
+    console.warn("OpenAI merge failed, falling back to local chronicle", error);
+    return buildLocalChronicle(entries, promptId);
+  }
 }
 
 async function mergeWithOpenAI(entries: ReflectionEntry[]) {
