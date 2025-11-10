@@ -1,0 +1,356 @@
+[
+  {
+    "id": "2025-09-13-agentic-feature-in-a-browser",
+    "title": "2025 08 23 Agentic Feature In A Browser",
+    "url": "/blog/2025-09-13-agentic-feature-in-a-browser",
+    "excerpt": "const AgenticFeatureInABrowser = () => } /> ← Back to Blog Originally published on WordPress ); };"
+  },
+  {
+    "id": "2025-10-22-rise-from-fire",
+    "title": "2025 10 22 Rise From Fire",
+    "url": "/blog/2025-10-22-rise-from-fire",
+    "excerpt": "const RiseFromFire = () => { const navigate = useNavigate(); const publishedDate = new Date('2025-10-22T00:00:00Z'); const formattedDate = publishedDate.toLocaleDateString('en-US', ); return ( navigate('/blog')} className=\"px-4 py-2 bg-gray"
+  },
+  {
+    "id": "2025-10-22-the-educator-of-highest-calibre",
+    "title": "2025 10 22 The Educator Of Highest Calibre",
+    "url": "/blog/2025-10-22-the-educator-of-highest-calibre",
+    "excerpt": "const TheEducatorOfHighestCalibre = () => { const navigate = useNavigate(); const publishedDate = new Date('2025-10-22T00:00:00Z'); const formattedDate = publishedDate.toLocaleDateString('en-US', ); return ( navigate('/blog')} className=\"px"
+  },
+  {
+    "id": "2025-10-27-markets-and-morals",
+    "title": "2025 10 27 Markets And Morals",
+    "url": "/blog/2025-10-27-markets-and-morals",
+    "excerpt": "const MarketsAndMorals = () => { const navigate = useNavigate(); const publishedDate = new Date(\"2025-10-27T00:00:00Z\"); const formattedDate = publishedDate.toLocaleDateString(\"en-US\", ); return ( navigate(\"/blog\")} className=\"px-4 py-2 bg-"
+  },
+  {
+    "id": "2025-10-31-bisibele-bhath-bangalore-to-oslo",
+    "title": "2025 10 31 Bisibele Bhath Bangalore To Oslo",
+    "url": "/blog/2025-10-31-bisibele-bhath-bangalore-to-oslo",
+    "excerpt": "const BisibeleBhathBangaloreToOslo = () => { const navigate = useNavigate(); const publishedDate = new Date(\"2025-10-31T00:00:00Z\"); const formattedDate = publishedDate.toLocaleDateString(\"en-US\", ); const tags = [ , , , , ]; return ( navig"
+  },
+  {
+    "id": "Compelling-india-story",
+    "title": "Compelling India Story",
+    "url": "/blog/Compelling-india-story",
+    "excerpt": "const FascinatingIndiaStory = () => ( Very Compelling India Story: How Millennials Are Powering the SIP Revolution Let's talk about something quietly amazing happening in India right now. No, it's not cricket (for once!)—it's the way young "
+  },
+  {
+    "id": "2025-09-13-Latest_Happenings",
+    "title": "Latest Happenings",
+    "url": "/blog/2025-09-13-Latest_Happenings",
+    "excerpt": "const LatestHappenings = () => { const today = new Date().toLocaleDateString('en-US', ); return ( Latest Happenings The End of Passwords, The HIRE Act Bombshell, and Investment Legends Who Changed Everything 3-minute read Let's dive into th"
+  },
+  {
+    "id": "PostDynamic",
+    "title": "PostDynamic",
+    "url": "/blog/PostDynamic",
+    "excerpt": "const jsxModules = import.meta.glob(\"/src/pages/blog/*.jsx\"); const mdModules = import.meta.glob(\"/src/pages/blog/*.md\", ); const [markdown, setMarkdown] = useState(\"\"); const LazyComponent = useMemo(() => { const path = `/src/pages/blog/$ "
+  },
+  {
+    "id": "_template",
+    "title": "Template",
+    "url": "/blog/_template",
+    "excerpt": "--- title: \"New Blog Post\" date: 2025-01-01T00:00:00.000Z featuredimage: null excerpt: \"A brief description of this blog post\" tags: [] author: \"Kumar\" draft: true --- New Blog Post Write your blog post content here using Markdown. Features"
+  },
+  {
+    "id": "2025-09-13-acronym-soup-revisited-2025",
+    "title": "Acronym Soup Revisited 2025",
+    "url": "/blog/2025-09-13-acronym-soup-revisited-2025",
+    "excerpt": "const AcronymSoupRevisited2025 = () => { const navigate = useNavigate(); return ( navigate('/blog')} className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Acronym Soup Revisited (2"
+  },
+  {
+    "id": "acronym-soup",
+    "title": "Acronym Soup",
+    "url": "/blog/acronym-soup",
+    "excerpt": "const AcronymSoup = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Acronym Soup: The Evolution of Tech's Most Influential Companies June 18, 2025 From FANG to MAAMA: H"
+  },
+  {
+    "id": "2025-09-13-andrej-karpathy-yc-ai-startup-school",
+    "title": "Andrej Karpathy Yc Ai Startup School",
+    "url": "/blog/2025-09-13-andrej-karpathy-yc-ai-startup-school",
+    "excerpt": "// import GraphRecommendations from '../../components/GraphRecommendations'; const AndrejKarpathyYcAiStartupSchool = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog And"
+  },
+  {
+    "id": "2025-09-13-applying-robinson-method",
+    "title": "Applying Robinson Method",
+    "url": "/blog/2025-09-13-applying-robinson-method",
+    "excerpt": "const ApplyingRobinsonMethod = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Applying the Robinson Method: A Guide to Using Active Reading and Mastering Lifelong Lear"
+  },
+  {
+    "id": "2025-09-13-autophagy",
+    "title": "Autophagy",
+    "url": "/blog/2025-09-13-autophagy",
+    "excerpt": "// import GraphRecommendations from '../../components/GraphRecommendations'; const Autophagy = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Ekadasi morphs into IF an"
+  },
+  {
+    "id": "2025-10-23-bitcoin-disintermediation",
+    "title": "Bitcoin Disintermediation",
+    "url": "/blog/2025-10-23-bitcoin-disintermediation",
+    "excerpt": "const BitcoinDisintermediation = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Bitcoin and Disintermediation: Reimagining the Future of Finance October 23, 2025 • 15 "
+  },
+  {
+    "id": "2025-10-24-bitcoin-rails-explained",
+    "title": "Bitcoin Rails Explained",
+    "url": "/blog/2025-10-24-bitcoin-rails-explained",
+    "excerpt": "const BitcoinRailsExplained = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Bitcoin Rails: Value Moves on Math, Not Promises {new Date().toLocaleDateString('en-US', )"
+  },
+  {
+    "id": "2025-09-13-boy-with-music-in-veins",
+    "title": "Boy With Music In Veins",
+    "url": "/blog/2025-09-13-boy-with-music-in-veins",
+    "excerpt": "const BoyWithMusicInVeins = () => { const navigate = useNavigate(); return ( navigate('/blog')} className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Boy with Music in His Veins Au"
+  },
+  {
+    "id": "2025-09-13-building-mcp-server-with-cursor",
+    "title": "Building Mcp Server With Cursor",
+    "url": "/blog/2025-09-13-building-mcp-server-with-cursor",
+    "excerpt": "const BuildingMcpServerWithCursor = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog Building a NewsAPI MCP Server with Cursor June 21, 2025 A practical guide to creating an MCP server fo"
+  },
+  {
+    "id": "2025-09-13-common-sense-rare-commodity",
+    "title": "Common Sense Rare Commodity",
+    "url": "/blog/2025-09-13-common-sense-rare-commodity",
+    "excerpt": "const CommonSenseRareCommodity = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog 🧠 Common Sense is a Rare Commodity Date: {new Date().toLocaleDateString('en-US', )} Tr"
+  },
+  {
+    "id": "compare",
+    "title": "Compare",
+    "url": "/blog/compare",
+    "excerpt": "const Compare = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Untitled Date: Unknown Date • By Kumar ₹15L | 30% | ### 4. Capital Gains Tax: Long-Term vs Short-Term (2"
+  },
+  {
+    "id": "compare",
+    "title": "Compare",
+    "url": "/blog/compare",
+    "excerpt": "Price/cost of essentials in places our folks live now I made this to just vet my curiocity. July 9, 2025 The main table covers cost of living and healthcare access. Separate tables below show dental/drug costs, income tax slabs, capital gai"
+  },
+  {
+    "id": "2025-09-13-devastated-by-young-girls-demise",
+    "title": "Devastated By Young Girls Demise",
+    "url": "/blog/2025-09-13-devastated-by-young-girls-demise",
+    "excerpt": "const DevastatedByYoungGirlsDemise = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Devastated by the Young Girl's Sudden Demise {new Date().toLocaleDateString('en-US'"
+  },
+  {
+    "id": "2025-10-29-digital-swadeshi-age",
+    "title": "Digital Swadeshi Age",
+    "url": "/blog/2025-10-29-digital-swadeshi-age",
+    "excerpt": "const MotionDiv = motion.div; const DigitalSwadeshiAge = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Digital Swadeshi Age: How India Could Outlast a U.S. Tech Block"
+  },
+  {
+    "id": "2025-09-13-drug-suggestion-app",
+    "title": "Drug Suggestion App",
+    "url": "/blog/2025-09-13-drug-suggestion-app",
+    "excerpt": "const DrugSuggestionAppPost = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog Building a Smart Drug Suggestion Application May 20, 2025 Introduction The Smart Drug Suggestion App is a mo"
+  },
+  {
+    "id": "2025-09-13-expanding-startups",
+    "title": "Expanding Startups",
+    "url": "/blog/2025-09-13-expanding-startups",
+    "excerpt": "const ExpandingStartups = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Starting Up Your Own Company {new Date().toLocaleDateString('en-US', )} I remember watching a "
+  },
+  {
+    "id": "2025-09-13-experience-using-api-in-ai-code-editor",
+    "title": "Experience Using Api In Ai Code Editor",
+    "url": "/blog/2025-09-13-experience-using-api-in-ai-code-editor",
+    "excerpt": "const ExperienceUsingApiInAiCodeEditor = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog My Experience with the stock market API: Building a Mutual Fund Performance Tracker June 14, 2025"
+  },
+  {
+    "id": "2025-09-13-faq-budding-dentist",
+    "title": "Faq Budding Dentist",
+    "url": "/blog/2025-09-13-faq-budding-dentist",
+    "excerpt": "const FAQBuddingDentist = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog FAQ with our budding dentist August 22, 2025 An insightful conversation about dentistry, good "
+  },
+  {
+    "id": "2025-09-13-feynman-technique",
+    "title": "Feynman Technique",
+    "url": "/blog/2025-09-13-feynman-technique",
+    "excerpt": "const FeynmanTechnique = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Feynman Techniques: Learning Like Richard Feynman July 19, 2025 How the Nobel Prize-winning phy"
+  },
+  {
+    "id": "2025-09-27-fortnight-that-went-by-september-2025",
+    "title": "Fortnight That Went By September 2025",
+    "url": "/blog/2025-09-27-fortnight-that-went-by-september-2025",
+    "excerpt": "const FortnightThatWentBySeptember2025 = () => ;"
+  },
+  {
+    "id": "2025-09-13-global-economic-concerns-2025",
+    "title": "Global Economic Concerns 2025",
+    "url": "/blog/2025-09-13-global-economic-concerns-2025",
+    "excerpt": "const GlobalEconomicConcerns = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog 🌍 Global Economic Concerns: A 2025 Pew Research Perspective Date: August 25, 2025 Global"
+  },
+  {
+    "id": "2025-09-13-habit",
+    "title": "Habit",
+    "url": "/blog/2025-09-13-habit",
+    "excerpt": "const Habit = () => { const navigate = useNavigate(); return ( navigate('/blog')} className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Habit August 29, 2025 Original Post: This co"
+  },
+  {
+    "id": "2025-09-13-india-usa-trade-gap-2025",
+    "title": "India Usa Trade Gap 2025",
+    "url": "/blog/2025-09-13-india-usa-trade-gap-2025",
+    "excerpt": "// import TldrSummary from '../../components/TldrSummary'; const IndiaUSATradeGap = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog 📄 Cornell Notes: India--USA Trade R"
+  },
+  {
+    "id": "2025-09-13-joy-of-writing",
+    "title": "Joy Of Writing",
+    "url": "/blog/2025-09-13-joy-of-writing",
+    "excerpt": "const JoyOfWriting = () => { return ( ← Back to Blog joy of writing Date: August 26, 2025 By: kumar2net Writing Productivity Natural Language AI UX What do you enjoy most about writing? it helps to gather &amp; organise my thoughts in a coh"
+  },
+  {
+    "id": "kumblogtipsaug3",
+    "title": "Kumblogtipsaug3",
+    "url": "/blog/kumblogtipsaug3",
+    "excerpt": "const Kumblogtipsaug3 = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Untitled Date: Unknown Date • By Kumar ); };"
+  },
+  {
+    "id": "kumblogtipsaug3",
+    "title": "Kumblogtipsaug3",
+    "url": "/blog/kumblogtipsaug3",
+    "excerpt": "Da vinci xi robot in a local hospital ad i read in newspaper and did dig and found its specs and price T&T - headline grabbing news in the last 3 days. Does it really matter. Per capita GDP of massive percentage of India population calculat"
+  },
+  {
+    "id": "2025-09-13-long-weekend-musings-2025",
+    "title": "Long Weekend Musings 2025",
+    "url": "/blog/2025-09-13-long-weekend-musings-2025",
+    "excerpt": "const LongWeekendMusings2025 = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog What to Write This Week? August 16, 2025 • 4 min read A long weekend in India brings refl"
+  },
+  {
+    "id": "marketnewsfetch",
+    "title": "Marketnewsfetch",
+    "url": "/blog/marketnewsfetch",
+    "excerpt": "const Marketnewsfetch = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Untitled Date: Unknown Date • By Kumar ); };"
+  },
+  {
+    "id": "marketnewsfetch",
+    "title": "Marketnewsfetch",
+    "url": "/blog/marketnewsfetch",
+    "excerpt": "i want to fetch latest Market News for my specific stocks in file /home/kumara/akstockanalysis/kumdematicicijun62025updatedfinal.xlsx using indianapi.in for which i have api key create a menu in home page navigation bar create a new page Ma"
+  },
+  {
+    "id": "2025-09-13-memory-evolution",
+    "title": "Memory Evolution",
+    "url": "/blog/2025-09-13-memory-evolution",
+    "excerpt": "const MemoryEvolution = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Memory Evolution: From Human Moments to AI Memories July 26, 2025 How AI memory systems are resh"
+  },
+  {
+    "id": "2025-09-13-microsoft-mai-dx-india",
+    "title": "Microsoft Mai Dx India",
+    "url": "/blog/2025-09-13-microsoft-mai-dx-india",
+    "excerpt": "const MicrosoftMaiDxIndia = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Hope this gets implemented sooner in India: Microsoft's MAI-DxO Revolution July 4, 2025 Micr"
+  },
+  {
+    "id": "2025-09-13-my-experience-with-windsurf",
+    "title": "My Experience With Windsurf",
+    "url": "/blog/2025-09-13-my-experience-with-windsurf",
+    "excerpt": "const MyExperienceWithWindsurfPost = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog My Experience with Windsurf June 04, 2025 Introduction I faced a lot of freezing & hanging issues in "
+  },
+  {
+    "id": "2025-09-13-my-fascination-with-shortcuts",
+    "title": "My Fascination With Shortcuts",
+    "url": "/blog/2025-09-13-my-fascination-with-shortcuts",
+    "excerpt": "const MyFascinationWithShortcuts = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog My Fascination with Shortcuts: The Art of Keyboard Navigation June 27, 2025 Why keybo"
+  },
+  {
+    "id": "2025-09-13-my-random-thoughts-this-week",
+    "title": "My Random Thoughts This Week",
+    "url": "/blog/2025-09-13-my-random-thoughts-this-week",
+    "excerpt": "// import TldrSummary from '../../components/TldrSummary'; const MyRandomThoughtsThisWeek = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog my random thoughts this week"
+  },
+  {
+    "id": "2025-10-24-my-reminiscences",
+    "title": "My Reminiscences",
+    "url": "/blog/2025-10-24-my-reminiscences",
+    "excerpt": "const MyReminiscences = () => { return ( My Reminiscences - Kumar's Personal Website My Reminiscences Reflections on family, technology, and the changing tides of life Published on October 24, 2025 Life has a way of bringing together moment"
+  },
+  {
+    "id": "2025-09-13-nammu-soil-analysis-research",
+    "title": "Nammu Soil Analysis Research",
+    "url": "/blog/2025-09-13-nammu-soil-analysis-research",
+    "excerpt": "// import TldrSummary from '../../components/TldrSummary'; const NammuSoilAnalysisResearch = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog revolutionizing soil analys"
+  },
+  {
+    "id": "2025-09-13-nepal-annapurna-circuit",
+    "title": "Nepal Annapurna Circuit",
+    "url": "/blog/2025-09-13-nepal-annapurna-circuit",
+    "excerpt": "const NepalAnnapurnaCircuit = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Nepal Journeys: An Annapurna Circuit Adventure July 27, 2025 Adventure Trekking Nepal Anna"
+  },
+  {
+    "id": "2025-10-23-openai-ecosystem-explained",
+    "title": "Openai Ecosystem Explained",
+    "url": "/blog/2025-10-23-openai-ecosystem-explained",
+    "excerpt": "const OpenAIEcosystemExplained = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog OpenAI's Latest Releases: Atlas Browser, GPT-5, and the Future of AI January 15, 2025 •"
+  },
+  {
+    "id": "2025-09-13-portfolio-website",
+    "title": "Portfolio Website",
+    "url": "/blog/2025-09-13-portfolio-website",
+    "excerpt": "const PortfolioWebsitePost = () => className=\"flex items-center text-blue-600 hover:text-blue-800 mb-8\" > Back to Blog Building My Personal Portfolio Website June 3, 2025 Introduction I recently built my personal portfolio website using mod"
+  },
+  {
+    "id": "preview-story-last-drop-check-e764",
+    "title": "Preview Story Last Drop Check E764",
+    "url": "/blog/preview-story-last-drop-check-e764",
+    "excerpt": "Is this the last drop? Oh no This is a quick preview post to verify rendering and routing. > is this the last drop, oh no"
+  },
+  {
+    "id": "2025-09-13-price-parity",
+    "title": "Price Parity",
+    "url": "/blog/2025-09-13-price-parity",
+    "excerpt": "const lines = markdownContent.split('\\n'); const title = lines[0].replace(/^#\\s*/, ''); const date = lines[2].replace(/^\\*\\s*|\\s*\\*$/g, ''); const body = lines.slice(4).join('\\n'); const PriceParity = () => className=\"px-4 py-2 bg-gray-100 "
+  },
+  {
+    "id": "2025-10-31-quantum-computing-vs-security",
+    "title": "Quantum Computing Vs Security",
+    "url": "/blog/2025-10-31-quantum-computing-vs-security",
+    "excerpt": "const MotionDiv = motion.div; const badgeStyles = ; const qubitCapabilityInfographic = new URL( \"/media/Qbit_Realworld.png\", import.meta.url, ).href; const quantumSecurityInfographic = new URL( \"/media/ChatGPT%20Image%20Oct%2031%2C%202025%2"
+  },
+  {
+    "id": "2025-10-26-sandel-market-morality",
+    "title": "Sandel Market Morality",
+    "url": "/blog/2025-10-26-sandel-market-morality",
+    "excerpt": "const SandelMarketMorality = () => { const navigate = useNavigate(); const articleRef = useRef(null); return ( What Money Can't Buy: Lessons from Michael Sandel on Market Morality - Kumar's Stories navigate(\"/blog\")} className=\"px-4 py-2 bg"
+  },
+  {
+    "id": "2025-09-13-semantic-search-explained",
+    "title": "Semantic Search Explained",
+    "url": "/blog/2025-09-13-semantic-search-explained",
+    "excerpt": "const SemanticSearchExplained = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Search Explained: How Semantic Search Transforms Content Discovery September 06, 2025 • "
+  },
+  {
+    "id": "2025-09-13-sobering-week-august-2025",
+    "title": "Sobering Week August 2025",
+    "url": "/blog/2025-09-13-sobering-week-august-2025",
+    "excerpt": "const SoberingWeekAugust2025 = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog A Sobering Week: Reflections on Loss, Life, and Learning August 2025 • 6 min read When li"
+  },
+  {
+    "id": "2025-09-13-spine-implant-dashboard",
+    "title": "Spine Implant Dashboard",
+    "url": "/blog/2025-09-13-spine-implant-dashboard",
+    "excerpt": "const SpineImplantDashboardPost = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors\" > Back to Blog Building a Spine Implant Market Analytics Dashboard May 20, 2025 Introduction The Spine Implant Market A"
+  },
+  {
+    "id": "2025-09-13-started-to-kindle-again",
+    "title": "Started To Kindle Again",
+    "url": "/blog/2025-09-13-started-to-kindle-again",
+    "excerpt": "const StartedToKindleAgain = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Started to Kindle Again Reading Notes From: Dopamine Detox: A Short Guide to Remove Distrac"
+  },
+  {
+    "id": "2025-09-13-the-great-pivot",
+    "title": "The Great Pivot",
+    "url": "/blog/2025-09-13-the-great-pivot",
+    "excerpt": "// import TldrSummary from '../../components/TldrSummary'; // import GraphRecommendations from '../../components/GraphRecommendations'; const TheGreatPivot = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-col"
+  },
+  {
+    "id": "2025-09-13-tnpdcl-automated-meter-reading",
+    "title": "Tnpdcl Automated Meter Reading",
+    "url": "/blog/2025-09-13-tnpdcl-automated-meter-reading",
+    "excerpt": "const TnpdclAutomatedMeterReading = () => { const navigate = useNavigate(); return ( navigate('/blog')} className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Friction in India with"
+  },
+  {
+    "id": "2025-09-13-top-9-famous-rules",
+    "title": "Top 9 Famous Rules",
+    "url": "/blog/2025-09-13-top-9-famous-rules",
+    "excerpt": "const Top9FamousRules = () => { const navigate = useNavigate(); const publishedDate = 'August 9, 2025'; const readingTime = '3 min read'; return ( navigate('/blog')} className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-c"
+  }
+]

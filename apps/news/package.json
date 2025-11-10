@@ -1,0 +1,11 @@
+{
+  "name": "news",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "echo \"News app placeholder\"",
+    "build": "echo \"News build placeholder\"",
+    "lint": "echo \"News lint placeholder\"",
+    "test": "echo \"News test placeholder\""
+  }
+}

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import OpenAI from "openai";
 import { kv } from "@vercel/kv";
@@ -9,8 +10,101 @@ type ReflectionEntry = {
   emoji?: string;
 };
 
+type OpenAIUsageDetails = {
+  promptTokens?: number;
+  completionTokens?: number;
+  totalTokens?: number;
+};
+
+type ChronicleBuildResult = {
+  text: string;
+  usage?: OpenAIUsageDetails;
+  model?: string;
+  usedFallback?: boolean;
+  fallbackReason?: string;
+};
+
+type PricingInfo = {
+  displayName: string;
+  promptPer1K: number;
+  completionPer1K: number;
+};
+
+type OpenAITokenUsagePayload = {
+  source: "openai";
+  model: string;
+  promptTokens: number;
+  completionTokens: number;
+  totalTokens: number;
+  costUsd: number;
+  promptRatePer1k: number;
+  completionRatePer1k: number;
+};
+
+type FallbackTokenUsagePayload = {
+  source: "fallback";
+  message: string;
+};
+
+type TokenUsagePayload = OpenAITokenUsagePayload | FallbackTokenUsagePayload;
+
 const hasKvConfig = Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
 const hasOpenAIKey = Boolean(process.env.OPENAI_API_KEY);
+
+const DEFAULT_MODEL = "gpt-4o-mini";
+
+function parseEnvNumber(name: string, fallback: number): number {
+  const raw = process.env[name];
+  if (!raw) return fallback;
+  const value = Number(raw);
+  return Number.isNaN(value) ? fallback : value;
+}
+
+const MODEL_PRICING: Record<string, PricingInfo> = {
+  [DEFAULT_MODEL]: {
+    displayName: "GPT-4o Mini",
+    promptPer1K: parseEnvNumber("GENERATIONS_GPT4O_MINI_PROMPT_COST_PER_1K", 0.0015),
+    completionPer1K: parseEnvNumber("GENERATIONS_GPT4O_MINI_COMPLETION_COST_PER_1K", 0.0035),
+  },
+};
+
+function getPricingForModel(model: string): PricingInfo {
+  return MODEL_PRICING[model] ?? MODEL_PRICING[DEFAULT_MODEL];
+}
+
+function buildTokenUsagePayload(
+  usage: OpenAIUsageDetails,
+  model: string = DEFAULT_MODEL,
+): OpenAITokenUsagePayload {
+  const pricing = getPricingForModel(model);
+  const promptTokens = usage.promptTokens ?? 0;
+  const completionTokens = usage.completionTokens ?? 0;
+  const totalTokens = usage.totalTokens ?? promptTokens + completionTokens;
+  const promptCost = (promptTokens / 1000) * pricing.promptPer1K;
+  const completionCost = (completionTokens / 1000) * pricing.completionPer1K;
+  const costUsd = promptCost + completionCost;
+
+  return {
+    source: "openai",
+    model: pricing.displayName,
+    promptTokens,
+    completionTokens,
+    totalTokens,
+    costUsd,
+    promptRatePer1k: pricing.promptPer1K,
+    completionRatePer1k: pricing.completionPer1K,
+  };
+}
+
+function createFallbackUsage(reason?: string): FallbackTokenUsagePayload {
+  const baseMessage = hasOpenAIKey
+    ? "OpenAI merge was skipped or failed; presenting a local chronicle so no tokens were billed."
+    : "No OpenAI API key configured; using the local chronicle generator.";
+  return {
+    source: "fallback",
+    message: reason ? `${reason}. ${baseMessage}` : baseMessage,
+  };
+}
 
 const fallbackReflections: ReflectionEntry[] = [
   { id: "ops", text: "Ops standup regained rhythm once async video updates replaced status pings.", emoji: "📼" },
@@ -33,9 +127,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { promptId } = payload;
-  if (!promptId) {
-    return res.status(400).json({ ok: false, error: "Missing promptId" });
-  }
+  if (!promptId) return res.status(400).json({ ok: false, error: "Missing promptId" });
 
   try {
     const entries = await loadEntries(promptId);
@@ -43,7 +135,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ ok: false, error: "No reflections found for this week" });
     }
 
-    const text = await buildChronicleText(entries, promptId);
+    const { text, usage, model, fallbackReason } = await buildChronicleText(entries, promptId);
 
     const chronicle = {
       id: `chron_${Date.now()}`,
@@ -61,7 +153,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    return res.status(200).json({ ok: true, chronicle });
+    const tokenUsage = usage
+      ? buildTokenUsagePayload(usage, model ?? DEFAULT_MODEL)
+      : createFallbackUsage(fallbackReason);
+
+    return res.status(200).json({ ok: true, chronicle, tokenUsage });
   } catch (error) {
     console.error("Chronicle merge failed", error);
     return res.status(500).json({ ok: false, error: "Failed to merge chronicle" });
@@ -92,28 +188,46 @@ async function loadEntries(promptId: string): Promise<ReflectionEntry[]> {
   return fallbackReflections;
 }
 
-async function buildChronicleText(entries: ReflectionEntry[], promptId: string) {
-  if (!hasOpenAIKey) return buildLocalChronicle(entries, promptId);
+async function buildChronicleText(entries: ReflectionEntry[], promptId: string): Promise<ChronicleBuildResult> {
+  if (!hasOpenAIKey) {
+    return {
+      text: buildLocalChronicle(entries, promptId),
+      usedFallback: true,
+      fallbackReason: "OpenAI API key not provided",
+    };
+  }
+
   try {
     return await mergeWithOpenAI(entries);
   } catch (error) {
     console.warn("OpenAI merge failed, falling back to local chronicle", error);
-    return buildLocalChronicle(entries, promptId);
+    return {
+      text: buildLocalChronicle(entries, promptId),
+      usedFallback: true,
+      fallbackReason: "OpenAI merge failed",
+    };
   }
 }
 
-async function mergeWithOpenAI(entries: ReflectionEntry[]) {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error("OPENAI_API_KEY missing");
-  }
+async function mergeWithOpenAI(entries: ReflectionEntry[]): Promise<ChronicleBuildResult> {
+  if (!process.env.OPENAI_API_KEY) throw new Error("OPENAI_API_KEY missing");
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const combined = entries.map((entry) => `• ${entry.text}`).join("\n");
   const mergePrompt = `Combine these reflections into a warm, poetic narrative for the family chronicle:\n${combined}`;
   const llm = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: DEFAULT_MODEL,
     messages: [{ role: "user", content: mergePrompt }],
   });
-  return llm.choices[0]?.message?.content ?? combined;
+  const usage: OpenAIUsageDetails = {
+    promptTokens: llm.usage?.prompt_tokens ?? 0,
+    completionTokens: llm.usage?.completion_tokens ?? 0,
+    totalTokens: llm.usage?.total_tokens ?? 0,
+  };
+  return {
+    text: llm.choices[0]?.message?.content ?? combined,
+    usage,
+    model: DEFAULT_MODEL,
+  };
 }
 
 function buildLocalChronicle(entries: ReflectionEntry[], promptId: string) {
