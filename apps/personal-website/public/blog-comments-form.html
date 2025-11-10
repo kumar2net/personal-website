@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ37S6E5BL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PZ37S6E5BL');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Comments Form</title>
+</head>
+<body>
+    <h1>Blog Comments Form</h1>
+    <form name="blog-comments" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="blog-comments" />
+        <p style="display: none;">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
+        <p>
+            <label>Name: <input type="text" name="name" /></label>
+        </p>
+        <p>
+            <label>Comment: <textarea name="comment"></textarea></label>
+        </p>
+        <p>
+            <label>Post Slug: <input type="text" name="post-slug" /></label>
+        </p>
+        <p>
+            <label>Timestamp: <input type="text" name="timestamp" /></label>
+        </p>
+        <p>
+            <button type="submit">Submit Comment</button>
+        </p>
+    </form>
+</body>
+</html>

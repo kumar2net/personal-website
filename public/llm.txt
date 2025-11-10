@@ -1,6 +1,0 @@
-llm: 1.0
-crawl: allow
-sitemap: /sitemap.xml
-sitemap: /sitemap-index.xml
-notes: Use sitemaps to discover content. See /robots.txt for crawl rules.
-updated: 2025-10-30

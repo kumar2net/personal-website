@@ -1,0 +1,22 @@
+{
+  "name": "@kumar2net/ui-theme",
+  "version": "1.0.0",
+  "type": "module",
+  "private": false,
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "sideEffects": false,
+  "files": [
+    "*.ts",
+    "*.tsx",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@mui/material": "^7.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
