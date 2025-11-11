@@ -141,7 +141,7 @@ function Convert() {
   const [history, setHistory] = useState([]);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [notice, setNotice] = useState("");
+  const [resultSource, setResultSource] = useState("api");
 
   const allUnits = useMemo(
     () =>
@@ -185,7 +185,6 @@ function Convert() {
 
     setIsSubmitting(true);
     setError("");
-    setNotice("");
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -205,11 +204,12 @@ function Convert() {
       }
 
       setResult(payload);
-      setNotice("");
+      setResultSource("api");
       setHistory((prev) => {
         const next = [
           {
             ...payload,
+            source: "api",
             timestamp: new Date().toISOString(),
           },
           ...prev,
@@ -220,12 +220,14 @@ function Convert() {
       const fallback = convertLocally(numericValue, fromUnit, toUnit);
       if (fallback) {
         setResult(fallback);
-        setNotice(
-          "API unavailable, used the built-in converter instead (data may be slightly rounded).",
-        );
+        setResultSource("local");
         setHistory((prev) => {
           const next = [
-            { ...fallback, timestamp: new Date().toISOString() },
+            {
+              ...fallback,
+              source: "local",
+              timestamp: new Date().toISOString(),
+            },
             ...prev,
           ];
           return next.slice(0, 5);
@@ -276,7 +278,7 @@ function Convert() {
                   step="any"
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-4 py-3 text-lg focus:border-blue-500 focus:ring focus:ring-blue-200 transition"
+                  className="w-full rounded-xl border border-gray-300 dark:border-slate-700 px-4 py-3 text-lg bg-white dark:bg-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring focus:ring-blue-200 transition"
                   placeholder="Enter a number"
                   required
                 />
@@ -294,7 +296,7 @@ function Convert() {
                       id="from"
                       value={fromUnit}
                       onChange={(event) => setFromUnit(event.target.value)}
-                      className="w-full appearance-none rounded-xl border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring focus:ring-blue-200 transition bg-white"
+                      className="w-full appearance-none rounded-xl border border-gray-300 dark:border-slate-700 px-4 py-3 focus:border-blue-500 focus:ring focus:ring-blue-200 transition bg-white dark:bg-slate-900 dark:text-slate-100"
                     >
                       {UNIT_GROUPS.map((group) => (
                         <optgroup label={group.label} key={group.label}>
@@ -323,7 +325,7 @@ function Convert() {
                       id="to"
                       value={toUnit}
                       onChange={(event) => setToUnit(event.target.value)}
-                      className="w-full appearance-none rounded-xl border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring focus:ring-blue-200 transition bg-white"
+                      className="w-full appearance-none rounded-xl border border-gray-300 dark:border-slate-700 px-4 py-3 focus:border-blue-500 focus:ring focus:ring-blue-200 transition bg-white dark:bg-slate-900 dark:text-slate-100"
                     >
                       {UNIT_GROUPS.map((group) => (
                         <optgroup label={group.label} key={group.label}>
@@ -364,12 +366,6 @@ function Convert() {
                 {error}
               </div>
             )}
-            {notice && !error && (
-              <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                {notice}
-              </div>
-            )}
-
             {result && !error && (
               <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5">
                 <p className="text-sm uppercase font-semibold tracking-wide text-emerald-600 mb-2">
@@ -379,6 +375,13 @@ function Convert() {
                   {result.output}
                 </p>
                 <p className="text-gray-600 mt-1">from {result.input}</p>
+                <p
+                  className={`text-xs mt-2 ${resultSource === "local" ? "text-amber-600" : "text-gray-400"}`}
+                >
+                  {resultSource === "local"
+                    ? "Converted with the offline fallback (slight rounding)."
+                    : "Powered by the live API."}
+                </p>
               </div>
             )}
 
@@ -422,6 +425,11 @@ function Convert() {
                     <p className="text-xs text-gray-400 mt-1">
                       {new Date(item.timestamp).toLocaleString()}
                     </p>
+                    {item.source && (
+                      <p className={`text-xs ${item.source === "local" ? "text-amber-600" : "text-gray-400"}`}>
+                        {item.source === "local" ? "Offline fallback" : "Live API"}
+                      </p>
+                    )}
                   </li>
                 ))}
               </ul>
