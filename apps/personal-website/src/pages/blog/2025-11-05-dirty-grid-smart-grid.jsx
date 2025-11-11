@@ -223,7 +223,7 @@ export default function DirtyGridSmartGrid() {
         <button
           type="button"
           onClick={() => navigate("/blog")}
-          className="flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-900 transition hover:border-slate-300 hover:text-slate-900"
+          className="flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-600 px-4 py-2 text-sm font-medium text-slate-900 dark:text-slate-100 transition hover:border-slate-300 dark:hover:border-slate-400 hover:text-slate-900 dark:hover:text-slate-50"
         >
           <svg
             className="h-4 w-4"
