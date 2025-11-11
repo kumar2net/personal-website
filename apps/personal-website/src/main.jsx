@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { CssBaseline } from "@mui/material";
-import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
+import { CssVarsProvider } from "@mui/material/styles";
 import theme from "@kumar2net/ui-theme";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
