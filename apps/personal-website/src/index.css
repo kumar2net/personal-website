@@ -316,3 +316,48 @@ button:focus-visible {
 .flashcard-face-back {
     transform: rotateX(180deg);
 }
+
+
+/* High-contrast tweaks so commonly-used Tailwind gray utilities stay legible in dark mode */
+@media (prefers-color-scheme: dark) {
+    .mobile-fix .text-gray-900,
+    .mobile-fix .text-gray-800,
+    .mobile-fix .text-gray-700 {
+        color: #f3f4f6 !important;
+    }
+
+    .mobile-fix .text-gray-600 {
+        color: #e2e8f0 !important;
+    }
+
+    .mobile-fix .text-gray-500 {
+        color: #cbd5f5 !important;
+    }
+
+    .mobile-fix .text-gray-400,
+    .mobile-fix .text-gray-300 {
+        color: #a8b1d4 !important;
+    }
+
+    .mobile-fix .text-gray-200,
+    .mobile-fix .text-gray-100,
+    .mobile-fix .text-gray-50 {
+        color: #f8fafc !important;
+    }
+
+    .mobile-fix .text-blue-600 {
+        color: #93c5fd !important;
+    }
+
+    .mobile-fix .bg-white,
+    .mobile-fix .bg-gray-50,
+    .mobile-fix .bg-gray-100 {
+        background-color: #111827 !important;
+    }
+
+    .mobile-fix .border-gray-200,
+    .mobile-fix .border-gray-300,
+    .mobile-fix .border-gray-400 {
+        border-color: rgba(148, 163, 184, 0.45) !important;
+    }
+}
