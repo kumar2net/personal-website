@@ -12,10 +12,13 @@ export default function SemanticSearch() {
   const [error, setError] = useState("");
   const [results, setResults] = useState([]);
   const [meta, setMeta] = useState({ tookMs: 0, provider: "" });
+  const [apiAvailable, setApiAvailable] = useState(true);
+  const unavailableMessage =
+    "Semantic search API isn't running in this environment. Start `vercel dev` or set VITE_SEMANTIC_SEARCH_ENDPOINT.";
 
   const canSearch = useMemo(
-    () => query.trim().length > 0 && !loading,
-    [query, loading],
+    () => query.trim().length > 0 && !loading && apiAvailable,
+    [query, loading, apiAvailable],
   );
 
   const onSubmit = useCallback(
@@ -48,14 +51,19 @@ export default function SemanticSearch() {
           provider: data?.provider || "",
         });
       } catch (err) {
-        setError(
-          typeof err?.message === "string" ? err.message : "Search failed",
-        );
+        const message =
+          typeof err?.message === "string" ? err.message : "Search failed";
+        if (message.includes("404")) {
+          setApiAvailable(false);
+          setError(unavailableMessage);
+        } else {
+          setError(message);
+        }
       } finally {
         setLoading(false);
       }
     },
-    [canSearch, query, topK],
+    [apiAvailable, canSearch, query, topK, unavailableMessage],
   );
 
   return (
@@ -97,6 +105,11 @@ export default function SemanticSearch() {
       {error && (
         <div className="mt-3 rounded border border-red-200 dark:border-red-700 bg-red-50 dark:bg-red-900/30 p-3 text-sm text-red-700 dark:text-red-300">
           {error}
+        </div>
+      )}
+      {!error && !apiAvailable && (
+        <div className="mt-3 rounded border border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/30 p-3 text-sm text-amber-800 dark:text-amber-200">
+          {unavailableMessage}
         </div>
       )}
 
