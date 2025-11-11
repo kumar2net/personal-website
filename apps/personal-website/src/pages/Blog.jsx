@@ -15,17 +15,17 @@ const Blog = () => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 text-gray-900 dark:text-slate-100">
       <SEO
         title="Blog"
         description="Latest posts on technology, learning, notes, and personal writing."
         canonicalPath="/blog"
         type="website"
       />
-      <h1 className="text-4xl font-bold mb-6">Blog</h1>
+      <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">Blog</h1>
       <SemanticSearch />
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">Latest Posts</h2>
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Posts</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -35,7 +35,7 @@ const Blog = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+            className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
           >
             <div className="relative h-48">
               <img
@@ -58,31 +58,31 @@ const Blog = () => {
                 lastModified={post.lastModified}
               />
             </div>
-            <div className="p-6">
+            <div className="p-6 text-gray-900 dark:text-gray-100">
               <div className="flex gap-2 mb-4">
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs"
+                    className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs dark:bg-slate-800 dark:text-blue-200"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <h2 className="text-xl font-bold mb-2 hover:text-blue-600 transition-colors">
+              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100 hover:text-blue-600 transition-colors">
                 <Link to={post.link}>{post.title}</Link>
               </h2>
-              <p className="text-gray-600 mb-4">{post.excerpt}</p>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{post.excerpt}</p>
               <div className="mt-3">
                 <Link
                   to={post.link}
-                  className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
                   aria-label={`Read more: ${post.title}`}
                 >
                   Read more
                 </Link>
               </div>
-              <div className="flex items-center text-gray-500 text-sm">
+              <div className="flex items-center text-gray-500 dark:text-gray-300 text-sm">
                 <svg
                   className="w-4 h-4 mr-2"
                   fill="none"
@@ -104,7 +104,7 @@ const Blog = () => {
       </div>
       <div className="mt-12 text-center">
         <button
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors dark:bg-blue-500 dark:hover:bg-blue-400"
           aria-label="Load more blog posts"
         >
           Load More

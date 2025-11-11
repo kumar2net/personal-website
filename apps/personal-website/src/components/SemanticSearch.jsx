@@ -59,7 +59,7 @@ export default function SemanticSearch() {
   );
 
   return (
-    <div className="mb-10 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="mb-10 rounded-lg border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm text-gray-900 dark:text-slate-100">
       <form
         onSubmit={onSubmit}
         className="flex flex-col gap-3 md:flex-row md:items-center"
@@ -69,10 +69,10 @@ export default function SemanticSearch() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search posts semantically (try: india usa trade gap)"
-          className="flex-1 rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          className="flex-1 rounded border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 px-3 py-2 focus:border-blue-500 focus:outline-none"
         />
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-600" htmlFor="topk">
+          <label className="text-sm text-gray-600 dark:text-gray-300" htmlFor="topk">
             Top K
           </label>
           <input
@@ -82,27 +82,27 @@ export default function SemanticSearch() {
             max={10}
             value={topK}
             onChange={(e) => setTopK(e.target.value)}
-            className="w-20 rounded border border-gray-300 px-2 py-2 focus:border-blue-500 focus:outline-none"
+            className="w-20 rounded border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 px-2 py-2 focus:border-blue-500 focus:outline-none"
           />
         </div>
         <button
           type="submit"
           disabled={!canSearch}
-          className={`rounded px-4 py-2 text-white ${canSearch ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
+          className={`rounded px-4 py-2 text-white ${canSearch ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400" : "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"}`}
         >
           {loading ? "Searching…" : "Search"}
         </button>
       </form>
 
       {error && (
-        <div className="mt-3 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <div className="mt-3 rounded border border-red-200 dark:border-red-700 bg-red-50 dark:bg-red-900/30 p-3 text-sm text-red-700 dark:text-red-300">
           {error}
         </div>
       )}
 
       {results.length > 0 && (
         <div className="mt-4">
-          <div className="mb-2 text-xs text-gray-500">
+          <div className="mb-2 text-xs text-gray-500 dark:text-gray-300">
             <span>Found {results.length}</span>
             {meta.tookMs ? (
               <span className="ml-2">in {meta.tookMs} ms</span>
@@ -111,18 +111,18 @@ export default function SemanticSearch() {
               <span className="ml-2">via {meta.provider}</span>
             ) : null}
           </div>
-          <ul className="divide-y divide-gray-200 rounded border border-gray-200">
+          <ul className="divide-y divide-gray-200 dark:divide-slate-800 rounded border border-gray-200 dark:border-slate-800">
             {results.map((r) => (
-              <li key={r.id} className="p-3 hover:bg-gray-50">
-                <div className="mb-1 text-sm font-semibold text-gray-900">
+              <li key={r.id} className="p-3 hover:bg-gray-50 dark:hover:bg-slate-800">
+                <div className="mb-1 text-sm font-semibold text-gray-900 dark:text-slate-100">
                   <Link to={r.url} className="hover:text-blue-600">
                     {r.title || r.id}
                   </Link>
                 </div>
                 {r.excerpt ? (
-                  <div className="text-sm text-gray-600">{r.excerpt}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">{r.excerpt}</div>
                 ) : null}
-                <div className="mt-1 text-xs text-gray-400">
+                <div className="mt-1 text-xs text-gray-400 dark:text-gray-400">
                   score:{" "}
                   {typeof r.score === "number" ? r.score.toFixed(4) : r.score}
                 </div>
