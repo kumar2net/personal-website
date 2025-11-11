@@ -54,6 +54,85 @@ const QUICK_EXAMPLES = [
 
 const API_ENDPOINT = "/api/convert";
 
+const LINEAR_CONVERSIONS = {
+  // Distance
+  "km-mi": 0.621371,
+  "mi-km": 1.60934,
+  "m-ft": 3.28084,
+  "ft-m": 0.3048,
+  "in-cm": 2.54,
+  "cm-in": 0.393701,
+
+  // Weight / Mass
+  "kg-lb": 2.20462,
+  "lb-kg": 0.453592,
+  "oz-g": 28.3495,
+  "g-oz": 0.035274,
+
+  // Volume (liquid)
+  "l-gal": 0.264172,
+  "gal-l": 3.78541,
+  "cup-ml": 240,
+  "ml-cup": 0.004167,
+  "tbsp-ml": 15,
+  "ml-tbsp": 0.0667,
+  "tsp-ml": 5,
+  "ml-tsp": 0.2,
+
+  // Pressure
+  "psi-bar": 0.0689476,
+  "bar-psi": 14.5038,
+
+  // Power / Energy
+  "hp-kw": 0.7457,
+  "kw-hp": 1.34102,
+  "btu-kj": 1.05506,
+  "kj-btu": 0.947817,
+
+  // Area / Land
+  "sqft-m2": 0.092903,
+  "m2-sqft": 10.7639,
+  "acre-ha": 0.404686,
+  "ha-acre": 2.47105,
+};
+
+const SUPPORTED_LINEAR_UNITS = new Set(
+  Object.keys(LINEAR_CONVERSIONS).flatMap((key) => key.split("-")),
+);
+
+const convertTemperature = (value, from, to) => {
+  if (from === "C" && to === "F") {
+    return (value * 9) / 5 + 32;
+  }
+  if (from === "F" && to === "C") {
+    return ((value - 32) * 5) / 9;
+  }
+  return null;
+};
+
+const convertLocally = (value, from, to) => {
+  if (from === to) {
+    return { input: `${value} ${from}`, output: `${value} ${to}` };
+  }
+
+  const temp = convertTemperature(value, from, to);
+  if (temp !== null) {
+    return {
+      input: `${value}°${from}`,
+      output: `${temp.toFixed(2)}°${to}`,
+    };
+  }
+
+  const key = `${from}-${to}`;
+  const factor = LINEAR_CONVERSIONS[key];
+  if (!factor) {
+    return null;
+  }
+
+  const converted = Number((value * factor).toFixed(3));
+  return { input: `${value} ${from}`, output: `${converted} ${to}` };
+};
+
 function Convert() {
   const [inputValue, setInputValue] = useState("1");
   const [fromUnit, setFromUnit] = useState("km");
@@ -62,6 +141,7 @@ function Convert() {
   const [history, setHistory] = useState([]);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notice, setNotice] = useState("");
 
   const allUnits = useMemo(
     () =>
@@ -105,6 +185,7 @@ function Convert() {
 
     setIsSubmitting(true);
     setError("");
+    setNotice("");
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -124,6 +205,7 @@ function Convert() {
       }
 
       setResult(payload);
+      setNotice("");
       setHistory((prev) => {
         const next = [
           {
@@ -135,8 +217,26 @@ function Convert() {
         return next.slice(0, 5);
       });
     } catch (err) {
-      setResult(null);
-      setError(err instanceof Error ? err.message : "Conversion failed.");
+      const fallback = convertLocally(numericValue, fromUnit, toUnit);
+      if (fallback) {
+        setResult(fallback);
+        setNotice(
+          "API unavailable, used the built-in converter instead (data may be slightly rounded).",
+        );
+        setHistory((prev) => {
+          const next = [
+            { ...fallback, timestamp: new Date().toISOString() },
+            ...prev,
+          ];
+          return next.slice(0, 5);
+        });
+        setError("");
+      } else {
+        setResult(null);
+        setError(
+          err instanceof Error ? err.message : "Conversion failed.",
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -262,6 +362,11 @@ function Convert() {
             {error && (
               <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error}
+              </div>
+            )}
+            {notice && !error && (
+              <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                {notice}
               </div>
             )}
 
