@@ -41,7 +41,7 @@ export const getBlogPostDates = (moduleUrl) => {
       isoPublishDate: isoDate,
       isoLastModifiedDate: isoDate,
     };
-  } catch (error) {
+  } catch {
     return fallback;
   }
 };

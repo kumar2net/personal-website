@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { CssBaseline } from "@mui/material";
-import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material/styles";
+import { CssVarsProvider } from "@mui/material/styles";
 import theme from "./theme";
 
 export type ThemeProviderProps = PropsWithChildren<{
