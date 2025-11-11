@@ -196,7 +196,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-100 mobile-fix">
+      <div className="min-h-screen bg-gray-100 dark:bg-slate-950 text-gray-900 dark:text-slate-100 mobile-fix">
         <SEO
           title="My Stories"
           description="AI enthusiast. Projects, blog, books, music, learning resources, and more."
