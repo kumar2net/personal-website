@@ -1,5 +1,1 @@
-{
-  "buildCommand": "npm run build",
-  "installCommand": "npm install --workspaces --legacy-peer-deps",
-  "framework": "vite"
-}
+{}
