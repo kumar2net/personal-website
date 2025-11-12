@@ -4,7 +4,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - Node.js 20+ (backend declares `>=18`, Vite dev server benefits from 20).
 - npm 11.6.2 (locked via `package-lock.json`).
 - Optional: Python 3.11 for the experimental GNN backend (`backend/gnn_server.py`).
-- Access to Google Cloud project with GA4 BigQuery export and Vertex AI if you want live topic suggestions or embeddings.
+- Access to a Google Cloud project with GA4 BigQuery export (and Vertex AI if you want live topic suggestions). Semantic search now runs entirely on Gemini + DuckDB, so you only need `GEMINI_API_KEY` to rebuild/query embeddings.
 - API keys: Gemini (`GEMINI_API_KEY`), OpenAI (`OPENAI_API_KEY`), X bearer token, Vercel KV credentials, optional Netlify function secret for TL;DR.
 
 ## Directory Ownership
@@ -21,11 +21,10 @@ Populate `.env` at repo root (copy from `.env.example`) and `backend/.env` (from
 
 | Var | Location | Notes |
 | --- | --- | --- |
-| `GEMINI_API_KEY` | root | Required for semantic search embeddings. Without it the handler falls back to lexical matches.
+| `GEMINI_API_KEY` | root | Required for semantic search indexing (`scripts/index-duckdb.mjs`) and query-time embeddings. No fallback path exists without it.
 | `OPENAI_API_KEY`, `OPENAI_MODEL` | root | Needed for `/api/generations/merge`. Fallback text is used when absent.
 | `GCP_PROJECT_ID`, `GCP_LOCATION` | root + backend | Required for Vertex AI + BigQuery clients.
 | `GCP_SERVICE_ACCOUNT_JSON` | root | Inline JSON used by semantic search/Vertex clients during local dev.
-| `VERTEX_INDEX_ID`, `VERTEX_INDEX_ENDPOINT_ID`, `VERTEX_DEPLOYED_INDEX_ID`, `VERTEX_EMBED_DIM` | root | Configure Vertex Vector Search for semantic retrieval.
 | `VITE_NEWS_API_KEY`, `VITE_CLIMATIQ_API_KEY` | root | Used by climate/news widgets. Provide dummy strings for local dev if hitting external APIs is optional.
 | `VITE_FEATURE_UNREAD` | root | Feature flag toggling unread badge logic.
 | `X_BEARER_TOKEN` | root | Enables `/api/x-latest` for Elsewhere page.
@@ -55,10 +54,12 @@ The UI theme package is part of the workspace, so no extra steps are required.
 | Run sitemap tests | `npm run test:sitemap --prefix apps/personal-website`. |
 | Generate semantic index | `npm run semantic:index --prefix apps/personal-website`.
 
+`semantic:index` rebuilds `apps/personal-website/src/data/semantic.duckdb` using the Gemini API so the DuckDB store ships with the freshest blog copy before local testing or Vercel builds.
+
 ## Dev Server Matrix
 | Service | Command | Port | Notes |
 | --- | --- | --- | --- |
-| Vite SPA | `npm run dev` | 5173 | Strict port; proxies `/api/convert` locally.
+| Vite SPA | `npm run dev` | 5173 | Strict port; proxies `/api/convert` and `/api/semantic-search` into the real handlers (DuckDB search works in dev).
 | News shell | `npm run dev --prefix apps/news` | 5174 | Optional, placeholder UI.
 | Express analytics | `npm run dev --prefix backend` | 3001 | Required for Topic Suggestions page.
 | Netlify functions (TL;DR) | `netlify dev` (if applicable) | 8889 | Only needed if you want live TL;DR while running Vite.
@@ -88,7 +89,7 @@ The UI theme package is part of the workspace, so no extra steps are required.
      -H 'Content-Type: application/json' \
      -d '{"q":"india usa trade gap","topK":3}'
    ```
-   With `GEMINI_API_KEY` set you get merged semantic + lexical hits; otherwise only lexical fallback.
+   With `GEMINI_API_KEY` set (and `npm run semantic:index` having produced `src/data/semantic.duckdb`) you get scored semantic hits sourced from DuckDB; without the key the handler returns `500`.
 4. **Generations merge**
    ```sh
    curl -X POST http://localhost:5173/api/generations/merge -H 'Content-Type: application/json' -d '{"promptId":"2025-W45"}'
@@ -101,7 +102,7 @@ The UI theme package is part of the workspace, so no extra steps are required.
 
 ## Troubleshooting
 - **Port conflicts**: Vite uses `strictPort`; if 5173 is taken you must free it or override `server.port` in `vite.config.js`.
-- **Semantic search 404**: start via `npm run dev` (Turbo) so the local `/api` handlers mount; direct `vite` invocations without the custom middleware will not serve `api/convert`.
+- **Semantic search 404/500**: run `npm run dev` (Turbo) so both `/api/convert` and `/api/semantic-search` are proxied, set `GEMINI_API_KEY`, and re-run `npm run semantic:index --prefix apps/personal-website` so `src/data/semantic.duckdb` exists.
 - **GA4/Vertex auth errors**: confirm service-account JSON is valid and `GA4_DATASET` matches `analytics_<property>` naming.
 - **Graph recommender unavailable**: Graph components silently hide themselves until `GNN_API_BASE_URL` responds with `{ initialized: true }`. Run the Python server or change `import.meta.env.VITE_GNN_API_BASE_URL` to a reachable endpoint.
 - **Webhook integration UI**: `src/services/webhookService.js` intentionally keeps `webhookUrl=null`, so registration UI only acts as a stub. Enable once backend endpoints exist.
