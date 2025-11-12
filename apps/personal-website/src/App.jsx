@@ -196,7 +196,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-100 dark:bg-slate-950 text-gray-900 dark:text-slate-100 mobile-fix">
+      <div className="min-h-screen bg-gray-100 dark:bg-slate-950 mobile-fix">
         <SEO
           title="My Stories"
           description="AI enthusiast. Projects, blog, books, music, learning resources, and more."
@@ -320,7 +320,7 @@ function App() {
                       isOpen: !isMobileMenuOpen,
                     });
                   }}
-                  className="md:hidden"
+                  className="md:hidden text-gray-600 hover:text-gray-800"
                   aria-label={
                     isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
                   }
