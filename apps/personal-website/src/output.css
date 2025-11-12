@@ -3,12 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-gray-100 text-gray-900;
-  }
   :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
+  }
+
+  body {
+    @apply bg-gray-100 text-gray-900 antialiased transition-colors duration-150 dark:bg-slate-950 dark:text-slate-100;
+  }
+
+  a {
+    @apply text-blue-600 transition-colors dark:text-blue-300;
+  }
+
+  a:hover {
+    @apply text-blue-700 dark:text-blue-200;
   }
 }
