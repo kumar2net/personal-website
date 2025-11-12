@@ -203,8 +203,8 @@ export default function BlogPost() {
 
       <Card className="mt-8">
         <CardContent className="p-4 space-y-2">
-          <h3 className="font-semibold text-lg">🔎 TL;DR</h3>
-          <ul className="list-disc ml-6">
+          <h3 className="font-semibold text-lg text-gray-900">🔎 TL;DR</h3>
+          <ul className="list-disc ml-6 text-gray-900">
             <li>Real-life friends using AI + R + MATLAB beat billionaire gossip any day.</li>
             <li>Rare earths (LREEs + HREEs) are the silent backbone of EVs, wind, defence and electronics.</li>
             <li>

@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "NODE_OPTIONS='--max-old-space-size=4096' vite --host 127.0.0.1 --open",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' vite --host 127.0.0.1",
     "dev:clean": "bash scripts/start-dev-clean.sh",
     "build": "vite build",
     "lint": "eslint .",

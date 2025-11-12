@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "echo \"News app placeholder\"",
+    "dev": "vite --host 127.0.0.1 --port 5174 --open",
     "build": "echo \"News build placeholder\"",
     "lint": "echo \"News lint placeholder\"",
     "test": "echo \"News test placeholder\""

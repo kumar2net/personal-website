@@ -1,4 +1,4 @@
-import { extendTheme } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 export const colorTokens = {
   primary: {
@@ -43,7 +43,7 @@ export const colorTokens = {
   },
 } as const;
 
-const theme = extendTheme({
+const theme = createTheme({
   cssVarPrefix: "k2n",
   colorSchemes: {
     light: {
