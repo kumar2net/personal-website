@@ -77,7 +77,7 @@ export default function SemanticSearch() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search posts semantically (try: india usa trade gap)"
-          className="flex-1 rounded border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          className="flex-1 rounded border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
         />
         <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600 dark:text-gray-300" htmlFor="topk">
@@ -90,7 +90,7 @@ export default function SemanticSearch() {
             max={10}
             value={topK}
             onChange={(e) => setTopK(e.target.value)}
-            className="w-20 rounded border border-gray-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 px-2 py-2 focus:border-blue-500 focus:outline-none"
+            className="w-20 rounded border border-gray-300 bg-white text-gray-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 px-2 py-2 focus:border-blue-500 focus:outline-none"
           />
         </div>
         <button

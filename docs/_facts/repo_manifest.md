@@ -44,7 +44,7 @@ backend/.env.example     # Backend env sample
 
 ## App-specific scripts (highlights)
 ### `apps/personal-website`
-- `dev`: `NODE_OPTIONS=... vite --host 127.0.0.1` (strict port 5173, attaches local convert API middleware).
+- `dev`: `NODE_OPTIONS=... vite --host 127.0.0.1` (strict port 5173, attaches local convert + semantic-search API middleware).
 - `dev:clean`: shell wrapper to reset caches before Vite.
 - `build`: `vite build` (outputs to `dist/`).
 - `test:*`: numerous Node scripts under `scripts/` (unit, e2e, sitemap, viewport, etc.).
@@ -61,11 +61,11 @@ backend/.env.example     # Backend env sample
 ## Env sample files
 | File | Key variables |
 | --- | --- |
-| `.env.example` | `GEMINI_API_KEY`, `OPENAI_API_KEY`, `GCP_PROJECT_ID`, `GCP_SERVICE_ACCOUNT_JSON` blob, Vertex index IDs, `VITE_*` client flags (news API, feature toggles), `VITE_CLIMATIQ_API_KEY`, `VITE_FEATURE_UNREAD`, etc.
+| `.env.example` | `GEMINI_API_KEY`, `OPENAI_API_KEY`, `GCP_PROJECT_ID`, `GCP_SERVICE_ACCOUNT_JSON` blob, `VITE_*` client flags (news API, feature toggles), `VITE_CLIMATIQ_API_KEY`, `VITE_FEATURE_UNREAD`, etc.
 | `backend/.env.example` | `GOOGLE_APPLICATION_CREDENTIALS`, `GCP_PROJECT_ID`, `GA4_DATASET`, `GA4_TABLE`, `RECOMMENDER_MODEL`, `RECOMMENDER_SYSTEM_INSTRUCTION`, `CACHE_TTL_SECONDS`.
 
 ## Ports + endpoints (by config)
-- `apps/personal-website`: Vite dev server on `localhost:5173` (strict) with local `/api/convert` shim via Vite middleware hitting `api/convert.js`.
+- `apps/personal-website`: Vite dev server on `localhost:5173` (strict) with local `/api/convert` + `/api/semantic-search` shims via the Vite middleware hitting the actual serverless handlers.
 - `apps/news`: Vite dev server on `localhost:5174`.
 - `backend/server.js`: Express API default `3001`, exposes `/api/health`, `/api/analytics/*`, `/api/recommendations/topics`.
 - Netlify Functions fallback for TL;DR summary uses port `8889` when Vite host detected.
@@ -74,5 +74,5 @@ backend/.env.example     # Backend env sample
 
 ## Supporting scripts & assets
 - `api/` functions integrate with Gemini embeddings, WordPress feed, X feed, conversions, and “generations” journaling endpoints persisted via `@vercel/kv` and OpenAI merge fallback.
-- `apps/personal-website/scripts/` holds tooling for GA4 ingestion, comments fetch, PDF/doc converters (mammoth, pdfjs), viewport smoke tests, sitemap generator, DevTools probes, etc.
+- `apps/personal-website/scripts/` holds tooling for GA4 ingestion, comments fetch, PDF/doc converters (mammoth, pdfjs), viewport smoke tests, sitemap generator, DevTools probes, and the DuckDB semantic indexer.
 - `backend/` also contains Python experiments (`gnn_server.py`, `graph_recommender.py`, `analytics_integration.py`) plus shell scripts to bootstrap GCP resources.
