@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import pythonCodeRaw from "../../../../../docs/DLalgoblogreco.py?raw";
+import pythonCodeRaw from "@/data/ai-recommender-code.py?raw";
 
 const pythonCode = pythonCodeRaw.trim();
 
