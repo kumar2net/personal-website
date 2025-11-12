@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import duckdb from "duckdb";
 
 function jsonResponse(res, statusCode, body, extraHeaders = {}) {
   res.status(statusCode).setHeader("Content-Type", "application/json");
@@ -14,144 +13,109 @@ function jsonResponse(res, statusCode, body, extraHeaders = {}) {
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const EMBEDDING_DIM = 768;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_CANDIDATES = [
-  path.resolve(process.cwd(), "src/data/semantic.duckdb"),
-  path.resolve(process.cwd(), "apps/personal-website/src/data/semantic.duckdb"),
-  path.resolve(__dirname, "../src/data/semantic.duckdb"),
+const INDEX_CANDIDATES = [
+  path.resolve(process.cwd(), "src/data/semantic-index.json"),
+  path.resolve(process.cwd(), "apps/personal-website/src/data/semantic-index.json"),
+  path.resolve(__dirname, "../src/data/semantic-index.json"),
   path.resolve(
     __dirname,
-    "../apps/personal-website/src/data/semantic.duckdb",
+    "../apps/personal-website/src/data/semantic-index.json",
   ),
 ];
 
-let cachedDbPath = null;
-let cachedDb = null;
+let cachedIndex = null;
 
-function resolveDbPath() {
-  if (cachedDbPath && fs.existsSync(cachedDbPath)) {
-    return cachedDbPath;
-  }
-  for (const candidate of DB_CANDIDATES) {
-    if (fs.existsSync(candidate)) {
-      cachedDbPath = candidate;
-      return cachedDbPath;
-    }
-  }
-  throw new Error(
-    "semantic.duckdb not found. Run `npm run semantic:index` before querying.",
-  );
-}
-
-function getConnection() {
-  if (!cachedDb) {
-    const dbPath = resolveDbPath();
-    cachedDb = new duckdb.Database(dbPath, duckdb.OPEN_READONLY);
-  }
-  return cachedDb.connect();
-}
-
-function allAsync(conn, sql) {
-  return new Promise((resolve, reject) => {
-    conn.all(sql, (err, rows) => {
-      if (err) reject(err);
-      else resolve(rows);
-    });
-  });
-}
-
-function vectorLiteral(values) {
+function toFiniteVector(values, expectedLength = EMBEDDING_DIM) {
   if (!Array.isArray(values)) {
     throw new Error("Embedding vector missing");
   }
-  if (values.length !== EMBEDDING_DIM) {
+  if (values.length !== expectedLength) {
     throw new Error(
-      `Embedding dimension mismatch: got ${values.length}, expected ${EMBEDDING_DIM}`,
+      `Embedding dimension mismatch: got ${values.length}, expected ${expectedLength}`,
     );
   }
-  const sanitized = values.map((value) => {
+  return values.map((value) => {
     const num = Number(value);
     return Number.isFinite(num) ? num : 0;
   });
-  return `LIST_VALUE(${sanitized.join(",")})::FLOAT[]`;
 }
 
-function buildSimilaritySql(vector, topK) {
-  const literal = vectorLiteral(vector);
-  return `
-    WITH query_vec AS (
-      SELECT ${literal}::FLOAT[] AS vector
-    ),
-    query_expanded AS (
-      SELECT idx, value
-      FROM query_vec,
-      UNNEST(vector) WITH ORDINALITY AS q(value, idx)
-    ),
-    doc_expanded AS (
-      SELECT
-        e.id,
-        e.title,
-        e.url,
-        e.excerpt,
-        idx,
-        value
-      FROM embeddings e,
-      UNNEST(e.vector::FLOAT[]) WITH ORDINALITY AS ev(value, idx)
-    ),
-    doc_norms AS (
-      SELECT
-        id,
-        title,
-        url,
-        excerpt,
-        sqrt(SUM(value * value)) AS doc_norm
-      FROM doc_expanded
-      GROUP BY id, title, url, excerpt
-    ),
-    dot_products AS (
-      SELECT
-        d.id,
-        SUM(d.value * q.value) AS dot
-      FROM doc_expanded d
-      JOIN query_expanded q ON q.idx = d.idx
-      GROUP BY d.id
-    ),
-    query_norm AS (
-      SELECT
-        sqrt(SUM(value * value)) AS norm
-      FROM query_expanded
-    )
-    SELECT
-      n.id,
-      n.title,
-      n.url,
-      n.excerpt,
-      CASE
-        WHEN n.doc_norm = 0 OR query_norm.norm = 0 OR dot_products.dot IS NULL THEN 0
-        ELSE dot_products.dot / (n.doc_norm * query_norm.norm)
-      END AS score
-    FROM doc_norms n
-    LEFT JOIN dot_products ON n.id = dot_products.id
-    CROSS JOIN query_norm
-    ORDER BY score DESC
-    LIMIT ${topK};
-  `;
+function computeNorm(vector) {
+  return Math.sqrt(vector.reduce((sum, value) => sum + value * value, 0));
+}
+
+function loadIndex() {
+  if (cachedIndex) {
+    return cachedIndex;
+  }
+  for (const candidate of INDEX_CANDIDATES) {
+    if (!fs.existsSync(candidate)) {
+      continue;
+    }
+    const raw = fs.readFileSync(candidate, "utf8");
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed?.items)) {
+      throw new Error(`Malformed semantic index at ${candidate}`);
+    }
+    const embeddingDim = Number(parsed.embeddingDim) || EMBEDDING_DIM;
+    const docs = parsed.items.map((item) => {
+      const vector = toFiniteVector(item.vector, embeddingDim);
+      const norm =
+        typeof item.norm === "number" && Number.isFinite(item.norm)
+          ? item.norm
+          : computeNorm(vector);
+      return {
+        id: item.id,
+        title: item.title,
+        url: item.url,
+        excerpt: item.excerpt,
+        vector,
+        norm,
+      };
+    });
+    cachedIndex = {
+      docs,
+      embeddingDim,
+      provider: parsed.provider || "semantic-index",
+    };
+    return cachedIndex;
+  }
+  throw new Error(
+    "semantic-index.json not found. Run `npm run semantic:index` before querying.",
+  );
+}
+
+function dotProduct(a, b) {
+  let sum = 0;
+  for (let i = 0; i < a.length; i += 1) {
+    sum += a[i] * b[i];
+  }
+  return sum;
 }
 
 async function searchEmbeddings(vector, topK) {
-  const conn = getConnection();
-  try {
-    const sql = buildSimilaritySql(vector, topK);
-    const rows = await allAsync(conn, sql);
-    return rows.map((row) => ({
-      id: row.id,
-      title: row.title,
-      url: row.url,
-      excerpt: row.excerpt,
-      score: Number(row.score) || 0,
-    }));
-  } finally {
-    conn.close();
+  const index = loadIndex();
+  const query = toFiniteVector(vector, index.embeddingDim);
+  const queryNorm = computeNorm(query);
+  if (queryNorm === 0) {
+    return [];
   }
+
+  const scored = index.docs.map((doc) => {
+    const dot = dotProduct(query, doc.vector);
+    const denom = doc.norm * queryNorm;
+    const score = denom === 0 ? 0 : dot / denom;
+    return {
+      id: doc.id,
+      title: doc.title,
+      url: doc.url,
+      excerpt: doc.excerpt,
+      score: Number.isFinite(score) ? score : 0,
+    };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, topK);
 }
 
 async function embedQuery(text) {
@@ -221,7 +185,7 @@ export default async function handler(req, res) {
     jsonResponse(res, 200, {
       results,
       tookMs: Date.now() - started,
-      provider: "duckdb",
+      provider: "semantic-index",
     });
   } catch (err) {
     jsonResponse(res, 500, {

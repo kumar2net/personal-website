@@ -74,5 +74,5 @@ backend/.env.example     # Backend env sample
 
 ## Supporting scripts & assets
 - `api/` functions integrate with Gemini embeddings, WordPress feed, X feed, conversions, and “generations” journaling endpoints persisted via `@vercel/kv` and OpenAI merge fallback.
-- `apps/personal-website/scripts/` holds tooling for GA4 ingestion, comments fetch, PDF/doc converters (mammoth, pdfjs), viewport smoke tests, sitemap generator, DevTools probes, and the DuckDB semantic indexer.
+- `apps/personal-website/scripts/` holds tooling for GA4 ingestion, comments fetch, PDF/doc converters (mammoth, pdfjs), viewport smoke tests, sitemap generator, DevTools probes, and the Gemini semantic indexer.
 - `backend/` also contains Python experiments (`gnn_server.py`, `graph_recommender.py`, `analytics_integration.py`) plus shell scripts to bootstrap GCP resources.

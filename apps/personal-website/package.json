@@ -61,7 +61,6 @@
     "axios": "^1.13.2",
     "docx-preview": "^0.3.6",
     "dotenv": "^17.2.1",
-    "duckdb": "^1.4.1",
     "esbuild": "^0.27.0",
     "execa": "^9.6.0",
     "fast-xml-parser": "^5.2.5",
