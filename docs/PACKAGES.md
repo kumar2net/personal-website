@@ -25,8 +25,8 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
   - `src/components/*` exports re-usable widgets (SEO, ErrorBoundary, GraphVisualization, SemanticSearch, TldrSummary, PDF extractor, world clock, etc.).
   - `src/lib/generationsClient.ts` exposes `apiRequest` helper for journaling endpoints.
   - `src/services/*.js` provide data loaders (book covers, OpenLibrary wrappers, webhook stub).
-- `src/data` stores blog metadata, GA4 snapshots, comments, and the DuckDB vector store (`semantic.duckdb`).
-- Scripts (npm): `dev`, `build`, `lint`, `preview`, plus >30 task-specific commands (`semantic:index`, `ga:*`, `test:*`, `biome:*`, `cleanup:*`, `convert:*`). `semantic:index` calls `scripts/index-duckdb.mjs` to rebuild `src/data/semantic.duckdb`. All scripts run node-based utilities inside `scripts/`.
+- `src/data` stores blog metadata, GA4 snapshots, comments, and the JSON semantic index (`semantic-index.json`).
+- Scripts (npm): `dev`, `build`, `lint`, `preview`, plus >30 task-specific commands (`semantic:index`, `ga:*`, `test:*`, `biome:*`, `cleanup:*`, `convert:*`). `semantic:index` calls `scripts/index-duckdb.mjs` to rebuild `src/data/semantic-index.json`. All scripts run node-based utilities inside `scripts/`.
 - Notable dev utilities under `scripts/` include `generate-sitemap.mjs`, `ga4-topic-suggestions.mjs`, `test-viewport-mobile.mjs`, `fetch-comments-build.mjs`, and `test-chrome-devtools.mjs` for headless probes.
 
 ## `apps/news`
@@ -43,7 +43,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | Function | File | Notes |
 | --- | --- | --- |
 | Unit converter | `api/convert.js` | GET self-docs, POST conversions, includes manual streaming body parser.
-| Semantic search | `api/semantic-search.js` | Opens `src/data/semantic.duckdb`, embeds queries via Gemini, executes cosine similarity inside DuckDB, and returns `{ id, title, url, excerpt, score }` plus latency metadata.
+| Semantic search | `api/semantic-search.js` | Loads `src/data/semantic-index.json`, embeds queries via Gemini, computes cosine similarity in Node.js, and returns `{ id, title, url, excerpt, score }` plus latency metadata.
 | WordPress feed proxy | `api/wp-feed.js` | Fetches RSS, defends against HTML responses, strips markup with `fast-xml-parser`.
 | X latest posts | `api/x-latest.js` | Uses bearer token, exposes `items` array with tweet URLs.
 | Generations journaling | `api/generations/*.ts` | `entry.ts` accepts reflections, `chronicle.ts` serves weekly digest (Edge runtime), `merge.ts` fuses entries using OpenAI + KV persistence, `chronicle-store.ts` keeps in-memory cache, `upload.ts`/`reflections.ts` handle asset workflows.

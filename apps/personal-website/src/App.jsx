@@ -25,7 +25,6 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
-const TopicSuggestions = lazy(() => import("./pages/TopicSuggestions"));
 const Trends = lazy(() => import("./pages/Trends"));
 const GenerationsPage = lazy(() => import("./pages/generations"));
 
@@ -359,16 +358,6 @@ function App() {
                     Elsewhere
                   </Link>
                   <Link
-                    to="/topics"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_topics_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Topics
-                  </Link>
-                  <Link
                     to="/projects"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
@@ -593,20 +582,6 @@ function App() {
                       type="website"
                     />
                     <About />
-                  </>
-                }
-              />
-              <Route
-                path="/topics"
-                element={
-                  <>
-                    <SEO
-                      title="Topic Suggestions"
-                      description="3–4 blog topic ideas from GA4 analytics."
-                      canonicalPath="/topics"
-                      type="website"
-                    />
-                    <TopicSuggestions />
                   </>
                 }
               />

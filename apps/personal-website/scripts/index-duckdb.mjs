@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
 /**
- * Index all blog posts into a local DuckDB vector store.
+ * Index all blog posts into a local semantic vector store.
  * Usage: npm run semantic:index
  */
 
 import fs from "node:fs";
 import path from "node:path";
-import duckdb from "duckdb";
 import dotenv from "dotenv";
 
 const envCandidates = [
@@ -32,7 +31,7 @@ if (!GEMINI_API_KEY) {
 }
 
 const BLOG_DIR = path.resolve(process.cwd(), "src/pages/blog");
-const DB_PATH = path.resolve(process.cwd(), "src/data/semantic.duckdb");
+const INDEX_PATH = path.resolve(process.cwd(), "src/data/semantic-index.json");
 const MAX_TEXT_CHARS = 16000;
 const MAX_EXCERPT_CHARS = 240;
 const EMBEDDING_DIM = 768;
@@ -109,46 +108,32 @@ async function embedText(text) {
   return values.map((v) => Number(v) || 0);
 }
 
-function promisifyRun(conn, sql, params = []) {
-  return new Promise((resolve, reject) => {
-    conn.run(sql, ...params, (err) => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
-}
-
-async function ensureDatabase(conn) {
-  const ddl = `
-    CREATE TABLE IF NOT EXISTS embeddings (
-      id TEXT PRIMARY KEY,
-      title TEXT,
-      url TEXT,
-      excerpt TEXT,
-      vector FLOAT[${EMBEDDING_DIM}]
-    );
-  `;
-  await promisifyRun(conn, ddl);
-}
-
-function toVectorLiteral(vector) {
-  if (!Array.isArray(vector) || vector.length !== EMBEDDING_DIM) {
-    throw new Error(`Expected embedding vector of length ${EMBEDDING_DIM}`);
+function toFiniteVector(values) {
+  if (!Array.isArray(values)) {
+    throw new Error("Expected embedding array");
   }
-  const sanitized = vector.map((value) => {
+  if (values.length !== EMBEDDING_DIM) {
+    throw new Error(
+      `Expected embedding vector of length ${EMBEDDING_DIM}, got ${values.length}`,
+    );
+  }
+  return values.map((value) => {
     const num = Number(value);
     return Number.isFinite(num) ? num : 0;
   });
-  return `LIST_VALUE(${sanitized.join(",")})::FLOAT[]`;
+}
+
+function computeNorm(vector) {
+  return Math.sqrt(vector.reduce((sum, value) => sum + value * value, 0));
 }
 
 async function main() {
-  console.log("[duckdb] indexing blog posts");
-  await fs.promises.mkdir(path.dirname(DB_PATH), { recursive: true });
+  console.log("[semantic-store] indexing blog posts");
+  await fs.promises.mkdir(path.dirname(INDEX_PATH), { recursive: true });
 
   const files = await readBlogFiles();
   if (files.length === 0) {
-    console.log("[duckdb] no blog posts found");
+    console.log("[semantic-store] no blog posts found");
     return;
   }
 
@@ -158,51 +143,55 @@ async function main() {
       const post = await readPost(file);
       posts.push(post);
     } catch (err) {
-      console.warn(`[duckdb] failed to parse ${file}: ${err.message}`);
+      console.warn(`[semantic-store] failed to parse ${file}: ${err.message}`);
     }
   }
 
-  const db = new duckdb.Database(DB_PATH);
-  const conn = db.connect();
-
   try {
-    await ensureDatabase(conn);
-
+    const items = [];
     let processed = 0;
     for (const post of posts) {
       if (!post.text) {
-        console.warn(`[duckdb] skipping empty post ${post.id}`);
+        console.warn(`[semantic-store] skipping empty post ${post.id}`);
         continue;
       }
-      const vector = await embedText(post.text);
-      const vectorLiteral = toVectorLiteral(vector);
-      await promisifyRun(
-        conn,
-        `
-          INSERT OR REPLACE INTO embeddings (id, title, url, excerpt, vector)
-          VALUES (?, ?, ?, ?, ${vectorLiteral})
-        `,
-        [
-          post.id,
-          post.title,
-          post.url,
-          post.excerpt,
-        ],
-      );
+      const vector = toFiniteVector(await embedText(post.text));
+      items.push({
+        id: post.id,
+        title: post.title,
+        url: post.url,
+        excerpt: post.excerpt,
+        vector,
+      });
       processed += 1;
-      console.log(`[duckdb] indexed ${post.id} (${processed}/${posts.length})`);
+      console.log(
+        `[semantic-store] indexed ${post.id} (${processed}/${posts.length})`,
+      );
     }
-    console.log(`[duckdb] completed indexing ${processed} posts`);
+    const payload = {
+      provider: "gemini-text-embedding-004",
+      embeddingDim: EMBEDDING_DIM,
+      generatedAt: new Date().toISOString(),
+      items: items.map((item) => ({
+        ...item,
+        norm: computeNorm(item.vector),
+      })),
+    };
+    await fs.promises.writeFile(
+      INDEX_PATH,
+      JSON.stringify(payload, null, 2),
+      "utf8",
+    );
+    console.log(
+      `[semantic-store] wrote index with ${items.length} posts to ${INDEX_PATH}`,
+    );
   } catch (err) {
-    console.error("[duckdb] indexing failed:", err);
+    console.error("[semantic-store] indexing failed:", err);
     process.exitCode = 1;
-  } finally {
-    conn.close();
-    db.close?.();
   }
 }
 
 main().catch((err) => {
-  console.error("[duckdb] unhandled error:", err);
+  console.error("[semantic-store] unhandled error:", err);
   process.exit(1);
 });
