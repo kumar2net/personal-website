@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:5173/",
+  "port": 5173,
+  "startedAt": "2025-11-12T01:20:02.619Z",
+  "console": [
+    {
+      "type": "log",
+      "text": "Google Analytics disabled in development mode"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "log",
+      "text": "HelmetProvider loaded successfully"
+    },
+    {
+      "type": "log",
+      "text": "Application rendered successfully"
+    }
+  ],
+  "pageErrors": [
+    {
+      "message": "page.waitForTimeout is not a function",
+      "stack": "TypeError: page.waitForTimeout is not a function\n    at file:///Users/kumara/personal-website/scripts/devtools_probe.mjs:64:14"
+    }
+  ],
+  "httpErrors": [],
+  "firstStatus": 200,
+  "firstStatusText": "OK",
+  "endedAt": "2025-11-12T01:20:04.871Z"
+}

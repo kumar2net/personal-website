@@ -1,0 +1,11 @@
+
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] @kumar2net/ui-theme#build" -> "[root] ___ROOT___"
+		"[root] news#build" -> "[root] ___ROOT___"
+		"[root] personal-website#build" -> "[root] @kumar2net/ui-theme#build"
+	}
+}
+

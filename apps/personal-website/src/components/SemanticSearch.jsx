@@ -63,7 +63,7 @@ export default function SemanticSearch() {
         setLoading(false);
       }
     },
-    [apiAvailable, canSearch, query, topK, unavailableMessage],
+    [canSearch, query, topK, unavailableMessage],
   );
 
   return (
