@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo } from "react";
 import {
   CssVarsProvider,
-  experimental_extendTheme as extendTheme,
+  extendTheme,
   useColorScheme,
 } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -70,4 +70,3 @@ export function useColorMode() {
   }
   return context;
 }
-

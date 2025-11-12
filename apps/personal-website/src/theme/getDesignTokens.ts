@@ -74,6 +74,7 @@ export const getDesignTokens = (): ThemeOptions => ({
       styleOverrides: {
         body: {
           transition: transitionBase,
+          color: "var(--mui-palette-text-primary)",
           backgroundColor: "var(--mui-palette-background-default)",
         },
         "#root": {
@@ -125,4 +126,3 @@ export const getDesignTokens = (): ThemeOptions => ({
 });
 
 export type SupportedColorMode = "light" | "dark";
-
