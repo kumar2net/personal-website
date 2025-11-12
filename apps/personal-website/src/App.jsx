@@ -7,6 +7,7 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
+import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
 import React, { Suspense, lazy } from "react";
@@ -230,7 +231,7 @@ function App() {
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                 </div>
               </div>
-              <div className="hidden md:flex space-x-4">
+              <div className="hidden md:flex items-center space-x-4">
                 <Link
                   to="/about"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
@@ -311,8 +312,10 @@ function App() {
                 >
                   Contact
                 </Link>
+                <ModeToggle />
               </div>
               <div className="md:hidden flex items-center gap-3">
+                <ModeToggle />
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -484,10 +487,12 @@ function App() {
                     transition={{ duration: 0.5 }}
                     className="text-center"
                   >
-                    <h1 className="text-4xl font-bold mb-4">
+                    <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-slate-100">
                       Welcome to My Personal Website
                     </h1>
-                    <p className="text-xl text-gray-600 mb-8">AI Enthusiast</p>
+                    <p className="text-xl text-gray-600 dark:text-slate-200 mb-8">
+                      AI Enthusiast
+                    </p>
 
                     <div className="flex flex-wrap gap-4 justify-center">
                       <Link

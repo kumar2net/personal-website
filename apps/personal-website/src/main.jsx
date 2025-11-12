@@ -1,11 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { CssBaseline } from "@mui/material";
-import { CssVarsProvider } from "@mui/material/styles";
-import theme from "@kumar2net/ui-theme";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./output.css";
+import { ColorModeProvider } from "./providers/ColorModeProvider";
 
 // Error handling and recovery system
 let initializationAttempts = 0;
@@ -222,9 +220,8 @@ const renderApp = (HelmetProvider) => {
         React.StrictMode,
         null,
         React.createElement(
-          CssVarsProvider,
-          { theme, defaultMode: "system" },
-          React.createElement(CssBaseline, { enableColorScheme: true }),
+          ColorModeProvider,
+          null,
           React.createElement(
             HelmetProvider,
             null,
