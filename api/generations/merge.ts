@@ -51,7 +51,7 @@ type TokenUsagePayload = OpenAITokenUsagePayload | FallbackTokenUsagePayload;
 const hasKvConfig = Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
 const hasOpenAIKey = Boolean(process.env.OPENAI_API_KEY);
 
-const DEFAULT_MODEL = "gpt-4o-mini";
+const DEFAULT_MODEL = "gpt-5.1";
 
 function parseEnvNumber(name: string, fallback: number): number {
   const raw = process.env[name];
@@ -62,9 +62,15 @@ function parseEnvNumber(name: string, fallback: number): number {
 
 const MODEL_PRICING: Record<string, PricingInfo> = {
   [DEFAULT_MODEL]: {
-    displayName: "GPT-4o Mini",
-    promptPer1K: parseEnvNumber("GENERATIONS_GPT4O_MINI_PROMPT_COST_PER_1K", 0.0015),
-    completionPer1K: parseEnvNumber("GENERATIONS_GPT4O_MINI_COMPLETION_COST_PER_1K", 0.0035),
+    displayName: "GPT-5.1",
+    promptPer1K: parseEnvNumber(
+      "GENERATIONS_GPT5_1_PROMPT_COST_PER_1K",
+      parseEnvNumber("GENERATIONS_GPT4O_MINI_PROMPT_COST_PER_1K", 0.0015),
+    ),
+    completionPer1K: parseEnvNumber(
+      "GENERATIONS_GPT5_1_COMPLETION_COST_PER_1K",
+      parseEnvNumber("GENERATIONS_GPT4O_MINI_COMPLETION_COST_PER_1K", 0.0035),
+    ),
   },
 };
 

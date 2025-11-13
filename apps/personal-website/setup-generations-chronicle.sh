@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   const mergePrompt = `Combine these reflections into a warm, poetic narrative for the family chronicle:\n${combined}`;
 
   const llm = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.1",
     messages: [{ role: "user", content: mergePrompt }],
   });
 
@@ -170,4 +170,3 @@ git commit -m "Add Generations Chronicle publish + viewer flow" || true
 
 echo "✅ Chronicle integration complete!"
 echo "Next: Run 'npm run dev' and visit http://localhost:5173/generations to publish & view your story."
-
