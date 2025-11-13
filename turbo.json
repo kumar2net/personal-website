@@ -4,7 +4,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"],
-      "env": ["GEMINI_API_KEY", "OPENAI_API_KEY"]
+      "env": ["GEMINI_API_KEY", "OPENAI_API_KEY", "NEWSDATA_API_KEY", "NEWSAPI_KEY"]
     },
     "dev": {
       "persistent": true
