@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
-import "./output.css";
+import "./index.css";
 import { ColorModeProvider } from "./providers/ColorModeProvider";
 
 // Error handling and recovery system
