@@ -58,7 +58,6 @@
     "@mui/material": "^7.3.5",
     "@mui/system": "^7.3.5",
     "@tailwindcss/typography": "^0.5.16",
-    "@vercel/kv": "^3.0.0",
     "axios": "^1.13.2",
     "docx-preview": "^0.3.6",
     "dotenv": "^17.2.1",

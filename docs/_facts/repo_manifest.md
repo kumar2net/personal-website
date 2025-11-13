@@ -5,12 +5,12 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - Primary app: `apps/personal-website` (Vite + React 18, Tailwind, MUI Theme package).
 - Secondary app: `apps/news` (skeleton Vite app reserved for news microsite).
 - Shared UI package: `packages/ui-theme` (MUI color-system + provider exports).
-- API edge/serverless functions live under `/api` for conversions, feeds, semantic search, and AI “generations”.
+- API edge/serverless functions live under `/api` for conversions, feeds, and semantic search.
 - Analytics + recommender backend lives under `/backend` (Express server, GA4 BigQuery queries, Vertex AI orchestration plus Python prototypes).
 
 ## Top-level tree (selected)
 ```
-api/                     # Vercel/Netlify friendly serverless handlers (convert, semantic-search, wp feed, generations)
+api/                     # Vercel/Netlify friendly serverless handlers (convert, semantic-search, wp feed)
 apps/
   personal-website/      # Vite React app, scripts/, public/, src/components|pages|data|services
   news/                  # Placeholder Vite app with dev/build stubs
@@ -73,6 +73,6 @@ backend/.env.example     # Backend env sample
 - Semantic search falls back to `/api/semantic-search` or custom `VITE_SEMANTIC_SEARCH_ENDPOINT`.
 
 ## Supporting scripts & assets
-- `api/` functions integrate with Gemini embeddings, WordPress feed, X feed, conversions, and “generations” journaling endpoints persisted via `@vercel/kv` and OpenAI merge fallback.
+- `api/` functions integrate with Gemini embeddings, WordPress feed, X feed, and conversions.
 - `apps/personal-website/scripts/` holds tooling for GA4 ingestion, comments fetch, PDF/doc converters (mammoth, pdfjs), viewport smoke tests, sitemap generator, DevTools probes, and the Gemini semantic indexer.
 - `backend/` also contains Python experiments (`gnn_server.py`, `graph_recommender.py`, `analytics_integration.py`) plus shell scripts to bootstrap GCP resources.

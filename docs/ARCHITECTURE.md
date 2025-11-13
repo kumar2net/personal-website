@@ -18,7 +18,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - **Semantic Search**: `src/components/SemanticSearch.jsx` POSTs to `import.meta.env.VITE_SEMANTIC_SEARCH_ENDPOINT` (defaults to `/api/semantic-search`), which generates query embeddings via Gemini and ranks documents from the JSON semantic index, returning scores + latency metadata.
 - **Topic Suggestions**: `src/pages/TopicSuggestions.jsx` builds URLs to the Express backend (`http://localhost:3001` when Vite runs on port 5173) to hit `/api/recommendations/topics`, exposing cache-bypass toggles for GA4-driven recommendations.
 - **Graph Recommendations**: `src/components/GraphRecommendations.jsx` and `src/components/GraphVisualization.jsx` read `GNN_API_BASE_URL` (`src/utils/gnnApi.js`), fetch graph stats/recommendations, and track user actions via `useInteractionTracking` which POSTs anonymized events to the GNN backend.
-- **Generations 2.0**: `src/pages/generations/*` renders journaling tools (Hero explainer, prompt input, reflection gallery, PublishChronicle button). Client helpers in `src/lib/generationsClient.ts` call `VITE_GENERATIONS_API_URL` endpoints with retries/backoff.
 - **TL;DR summaries**: `src/hooks/useTldrSummary.js` hashes article text, caches summaries in `localStorage`, and calls `/api/tldr` (falling back to the Netlify dev tunnel or legacy endpoint when configured) using keys from `.env.example` (`TLDR_*`).
 - **Elsewhere feed**: `src/pages/Elsewhere.jsx` fetches `/api/wp-feed` for WordPress posts and `/api/x-latest` for social updates, decoding HTML safely in-browser.
 - **Book utilities**: `src/services/bookCoverService.js` chains Google Books, OpenLibrary, and ISBN lookups with cached fallbacks for offline-friendly covers.
@@ -35,7 +34,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - `convert.js`: Request-aware unit converter with wide linear and temperature coverage plus CORS headers; consumed locally via the Vite middleware.
 - `wp-feed.js` and `x-latest.js`: Fetch + sanitize external feeds (WordPress RSS via `fast-xml-parser`, X API via bearer token), returning JSON with coarse caching.
 - `semantic-search.js`: Loads `src/data/semantic-index.json`, embeds queries via Gemini (`GEMINI_API_KEY`), computes cosine similarity in pure Node.js, and returns the highest-scoring posts plus timing metadata.
-- `generations/*.ts`: Entry handlers accept journaling prompts, merge weekly reflections via OpenAI (or fallback text) while persisting output in-memory and, if configured, `@vercel/kv`. `merge.ts` also computes approximate OpenAI costs and exposes fallback reasoning when API keys are absent.
 - `semantic-search`, `convert`, `wp-feed`, and `x-latest` export standard Node handlers so they can run under Vercel/Netlify or the local dev server.
 
 ## Analytics Backend: `/backend`
@@ -45,7 +43,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## Data Flow & Observability
 - Client event tracking relies on GA4 via `gtag` plus optional webhook forwarding (`src/services/webhookService.js`). Webhook registration UI exists but is gated until endpoints are implemented, keeping external calls disabled by default.
-- Express backend caches analytics responses using NodeCache; semantic search reads vectors from the JSON index (so only Gemini query embeddings are computed at runtime); TL;DR data is cached in `localStorage` keyed by SHA-256 of article text; chronicled reflections persist in memory and Vercel KV when configured.
+- Express backend caches analytics responses using NodeCache; semantic search reads vectors from the JSON index (so only Gemini query embeddings are computed at runtime); TL;DR data is cached in `localStorage` keyed by SHA-256 of article text.
 - Error resiliency: `src/main.jsx` retries mounting up to three times before showing an inline recovery card, and `ErrorBoundary` provides a reload UI with dev-only stack traces.
 
 ## Build & Deploy
@@ -60,7 +58,6 @@ graph LR
     SemanticSearch[SemanticSearch.jsx]
     TopicSuggestions[TopicSuggestions.jsx]
     GraphRecs[GraphRecommendations.jsx]
-    GenerationsUI[Generations components]
     TLDR[useTldrSummary hook]
   end
   subgraph Serverless
@@ -68,7 +65,6 @@ graph LR
     SemanticAPI[/api/semantic-search.js/]
     WPFeed[/api/wp-feed.js/]
     XFeed[/api/x-latest.js/]
-    GenerationsAPI[/api/generations/*/]
   end
   subgraph Backend
     ExpressTopics[backend/server.js]
@@ -80,13 +76,11 @@ graph LR
     SemanticIndexJSON[src/data/semantic-index.json]
     SemanticMapping[src/data/semantic-mapping.json]
     GA4[BigQuery GA4 tables]
-    KV[@vercel/kv]
   end
 
   App --> SemanticSearch
   App --> TopicSuggestions
   App --> GraphRecs
-  App --> GenerationsUI
   App --> TLDR
   SemanticSearch --> SemanticAPI
   SemanticAPI --> SemanticIndexJSON
@@ -95,9 +89,6 @@ graph LR
   ExpressTopics --> BigQuerySvc --> GA4
   ExpressTopics --> VertexSvc
   GraphRecs --> GNN
-  GenerationsUI --> GenerationsAPI
-  GenerationsAPI --> KV
-  GenerationsAPI --> OpenAI[(OpenAI GPT-4o mini)]
   TLDR --> TLDRApi[/api/tldr/]
   App --> ConvertAPI
   App --> WPFeed

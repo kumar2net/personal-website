@@ -53,7 +53,6 @@ const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
 const Trends = lazy(() => import("./pages/Trends"));
-const GenerationsPage = lazy(() => import("./pages/generations"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -648,20 +647,6 @@ function App() {
                       type="website"
                     />
                     <Projects />
-                  </>
-                }
-              />
-              <Route
-                path="/generations"
-                element={
-                  <>
-                    <SEO
-                      title="Generations 2.0"
-                      description="Experiment with tiny reflections, tone detection, and intent-aware rewrites."
-                      canonicalPath="/generations"
-                      type="website"
-                    />
-                    <GenerationsPage />
                   </>
                 }
               />

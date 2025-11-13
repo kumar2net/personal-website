@@ -1,10 +1,4 @@
 {"path":"api/convert.js","symbols":["applyCors","convertTemperature","handler","readJsonBody"]}
-{"path":"api/generations/chronicle-store.ts","symbols":["persistChronicle","readChronicle"]}
-{"path":"api/generations/chronicle.ts","symbols":["handler","runtime"]}
-{"path":"api/generations/entry.ts","symbols":["handler"]}
-{"path":"api/generations/merge.ts","symbols":["buildChronicleText","buildLocalChronicle","buildTokenUsagePayload","completionCost","createFallbackUsage","getPricingForModel","handler","loadEntries","mergeWithOpenAI","normalizeBody","parseEnvNumber","promptCost","runtime"]}
-{"path":"api/generations/reflections.ts","symbols":["handler"]}
-{"path":"api/generations/upload.ts","symbols":["handler"]}
 {"path":"api/semantic-search.js","symbols":["cosineSimilarity","embedQuery","handler","jsonResponse","lexicalResults","loadEmbeddings","loadMapping","mergeWithLexical","q","tokenize"]}
 {"path":"api/wp-feed.js","symbols":["channel","handler"]}
 {"path":"api/x-latest.js","symbols":["handler","username","xFetch"]}
@@ -67,10 +61,6 @@
 {"path":"apps/personal-website/src/components/TwitterTimeline.jsx","symbols":["TwitterTimeline","ensureScript","renderOnce"]}
 {"path":"apps/personal-website/src/components/WebhookIntegration.jsx","symbols":["WebhookIntegration","handleEventChange","handleRegisterWebhook","handleUnregisterWebhook"]}
 {"path":"apps/personal-website/src/components/WorldClock.jsx","symbols":["Clock","WorldClock"]}
-{"path":"apps/personal-website/src/components/generations/HeroExplainerGenerations.tsx","symbols":["HeroExplainerGenerations"]}
-{"path":"apps/personal-website/src/components/generations/PromptInputGenerations.tsx","symbols":["PromptInputGenerations","buildReflection","detectTone","handleSubmit","scoreText"]}
-{"path":"apps/personal-website/src/components/generations/PublishChronicleButton.tsx","symbols":["PublishChronicleButton","publish"]}
-{"path":"apps/personal-website/src/components/generations/ReflectionGalleryToneDetection.tsx","symbols":["PulseBlock","ReflectionGalleryToneDetection","ShieldBlock","SparkBlock","getIcon"]}
 {"path":"apps/personal-website/src/components/latest_market_news.jsx","symbols":["LatestMarketNews"]}
 {"path":"apps/personal-website/src/components/ui/badge.jsx","symbols":["Badge"]}
 {"path":"apps/personal-website/src/components/ui/card.jsx","symbols":["Card","CardContent","joinClasses"]}
@@ -82,7 +72,6 @@
 {"path":"apps/personal-website/src/hooks/useContentText.js","symbols":["useContentText"]}
 {"path":"apps/personal-website/src/hooks/useInteractionTracking.js","symbols":["useInteractionTracking"]}
 {"path":"apps/personal-website/src/hooks/useTldrSummary.js","symbols":["fetchSummary","hashTextSha256","useTldrSummary"]}
-{"path":"apps/personal-website/src/lib/generationsClient.ts","symbols":["apiRequest"]}
 {"path":"apps/personal-website/src/main.jsx","symbols":["FallbackProvider","handleGlobalError","handleVendorError","initializeApp","renderApp","to"]}
 {"path":"apps/personal-website/src/pages/About.jsx","symbols":["About"]}
 {"path":"apps/personal-website/src/pages/Album.jsx","symbols":["Album","handleAlbumClick"]}
@@ -178,9 +167,6 @@
 {"path":"apps/personal-website/src/pages/books/its-not-about-you.jsx","symbols":["ItsNotAboutYou"]}
 {"path":"apps/personal-website/src/pages/books/pdf-extractor.jsx","symbols":["PDFExtractorPage","convertToMarkdown","copyToClipboard","handleExtract"]}
 {"path":"apps/personal-website/src/pages/books/the-brain-story-content.jsx","symbols":["TheBrainStoryContent","handleReadBook"]}
-{"path":"apps/personal-website/src/pages/generations/PublishChronicleButton.tsx","symbols":["PublishChronicleButton","publish"]}
-{"path":"apps/personal-website/src/pages/generations/chronicle/[weekId].tsx","symbols":["ChronicleView"]}
-{"path":"apps/personal-website/src/pages/generations/index.tsx","symbols":["GenerationsPage","dayNum","getWeekKey"]}
 {"path":"apps/personal-website/src/pages/naruvi/NaruviWaterIssues.jsx","symbols":["NaruviWaterIssues"]}
 {"path":"apps/personal-website/src/pages/projects/AiRecommenderCode.jsx","symbols":["AiRecommenderCode"]}
 {"path":"apps/personal-website/src/services/bookCoverService.js","symbols":["BookCoverService"]}

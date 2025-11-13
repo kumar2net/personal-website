@@ -3,7 +3,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 ## Workspace Summary
 | Package | Path | Purpose |
 | --- | --- | --- |
-| `personal-website` | `apps/personal-website` | React 18 + Vite SPA with blog, recommendations, semantic search, and AI tooling.
+| `personal-website` | `apps/personal-website` | React 18 + Vite SPA with blog, recommendations, semantic search, and automation tooling.
 | `news` | `apps/news` | Placeholder Vite shell for an external news microsite.
 | `@kumar2net/ui-theme` | `packages/ui-theme` | Shared MUI 7 theme + ThemeProvider exports.
 | (extra) `api` | `apps/personal-website/api/*` | Serverless handlers consumed by Vite + Vercel.
@@ -21,9 +21,8 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
   - `src/index.css` + `tailwind.config.js`: styling baseline (Tailwind + custom classes).
 - `vite.config.js`: attaches `withLocalApi` plugin for `/api/convert` and `/api/semantic-search`, loads env files, and sets aliases.
 - Public surface:
-  - `src/pages/*` exports dozens of route components (`About`, `Blog`, `TopicSuggestions`, `Generations`, `Recommendations`, etc.).
+  - `src/pages/*` exports dozens of route components (`About`, `Blog`, `TopicSuggestions`, `Recommendations`, etc.).
   - `src/components/*` exports re-usable widgets (SEO, ErrorBoundary, GraphVisualization, SemanticSearch, TldrSummary, PDF extractor, world clock, etc.).
-  - `src/lib/generationsClient.ts` exposes `apiRequest` helper for journaling endpoints.
   - `src/services/*.js` provide data loaders (book covers, OpenLibrary wrappers, webhook stub).
 - `src/data` stores blog metadata, GA4 snapshots, comments, and the JSON semantic index (`semantic-index.json`).
 - Scripts (npm): `dev`, `build`, `lint`, `preview`, plus >30 task-specific commands (`semantic:index`, `ga:*`, `test:*`, `biome:*`, `cleanup:*`, `convert:*`). `semantic:index` calls `scripts/build-semantic-index.mjs` to rebuild `src/data/semantic-index.json`. All scripts run node-based utilities inside `scripts/`.
@@ -46,7 +45,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | Semantic search | `apps/personal-website/api/semantic-search.js` | Loads `src/data/semantic-index.json`, embeds queries via Gemini, computes cosine similarity in Node.js, and returns `{ id, title, url, excerpt, score }` plus latency metadata.
 | WordPress feed proxy | `apps/personal-website/api/wp-feed.js` | Fetches RSS, defends against HTML responses, strips markup with `fast-xml-parser`.
 | X latest posts | `apps/personal-website/api/x-latest.js` | Uses bearer token, exposes `items` array with tweet URLs.
-| Generations journaling | `apps/personal-website/api/generations/*.ts` | `entry.ts` accepts reflections, `chronicle.ts` serves weekly digest (Edge runtime), `merge.ts` fuses entries using OpenAI + KV persistence, `chronicle-store.ts` keeps in-memory cache, `upload.ts`/`reflections.ts` handle asset workflows.
 
 
 ## `backend`
