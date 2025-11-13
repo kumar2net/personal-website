@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useColorMode } from "../providers/ColorModeProvider";
 
 const UNIT_GROUPS = [
   { label: "Distance", units: ["km", "mi", "m", "ft", "in", "cm"] },
@@ -142,6 +143,8 @@ function Convert() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resultSource, setResultSource] = useState("api");
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
 
   const allUnits = useMemo(
     () =>
@@ -244,6 +247,67 @@ function Convert() {
     }
   };
 
+  const formCardClasses = [
+    "lg:col-span-2",
+    "rounded-2xl",
+    "shadow-sm",
+    "p-6",
+    isDarkMode ? "bg-slate-950 border border-slate-800 text-slate-100" : "bg-white border border-gray-200 text-gray-900",
+  ].join(" ");
+
+  const cardClasses = (extra = "") =>
+    [
+      "rounded-2xl",
+      "p-6",
+      "shadow-sm",
+      isDarkMode ? "bg-slate-950 border border-slate-800 text-slate-100" : "bg-white border border-gray-200 text-gray-900",
+      extra,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+  const labelClasses = `block text-sm font-semibold mb-2 ${isDarkMode ? "text-slate-200" : "text-gray-700"}`;
+
+  const inputClasses = [
+    "w-full",
+    "rounded-xl",
+    "px-4",
+    "py-3",
+    "text-lg",
+    "focus:border-blue-500",
+    "focus:ring",
+    "focus:ring-blue-200",
+    "transition",
+    isDarkMode ? "border border-slate-700 bg-slate-900 text-slate-100" : "border border-gray-300 bg-white text-gray-900",
+  ].join(" ");
+
+  const selectClasses = [
+    "w-full",
+    "appearance-none",
+    "rounded-xl",
+    "px-4",
+    "py-3",
+    "focus:border-blue-500",
+    "focus:ring",
+    "focus:ring-blue-200",
+    "transition",
+    isDarkMode ? "border border-slate-700 bg-slate-900 text-slate-100" : "border border-gray-300 bg-white text-gray-900",
+  ].join(" ");
+
+  const subtleText = isDarkMode ? "text-slate-400" : "text-gray-500";
+  const primaryText = isDarkMode ? "text-slate-100" : "text-gray-900";
+  const quickButtonClasses = `rounded-full border px-4 py-2 text-sm transition ${
+    isDarkMode
+      ? "border-slate-700 text-slate-200 hover:border-blue-500 hover:text-blue-300"
+      : "border-gray-200 text-gray-700 hover:border-blue-400 hover:text-blue-600"
+  }`;
+
+  const swapButtonClasses = `inline-flex items-center rounded-xl border px-4 py-2 text-sm font-medium transition ${
+    isDarkMode
+      ? "border-slate-700 text-slate-200 hover:bg-slate-900/50"
+      : "border-gray-300 text-gray-700 hover:bg-gray-50"
+  }`;
+
   return (
     <section className="py-12 md:py-16">
       <div className="max-w-5xl mx-auto px-4">
@@ -262,13 +326,10 @@ function Convert() {
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
+          <div className={formCardClasses}>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label
-                  htmlFor="value"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
+                <label htmlFor="value" className={labelClasses}>
                   Value
                 </label>
                 <input
@@ -278,17 +339,14 @@ function Convert() {
                   step="any"
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
-                  className="w-full rounded-xl border border-gray-300 dark:border-slate-700 px-4 py-3 text-lg bg-white dark:bg-slate-900 dark:text-slate-100 focus:border-blue-500 focus:ring focus:ring-blue-200 transition"
+                  className={inputClasses}
                   placeholder="Enter a number"
                   required
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label
-                    htmlFor="from"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
+                  <label htmlFor="from" className={labelClasses}>
                     From unit
                   </label>
                   <div className="relative">
@@ -296,7 +354,7 @@ function Convert() {
                       id="from"
                       value={fromUnit}
                       onChange={(event) => setFromUnit(event.target.value)}
-                      className="w-full appearance-none rounded-xl border border-gray-300 dark:border-slate-700 px-4 py-3 focus:border-blue-500 focus:ring focus:ring-blue-200 transition bg-white dark:bg-slate-900 dark:text-slate-100"
+                      className={selectClasses}
                     >
                       {UNIT_GROUPS.map((group) => (
                         <optgroup label={group.label} key={group.label}>
@@ -308,16 +366,15 @@ function Convert() {
                         </optgroup>
                       ))}
                     </select>
-                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span
+                      className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 ${subtleText}`}
+                    >
                       ↓
                     </span>
                   </div>
                 </div>
                 <div>
-                  <label
-                    htmlFor="to"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
+                  <label htmlFor="to" className={labelClasses}>
                     To unit
                   </label>
                   <div className="relative">
@@ -325,7 +382,7 @@ function Convert() {
                       id="to"
                       value={toUnit}
                       onChange={(event) => setToUnit(event.target.value)}
-                      className="w-full appearance-none rounded-xl border border-gray-300 dark:border-slate-700 px-4 py-3 focus:border-blue-500 focus:ring focus:ring-blue-200 transition bg-white dark:bg-slate-900 dark:text-slate-100"
+                      className={selectClasses}
                     >
                       {UNIT_GROUPS.map((group) => (
                         <optgroup label={group.label} key={group.label}>
@@ -337,7 +394,9 @@ function Convert() {
                         </optgroup>
                       ))}
                     </select>
-                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <span
+                      className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 ${subtleText}`}
+                    >
                       ↓
                     </span>
                   </div>
@@ -347,7 +406,7 @@ function Convert() {
                 <button
                   type="button"
                   onClick={handleSwap}
-                  className="inline-flex items-center rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+                  className={swapButtonClasses}
                 >
                   Swap units
                 </button>
@@ -362,21 +421,47 @@ function Convert() {
             </form>
 
             {error && (
-              <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div
+                className={`mt-6 rounded-xl border px-4 py-3 text-sm ${
+                  isDarkMode
+                    ? "border-red-500/50 bg-red-500/10 text-red-200"
+                    : "border-red-200 bg-red-50 text-red-700"
+                }`}
+              >
                 {error}
               </div>
             )}
             {result && !error && (
-              <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-6 py-5">
-                <p className="text-sm uppercase font-semibold tracking-wide text-emerald-600 mb-2">
+              <div
+                className={`mt-6 rounded-2xl border px-6 py-5 ${
+                  isDarkMode
+                    ? "border-emerald-400/30 bg-emerald-500/10"
+                    : "border-emerald-200 bg-emerald-50"
+                }`}
+              >
+                <p
+                  className={`text-sm uppercase font-semibold tracking-wide mb-2 ${
+                    isDarkMode ? "text-emerald-200" : "text-emerald-600"
+                  }`}
+                >
                   Result
                 </p>
-                <p className="text-3xl font-bold text-emerald-900">
+                <p
+                  className={`text-3xl font-bold ${
+                    isDarkMode ? "text-emerald-100" : "text-emerald-900"
+                  }`}
+                >
                   {result.output}
                 </p>
-                <p className="text-gray-600 mt-1">from {result.input}</p>
+                <p className={`${subtleText} mt-1`}>from {result.input}</p>
                 <p
-                  className={`text-xs mt-2 ${resultSource === "local" ? "text-amber-600" : "text-gray-400"}`}
+                  className={`text-xs mt-2 ${
+                    resultSource === "local"
+                      ? isDarkMode
+                        ? "text-amber-300"
+                        : "text-amber-600"
+                      : subtleText
+                  }`}
                 >
                   {resultSource === "local"
                     ? "Converted with the offline fallback (slight rounding)."
@@ -386,7 +471,7 @@ function Convert() {
             )}
 
             <div className="mt-8">
-              <p className="text-sm font-semibold text-gray-700 mb-3">
+              <p className={`text-sm font-semibold mb-3 ${primaryText}`}>
                 Quick examples
               </p>
               <div className="flex flex-wrap gap-3">
@@ -395,7 +480,7 @@ function Convert() {
                     type="button"
                     key={example.label}
                     onClick={() => handleExample(example)}
-                    className="rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-700 hover:border-blue-400 hover:text-blue-600 transition"
+                    className={quickButtonClasses}
                   >
                     {example.label}
                   </button>
@@ -405,28 +490,34 @@ function Convert() {
           </div>
 
           <aside className="space-y-6">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            <div className={cardClasses()}>
+              <h2 className={`text-lg font-semibold mb-4 ${primaryText}`}>
                 Latest conversions
               </h2>
               {history.length === 0 && (
-                <p className="text-sm text-gray-500">
+                <p className={`text-sm ${subtleText}`}>
                   Run a conversion to see it here. The five most recent
                   conversions stay handy for reference.
                 </p>
               )}
               <ul className="space-y-4">
                 {history.map((item) => (
-                  <li key={item.timestamp} className="text-sm text-gray-700">
-                    <p className="font-semibold text-gray-900">
-                      {item.output}
-                    </p>
-                    <p className="text-gray-500">from {item.input}</p>
-                    <p className="text-xs text-gray-400 mt-1">
+                  <li key={item.timestamp} className={`text-sm ${primaryText}`}>
+                    <p className="font-semibold">{item.output}</p>
+                    <p className={subtleText}>from {item.input}</p>
+                    <p className={`text-xs mt-1 ${subtleText}`}>
                       {new Date(item.timestamp).toLocaleString()}
                     </p>
                     {item.source && (
-                      <p className={`text-xs ${item.source === "local" ? "text-amber-600" : "text-gray-400"}`}>
+                      <p
+                        className={`text-xs ${
+                          item.source === "local"
+                            ? isDarkMode
+                              ? "text-amber-300"
+                              : "text-amber-600"
+                            : subtleText
+                        }`}
+                      >
                         {item.source === "local" ? "Offline fallback" : "Live API"}
                       </p>
                     )}
@@ -435,14 +526,14 @@ function Convert() {
               </ul>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-              <h2 className="text-lg font-semibold text-gray-800 mb-3">
+            <div className={cardClasses()}>
+              <h2 className={`text-lg font-semibold mb-3 ${primaryText}`}>
                 Supported unit groups
               </h2>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <ul className={`space-y-2 text-sm ${subtleText}`}>
                 {UNIT_GROUPS.map((group) => (
                   <li key={group.label}>
-                    <span className="text-gray-900 font-medium">
+                    <span className={`${primaryText} font-medium`}>
                       {group.label}:
                     </span>{" "}
                     {group.units.join(", ")}
@@ -451,7 +542,11 @@ function Convert() {
               </ul>
             </div>
 
-            <div className="bg-gray-900 text-gray-100 rounded-2xl p-6 shadow-lg">
+            <div
+              className={`rounded-2xl p-6 shadow-lg ${
+                isDarkMode ? "bg-slate-900 text-slate-100" : "bg-gray-900 text-gray-100"
+              }`}
+            >
               <p className="text-sm uppercase tracking-wide text-gray-400 mb-2">
                 API access
               </p>

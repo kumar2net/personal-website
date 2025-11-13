@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useColorMode } from "../providers/ColorModeProvider";
 
 const endpoint =
   import.meta.env.VITE_SEMANTIC_SEARCH_ENDPOINT?.trim() ||
@@ -25,6 +26,8 @@ export default function SemanticSearch() {
   const [results, setResults] = useState([]);
   const [meta, setMeta] = useState({ tookMs: 0, provider: "" });
   const [apiAvailable, setApiAvailable] = useState(true);
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
   const unavailableMessage =
     "Semantic search API isn't running in this environment. Start `vercel dev` or set VITE_SEMANTIC_SEARCH_ENDPOINT.";
 
@@ -89,16 +92,14 @@ export default function SemanticSearch() {
         border: "1px solid",
         borderColor: "divider",
         backdropFilter: "blur(8px)",
-        backgroundImage:
-          theme.palette.mode === "dark"
-            ? "linear-gradient(135deg, rgba(2,6,23,0.95), rgba(15,23,42,0.8))"
-            : "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(236,244,255,0.9))",
+        backgroundImage: isDarkMode
+          ? "linear-gradient(135deg, rgba(2,6,23,0.95), rgba(15,23,42,0.8))"
+          : "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(236,244,255,0.9))",
         "&:has(input:focus)": {
           borderColor: theme.palette.primary.main,
-          boxShadow:
-            theme.palette.mode === "dark"
-              ? "0 18px 30px rgba(2,6,23,0.8)"
-              : "0 18px 30px rgba(37,99,235,0.18)",
+          boxShadow: isDarkMode
+            ? "0 18px 30px rgba(2,6,23,0.8)"
+            : "0 18px 30px rgba(37,99,235,0.18)",
         },
       })}
     >

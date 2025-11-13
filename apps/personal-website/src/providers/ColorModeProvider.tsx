@@ -22,8 +22,10 @@ const ColorModeContext = createContext<ColorModeContextValue | undefined>(
 );
 
 function ModeBridge({ children }: { children: ReactNode }) {
-  const { mode, setMode } = useColorScheme();
-  const resolvedMode: SupportedColorMode = mode === "dark" ? "dark" : "light";
+  const { mode, setMode, systemMode } = useColorScheme();
+  const effectiveMode = mode === "system" ? systemMode : mode;
+  const resolvedMode: SupportedColorMode =
+    effectiveMode === "dark" ? "dark" : "light";
 
   const value = useMemo<ColorModeContextValue>(() => {
     const persist = (nextMode: SupportedColorMode) => {

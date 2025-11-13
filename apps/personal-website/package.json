@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=4096' vite --host 127.0.0.1",
     "dev:clean": "bash scripts/start-dev-clean.sh",
-    "build": "npm run semantic:index && vite build",
+    "news:sync": "node scripts/sync-news.mjs",
+    "build": "npm run news:sync && npm run semantic:index && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
