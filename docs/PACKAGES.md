@@ -26,7 +26,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
   - `src/lib/generationsClient.ts` exposes `apiRequest` helper for journaling endpoints.
   - `src/services/*.js` provide data loaders (book covers, OpenLibrary wrappers, webhook stub).
 - `src/data` stores blog metadata, GA4 snapshots, comments, and the JSON semantic index (`semantic-index.json`).
-- Scripts (npm): `dev`, `build`, `lint`, `preview`, plus >30 task-specific commands (`semantic:index`, `ga:*`, `test:*`, `biome:*`, `cleanup:*`, `convert:*`). `semantic:index` calls `scripts/index-duckdb.mjs` to rebuild `src/data/semantic-index.json`. All scripts run node-based utilities inside `scripts/`.
+- Scripts (npm): `dev`, `build`, `lint`, `preview`, plus >30 task-specific commands (`semantic:index`, `ga:*`, `test:*`, `biome:*`, `cleanup:*`, `convert:*`). `semantic:index` calls `scripts/build-semantic-index.mjs` to rebuild `src/data/semantic-index.json`. All scripts run node-based utilities inside `scripts/`.
 - Notable dev utilities under `scripts/` include `generate-sitemap.mjs`, `ga4-topic-suggestions.mjs`, `test-viewport-mobile.mjs`, `fetch-comments-build.mjs`, and `test-chrome-devtools.mjs` for headless probes.
 
 ## `apps/news`

@@ -25,7 +25,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ### Local Content & Scripts
 - Static blog metadata, the semantic index (`src/data/semantic-index.json`), GA4 seed data, and comments live under `src/data/`; helper utilities (`src/utils/*`) normalize dates, map recommendations, and call GNN APIs.
-- Scripts under `apps/personal-website/scripts` generate sitemaps, convert docs to Markdown/JSX, collect GA4 insights, fetch Netlify comments, rebuild the Gemini semantic index (`index-duckdb.mjs`), and run custom tests (`test-viewport`, `test-sitemap`, `test-ga4-connection`).
+- Scripts under `apps/personal-website/scripts` generate sitemaps, convert docs to Markdown/JSX, collect GA4 insights, fetch Netlify comments, rebuild the Gemini semantic index (`build-semantic-index.mjs`), and run custom tests (`test-viewport`, `test-sitemap`, `test-ga4-connection`).
 
 ## Shared Design System: `packages/ui-theme`
 - `packages/ui-theme/theme.ts` exports color tokens and an MUI 7 theme with dual color schemes, typography presets, and component defaults tailored for pill buttons and CSS variables.
