@@ -24,9 +24,9 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
-const TopicSuggestions = lazy(() => import("./pages/TopicSuggestions"));
 const Trends = lazy(() => import("./pages/Trends"));
 const GenerationsPage = lazy(() => import("./pages/generations"));
+const NewsPage = lazy(() => import("./pages/News"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -64,36 +64,6 @@ const AiRecommenderCode = lazy(
 );
 
 // Admin CMS removed
-
-const ExternalNewsRedirect = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const newTab = window.open(
-        "https://news.kumar2net.com",
-        "_blank",
-        "noopener,noreferrer",
-      );
-
-      if (!newTab) {
-        window.location.href = "https://news.kumar2net.com";
-      }
-    }
-  }, []);
-
-  return (
-    <div className="min-h-[40vh] flex items-center justify-center text-gray-600">
-      Redirecting to news.kumar2net.com...
-      <a
-        href="https://news.kumar2net.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="ml-2 text-blue-600 hover:underline"
-      >
-        Open manually
-      </a>
-    </div>
-  );
-};
 
 function useGaPageViews() {
   const location = useLocation();
@@ -273,15 +243,13 @@ function App() {
                 >
                   Blog
                 </Link>
-                <a
-                  href="https://news.kumar2net.com"
+                <Link
+                  to="/news"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick("nav_news")}
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   News
-                </a>
+                </Link>
 
                 <Link
                   to="/learning"
@@ -356,16 +324,6 @@ function App() {
                     Elsewhere
                   </Link>
                   <Link
-                    to="/topics"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_topics_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Topics
-                  </Link>
-                  <Link
                     to="/projects"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
@@ -405,18 +363,16 @@ function App() {
                   >
                     Blog
                   </Link>
-                  <a
-                    href="https://news.kumar2net.com"
+                  <Link
+                    to="/news"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       trackClick("nav_news_mobile");
                     }}
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     News
-                  </a>
+                  </Link>
 
                   <Link
                     to="/learning"
@@ -592,20 +548,6 @@ function App() {
                 }
               />
               <Route
-                path="/topics"
-                element={
-                  <>
-                    <SEO
-                      title="Topic Suggestions"
-                      description="3–4 blog topic ideas from GA4 analytics."
-                      canonicalPath="/topics"
-                      type="website"
-                    />
-                    <TopicSuggestions />
-                  </>
-                }
-              />
-              <Route
                 path="/projects"
                 element={
                   <>
@@ -661,7 +603,20 @@ function App() {
                   </>
                 }
               />
-              <Route path="/news" element={<ExternalNewsRedirect />} />
+              <Route
+                path="/news"
+                element={
+                  <>
+                    <SEO
+                      title="News"
+                      description="Read the latest stories curated from the IMP News feed without leaving the site."
+                      canonicalPath="/news"
+                      type="website"
+                    />
+                    <NewsPage />
+                  </>
+                }
+              />
               <Route
                 path="/blog/2025-10-24-my-reminiscences"
                 element={
