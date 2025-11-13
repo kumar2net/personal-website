@@ -2,14 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
-const { getRecommendedTopics } = require('./services/recommendationService');
 const { fetchTopPages, fetchTopSearchTerms } = require('./services/bigqueryService');
-const NodeCache = require('node-cache');
 const { BigQuery } = require('@google-cloud/bigquery');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const apiCache = new NodeCache({ stdTTL: parseInt(process.env.CACHE_TTL_SECONDS || '3600') });
 
 // Middleware
 app.use(helmet());
@@ -340,36 +337,6 @@ app.get('/api/debug/top_signals', async (req, res) => {
       fetchTopSearchTerms(days, overrides).catch(() => []),
     ]);
     res.json({ success: true, days, projectId, dataset, table, location, pages, terms });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// New: Topic recommendations endpoint
-app.get('/api/recommendations/topics', async (req, res) => {
-  try {
-    const days = parseInt(req.query.days || '14');
-    const limit = Math.min(parseInt(req.query.limit || '10'), 25);
-    const language = (req.query.language || 'en').toString();
-    const noCache = String(req.query.no_cache || req.query.noCache || 'false') === 'true';
-    // Optional BigQuery/Vertex overrides via query params
-    const projectId = req.query.projectId || req.query.project_id;
-    const dataset = req.query.dataset || req.query.ga4_dataset;
-    const table = req.query.table || req.query.ga4_table;
-    const location = req.query.location || req.query.bigquery_location || req.query.ga4_location;
-    const cacheKey = `api:topics:${days}:${limit}:${language}:${projectId || ''}:${dataset || ''}:${table || ''}:${location || ''}`;
-
-    if (!noCache) {
-      const cached = apiCache.get(cacheKey);
-      if (cached) {
-        return res.json({ success: true, data: cached, cached: true });
-      }
-    }
-
-    const data = await getRecommendedTopics({ days, limit, language, projectId, dataset, table, location, noCache });
-    // Refresh cache with latest data even when bypassed
-    apiCache.set(cacheKey, data);
-    res.json({ success: true, data, cached: false, no_cache: noCache });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
