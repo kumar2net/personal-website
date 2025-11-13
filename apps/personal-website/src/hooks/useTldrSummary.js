@@ -51,7 +51,9 @@ export function useTldrSummary({ slug, text, enabled = true }) {
           return;
         }
 
-        // Ensure functions resolve when app is opened on Vite port (5173/5174)
+        const candidateEndpoints = [];
+        const netlifyPort =
+          import.meta.env.VITE_TLDR_NETLIFY_PORT || '8889';
         const isLocalHost =
           typeof window !== 'undefined' &&
           (window.location.hostname === 'localhost' ||
@@ -59,20 +61,56 @@ export function useTldrSummary({ slug, text, enabled = true }) {
         const isVitePort =
           typeof window !== 'undefined' &&
           (window.location.port === '5173' || window.location.port === '5174');
-        const functionsBase =
-          isLocalHost && isVitePort ? 'http://localhost:8889' : '';
 
-        const resp = await fetch(`${functionsBase}/.netlify/functions/tldr`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug, content: safeText }),
-        });
-
-        if (!resp.ok) {
-          const errText = await resp.text();
-          throw new Error(errText || `HTTP ${resp.status}`);
+        if (isLocalHost && isVitePort) {
+          candidateEndpoints.push(
+            `http://localhost:${netlifyPort}/.netlify/functions/tldr`
+          );
         }
-        const data = await resp.json();
+
+        const envOverride = import.meta.env.VITE_TLDR_ENDPOINT;
+        if (envOverride) {
+          candidateEndpoints.push(envOverride);
+        }
+
+        candidateEndpoints.push('/api/tldr', '/.netlify/functions/tldr');
+        const uniqueEndpoints = Array.from(
+          new Set(candidateEndpoints.filter(Boolean))
+        );
+
+        if (uniqueEndpoints.length === 0) {
+          throw new Error('No TL;DR endpoint configured');
+        }
+
+        let data = null;
+        let lastError = null;
+
+        for (const endpoint of uniqueEndpoints) {
+          try {
+            const response = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug, content: safeText }),
+            });
+
+            if (!response.ok) {
+              const errText = await response.text();
+              lastError = new Error(
+                errText || `HTTP ${response.status} at ${endpoint}`
+              );
+              continue;
+            }
+
+            data = await response.json();
+            break;
+          } catch (err) {
+            lastError = err;
+          }
+        }
+
+        if (!data) {
+          throw lastError || new Error('TL;DR request failed');
+        }
         const result = {
           summary: data.summary,
           model: data.model,

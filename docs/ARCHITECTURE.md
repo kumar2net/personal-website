@@ -19,7 +19,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - **Topic Suggestions**: `src/pages/TopicSuggestions.jsx` builds URLs to the Express backend (`http://localhost:3001` when Vite runs on port 5173) to hit `/api/recommendations/topics`, exposing cache-bypass toggles for GA4-driven recommendations.
 - **Graph Recommendations**: `src/components/GraphRecommendations.jsx` and `src/components/GraphVisualization.jsx` read `GNN_API_BASE_URL` (`src/utils/gnnApi.js`), fetch graph stats/recommendations, and track user actions via `useInteractionTracking` which POSTs anonymized events to the GNN backend.
 - **Generations 2.0**: `src/pages/generations/*` renders journaling tools (Hero explainer, prompt input, reflection gallery, PublishChronicle button). Client helpers in `src/lib/generationsClient.ts` call `VITE_GENERATIONS_API_URL` endpoints with retries/backoff.
-- **TL;DR summaries**: `src/hooks/useTldrSummary.js` hashes article text, caches summaries in `localStorage`, and calls `/.netlify/functions/tldr` (or `http://localhost:8889` when running Vite) using keys from `.env.example` (`TLDR_*`).
+- **TL;DR summaries**: `src/hooks/useTldrSummary.js` hashes article text, caches summaries in `localStorage`, and calls `/api/tldr` (falling back to the Netlify dev tunnel or legacy endpoint when configured) using keys from `.env.example` (`TLDR_*`).
 - **Elsewhere feed**: `src/pages/Elsewhere.jsx` fetches `/api/wp-feed` for WordPress posts and `/api/x-latest` for social updates, decoding HTML safely in-browser.
 - **Book utilities**: `src/services/bookCoverService.js` chains Google Books, OpenLibrary, and ISBN lookups with cached fallbacks for offline-friendly covers.
 
@@ -31,7 +31,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - `packages/ui-theme/theme.ts` exports color tokens and an MUI 7 theme with dual color schemes, typography presets, and component defaults tailored for pill buttons and CSS variables.
 - `ThemeProvider.tsx` wraps children in `CssVarsProvider` with persistent `k2n-color-scheme` storage, supplying `CssBaseline` so each React tree can opt into dark/light/system modes.
 
-## Serverless Functions: `/api`
+## Serverless Functions: `apps/personal-website/api`
 - `convert.js`: Request-aware unit converter with wide linear and temperature coverage plus CORS headers; consumed locally via the Vite middleware.
 - `wp-feed.js` and `x-latest.js`: Fetch + sanitize external feeds (WordPress RSS via `fast-xml-parser`, X API via bearer token), returning JSON with coarse caching.
 - `semantic-search.js`: Loads `src/data/semantic-index.json`, embeds queries via Gemini (`GEMINI_API_KEY`), computes cosine similarity in pure Node.js, and returns the highest-scoring posts plus timing metadata.
@@ -98,7 +98,7 @@ graph LR
   GenerationsUI --> GenerationsAPI
   GenerationsAPI --> KV
   GenerationsAPI --> OpenAI[(OpenAI GPT-4o mini)]
-  TLDR --> NetlifyFunc[/.netlify/functions/tldr]
+  TLDR --> TLDRApi[/api/tldr/]
   App --> ConvertAPI
   App --> WPFeed
   App --> XFeed

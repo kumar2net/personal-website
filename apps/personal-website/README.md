@@ -32,7 +32,7 @@ See `docs/CHANGELOG.md` for a detailed history.
 |-------|---------|
 | **Frontend** | React 18, Vite 5, React Router 6, Tailwind CSS, Framer Motion |
 | **Content** | Markdown + MDX-style JSX pages, `react-markdown`, `gray-matter`, custom SVG assets |
-| **Serverless** | `api/*.js` (Vercel/Netlify compatible) for conversions, semantic search, feeds, journaling |
+| **Serverless** | `apps/personal-website/api/*.js` (Vercel/Netlify compatible) for conversions, semantic search, feeds, journaling |
 | **Backend (optional)** | Python scripts + services in `backend/` for BigQuery and Vertex AI integrations |
 | **Tooling** | ESLint 9, Biome, Codemon CLI, Netlify CLI, Node 18 |
 
@@ -41,7 +41,7 @@ See `docs/CHANGELOG.md` for a detailed history.
 ```
 personal-website/
 ├── src/                  # React source (components, pages, data helpers)
-├── api/                  # Serverless endpoints (convert, semantic-search, feeds, generations)
+├── api/                  # (under apps/personal-website) Serverless endpoints (convert, semantic-search, feeds, generations)
 ├── backend/              # Python + node service scripts for GA4/BQ workflows
 ├── docs/                 # Architecture, deployment, changelog, research notes
 ├── public/               # Static assets served by Netlify
