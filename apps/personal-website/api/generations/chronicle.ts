@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv";
-import { readChronicle } from "./chronicle-store";
+import { readChronicle } from "./chronicle-store.js";
 
 const hasKvConfig = Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
 
