@@ -13,8 +13,6 @@
     "test": "turbo run test"
   },
   "devDependencies": {
-    "turbo": "^2.6.0",
-    "react-router-dom": "^6.23.1",
-    "react-helmet-async": "^2.0.5"
+    "turbo": "^2.6.0"
   }
 }
