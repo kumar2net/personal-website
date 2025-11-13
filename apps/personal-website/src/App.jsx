@@ -24,7 +24,6 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
-const TopicSuggestions = lazy(() => import("./pages/TopicSuggestions"));
 const Trends = lazy(() => import("./pages/Trends"));
 const GenerationsPage = lazy(() => import("./pages/generations"));
 
@@ -273,15 +272,13 @@ function App() {
                 >
                   Blog
                 </Link>
-                <a
-                  href="https://news.kumar2net.com"
+                <Link
+                  to="/news"
                   className="text-gray-600 hover:text-gray-800 transition-colors"
                   onClick={() => trackClick("nav_news")}
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   News
-                </a>
+                </Link>
 
                 <Link
                   to="/learning"
@@ -356,16 +353,6 @@ function App() {
                     Elsewhere
                   </Link>
                   <Link
-                    to="/topics"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_topics_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Topics
-                  </Link>
-                  <Link
                     to="/projects"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
@@ -405,18 +392,16 @@ function App() {
                   >
                     Blog
                   </Link>
-                  <a
-                    href="https://news.kumar2net.com"
+                  <Link
+                    to="/news"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       trackClick("nav_news_mobile");
                     }}
                     className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     News
-                  </a>
+                  </Link>
 
                   <Link
                     to="/learning"
@@ -498,7 +483,7 @@ function App() {
                       </Link>
                       <Link
                         to="/projects"
-                        className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition-colors"
+                        className="px-6 py-3 bg-teal-800 text-white rounded-lg shadow hover:bg-teal-900 transition-colors"
                       >
                         My Projects
                       </Link>
@@ -588,20 +573,6 @@ function App() {
                       type="website"
                     />
                     <About />
-                  </>
-                }
-              />
-              <Route
-                path="/topics"
-                element={
-                  <>
-                    <SEO
-                      title="Topic Suggestions"
-                      description="3–4 blog topic ideas from GA4 analytics."
-                      canonicalPath="/topics"
-                      type="website"
-                    />
-                    <TopicSuggestions />
                   </>
                 }
               />
