@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 5174 --open",
-    "build": "echo \"News build placeholder\"",
+    "dev": "npm run build && npx --yes serve dist -l 5174 --listen 127.0.0.1 --single",
+    "build": "node scripts/build.mjs",
     "lint": "echo \"News lint placeholder\"",
     "test": "echo \"News test placeholder\""
   }
