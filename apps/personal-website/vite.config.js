@@ -21,12 +21,17 @@ const API_ROUTES = [
   {
     prefix: '/api/convert',
     name: 'convert',
-    load: () => import('../../api/convert.js'),
+    load: () => import('./api/convert.js'),
   },
   {
     prefix: '/api/semantic-search',
     name: 'semantic-search',
-    load: () => import('../../api/semantic-search.js'),
+    load: () => import('./api/semantic-search.js'),
+  },
+  {
+    prefix: '/api/tldr',
+    name: 'tldr',
+    load: () => import('./api/tldr.js'),
   },
 ];
 

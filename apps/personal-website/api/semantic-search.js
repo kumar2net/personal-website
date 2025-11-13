@@ -17,10 +17,6 @@ const INDEX_CANDIDATES = [
   path.resolve(process.cwd(), "src/data/semantic-index.json"),
   path.resolve(process.cwd(), "apps/personal-website/src/data/semantic-index.json"),
   path.resolve(__dirname, "../src/data/semantic-index.json"),
-  path.resolve(
-    __dirname,
-    "../apps/personal-website/src/data/semantic-index.json",
-  ),
 ];
 
 let cachedIndex = null;

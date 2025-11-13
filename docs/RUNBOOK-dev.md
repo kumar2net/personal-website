@@ -5,7 +5,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - npm 11.6.2 (locked via `package-lock.json`).
 - Optional: Python 3.11 for the experimental GNN backend (`backend/gnn_server.py`).
 - Access to a Google Cloud project with GA4 BigQuery export (and Vertex AI if you want live topic suggestions). Semantic search now runs entirely on Gemini + a JSON index, so you only need `GEMINI_API_KEY` to rebuild/query embeddings.
-- API keys: Gemini (`GEMINI_API_KEY`), OpenAI (`OPENAI_API_KEY`), X bearer token, Vercel KV credentials, optional Netlify function secret for TL;DR.
+- API keys: Gemini (`GEMINI_API_KEY`), OpenAI (`OPENAI_API_KEY`), X bearer token, Vercel KV credentials; TL;DR now reuses the OpenAI key used by `/api/generations`.
 
 ## Directory Ownership
 | Path | Responsibility |
@@ -13,7 +13,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | `apps/personal-website` | Primary Vite SPA + scripts. |
 | `apps/news` | Lightweight Vite shell for future news microsite. |
 | `packages/ui-theme` | Shared MUI theme package. |
-| `api` | Serverless handlers (convert, semantic search, feeds, generations). |
+| `apps/personal-website/api` | Serverless handlers (convert, semantic search, feeds, generations). |
 | `backend` | Express analytics/topic recommender + GA4/Vertex services. |
 
 ## Environment Variables
@@ -28,7 +28,8 @@ Populate `.env` at repo root (copy from `.env.example`) and `backend/.env` (from
 | `VITE_NEWS_API_KEY`, `VITE_CLIMATIQ_API_KEY` | root | Used by climate/news widgets. Provide dummy strings for local dev if hitting external APIs is optional.
 | `VITE_FEATURE_UNREAD` | root | Feature flag toggling unread badge logic.
 | `X_BEARER_TOKEN` | root | Enables `/api/x-latest` for Elsewhere page.
-| `TLDR_PROVIDER`, `TLDR_DEV_FAKE`, `TLDR_DEV_FALLBACK_ON_ERROR` | root | Control the Netlify TL;DR function behavior.
+| `TLDR_PROVIDER`, `TLDR_DEV_FAKE`, `TLDR_DEV_FALLBACK_ON_ERROR`, `TLDR_OPENAI_MODEL`, `TLDR_MAX_INPUT_CHARS` | root | Tune the `/api/tldr` provider (OpenAI vs heuristic) plus dev fallbacks.
+| `VITE_TLDR_ENDPOINT`, `VITE_TLDR_NETLIFY_PORT` | root | Optional client override/port when pointing TL;DR requests at a custom endpoint.
 | `GOOGLE_APPLICATION_CREDENTIALS` | backend | Path to service-account JSON for backend BigQuery scripts.
 | `GA4_DATASET`, `GA4_TABLE` | backend | Defaults to `analytics_XXXX.events_*`; override per project.
 | `RECOMMENDER_MODEL`, `RECOMMENDER_SYSTEM_INSTRUCTION`, `CACHE_TTL_SECONDS`, `RECOMMENDER_DEV_MODE` | backend | Tune Vertex AI prompt + caching.
@@ -62,7 +63,8 @@ The UI theme package is part of the workspace, so no extra steps are required.
 | Vite SPA | `npm run dev` | 5173 | Strict port; proxies `/api/convert` and `/api/semantic-search` into the real handlers (semantic search works in dev).
 | News shell | `npm run dev --prefix apps/news` | 5174 | Optional, placeholder UI.
 | Express analytics | `npm run dev --prefix backend` | 3001 | Required for Topic Suggestions page.
-| Netlify functions (TL;DR) | `netlify dev` (if applicable) | 8889 | Only needed if you want live TL;DR while running Vite.
+| TL;DR API | (bundled with Vite) | 5173 proxy | `/api/tldr` runs via Vite's local middleware; Netlify dev is no longer required for summaries.
+| Legacy Netlify functions | `netlify dev` (optional) | 8889 | Only spin up if you still hit `/.netlify/functions/*` during migration.
 | GNN recommender | `python backend/gnn_server.py` | 8000 | Optional; Graph widgets fall back to static hints without it.
 
 ## Startup Checklist
@@ -70,7 +72,7 @@ The UI theme package is part of the workspace, so no extra steps are required.
 2. `npm install` (root) and `npm install --prefix backend`.
 3. Start backend (`npm run dev --prefix backend`) so GA4 endpoints respond.
 4. In a new terminal run `npm run dev` to boot Vite + local API middleware.
-5. Optional: start Netlify dev for TL;DR and Python GNN server if you need those surfaces.
+5. Optional: run the Python GNN server or legacy Netlify dev if you need to exercise those surfaces.
 
 ## Smoke Tests
 1. **Backend health**
@@ -106,4 +108,4 @@ The UI theme package is part of the workspace, so no extra steps are required.
 - **GA4/Vertex auth errors**: confirm service-account JSON is valid and `GA4_DATASET` matches `analytics_<property>` naming.
 - **Graph recommender unavailable**: Graph components silently hide themselves until `GNN_API_BASE_URL` responds with `{ initialized: true }`. Run the Python server or change `import.meta.env.VITE_GNN_API_BASE_URL` to a reachable endpoint.
 - **Webhook integration UI**: `src/services/webhookService.js` intentionally keeps `webhookUrl=null`, so registration UI only acts as a stub. Enable once backend endpoints exist.
-- **Netlify TL;DR fails while local**: run `netlify dev` on port 8889 or set `TLDR_DEV_FAKE=1` to skip remote calls.
+- **TL;DR endpoint errors**: ensure `/api/tldr` is reachable (Vite should proxy it locally). Set `TLDR_DEV_FAKE=1` to stub responses or `VITE_TLDR_ENDPOINT` to point at a custom endpoint if you still rely on Netlify functions.

@@ -6,7 +6,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | `personal-website` | `apps/personal-website` | React 18 + Vite SPA with blog, recommendations, semantic search, and AI tooling.
 | `news` | `apps/news` | Placeholder Vite shell for an external news microsite.
 | `@kumar2net/ui-theme` | `packages/ui-theme` | Shared MUI 7 theme + ThemeProvider exports.
-| (extra) `api` | `api/*` | Serverless handlers consumed by Vite + Vercel.
+| (extra) `api` | `apps/personal-website/api/*` | Serverless handlers consumed by Vite + Vercel.
 | (extra) `backend` | `backend/` | Express analytics + GA4/Vertex topic recommender.
 
 ## Root / Turborepo
@@ -39,14 +39,14 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - Implementation: uses `@mui/material/styles` `createTheme` with dual color schemes, sets `CssVarsProvider` defaults (`modeStorageKey = "k2n-color-scheme"`).
 - Consumed in `apps/personal-website/src/main.jsx` and available to other packages via workspace resolution.
 
-## `api` (serverless)
+## `apps/personal-website/api` (serverless)
 | Function | File | Notes |
 | --- | --- | --- |
-| Unit converter | `api/convert.js` | GET self-docs, POST conversions, includes manual streaming body parser.
-| Semantic search | `api/semantic-search.js` | Loads `src/data/semantic-index.json`, embeds queries via Gemini, computes cosine similarity in Node.js, and returns `{ id, title, url, excerpt, score }` plus latency metadata.
-| WordPress feed proxy | `api/wp-feed.js` | Fetches RSS, defends against HTML responses, strips markup with `fast-xml-parser`.
-| X latest posts | `api/x-latest.js` | Uses bearer token, exposes `items` array with tweet URLs.
-| Generations journaling | `api/generations/*.ts` | `entry.ts` accepts reflections, `chronicle.ts` serves weekly digest (Edge runtime), `merge.ts` fuses entries using OpenAI + KV persistence, `chronicle-store.ts` keeps in-memory cache, `upload.ts`/`reflections.ts` handle asset workflows.
+| Unit converter | `apps/personal-website/api/convert.js` | GET self-docs, POST conversions, includes manual streaming body parser.
+| Semantic search | `apps/personal-website/api/semantic-search.js` | Loads `src/data/semantic-index.json`, embeds queries via Gemini, computes cosine similarity in Node.js, and returns `{ id, title, url, excerpt, score }` plus latency metadata.
+| WordPress feed proxy | `apps/personal-website/api/wp-feed.js` | Fetches RSS, defends against HTML responses, strips markup with `fast-xml-parser`.
+| X latest posts | `apps/personal-website/api/x-latest.js` | Uses bearer token, exposes `items` array with tweet URLs.
+| Generations journaling | `apps/personal-website/api/generations/*.ts` | `entry.ts` accepts reflections, `chronicle.ts` serves weekly digest (Edge runtime), `merge.ts` fuses entries using OpenAI + KV persistence, `chronicle-store.ts` keeps in-memory cache, `upload.ts`/`reflections.ts` handle asset workflows.
 
 
 ## `backend`
