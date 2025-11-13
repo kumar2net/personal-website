@@ -21,7 +21,7 @@ Populate `.env` at repo root (copy from `.env.example`) and `backend/.env` (from
 
 | Var | Location | Notes |
 | --- | --- | --- |
-| `GEMINI_API_KEY` | root | Required for semantic search indexing (`scripts/index-duckdb.mjs`) and query-time embeddings. No fallback path exists without it.
+| `GEMINI_API_KEY` | root | Required for semantic search indexing (`scripts/build-semantic-index.mjs`) and query-time embeddings. No fallback path exists without it.
 | `OPENAI_API_KEY`, `OPENAI_MODEL` | root | Needed for `/api/generations/merge`. Fallback text is used when absent.
 | `GCP_PROJECT_ID`, `GCP_LOCATION` | root + backend | Required for Vertex AI + BigQuery clients.
 | `GCP_SERVICE_ACCOUNT_JSON` | root | Inline JSON used by semantic search/Vertex clients during local dev.
