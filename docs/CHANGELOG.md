@@ -2,6 +2,11 @@
 
 Chronological log of notable changes. Dates use **YYYY-MM-DD**.
 
+## 2025-11-05
+
+- Documented typography contrast adjustments on the homepage hero and blog list, referencing the updated design tokens.
+- Captured the rollout of improved focus outlines for interactive components in the accessibility implementation guide.
+
 ## 2025-11-04
 
 - Added “Dirty Grid, Smart Grid” enhancements: new multi-country GEF SVG, fuel stewardship PS notes, and doc updates reflecting storage + SMR guidance.
