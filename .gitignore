@@ -44,6 +44,7 @@ kumscripts/
 .configstore/
 .npm/
 Library/
+.turbo/
 
 # Temporary and build artifacts
 *.log
