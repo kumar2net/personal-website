@@ -1,16 +1,42 @@
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { FaHome } from "react-icons/fa";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Link as RouterLink,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import {
+  AppBar,
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  CircularProgress,
+  Container,
+  Divider,
+  Drawer,
+  IconButton,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Paper,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
-import React, { Suspense, lazy } from "react";
 
 // Eagerly load critical components
 import About from "./pages/About";
@@ -64,6 +90,35 @@ const AiRecommenderCode = lazy(
 );
 
 // Admin CMS removed
+
+const navLinks = [
+  { label: "About", to: "/about", analyticsKey: "nav_about" },
+  { label: "Elsewhere", to: "/elsewhere", analyticsKey: "nav_elsewhere" },
+  { label: "Projects", to: "/projects", analyticsKey: "nav_projects" },
+  { label: "Books", to: "/books", analyticsKey: "nav_books" },
+  { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
+  { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
+  {
+    label: "News",
+    href: "https://news.kumar2net.com",
+    analyticsKey: "nav_news",
+    external: true,
+  },
+  { label: "Learning", to: "/learning", analyticsKey: "nav_learning" },
+  { label: "Music", to: "/music", analyticsKey: "nav_music" },
+  { label: "Album", to: "/album", analyticsKey: "nav_album" },
+  { label: "Contact", to: "/contact", analyticsKey: "nav_contact" },
+];
+
+const heroSections = [
+  { label: "About", description: "Backstory & mission.", to: "/about" },
+  { label: "Projects", description: "Selected experiments.", to: "/projects" },
+  { label: "Books", description: "Reading list & notes.", to: "/books" },
+  { label: "Blog", description: "Long-form writing.", to: "/blog" },
+  { label: "Learning", description: "Study notes & flashcards.", to: "/learning" },
+  { label: "Music", description: "Playlists on repeat.", to: "/music" },
+  { label: "Album", description: "Photo essays & trips.", to: "/album" },
+];
 
 const ExternalNewsRedirect = () => {
   useEffect(() => {
@@ -134,6 +189,27 @@ function App() {
     }
   };
 
+  const getLinkProps = (item) =>
+    item.to
+      ? { component: RouterLink, to: item.to }
+      : {
+          component: "a",
+          href: item.href,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        };
+
+  const handleNavClick = (item, isMobile = false) => {
+    trackClick(
+      isMobile ? `${item.analyticsKey}_mobile` : item.analyticsKey,
+      { surface: isMobile ? "drawer" : "appbar" },
+    );
+    if (isMobile) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+  const currentYear = new Date().getFullYear();
+
   useGaPageViews();
 
   // Handle app loading and error states
@@ -161,42 +237,79 @@ function App() {
   // Show loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "background.default",
+        }}
+      >
+        <Stack spacing={2} alignItems="center">
+          <CircularProgress color="primary" />
+          <Typography variant="body2" color="text.secondary">
+            Loading…
+          </Typography>
+        </Stack>
+      </Box>
     );
   }
 
   // Show error state
   if (hasError) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-6">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h1 className="text-xl font-semibold text-gray-800 mb-2">
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "background.default",
+          px: 2,
+        }}
+      >
+        <Paper
+          elevation={0}
+          sx={{
+            p: 4,
+            maxWidth: 420,
+            textAlign: "center",
+            borderRadius: 4,
+            border: "1px solid",
+            borderColor: "divider",
+          }}
+        >
+          <Typography variant="h4" color="error" sx={{ mb: 2 }}>
             Something went wrong
-          </h1>
-          <p className="text-gray-600 mb-4">
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             Please refresh the page or try again later.
-          </p>
-          <button
+          </Typography>
+          <Button
+            variant="contained"
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             aria-label="Refresh the page to try again"
           >
             Refresh Page
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Paper>
+      </Box>
     );
   }
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-100 dark:bg-slate-950 mobile-fix">
+      <Box
+        className="mobile-fix"
+        sx={{
+          minHeight: "100vh",
+          bgcolor: "background.default",
+          color: "text.primary",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <SEO
           title="My Stories"
           description="AI enthusiast. Projects, blog, books, music, learning resources, and more."
@@ -205,370 +318,284 @@ function App() {
           type="website"
         />
         <ScrollToTop />
-        {/* Navigation */}
-        <nav className="bg-white shadow-lg" aria-label="primary navigation">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex justify-between items-center h-16">
-              <div className="relative group">
-                <Link
-                  to="/"
-                  className="flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
-                  title="Click to go to Home page"
-                >
-                  <Logo className="h-[60px] w-[60px]" />
-                  {/* Mobile home indicator */}
-                  <span className="md:hidden ml-2 text-sm text-gray-600 font-medium flex items-center">
-                    <FaHome className="w-3 h-3 mr-1" />
-                    Home
-                  </span>
-                </Link>
-
-                {/* Tooltip for logo */}
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
-                  Click to go Home
-                  {/* Tooltip arrow */}
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
-                </div>
-              </div>
-              <div className="hidden md:flex items-center space-x-4">
-                <Link
-                  to="/about"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_about")}
-                >
-                  About
-                </Link>
-                <Link
-                  to="/elsewhere"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_elsewhere")}
-                >
-                  Elsewhere
-                </Link>
-                <Link
-                  to="/projects"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_projects")}
-                >
-                  Projects
-                </Link>
-                <Link
-                  to="/books"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_books")}
-                >
-                  Books
-                </Link>
-                <Link
-                  to="/convert"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_convert")}
-                >
-                  Convert
-                </Link>
-                <Link
-                  to="/blog"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_blog")}
-                >
-                  Blog
-                </Link>
-                <a
-                  href="https://news.kumar2net.com"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_news")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  News
-                </a>
-
-                <Link
-                  to="/learning"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_learning")}
-                >
-                  Learning
-                </Link>
-                <Link
-                  to="/music"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_music")}
-                >
-                  Music
-                </Link>
-                <Link
-                  to="/album"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_album")}
-                >
-                  Album
-                </Link>
-                <Link
-                  to="/contact"
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                  onClick={() => trackClick("nav_contact")}
-                >
-                  Contact
-                </Link>
-                <ModeToggle />
-              </div>
-              <div className="md:hidden flex items-center gap-3">
-                <ModeToggle />
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(!isMobileMenuOpen);
-                    trackClick("mobile_menu_toggle", {
-                      isOpen: !isMobileMenuOpen,
-                    });
+        <AppBar
+          position="sticky"
+          color="transparent"
+          elevation={0}
+          sx={(theme) => ({
+            backdropFilter: "blur(18px)",
+            backgroundColor:
+              theme.palette.mode === "dark"
+                ? "rgba(5, 11, 22, 0.9)"
+                : "rgba(255, 255, 255, 0.92)",
+            borderBottom: "1px solid",
+            borderColor: "divider",
+          })}
+        >
+          <Toolbar sx={{ minHeight: 80, gap: 2 }}>
+            <Tooltip title="Click to go Home">
+              <Box
+                component={RouterLink}
+                to="/"
+                onClick={() => trackClick("nav_home")}
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  textDecoration: "none",
+                  color: "inherit",
+                  gap: 1,
+                  transition: "transform 200ms ease",
+                  "&:hover": { transform: "translateY(-2px)" },
+                }}
+              >
+                <Logo className="h-[60px] w-[60px]" />
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    display: { xs: "inline-flex", md: "none" },
+                    color: "text.secondary",
+                    fontWeight: 600,
                   }}
-                  className="md:hidden text-gray-600 hover:text-gray-800"
-                  aria-label={
-                    isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
-                  }
-                  aria-expanded={isMobileMenuOpen}
                 >
-                  <HiMenu className="h-6 w-6" />
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile menu */}
-            {isMobileMenuOpen && (
-              <div className="md:hidden mt-4">
-                <div className="px-2 pt-2 pb-3 space-y-1">
-                  <Link
-                    to="/about"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_about_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    About
-                  </Link>
-                  <Link
-                    to="/elsewhere"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_elsewhere_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Elsewhere
-                  </Link>
-                  <Link
-                    to="/projects"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_projects_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Projects
-                  </Link>
-                  <Link
-                    to="/books"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_books_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Books
-                  </Link>
-                  <Link
-                    to="/convert"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_convert_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Convert
-                  </Link>
-                  <Link
-                    to="/blog"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_blog_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Blog
-                  </Link>
-                  <a
-                    href="https://news.kumar2net.com"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_news_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    News
-                  </a>
-
-                  <Link
-                    to="/learning"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_learning_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Learning
-                  </Link>
-                  <Link
-                    to="/music"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_music_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Music
-                  </Link>
-                  <Link
-                    to="/album"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_album_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Album
-                  </Link>
-                  <Link
-                    to="/contact"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      trackClick("nav_contact_mobile");
-                    }}
-                    className="block px-3 py-2 rounded-md text-gray-600 hover:text-gray-800"
-                  >
-                    Contact
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
-        </nav>
-
-        {/* Main content */}
-        <main className="max-w-6xl mx-auto px-4 py-8">
-          <Suspense
-            fallback={
-              <div className="py-16 text-center">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                <p className="mt-2 text-gray-600">Loading...</p>
-              </div>
-            }
+                  Home
+                </Typography>
+              </Box>
+            </Tooltip>
+            <Stack
+              direction="row"
+              spacing={0.5}
+              alignItems="center"
+              sx={{ display: { xs: "none", md: "flex" }, ml: "auto" }}
+            >
+              {navLinks.map((item) => (
+                <Button
+                  key={item.label}
+                  {...getLinkProps(item)}
+                  onClick={() => handleNavClick(item)}
+                  color="inherit"
+                  size="small"
+                  sx={{
+                    color: "text.secondary",
+                    borderRadius: 999,
+                    px: 2,
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+              <ModeToggle />
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ display: { xs: "flex", md: "none" }, ml: "auto" }}
+            >
+              <ModeToggle />
+              <IconButton
+                onClick={() => {
+                  setIsMobileMenuOpen(true);
+                  trackClick("mobile_menu_toggle", { isOpen: true });
+                }}
+                aria-label="Open mobile menu"
+              >
+                <HiMenu />
+              </IconButton>
+            </Stack>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          anchor="right"
+          open={isMobileMenuOpen}
+          onClose={() => {
+            setIsMobileMenuOpen(false);
+            trackClick("mobile_menu_toggle", { isOpen: false });
+          }}
+          PaperProps={{
+            sx: {
+              width: 320,
+              p: 3,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            },
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
           >
+            <Typography variant="subtitle1" fontWeight={600}>
+              Navigate
+            </Typography>
+            <ModeToggle />
+          </Stack>
+          <Divider />
+          <List dense>
+            {navLinks.map((item) => (
+              <ListItem disablePadding key={item.label}>
+                <ListItemButton
+                  {...getLinkProps(item)}
+                  onClick={() => handleNavClick(item, true)}
+                >
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Box component="main" sx={{ flex: 1 }}>
+          <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+            <Suspense
+              fallback={
+                <Box
+                  sx={{
+                    py: 16,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 2,
+                  }}
+                >
+                  <CircularProgress />
+                  <Typography variant="body2" color="text.secondary">
+                    Loading…
+                  </Typography>
+                </Box>
+              }
+            >
             <Routes>
               <Route
                 path="/"
                 element={
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                  <Box
+                    component={motion.section}
+                    initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center"
+                    transition={{ duration: 0.6 }}
+                    sx={{
+                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 4,
+                    }}
                   >
-                    <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-slate-100">
+                    <Typography variant="h1" sx={{ mb: 1 }}>
                       Welcome to My Personal Website
-                    </h1>
-                    <p className="text-xl text-gray-600 dark:text-slate-200 mb-8">
+                    </Typography>
+                    <Typography
+                      variant="subtitle1"
+                      color="text.secondary"
+                      sx={{ maxWidth: 560, mx: "auto" }}
+                    >
                       AI Enthusiast
-                    </p>
-
-                    <div className="flex flex-wrap gap-4 justify-center">
-                      <Link
-                        to="/about"
-                        className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
-                      >
-                        About
-                      </Link>
-                      <Link
-                        to="/projects"
-                        className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow hover:bg-teal-700 transition-colors"
-                      >
-                        My Projects
-                      </Link>
-                      <Link
-                        to="/books"
-                        className="px-6 py-3 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition-colors"
-                      >
-                        Books
-                      </Link>
-                      <Link
-                        to="/blog"
-                        className="px-6 py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition-colors"
-                      >
-                        Blog
-                      </Link>
-
-                      <Link
-                        to="/learning"
-                        className="px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors"
-                      >
-                        Learning
-                      </Link>
-                      <Link
-                        to="/music"
-                        className="px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors"
-                      >
-                        Music
-                      </Link>
-                      <Link
-                        to="/album"
-                        className="px-6 py-3 bg-pink-700 text-white rounded-lg hover:bg-pink-800 transition-colors"
-                      >
-                        Album
-                      </Link>
-                    </div>
-
-                    {/* Home quote */}
-                    <motion.div
+                    </Typography>
+                    <Grid container spacing={3}>
+                      {heroSections.map((section, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={section.label}>
+                          <Card
+                            component={motion.article}
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                              duration: 0.45,
+                              delay: index * 0.05,
+                            }}
+                            sx={{ height: "100%" }}
+                          >
+                            <CardActionArea
+                              {...getLinkProps(section)}
+                              onClick={() =>
+                                trackClick(
+                                  `hero_${section.label.toLowerCase()}_card`,
+                                )
+                              }
+                              sx={{ height: "100%" }}
+                            >
+                              <CardContent>
+                                <Typography variant="h6" gutterBottom>
+                                  {section.label}
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                >
+                                  {section.description}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
+                    <Paper
+                      component={motion.blockquote}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.15 }}
-                      className="mt-12 mx-auto max-w-3xl bg-gradient-to-r from-gray-50 to-gray-100 p-6 md:p-8 rounded-xl border-l-4 border-gray-400 text-left"
+                      transition={{ duration: 0.6, delay: 0.15 }}
+                      sx={{
+                        mx: "auto",
+                        maxWidth: 720,
+                        textAlign: "left",
+                        p: { xs: 4, md: 5 },
+                        borderRadius: 4,
+                      }}
                     >
-                      <blockquote className="text-xl md:text-2xl font-semibold text-gray-800 leading-snug">
-                        "Live your life as an exclamation rather than an explanation."
-                      </blockquote>
-                      <p className="mt-4 text-gray-600 italic text-right">
+                      <Typography variant="h5" sx={{ fontStyle: "italic" }}>
+                        “Live your life as an exclamation rather than an
+                        explanation.”
+                      </Typography>
+                      <Typography
+                        variant="subtitle2"
+                        color="text.secondary"
+                        sx={{ mt: 3, textAlign: "right" }}
+                      >
                         — Sir Isaac Newton
-                      </p>
-                    </motion.div>
-
-                    {/* Elsewhere icons */}
-                    <div className="mt-8 flex items-center justify-center gap-6">
-                      <a
-                        href="https://kumar2net.wordpress.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="WordPress"
-                        className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white shadow ring-1 ring-gray-200 hover:ring-blue-400 hover:shadow-md transition"
-                        title="WordPress"
-                      >
-                        <FaWordpress className="h-6 w-6 text-gray-800" />
-                      </a>
-                      <a
-                        href="https://twitter.com/kumar2net"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="X (Twitter)"
-                        className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-white shadow ring-1 ring-gray-200 hover:ring-blue-400 hover:shadow-md transition"
-                        title="X (Twitter)"
-                      >
-                        <FaTwitter className="h-6 w-6 text-gray-800" />
-                      </a>
-                    </div>
+                      </Typography>
+                    </Paper>
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      justifyContent="center"
+                      sx={{ flexWrap: "wrap" }}
+                    >
+                      {[
+                        {
+                          href: "https://kumar2net.wordpress.com/",
+                          label: "WordPress",
+                          icon: <FaWordpress />,
+                        },
+                        {
+                          href: "https://twitter.com/kumar2net",
+                          label: "X (Twitter)",
+                          icon: <FaTwitter />,
+                        },
+                      ].map((social) => (
+                        <IconButton
+                          key={social.label}
+                          component="a"
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={social.label}
+                          sx={{
+                            borderRadius: "50%",
+                            width: 56,
+                            height: 56,
+                            border: "1px solid",
+                            borderColor: "divider",
+                            boxShadow: "0 12px 30px rgba(15,23,42,0.15)",
+                            color: "text.primary",
+                          }}
+                        >
+                          {social.icon}
+                        </IconButton>
+                      ))}
+                    </Stack>
                     <WorldClock />
-                  </motion.div>
+                  </Box>
                 }
               />
               <Route
@@ -917,39 +944,54 @@ function App() {
               {/* Admin route is handled by static files, not React Router */}
             </Routes>
           </Suspense>
-        </main>
-
-        {/* Footer */}
-        <footer className="mt-16 py-8 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex justify-between items-center">
-              <p className="text-gray-600">
-                {" "}
-                2025 My Stories. All rights reserved.
-              </p>
-              {/* <p className="text-gray-600">© 2025 My Stories. All rights reserved.</p> */}
-              <div className="flex space-x-4">
-                <a
-                  href="https://kumar2net.wordpress.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  WordPress
-                </a>
-                <a
-                  href="https://twitter.com/kumar2net"
-                  className="text-gray-600 hover:text-gray-800"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Twitter
-                </a>
-              </div>
-            </div>
-          </div>
-        </footer>
-      </div>
+        </Container>
+      </Box>
+      <Box
+        component="footer"
+        sx={{
+          mt: "auto",
+          borderTop: "1px solid",
+          borderColor: "divider",
+          py: 4,
+          backgroundColor: "background.paper",
+        }}
+      >
+        <Container maxWidth="lg">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            justifyContent="space-between"
+            alignItems={{ xs: "flex-start", sm: "center" }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              © {currentYear} My Stories. All rights reserved.
+            </Typography>
+            <Stack direction="row" spacing={3}>
+              <Button
+                component="a"
+                href="https://kumar2net.wordpress.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="text"
+                size="small"
+              >
+                WordPress
+              </Button>
+              <Button
+                component="a"
+                href="https://twitter.com/kumar2net"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="text"
+                size="small"
+              >
+                Twitter
+              </Button>
+            </Stack>
+          </Stack>
+        </Container>
+      </Box>
+    </Box>
     </ErrorBoundary>
   );
 }

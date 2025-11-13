@@ -46,27 +46,45 @@ export const getDesignTokens = (): ThemeOptions => ({
     fontWeightMedium: 500,
     fontWeightBold: 600,
     h1: {
-      fontSize: "2.5rem",
-      fontWeight: 600,
-      lineHeight: 1.2,
+      fontSize: "clamp(2.75rem, 5vw, 3.5rem)",
+      fontWeight: 700,
+      lineHeight: 1.12,
+      letterSpacing: "-0.015em",
     },
     h2: {
-      fontSize: "2rem",
+      fontSize: "clamp(2rem, 4vw, 2.75rem)",
+      fontWeight: 600,
+      lineHeight: 1.2,
+      letterSpacing: "-0.01em",
+    },
+    h3: {
+      fontSize: "clamp(1.5rem, 3vw, 2rem)",
       fontWeight: 600,
       lineHeight: 1.25,
     },
-    h3: {
-      fontSize: "1.75rem",
-      fontWeight: 600,
-      lineHeight: 1.3,
+    subtitle1: {
+      fontSize: "1.125rem",
+      lineHeight: 1.45,
+      fontWeight: 500,
+    },
+    subtitle2: {
+      fontSize: "1rem",
+      lineHeight: 1.4,
+      fontWeight: 500,
+      letterSpacing: "0.01em",
     },
     body1: {
-      fontSize: "1rem",
-      lineHeight: 1.6,
+      fontSize: "1.05rem",
+      lineHeight: 1.8,
+    },
+    body2: {
+      fontSize: "0.95rem",
+      lineHeight: 1.65,
     },
     button: {
       textTransform: "none",
       fontWeight: 600,
+      letterSpacing: 0.2,
     },
   },
   components: {
@@ -108,6 +126,18 @@ export const getDesignTokens = (): ThemeOptions => ({
         },
       },
     },
+    MuiLink: {
+      defaultProps: {
+        underline: "hover",
+      },
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          color: "var(--mui-palette-primary-main)",
+          transition: transitionBase,
+        },
+      },
+    },
     MuiCard: {
       styleOverrides: {
         root: {
@@ -118,6 +148,27 @@ export const getDesignTokens = (): ThemeOptions => ({
           "&:hover": {
             transform: "translateY(-2px)",
             boxShadow: "0 18px 32px rgba(15, 23, 42, 0.15)",
+          },
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 999,
+          fontWeight: 600,
+          letterSpacing: 0.2,
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          paddingLeft: "1.5rem",
+          paddingRight: "1.5rem",
+          "@media (max-width: 600px)": {
+            paddingLeft: "1rem",
+            paddingRight: "1rem",
           },
         },
       },

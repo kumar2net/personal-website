@@ -1,22 +1,46 @@
-const baseClass =
-  "rounded-xl border border-gray-200 bg-white text-gray-900 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100";
+import MuiCard from "@mui/material/Card";
+import MuiCardContent from "@mui/material/CardContent";
 
-const joinClasses = (className) => {
-  return [baseClass, className].filter(Boolean).join(' ');
-};
+const toArray = (value) => (Array.isArray(value) ? value : value ? [value] : []);
 
-export function Card({ className = '', children, ...props }) {
+export function Card({ sx, children, ...props }) {
   return (
-    <div className={joinClasses(className)} {...props}>
+    <MuiCard
+      variant="outlined"
+      {...props}
+      sx={[
+        (theme) => ({
+          borderRadius: 3,
+          borderColor: "divider",
+          backgroundImage:
+            theme.palette.mode === "dark"
+              ? "linear-gradient(135deg, rgba(15,23,42,0.9), rgba(15,23,42,0.6))"
+              : "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,250,252,0.95))",
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? "0 10px 30px rgba(2,6,23,0.7)"
+              : "0 18px 34px rgba(15,23,42,0.08)",
+        }),
+        ...toArray(sx),
+      ]}
+    >
       {children}
-    </div>
+    </MuiCard>
   );
 }
 
-export function CardContent({ className = '', children, ...props }) {
+export function CardContent({ sx, children, ...props }) {
   return (
-    <div className={['p-4 leading-relaxed text-inherit', className].filter(Boolean).join(' ')} {...props}>
+    <MuiCardContent
+      {...props}
+      sx={[
+        {
+          lineHeight: 1.7,
+        },
+        ...toArray(sx),
+      ]}
+    >
       {children}
-    </div>
+    </MuiCardContent>
   );
 }
