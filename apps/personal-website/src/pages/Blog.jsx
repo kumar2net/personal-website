@@ -1,12 +1,24 @@
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import EventIcon from "@mui/icons-material/Event";
+import { Link as RouterLink } from "react-router-dom";
 import ContentBadge from "../components/ContentBadge";
 import SEO from "../components/SEO";
 import SemanticSearch from "../components/SemanticSearch";
 import blogPosts from "../data/blogPostsData";
 import { addLastModifiedIfMissing } from "../utils/contentDates";
-
 
 const Blog = () => {
   const processedPosts = useMemo(
@@ -15,102 +27,148 @@ const Blog = () => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 text-gray-900 dark:text-slate-100">
+    <Box component="section" sx={{ py: { xs: 5, md: 8 } }}>
       <SEO
         title="Blog"
         description="Latest posts on technology, learning, notes, and personal writing."
         canonicalPath="/blog"
         type="website"
       />
-      <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">Blog</h1>
-      <SemanticSearch />
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Posts</h2>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {processedPosts.map((post, index) => (
-          <motion.div
-            key={post.link}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+      <Container maxWidth="lg">
+        <Stack spacing={4}>
+          <Box textAlign="center">
+            <Typography variant="h1">Blog</Typography>
+            <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              sx={{ mt: 1 }}
+            >
+              Latest posts on technology, learning, notes, and personal writing.
+            </Typography>
+          </Box>
+          <SemanticSearch />
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-between"
+            alignItems={{ xs: "flex-start", sm: "center" }}
+            spacing={1}
           >
-            <div className="relative h-48">
-              <img
-                loading="lazy"
-                decoding="async"
-                src={post.image}
-                alt={post.title}
-                className="w-full h-full object-cover"
-                style={
-                  post.title ===
-                  "A Sobering Week: Reflections on Loss, Life, and Learning"
-                    ? {
-                        objectPosition: "center 30%",
-                      }
-                    : {}
-                }
-              />
-              <ContentBadge
-                publishDate={post.date}
-                lastModified={post.lastModified}
-              />
-            </div>
-            <div className="p-6 text-gray-900 dark:text-gray-100">
-              <div className="flex gap-2 mb-4">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs dark:bg-slate-800 dark:text-blue-200"
+            <Typography variant="h2">Latest Posts</Typography>
+          </Stack>
+          <Grid container spacing={3}>
+            {processedPosts.map((post, index) => (
+              <Grid item xs={12} sm={6} md={4} key={post.link}>
+                <Card
+                  component={motion.article}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: index * 0.08 }}
+                  sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+                >
+                  <Box
+                    sx={{
+                      position: "relative",
+                      height: 220,
+                      overflow: "hidden",
+                    }}
                   >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100 hover:text-blue-600 transition-colors">
-                <Link to={post.link}>{post.title}</Link>
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">{post.excerpt}</p>
-              <div className="mt-3">
-                <Link
-                  to={post.link}
-                  className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400"
-                  aria-label={`Read more: ${post.title}`}
-                >
-                  Read more
-                </Link>
-              </div>
-              <div className="flex items-center text-gray-500 dark:text-gray-300 text-sm">
-                <svg
-                  className="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                {post.date}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-      <div className="mt-12 text-center">
-        <button
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors dark:bg-blue-500 dark:hover:bg-blue-400"
-          aria-label="Load more blog posts"
-        >
-          Load More
-        </button>
-      </div>
-    </div>
+                    <Box
+                      component="img"
+                      loading="lazy"
+                      decoding="async"
+                      src={post.image}
+                      alt={post.title}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition:
+                          post.title ===
+                          "A Sobering Week: Reflections on Loss, Life, and Learning"
+                            ? "center 30%"
+                            : "center",
+                      }}
+                    />
+                    <ContentBadge
+                      publishDate={post.date}
+                      lastModified={post.lastModified}
+                    />
+                  </Box>
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      flexWrap="wrap"
+                      useFlexGap
+                      sx={{ mb: 2 }}
+                    >
+                      {post.tags.map((tag) => (
+                        <Chip
+                          key={tag}
+                          label={tag}
+                          size="small"
+                          color="primary"
+                          variant="soft"
+                        />
+                      ))}
+                    </Stack>
+                    <Typography
+                      component={RouterLink}
+                      to={post.link}
+                      variant="h6"
+                      sx={{
+                        display: "inline-flex",
+                        textDecoration: "none",
+                        color: "text.primary",
+                        mb: 1,
+                      }}
+                    >
+                      {post.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {post.excerpt}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      mt: "auto",
+                      px: 3,
+                      pb: 3,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Button
+                      component={RouterLink}
+                      to={post.link}
+                      variant="contained"
+                      size="small"
+                      aria-label={`Read more: ${post.title}`}
+                    >
+                      Read more
+                    </Button>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <EventIcon fontSize="small" sx={{ color: "text.secondary" }} />
+                      <Typography variant="caption" color="text.secondary">
+                        {post.date}
+                      </Typography>
+                    </Stack>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Box textAlign="center" sx={{ mt: 4 }}>
+            <Button
+              variant="outlined"
+              size="large"
+              aria-label="Load more blog posts"
+            >
+              Load More
+            </Button>
+          </Box>
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

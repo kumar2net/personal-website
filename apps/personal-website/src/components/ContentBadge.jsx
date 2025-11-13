@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Grow from "@mui/material/Grow";
 import {
   shouldShowNewBadge,
   shouldShowUpdatedBadge,
-} from '../utils/contentDates';
+} from "../utils/contentDates";
 
-const ContentBadge = ({ publishDate, lastModified, className = '' }) => {
+const ContentBadge = ({ publishDate, lastModified, className = "" }) => {
   const [badgeType, setBadgeType] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -32,28 +35,30 @@ const ContentBadge = ({ publishDate, lastModified, className = '' }) => {
     return null;
   }
 
-  const badgeStyles = {
-    new: 'bg-red-500 text-white',
-    updated: 'bg-blue-500 text-white',
-  };
-
-  const badgeText = {
-    new: 'NEW',
-    updated: 'UPDATED',
-  };
-
   return (
-    <div className={`absolute top-2 right-2 z-10 ${className}`}>
-      <span
-        className={`
-        inline-flex items-center px-2 py-1 rounded-full text-xs font-bold
-        ${badgeStyles[badgeType]}
-        animate-pulse
-      `}
+    <Grow in timeout={220}>
+      <Box
+        className={className}
+        sx={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+          zIndex: 2,
+        }}
       >
-        {badgeText[badgeType]}
-      </span>
-    </div>
+        <Chip
+          label={badgeType === "new" ? "New" : "Updated"}
+          size="small"
+          color={badgeType === "new" ? "error" : "info"}
+          sx={{
+            fontWeight: 700,
+            letterSpacing: 0.8,
+            textTransform: "uppercase",
+            boxShadow: "0 8px 18px rgba(15,23,42,0.2)",
+          }}
+        />
+      </Box>
+    </Grow>
   );
 };
 
