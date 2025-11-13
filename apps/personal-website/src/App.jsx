@@ -37,6 +37,7 @@ import Logo from "./components/Logo";
 import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
+import { useColorMode } from "./providers/ColorModeProvider";
 
 // Eagerly load critical components
 import About from "./pages/About";
@@ -178,6 +179,8 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const { mode } = useColorMode();
+  const isDarkMode = mode === "dark";
 
   const trackClick = (eventName, parameters = {}) => {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
@@ -322,15 +325,14 @@ function App() {
           position="sticky"
           color="transparent"
           elevation={0}
-          sx={(theme) => ({
+          sx={{
             backdropFilter: "blur(18px)",
-            backgroundColor:
-              theme.palette.mode === "dark"
-                ? "rgba(5, 11, 22, 0.9)"
-                : "rgba(255, 255, 255, 0.92)",
+            backgroundColor: isDarkMode
+              ? "rgba(5, 11, 22, 0.9)"
+              : "rgba(255, 255, 255, 0.92)",
             borderBottom: "1px solid",
             borderColor: "divider",
-          })}
+          }}
         >
           <Toolbar sx={{ minHeight: 80, gap: 2 }}>
             <Tooltip title="Click to go Home">
@@ -375,10 +377,20 @@ function App() {
                   color="inherit"
                   size="small"
                   sx={{
-                    color: "text.secondary",
+                    color: isDarkMode ? "rgba(248,250,252,0.92)" : "#0f172a",
                     borderRadius: 999,
                     px: 2,
-                    fontWeight: 500,
+                    fontWeight: 600,
+                    letterSpacing: 0.2,
+                    transition:
+                      "color 180ms ease, background-color 180ms ease, transform 180ms ease",
+                    "&:hover": {
+                      color: isDarkMode ? "#ffffff" : "#1d4ed8",
+                      backgroundColor: isDarkMode
+                        ? "rgba(248,250,252,0.12)"
+                        : "rgba(59,130,246,0.08)",
+                      transform: "translateY(-1px)",
+                    },
                   }}
                 >
                   {item.label}
@@ -399,6 +411,7 @@ function App() {
                   trackClick("mobile_menu_toggle", { isOpen: true });
                 }}
                 aria-label="Open mobile menu"
+                sx={{ color: isDarkMode ? "#f8fafc" : "#0f172a" }}
               >
                 <HiMenu />
               </IconButton>
@@ -427,7 +440,11 @@ function App() {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Typography variant="subtitle1" fontWeight={600}>
+            <Typography
+              variant="subtitle1"
+              fontWeight={600}
+              sx={{ color: isDarkMode ? "#f8fafc" : "#0f172a" }}
+            >
               Navigate
             </Typography>
             <ModeToggle />
@@ -440,7 +457,15 @@ function App() {
                   {...getLinkProps(item)}
                   onClick={() => handleNavClick(item, true)}
                 >
-                  <ListItemText primary={item.label} />
+                  <ListItemText
+                    primary={item.label}
+                    primaryTypographyProps={{
+                      sx: {
+                        fontWeight: 600,
+                        color: isDarkMode ? "#f8fafc" : "#0f172a",
+                      },
+                    }}
+                  />
                 </ListItemButton>
               </ListItem>
             ))}
