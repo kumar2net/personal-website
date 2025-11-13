@@ -5,7 +5,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - npm 11.6.2 (locked via `package-lock.json`).
 - Optional: Python 3.11 for the experimental GNN backend (`backend/gnn_server.py`).
 - Access to a Google Cloud project with GA4 BigQuery export (and Vertex AI if you want live topic suggestions). Semantic search now runs entirely on Gemini + a JSON index, so you only need `GEMINI_API_KEY` to rebuild/query embeddings.
-- API keys: Gemini (`GEMINI_API_KEY`), OpenAI (`OPENAI_API_KEY`), X bearer token, Vercel KV credentials; TL;DR now reuses the OpenAI key used by `/api/generations`.
+- API keys: Gemini (`GEMINI_API_KEY`), OpenAI (`OPENAI_API_KEY`), X bearer token. TL;DR reuses the OpenAI key for summary generation.
 
 ## Directory Ownership
 | Path | Responsibility |
@@ -13,7 +13,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | `apps/personal-website` | Primary Vite SPA + scripts. |
 | `apps/news` | Lightweight Vite shell for future news microsite. |
 | `packages/ui-theme` | Shared MUI theme package. |
-| `apps/personal-website/api` | Serverless handlers (convert, semantic search, feeds, generations). |
+| `apps/personal-website/api` | Serverless handlers (convert, semantic search, feeds). |
 | `backend` | Express analytics/topic recommender + GA4/Vertex services. |
 
 ## Environment Variables
@@ -22,7 +22,7 @@ Populate `.env` at repo root (copy from `.env.example`) and `backend/.env` (from
 | Var | Location | Notes |
 | --- | --- | --- |
 | `GEMINI_API_KEY` | root | Required for semantic search indexing (`scripts/build-semantic-index.mjs`) and query-time embeddings. No fallback path exists without it.
-| `OPENAI_API_KEY`, `OPENAI_MODEL` | root | Needed for `/api/generations/merge`. Fallback text is used when absent.
+| `OPENAI_API_KEY`, `OPENAI_MODEL` | root | Needed for `/api/tldr` (OpenAI summaries). Set `TLDR_DEV_FAKE=1` if no key is available.
 | `GCP_PROJECT_ID`, `GCP_LOCATION` | root + backend | Required for Vertex AI + BigQuery clients.
 | `GCP_SERVICE_ACCOUNT_JSON` | root | Inline JSON used by semantic search/Vertex clients during local dev.
 | `VITE_NEWS_API_KEY`, `VITE_CLIMATIQ_API_KEY` | root | Used by climate/news widgets. Provide dummy strings for local dev if hitting external APIs is optional.
@@ -92,14 +92,9 @@ The UI theme package is part of the workspace, so no extra steps are required.
      -d '{"q":"india usa trade gap","topK":3}'
    ```
    With `GEMINI_API_KEY` set (and `npm run semantic:index` having produced `src/data/semantic-index.json`) you get scored semantic hits sourced from the local index; without the key the handler returns `500`.
-4. **Generations merge**
-   ```sh
-   curl -X POST http://localhost:5173/api/generations/merge -H 'Content-Type: application/json' -d '{"promptId":"2025-W45"}'
-   ```
-   Without OpenAI credentials the JSON includes `tokenUsage.source = "fallback"`.
-5. **Frontend route smoke**
+4. **Frontend route smoke**
    - Open `http://localhost:5173`.
-   - Navigate to `/blog`, `/topics`, `/reco`, `/generations`.
+   - Navigate to `/blog`, `/topics`, `/reco`.
    - Ensure the console is free of uncaught errors and network panel shows 2xx for local API calls.
 
 ## Troubleshooting
