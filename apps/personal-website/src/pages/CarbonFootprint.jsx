@@ -693,7 +693,7 @@ export default function CarbonFootprint() {
           <button
             type="submit"
             disabled={isLoading || isResolvingFactors}
-            className="w-full rounded-xl bg-teal-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:bg-teal-300"
+            className="w-full rounded-xl bg-teal-800 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 disabled:cursor-not-allowed disabled:bg-teal-200 disabled:text-teal-700"
           >
             {isLoading
               ? "Estimating…"
