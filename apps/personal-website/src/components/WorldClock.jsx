@@ -18,12 +18,12 @@ const Clock = ({ timeZone, label, city }) => {
   }, [timeZone]);
 
   return (
-    <div className="flex flex-col items-center px-2 py-1 bg-gray-200 rounded-lg">
-      <span className="text-xs font-medium text-gray-600">{label}</span>
+    <div className="flex flex-col items-center px-2 py-1 bg-white border border-gray-200 rounded-lg shadow-sm">
+      <span className="text-xs font-medium text-gray-700">{label}</span>
       <span className="text-sm font-bold text-gray-900">
         {time.substring(0, 5)}
       </span>
-      <span className="text-xs text-gray-500">{city}</span>
+      <span className="text-xs text-gray-600">{city}</span>
     </div>
   );
 };
