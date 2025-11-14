@@ -1,9 +1,12 @@
+import { XMLParser } from "fast-xml-parser";
+
 const BASE = "https://api.x.com/2";
 const COMMON_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
+const NITTER_BASE = "https://nitter.net";
 
 async function xFetch(path, token) {
   const response = await fetch(`${BASE}${path}`, {
@@ -24,6 +27,39 @@ async function xFetch(path, token) {
   return response.json();
 }
 
+async function fetchNitter(username) {
+  const rssUrl = `${NITTER_BASE}/${encodeURIComponent(username)}/rss`;
+  const response = await fetch(rssUrl, {
+    headers: { "User-Agent": "personal-website-x-latest" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Nitter RSS error ${response.status}`);
+  }
+
+  const xml = await response.text();
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: "",
+  });
+  const parsed = parser.parse(xml);
+  const channel = parsed?.rss?.channel || {};
+  const items = Array.isArray(channel.item)
+    ? channel.item
+    : channel.item
+      ? [channel.item]
+      : [];
+
+  return items.slice(0, 5).map((item, index) => ({
+    id: item?.guid || item?.link || `${username}-${index}`,
+    text: (item?.description || item?.title || "")
+      .replace(/<[^>]*>/g, "")
+      .trim(),
+    created_at: item?.pubDate || channel.lastBuildDate || new Date().toISOString(),
+    url: item?.link || `https://x.com/${username}`,
+  }));
+}
+
 export default async function handler(req, res) {
   if (req.method === "OPTIONS") {
     res.setHeader("Access-Control-Max-Age", "86400");
@@ -33,45 +69,38 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  const username = (req.query && req.query.username) || "kumar2net";
+
   try {
     const token = process.env.X_BEARER_TOKEN;
-    const username = (req.query && req.query.username) || "kumar2net";
 
-    if (!token) {
-      Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
-        res.setHeader(key, value),
+    let items = [];
+
+    if (token) {
+      const userResp = await xFetch(
+        `/users/by/username/${encodeURIComponent(username)}?user.fields=profile_image_url`,
+        token,
       );
-      res.setHeader("content-type", "application/json");
-      return res
-        .status(503)
-        .json({ error: "X_BEARER_TOKEN not configured" });
-    }
+      const userId = userResp?.data?.id;
+      if (!userId) {
+        throw new Error("User not found");
+      }
 
-    const userResp = await xFetch(
-      `/users/by/username/${encodeURIComponent(username)}?user.fields=profile_image_url`,
-      token,
-    );
-    const userId = userResp?.data?.id;
-    if (!userId) {
-      Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
-        res.setHeader(key, value),
+      const tweetsResp = await xFetch(
+        `/users/${userId}/tweets?max_results=5&tweet.fields=created_at`,
+        token,
       );
-      res.setHeader("content-type", "application/json");
-      return res.status(404).json({ error: "User not found" });
+      const tweets = tweetsResp?.data || [];
+
+      items = tweets.map((tweet) => ({
+        id: tweet.id,
+        text: tweet.text,
+        created_at: tweet.created_at,
+        url: `https://twitter.com/${username}/status/${tweet.id}`,
+      }));
+    } else {
+      items = await fetchNitter(username);
     }
-
-    const tweetsResp = await xFetch(
-      `/users/${userId}/tweets?max_results=5&tweet.fields=created_at`,
-      token,
-    );
-    const tweets = tweetsResp?.data || [];
-
-    const items = tweets.map((tweet) => ({
-      id: tweet.id,
-      text: tweet.text,
-      created_at: tweet.created_at,
-      url: `https://twitter.com/${username}/status/${tweet.id}`,
-    }));
 
     Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
       res.setHeader(key, value),
@@ -81,15 +110,42 @@ export default async function handler(req, res) {
     return res.status(200).json({ username, items });
   } catch (err) {
     const status = err && err.status ? err.status : 500;
-    Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
-      res.setHeader(key, value),
-    );
-    res.setHeader("content-type", "application/json");
-    return res.status(status).json({
-      error: "Failed to fetch X posts",
-      details: String(
-        (err && err.details) || (err && err.message) || err,
-      ),
-    });
+    if (process.env.X_BEARER_TOKEN) {
+      try {
+        const fallbackItems = await fetchNitter(username);
+        Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
+          res.setHeader(key, value),
+        );
+        res.setHeader("content-type", "application/json");
+        res.setHeader("cache-control", "public, max-age=300");
+        return res.status(200).json({
+          username,
+          items: fallbackItems,
+          warning: `Primary X API failed (${status}); served fallback RSS.`,
+        });
+      } catch (fallbackErr) {
+        Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
+          res.setHeader(key, value),
+        );
+        res.setHeader("content-type", "application/json");
+        return res.status(status).json({
+          error: "Failed to fetch X posts",
+          details: `${String(
+            (err && err.details) || (err && err.message) || err,
+          )}; fallback also failed: ${String(fallbackErr?.message || fallbackErr)}`,
+        });
+      }
+    } else {
+      Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
+        res.setHeader(key, value),
+      );
+      res.setHeader("content-type", "application/json");
+      return res.status(status).json({
+        error: "Failed to fetch X posts",
+        details: String(
+          (err && err.details) || (err && err.message) || err,
+        ),
+      });
+    }
   }
 }

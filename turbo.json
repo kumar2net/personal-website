@@ -7,6 +7,8 @@
       "env": [
         "GEMINI_API_KEY",
         "OPENAI_API_KEY",
+        "NEWSDATA_API_KEY",
+        "X_BEARER_TOKEN",
         "ROLLUP_SKIP_NODEJS_NATIVE_BUILD"
       ]
     },
