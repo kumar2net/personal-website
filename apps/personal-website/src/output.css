@@ -64,3 +64,43 @@
     border-color: rgba(148, 163, 184, 0.45) !important;
   }
 }
+
+@layer base {
+  :root[data-mui-color-scheme='dark'] .text-gray-900,
+  :root[data-mui-color-scheme='dark'] .text-gray-800,
+  :root[data-mui-color-scheme='dark'] .text-gray-700 {
+    color: #f3f4f6 !important;
+  }
+
+  :root[data-mui-color-scheme='dark'] .text-gray-600,
+  :root[data-mui-color-scheme='dark'] .text-gray-500 {
+    color: #e2e8f0 !important;
+  }
+
+  :root[data-mui-color-scheme='dark'] .text-gray-400,
+  :root[data-mui-color-scheme='dark'] .text-gray-300 {
+    color: #cbd5f5 !important;
+  }
+
+  :root[data-mui-color-scheme='dark'] .text-gray-200,
+  :root[data-mui-color-scheme='dark'] .text-gray-100,
+  :root[data-mui-color-scheme='dark'] .text-gray-50 {
+    color: #f8fafc !important;
+  }
+
+  :root[data-mui-color-scheme='dark'] .text-slate-900,
+  :root[data-mui-color-scheme='dark'] .text-slate-800,
+  :root[data-mui-color-scheme='dark'] .text-slate-700 {
+    color: #f3f4f6 !important;
+  }
+
+  :root[data-mui-color-scheme='dark'] .text-slate-600,
+  :root[data-mui-color-scheme='dark'] .text-slate-500 {
+    color: #d8dee9 !important;
+  }
+
+  :root[data-mui-color-scheme='dark'] .text-slate-400,
+  :root[data-mui-color-scheme='dark'] .text-slate-300 {
+    color: #cbd5f5 !important;
+  }
+}

@@ -10,7 +10,9 @@
     "build": "turbo run build",
     "dev": "turbo dev --filter=personal-website",
     "lint": "turbo run lint",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "bookhints:process": "node apps/personal-website/scripts/bookhint-agentic.mjs",
+    "bookhints:watch": "node apps/personal-website/scripts/bookhint-agentic.mjs --watch"
   },
   "devDependencies": {
     "turbo": "^2.6.0"

@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "sevenstoriesrb-md",
+    "title": "Seven Must Read Nature Stories (Rupa Quick Reads)",
+    "author": "Ruskin Bond",
+    "summary": "Seven Must Read Nature Stories (Rupa Quick Reads)",
+    "description": "Seven Must Read Nature Stories (Rupa Quick Reads)",
+    "tags": [
+      "Notes"
+    ],
+    "publishDate": "November 14, 2025",
+    "lastModified": "November 14, 2025",
+    "readingTime": "2 min read",
+    "sourceFile": "docs/bookhints/sevenstoriesrb.md",
+    "heroGradient": "from-rose-100 to-fuchsia-100",
+    "coverImage": "https://books.google.com/books/content?id=4CTREAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  },
+  {
+    "slug": "life-in-three-dimensions-how-curiosity-exploration-and-experience-make-a-fuller-better-life-by-shigehiro-oishi",
+    "title": "Life in Three Dimensions: How Curiosity, Exploration and Experience Make a Fuller, Better Life",
+    "author": "Shigehiro Oishi",
+    "summary": "Life in Three Dimensions: How Curiosity, Exploration and Experience Make a Fuller, Better Life",
+    "description": "Life in Three Dimensions: How Curiosity, Exploration and Experience Make a Fuller, Better Life",
+    "tags": [
+      "Notes"
+    ],
+    "publishDate": "November 14, 2025",
+    "lastModified": "November 14, 2025",
+    "readingTime": "6 min read",
+    "sourceFile": "docs/bookhints/Life_in_3_dimensions.md",
+    "heroGradient": "from-amber-100 to-orange-100",
+    "coverImage": "https://books.google.com/books/content?id=UroOEQAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+  }
+]

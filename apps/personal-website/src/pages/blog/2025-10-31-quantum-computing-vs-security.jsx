@@ -12,25 +12,14 @@ const badgeStyles = {
   explainer: "bg-slate-100 text-slate-800",
 };
 
-const qubitCapabilityInfographic = new URL(
-  "/media/Qbit_Realworld.png",
-  import.meta.url,
-).href;
+const qubitCapabilityInfographic = "/media/Qbit_Realworld.png";
 
-const quantumSecurityInfographic = new URL(
-  "/media/ChatGPT%20Image%20Oct%2031%2C%202025%2C%2009_37_24%20AM.png",
-  import.meta.url,
-).href;
+const quantumSecurityInfographic =
+  "/media/ChatGPT%20Image%20Oct%2031%2C%202025%2C%2009_37_24%20AM.png";
 
-const ladderIllustration = new URL(
-  "/media/quantum-security-ladder.svg",
-  import.meta.url,
-).href;
+const ladderIllustration = "/media/quantum-security-ladder.svg";
 
-const qubitEvolutionIllustration = new URL(
-  "/media/quantum-capability-bars.svg",
-  import.meta.url,
-).href;
+const qubitEvolutionIllustration = "/media/quantum-capability-bars.svg";
 
 const QuantumComputingVsSecurity = () => {
   const navigate = useNavigate();

@@ -1,16 +1,115 @@
 import { Link } from 'react-router-dom';
 import BookCover from '../components/BookCover';
 import ContentBadge from '../components/ContentBadge';
+import autoBooks from '../data/autoBooks.json';
+
+const TAG_CLASSES = [
+  'bg-blue-100 text-blue-800',
+  'bg-purple-100 text-purple-800',
+  'bg-emerald-100 text-emerald-800',
+  'bg-amber-100 text-amber-800',
+  'bg-rose-100 text-rose-800',
+  'bg-sky-100 text-sky-800',
+];
+
+const FALLBACK_GRADIENT = 'from-indigo-100 via-purple-50 to-pink-100';
+
+function AutoBookCard({ book, index }) {
+  const gradient = book?.heroGradient || FALLBACK_GRADIENT;
+  const tags = Array.isArray(book?.tags) ? book.tags : [];
+  const publishDate = book?.publishDate || 'Recently added';
+  const lastModified = book?.lastModified || publishDate;
+  const readingTime = book?.readingTime;
+  const summary = book?.summary || book?.description;
+  const coverImage = book?.coverImage;
+  const coverAlt = book?.coverAlt || `${book?.title || 'Book'} cover art`;
+
+  return (
+    <Link
+      to={`/books/${book.slug}`}
+      aria-label={`Read ${book.title}`}
+      className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+    >
+      <div
+        className={`rounded-md h-40 sm:h-48 bg-gradient-to-br ${gradient} border overflow-hidden relative`}
+      >
+        {coverImage ? (
+          <img
+            src={coverImage}
+            alt={coverAlt}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <BookCover
+            bookId={book.slug}
+            title={book.title}
+            author={book.author}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-black bg-opacity-10 group-hover:bg-opacity-5 transition-all duration-300"></div>
+        <ContentBadge publishDate={publishDate} lastModified={lastModified} />
+      </div>
+      <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            {book.title}
+          </h2>
+          {readingTime && (
+            <span className="text-xs sm:text-sm text-gray-500">{readingTime}</span>
+          )}
+        </div>
+        <p className="text-sm text-gray-500 mt-1">{book.author}</p>
+        {tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {tags.map((tag, tagIndex) => (
+              <span
+                key={`${book.slug}-tag-${tag}`}
+                className={`px-3 py-1 rounded-full text-xs sm:text-sm font-semibold ${
+                  TAG_CLASSES[(index + tagIndex) % TAG_CLASSES.length]
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+        {summary && (
+          <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            {summary}
+          </p>
+        )}
+        <div className="mt-4">
+          <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            Read Book
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
 
 function Books() {
   return (
     <div className="space-y-8">
       <header className="text-center">
         <h1 className="text-3xl md:text-4xl font-bold">Books</h1>
-        <p className="text-gray-600 mt-2">Reading notes and handbooks</p>
+        <p className="text-gray-600 dark:text-slate-200 mt-2">
+          Reading notes and handbooks
+        </p>
       </header>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {autoBooks?.length > 0 &&
+          autoBooks.map((book, index) => (
+            <AutoBookCard
+              key={book?.slug || `${book?.title || 'book'}-${index}`}
+              book={book}
+              index={index}
+            />
+          ))}
         <Link
           to="/books/the-last-drop-of-water"
           aria-label="Read The Last Drop of Water, oh no"

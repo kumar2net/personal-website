@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo } from "react";
 import {
   CssVarsProvider,
   extendTheme,
@@ -44,6 +44,16 @@ function ModeBridge({ children }: { children: ReactNode }) {
       },
     };
   }, [resolvedMode, setMode]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const root = document.documentElement;
+    if (resolvedMode === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [resolvedMode]);
 
   return (
     <ColorModeContext.Provider value={value}>
