@@ -1,4 +1,8 @@
-# Agentic bookhints workflow
+---
+title: "Bookhints Agent Workflow"
+---
+
+# Bookhints Agent Workflow
 
 Dropping any `.md`/`.txt` file inside `docs/bookhints` now triggers an Agentic workflow that turns the note into a polished `/books` entry. The workflow is powered by OpenAI's Agentic Toolkit (Responses API + JSON schema) and lives in `apps/personal-website/scripts/bookhint-agentic.mjs`.
 
