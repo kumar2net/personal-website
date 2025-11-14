@@ -4,7 +4,11 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"],
-      "env": ["GEMINI_API_KEY", "OPENAI_API_KEY"]
+      "env": [
+        "GEMINI_API_KEY",
+        "OPENAI_API_KEY",
+        "ROLLUP_SKIP_NODEJS_NATIVE_BUILD"
+      ]
     },
     "dev": {
       "persistent": true
