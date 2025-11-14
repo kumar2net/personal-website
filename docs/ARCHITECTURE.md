@@ -2,7 +2,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## Monorepo Topology
 - npm 11.x workspaces orchestrated via Turborepo (`package.json`, `turbo.json`).
-- Workspaces: `apps/personal-website` (primary SPA), `apps/news` (secondary Vite shell), `packages/ui-theme` (MUI design system). The `/backend` Express app and `/api` serverless handlers share the repo but are not Turborepo workspaces.
+- Workspaces: `apps/personal-website` (primary SPA) and `packages/ui-theme` (MUI design system). The `/backend` Express app and `/api` serverless handlers share the repo but are not Turborepo workspaces.
 - Global tooling lives under `apps/personal-website/scripts` (GA4 ingestion, semantic indexing, PDF converters, DevTools probes) and `backend/scripts` (GCP setup smoke tests).
 
 ## Frontend: `apps/personal-website`
@@ -47,7 +47,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - Error resiliency: `src/main.jsx` retries mounting up to three times before showing an inline recovery card, and `ErrorBoundary` provides a reload UI with dev-only stack traces.
 
 ## Build & Deploy
-- Turborepo tasks: `build` runs Vite builds for apps (personal-website depends on `@kumar2net/ui-theme`); `dev` marks watch tasks as persistent. `turbo run build --graph` shows `personal-website` depends on `ui-theme` while `news` is isolated (see `docs/_facts/turbo-graph.dot`).
+- Turborepo tasks: `build` runs Vite builds for apps (personal-website depends on `@kumar2net/ui-theme`); `dev` marks watch tasks as persistent. `turbo run build --graph` shows `personal-website` depending solely on `ui-theme` (see `docs/_facts/turbo-graph.dot`).
 - Vercel SPA rewrite (`vercel.json`) routes all paths to `index.html`. Backend can deploy independently (Node/Express) or behind Netlify/Vercel serverless proxies.
 
 ## Dependency Diagram

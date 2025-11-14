@@ -4,7 +4,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | Package | Path | Purpose |
 | --- | --- | --- |
 | `personal-website` | `apps/personal-website` | React 18 + Vite SPA with blog, recommendations, semantic search, and automation tooling.
-| `news` | `apps/news` | Placeholder Vite shell for an external news microsite.
 | `@kumar2net/ui-theme` | `packages/ui-theme` | Shared MUI 7 theme + ThemeProvider exports.
 | (extra) `api` | `apps/personal-website/api/*` | Serverless handlers consumed by Vite + Vercel.
 | (extra) `backend` | `backend/` | Express analytics + GA4/Vertex topic recommender.
@@ -27,10 +26,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - `src/data` stores blog metadata, GA4 snapshots, comments, and the JSON semantic index (`semantic-index.json`).
 - Scripts (npm): `dev`, `build`, `lint`, `preview`, plus >30 task-specific commands (`semantic:index`, `ga:*`, `test:*`, `biome:*`, `cleanup:*`, `convert:*`). `semantic:index` calls `scripts/build-semantic-index.mjs` to rebuild `src/data/semantic-index.json`. All scripts run node-based utilities inside `scripts/`.
 - Notable dev utilities under `scripts/` include `generate-sitemap.mjs`, `ga4-topic-suggestions.mjs`, `test-viewport-mobile.mjs`, `fetch-comments-build.mjs`, and `test-chrome-devtools.mjs` for headless probes.
-
-## `apps/news`
-- Minimal Vite setup (no `src/` checked in yet) with `dev`, `build`, `lint`, `test` scripts acting as placeholders.
-- Intended to point traffic to `https://news.kumar2net.com` (see `App.jsx` `ExternalNewsRedirect`).
 
 ## `packages/@kumar2net/ui-theme`
 - Files: `theme.ts`, `ThemeProvider.tsx`, `index.ts`.
