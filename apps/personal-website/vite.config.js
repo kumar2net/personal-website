@@ -1,6 +1,9 @@
-import { defineConfig } from 'vite'
+import { defineConfig, searchForWorkspaceRoot } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+
+const rootNodeModules = path.resolve(__dirname, '../../node_modules')
+const newsWorkspaceRoot = path.resolve(__dirname, '../news')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,10 +11,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+      'react-router-dom': path.join(rootNodeModules, 'react-router-dom'),
     },
   },
   optimizeDeps: {
-    include: ['react-markdown'],
+    include: ['react-markdown', 'react-router-dom'],
   },
   build: {
     chunkSizeWarningLimit: 1500,
@@ -21,5 +25,8 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     open: false,
+    fs: {
+      allow: [searchForWorkspaceRoot(process.cwd()), newsWorkspaceRoot],
+    },
   },
 })
