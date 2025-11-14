@@ -3,7 +3,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 ## Overview
 - Monorepo managed by npm workspaces + Turborepo (`turbo.json`).
 - Primary app: `apps/personal-website` (Vite + React 18, Tailwind, MUI Theme package).
-- Secondary app: `apps/news` (skeleton Vite app reserved for news microsite).
 - Shared UI package: `packages/ui-theme` (MUI color-system + provider exports).
 - API edge/serverless functions live under `/api` for conversions, feeds, and semantic search.
 - Analytics + recommender backend lives under `/backend` (Express server, GA4 BigQuery queries, Vertex AI orchestration plus Python prototypes).
@@ -13,7 +12,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 api/                     # Vercel/Netlify friendly serverless handlers (convert, semantic-search, wp feed)
 apps/
   personal-website/      # Vite React app, scripts/, public/, src/components|pages|data|services
-  news/                  # Placeholder Vite app with dev/build stubs
 backend/                 # Express analytics API + GA4/Vertex services, Python GNN experiments
 packages/
   ui-theme/              # Shared MUI theme + ThemeProvider wrapper
@@ -31,7 +29,6 @@ backend/.env.example     # Backend env sample
 | Package | Path | Type |
 | --- | --- | --- |
 | `personal-website` | `apps/personal-website` | React + Vite SPA |
-| `news` | `apps/news` | Placeholder Vite app |
 | `@kumar2net/ui-theme` | `packages/ui-theme` | Shared design system |
 
 ## Root npm scripts
@@ -50,9 +47,6 @@ backend/.env.example     # Backend env sample
 - `test:*`: numerous Node scripts under `scripts/` (unit, e2e, sitemap, viewport, etc.).
 - `ga:*`, `semantic:index`, `sitemap`, `fetch:comments`, `biome:*`, `cleanup:*`: automation for GA4/semantic data, formatting, cleanups.
 
-### `apps/news`
-- `dev`: `vite --host 127.0.0.1 --port 5174 --open`.
-- Build/lint/test currently stubs logging placeholders.
 
 ### `backend`
 - `dev`: `nodemon server.js` on port `process.env.PORT || 3001`.
@@ -66,7 +60,6 @@ backend/.env.example     # Backend env sample
 
 ## Ports + endpoints (by config)
 - `apps/personal-website`: Vite dev server on `localhost:5173` (strict) with local `/api/convert` + `/api/semantic-search` shims via the Vite middleware hitting the actual serverless handlers.
-- `apps/news`: Vite dev server on `localhost:5174`.
 - `backend/server.js`: Express API default `3001`, exposes `/api/health`, `/api/analytics/*`, `/api/recommendations/topics`.
 - Netlify Functions fallback for TL;DR summary uses port `8889` when Vite host detected.
 - GNN sandbox endpoints derived from `VITE_GNN_API_BASE_URL` (default `http://localhost:8000` in dev) for recommender graph + interaction tracking.

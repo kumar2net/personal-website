@@ -11,6 +11,17 @@ import {
 } from "lucide-react";
 import { FaWordpress } from "react-icons/fa";
 
+const resolveApiBase = () => {
+  const configured = import.meta.env.VITE_API_BASE?.trim();
+  if (configured) {
+    return configured.endsWith("/") ? configured.slice(0, -1) : configured;
+  }
+  if (import.meta.env.PROD && typeof window !== "undefined") {
+    return window.location.origin;
+  }
+  return null;
+};
+
 export default function Elsewhere() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,11 +39,16 @@ export default function Elsewhere() {
 
   useEffect(() => {
     let active = true;
-    const base = (() => {
-      const configured = import.meta.env.VITE_API_BASE;
-      if (!configured) return "";
-      return configured.endsWith("/") ? configured.slice(0, -1) : configured;
-    })();
+    const base = resolveApiBase();
+    if (!base) {
+      setError(
+        "WordPress feed is disabled in local development. Set VITE_API_BASE to enable it.",
+      );
+      setLoading(false);
+      return () => {
+        active = false;
+      };
+    }
     const feedUrl = `${base}/api/wp-feed`;
 
     fetch(feedUrl)
@@ -55,7 +71,7 @@ export default function Elsewhere() {
         setPosts(data?.posts || []);
       })
       .catch((e) => {
-        console.error("WordPress feed error:", e);
+        console.warn("WordPress feed error:", e);
         setError(e.message);
       })
       .finally(() => setLoading(false));
@@ -66,11 +82,16 @@ export default function Elsewhere() {
 
   useEffect(() => {
     let active = true;
-    const base = (() => {
-      const configured = import.meta.env.VITE_API_BASE;
-      if (!configured) return "";
-      return configured.endsWith("/") ? configured.slice(0, -1) : configured;
-    })();
+    const base = resolveApiBase();
+    if (!base) {
+      setXError(
+        "X feed is disabled in local development. Set VITE_API_BASE to enable it.",
+      );
+      setXLoading(false);
+      return () => {
+        active = false;
+      };
+    }
     const xUrl = `${base}/api/x-latest?username=kumar2net`;
 
     fetch(xUrl)
@@ -82,7 +103,7 @@ export default function Elsewhere() {
         setXItems(Array.isArray(data?.items) ? data.items : []);
       })
       .catch((e) => {
-        console.error("X feed error:", e);
+        console.warn("X feed error:", e);
         setXError("Unable to load X posts right now.");
       })
       .finally(() => setXLoading(false));

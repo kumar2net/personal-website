@@ -26,36 +26,53 @@ const TechTrendsDashboard = () => {
     return `${day}-${month}-${year}`;
   };
 
+  const manualEndpoint = import.meta.env.VITE_TECH_TRENDS_ENDPOINT?.trim();
+  const allowTrendsFetch =
+    import.meta.env.PROD ||
+    import.meta.env.VITE_ENABLE_TRENDS_FETCH === 'true' ||
+    Boolean(manualEndpoint);
+
   const fetchTechTrends = useCallback(async () => {
+    if (!allowTrendsFetch) {
+      setError(
+        'Tech trends data is disabled in local development. Set VITE_ENABLE_TRENDS_FETCH=true or provide VITE_TECH_TRENDS_ENDPOINT to test.',
+      );
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError('');
 
     try {
-      // Try local Netlify dev server first, then fallback to deployed function
-      const localUrl = 'http://localhost:8888/.netlify/functions/tech-trends';
-      const deployedUrl =
-        'https://kumar2net.com/.netlify/functions/tech-trends';
-
-      let response;
-      try {
-        // Try local first
-        response = await fetch(localUrl);
-        if (!response.ok) {
-          throw new Error(`Local server error: ${response.status}`);
+      const endpoints = [];
+      if (manualEndpoint) {
+        endpoints.push(manualEndpoint);
+      } else {
+        if (import.meta.env.DEV) {
+          endpoints.push('http://localhost:8888/.netlify/functions/tech-trends');
         }
-      } catch (localError) {
-        console.log(
-          'Local Netlify dev server not available, trying deployed function...',
-          localError.message
-        );
-        // Fallback to deployed function
-        response = await fetch(deployedUrl);
-        if (!response.ok) {
-          throw new Error(`Deployed function error: ${response.status}`);
+        endpoints.push('https://kumar2net.com/.netlify/functions/tech-trends');
+      }
+
+      let data;
+      let lastError;
+      for (const endpoint of endpoints) {
+        try {
+          const response = await fetch(endpoint);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          data = await response.json();
+          break;
+        } catch (err) {
+          lastError = err;
         }
       }
 
-      const data = await response.json();
+      if (!data) {
+        throw lastError || new Error('Unable to reach tech trends endpoint.');
+      }
 
       if (data.error) {
         throw new Error(data.message || 'Failed to fetch tech trends');
@@ -70,7 +87,7 @@ const TechTrendsDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [allowTrendsFetch, manualEndpoint]);
 
   useEffect(() => {
     fetchTechTrends();

@@ -11,7 +11,6 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | Path | Responsibility |
 | --- | --- |
 | `apps/personal-website` | Primary Vite SPA + scripts. |
-| `apps/news` | Lightweight Vite shell for future news microsite. |
 | `packages/ui-theme` | Shared MUI theme package. |
 | `apps/personal-website/api` | Serverless handlers (convert, semantic search, feeds). |
 | `backend` | Express analytics/topic recommender + GA4/Vertex services. |
@@ -61,7 +60,6 @@ The UI theme package is part of the workspace, so no extra steps are required.
 | Service | Command | Port | Notes |
 | --- | --- | --- | --- |
 | Vite SPA | `npm run dev` | 5173 | Strict port; proxies `/api/convert` and `/api/semantic-search` into the real handlers (semantic search works in dev).
-| News shell | `npm run dev --prefix apps/news` | 5174 | Optional, placeholder UI.
 | Express analytics | `npm run dev --prefix backend` | 3001 | Required for Topic Suggestions page.
 | TL;DR API | (bundled with Vite) | 5173 proxy | `/api/tldr` runs via Vite's local middleware; Netlify dev is no longer required for summaries.
 | Legacy Netlify functions | `netlify dev` (optional) | 8889 | Only spin up if you still hit `/.netlify/functions/*` during migration.
