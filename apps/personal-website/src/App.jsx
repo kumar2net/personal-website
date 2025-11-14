@@ -98,12 +98,6 @@ const navLinks = [
   { label: "Books", to: "/books", analyticsKey: "nav_books" },
   { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
   { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
-  {
-    label: "News",
-    href: "https://news.kumar2net.com",
-    analyticsKey: "nav_news",
-    external: true,
-  },
   { label: "Learning", to: "/learning", analyticsKey: "nav_learning" },
   { label: "Music", to: "/music", analyticsKey: "nav_music" },
   { label: "Album", to: "/album", analyticsKey: "nav_album" },
