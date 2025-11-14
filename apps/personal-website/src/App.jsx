@@ -26,7 +26,7 @@ const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
 const Trends = lazy(() => import("./pages/Trends"));
 const GenerationsPage = lazy(() => import("./pages/generations"));
-const NewsPage = lazy(() => import("./pages/News"));
+const News = lazy(() => import("./pages/News"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -608,12 +608,12 @@ function App() {
                 element={
                   <>
                     <SEO
-                      title="News"
-                      description="Read the latest stories curated from the IMP News feed without leaving the site."
+                      title="News Desk"
+                      description="Curated market, policy, and technology briefings maintained inside the monorepo."
                       canonicalPath="/news"
                       type="website"
                     />
-                    <NewsPage />
+                    <News />
                   </>
                 }
               />

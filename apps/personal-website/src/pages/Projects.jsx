@@ -279,7 +279,7 @@ cluster_labels = kmeans.fit_predict(self.content_vectors)`}
     tech: ["React", "Vercel", "Tailwind CSS", "NewsAPI"],
     image:
       "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
-    link: "https://news.kumar2net.com",
+    link: "/news",
     features: [
       "Newssearch experience driven by comma-separated topic input",
       "Persists saved interests locally so they are ready on return visits",

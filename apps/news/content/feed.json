@@ -1,0 +1,239 @@
+{
+  "updatedAt": "2025-02-13T00:00:00.000Z",
+  "headline": {
+    "title": "Asia equities steady while investors wait for global inflation updates",
+    "summary": "Overnight trading was range-bound as traders looked to this week's US CPI print and India's industrial output data for direction.",
+    "source": "Financial Times",
+    "url": "https://www.ft.com/markets",
+    "publishedAt": "2025-02-12T22:30:00.000Z",
+    "tag": "Overnight Moves"
+  },
+  "sections": [
+    {
+      "id": "briefing",
+      "title": "Morning Briefing",
+      "summary": "Essential reads to get a quick pulse on domestic markets before the opening bell.",
+      "items": [
+        {
+          "title": "Mint Morning Market Wrap",
+          "source": "Mint",
+          "url": "https://www.livemint.com/market/stock-market-news",
+          "publishedAt": "2025-02-12T23:30:00.000Z",
+          "summary": "Livemint's morning wrap pulls together the macro stories and corporate tidbits moving Indian equities.",
+          "tags": ["Equities", "Macro"]
+        },
+        {
+          "title": "ET Markets Pre-open",
+          "source": "The Economic Times",
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news",
+          "publishedAt": "2025-02-12T23:15:00.000Z",
+          "summary": "Section highlights the overnight cues and block deals to watch in the upcoming session.",
+          "tags": ["Pre-market", "Flows"]
+        },
+        {
+          "title": "Bloomberg Daybreak: Asia",
+          "source": "Bloomberg",
+          "url": "https://www.bloomberg.com/podcasts/daybreak-asia",
+          "publishedAt": "2025-02-12T22:45:00.000Z",
+          "summary": "Podcast episode outlines the macro calendar and the Asia-Pacific stocks to monitor today.",
+          "tags": ["Audio", "Macro"]
+        },
+        {
+          "title": "Reuters India Morning News",
+          "source": "Reuters",
+          "url": "https://www.reuters.com/world/india/",
+          "publishedAt": "2025-02-12T22:00:00.000Z",
+          "summary": "A rolling file that updates through the day with the biggest policy and corporate developments in India.",
+          "tags": ["Policy", "Breaking"]
+        }
+      ]
+    },
+    {
+      "id": "macro",
+      "title": "Policy & Macro",
+      "summary": "Follow rate decisions, fiscal moves, and global trade developments that ripple into Indian markets.",
+      "items": [
+        {
+          "title": "RBI Bulletins & Statements",
+          "source": "Reserve Bank of India",
+          "url": "https://www.rbi.org.in/Scripts/Publication.aspx?subsectionid=19",
+          "publishedAt": "2025-02-12T10:30:00.000Z",
+          "summary": "Official releases and governor commentary straight from Mint Street.",
+          "tags": ["Central Bank", "Policy"]
+        },
+        {
+          "title": "PIB Press Information Bureau",
+          "source": "Government of India",
+          "url": "https://pib.gov.in/AllRelease.aspx",
+          "publishedAt": "2025-02-12T09:00:00.000Z",
+          "summary": "Verified policy announcements and government initiatives across ministries.",
+          "tags": ["Govt", "Releases"]
+        },
+        {
+          "title": "IMF India Country Page",
+          "source": "International Monetary Fund",
+          "url": "https://www.imf.org/en/Countries/IND",
+          "publishedAt": "2025-02-11T18:30:00.000Z",
+          "summary": "Macro assessments, Article IV reports, and growth projections to benchmark domestic expectations.",
+          "tags": ["Global", "Research"]
+        },
+        {
+          "title": "US Economic Calendar",
+          "source": "Bureau of Labor Statistics",
+          "url": "https://www.bls.gov/schedule/",
+          "publishedAt": "2025-02-11T17:00:00.000Z",
+          "summary": "Key releases like CPI, jobs, and PCE that typically drive global risk sentiment.",
+          "tags": ["US", "Data"]
+        }
+      ]
+    },
+    {
+      "id": "corporate",
+      "title": "India Inc.",
+      "summary": "Company results, deal flow, and technology updates from domestic corporates.",
+      "items": [
+        {
+          "title": "BSE Corporate Filings",
+          "source": "BSE",
+          "url": "https://www.bseindia.com/corporates/ann.html",
+          "publishedAt": "2025-02-12T15:30:00.000Z",
+          "summary": "Live stream of board announcements, shareholding changes, and compliance filings.",
+          "tags": ["Filings", "Regulatory"]
+        },
+        {
+          "title": "NSE Press Releases",
+          "source": "NSE India",
+          "url": "https://www.nseindia.com/resources/exchange-communication",
+          "publishedAt": "2025-02-12T14:45:00.000Z",
+          "summary": "Exchange updates covering new listings, derivatives changes, and surveillance actions.",
+          "tags": ["Exchange", "Listings"]
+        },
+        {
+          "title": "YourStory Enterprise Tech",
+          "source": "YourStory",
+          "url": "https://yourstory.com/enterprise-tech",
+          "publishedAt": "2025-02-12T13:00:00.000Z",
+          "summary": "Coverage of Indian SaaS companies, funding rounds, and product launches.",
+          "tags": ["Startups", "Technology"]
+        },
+        {
+          "title": "Moneycontrol Earnings Calendar",
+          "source": "Moneycontrol",
+          "url": "https://www.moneycontrol.com/markets/earnings/",
+          "publishedAt": "2025-02-12T12:30:00.000Z",
+          "summary": "Quarterly schedules, consensus estimates, and commentary for listed companies.",
+          "tags": ["Earnings", "Calendar"]
+        }
+      ]
+    },
+    {
+      "id": "climate-tech",
+      "title": "Tech & Climate",
+      "summary": "Longer reads on sustainability, energy transition, and the technology shifts reshaping policy.",
+      "items": [
+        {
+          "title": "Rest of World: India Technology",
+          "source": "Rest of World",
+          "url": "https://restofworld.org/regions/india/",
+          "publishedAt": "2025-02-11T20:00:00.000Z",
+          "summary": "Deep dives into India's digital public infrastructure and startup ecosystem.",
+          "tags": ["Analysis", "Technology"]
+        },
+        {
+          "title": "Bloomberg Green",
+          "source": "Bloomberg",
+          "url": "https://www.bloomberg.com/green",
+          "publishedAt": "2025-02-11T19:30:00.000Z",
+          "summary": "Climate policy, carbon markets, and clean tech innovation around the world.",
+          "tags": ["Climate", "Global"]
+        },
+        {
+          "title": "IEEFA India",
+          "source": "Institute for Energy Economics and Financial Analysis",
+          "url": "https://ieefa.org/india",
+          "publishedAt": "2025-02-11T18:00:00.000Z",
+          "summary": "Research papers on renewable adoption, coal phase-down, and grid planning.",
+          "tags": ["Research", "Energy"]
+        },
+        {
+          "title": "The Ken Climate Smart",
+          "source": "The Ken",
+          "url": "https://the-ken.com/climate-smart/",
+          "publishedAt": "2025-02-11T16:30:00.000Z",
+          "summary": "Subscription deep dives on climate tech operators and policy innovations across South Asia.",
+          "tags": ["Subscription", "Deep Dive"]
+        }
+      ]
+    }
+  ],
+  "watchlist": [
+    {
+      "label": "Nifty 50",
+      "value": "22,120",
+      "change": "+0.84%",
+      "direction": "up"
+    },
+    {
+      "label": "Sensex",
+      "value": "73,560",
+      "change": "+0.76%",
+      "direction": "up"
+    },
+    {
+      "label": "USD/INR",
+      "value": "82.95",
+      "change": "-0.12%",
+      "direction": "down"
+    },
+    {
+      "label": "Brent Crude",
+      "value": "$81.40",
+      "change": "-0.45%",
+      "direction": "down"
+    }
+  ],
+  "quickLinks": [
+    {
+      "category": "Calendar",
+      "title": "Trading holidays and settlement schedule",
+      "summary": "NSE's master list of clearing holidays and cut-off timings for equity and F&O trades.",
+      "url": "https://www.nseindia.com/resources/exchange-communication-holidays"
+    },
+    {
+      "category": "Data",
+      "title": "NSDL Bulk Deals",
+      "summary": "Track institutional moves across the NSE with raw data refreshed every 15 minutes.",
+      "url": "https://nsdl.co.in/Investor/bulklivenew.php"
+    },
+    {
+      "category": "Community",
+      "title": "India FinTwit curations",
+      "summary": "Handpicked Twitter lists covering domestic market commentators and policy voices.",
+      "url": "https://twitter.com/i/lists/1680977392303747072"
+    },
+    {
+      "category": "Tools",
+      "title": "Energy Policy Tracker",
+      "summary": "Database of government energy commitments and subsidies across 34 countries.",
+      "url": "https://www.energypolicytracker.org/"
+    }
+  ],
+  "audioBriefings": [
+    {
+      "source": "Mint",
+      "title": "Morning News Expresso",
+      "duration": "6 min listen",
+      "url": "https://www.livemint.com/news/podcast"
+    },
+    {
+      "source": "The Ken",
+      "title": "Weekly Wrap: Climate Smart",
+      "duration": "12 min listen",
+      "url": "https://the-ken.com/podcasts/"
+    }
+  ],
+  "fallback": {
+    "label": "Open the IMP News microsite",
+    "url": "https://impnews.netlify.app/"
+  }
+}

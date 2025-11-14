@@ -40,7 +40,7 @@ Somewhere between these points sits the November dilemma: the policy is simultan
 
 ## Reclaiming My Digital Home
 
-Netlify paused my site this week, freemium realities catch up eventually, so I finally bought my own domain and redeployed everything. I even recorded a quick screen capture to remember the moment ([watch the Loom clip](https://www.loom.com/share/1ac97d75d4d347bb9afb287ebd25b8a6)). The rebuild pushed me to polish the news sub-domain, [news.kumar2net.com](https://news.kumar2net.com/), which now holds just the topics I care about and remembers them across the session.
+Netlify paused my site this week, freemium realities catch up eventually, so I finally bought my own domain and redeployed everything. I even recorded a quick screen capture to remember the moment ([watch the Loom clip](https://www.loom.com/share/1ac97d75d4d347bb9afb287ebd25b8a6)). The rebuild pushed me to polish the news desk at [kumar2net.com/news](https://kumar2net.com/news), which now holds just the topics I care about and remembers them across the session.
 
 Owning the domain feels like a small but necessary step in keeping this space resilient, especially when platforms tighten quotas without warning.
 

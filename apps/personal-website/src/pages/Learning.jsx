@@ -92,7 +92,7 @@ const Learning = () => {
               <p className="mt-4 text-gray-600 leading-relaxed">
                 I recorded a short, vertical tour that shows how to hop between{" "}
                 <code>/blog</code>, <code>/convert</code>, <code>/music</code>, and{" "}
-                <code>news.kumar2net.com</code> (the pull-mode news desk powered by AI
+                <code>kumar2net.com/news</code> (the pull-mode news desk powered by AI
                 topic filters). It is the quickest way to learn the layout, nav
                 tips, and what each utility does before you dive into the
                 flashcards below.
