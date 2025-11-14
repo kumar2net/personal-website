@@ -3,9 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "echo \"News app placeholder\"",
-    "build": "echo \"News build placeholder\"",
-    "lint": "echo \"News lint placeholder\"",
-    "test": "echo \"News test placeholder\""
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs",
+    "lint": "echo \"No lint step for static news feed\"",
+    "test": "node scripts/build.mjs"
   }
 }

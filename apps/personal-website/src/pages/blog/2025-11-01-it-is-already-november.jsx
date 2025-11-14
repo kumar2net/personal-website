@@ -325,12 +325,12 @@ const ItIsAlreadyNovember = () => {
           <p className="text-lg leading-relaxed">
             The rebuild nudged me to polish the news sub-domain,
             <a
-              href="https://news.kumar2net.com/"
+              href="https://kumar2net.com/news"
               className="ml-1 text-blue-600 hover:underline"
               target="_blank"
               rel="noreferrer"
             >
-              news.kumar2net.com
+              kumar2net.com/news
             </a>
             , which now surfaces only the topics I care about and remembers the
             selection across the session. Owning the domain feels like a small

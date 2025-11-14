@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
+import { defineConfig, searchForWorkspaceRoot } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
 const rootNodeModules = path.resolve(__dirname, '../../node_modules')
+const newsWorkspaceRoot = path.resolve(__dirname, '../news')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,5 +25,8 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     open: false,
+    fs: {
+      allow: [searchForWorkspaceRoot(process.cwd()), newsWorkspaceRoot],
+    },
   },
 })
