@@ -1,4 +1,12 @@
 {
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "apps/personal-website/dist",
+  "build": {
+    "env": {
+      "ROLLUP_SKIP_NODEJS_NATIVE_BUILD": "1"
+    }
+  },
   "rewrites": [
     {
       "source": "/",
