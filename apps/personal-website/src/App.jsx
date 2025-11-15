@@ -333,6 +333,7 @@ function App() {
                 component={RouterLink}
                 to="/"
                 onClick={() => trackClick("nav_home")}
+                aria-label="கு कु Home"
                 sx={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -505,6 +506,7 @@ function App() {
                     </Typography>
                     <Typography
                       variant="subtitle1"
+                      component="p"
                       color="text.secondary"
                       sx={{ maxWidth: 560, mx: "auto" }}
                     >

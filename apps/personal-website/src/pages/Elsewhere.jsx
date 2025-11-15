@@ -101,6 +101,7 @@ export default function Elsewhere() {
       .then((data) => {
         if (!active) return;
         setXItems(Array.isArray(data?.items) ? data.items : []);
+        setXError(data?.warning || "");
       })
       .catch((e) => {
         console.warn("X feed error:", e);
