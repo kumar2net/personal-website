@@ -13,7 +13,7 @@ const albums = [
     title: "Ragas Dental Camp Diaries",
     description:
       "Snapshots from the budding dentist’s internship week – queues of patients in Puducherry, Thiruvanmiyur’s Nagarpura clinic, and the team in full PPE. A lighthearted look at serious service.",
-    url: "https://photos.google.com/album/AF1QipMca59QS3tW1s8Ss0oyteTvGIzENgeNt6s0M1lF",
+    url: "https://photos.app.goo.gl/HQrPQxw8Q2Qa9EWM7",
   },
 ];
 
