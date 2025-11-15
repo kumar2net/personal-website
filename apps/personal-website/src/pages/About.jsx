@@ -1,31 +1,13 @@
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 
-const shieldUrl = (label, message, color, options = "") =>
-  `https://img.shields.io/badge/${encodeURIComponent(label)}-${encodeURIComponent(
-    message,
-  )}-${color}?style=flat-square${options ? `&${options}` : ""}`;
-
-const skillBadges = [
-  { label: "Frontend", message: "React + Framer Motion", color: "0ea5e9" },
-  { label: "Styling", message: "Tailwind + MUI", color: "6366f1" },
-  { label: "APIs", message: "Node.js + Express", color: "16a34a" },
-  { label: "Infra", message: "Vercel + Turbo", color: "0f172a" },
-  { label: "Networks", message: "IP Networks", color: "facc15", options: "logo=cisco" },
-  { label: "ML", message: "Machine Learning", color: "14b8a6" },
-  { label: "Python", message: "Python + Scikit-Learn", color: "f97316", options: "logo=python" },
-];
-
-const domainBadges = [
-  { label: "Domain", message: "Telecom & Wireless", color: "f97316" },
-  { label: "AI Ops", message: "Agents + MCP", color: "9333ea" },
-  { label: "Markets", message: "WordPress + X", color: "2563eb" },
-];
-
-const stackBadges = [
-  { label: "LLM", message: "GPT-4o mini (OpenAI)", color: "111827" },
-  { label: "LLM", message: "Gemini text-embedding-004", color: "0b9ed9" },
-  { label: "APIs", message: "OpenAI + Gemini + Newsdata", color: "0891b2" },
+const skillCards = [
+  { icon: "⚛️", title: "Frontend", caption: "React 18 · Framer Motion · React Router 6" },
+  { icon: "🎨", title: "Styling", caption: "Tailwind CSS · MUI 7 · CSS Variables" },
+  { icon: "🧠", title: "AI/LLM", caption: "OpenAI GPT-4o · Gemini · MCP agents" },
+  { icon: "🧮", title: "Data/ML", caption: "Vertex AI · scikit-learn · cosine search" },
+  { icon: "🛰️", title: "Networks", caption: "Wireless testbeds · IP transport" },
+  { icon: "⚙️", title: "Infra", caption: "Vercel · Turbo · Netlify · CI probes" },
 ];
 
 const resolveApiBase = () => {
@@ -154,22 +136,23 @@ const About = () => {
         <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/60 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold mb-3">Stack cheat sheet</h2>
           <p className="text-slate-600 dark:text-slate-200 mb-4">
-            Shields-on so recruiters and fellow builders can skim the TL;DR.
-            These are static badges because zero-code-splitting bragging rights
-            also count.
+            Real tools instead of novelty shields. Here&apos;s the ground truth.
           </p>
-          <div className="space-y-3">
-            {[skillBadges, domainBadges, stackBadges].map((group, idx) => (
-              <div key={`badges-${idx}`} className="flex flex-wrap gap-2">
-                {group.map((item) => (
-                  <img
-                    key={`${item.label}-${item.message}`}
-                    src={shieldUrl(item.label, item.message, item.color)}
-                    alt={`${item.label} – ${item.message}`}
-                    loading="lazy"
-                    className="rounded"
-                  />
-                ))}
+          <div className="grid sm:grid-cols-2 gap-4">
+            {skillCards.map((card) => (
+              <div
+                key={card.title}
+                className="flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/50 p-3 shadow-sm"
+              >
+                <div className="text-2xl">{card.icon}</div>
+                <div>
+                  <div className="text-sm font-semibold text-slate-800 dark:text-slate-100">
+                    {card.title}
+                  </div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300">
+                    {card.caption}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
