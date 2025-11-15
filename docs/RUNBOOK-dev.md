@@ -94,6 +94,11 @@ The UI theme package is part of the workspace, so no extra steps are required.
    - Open `http://localhost:5173`.
    - Navigate to `/blog`, `/topics`, `/reco`.
    - Ensure the console is free of uncaught errors and network panel shows 2xx for local API calls.
+5. **X feed (requires `X_BEARER_TOKEN`)**
+   ```sh
+   curl "http://localhost:5173/api/x-latest?username=kumar2net" | jq '.items | length'
+   ```
+   Expect a 200 with a non-empty `items` array when the bearer token is valid, or a JSON payload containing a `warning` string if all mirrors are down (the SPA surfaces the same warning).
 
 ## Troubleshooting
 - **Port conflicts**: Vite uses `strictPort`; if 5173 is taken you must free it or override `server.port` in `vite.config.js`.

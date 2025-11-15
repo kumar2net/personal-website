@@ -28,7 +28,7 @@ function AutoBookCard({ book, index }) {
     <Link
       to={`/books/${book.slug}`}
       aria-label={`Read ${book.title}`}
-      className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+      className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow hover:shadow-md dark:shadow-slate-900/40 transition-shadow p-3 sm:p-4 flex flex-col"
     >
       <div
         className={`rounded-md h-40 sm:h-48 bg-gradient-to-br ${gradient} border overflow-hidden relative`}
@@ -58,10 +58,14 @@ function AutoBookCard({ book, index }) {
             {book.title}
           </h2>
           {readingTime && (
-            <span className="text-xs sm:text-sm text-gray-500">{readingTime}</span>
+            <span className="text-xs sm:text-sm text-gray-500 dark:text-slate-400">
+              {readingTime}
+            </span>
           )}
         </div>
-        <p className="text-sm text-gray-500 mt-1">{book.author}</p>
+        <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
+          {book.author}
+        </p>
         {tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2">
             {tags.map((tag, tagIndex) => (
@@ -77,12 +81,12 @@ function AutoBookCard({ book, index }) {
           </div>
         )}
         {summary && (
-          <p className="text-gray-600 mt-3 text-sm sm:text-base">
+          <p className="text-gray-600 dark:text-slate-300 mt-3 text-sm sm:text-base">
             {summary}
           </p>
         )}
         <div className="mt-4">
-          <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-500/90">
             Read Book
           </span>
         </div>
@@ -113,7 +117,7 @@ function Books() {
         <Link
           to="/books/the-last-drop-of-water"
           aria-label="Read The Last Drop of Water, oh no"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow hover:shadow-md dark:shadow-slate-900/40 transition-shadow p-3 sm:p-4 flex flex-col"
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-cyan-100 border overflow-hidden relative">
             <img

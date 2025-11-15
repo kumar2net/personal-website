@@ -25,12 +25,13 @@ See `docs/CHANGELOG.md` for a detailed history.
 - **Dashboards** – Utilities spending dashboard, status page, dossier timelines, and other data-first explorations.
 - **Books & Notes** – Mixed media content (Markdown, PDF excerpts, DOCX conversions) routed through lazily loaded page bundles.
 - **Backend Support** – Optional Node/Python services that feed GA4 + BigQuery powered recommendations.
+- **Observability** – Vercel Speed Insights instrumentation baked into the root React tree for real-user performance analytics without extra setup.
 
 ## Tech Stack Overview
 
 | Layer | Details |
 |-------|---------|
-| **Frontend** | React 18, Vite 5, React Router 6, Tailwind CSS, Framer Motion |
+| **Frontend** | React 18, Vite 5, React Router 6, Tailwind CSS, Framer Motion, Vercel Speed Insights |
 | **Content** | Markdown + MDX-style JSX pages, `react-markdown`, `gray-matter`, custom SVG assets |
 | **Serverless** | `apps/personal-website/api/*.js` (Vercel/Netlify compatible) for conversions, semantic search, feeds, journaling |
 | **Backend (optional)** | Python scripts + services in `backend/` for BigQuery and Vertex AI integrations |
