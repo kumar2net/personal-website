@@ -5,7 +5,7 @@ import os
 # --- Configuration ---
 image_folder = '/Users/kumara/personal-website/docs/dentist'
 output_video_path = '/Users/kumara/personal-website/docs/dentist/output_video.mp4'
-narration_text = "இறுதி ஆண்டு பிடிஎஸ் இன்டர்ன்ஷிப்பில் இருக்கும் என் மகள், தமிழ்நாடு அரசு ஏற்பாடு செய்துள்ள சமூக சேவை முகாம்களில் நோயாளிகளுக்கு சிகிச்சை அளித்து வருகிறார். இந்த தருணங்களை உங்களுடன் பகிர்ந்து கொள்வதில் பெருமை கொள்கிறேன்."
+narration_text = "இறுதி ஆண்டு பிடிஎஸ் இன்டர்ன்ஷிப்பில் இருக்கும் என் தம்பி மகள், தமிழ்நாடு அரசு ஏற்பாடு செய்துள்ள சமூக சேவை முகாம்களில் நோயாளிகளுக்கு சிகிச்சை அளித்து வருகிறார். இந்த தருணங்களை உங்களுடன் பகிர்ந்து கொள்வதில் பெருமை கொள்கிறேன்."
 narration_audio_path = '/Users/kumara/personal-website/docs/dentist/narration.mp3'
 image_duration = 5  # seconds per image
 

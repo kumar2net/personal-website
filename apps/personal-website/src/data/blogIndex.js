@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2025-11-15-belam-field-notes": {
+    title: "From Belém Rumours to Chennai Dashboards: Weekend Climate Field Notes",
+    description:
+      "Kumar’s five-minute dispatch covering Tamil Nadu’s climate tracker stats, Belém logistics, dental camp notes, India’s data-centre race, AI water math, DPDP takeaways, and an OpenAI-generated visual.",
+    image: "/media/generated/openai-cop30-tn-tracker.png",
+    tags: ["Tamil Nadu", "Climate Tracker", "COP30", "Data Centres", "Policy"],
+    datePublished: "2025-11-15",
+    dateModified: "2025-11-15",
+  },
   "2025-11-09-myruminations": {
     title: "My Ruminations: Magnets, Microbes, and Mindful Living",
     description:
