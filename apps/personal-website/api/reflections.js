@@ -77,6 +77,7 @@ export default async function handler(req, res) {
     await put(normalizedPath, JSON.stringify(data, null, 2), {
       access: "public",
       contentType: "application/json",
+      addRandomSuffix: false,
     });
     return res.status(200).json({ ok: true, path: normalizedPath });
   } catch (error) {
