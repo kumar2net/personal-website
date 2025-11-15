@@ -11,6 +11,7 @@
     "dev": "turbo dev --filter=personal-website",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "sitemap": "node apps/personal-website/scripts/generate-sitemap.mjs",
     "bookhints:process": "node apps/personal-website/scripts/bookhint-agentic.mjs",
     "bookhints:watch": "node apps/personal-website/scripts/bookhint-agentic.mjs --watch"
   },
