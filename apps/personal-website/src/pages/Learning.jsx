@@ -43,98 +43,6 @@ const Learning = () => {
         </MotionDiv>
       </div>
 
-      {/* Video Guide CTA */}
-      <MotionDiv
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-        className="mb-12"
-      >
-        <div className="rounded-2xl bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-500 px-6 py-7 text-white shadow-lg">
-          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.25em] text-white/80">
-                New video shorts
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold">
-                Have added a couple of YouTube shorts that double as quick user
-                guides for this site.
-              </h2>
-            </div>
-            <a
-              href="https://www.youtube.com/@kumar2net"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center rounded-full bg-white/10 px-5 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20"
-            >
-              Watch on YouTube →
-            </a>
-          </div>
-        </div>
-      </MotionDiv>
-
-      {/* YouTube User Guide */}
-      <MotionDiv
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-12"
-      >
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10">
-          <div className="grid gap-8 md:grid-cols-2 md:items-center">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
-                YouTube user guide
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-gray-900">
-                Watch the full walkthrough of kumar2net.com
-              </h2>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                I recorded a short, vertical tour that shows how to hop between{" "}
-                <code>/blog</code>, <code>/convert</code>, <code>/music</code>, and{" "}
-                <code>news.kumar2net.com</code> (the pull-mode news desk powered by AI
-                topic filters). It is the quickest way to learn the layout, nav
-                tips, and what each utility does before you dive into the
-                flashcards below.
-              </p>
-              <ul className="mt-4 space-y-2 text-gray-700 text-sm">
-                <li>• Explains the navigation shortcuts baked into every page.</li>
-                <li>• Highlights the new <code>/convert</code> tweaks for US/UK imperial units.</li>
-                <li>• Shows how to customise the news intake on the /news micro-site.</li>
-              </ul>
-              <div className="mt-5 flex flex-wrap items-center gap-3">
-                <a
-                  href="https://www.youtube.com/shorts/RT2mcFz9bI8"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center rounded-full bg-blue-600 px-5 py-2.5 text-white font-semibold shadow hover:bg-blue-700"
-                >
-                  Open on YouTube →
-                </a>
-                <span className="text-xs text-gray-500">
-                  Runtime: 44 seconds · Shot on November 2025
-                </span>
-              </div>
-            </div>
-            <div className="w-full rounded-2xl overflow-hidden shadow-xl">
-              <div
-                className="relative w-full"
-                style={{ paddingTop: "177.78%" }}
-              >
-                <iframe
-                  src="https://www.youtube.com/embed/RT2mcFz9bI8"
-                  title="Kumar2net.com user guide"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </MotionDiv>
-
       {/* Stats */}
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
@@ -249,16 +157,16 @@ const Learning = () => {
         transition={{ duration: 0.5, delay: 0.4 }}
         className="mt-16 text-center"
       >
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
+        <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-md text-gray-900">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             More Coming Soon!
           </h2>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-gray-800 mb-6 max-w-2xl mx-auto">
             I'm continuously adding new flashcard sets covering various topics
             including programming concepts, language learning, science, and
             more. Check back regularly for new content!
           </p>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-700">
             Suggestions for new flashcard topics?{" "}
             <Link
               to="/contact"

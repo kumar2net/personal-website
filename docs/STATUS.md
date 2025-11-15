@@ -8,6 +8,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - Ran `npm run test` plus `npm run test:unit --prefix apps/personal-website`; see `docs/_logs/turbo-test.log` and `docs/_logs/personal-website-test-unit.log`.
 - Started Vite on `http://127.0.0.1:5173` (`docs/_logs/dev-server.log`) and created `scripts/devtools_probe.mjs` to automate CDP checks.
 - DevTools probe log (`docs/_logs/devtools-probe-1762910425595.json`) shows a clean home render: status 200, no console errors, no >=400 network calls.
+- Refreshed the `/learning` page content by stripping the YouTube shorts promo + iframe in favor of a pure in-app flashcard view and fixing the “More Coming Soon” card styling so copy is readable on any theme background.
 
 ## Follow-ups / open items
 1. Start `backend/server.js` whenever Topic Suggestions or analytics dashboards need live GA4/Vertex data; it was not required for the home smoke test.
