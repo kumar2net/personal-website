@@ -13,6 +13,11 @@ const TAG_CLASSES = [
 ];
 
 const FALLBACK_GRADIENT = 'from-indigo-100 via-purple-50 to-pink-100';
+const CARD_CLASS =
+  'group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow hover:shadow-md dark:shadow-slate-900/40 transition-shadow p-3 sm:p-4 flex flex-col';
+const SUMMARY_TEXT_CLASS = 'text-gray-600 dark:text-slate-300';
+const BUTTON_CLASS =
+  'inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-500/90';
 
 function AutoBookCard({ book, index }) {
   const gradient = book?.heroGradient || FALLBACK_GRADIENT;
@@ -28,7 +33,7 @@ function AutoBookCard({ book, index }) {
     <Link
       to={`/books/${book.slug}`}
       aria-label={`Read ${book.title}`}
-      className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow hover:shadow-md dark:shadow-slate-900/40 transition-shadow p-3 sm:p-4 flex flex-col"
+      className={CARD_CLASS}
     >
       <div
         className={`rounded-md h-40 sm:h-48 bg-gradient-to-br ${gradient} border overflow-hidden relative`}
@@ -81,14 +86,12 @@ function AutoBookCard({ book, index }) {
           </div>
         )}
         {summary && (
-          <p className="text-gray-600 dark:text-slate-300 mt-3 text-sm sm:text-base">
+          <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
             {summary}
           </p>
         )}
         <div className="mt-4">
-          <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:hover:bg-blue-500/90">
-            Read Book
-          </span>
+          <span className={BUTTON_CLASS}>Read Book</span>
         </div>
       </div>
     </Link>
@@ -117,7 +120,7 @@ function Books() {
         <Link
           to="/books/the-last-drop-of-water"
           aria-label="Read The Last Drop of Water, oh no"
-          className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-lg shadow hover:shadow-md dark:shadow-slate-900/40 transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-blue-100 to-cyan-100 border overflow-hidden relative">
             <img
@@ -162,13 +165,11 @@ function Books() {
                 alt="Reading time badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               A profound true story of compassion and reflection. When a dying darkling beetle crosses paths with the author on a Sunday morning in Vadavalli, Coimbatore, a simple act of kindness becomes a meditation on mortality, empathy, and the interconnectedness of all living things.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
@@ -176,7 +177,7 @@ function Books() {
         <Link
           to="/books/how-to-stop-caring"
           aria-label="Read How to STOP Caring What People Think of You!"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-pink-100 to-purple-100 border overflow-hidden relative">
             <img
@@ -215,13 +216,11 @@ function Books() {
                 alt="Psychology badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               A concise guide to breaking free from others' opinions and living authentically. Jamieson provides practical strategies for developing self-confidence and embracing your true self.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
@@ -229,7 +228,7 @@ function Books() {
         <Link
           to="/books/its-not-about-you"
           aria-label="Read It's Not About You: A Brief Guide to a Meaningful Life"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-teal-100 to-cyan-100 border overflow-hidden relative">
             <BookCover
@@ -268,13 +267,11 @@ function Books() {
                 alt="Service badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               A powerful guide on finding meaning through service to others rather than self-focused pursuits. Rath shares personal insights about living with a rare genetic condition while emphasizing how our contributions to others create lasting impact.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
@@ -282,7 +279,7 @@ function Books() {
         <Link
           to="/books/the-subtle-art"
           aria-label="Read The Subtle Art of Not Giving a F***"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-orange-100 to-red-100 border overflow-hidden relative">
             <BookCover
@@ -315,13 +312,11 @@ function Books() {
                 alt="Philosophy badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               A generation-defining self-help guide that cuts through the crap to show us how to stop trying to be 'positive' all the time so that we can truly become better, happier people.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
@@ -329,13 +324,13 @@ function Books() {
         <Link
           to="/books/the-stoic-art-manual"
           aria-label="Read The Stoic Art Manual"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-yellow-100 to-amber-100 border overflow-hidden relative">
             <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
               <div className="text-center">
                 <div className="text-6xl mb-2">📜</div>
-                <div className="text-sm text-gray-600">Stoicism</div>
+                <div className="text-sm text-gray-600 dark:text-slate-300">Stoicism</div>
               </div>
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
@@ -370,26 +365,24 @@ function Books() {
                 alt="Notes badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               Your verbatim notes converted from PDF.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
         <Link
           to="/books/atheism"
           aria-label="Read Atheism: A Wonderful World Without Religion"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-red-100 to-orange-100 border overflow-hidden relative">
             <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
               <div className="text-center">
                 <div className="text-6xl mb-2">🤔</div>
-                <div className="text-sm text-gray-600">Philosophy</div>
+                <div className="text-sm text-gray-600 dark:text-slate-300">Philosophy</div>
               </div>
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
@@ -416,15 +409,13 @@ function Books() {
                 alt="Worldview badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               A comprehensive exploration of atheism, its philosophical
               foundations, and its implications for understanding the world and
               human existence.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
@@ -432,7 +423,7 @@ function Books() {
         <Link
           to="/books/the-brain-story"
           aria-label="Read The Brain: The Story of You"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-purple-100 to-blue-100 border overflow-hidden relative">
             <BookCover
@@ -465,16 +456,14 @@ function Books() {
                 alt="AI Technology badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               One of the best books I have read in a while. Observing all the
               advances in AI and listening to gyan from my kin on neurology
               brain implants, wanted to dig deeper. As they say these days -
               learn from First Principles
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read Book
-              </span>
+              <span className={BUTTON_CLASS}>Read Book</span>
             </div>
           </div>
         </Link>
@@ -482,7 +471,7 @@ function Books() {
         <Link
           to="/books/applying-cornell-method"
           aria-label="Read Applying the Cornell Method"
-          className="group bg-white rounded-lg shadow hover:shadow-md transition-shadow p-3 sm:p-4 flex flex-col"
+          className={CARD_CLASS}
         >
           <div className="rounded-md h-40 sm:h-48 bg-gradient-to-br from-green-100 to-blue-100 border overflow-hidden relative">
             <BookCover
@@ -515,13 +504,11 @@ function Books() {
                 alt="Study skills badge"
               />
             </div>
-            <p className="text-gray-600 mt-3 text-sm sm:text-base">
+            <p className={`${SUMMARY_TEXT_CLASS} mt-3 text-sm sm:text-base`}>
               Verbatim content embedded from the original document.
             </p>
             <div className="mt-4">
-              <span className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Read more
-              </span>
+              <span className={BUTTON_CLASS}>Read more</span>
             </div>
           </div>
         </Link>

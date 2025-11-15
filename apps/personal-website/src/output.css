@@ -104,3 +104,37 @@
     color: #cbd5f5 !important;
   }
 }
+
+@layer base {
+  .dark .text-gray-900,
+  .dark .text-gray-800,
+  .dark .text-gray-700 {
+    color: #f3f4f6 !important;
+  }
+
+  .dark .text-gray-600,
+  .dark .text-gray-500 {
+    color: #e2e8f0 !important;
+  }
+
+  .dark .text-gray-400,
+  .dark .text-gray-300 {
+    color: #cbd5f5 !important;
+  }
+
+  .dark .text-gray-200,
+  .dark .text-gray-100,
+  .dark .text-gray-50 {
+    color: #f8fafc !important;
+  }
+
+  .dark .bg-white,
+  .dark .bg-gray-50,
+  .dark .bg-slate-50,
+  :root[data-mui-color-scheme='dark'] .bg-white,
+  :root[data-mui-color-scheme='dark'] .bg-gray-50,
+  :root[data-mui-color-scheme='dark'] .bg-slate-50 {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    color: #f8fafc !important;
+  }
+}
