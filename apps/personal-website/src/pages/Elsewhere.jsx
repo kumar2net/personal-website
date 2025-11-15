@@ -162,7 +162,7 @@ export default function Elsewhere() {
       <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
         Elsewhere
       </h1>
-      <p className="text-gray-600 mb-6 text-lg leading-relaxed">
+      <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg leading-relaxed">
         I also write at{" "}
         <a
           className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center gap-1 transition-colors duration-200"
@@ -200,7 +200,9 @@ export default function Elsewhere() {
 
       <div className="grid grid-cols-1 gap-8">
         <section>
-          <h2 className="text-2xl font-semibold mb-4">Latest on WordPress</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-slate-900 dark:text-slate-100">
+            Latest on WordPress
+          </h2>
           {loading && (
             <div className="space-y-6">
               {[...Array(3)].map((_, i) => (
@@ -248,7 +250,7 @@ export default function Elsewhere() {
               {posts.slice(0, 10).map((p, index) => (
                 <article
                   key={p.guid}
-                  className="group relative bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200"
+                  className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-slate-900 dark:via-slate-900/80 dark:to-slate-900/60 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-400/40"
                   style={{
                     animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`,
                   }}
@@ -263,7 +265,7 @@ export default function Elsewhere() {
                     className="block p-6 relative"
                   >
                     {/* WordPress badge */}
-                    <div className="absolute top-6 right-6 flex items-center gap-2 text-gray-400 group-hover:text-blue-500 transition-colors duration-300">
+                    <div className="absolute top-6 right-6 flex items-center gap-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-300 transition-colors duration-300">
                       <FaWordpress className="w-5 h-5" />
                       <span className="hidden sm:inline text-xs font-medium uppercase tracking-wider">
                         WordPress
@@ -271,12 +273,12 @@ export default function Elsewhere() {
                     </div>
 
                     {/* Title with hover effect */}
-                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-200 pr-12 sm:pr-32 mb-3 mt-8">
+                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors duration-200 pr-12 sm:pr-32 mb-3 mt-8">
                       {decodeEntities(p.title)}
                     </h3>
 
                     {/* Date with icon */}
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                    <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-300 mb-3">
                       <Calendar className="w-4 h-4" />
                       <time dateTime={p.pubDate}>
                         {new Date(p.pubDate).toLocaleDateString("en-US", {
@@ -289,7 +291,7 @@ export default function Elsewhere() {
 
                     {/* Excerpt */}
                     {p.excerpt && (
-                      <p className="text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                      <p className="text-gray-600 dark:text-gray-200 leading-relaxed mb-4 line-clamp-3">
                         {decodeEntities(p.excerpt)}…
                       </p>
                     )}
