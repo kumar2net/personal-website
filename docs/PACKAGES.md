@@ -15,7 +15,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## `apps/personal-website`
 - Entrypoints:
-  - `src/main.jsx`: bootstraps React root with global vendor error recovery.
+  - `src/main.jsx`: bootstraps React root with global vendor error recovery and renders Vercel Speed Insights telemetry alongside `<App />`.
   - `src/App.jsx`: router, layout, nav, and lazy route definitions.
   - `src/index.css` + `tailwind.config.js`: styling baseline (Tailwind + custom classes).
 - `vite.config.js`: attaches `withLocalApi` plugin for `/api/convert` and `/api/semantic-search`, loads env files, and sets aliases.
@@ -29,8 +29,8 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## `packages/@kumar2net/ui-theme`
 - Files: `theme.ts`, `ThemeProvider.tsx`, `index.ts`.
-- Exports: default theme object, `colorTokens`, `ThemeProvider`, `ThemeProviderProps`.
-- Implementation: uses `@mui/material/styles` `createTheme` with dual color schemes, sets `CssVarsProvider` defaults (`modeStorageKey = "k2n-color-scheme"`).
+- Exports: default theme object, Material 3 `colorTokens`, `ThemeProvider`, `ThemeProviderProps`.
+- Implementation: builds both light/dark palettes from the shared tokens via `@mui/material/styles/createTheme`, sets `CssVarsProvider` defaults (`modeStorageKey = "k2n-color-scheme"`), and keeps typography/component overrides consistent across apps.
 - Consumed in `apps/personal-website/src/main.jsx` and available to other packages via workspace resolution.
 
 ## `apps/personal-website/api` (serverless)
@@ -39,7 +39,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 | Unit converter | `apps/personal-website/api/convert.js` | GET self-docs, POST conversions, includes manual streaming body parser.
 | Semantic search | `apps/personal-website/api/semantic-search.js` | Loads `src/data/semantic-index.json`, embeds queries via Gemini, computes cosine similarity in Node.js, and returns `{ id, title, url, excerpt, score }` plus latency metadata.
 | WordPress feed proxy | `apps/personal-website/api/wp-feed.js` | Fetches RSS, defends against HTML responses, strips markup with `fast-xml-parser`.
-| X latest posts | `apps/personal-website/api/x-latest.js` | Uses bearer token, exposes `items` array with tweet URLs.
+| X latest posts | `apps/personal-website/api/x-latest.js` | Prefers the X v2 API via `X_BEARER_TOKEN`, then rotates through configurable Nitter mirrors before returning a warning payload so clients degrade gracefully.
 
 
 ## `backend`
