@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 
 // Base URL for your website
 const BASE_URL = 'https://kumar2net.com';
+const XML_STYLESHEET_PATH = '/sitemap.xsl';
 
 // Curated static routes from App.jsx (non-parameterized, crawlable)
 const STATIC_ROUTES = [
@@ -68,7 +69,7 @@ async function getBlogRoutes() {
 
 // Generate XML sitemap
 function generateSitemap(urls) {
-  const xmlHeader = '<?xml version="1.0" encoding="UTF-8"?>';
+  const xmlHeader = `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="${XML_STYLESHEET_PATH}"?>`;
   const urlsetOpen = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
   const urlsetClose = '</urlset>';
 
