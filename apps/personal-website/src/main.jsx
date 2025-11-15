@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./output.css";
 import { ColorModeProvider } from "./providers/ColorModeProvider";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Error handling and recovery system
 let initializationAttempts = 0;
@@ -234,6 +235,7 @@ const renderApp = (HelmetProvider) => {
                 },
               },
               React.createElement(App, null),
+              React.createElement(SpeedInsights, null),
             ),
           ),
         ),

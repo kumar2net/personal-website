@@ -1,41 +1,103 @@
-import type { ThemeOptions } from "@mui/material/styles";
+import {
+  alpha,
+  darken,
+  lighten,
+  type ThemeOptions,
+} from "@mui/material/styles";
+import { colorTokens } from "@kumar2net/ui-theme";
 
 const transitionBase =
   "color 180ms ease, background-color 180ms ease, border-color 180ms ease";
 
+type Scheme = "light" | "dark";
+
+const getToken = <K extends keyof typeof colorTokens>(
+  token: K,
+  scheme: Scheme,
+) => colorTokens[token][scheme];
+
+const buildColorScheme = (scheme: Scheme) => {
+  const isDark = scheme === "dark";
+  const primary = getToken("primary", scheme);
+  const secondary = getToken("secondary", scheme);
+  const tertiary = getToken("tertiary", scheme);
+  const success = getToken("success", scheme);
+  const warning = getToken("warning", scheme);
+  const error = getToken("error", scheme);
+  const onSurface = getToken("onSurface", scheme);
+  const onSurfaceVariant = getToken("onSurfaceVariant", scheme);
+
+  return {
+    palette: {
+      mode: scheme,
+      primary: {
+        main: primary,
+        light: lighten(primary, isDark ? 0.08 : 0.16),
+        dark: darken(primary, 0.2),
+        contrastText: getToken("onPrimary", scheme),
+      },
+      secondary: {
+        main: secondary,
+        light: lighten(secondary, isDark ? 0.08 : 0.16),
+        dark: darken(secondary, 0.18),
+        contrastText: getToken("onSecondary", scheme),
+      },
+      info: {
+        main: tertiary,
+        light: lighten(tertiary, isDark ? 0.08 : 0.14),
+        dark: darken(tertiary, 0.18),
+        contrastText: getToken("onTertiary", scheme),
+      },
+      success: {
+        main: success,
+        light: lighten(success, 0.1),
+        dark: darken(success, 0.18),
+        contrastText: getToken("onSuccess", scheme),
+      },
+      warning: {
+        main: warning,
+        light: lighten(warning, 0.08),
+        dark: darken(warning, 0.2),
+        contrastText: getToken("onWarning", scheme),
+      },
+      error: {
+        main: error,
+        light: lighten(error, 0.08),
+        dark: darken(error, 0.2),
+        contrastText: getToken("onError", scheme),
+      },
+      background: {
+        default: getToken("surface", scheme),
+        paper: getToken("surfaceContainer", scheme),
+      },
+      text: {
+        primary: onSurface,
+        secondary: onSurfaceVariant,
+        disabled: alpha(onSurface, 0.38),
+      },
+      divider: alpha(getToken("outline", scheme), isDark ? 0.36 : 0.26),
+      action: {
+        active: onSurface,
+        hover: alpha(onSurface, 0.08),
+        hoverOpacity: 0.08,
+        selected: alpha(onSurface, 0.16),
+        selectedOpacity: 0.16,
+        disabled: alpha(onSurface, 0.38),
+        disabledBackground: alpha(onSurfaceVariant, isDark ? 0.18 : 0.08),
+        disabledOpacity: 0.38,
+        focus: alpha(onSurface, 0.12),
+        focusOpacity: 0.12,
+        activatedOpacity: 0.12,
+      },
+    },
+  };
+};
+
 export const getDesignTokens = (): ThemeOptions => ({
   cssVarPrefix: "k2n",
   colorSchemes: {
-    light: {
-      palette: {
-        primary: { main: "#2563eb", contrastText: "#f8fafc" },
-        secondary: { main: "#0ea5e9", contrastText: "#022c22" },
-        background: {
-          default: "#f8fafc",
-          paper: "#ffffff",
-        },
-        text: {
-          primary: "#0f172a",
-          secondary: "#475569",
-        },
-        divider: "rgba(15, 23, 42, 0.12)",
-      },
-    },
-    dark: {
-      palette: {
-        primary: { main: "#60a5fa", contrastText: "#020617" },
-        secondary: { main: "#67e8f9", contrastText: "#042f2e" },
-        background: {
-          default: "#050b16",
-          paper: "#0f172a",
-        },
-        text: {
-          primary: "#f8fafc",
-          secondary: "#cbd5f5",
-        },
-        divider: "rgba(226, 232, 240, 0.16)",
-      },
-    },
+    light: buildColorScheme("light"),
+    dark: buildColorScheme("dark"),
   },
   shape: {
     borderRadius: 16,

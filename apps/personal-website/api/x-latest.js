@@ -6,7 +6,20 @@ const COMMON_HEADERS = {
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
-const NITTER_BASE = "https://nitter.net";
+const DEFAULT_NITTER_SOURCES = [
+  "https://nitter.net",
+  "https://nitter.privacydev.net",
+  "https://nitter.poast.org",
+  "https://nitter.fdn.fr",
+  "https://nitter.catsarch.com",
+];
+
+const NITTER_SOURCES =
+  (process.env.NITTER_SOURCES &&
+    process.env.NITTER_SOURCES.split(",")
+      .map((value) => value.trim())
+      .filter(Boolean)) ||
+  DEFAULT_NITTER_SOURCES;
 
 async function xFetch(path, token) {
   const response = await fetch(`${BASE}${path}`, {
@@ -28,36 +41,58 @@ async function xFetch(path, token) {
 }
 
 async function fetchNitter(username) {
-  const rssUrl = `${NITTER_BASE}/${encodeURIComponent(username)}/rss`;
-  const response = await fetch(rssUrl, {
-    headers: { "User-Agent": "personal-website-x-latest" },
-  });
+  const errors = [];
 
-  if (!response.ok) {
-    throw new Error(`Nitter RSS error ${response.status}`);
+  for (const base of NITTER_SOURCES) {
+    const rssUrl = `${base.replace(/\/+$/, "")}/${encodeURIComponent(username)}/rss`;
+    try {
+      const response = await fetch(rssUrl, {
+        headers: { "User-Agent": "personal-website-x-latest" },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Nitter RSS error ${response.status}`);
+      }
+
+      const xml = await response.text();
+      const parser = new XMLParser({
+        ignoreAttributes: false,
+        attributeNamePrefix: "",
+      });
+      const parsed = parser.parse(xml);
+      const channel = parsed?.rss?.channel || {};
+      const items = Array.isArray(channel.item)
+        ? channel.item
+        : channel.item
+          ? [channel.item]
+          : [];
+
+      const normalized = items.slice(0, 5).map((item, index) => ({
+        id: item?.guid || item?.link || `${username}-${index}`,
+        text: (item?.description || item?.title || "")
+          .replace(/<[^>]*>/g, "")
+          .trim(),
+        created_at:
+          item?.pubDate || channel.lastBuildDate || new Date().toISOString(),
+        url: item?.link || `https://x.com/${username}`,
+      }));
+
+      if (!normalized.length) {
+        throw new Error("No RSS items returned");
+      }
+
+      return {
+        items: normalized,
+        source: base,
+      };
+    } catch (error) {
+      errors.push(`${rssUrl}: ${error.message}`);
+    }
   }
 
-  const xml = await response.text();
-  const parser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: "",
-  });
-  const parsed = parser.parse(xml);
-  const channel = parsed?.rss?.channel || {};
-  const items = Array.isArray(channel.item)
-    ? channel.item
-    : channel.item
-      ? [channel.item]
-      : [];
-
-  return items.slice(0, 5).map((item, index) => ({
-    id: item?.guid || item?.link || `${username}-${index}`,
-    text: (item?.description || item?.title || "")
-      .replace(/<[^>]*>/g, "")
-      .trim(),
-    created_at: item?.pubDate || channel.lastBuildDate || new Date().toISOString(),
-    url: item?.link || `https://x.com/${username}`,
-  }));
+  const err = new Error("All Nitter sources failed");
+  err.details = errors.join("; ");
+  throw err;
 }
 
 export default async function handler(req, res) {
@@ -99,7 +134,9 @@ export default async function handler(req, res) {
         url: `https://twitter.com/${username}/status/${tweet.id}`,
       }));
     } else {
-      items = await fetchNitter(username);
+      const fallback = await fetchNitter(username);
+      items = fallback.items;
+      res.setHeader("x-nitter-source", fallback.source);
     }
 
     Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
@@ -112,15 +149,16 @@ export default async function handler(req, res) {
     const status = err && err.status ? err.status : 500;
     if (process.env.X_BEARER_TOKEN) {
       try {
-        const fallbackItems = await fetchNitter(username);
+        const fallbackResult = await fetchNitter(username);
         Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
           res.setHeader(key, value),
         );
         res.setHeader("content-type", "application/json");
         res.setHeader("cache-control", "public, max-age=300");
+        res.setHeader("x-nitter-source", fallbackResult.source);
         return res.status(200).json({
           username,
-          items: fallbackItems,
+          items: fallbackResult.items,
           warning: `Primary X API failed (${status}); served fallback RSS.`,
         });
       } catch (fallbackErr) {
@@ -136,16 +174,40 @@ export default async function handler(req, res) {
         });
       }
     } else {
-      Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
-        res.setHeader(key, value),
-      );
-      res.setHeader("content-type", "application/json");
-      return res.status(status).json({
-        error: "Failed to fetch X posts",
-        details: String(
-          (err && err.details) || (err && err.message) || err,
-        ),
-      });
+      try {
+        const fallbackResult = await fetchNitter(username);
+        Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
+          res.setHeader(key, value),
+        );
+        res.setHeader("content-type", "application/json");
+        res.setHeader("cache-control", "public, max-age=300");
+        res.setHeader("x-nitter-source", fallbackResult.source);
+        return res.status(200).json({
+          username,
+          items: fallbackResult.items,
+          warning: `Served RSS after primary fetch failed (${String(
+            (err && err.details) || err?.message || err,
+          )}).`,
+        });
+      } catch (fallbackErr) {
+        Object.entries(COMMON_HEADERS).forEach(([key, value]) =>
+          res.setHeader(key, value),
+        );
+        res.setHeader("content-type", "application/json");
+        return res.status(200).json({
+          username,
+          items: [],
+          warning:
+            "Unable to fetch X posts right now. View updates directly on https://x.com/kumar2net.",
+          details: `Failed to fetch X posts (${String(
+            (err && err.details) || (err && err.message) || err,
+          )}; fallback also failed: ${String(
+            (fallbackErr && fallbackErr.details) ||
+              fallbackErr?.message ||
+              fallbackErr,
+          )})`,
+        });
+      }
     }
   }
 }

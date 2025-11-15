@@ -86,6 +86,7 @@ const About = () => {
       .then((data) => {
         if (!active) return;
         setXPosts(Array.isArray(data?.items) ? data.items.slice(0, 3) : []);
+        setXError(data?.warning || "");
       })
       .catch((error) => {
         console.warn("About X feed error:", error);

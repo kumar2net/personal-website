@@ -54,7 +54,7 @@ function AutoBookCard({ book, index }) {
       </div>
       <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
             {book.title}
           </h2>
           {readingTime && (
@@ -129,7 +129,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               The Last Drop of Water, oh no
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -188,7 +188,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               How to STOP Caring What People Think of You!
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -241,7 +241,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               It's Not About You: A Brief Guide to a Meaningful Life
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -294,7 +294,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               The Subtle Art of Not Giving a F***
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -349,7 +349,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               The Stoic Art of Living
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -395,7 +395,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               Atheism: A Wonderful World Without Religion
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -444,7 +444,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               The Brain: The Story of You
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -494,7 +494,7 @@ function Books() {
             />
           </div>
           <div className="mt-3 sm:mt-4 flex-1 flex flex-col">
-            <h2 className="text-lg sm:text-xl font-semibold group-hover:underline">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-slate-100 group-hover:underline">
               Applying the Cornell Method
             </h2>
             <div className="mt-2 flex flex-wrap gap-2">
