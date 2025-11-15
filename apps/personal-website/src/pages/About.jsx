@@ -1,85 +1,15 @@
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
 
 const skillCards = [
   { icon: "⚛️", title: "Frontend", caption: "React 18 · Framer Motion · React Router 6" },
   { icon: "🎨", title: "Styling", caption: "Tailwind CSS · MUI 7 · CSS Variables" },
-  { icon: "🧠", title: "AI/LLM", caption: "OpenAI GPT-4o · Gemini · MCP agents" },
+  { icon: "🧠", title: "AI/LLM", caption: "OpenAI GPT-5 · Gemini · MCP agents" },
   { icon: "🧮", title: "Data/ML", caption: "Vertex AI · scikit-learn · cosine search" },
   { icon: "🛰️", title: "Networks", caption: "Wireless testbeds · IP transport" },
   { icon: "⚙️", title: "Infra", caption: "Vercel · Turbo · Netlify · CI probes" },
 ];
 
-const resolveApiBase = () => {
-  const configured = import.meta.env.VITE_API_BASE?.trim();
-  if (configured) {
-    return configured.endsWith("/") ? configured.slice(0, -1) : configured;
-  }
-  if (import.meta.env.PROD && typeof window !== "undefined") {
-    return window.location.origin;
-  }
-  return null;
-};
-
 const About = () => {
-  const [wpPosts, setWpPosts] = useState([]);
-  const [xPosts, setXPosts] = useState([]);
-  const [feedError, setFeedError] = useState("");
-  const [xError, setXError] = useState("");
-
-  const apiBase = useMemo(resolveApiBase, []);
-
-  useEffect(() => {
-    let active = true;
-    if (!apiBase) {
-      setFeedError("WordPress feed disabled locally.");
-      return () => {
-        active = false;
-      };
-    }
-
-    fetch(`${apiBase}/api/wp-feed`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.statusText))))
-      .then((data) => {
-        if (!active) return;
-        setWpPosts((data?.posts || []).slice(0, 3));
-      })
-      .catch((error) => {
-        console.warn("About WP feed error:", error);
-        setFeedError("Unable to load the WordPress vibe. Refresh later?");
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [apiBase]);
-
-  useEffect(() => {
-    let active = true;
-    if (!apiBase) {
-      setXError("X feed disabled locally.");
-      return () => {
-        active = false;
-      };
-    }
-
-    fetch(`${apiBase}/api/x-latest?username=kumar2net`)
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.statusText))))
-      .then((data) => {
-        if (!active) return;
-        setXPosts(Array.isArray(data?.items) ? data.items.slice(0, 3) : []);
-        setXError(data?.warning || "");
-      })
-      .catch((error) => {
-        console.warn("About X feed error:", error);
-        setXError("X posts are stretching the timeline. Try again soon!");
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [apiBase]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -159,87 +89,6 @@ const About = () => {
         </div>
       </section>
 
-      <section className="grid md:grid-cols-2 gap-6">
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/60 p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-blue-600 font-semibold">WordPress feed</span>
-            <span className="text-xs uppercase tracking-wide text-slate-500">
-              kumar2net.wordpress.com
-            </span>
-          </div>
-          {feedError ? (
-            <p className="text-sm text-rose-500">{feedError}</p>
-          ) : wpPosts.length === 0 ? (
-            <p className="text-sm text-slate-500">Loading highlights…</p>
-          ) : (
-            <ul className="space-y-4">
-              {wpPosts.map((post) => (
-                <li key={post.guid}>
-                  <a
-                    href={post.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg font-semibold text-blue-600 hover:text-blue-800"
-                  >
-                    {post.title}
-                  </a>
-                  <p className="text-sm text-slate-500 italic">
-                    {new Date(post.pubDate).toLocaleDateString(undefined, {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </p>
-                  <p className="text-sm text-slate-600 dark:text-slate-200 line-clamp-3">
-                    {post.excerpt || "Fresh drop from the WP vault."}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/60 p-6 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-slate-800 dark:text-slate-100 font-semibold">
-              X timeline
-            </span>
-            <span className="text-xs uppercase tracking-wide text-slate-500">
-              @kumar2net
-            </span>
-          </div>
-          {xError ? (
-            <p className="text-sm text-rose-500">{xError}</p>
-          ) : xPosts.length === 0 ? (
-            <p className="text-sm text-slate-500">Booting up the X timeline…</p>
-          ) : (
-            <ul className="space-y-4">
-              {xPosts.map((tweet) => (
-                <li
-                  key={tweet.id}
-                  className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 shadow-inner"
-                >
-                  <p className="text-sm text-slate-500 mb-2">
-                    {new Date(tweet.created_at).toLocaleString()}
-                  </p>
-                  <p className="text-slate-700 dark:text-slate-100 whitespace-pre-line">
-                    {tweet.text}
-                  </p>
-                  <a
-                    href={tweet.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center text-xs uppercase tracking-wide text-blue-600 dark:text-blue-400"
-                  >
-                    View on X →
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </section>
-
       <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-r from-slate-900 to-slate-800 text-slate-100 p-8 shadow-lg">
         <h2 className="text-2xl font-semibold mb-3">
           LLM Ops, bold and transparent
@@ -249,7 +98,7 @@ const About = () => {
           search via Gemini&apos;s{" "}
           <span className="font-semibold">text-embedding-004</span>, TL;DR
           summaries via{" "}
-          <span className="font-semibold">OpenAI GPT-4o mini</span>, and
+          <span className="font-semibold">OpenAI GPT-5</span>, and
           WordPress/X feeds proxied through custom serverless handlers. You&apos;ll see agents cited in
           blog posts, CLI workflows documented in docs/, and a running changelog
           on the Status page. Ask me anything on{" "}

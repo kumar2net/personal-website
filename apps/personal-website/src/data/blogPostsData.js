@@ -1,5 +1,16 @@
 export const blogPosts = [
   {
+    title: "From Belém Rumours to Chennai Dashboards: Weekend Climate Field Notes",
+    date: "November 15, 2025",
+    lastModified: "November 15, 2025",
+    excerpt:
+      "Five-minute roundup: Tamil Nadu’s climate tracker stats, COP30 housing reality, a dentist’s camp diary, the data-centre race, AI water stress, DPDP takeaways, and an OpenAI-generated visual.",
+    tags: ["Tamil Nadu", "Climate Tracker", "COP30", "Data Centres", "Policy"],
+    image:
+      "/media/generated/openai-cop30-tn-tracker.png",
+    link: "/blog/2025-11-15-belam-field-notes",
+  },
+  {
     title: "My Ruminations: Magnets, Microbes, and Mindful Living",
     date: "November 9, 2025",
     lastModified: "November 9, 2025",
