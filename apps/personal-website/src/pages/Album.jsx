@@ -6,7 +6,7 @@ const albums = [
   {
     title: "Family Highlights",
     description:
-      "Camp fires, DC strolls, San Jose dosa runs, and Reet’s grin – the evergreen phone-roll dump we keep updating.",
+      "Some new images from S boy, some interesting clippings etc...",
     url: "https://photos.app.goo.gl/ej2zF3go6NVt7Pgv6",
   },
   {
@@ -58,8 +58,8 @@ const Album = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">Photo Album</h1>
         <p className="text-xl text-gray-600 mb-6">Captured Moments</p>
-        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 text-left max-w-3xl mx-auto">
-          <p className="text-gray-800">
+        <div className="bg-blue-50 border-l-4 border-blue-600 rounded-lg p-4 text-left max-w-3xl mx-auto dark:bg-slate-900/70 dark:border-blue-400/70">
+          <p className="text-gray-800 dark:text-gray-100">
             A rolling gallery—from Duke-boy’s DC visit and Mylapore Bhavan
             pitstops to on-ground shots from our budding dentist’s internship
             camps. Tap through to wander the latest frames straight from the
