@@ -571,15 +571,15 @@ function App() {
                       }}
                     >
                       <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                        “To the mind that is still, the whole universe
-                        surrenders.”
+                        “Live your life as an exclamation rather than an
+                        explanation.”
                       </Typography>
                       <Typography
                         variant="subtitle2"
                         color="text.secondary"
                         sx={{ mt: 3, textAlign: "right" }}
                       >
-                        — Lao Tzu
+                        — Sir Isaac Newton
                       </Typography>
                     </Paper>
                     <Stack

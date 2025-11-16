@@ -21,6 +21,15 @@ const featuredSections = [
     sectionId: "greywater",
     tone: "from-rose-900/70 via-orange-900/40 to-yellow-900/20",
   },
+  {
+    title: "Packing list chorus",
+    subtitle: "Weekend Field Notes · Section 9",
+    summary:
+      "Add wish-list items, Tamil playlists, or quick hacks that should ride shotgun to COP30.",
+    postId: "2025-11-15-belam-field-notes",
+    sectionId: "packing-list",
+    tone: "from-cyan-900/70 via-blue-900/40 to-indigo-900/30",
+  },
 ];
 
 export default function Reflections() {
@@ -42,9 +51,8 @@ export default function Reflections() {
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-stone-600 dark:text-slate-200">
             Leave a love note, emoji remix, or tactical nudge for any section of
-            the blog. I now pin just the most useful prompts from each Field
-            Notes drop, and every submission lives in a tiny JSON note inside
-            the Vercel Blob store—so it persists between visits without extra
+            the blog. Every submission lives in a tiny JSON note inside the
+            Vercel Blob store, so it persists between visits without extra
             accounts or logins.
           </p>
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
@@ -54,29 +62,16 @@ export default function Reflections() {
             >
               Browse Blog
             </Link>
+            <a
+              href="https://vercel.com/kumar2nets-projects/personal-website/stores/blob/store_jf0xCffb3qOqwhu6/browser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-transparent bg-stone-900 px-4 py-2 font-semibold text-white shadow-lg shadow-stone-500/40 transition hover:-translate-y-0.5 dark:bg-white dark:text-slate-900"
+            >
+              Vercel Blob Console ↗
+            </a>
           </div>
         </header>
-
-        <section className="rounded-[28px] border border-stone-200 bg-white/90 p-6 shadow-lg shadow-amber-100/80 dark:border-slate-800 dark:bg-slate-900/70">
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-white">
-            Quick tutorial: how to use Reflections
-          </h2>
-          <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm text-stone-600 dark:text-slate-200">
-            <li>
-              Scan the featured cards below—each one is a curated question from
-              the latest blog post that actually needs your voice.
-            </li>
-            <li>
-              Tap the text box or emoji picker inside the card, keep the note
-              short and specific, then hit submit. It’s instantly saved and tied
-              to that blog section.
-            </li>
-            <li>
-              If your thought doesn’t match a section, drop it into the
-              off-script inbox at the bottom so nothing gets lost.
-            </li>
-          </ol>
-        </section>
 
         <section className="space-y-10">
           {featuredSections.map((section) => (
@@ -114,7 +109,6 @@ export default function Reflections() {
             <QuickForm postId="reflections" sectionId="family-lounge" />
           </div>
         </section>
-
       </div>
     </div>
   );

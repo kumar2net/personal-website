@@ -186,9 +186,6 @@ export const getDesignTokens = (): ThemeOptions => ({
             boxShadow: "0 6px 12px rgba(15, 23, 42, 0.22)",
           },
         },
-        containedPrimary: {
-          color: "var(--mui-palette-primary-contrastText)",
-        },
       },
     },
     MuiLink: {
