@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
-import SEO from "../../components/SEO";
+import BlogPostLayout from "../../components/BlogPostLayout";
 import { getBlogSeo } from "../../data/blogIndex";
 import QuickForm from "@/components/QuickForm";
 
@@ -15,6 +15,7 @@ const mdModules = import.meta.glob("/src/pages/blog/*.md", {
 export default function PostDynamic() {
   const { slug } = useParams();
   const [markdown, setMarkdown] = useState("");
+  const postSeo = getBlogSeo(slug);
 
   const LazyComponent = useMemo(() => {
     const path = `/src/pages/blog/${slug}.jsx`;
@@ -35,40 +36,22 @@ export default function PostDynamic() {
 
   if (LazyComponent) {
     return (
-      <Suspense fallback={<div>Loading…</div>}>
-        <SEO
-          title={getBlogSeo(slug)?.title}
-          description={getBlogSeo(slug)?.description}
-          canonicalPath={`/blog/${slug}`}
-          image={getBlogSeo(slug)?.image}
-          type="article"
-          publishedTime={getBlogSeo(slug)?.datePublished}
-          modifiedTime={getBlogSeo(slug)?.dateModified}
-          tags={getBlogSeo(slug)?.tags}
-        />
-        <LazyComponent />
-      </Suspense>
+      <BlogPostLayout slug={slug} post={postSeo}>
+        <Suspense fallback={<div>Loading…</div>}>
+          <LazyComponent />
+        </Suspense>
+      </BlogPostLayout>
     );
   }
 
   if (markdown) {
     return (
-      <div className="prose max-w-none px-4 md:px-8">
-        <SEO
-          title={getBlogSeo(slug)?.title || slug.replace(/-/g, " ")}
-          description={getBlogSeo(slug)?.description}
-          canonicalPath={`/blog/${slug}`}
-          image={getBlogSeo(slug)?.image}
-          type="article"
-          publishedTime={getBlogSeo(slug)?.datePublished}
-          modifiedTime={getBlogSeo(slug)?.dateModified}
-          tags={getBlogSeo(slug)?.tags}
-        />
+      <BlogPostLayout slug={slug} post={postSeo}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
         <div className="not-prose mt-8">
           <QuickForm postId={slug} sectionId="reflections" />
         </div>
-      </div>
+      </BlogPostLayout>
     );
   }
 

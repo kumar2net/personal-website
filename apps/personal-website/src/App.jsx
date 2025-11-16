@@ -492,484 +492,486 @@ function App() {
                 </Box>
               }
             >
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Box
-                    component={motion.section}
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    sx={{
-                      textAlign: "center",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 4,
-                    }}
-                  >
-                    <Typography variant="h1" sx={{ mb: 1 }}>
-                      Welcome to My Personal Website
-                    </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      component="p"
-                      color="text.secondary"
-                      sx={{ maxWidth: 560, mx: "auto" }}
-                    >
-                      AI Enthusiast
-                    </Typography>
-                    <Grid container spacing={3}>
-                      {heroSections.map((section, index) => (
-                        <Grid xs={12} sm={6} md={4} key={section.label}>
-                          <Card
-                            component={motion.article}
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                              duration: 0.45,
-                              delay: index * 0.05,
-                            }}
-                            sx={{ height: "100%" }}
-                          >
-                            <CardActionArea
-                              {...getLinkProps(section)}
-                              onClick={() =>
-                                trackClick(
-                                  `hero_${section.label.toLowerCase()}_card`,
-                                )
-                              }
-                              sx={{ height: "100%" }}
-                            >
-                              <CardContent>
-                                <Typography variant="h6" gutterBottom>
-                                  {section.label}
-                                </Typography>
-                                <Typography
-                                  variant="body2"
-                                  color="text.secondary"
-                                >
-                                  {section.description}
-                                </Typography>
-                              </CardContent>
-                            </CardActionArea>
-                          </Card>
-                        </Grid>
-                      ))}
-                    </Grid>
-                    <Paper
-                      component={motion.blockquote}
-                      initial={{ opacity: 0, y: 20 }}
+            <ScrollToTop>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Box
+                      component={motion.section}
+                      initial={{ opacity: 0, y: 24 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.15 }}
+                      transition={{ duration: 0.6 }}
                       sx={{
-                        mx: "auto",
-                        maxWidth: 720,
-                        textAlign: "left",
-                        p: { xs: 4, md: 5 },
-                        borderRadius: 4,
+                        textAlign: "center",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 4,
                       }}
                     >
-                      <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                        “To the mind that is still, the whole universe
-                        surrenders.”
+                      <Typography variant="h1" sx={{ mb: 1 }}>
+                        Welcome to My Personal Website
                       </Typography>
                       <Typography
-                        variant="subtitle2"
+                        variant="subtitle1"
+                        component="p"
                         color="text.secondary"
-                        sx={{ mt: 3, textAlign: "right" }}
+                        sx={{ maxWidth: 560, mx: "auto" }}
                       >
-                        — Lao Tzu
+                        AI Enthusiast
                       </Typography>
-                    </Paper>
-                    <WorldClock />
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      justifyContent="center"
-                      sx={{ flexWrap: "wrap" }}
-                    >
-                      {[
-                        {
-                          href: "https://kumar2net.wordpress.com/",
-                          label: "WordPress",
-                          icon: <FaWordpress />,
-                        },
-                        {
-                          href: "https://twitter.com/kumar2net",
-                          label: "X (Twitter)",
-                          icon: <FaTwitter />,
-                        },
-                      ].map((social) => (
-                        <IconButton
-                          key={social.label}
-                          component="a"
-                          href={social.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={social.label}
-                          sx={{
-                            borderRadius: "50%",
-                            width: 56,
-                            height: 56,
-                            border: "1px solid",
-                            borderColor: "divider",
-                            boxShadow: "0 12px 30px rgba(15,23,42,0.15)",
-                            color: "text.primary",
-                          }}
+                      <Grid container spacing={3}>
+                        {heroSections.map((section, index) => (
+                          <Grid xs={12} sm={6} md={4} key={section.label}>
+                            <Card
+                              component={motion.article}
+                              initial={{ opacity: 0, y: 30 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                duration: 0.45,
+                                delay: index * 0.05,
+                              }}
+                              sx={{ height: "100%" }}
+                            >
+                              <CardActionArea
+                                {...getLinkProps(section)}
+                                onClick={() =>
+                                  trackClick(
+                                    `hero_${section.label.toLowerCase()}_card`,
+                                  )
+                                }
+                                sx={{ height: "100%" }}
+                              >
+                                <CardContent>
+                                  <Typography variant="h6" gutterBottom>
+                                    {section.label}
+                                  </Typography>
+                                  <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                  >
+                                    {section.description}
+                                  </Typography>
+                                </CardContent>
+                              </CardActionArea>
+                            </Card>
+                          </Grid>
+                        ))}
+                      </Grid>
+                      <Paper
+                        component={motion.blockquote}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.15 }}
+                        sx={{
+                          mx: "auto",
+                          maxWidth: 720,
+                          textAlign: "left",
+                          p: { xs: 4, md: 5 },
+                          borderRadius: 4,
+                        }}
+                      >
+                        <Typography variant="h5" sx={{ fontStyle: "italic" }}>
+                          “To the mind that is still, the whole universe
+                          surrenders.”
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          sx={{ mt: 3, textAlign: "right" }}
                         >
-                          {social.icon}
-                        </IconButton>
-                      ))}
-                    </Stack>
-                  </Box>
-                }
-              />
-              <Route
-                path="/about"
-                element={
-                  <>
-                    <SEO
-                      title="About"
-                      description="About Kumar and this website."
-                      canonicalPath="/about"
-                      type="website"
-                    />
-                    <About />
-                  </>
-                }
-              />
-              <Route
-                path="/projects"
-                element={
-                  <>
-                    <SEO
-                      title="Projects"
-                      description="Selected projects and experiments."
-                      canonicalPath="/projects"
-                      type="website"
-                    />
-                    <Projects />
-                  </>
-                }
-              />
-              <Route
-                path="/projects/ai-recommender-code"
-                element={
-                  <>
-                    <SEO
-                      title="AI Recommender Code"
-                      description="Full Colab notebook powering the AI-driven blog topic recommender."
-                      canonicalPath="/projects/ai-recommender-code"
-                      type="article"
-                    />
-                    <AiRecommenderCode />
-                  </>
-                }
-              />
-              <Route
-                path="/blog"
-                element={
-                  <>
-                    <SEO
-                      title="Blog"
-                      description="Latest posts on technology, learning, and life."
-                      canonicalPath="/blog"
-                      type="website"
-                    />
-                    <Blog />
-                  </>
-                }
-              />
-              <Route
-                path="/reflections"
-                element={
-                  <>
-                    <SEO
-                      title="Reflections"
-                      description="A private-ish lounge for family reactions with emoji shortcuts and Blob-powered notes."
-                      canonicalPath="/reflections"
-                      type="website"
-                    />
-                    <Reflections />
-                  </>
-                }
-              />
-              <Route path="/news" element={<ExternalNewsRedirect />} />
-              <Route
-                path="/blog/2025-10-24-my-reminiscences"
-                element={
-                  <>
-                    <SEO
-                      title="My Reminiscences"
-                      description="Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections."
-                      canonicalPath="/blog/2025-10-24-my-reminiscences"
-                      type="article"
-                    />
-                    <MyReminiscences />
-                  </>
-                }
-              />
-              <Route
-                path="/reco"
-                element={
-                  <>
-                    <SEO
-                      title="AI Recommendations"
-                      description="Get AI-powered content recommendations using Neural Graph Intelligence. Discover trending topics and personalized suggestions."
-                      canonicalPath="/reco"
-                      type="website"
-                    />
-                    <Recommendations />
-                  </>
-                }
-              />
-              <Route
-                path="/trends"
-                element={
-                  <>
-                    <SEO
-                      title="Trends"
-                      description="Trends and insights."
-                      canonicalPath="/trends"
-                      type="website"
-                    />
-                    <Trends />
-                  </>
-                }
-              />
-              <Route
-                path="/learning"
-                element={
-                  <>
-                    <SEO
-                      title="Learning"
-                      description="Learning hub: flashcards, notes, and more."
-                      canonicalPath="/learning"
-                      type="website"
-                    />
-                    <Learning />
-                  </>
-                }
-              />
-              <Route
-                path="/music"
-                element={
-                  <>
-                    <SEO
-                      title="Music"
-                      description="Favorite tracks and playlists."
-                      canonicalPath="/music"
-                      type="website"
-                    />
-                    <MusicPage />
-                  </>
-                }
-              />
-              <Route
-                path="/album"
-                element={
-                  <>
-                    <SEO
-                      title="Album"
-                      description="Travel albums and photos."
-                      canonicalPath="/album"
-                      type="website"
-                    />
-                    <Album />
-                  </>
-                }
-              />
-              <Route
-                path="/elsewhere"
-                element={
-                  <>
-                    <SEO
-                      title="Elsewhere"
-                      description="WordPress posts and X timeline."
-                      canonicalPath="/elsewhere"
-                      type="website"
-                    />
-                    <Elsewhere />
-                  </>
-                }
-              />
-              <Route
-                path="/books"
-                element={
-                  <>
-                    <SEO
-                      title="Books"
-                      description="Books I’m reading and notes."
-                      canonicalPath="/books"
-                      type="website"
-                    />
-                    <Books />
-                  </>
-                }
-              />
-              <Route
-                path="/books/applying-cornell-method"
-                element={<ApplyingCornellMethodMd />}
-              />
-              <Route
-                path="/books/the-brain-story-content"
-                element={<TheBrainStoryContent />}
-              />
-              <Route
-                path="/books/pdf-extractor"
-                element={<PDFExtractorPage />}
-              />
-              <Route
-                path="/books/atheism"
-                element={
-                  <>
-                    <SEO
-                      title="Atheism"
-                      description="Atheism book notes and excerpts."
-                      canonicalPath="/books/atheism"
-                      type="article"
-                    />
-                    <Atheism />
-                  </>
-                }
-              />
-              <Route
-                path="/books/how-to-stop-caring"
-                element={
-                  <>
-                    <SEO
-                      title="How to STOP Caring What People Think of You!"
-                      description="A concise guide to breaking free from others' opinions and living authentically. Russell Jamieson provides practical strategies for developing self-confidence."
-                      canonicalPath="/books/how-to-stop-caring"
-                      type="article"
-                    />
-                    <HowToStopCaring />
-                  </>
-                }
-              />
-              <Route
-                path="/books/the-last-drop-of-water"
-                element={
-                  <>
-                    <SEO
-                      title="The Last Drop of Water, oh no - A True Story of Compassion"
-                      description="A profound true story about compassion and reflection. When a dying darkling beetle crosses paths with Kumar.A on a Sunday morning in Coimbatore, a simple act of kindness becomes a meditation on mortality and empathy."
-                      canonicalPath="/books/the-last-drop-of-water"
-                      type="article"
-                      image="/media/darkling-beetle.jpg"
-                    />
-                    <TheLastDropOfWater />
-                  </>
-                }
-              />
-              <Route path="/books/:slug" element={<BookDynamic />} />
-              <Route path="/learning/:setId" element={<FlashcardSetPage />} />
-              <Route
-                path="/learning/shortcuts"
-                element={
-                  <>
-                    <SEO
-                      title="Shortcuts"
-                      description="Keyboard shortcuts and practice."
-                      canonicalPath="/learning/shortcuts"
-                      type="website"
-                    />
-                    <Shortcuts />
-                  </>
-                }
-              />
+                          — Lao Tzu
+                        </Typography>
+                      </Paper>
+                      <WorldClock />
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                        sx={{ flexWrap: "wrap" }}
+                      >
+                        {[
+                          {
+                            href: "https://kumar2net.wordpress.com/",
+                            label: "WordPress",
+                            icon: <FaWordpress />,
+                          },
+                          {
+                            href: "https://twitter.com/kumar2net",
+                            label: "X (Twitter)",
+                            icon: <FaTwitter />,
+                          },
+                        ].map((social) => (
+                          <IconButton
+                            key={social.label}
+                            component="a"
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={social.label}
+                            sx={{
+                              borderRadius: "50%",
+                              width: 56,
+                              height: 56,
+                              border: "1px solid",
+                              borderColor: "divider",
+                              boxShadow: "0 12px 30px rgba(15,23,42,0.15)",
+                              color: "text.primary",
+                            }}
+                          >
+                            {social.icon}
+                          </IconButton>
+                        ))}
+                      </Stack>
+                    </Box>
+                  }
+                />
+                <Route
+                  path="/about"
+                  element={
+                    <>
+                      <SEO
+                        title="About"
+                        description="About Kumar and this website."
+                        canonicalPath="/about"
+                        type="website"
+                      />
+                      <About />
+                    </>
+                  }
+                />
+                <Route
+                  path="/projects"
+                  element={
+                    <>
+                      <SEO
+                        title="Projects"
+                        description="Selected projects and experiments."
+                        canonicalPath="/projects"
+                        type="website"
+                      />
+                      <Projects />
+                    </>
+                  }
+                />
+                <Route
+                  path="/projects/ai-recommender-code"
+                  element={
+                    <>
+                      <SEO
+                        title="AI Recommender Code"
+                        description="Full Colab notebook powering the AI-driven blog topic recommender."
+                        canonicalPath="/projects/ai-recommender-code"
+                        type="article"
+                      />
+                      <AiRecommenderCode />
+                    </>
+                  }
+                />
+                <Route
+                  path="/blog"
+                  element={
+                    <>
+                      <SEO
+                        title="Blog"
+                        description="Latest posts on technology, learning, and life."
+                        canonicalPath="/blog"
+                        type="website"
+                      />
+                      <Blog />
+                    </>
+                  }
+                />
+                <Route
+                  path="/reflections"
+                  element={
+                    <>
+                      <SEO
+                        title="Reflections"
+                        description="A private-ish lounge for family reactions with emoji shortcuts and Blob-powered notes."
+                        canonicalPath="/reflections"
+                        type="website"
+                      />
+                      <Reflections />
+                    </>
+                  }
+                />
+                <Route path="/news" element={<ExternalNewsRedirect />} />
+                <Route
+                  path="/blog/2025-10-24-my-reminiscences"
+                  element={
+                    <>
+                      <SEO
+                        title="My Reminiscences"
+                        description="Personal reflections on family, technology, and life changes over the years. From mobile services evolution to cryptocurrency battles, data science insights to cultural connections."
+                        canonicalPath="/blog/2025-10-24-my-reminiscences"
+                        type="article"
+                      />
+                      <MyReminiscences />
+                    </>
+                  }
+                />
+                <Route
+                  path="/reco"
+                  element={
+                    <>
+                      <SEO
+                        title="AI Recommendations"
+                        description="Get AI-powered content recommendations using Neural Graph Intelligence. Discover trending topics and personalized suggestions."
+                        canonicalPath="/reco"
+                        type="website"
+                      />
+                      <Recommendations />
+                    </>
+                  }
+                />
+                <Route
+                  path="/trends"
+                  element={
+                    <>
+                      <SEO
+                        title="Trends"
+                        description="Trends and insights."
+                        canonicalPath="/trends"
+                        type="website"
+                      />
+                      <Trends />
+                    </>
+                  }
+                />
+                <Route
+                  path="/learning"
+                  element={
+                    <>
+                      <SEO
+                        title="Learning"
+                        description="Learning hub: flashcards, notes, and more."
+                        canonicalPath="/learning"
+                        type="website"
+                      />
+                      <Learning />
+                    </>
+                  }
+                />
+                <Route
+                  path="/music"
+                  element={
+                    <>
+                      <SEO
+                        title="Music"
+                        description="Favorite tracks and playlists."
+                        canonicalPath="/music"
+                        type="website"
+                      />
+                      <MusicPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/album"
+                  element={
+                    <>
+                      <SEO
+                        title="Album"
+                        description="Travel albums and photos."
+                        canonicalPath="/album"
+                        type="website"
+                      />
+                      <Album />
+                    </>
+                  }
+                />
+                <Route
+                  path="/elsewhere"
+                  element={
+                    <>
+                      <SEO
+                        title="Elsewhere"
+                        description="WordPress posts and X timeline."
+                        canonicalPath="/elsewhere"
+                        type="website"
+                      />
+                      <Elsewhere />
+                    </>
+                  }
+                />
+                <Route
+                  path="/books"
+                  element={
+                    <>
+                      <SEO
+                        title="Books"
+                        description="Books I’m reading and notes."
+                        canonicalPath="/books"
+                        type="website"
+                      />
+                      <Books />
+                    </>
+                  }
+                />
+                <Route
+                  path="/books/applying-cornell-method"
+                  element={<ApplyingCornellMethodMd />}
+                />
+                <Route
+                  path="/books/the-brain-story-content"
+                  element={<TheBrainStoryContent />}
+                />
+                <Route
+                  path="/books/pdf-extractor"
+                  element={<PDFExtractorPage />}
+                />
+                <Route
+                  path="/books/atheism"
+                  element={
+                    <>
+                      <SEO
+                        title="Atheism"
+                        description="Atheism book notes and excerpts."
+                        canonicalPath="/books/atheism"
+                        type="article"
+                      />
+                      <Atheism />
+                    </>
+                  }
+                />
+                <Route
+                  path="/books/how-to-stop-caring"
+                  element={
+                    <>
+                      <SEO
+                        title="How to STOP Caring What People Think of You!"
+                        description="A concise guide to breaking free from others' opinions and living authentically. Russell Jamieson provides practical strategies for developing self-confidence."
+                        canonicalPath="/books/how-to-stop-caring"
+                        type="article"
+                      />
+                      <HowToStopCaring />
+                    </>
+                  }
+                />
+                <Route
+                  path="/books/the-last-drop-of-water"
+                  element={
+                    <>
+                      <SEO
+                        title="The Last Drop of Water, oh no - A True Story of Compassion"
+                        description="A profound true story about compassion and reflection. When a dying darkling beetle crosses paths with Kumar.A on a Sunday morning in Coimbatore, a simple act of kindness becomes a meditation on mortality and empathy."
+                        canonicalPath="/books/the-last-drop-of-water"
+                        type="article"
+                        image="/media/darkling-beetle.jpg"
+                      />
+                      <TheLastDropOfWater />
+                    </>
+                  }
+                />
+                <Route path="/books/:slug" element={<BookDynamic />} />
+                <Route path="/learning/:setId" element={<FlashcardSetPage />} />
+                <Route
+                  path="/learning/shortcuts"
+                  element={
+                    <>
+                      <SEO
+                        title="Shortcuts"
+                        description="Keyboard shortcuts and practice."
+                        canonicalPath="/learning/shortcuts"
+                        type="website"
+                      />
+                      <Shortcuts />
+                    </>
+                  }
+                />
 
-              {/* All blog posts now handled by PostDynamic */}
-              <Route
-                path="/dossier"
-                element={
-                  <>
-                    <SEO
-                      title="Dossier"
-                      description="Weekly dossiers and research notes."
-                      canonicalPath="/dossier"
-                      type="website"
-                    />
-                    <DossierPage />
-                  </>
-                }
-              />
-              <Route
-                path="/utilities"
-                element={
-                  <>
-                    <SEO
-                      title="Utilities"
-                      description="Utilities dashboard and tools."
-                      canonicalPath="/utilities"
-                      type="website"
-                    />
-                    <UtilitiesDashboard />
-                  </>
-                }
-              />
-              <Route
-                path="/convert"
-                element={
-                  <>
-                    <SEO
-                      title="Unit Converter"
-                      description="Convert between U.S. lifestyle units and their metric counterparts."
-                      canonicalPath="/convert"
-                      type="website"
-                    />
-                    <ConvertPage />
-                  </>
-                }
-              />
-              <Route
-                path="/naruvi"
-                element={
-                  <>
-                    <SEO
-                      title="Naruvi Water Issues"
-                      description="Naruvi water issues dashboard and notes."
-                      canonicalPath="/naruvi"
-                      type="website"
-                    />
-                    <NaruviWaterIssues />
-                  </>
-                }
-              />
-              {/* Admin route removed */}
-              <Route path="/blog/:slug" element={<PostDynamic />} />
+                {/* All blog posts now handled by PostDynamic */}
+                <Route
+                  path="/dossier"
+                  element={
+                    <>
+                      <SEO
+                        title="Dossier"
+                        description="Weekly dossiers and research notes."
+                        canonicalPath="/dossier"
+                        type="website"
+                      />
+                      <DossierPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/utilities"
+                  element={
+                    <>
+                      <SEO
+                        title="Utilities"
+                        description="Utilities dashboard and tools."
+                        canonicalPath="/utilities"
+                        type="website"
+                      />
+                      <UtilitiesDashboard />
+                    </>
+                  }
+                />
+                <Route
+                  path="/convert"
+                  element={
+                    <>
+                      <SEO
+                        title="Unit Converter"
+                        description="Convert between U.S. lifestyle units and their metric counterparts."
+                        canonicalPath="/convert"
+                        type="website"
+                      />
+                      <ConvertPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/naruvi"
+                  element={
+                    <>
+                      <SEO
+                        title="Naruvi Water Issues"
+                        description="Naruvi water issues dashboard and notes."
+                        canonicalPath="/naruvi"
+                        type="website"
+                      />
+                      <NaruviWaterIssues />
+                    </>
+                  }
+                />
+                {/* Admin route removed */}
+                <Route path="/blog/:slug" element={<PostDynamic />} />
 
-              <Route
-                path="/contact"
-                element={
-                  <>
-                    <SEO
-                      title="Contact"
-                      description="Get in touch with Kumar."
-                      canonicalPath="/contact"
-                      type="website"
-                    />
-                    <Contact />
-                  </>
-                }
-              />
-              <Route
-                path="/status"
-                element={
-                  <>
-                    <SEO
-                      title="Status"
-                      description="Deployment status of the website."
-                      canonicalPath="/status"
-                      type="website"
-                    />
-                    <Status />
-                  </>
-                }
-              />
-              {/* Admin route is handled by static files, not React Router */}
-            </Routes>
+                <Route
+                  path="/contact"
+                  element={
+                    <>
+                      <SEO
+                        title="Contact"
+                        description="Get in touch with Kumar."
+                        canonicalPath="/contact"
+                        type="website"
+                      />
+                      <Contact />
+                    </>
+                  }
+                />
+                <Route
+                  path="/status"
+                  element={
+                    <>
+                      <SEO
+                        title="Status"
+                        description="Deployment status of the website."
+                        canonicalPath="/status"
+                        type="website"
+                      />
+                      <Status />
+                    </>
+                  }
+                />
+                {/* Admin route is handled by static files, not React Router */}
+              </Routes>
+            </ScrollToTop>
           </Suspense>
         </Container>
       </Box>
