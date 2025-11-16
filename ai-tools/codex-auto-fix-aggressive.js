@@ -23,9 +23,22 @@ class CodexAutoFixAggressive {
     ].join(' ');
 
     if (OpenAI && process.env.OPENAI_API_KEY) {
-      this.client = new OpenAI({
+      const clientOptions = {
         apiKey: process.env.OPENAI_API_KEY
-      });
+      };
+      const normalizedProject = process.env.OPENAI_PROJECT;
+      const normalizedOrg = process.env.OPENAI_ORGANIZATION;
+      if (normalizedProject) {
+        if (normalizedProject.startsWith('org-') && !normalizedOrg) {
+          clientOptions.organization = normalizedProject;
+        } else {
+          clientOptions.project = normalizedProject;
+        }
+      }
+      if (normalizedOrg) {
+        clientOptions.organization = normalizedOrg;
+      }
+      this.client = new OpenAI(clientOptions);
     } else {
       this.client = null;
       this.logger.warn('[codex-auto-fix] OPENAI_API_KEY missing. Auto-fix will be skipped.');
