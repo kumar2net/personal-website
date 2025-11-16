@@ -1,5 +1,12 @@
 const chromeLauncher = require('chrome-launcher');
-const lighthouse = require('lighthouse');
+
+let lighthousePromise;
+async function getLighthouse() {
+  if (!lighthousePromise) {
+    lighthousePromise = import('lighthouse').then((mod) => mod.default || mod);
+  }
+  return lighthousePromise;
+}
 
 const CATEGORY_THRESHOLDS = {
   performance: 0.9,
@@ -57,6 +64,7 @@ class LighthouseAuditor {
           chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox']
         });
 
+        const lighthouse = await getLighthouse();
         const result = await lighthouse(
           url,
           {

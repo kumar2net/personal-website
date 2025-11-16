@@ -7,7 +7,8 @@
     "dev": "vite",
     "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
