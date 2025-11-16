@@ -6,7 +6,7 @@ const albums = [
   {
     title: "Family Highlights",
     description:
-      "Some new images from S boy, some interesting clippings etc...",
+      "SB’s latest frames, mellow autumn mood pics, and a few favorite newspaper clippings stitched together.",
     url: "https://photos.app.goo.gl/ej2zF3go6NVt7Pgv6",
   },
   {
@@ -63,7 +63,8 @@ const Album = () => {
             A rolling gallery—from Duke-boy’s DC visit and Mylapore Bhavan
             pitstops to on-ground shots from our budding dentist’s internship
             camps. Tap through to wander the latest frames straight from the
-            phone roll.
+            phone roll, browse scanned newspaper clippings, and soak in SB’s
+            autumn mood photos that set a mellow tone.
           </p>
         </div>
       </div>

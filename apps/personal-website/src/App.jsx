@@ -571,17 +571,18 @@ function App() {
                       }}
                     >
                       <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                        “Live your life as an exclamation rather than an
-                        explanation.”
+                        “To the mind that is still, the whole universe
+                        surrenders.”
                       </Typography>
                       <Typography
                         variant="subtitle2"
                         color="text.secondary"
                         sx={{ mt: 3, textAlign: "right" }}
                       >
-                        — Sir Isaac Newton
+                        — Lao Tzu
                       </Typography>
                     </Paper>
+                    <WorldClock />
                     <Stack
                       direction="row"
                       spacing={2}
@@ -621,7 +622,6 @@ function App() {
                         </IconButton>
                       ))}
                     </Stack>
-                    <WorldClock />
                   </Box>
                 }
               />
