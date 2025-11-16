@@ -14,7 +14,8 @@
     "sitemap": "node apps/personal-website/scripts/generate-sitemap.mjs",
     "bookhints:process": "node apps/personal-website/scripts/bookhint-agentic.mjs",
     "bookhints:watch": "node apps/personal-website/scripts/bookhint-agentic.mjs --watch",
-    "ai-debug": "node ai-tools/auto-debug-aggressive.js"
+    "ai-debug": "node ai-tools/auto-debug-aggressive.js",
+    "commit-changes": "git add . && git commit -m 'fix(ui): resolve invisible text issue after mui migration'"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",

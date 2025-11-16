@@ -108,7 +108,6 @@ const Blog = () => {
                           label={tag}
                           size="small"
                           color="primary"
-                          variant="soft"
                         />
                       ))}
                     </Stack>

@@ -102,20 +102,20 @@ export default function QuickForm({ postId, sectionId }) {
   };
 
   return (
-    <div className="rounded-3xl border border-white/30 bg-gradient-to-br from-indigo-50/90 via-white/80 to-emerald-50/80 p-4 shadow-lg shadow-indigo-100/50 backdrop-blur-sm dark:border-white/10 dark:from-slate-900/70 dark:via-slate-900/40 dark:to-emerald-900/20">
+    <div className="rounded-3xl border border-outline/30 bg-gradient-to-br from-primaryContainer/90 via-surface/80 to-secondaryContainer/80 p-4 shadow-lg shadow-primaryContainer/50 backdrop-blur-sm dark:border-outline/10 dark:from-surface/70 dark:via-surface/40 dark:to-secondaryContainer/20">
       <div className="flex flex-wrap gap-2 pb-3">
         {emojis.map((emoji) => (
           <button
             key={emoji}
             type="button"
             onClick={() => handleEmoji(emoji)}
-            className="rounded-full border border-transparent bg-white/80 px-3 py-1 text-lg transition hover:scale-110 hover:border-black/10 dark:bg-slate-800/70"
+            className="rounded-full border border-transparent bg-surface/80 px-3 py-1 text-lg transition hover:scale-110 hover:border-onSurface/10 dark:bg-surfaceContainer/70"
             aria-label={`Add ${emoji}`}
           >
             {emoji}
           </button>
         ))}
-        <span className="ml-auto text-xs uppercase tracking-[0.2em] text-gray-500">
+        <span className="ml-auto text-xs uppercase tracking-[0.2em] text-onSurfaceVariant">
           Leave a quick vibe
         </span>
       </div>
@@ -126,48 +126,48 @@ export default function QuickForm({ postId, sectionId }) {
           placeholder="Drop a note, memory, or emoji remix…"
           onChange={(event) => setText(event.target.value)}
           rows={3}
-          className="w-full resize-none rounded-2xl border border-gray-200/70 bg-white/90 p-3 text-sm shadow-inner focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-slate-700 dark:bg-slate-900/50 dark:focus:border-emerald-400 dark:focus:ring-emerald-200/30"
+          className="w-full resize-none rounded-2xl border border-outlineVariant/70 bg-surface/90 p-3 text-sm shadow-inner focus:border-primary focus:outline-none focus:ring-2 focus:ring-primaryContainer dark:border-outline dark:bg-surface/50 dark:focus:border-secondary dark:focus:ring-secondaryContainer/30"
         />
         <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={handleSubmit}
             disabled={isSending}
-            className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-black/20 transition disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-black"
+            className="inline-flex items-center gap-2 rounded-full bg-onSurface px-5 py-2 text-sm font-semibold uppercase tracking-wide text-surface shadow-lg shadow-onSurface/20 transition disabled:cursor-not-allowed disabled:opacity-60 dark:bg-surface dark:text-onSurface"
           >
             {isSending ? "Sending…" : "Send"}
           </button>
           {success && (
-            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-300">
+            <span className="text-xs font-medium text-success dark:text-success">
               Saved for the family album ✓
             </span>
           )}
           {error && (
-            <span className="text-xs text-rose-500 dark:text-rose-300">
+            <span className="text-xs text-error dark:text-error">
               {error}
             </span>
           )}
         </div>
       </div>
 
-      <div className="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-200">
+      <div className="mt-4 space-y-2 text-sm text-onSurface dark:text-onSurface">
         {isLoading && (
-          <div className="text-xs text-gray-500 dark:text-gray-400">
+          <div className="text-xs text-onSurfaceVariant dark:text-onSurfaceVariant">
             Loading previous notes…
           </div>
         )}
         {!isLoading && items.length === 0 && (
-          <div className="text-xs text-gray-500 dark:text-gray-400">
+          <div className="text-xs text-onSurfaceVariant dark:text-onSurfaceVariant">
             Be the first to leave a love note for this section.
           </div>
         )}
         {items.map((item) => (
           <div
             key={item.ts}
-            className="rounded-2xl border border-gray-100 bg-white/80 p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900/40"
+            className="rounded-2xl border border-outlineVariant bg-surface/80 p-3 shadow-sm dark:border-outline dark:bg-surface/40"
           >
             <p className="text-sm leading-relaxed">{item.text}</p>
-            <span className="text-xs uppercase tracking-widest text-gray-400">
+            <span className="text-xs uppercase tracking-widest text-onSurfaceVariant">
               {formatRelativeTime(item.ts)}
             </span>
           </div>
