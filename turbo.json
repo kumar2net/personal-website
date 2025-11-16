@@ -9,7 +9,8 @@
         "OPENAI_API_KEY",
         "NEWSDATA_API_KEY",
         "X_BEARER_TOKEN",
-        "ROLLUP_SKIP_NODEJS_NATIVE_BUILD"
+        "ROLLUP_SKIP_NODEJS_NATIVE_BUILD",
+        "BLOB_READ_WRITE_TOKEN"
       ]
     },
     "dev": {
