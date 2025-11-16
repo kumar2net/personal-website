@@ -17,7 +17,7 @@ class CodexAutoFixAggressive {
     const fallbackModelEnv =
       process.env.CODEX_FALLBACK_MODELS ||
       process.env.CODEX_FALLBACK_MODEL ||
-      'gpt-4.1,gpt-4.1-mini,gpt-4o-mini';
+      'gpt-5-mini-2025-08-07,gpt-5-nano-2025-08-07,gpt-5-pro-2025-10-06';
     this.fallbackModels = fallbackModelEnv
       .split(',')
       .map((entry) => entry.trim())
