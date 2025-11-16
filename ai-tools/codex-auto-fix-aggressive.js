@@ -22,6 +22,8 @@ class CodexAutoFixAggressive {
       .split(',')
       .map((entry) => entry.trim())
       .filter((entry) => entry && entry !== this.model);
+    this.geminiApiKey = process.env.GEMINI_API_KEY || null;
+    this.geminiModel = process.env.GEMINI_MODEL || 'gemini-1.5-pro-latest';
     this.systemPrompt = [
       'You are an autonomous refactoring agent plugged directly into `git apply`.',
       'Every response MUST include one or more ```patch fenced git patches or ```rewrite:path fences.',
@@ -57,8 +59,8 @@ class CodexAutoFixAggressive {
     if (!issues.length) {
       return { appliedPatches: 0, rewrites: 0 };
     }
-    if (!this.client) {
-      this.logger.warn('[codex-auto-fix] Skipping repair because OpenAI client is unavailable.');
+    if (!this.client && !this.geminiApiKey) {
+      this.logger.warn('[codex-auto-fix] Skipping repair because no LLM provider is configured.');
       return { appliedPatches: 0, rewrites: 0 };
     }
 
@@ -122,30 +124,45 @@ class CodexAutoFixAggressive {
   }
 
   async fetchResponseWithFallback(prompt) {
-    const models = [this.model, ...this.fallbackModels];
+    const models = this.client ? [this.model, ...this.fallbackModels] : [];
     let lastError = null;
 
-    for (let i = 0; i < models.length; i += 1) {
-      const targetModel = models[i];
-      const label = i === 0 ? 'Primary' : 'Fallback';
-      try {
-        const response = await this.requestFix(prompt, targetModel);
-        if (i > 0) {
-          this.logger.info(`[codex-auto-fix] Using fallback model ${targetModel}.`);
-        }
-        return { response, modelUsed: targetModel };
-      } catch (error) {
-        lastError = error;
-        const hasNext = i < models.length - 1;
-        if (hasNext && this.shouldFallback(error)) {
-          const nextModel = models[i + 1];
-          this.logger.warn(
-            `[codex-auto-fix] ${label} model ${targetModel} unavailable (${error.message}). Trying ${nextModel}...`
+    if (this.client && models.length) {
+      for (let i = 0; i < models.length; i += 1) {
+        const targetModel = models[i];
+        const label = i === 0 ? 'Primary' : 'Fallback';
+        try {
+          const response = await this.requestFix(prompt, targetModel);
+          if (i > 0) {
+            this.logger.info(`[codex-auto-fix] Using fallback model ${targetModel}.`);
+          }
+          return { response, modelUsed: targetModel };
+        } catch (error) {
+          lastError = error;
+          const hasNext = i < models.length - 1;
+          if (hasNext && this.shouldFallback(error)) {
+            const nextModel = models[i + 1];
+            this.logger.warn(
+              `[codex-auto-fix] ${label} model ${targetModel} unavailable (${error.message}). Trying ${nextModel}...`
+            );
+            continue;
+          }
+          this.logger.error(
+            `[codex-auto-fix] ${label} model ${targetModel} failed: ${error.message}`
           );
-          continue;
+          break;
         }
-        this.logger.error(`[codex-auto-fix] ${label} model ${targetModel} failed: ${error.message}`);
-        break;
+      }
+    }
+
+    if (this.geminiApiKey) {
+      this.logger.warn('[codex-auto-fix] Falling back to Gemini due to OpenAI issues.');
+      try {
+        const response = await this.requestGeminiFix(prompt);
+        return { response, modelUsed: this.geminiModel };
+      } catch (geminiError) {
+        lastError = geminiError;
+        this.logger.error(`[codex-auto-fix] Gemini request failed: ${geminiError.message}`);
       }
     }
 
@@ -159,13 +176,16 @@ class CodexAutoFixAggressive {
 
   shouldFallback(error) {
     if (!error) return false;
-    if (!this.fallbackModels.length) return false;
+    if (!this.fallbackModels.length && !this.geminiApiKey) return false;
     const status = error.status || error.code;
     const message = (error.message || '').toLowerCase();
     if (status === 401 || status === 403) return true;
     if (message.includes('does not have access')) return true;
     if (message.includes('was not found')) return true;
     if (message.includes('unknown model') || message.includes('unsupported model')) return true;
+    if (status === 408 || status === 504) return true;
+    if (error.code === 'ETIMEDOUT') return true;
+    if (message.includes('timeout') || message.includes('timed out')) return true;
     return false;
   }
 
@@ -212,6 +232,9 @@ class CodexAutoFixAggressive {
           .map((chunk) => {
             if (!chunk) return '';
             if (typeof chunk === 'string') return chunk;
+            if (Array.isArray(chunk.parts)) {
+              return chunk.parts.map((part) => part?.text || '').filter(Boolean).join('\n');
+            }
             return chunk.text || chunk.transcript || chunk.output_text || '';
           })
           .filter(Boolean)
@@ -255,6 +278,71 @@ class CodexAutoFixAggressive {
       });
     }
     return results;
+  }
+
+  async requestGeminiFix(prompt) {
+    if (!this.geminiApiKey) {
+      throw new Error('GEMINI_API_KEY not configured');
+    }
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.geminiModel}:generateContent?key=${this.geminiApiKey}`;
+    const payload = {
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: this.composeGeminiPrompt(prompt) }]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.1,
+        topK: 32,
+        topP: 0.95
+      }
+    };
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const message = await response.text();
+      throw new Error(`Gemini request failed (${response.status}): ${message.slice(0, 500)}`);
+    }
+
+    const data = await response.json();
+    const text = this.extractGeminiText(data);
+    return {
+      output: [
+        {
+          content: [{ text }]
+        }
+      ]
+    };
+  }
+
+  composeGeminiPrompt(prompt) {
+    return [
+      this.systemPrompt,
+      '',
+      'User Input JSON and instructions:',
+      prompt,
+      '',
+      'Return only git patches or rewrite fences per the rules.'
+    ].join('\n');
+  }
+
+  extractGeminiText(data) {
+    if (!data) return '';
+    const collected = [];
+    for (const candidate of data.candidates || []) {
+      const parts = candidate?.content?.parts || [];
+      const text = parts.map((part) => part?.text || '').filter(Boolean).join('\n');
+      if (text) collected.push(text);
+    }
+    if (collected.length) return collected.join('\n');
+    if (data.output_text) return data.output_text;
+    return '';
   }
 
   async applyPatch(patch) {
