@@ -13,7 +13,7 @@ class CodexAutoFixAggressive {
   constructor(options = {}) {
     this.projectRoot = options.projectRoot || process.cwd();
     this.logger = options.logger || console;
-    this.model = process.env.CODEX_MODEL || 'gpt-5.1-codex';
+    this.model = process.env.CODEX_MODEL || 'gpt-5-codex';
     const fallbackModelEnv =
       process.env.CODEX_FALLBACK_MODELS ||
       process.env.CODEX_FALLBACK_MODEL ||
@@ -205,13 +205,20 @@ class CodexAutoFixAggressive {
   extractText(response) {
     if (!response) return '';
     if (response.output?.length) {
-      return response.output
-        .map((item) =>
-          item.content
-            .map((chunk) => chunk.text || chunk.transcript || '')
-            .join('\n')
-        )
-        .join('\n');
+      const segments = [];
+      for (const item of response.output) {
+        if (!item || !Array.isArray(item.content)) continue;
+        const text = item.content
+          .map((chunk) => {
+            if (!chunk) return '';
+            if (typeof chunk === 'string') return chunk;
+            return chunk.text || chunk.transcript || chunk.output_text || '';
+          })
+          .filter(Boolean)
+          .join('\n');
+        if (text) segments.push(text);
+      }
+      if (segments.length) return segments.join('\n');
     }
 
     if (response.choices?.length) {
