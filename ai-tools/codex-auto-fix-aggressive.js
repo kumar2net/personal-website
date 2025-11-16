@@ -14,6 +14,14 @@ class CodexAutoFixAggressive {
     this.projectRoot = options.projectRoot || process.cwd();
     this.logger = options.logger || console;
     this.model = process.env.CODEX_MODEL || 'gpt-5.1-codex';
+    const fallbackModelEnv =
+      process.env.CODEX_FALLBACK_MODELS ||
+      process.env.CODEX_FALLBACK_MODEL ||
+      'gpt-4.1,gpt-4.1-mini,gpt-4o-mini';
+    this.fallbackModels = fallbackModelEnv
+      .split(',')
+      .map((entry) => entry.trim())
+      .filter((entry) => entry && entry !== this.model);
     this.systemPrompt = [
       'You are an autonomous refactoring agent plugged directly into `git apply`.',
       'Every response MUST include one or more ```patch fenced git patches or ```rewrite:path fences.',
@@ -54,37 +62,40 @@ class CodexAutoFixAggressive {
       return { appliedPatches: 0, rewrites: 0 };
     }
 
-    const prompt = this.buildPrompt(issues);
-    let response;
-    try {
-      response = await this.requestFix(prompt);
-    } catch (error) {
-      this.logger.error(`[codex-auto-fix] Failed to request fixes: ${error.message}`);
-      return { appliedPatches: 0, rewrites: 0 };
-    }
-    const body = this.extractText(response);
-    if (!body) {
-      this.logger.warn('[codex-auto-fix] Empty response from model.');
-      return { appliedPatches: 0, rewrites: 0 };
-    }
-
-    const patches = this.extractPatchBlocks(body);
-    const rewrites = this.extractRewriteBlocks(body);
-
+    const batches = this.chunkIssues(issues);
     let appliedPatches = 0;
-    for (const patch of patches) {
-      const applied = await this.applyPatch(patch);
-      if (applied) appliedPatches += 1;
-    }
-
     let rewriteCount = 0;
-    if (appliedPatches === 0 && rewrites.length === 0) {
-      this.logger.warn('[codex-auto-fix] Model returned no actionable content.');
-    }
 
-    for (const rewrite of rewrites) {
-      const applied = await this.applyRewrite(rewrite);
-      if (applied) rewriteCount += 1;
+    for (let index = 0; index < batches.length; index += 1) {
+      const batch = batches[index];
+      this.logger.info(
+        `[codex-auto-fix] Processing issue batch ${index + 1}/${batches.length} (${batch.length} issues)`
+      );
+      const prompt = this.buildPrompt(batch);
+      const { response } = await this.fetchResponseWithFallback(prompt);
+      if (!response) continue;
+      const body = this.extractText(response);
+      if (!body) {
+        this.logger.warn('[codex-auto-fix] Empty response from model.');
+        continue;
+      }
+
+      const patches = this.extractPatchBlocks(body);
+      const rewrites = this.extractRewriteBlocks(body);
+
+      for (const patch of patches) {
+        const applied = await this.applyPatch(patch);
+        if (applied) appliedPatches += 1;
+      }
+
+      if (patches.length === 0 && rewrites.length === 0) {
+        this.logger.warn('[codex-auto-fix] Model returned no actionable content for this batch.');
+      }
+
+      for (const rewrite of rewrites) {
+        const applied = await this.applyRewrite(rewrite);
+        if (applied) rewriteCount += 1;
+      }
     }
 
     return { appliedPatches, rewrites: rewriteCount };
@@ -110,15 +121,85 @@ class CodexAutoFixAggressive {
     ].join('\n');
   }
 
-  async requestFix(content) {
-    return this.client.responses.create({
-      model: this.model,
-      reasoning: { effort: 'medium' },
+  async fetchResponseWithFallback(prompt) {
+    const models = [this.model, ...this.fallbackModels];
+    let lastError = null;
+
+    for (let i = 0; i < models.length; i += 1) {
+      const targetModel = models[i];
+      const label = i === 0 ? 'Primary' : 'Fallback';
+      try {
+        const response = await this.requestFix(prompt, targetModel);
+        if (i > 0) {
+          this.logger.info(`[codex-auto-fix] Using fallback model ${targetModel}.`);
+        }
+        return { response, modelUsed: targetModel };
+      } catch (error) {
+        lastError = error;
+        const hasNext = i < models.length - 1;
+        if (hasNext && this.shouldFallback(error)) {
+          const nextModel = models[i + 1];
+          this.logger.warn(
+            `[codex-auto-fix] ${label} model ${targetModel} unavailable (${error.message}). Trying ${nextModel}...`
+          );
+          continue;
+        }
+        this.logger.error(`[codex-auto-fix] ${label} model ${targetModel} failed: ${error.message}`);
+        break;
+      }
+    }
+
+    if (lastError) {
+      this.logger.error(
+        `[codex-auto-fix] Exhausted available models without success: ${lastError.message}`
+      );
+    }
+    return { response: null, modelUsed: null };
+  }
+
+  shouldFallback(error) {
+    if (!error) return false;
+    if (!this.fallbackModels.length) return false;
+    const status = error.status || error.code;
+    const message = (error.message || '').toLowerCase();
+    if (status === 401 || status === 403) return true;
+    if (message.includes('does not have access')) return true;
+    if (message.includes('was not found')) return true;
+    if (message.includes('unknown model') || message.includes('unsupported model')) return true;
+    return false;
+  }
+
+  async requestFix(content, modelOverride) {
+    const model = modelOverride || this.model;
+    const payload = {
+      model,
       input: [
         { role: 'system', content: this.systemPrompt },
         { role: 'user', content }
       ]
-    });
+    };
+    if (this.supportsReasoning(model)) {
+      payload.reasoning = { effort: 'medium' };
+    }
+    return this.client.responses.create(payload);
+  }
+
+  supportsReasoning(modelName) {
+    if (!modelName) return false;
+    const normalized = modelName.toLowerCase();
+    return normalized.includes('codex') || normalized.includes('gpt-5.1') || normalized.includes('o1');
+  }
+
+  chunkIssues(issues) {
+    const batchSize = Number(process.env.CODEX_ISSUE_BATCH_SIZE || 40);
+    if (!Number.isFinite(batchSize) || batchSize <= 0) {
+      return [issues];
+    }
+    const chunks = [];
+    for (let i = 0; i < issues.length; i += batchSize) {
+      chunks.push(issues.slice(i, i + batchSize));
+    }
+    return chunks;
   }
 
   extractText(response) {
