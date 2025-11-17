@@ -1,4 +1,16 @@
 import { motion } from 'framer-motion';
+import { useMemo, useState } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import { DataGrid } from '@mui/x-data-grid';
+import { LineChart } from '@mui/x-charts/LineChart';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 // Simple utilities dashboard for utility bills: electricity, gas, and water
 // Uses inline data derived from docs/utildata parsing
@@ -55,6 +67,8 @@ const DATA = {
       costPerKwh: 2.52,
       total: 813,
       label: 'Tamil Nadu Power Distribution (May 24–Jul 26, 2025)',
+      periodStart: '2025-05-24',
+      periodEnd: '2025-07-26',
     },
     {
       city: 'Altamonte Springs, FL, USA',
@@ -63,6 +77,8 @@ const DATA = {
       costPerKwh: 0.1858,
       total: 290.57,
       label: 'Duke Energy (Jul 15–Aug 13, 2025)',
+      periodStart: '2025-07-15',
+      periodEnd: '2025-08-13',
     },
     {
       city: 'Singapore',
@@ -72,6 +88,8 @@ const DATA = {
       total: 45.6,
       label:
         'SP Services (Jul 6–Aug 5, 2025) — electricity 166 kWh @ S$0.2747/kWh',
+      periodStart: '2025-07-06',
+      periodEnd: '2025-08-05',
     },
     {
       city: 'Toronto, ON, Canada',
@@ -80,6 +98,8 @@ const DATA = {
       costPerKwh: 0.1876,
       total: 131.69,
       label: 'CARMA (Jun 23–Jul 23, 2025) — ~702 kWh @ C$0.1876/kWh',
+      periodStart: '2025-06-23',
+      periodEnd: '2025-07-23',
     },
   ],
   gas: [
@@ -93,6 +113,8 @@ const DATA = {
       costPerUnitLocal: 1.78,
       total: 37.32,
       label: 'Enbridge Gas (Jul 13–Aug 13, 2025) (taxes included)',
+      periodStart: '2025-07-13',
+      periodEnd: '2025-08-13',
     },
     {
       city: 'Coimbatore, TN, India',
@@ -104,6 +126,8 @@ const DATA = {
       costPerUnitLocal: 66.0, // ₹66/kg
       total: 660,
       label: 'Indane LPG ~10 kg/month @ ₹660 ⇒ ₹66/kg',
+      periodStart: '2025-07-01',
+      periodEnd: '2025-07-30',
     },
     {
       city: 'Singapore',
@@ -116,6 +140,8 @@ const DATA = {
       total: 14.93,
       label:
         'City Energy gas appears as 67 (bill kWh-equiv) @ S$0.2228; m³ not provided',
+      periodStart: '2025-07-06',
+      periodEnd: '2025-08-05',
     },
   ],
   water: [
@@ -127,6 +153,8 @@ const DATA = {
       total: 2500,
       label:
         'Coimbatore Groundwater (RO treated) — 500 liters/day × 30 days = 15 m³ @ ₹166.67/m³',
+      periodStart: '2025-07-01',
+      periodEnd: '2025-07-30',
     },
     {
       city: 'Toronto, ON, Canada',
@@ -135,6 +163,8 @@ const DATA = {
       costPerM3: 4.6872,
       total: 32.81,
       label: 'CARMA Cold Water Consumption — 7 m³ @ C$4.6872/m³',
+      periodStart: '2025-06-23',
+      periodEnd: '2025-07-23',
     },
     {
       city: 'Lake Mary, FL, USA',
@@ -144,6 +174,8 @@ const DATA = {
       total: 110.05,
       label:
         'Seminole County Utilities — derived from UsageX100 (hundreds of gallons)',
+      periodStart: '2025-07-01',
+      periodEnd: '2025-07-31',
     },
     {
       city: 'Singapore',
@@ -153,6 +185,8 @@ const DATA = {
       total: 18.44,
       label:
         'SP Services — Water 57 m³; effective includes WBT/WCT (S$18.44 total)',
+      periodStart: '2025-07-06',
+      periodEnd: '2025-08-05',
     },
   ],
 };
@@ -190,27 +224,192 @@ function BarRow({ label, value, max, rightLabel, colorClass = 'bg-blue-500' }) {
   );
 }
 
-export default function UtilitiesDashboard() {
-  function normalizeCity(rawCity) {
-    if (!rawCity) {
-      return rawCity;
-    }
-    // Toronto / Etobicoke → Toronto
-    if (rawCity.includes('Etobicoke')) {
-      return 'Toronto, ON, Canada';
-    }
-    if (rawCity === 'Toronto' || rawCity.includes('Toronto, ON')) {
-      return 'Toronto, ON, Canada';
-    }
-    // Altamonte Springs / Lake Mary → Altamonte Springs
-    if (rawCity.includes('Altamonte Springs')) {
-      return 'Altamonte Springs, FL, USA';
-    }
-    if (rawCity === 'Lake Mary' || rawCity.includes('Lake Mary, FL')) {
-      return 'Altamonte Springs, FL, USA';
-    }
+const DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+});
+
+function normalizeCity(rawCity) {
+  if (!rawCity) {
     return rawCity;
   }
+  if (rawCity.includes('Etobicoke')) {
+    return 'Toronto, ON, Canada';
+  }
+  if (rawCity === 'Toronto' || rawCity.includes('Toronto, ON')) {
+    return 'Toronto, ON, Canada';
+  }
+  if (rawCity.includes('Altamonte Springs')) {
+    return 'Altamonte Springs, FL, USA';
+  }
+  if (rawCity === 'Lake Mary' || rawCity.includes('Lake Mary, FL')) {
+    return 'Altamonte Springs, FL, USA';
+  }
+  return rawCity;
+}
+
+function formatUsageForRow(bill) {
+  if (bill.category === 'Electricity') {
+    return bill.unitsKwh != null ? `${bill.unitsKwh} kWh` : '—';
+  }
+  if (bill.category === 'Gas') {
+    if (bill.unitLabel === 'kWh-e') {
+      return `${bill.unitsLocal ?? '—'} kWh-e`;
+    }
+    if (bill.unitLabel === 'kg') {
+      return `${bill.unitsLocal ?? '—'} kg`;
+    }
+    return `${bill.unitsM3 ?? bill.unitsLocal ?? '—'} m³`;
+  }
+  if (bill.category === 'Water') {
+    return bill.unitsM3 != null ? `${bill.unitsM3} m³` : '—';
+  }
+  return '—';
+}
+
+function formatDateWindow(start, end) {
+  if (!start || !end) {
+    return 'Rolling window';
+  }
+  try {
+    return `${DATE_FORMATTER.format(new Date(start))} → ${DATE_FORMATTER.format(
+      new Date(end)
+    )}`;
+  } catch {
+    return `${start} → ${end}`;
+  }
+}
+
+export default function UtilitiesDashboard() {
+  const [startFilter, setStartFilter] = useState(null);
+  const [endFilter, setEndFilter] = useState(null);
+  const isFiltering = Boolean(startFilter || endFilter);
+
+  const activeRangeLabel = useMemo(() => {
+    if (startFilter && endFilter) {
+      return `${DATE_FORMATTER.format(startFilter)} → ${DATE_FORMATTER.format(
+        endFilter
+      )}`;
+    }
+    if (startFilter) {
+      return `From ${DATE_FORMATTER.format(startFilter)}`;
+    }
+    if (endFilter) {
+      return `Up to ${DATE_FORMATTER.format(endFilter)}`;
+    }
+    return 'Showing entire dataset';
+  }, [startFilter, endFilter]);
+
+  const allBills = useMemo(() => {
+    const mapCategory = (entries, category) =>
+      entries.map((entry, index) => ({
+        ...entry,
+        category,
+        id: `${category}-${index}-${entry.city}`,
+        startMs: entry.periodStart ? new Date(entry.periodStart).getTime() : null,
+        endMs: entry.periodEnd ? new Date(entry.periodEnd).getTime() : null,
+      }));
+    return [
+      ...mapCategory(DATA.electricity, 'Electricity'),
+      ...mapCategory(DATA.gas, 'Gas'),
+      ...mapCategory(DATA.water, 'Water'),
+    ];
+  }, []);
+
+  const filteredBills = useMemo(() => {
+    const startMs =
+      startFilter instanceof Date && !Number.isNaN(startFilter.getTime())
+        ? startFilter.getTime()
+        : null;
+    const endMs =
+      endFilter instanceof Date && !Number.isNaN(endFilter.getTime())
+        ? endFilter.getTime()
+        : null;
+
+    if (!startMs && !endMs) {
+      return allBills;
+    }
+
+    return allBills.filter((bill) => {
+      const billStart = bill.startMs ?? bill.endMs ?? null;
+      const billEnd = bill.endMs ?? bill.startMs ?? null;
+      if (startMs && billEnd && billEnd < startMs) {
+        return false;
+      }
+      if (endMs && billStart && billStart > endMs) {
+        return false;
+      }
+      return true;
+    });
+  }, [allBills, startFilter, endFilter]);
+
+  const chartData = useMemo(() => {
+    const totals = new Map();
+    filteredBills.forEach((bill) => {
+      const city = normalizeCity(bill.city);
+      const usd = toUsdEquivalent(bill.currency, bill.total) || 0;
+      totals.set(city, (totals.get(city) || 0) + usd);
+    });
+    return Array.from(totals.entries())
+      .map(([city, usd]) => ({
+        city,
+        usd: Number(usd.toFixed(2)),
+      }))
+      .sort((a, b) => b.usd - a.usd);
+  }, [filteredBills]);
+
+  const gridRows = useMemo(
+    () =>
+      filteredBills.map((bill, index) => {
+        const usdValue = toUsdEquivalent(bill.currency, bill.total);
+        return {
+          id: bill.id || `${bill.category}-${index}`,
+          category: bill.category,
+          city: normalizeCity(bill.city),
+          period: formatDateWindow(bill.periodStart, bill.periodEnd),
+          usage: formatUsageForRow(bill),
+          total: bill.total,
+          currency: bill.currency,
+          usdValue,
+        };
+      }),
+    [filteredBills]
+  );
+
+  const gridColumns = useMemo(
+    () => [
+      { field: 'category', headerName: 'Type', flex: 0.6, minWidth: 110 },
+      { field: 'city', headerName: 'City', flex: 1, minWidth: 170 },
+      {
+        field: 'period',
+        headerName: 'Billing window',
+        flex: 1.2,
+        minWidth: 200,
+      },
+      { field: 'usage', headerName: 'Usage', flex: 0.7, minWidth: 130 },
+      {
+        field: 'total',
+        headerName: 'Local total',
+        flex: 0.8,
+        minWidth: 150,
+        valueFormatter: (params) => {
+          const currency = params.row?.currency;
+          return params.value != null && currency
+            ? formatCurrency(params.value, currency)
+            : '—';
+        },
+      },
+      {
+        field: 'usdValue',
+        headerName: 'USD (est.)',
+        flex: 0.8,
+        minWidth: 150,
+        valueFormatter: (params) =>
+          params.value != null ? formatCurrency(params.value, 'USD') : '—',
+      },
+    ],
+    []
+  );
   const maxKwh = Math.max(...DATA.electricity.map((d) => d.unitsKwh));
   const costPerKwhUsd = DATA.electricity.map(
     (d) => toUsdEquivalent(d.currency, d.costPerKwh) || 0
@@ -433,6 +632,143 @@ export default function UtilitiesDashboard() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mb-10 space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold">
+            Interactive range explorer (MUI X v8)
+          </h2>
+          <p className="text-gray-600 dark:text-slate-300">
+            Slice the utility ledger with the latest MUI X date pickers, charts,
+            and Data Grid upgrades. {activeRangeLabel}.{' '}
+            {gridRows.length.toLocaleString()} statements currently visible.
+          </p>
+        </div>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <div className="grid gap-4 md:grid-cols-2">
+            <DatePicker
+              label="Start date"
+              value={startFilter}
+              onChange={(value) => setStartFilter(value)}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  helperText: 'Filter bills starting on/after this date',
+                },
+              }}
+            />
+            <DatePicker
+              label="End date"
+              value={endFilter}
+              onChange={(value) => setEndFilter(value)}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  helperText: 'Filter bills ending on/before this date',
+                },
+              }}
+            />
+          </div>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => {
+                setStartFilter(null);
+                setEndFilter(null);
+              }}
+              disabled={!isFiltering}
+            >
+              Clear window
+            </Button>
+            <Typography
+              variant="body2"
+              className="text-gray-600 dark:text-slate-300"
+            >
+              {isFiltering
+                ? 'Showing only statements that overlap this window.'
+                : 'No filters applied.'}
+            </Typography>
+          </div>
+        </LocalizationProvider>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card
+            variant="outlined"
+            sx={{
+              borderRadius: 3,
+              boxShadow:
+                '0 20px 45px rgba(15,23,42,0.15), 0 2px 10px rgba(15,23,42,0.08)',
+            }}
+          >
+            <CardHeader
+              title="USD cost by city"
+              subheader="Powered by the new MUI X Charts line component"
+            />
+            <CardContent>
+              {chartData.length > 0 ? (
+                <LineChart
+                  dataset={chartData}
+                  height={320}
+                  margin={{ top: 10, left: 20, right: 20 }}
+                  xAxis={[
+                    {
+                      dataKey: 'city',
+                      scaleType: 'point',
+                      label: 'City',
+                    },
+                  ]}
+                  series={[
+                    {
+                      dataKey: 'usd',
+                      label: 'Total USD',
+                      area: true,
+                      color: '#0f766e',
+                      valueFormatter: (value) =>
+                        value != null ? formatCurrency(value, 'USD') : '—',
+                    },
+                  ]}
+                />
+              ) : (
+                <Typography color="text.secondary">
+                  No statements fall within the selected window.
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card
+            variant="outlined"
+            sx={{
+              borderRadius: 3,
+              boxShadow:
+                '0 20px 45px rgba(15,23,42,0.15), 0 2px 10px rgba(15,23,42,0.08)',
+            }}
+          >
+            <CardHeader
+              title="Bill ledger"
+              subheader="MUI X Data Grid with quick sorting & pagination"
+            />
+            <CardContent>
+              <Box sx={{ height: 360, width: '100%' }}>
+                <DataGrid
+                  rows={gridRows}
+                  columns={gridColumns}
+                  disableColumnMenu
+                  disableRowSelectionOnClick
+                  pageSizeOptions={[5, 10]}
+                  initialState={{
+                    pagination: { paginationModel: { pageSize: 5 } },
+                    sorting: {
+                      sortModel: [{ field: 'usdValue', sort: 'desc' }],
+                    },
+                  }}
+                />
+              </Box>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

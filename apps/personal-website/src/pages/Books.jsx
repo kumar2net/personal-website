@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import BookCover from '../components/BookCover';
+import BooksDataGrid from '../components/BooksDataGrid';
 import ContentBadge from '../components/ContentBadge';
 import autoBooks from '../data/autoBooks.json';
 
@@ -512,6 +513,10 @@ function Books() {
             </div>
           </div>
         </Link>
+      </section>
+
+      <section>
+        <BooksDataGrid books={autoBooks} />
       </section>
     </div>
   );
