@@ -23,6 +23,26 @@ const FX = {
   CAD: 1.36, // C$1.36 per USD
 };
 
+const ELECTRICITY_EMISSIONS = {
+  'Coimbatore, TN, India': 0.708, // kg CO2e / kWh (CEA India 2022)
+  'Altamonte Springs, FL, USA': 0.386, // eGRID US avg
+  Singapore: 0.408, // EMA 2023
+  'Toronto, ON, Canada': 0.03, // IESO 2024
+};
+
+const LPG_EMISSION_PER_KG = 3.0;
+const NATURAL_GAS_EMISSION_PER_M3 = 1.89;
+const CITY_GAS_EMISSION_PER_KWH = 0.183;
+const WATER_EMISSION_PER_M3 = 0.344;
+
+const EMISSION_LABELS = {
+  electricity: 'Electricity',
+  lpg: 'LPG / bottled gas',
+  naturalGas: 'Natural gas',
+  cityGas: 'City gas',
+  water: 'Water pumping & treatment',
+};
+
 function toUsdEquivalent(currency, localValue) {
   if (localValue == null || Number.isNaN(localValue)) {
     return null;
@@ -222,6 +242,13 @@ function BarRow({ label, value, max, rightLabel, colorClass = 'bg-blue-500' }) {
       </div>
     </div>
   );
+}
+
+function formatKg(value) {
+  if (value == null || Number.isNaN(value)) {
+    return '—';
+  }
+  return `${value.toFixed(1)} kg CO₂e`;
 }
 
 const DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
@@ -471,6 +498,71 @@ export default function UtilitiesDashboard() {
     ...DATA.water.map((d) => toUsdEquivalent(d.currency, d.costPerM3) || 0),
     0
   );
+
+  const carbonSummaries = useMemo(() => {
+    const summaries = new Map();
+
+    const ensureSummary = (city) => {
+      const normalized = normalizeCity(city);
+      if (!summaries.has(normalized)) {
+        summaries.set(normalized, {
+          city: normalized,
+          total: 0,
+          breakdown: {},
+        });
+      }
+      return summaries.get(normalized);
+    };
+
+    DATA.electricity.forEach((bill) => {
+      if (!bill.unitsKwh) return;
+      const city = normalizeCity(bill.city);
+      const factor =
+        ELECTRICITY_EMISSIONS[city] ??
+        ELECTRICITY_EMISSIONS['Altamonte Springs, FL, USA'];
+      const emissions = bill.unitsKwh * factor;
+      if (emissions > 0) {
+        const summary = ensureSummary(city);
+        summary.breakdown.electricity =
+          (summary.breakdown.electricity || 0) + emissions;
+        summary.total += emissions;
+      }
+    });
+
+    DATA.gas.forEach((bill) => {
+      const summary = ensureSummary(bill.city);
+      let emissions = 0;
+      if (bill.unitLabel === 'kg' && bill.unitsLocal) {
+        emissions = bill.unitsLocal * LPG_EMISSION_PER_KG;
+        summary.breakdown.lpg = (summary.breakdown.lpg || 0) + emissions;
+      } else if (bill.unitLabel === 'm³' && bill.unitsM3) {
+        emissions = bill.unitsM3 * NATURAL_GAS_EMISSION_PER_M3;
+        summary.breakdown.naturalGas =
+          (summary.breakdown.naturalGas || 0) + emissions;
+      } else if (bill.unitLabel === 'kWh-e' && bill.unitsLocal) {
+        emissions = bill.unitsLocal * CITY_GAS_EMISSION_PER_KWH;
+        summary.breakdown.cityGas =
+          (summary.breakdown.cityGas || 0) + emissions;
+      }
+      summary.total += emissions;
+    });
+
+    DATA.water.forEach((bill) => {
+      if (!bill.unitsM3) return;
+      const city = normalizeCity(bill.city);
+      const summary = ensureSummary(city);
+      const emissions = bill.unitsM3 * WATER_EMISSION_PER_M3;
+      summary.breakdown.water = (summary.breakdown.water || 0) + emissions;
+      summary.total += emissions;
+    });
+
+    return Array.from(summaries.values())
+      .map((item) => ({
+        ...item,
+        total: Number(item.total.toFixed(1)),
+      }))
+      .sort((a, b) => b.total - a.total);
+  }, []);
 
   return (
     <motion.div
@@ -1359,6 +1451,68 @@ export default function UtilitiesDashboard() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="mb-12 space-y-5">
+        <div>
+          <h2 className="text-2xl font-semibold">
+            Household carbon footprint snapshot
+          </h2>
+          <p className="text-gray-600 dark:text-slate-300">
+            Using each billing cycle’s electricity, gas, and water volumes plus
+            region-specific emission factors, here’s the rough CO₂e impact for
+            every family featured on this page.
+          </p>
+        </div>
+        <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow">
+          <table className="min-w-full divide-y divide-slate-200">
+            <thead className="bg-slate-50 text-left text-sm font-semibold text-slate-600">
+              <tr>
+                <th className="px-4 py-3">City / family</th>
+                <th className="px-4 py-3">Estimated total</th>
+                <th className="px-4 py-3">Breakdown</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-sm">
+              {carbonSummaries.map((summary) => (
+                <tr key={summary.city} className="align-top">
+                  <td className="px-4 py-4 font-semibold text-slate-900">
+                    {summary.city}
+                  </td>
+                  <td className="px-4 py-4 font-medium text-emerald-700">
+                    {formatKg(summary.total)}
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex flex-wrap gap-2">
+                      {Object.entries(summary.breakdown).map(
+                        ([key, value]) => (
+                          <span
+                            key={`${summary.city}-${key}`}
+                            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
+                          >
+                            {EMISSION_LABELS[key] || key}:{' '}
+                            <span className="font-bold">
+                              {formatKg(value)}
+                            </span>
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-gray-600 leading-relaxed">
+          Florida’s household now clocks the largest monthly footprint (~0.71 t)
+          because pool + irrigation push both kWh and water volumes sky high.
+          Coimbatore trails at ~0.26 t thanks to India’s carbon-heavy grid and
+          LPG cooking. Singapore’s compact lifestyle plus efficient city-gas
+          keeps emissions under 0.1 t, while Toronto benefits most from a
+          hydro/nuclear grid—electricity is almost a rounding error compared to
+          the 21 m³ of natural-gas heating.
+        </p>
       </section>
     </motion.div>
   );
