@@ -48,7 +48,10 @@ export default function BooksDataGrid({ books = [] }) {
         renderCell: (params) => (
           <Link
             to={params.row.url}
-            className="text-blue-600 dark:text-sky-300 font-semibold hover:underline"
+            tabIndex={-1}
+            aria-label={`Open ${params.value}`}
+            className="text-blue-600 dark:text-sky-300 font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400"
+            onClick={(event) => event.stopPropagation()}
           >
             {params.value}
           </Link>
@@ -201,6 +204,16 @@ export default function BooksDataGrid({ books = [] }) {
               showQuickFilter: true,
               quickFilterProps: { debounceMs: 400 },
             },
+          }}
+          onCellKeyDown={(params, event) => {
+            if (
+              (event.key === "Enter" || event.key === " ") &&
+              params?.row?.url &&
+              params.row.url !== "#"
+            ) {
+              event.preventDefault();
+              navigate(params.row.url);
+            }
           }}
           onRowClick={(params) => {
             if (params?.row?.url && params.row.url !== "#") {
