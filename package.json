@@ -12,6 +12,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "sitemap": "node apps/personal-website/scripts/generate-sitemap.mjs",
+    "semantic:index": "npm run --workspace apps/personal-website semantic:index",
     "bookhints:process": "node apps/personal-website/scripts/bookhint-agentic.mjs",
     "bookhints:watch": "node apps/personal-website/scripts/bookhint-agentic.mjs --watch",
     "ai-debug": "node ai-tools/auto-debug-aggressive.js"

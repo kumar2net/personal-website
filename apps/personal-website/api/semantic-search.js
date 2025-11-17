@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { embedTextWithGemini } from "../lib/gemini.js";
 
 function jsonResponse(res, statusCode, body, extraHeaders = {}) {
   res.status(statusCode).setHeader("Content-Type", "application/json");
@@ -10,7 +11,6 @@ function jsonResponse(res, statusCode, body, extraHeaders = {}) {
   res.send(JSON.stringify(body));
 }
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const EMBEDDING_DIM = 768;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const INDEX_CANDIDATES = [
@@ -115,24 +115,9 @@ async function searchEmbeddings(vector, topK) {
 }
 
 async function embedQuery(text) {
-  if (!GEMINI_API_KEY) {
-    throw new Error("GEMINI_API_KEY is not configured");
-  }
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: { parts: [{ text }] } }),
+  const values = await embedTextWithGemini(text, {
+    model: "text-embedding-004",
   });
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Gemini embed error: ${res.status} ${errText}`);
-  }
-  const data = await res.json();
-  const values = data?.embedding?.values;
-  if (!Array.isArray(values)) {
-    throw new Error("Invalid embedding response");
-  }
   if (values.length !== EMBEDDING_DIM) {
     throw new Error(
       `Embedding dimension mismatch: got ${values.length}, expected ${EMBEDDING_DIM}`,

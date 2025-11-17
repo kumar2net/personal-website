@@ -8,6 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import dotenv from "dotenv";
+import { embedTextWithGemini } from "../lib/gemini.js";
 
 const envCandidates = [
   path.resolve(process.cwd(), ".env"),
@@ -24,9 +25,13 @@ for (const candidate of envCandidates) {
   }
 }
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-if (!GEMINI_API_KEY) {
-  console.error("GEMINI_API_KEY is required to build embeddings");
+const hasGeminiCredentials =
+  Boolean(process.env.GCP_SERVICE_ACCOUNT_JSON) ||
+  Boolean(process.env.GEMINI_API_KEY);
+if (!hasGeminiCredentials) {
+  console.error(
+    "Gemini credentials are required (set GCP_SERVICE_ACCOUNT_JSON or GEMINI_API_KEY)",
+  );
   process.exit(1);
 }
 
@@ -77,37 +82,6 @@ async function readPost(filePath) {
   return { id: slug, title, url, text, excerpt };
 }
 
-async function embedText(text) {
-  const body = {
-    content: {
-      parts: [{ text }],
-    },
-  };
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    },
-  );
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Gemini embed error: ${res.status} ${errText}`);
-  }
-  const data = await res.json();
-  const values = data?.embedding?.values;
-  if (!Array.isArray(values)) {
-    throw new Error("Gemini response missing embedding values");
-  }
-  if (values.length !== EMBEDDING_DIM) {
-    throw new Error(
-      `Unexpected embedding dimension ${values.length}, expected ${EMBEDDING_DIM}`,
-    );
-  }
-  return values.map((v) => Number(v) || 0);
-}
-
 function toFiniteVector(values) {
   if (!Array.isArray(values)) {
     throw new Error("Expected embedding array");
@@ -155,7 +129,11 @@ async function main() {
         console.warn(`[semantic-store] skipping empty post ${post.id}`);
         continue;
       }
-      const vector = toFiniteVector(await embedText(post.text));
+      const vector = toFiniteVector(
+        await embedTextWithGemini(post.text, {
+          model: "text-embedding-004",
+        }),
+      );
       items.push({
         id: post.id,
         title: post.title,

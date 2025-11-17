@@ -8,6 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { v1 as aiplatform } from "@google-cloud/aiplatform";
 import dotenv from "dotenv";
+import { embedTextWithGemini } from "../lib/gemini.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,7 +17,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // --- Env ---
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const hasGeminiCredentials =
+  Boolean(process.env.GCP_SERVICE_ACCOUNT_JSON) ||
+  Boolean(process.env.GEMINI_API_KEY);
 const GCP_PROJECT_ID = process.env.GCP_PROJECT_ID;
 const GCP_LOCATION = process.env.GCP_LOCATION || "us-central1";
 const VERTEX_INDEX_ID = process.env.VERTEX_INDEX_ID;
@@ -25,8 +28,10 @@ const SEMANTIC_SKIP_VERTEX = process.env.SEMANTIC_SKIP_VERTEX === "1";
 const GCP_SERVICE_ACCOUNT_JSON = process.env.GCP_SERVICE_ACCOUNT_JSON;
 const SEMANTIC_LEXICAL_ONLY = process.env.SEMANTIC_LEXICAL_ONLY === "1";
 
-if (!GEMINI_API_KEY && !SEMANTIC_LEXICAL_ONLY) {
-  throw new Error("Missing GEMINI_API_KEY");
+if (!hasGeminiCredentials && !SEMANTIC_LEXICAL_ONLY) {
+  throw new Error(
+    "Missing Gemini credentials. Set GCP_SERVICE_ACCOUNT_JSON or GEMINI_API_KEY",
+  );
 }
 // Only require GCP config if not skipping Vertex AI
 if (!SEMANTIC_LEXICAL_ONLY && !SEMANTIC_SKIP_VERTEX) {
@@ -112,35 +117,6 @@ async function readPost(filePath) {
   return { id: slug, title, url, text: limited, excerpt };
 }
 
-async function embedTextGemini(text) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`;
-  const body = {
-    content: {
-      parts: [{ text }],
-    },
-  };
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Gemini embed error: ${res.status} ${errText}`);
-  }
-  const data = await res.json();
-  const values = data?.embedding?.values;
-  if (!Array.isArray(values)) {
-    throw new Error("Invalid embedding response");
-  }
-  if (values.length !== VERTEX_EMBED_DIM) {
-    throw new Error(
-      `Embedding dimension mismatch: got ${values.length}, expected ${VERTEX_EMBED_DIM}`,
-    );
-  }
-  return values;
-}
-
 async function upsertDatapoints(datapoints) {
   const credentials = JSON.parse(GCP_SERVICE_ACCOUNT_JSON);
   const clientOptions = {
@@ -186,7 +162,14 @@ async function main() {
 
   for (const post of posts) {
     if (!SEMANTIC_LEXICAL_ONLY) {
-      const embedding = await embedTextGemini(post.text);
+      const embedding = await embedTextWithGemini(post.text, {
+        model: "text-embedding-004",
+      });
+      if (embedding.length !== VERTEX_EMBED_DIM) {
+        throw new Error(
+          `Embedding dimension mismatch: got ${embedding.length}, expected ${VERTEX_EMBED_DIM}`,
+        );
+      }
       processed += 1;
       console.log(
         `[semantic-index] Embedded ${post.id} (${processed}/${posts.length})`,

@@ -8,7 +8,8 @@
     "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "vite build",
     "preview": "vite preview",
-    "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js"
+    "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js",
+    "semantic:index": "node scripts/build-semantic-index.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -22,8 +23,10 @@
     "@vercel/blob": "^0.27.2",
     "@vercel/speed-insights": "^1.2.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.3",
     "fast-xml-parser": "^5.3.1",
     "framer-motion": "^12.23.24",
+    "google-auth-library": "^10.5.0",
     "lucide-react": "^0.553.0",
     "openai": "^6.9.0",
     "pdfjs-dist": "^5.4.394",
