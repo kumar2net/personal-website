@@ -1,5 +1,21 @@
 [
   {
+    "slug": "longform-book-gist-for-gen-z-millennials",
+    "title": "Longform Book Gist for Gen Z + Millennials",
+    "author": "Kumar",
+    "summary": "A deeper, story-driven gist of the current bookshelf tailored for Gen Z and millennial readers.",
+    "description": "A longform, 6–7 minute digest that distills the key vibes, takeaways, and experiments from the books currently featured on the site.",
+    "tags": [
+      "Notes"
+    ],
+    "publishDate": "November 17, 2025",
+    "lastModified": "November 17, 2025",
+    "readingTime": "5 min read",
+    "sourceFile": "docs/bookhints/book_gist.md",
+    "heroGradient": "from-emerald-100 to-teal-100",
+    "coverImage": "https://books.google.com/books/content?id=CaZFxwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+  },
+  {
     "slug": "sevenstoriesrb-md",
     "title": "Seven Must Read Nature Stories (Rupa Quick Reads)",
     "author": "Ruskin Bond",

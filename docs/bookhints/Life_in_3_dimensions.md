@@ -1,25 +1,61 @@
-Life in Three Dimensions: How Curiosity, Exploration and Experience Make a Fuller, Better Life" by Shigehiro Oishi
+# Life in Three Dimensions: How Curiosity, Exploration and Experience Make a Fuller, Better Life
 
-If I go there will be trouble And if I stay it will be double. —The Clash
+> If I go there will be trouble / And if I stay it will be double. —The Clash
 
-When author Donna Tartt was asked what questions she was grappling with in her novel1 The Goldfinch, she said, “What is a good life? … To be happy oneself? Is it personal happiness? Or is it to make other people happy even at the expense of one’s own happiness?”2 Tartt’s question is profound. Should we strive to be happy? Or should we work for others’ happiness before thinking of our own? First, what is personal happiness? What makes you happy? Freedom to do whatever you want to do? Pursuing and accomplishing your career goals? A trip to the beach or the spa?
+## Big Questions About a Good Life
 
-psychological research shows that trying to make others happy will make you happy,3 while trying to make yourself happy sometimes fails4 to do so. Indeed, psychologists have found that prosocial spending,5 writing gratitude letters,6 and having a satisficer (i.e., happy with good enough) mindset7 all promote happiness
+When Donna Tartt was asked what question sits at the heart of *The Goldfinch*, she responded, “What is a good life? … To be happy oneself? Or is it to make other people happy even at the expense of one’s own happiness?” The prompt is timeless. What even counts as personal happiness? Freedom to do whatever you want? Reaching career milestones? Luxurious rest at a spa or the beach?
 
-But is a life of self-sacrifice and virtue—which we might call a “meaningful life”—a life without regrets? In the short term, people regret action, like saying or doing something stupid. In the long run, however, people regret inaction, like not saying “I love you” or not going back to school.8 Some people may lead a life of self-sacrifice and virtue but forgo opportunities that ultimately lead to more regrets and “what ifs.” Self-sacrifice is admirable, to be sure, but prioritizing it can lead people to lose sight of their own desires and ideals until their lives no longer feel authentic. French philosopher Jean-Paul Sartre would have called this a life of “bad faith.”9 An example is found in Toni Morrison’s novel10 Sula, where Nel Wright puts aside her childhood dreams of adventure to seek perfection in her role as a wife and mother, just as her family expects of her. At the opposite end of the spectrum is the neurologist and writer Oliver Sacks,11 who was an enthusiastic Hells Angels motorcyclist, bodybuilder, and LSD user before launching his writing career. He struggled with depression in his college days; his own mother told him that she wished he had never been born when she learned that he was gay; and he spent thirty-five years of his adult life celibate. Yet, even though he had some tough years, his life was full of adventure and curiosity, challenged professional boundaries, and was deeply experientially and emotionally rich—it was an authentic life, the kind that Sartre would have approved of.
+## Happiness, Meaning, and Regret
 
-The overlap between hedonic and eudaimonic well-being is so great that some researchers argue that they are virtually the same thing.21 Others argue that both happiness and meaning in life are so important that there is no point debating which is more important.22
+Psychological research suggests that aiming to make others happy is one of the surest routes to our own happiness, while chasing personal happiness directly often backfires. Practices that repeatedly emerge in studies include:
 
-A chain is no stronger than its weakest link, and life is after all a chain. In the healthiest and most prosperous existence, how many links of illness, danger, and disaster are always interposed?”25 So it goes. The fragility of happiness.26 Meaning in life, on the other hand, boils down to whether your life has a “point.” When you’re devoted to making a difference in the world, your life certainly has a point. You see the fruits of your labor, your legacy. There is a reason for your existence. But when your efforts are not making a clear difference, it is harder to see the point of your life. The Scottish singer-songwriter Lewis Capaldi sang in the song “Pointless”: “Of all the dreams I’m chasing … Everything is pointless without you.” Imagine that he broke up with this woman. His dedication would be wasted, and his life would feel pointless.
+- Prosocial spending and gestures that lift up other people
+- Writing gratitude letters and making appreciation explicit
+- Leaning into a satisficer mindset—being content with “good enough”—when making everyday choices
 
-In the same way that material richness can be quantified by money—the more money you have, the richer you are materially—psychological richness can be quantified by experiences. The more interesting experiences and stories you have, the more psychologically rich you are. Just as you can accumulate wealth and become materially rich, you can accumulate experiences and become psychologically rich. If happiness is like the batting average that changes with every game, psychological richness is more like the total number of career home runs: it adds up. Table 1: Core Features and Metaphors of Happiness, Meaning, and Psychological Richness Core Features Metaphors Happiness Joy, Comfort, Stability Balloon, Batting Average, Sweet Chocolate Meaning Point, Impact, Coherence Angel, Activist, Monk Richness Novelty, Play, Perspective Change Treasure Box, Home Runs, Dark Chocolate A psychologically rich life is not for everyone. It suits the curious more than the content. The comfort and security of a happy or meaningful life provide a safety net that a psychologically rich life, with all its unknowns, often lacks. Yet the paradox of happiness and meaning is that the complacency they foster can make for an incomplete life with major regrets, doubts, and unanswered questions. Thankfully, our lives are not zero-sum games in which we must choose a single path to a good life; some people lead happy, meaningful, and psychologically rich lives. Therefore, anyone can benefit from the lessons of psychological richness research. By reminding ourselves that what counts is not just the destination but also the journey, we learn to find value in seeking new experiences and new knowledge, hopefully leading to a life without regrets, or at least fewer regrets. So, should you stay or should you go? For those who stay, psychological richness will add a new dimension of interest and resilience to life. And those who go are already on the path toward psychological richness. What are the other ingredients of a psychologically rich life? Who else has led a psychologically rich life? How is a psychologically rich life different from a happy life or a meaningful one? Do you need to accumulate experiences firsthand, or do vicarious experiences count as well? What are the benefits of a psychologically rich life? How can we enrich our lives psychologically? This book will venture deeply into these questions.
+Yet a life rooted solely in service can drift toward regret. Action-based regrets dominate in the short term, but inaction grows heavier in hindsight. A person can place everyone else’s needs first and later realize they forfeited their own desires, creating the “bad faith” that Sartre warned about. Morrison’s Nel Wright embodies this sacrifice; Oliver Sacks exemplifies the opposite pole—a life drenched in curiosity, experimentation, and authenticity even amid hardship.
 
-1\. Life’s Chief Concern Happiness is the ultimate goal of goals,2 according to Aristotle. When William James asked himself, “What is human life’s chief concern?”3 his answer was: “It is happiness. How to gain, how to keep, how to recover happiness, is in fact for most men at all times the secret motive of all they do, and of all they are willing to endure.” It is a goal shared by many across the globe; in a large international study4 conducted by Ed Diener, 69 percent of respondents rated happiness as extremely important (a perfect 7 on a 1 to 7 point scale), ahead of money, love, and health. It is a worthy goal, as research shows that happy people are healthier and more prosocial. They’re also better workers, and they live longer5 than unhappy people.
+## Hedonic and Eudaimonic Alignment
 
-Happiness is the frequency, not the intensity,15 of positive events. Relatedly, studies show that happiness is the product of close relationships16 rather than personal accomplishments. That is, happiness is not personal success, but interpersonal success.17
+Some researchers argue that hedonic (pleasure-based) and eudaimonic (meaning-based) well-being overlap so fully that they are nearly indistinguishable, while others simply contend that both matter too much to weigh one over the other. The fragility of happiness reminds us that prosperous lives still contain plenty of illness, danger, and disaster. Meaning hinges on whether life has a “point”—an evident impact, legacy, or reason for existing. When efforts feel pointless, the sense of meaning crumbles, as Lewis Capaldi’s “Pointless” illustrates.
 
-Since Denmark often ranks as one of the happiest countries in the world, the BBC went to the Danes in search of the key to happiness. The secret? Many Danes said they don’t expect much in life. Lower your expectations. Be content with what you have, Danish wisdom advised. Like my father, many Danes cherish hygge, the coziness and small joys of life, along with the idea of a life of contentment.
+## Psychological Richness: The Third Dimension
 
-Does this mean that we should promote the satisficer mindset over the maximizer mindset? I don’t think so. There is an important place in life for the satisficer mindset. I actively use it when I am buying something, planning something, or making everyday decisions. But this mindset can have a dark side as well. For instance, it makes you content with the status quo, which in turn discourages you from embracing39 necessary challenges and personal growth. This is the second part of the happiness trap: settling for less than you can achieve. Heed the warning of John, the “Savage” in Brave New World, who said, “Well, I’d rather be unhappy than have the sort of false, lying happiness you were having here.”40
+Material richness tallies currency; psychological richness tallies experiences. Happiness resembles a batting average that fluctuates game by game, but psychological richness looks more like career home runs—it accumulates. While a psychologically rich life isn’t for everyone, it offers the curious a safety net made of perspective changes rather than comfort.
 
-If you feel pressure to feel happy all the time, remember that it is OK to be sad, angry, or fearful every now and then. These emotions add43 complexity and richness to your inner life. And if you’re already happy with your life, you’re doing great. But take a moment to reflect on your satisficer mindset. Perhaps there could be more to life than coziness and small joys, at least once in a while. Happiness is not the only way to lead a good life, as we shall see.
+| Dimension            | Core Features                 | Helpful Metaphors                    |
+| -------------------- | ----------------------------- | ------------------------------------ |
+| Happiness            | Joy, comfort, stability       | Balloon, batting average, sweet chocolate |
+| Meaning              | Point, impact, coherence      | Angel, activist, monk                |
+| Psychological richness | Novelty, play, perspective shifts | Treasure box, home runs, dark chocolate |
+
+This book argues that a good life does not have to be zero-sum. We can cultivate happiness, meaning, and psychological richness, taking the lessons of each dimension to heart. By valuing the journey—and the stories that pile up along the way—we minimize regrets whether we “stay” or “go.”
+
+## Questions Guiding the Book
+
+The chapters probe questions such as:
+
+- What else contributes to a psychologically rich life?
+- Who exemplifies psychological richness in practice?
+- How does richness differ from happiness or meaning?
+- Do vicarious experiences count, or must we live everything firsthand?
+- How can we intentionally enrich life psychologically?
+
+## 1. Life’s Chief Concern
+
+### Happiness as the Ultimate Goal
+
+Aristotle called happiness the “goal of goals,” and William James believed humanity’s chief concern is how to gain, keep, or regain it. Cross-cultural surveys echo the priority: nearly 70% of people rate happiness as extremely important, even ahead of money, love, or health. The research case is strong—happy people tend to be healthier, more prosocial, better workers, and longer-lived.
+
+### Frequency Over Intensity
+
+Happiness rests on how frequently positive events occur, not how intense each event feels. Studies also show that close relationships, not individual accomplishments, drive sustained happiness. In other words, happiness usually equals interpersonal success rather than personal victory laps.
+
+### Cultural Wisdom and Mindsets
+
+Denmark’s global happiness ranking often leads researchers to its culture of low expectations and hygge—the cozy appreciation of small joys. Adopting a satisficer mindset brings peace when buying, planning, or making daily decisions. Still, there is a downside: contentment with the status quo can numb ambition and delay necessary growth. As John, the “Savage” in *Brave New World*, insists, there are moments when embracing discomfort beats accepting “false, lying happiness.”
+
+### Permission to Feel Everything
+
+Constant happiness is neither realistic nor desirable. Sadness, anger, and fear add complexity to our inner lives and often point toward growth. If you’re already content, celebrate it—but also ask whether “good enough” is holding you back from richer experiences. Happiness is only one doorway to a good life; curiosity and courageous exploration fill in the other dimensions that make life feel full and authentic.
