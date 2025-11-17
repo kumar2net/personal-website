@@ -1,15 +1,11 @@
 import { createContext, useContext, useEffect, useMemo } from "react";
-import {
-  CssVarsProvider,
-  extendTheme,
-  useColorScheme,
-} from "@mui/material/styles";
+import { CssVarsProvider, useColorScheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import type { ReactNode } from "react";
-import { getDesignTokens, type SupportedColorMode } from "../theme/getDesignTokens";
+import { createAppTheme, type SupportedColorMode } from "../theme/getDesignTokens";
 
 const STORAGE_KEY = "k2n-color-scheme";
-const theme = extendTheme(getDesignTokens());
+const theme = createAppTheme();
 
 type ColorModeContextValue = {
   mode: SupportedColorMode;
