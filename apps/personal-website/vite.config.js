@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 import dotenv from "dotenv";
 import semanticSearchHandler from "./api/semantic-search.js";
+import blogTtsHandler from "./api/blog-tts.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,13 +52,27 @@ function enhanceResponse(res) {
   return res;
 }
 
+const LOCAL_API_ROUTES = [
+  { prefix: "/api/semantic-search", handler: semanticSearchHandler },
+  { prefix: "/api/blog-tts", handler: blogTtsHandler },
+];
+
 function localApiPlugin() {
   return {
-    name: "dev-semantic-search-api",
+    name: "dev-local-api",
     apply: "serve",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (!req.url?.startsWith("/api/semantic-search")) {
+        if (!req.url) {
+          next();
+          return;
+        }
+
+        const match = LOCAL_API_ROUTES.find(({ prefix }) =>
+          req.url?.startsWith(prefix),
+        );
+
+        if (!match) {
           next();
           return;
         }
@@ -73,15 +88,15 @@ function localApiPlugin() {
         req.on("end", async () => {
           req.body = chunks.length ? Buffer.concat(chunks).toString() : "";
           try {
-            await semanticSearchHandler(req, enhanceResponse(res));
+            await match.handler(req, enhanceResponse(res));
           } catch (err) {
-            console.error("[dev-api] semantic-search handler error", err);
+            console.error("[dev-api] handler error", err);
             if (!res.headersSent) {
               res.statusCode = 500;
               res.setHeader("Content-Type", "application/json");
               res.end(
                 JSON.stringify({
-                  error: "Semantic search failed",
+                  error: "Local API handler failed",
                   details: err?.message || String(err),
                 }),
               );

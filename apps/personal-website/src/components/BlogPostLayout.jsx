@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import SEO from "./SEO";
+import BlogAudioPlayer from "./BlogAudioPlayer";
 
 export default function BlogPostLayout({ slug, post, children }) {
+  const articleRef = useRef(null);
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -40,7 +43,8 @@ export default function BlogPostLayout({ slug, post, children }) {
         {JSON.stringify(structuredData)}
       </script>
       <main className="prose max-w-none px-4 md:px8">
-        <article>{children}</article>
+        <BlogAudioPlayer slug={slug} articleRef={articleRef} />
+        <article ref={articleRef}>{children}</article>
       </main>
     </>
   );

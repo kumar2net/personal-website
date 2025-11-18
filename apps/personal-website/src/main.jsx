@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App.jsx";
 import "./output.css";
 import { ColorModeProvider } from "./providers/ColorModeProvider";
@@ -166,28 +167,7 @@ window.addEventListener("error", (event) => {
   }
 });
 
-// Async initialization function to handle HelmetProvider loading
-async function initializeApp() {
-  try {
-    // Load HelmetProvider safely after React is confirmed working
-    const { HelmetProvider } = await import("react-helmet-async");
-
-    if (!HelmetProvider) {
-      throw new Error("HelmetProvider not available");
-    }
-
-    console.log("HelmetProvider loaded successfully");
-    renderApp(HelmetProvider);
-  } catch (error) {
-    console.error("Failed to load HelmetProvider:", error);
-    // Fallback: use a dummy provider
-    const FallbackProvider = ({ children }) =>
-      React.createElement(React.Fragment, null, children);
-    renderApp(FallbackProvider);
-  }
-}
-
-const renderApp = (HelmetProvider) => {
+const renderApp = () => {
   const rootElement = document.getElementById("root");
   if (!rootElement) {
     console.error("Root element not found");
@@ -204,12 +184,6 @@ const renderApp = (HelmetProvider) => {
   if (!BrowserRouter) {
     console.error("BrowserRouter is not available");
     handleVendorError(new Error("BrowserRouter not available during render"));
-    return;
-  }
-
-  if (!HelmetProvider) {
-    console.error("HelmetProvider is not available");
-    handleVendorError(new Error("HelmetProvider not available during render"));
     return;
   }
 
@@ -249,9 +223,12 @@ const renderApp = (HelmetProvider) => {
   }
 };
 
-// Initialize the app with proper async handling
+// Initialize the app with proper error handling
 try {
-  initializeApp();
+  if (!HelmetProvider) {
+    throw new Error("HelmetProvider not available");
+  }
+  renderApp();
 } catch (error) {
   console.error("Failed to start application:", error);
   handleVendorError(error);

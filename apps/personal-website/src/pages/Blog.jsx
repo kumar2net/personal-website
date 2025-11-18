@@ -57,7 +57,7 @@ const Blog = () => {
           </Stack>
           <Grid container spacing={3}>
             {processedPosts.map((post, index) => (
-              <Grid xs={12} sm={6} md={4} key={post.link}>
+              <Grid key={post.link} size={{ xs: 12, sm: 6, md: 4 }}>
                 <Card
                   component={motion.article}
                   initial={{ opacity: 0, y: 24 }}

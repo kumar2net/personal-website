@@ -522,7 +522,10 @@ function App() {
                       </Typography>
                       <Grid container spacing={3}>
                         {heroSections.map((section, index) => (
-                          <Grid xs={12} sm={6} md={4} key={section.label}>
+                          <Grid
+                            key={section.label}
+                            size={{ xs: 12, sm: 6, md: 4 }}
+                          >
                             <Card
                               component={motion.article}
                               initial={{ opacity: 0, y: 30 }}
