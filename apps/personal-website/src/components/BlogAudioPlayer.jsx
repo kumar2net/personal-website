@@ -19,7 +19,12 @@ const LANGUAGES = [
   },
 ];
 
-const DEFAULT_ENDPOINTS = ["/api/blog-tts"];
+const DEFAULT_ENDPOINTS = [
+  "/api/blog-tts",
+  "/.netlify/functions/blog-tts",
+];
+const DEFAULT_NETLIFY_PORT =
+  import.meta.env.VITE_BLOG_TTS_NETLIFY_PORT || "8888";
 const MODEL_LABEL =
   import.meta.env.VITE_TTS_MODEL_LABEL || "auto-select";
 
@@ -56,11 +61,28 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   }, []);
 
   const endpoints = useMemo(() => {
+    const candidateEndpoints = [];
     const customEndpoint = import.meta.env.VITE_BLOG_TTS_ENDPOINT;
-    const merged = customEndpoint
-      ? [customEndpoint, ...DEFAULT_ENDPOINTS]
-      : DEFAULT_ENDPOINTS;
-    return Array.from(new Set(merged.filter(Boolean)));
+    const isBrowser = typeof window !== "undefined";
+
+    if (isBrowser) {
+      const { hostname, port } = window.location;
+      const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
+      const isVitePort = port === "5173" || port === "5174";
+
+      if (isLocalHost && isVitePort) {
+        candidateEndpoints.push(
+          `http://localhost:${DEFAULT_NETLIFY_PORT}/.netlify/functions/blog-tts`,
+        );
+      }
+    }
+
+    if (customEndpoint) {
+      candidateEndpoints.push(customEndpoint);
+    }
+
+    candidateEndpoints.push(...DEFAULT_ENDPOINTS);
+    return Array.from(new Set(candidateEndpoints.filter(Boolean)));
   }, []);
 
   const activeEntry = audioCache[selectedLanguage];
