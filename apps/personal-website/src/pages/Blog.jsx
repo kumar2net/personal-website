@@ -72,10 +72,6 @@ const Blog = () => {
                       theme.palette.mode === "dark"
                         ? "1px solid rgba(148,163,184,0.25)"
                         : "1px solid rgba(15,23,42,0.08)",
-                    backgroundColor:
-                      theme.palette.mode === "dark"
-                        ? "rgba(15,23,42,0.92)"
-                        : theme.palette.background.paper,
                     boxShadow:
                       theme.palette.mode === "dark"
                         ? "0 25px 55px -25px rgba(15,23,42,0.9)"
@@ -189,10 +185,6 @@ const Blog = () => {
                         theme.palette.mode === "dark"
                           ? "1px solid rgba(148,163,184,0.15)"
                           : "1px solid rgba(226,232,240,0.7)",
-                      backgroundColor:
-                        theme.palette.mode === "dark"
-                          ? "rgba(15,23,42,0.85)"
-                          : "transparent",
                     })}
                   >
                     <Button
