@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "upstash.context7-mcp"
+        "upstash.context7-mcp",
+        "openai.chatgpt"
     ]
 }
