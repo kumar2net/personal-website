@@ -79,7 +79,10 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
   }, [created]);
 
   return (
-    <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+    <div
+      className="mb-6 rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+      data-tldr-section="summary"
+    >
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">
           AI-generated TL;DR
@@ -90,7 +93,12 @@ export default function TldrSummary({ slug, articleRef, disabled = false }) {
         <p className="text-sm text-red-600">{error}</p>
       ) : summary ? (
         <>
-          <p className="text-sm leading-relaxed text-gray-800">{summary}</p>
+          <p
+            className="text-sm leading-relaxed text-gray-800"
+            data-tldr-text={summary}
+          >
+            {summary}
+          </p>
           <div className="mt-2 text-[11px] text-gray-500">
             <span>Model: {model || 'unknown'}</span>
             <span className="mx-2">•</span>
