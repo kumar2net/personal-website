@@ -28,13 +28,111 @@ const DEFAULT_NETLIFY_PORT =
 const MODEL_LABEL =
   import.meta.env.VITE_TTS_MODEL_LABEL || "auto-select";
 
+const HEADING_TAG_PATTERN = /^h([1-6])$/i;
+const TLDR_PATTERN = /tl;?dr/i;
+const ELEMENT_NODE = 1;
+const TEXT_NODE = 3;
+
+function getHeadingLevel(element) {
+  const tagName = element?.tagName || "";
+  const match = tagName.match(HEADING_TAG_PATTERN);
+  if (!match) {
+    return Infinity;
+  }
+  return parseInt(match[1], 10) || Infinity;
+}
+
+function normalizeText(text) {
+  return (text || "").replace(/\s+/g, " ").replace(/\s+\n/g, "\n").trim();
+}
+
+function extractTextAfterHeading(heading) {
+  if (!heading) {
+    return "";
+  }
+
+  const fragments = [];
+  const baseLevel = getHeadingLevel(heading);
+  let node = heading.nextSibling;
+
+  while (node) {
+    if (node.nodeType === ELEMENT_NODE) {
+      const tagName = node.tagName || "";
+      if (
+        HEADING_TAG_PATTERN.test(tagName) &&
+        getHeadingLevel(node) <= baseLevel
+      ) {
+        break;
+      }
+
+      fragments.push(node.textContent || "");
+    } else if (node.nodeType === TEXT_NODE) {
+      fragments.push(node.textContent || "");
+    }
+
+    node = node.nextSibling;
+  }
+
+  return normalizeText(fragments.join(" "));
+}
+
+function extractTldrText(node) {
+  if (!node || typeof window === "undefined") {
+    return "";
+  }
+
+  const attrMatch = node.querySelector(
+    "[data-tldr-text], [data-tldr], [data-tldr-section]",
+  );
+  if (attrMatch) {
+    const text = attrMatch.getAttribute("data-tldr-text")
+      ? attrMatch.getAttribute("data-tldr-text")
+      : attrMatch.innerText || attrMatch.textContent || "";
+    return normalizeText(text);
+  }
+
+  const headings = node.querySelectorAll("h1, h2, h3, h4, h5, h6");
+  for (const heading of headings) {
+    if (TLDR_PATTERN.test(heading.textContent || "")) {
+      const collected = extractTextAfterHeading(heading);
+      if (collected) {
+        return collected;
+      }
+
+      const parentSection = heading.closest("section, div, article");
+      if (parentSection) {
+        const parentText = normalizeText(
+          parentSection.innerText || parentSection.textContent || "",
+        );
+        if (parentText) {
+          const withoutHeading = parentText
+            .replace(heading.innerText || heading.textContent || "", "")
+            .trim();
+          if (withoutHeading) {
+            return withoutHeading;
+          }
+          return parentText;
+        }
+      }
+    }
+  }
+
+  return "";
+}
+
 function collectArticleText(articleRef) {
   const node = articleRef?.current;
   if (!node) {
     return "";
   }
+
+  const tldr = extractTldrText(node);
+  if (tldr) {
+    return tldr;
+  }
+
   const raw = node.innerText || node.textContent || "";
-  return raw.replace(/\s+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  return normalizeText(raw);
 }
 
 export default function BlogAudioPlayer({ slug, articleRef }) {
