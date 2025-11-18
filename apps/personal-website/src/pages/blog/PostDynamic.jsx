@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import BlogPostLayout from "../../components/BlogPostLayout";
 import { getBlogSeo } from "../../data/blogIndex";
-import QuickForm from "@/components/QuickForm";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
 const mdModules = import.meta.glob("/src/pages/blog/*.md", {
@@ -85,9 +84,6 @@ export default function PostDynamic() {
     return (
       <BlogPostLayout slug={slug} post={postSeo}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
-        <div className="not-prose mt-8">
-          <QuickForm postId={slug} sectionId="reflections" />
-        </div>
       </BlogPostLayout>
     );
   }

@@ -52,7 +52,6 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
-const Reflections = lazy(() => import("./pages/Reflections"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -95,7 +94,6 @@ const navLinks = [
   { label: "Books", to: "/books", analyticsKey: "nav_books" },
   { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
   { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
-  { label: "Reflections", to: "/reflections", analyticsKey: "nav_reflections" },
   { label: "Learning", to: "/learning", analyticsKey: "nav_learning" },
   { label: "Music", to: "/music", analyticsKey: "nav_music" },
   { label: "Album", to: "/album", analyticsKey: "nav_album" },
@@ -107,11 +105,6 @@ const heroSections = [
   { label: "Projects", description: "Selected experiments.", to: "/projects" },
   { label: "Books", description: "Reading list & notes.", to: "/books" },
   { label: "Blog", description: "Long-form writing.", to: "/blog" },
-  {
-    label: "Reflections",
-    description: "Emoji-powered family notes on each section.",
-    to: "/reflections",
-  },
   { label: "Learning", description: "Study notes & flashcards.", to: "/learning" },
   { label: "Music", description: "Playlists on repeat.", to: "/music" },
   { label: "Album", description: "Photo essays & trips.", to: "/album" },
@@ -678,20 +671,6 @@ function App() {
                         type="website"
                       />
                       <Blog />
-                    </>
-                  }
-                />
-                <Route
-                  path="/reflections"
-                  element={
-                    <>
-                      <SEO
-                        title="Reflections"
-                        description="A private-ish lounge for family reactions with emoji shortcuts and Blob-powered notes."
-                        canonicalPath="/reflections"
-                        type="website"
-                      />
-                      <Reflections />
                     </>
                   }
                 />
