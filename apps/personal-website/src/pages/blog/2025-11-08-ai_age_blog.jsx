@@ -12,7 +12,10 @@ const publishedDate = new Date().toLocaleDateString("en-US", {
 
 export default function BlogPost() {
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-8">
+    <div
+      className="max-w-3xl mx-auto p-6 space-y-8"
+      data-tldr-text="This post explores the intersection of AI, energy, and society. It covers Tesla's humanoid robots, China's dominance in rare earth minerals, India's grid efficiency challenges, and Kerala's success in eradicating extreme poverty. It also touches on the health effects of caffeine and the shifting sentiments of youth in the US and India."
+    >
       <div className="flex flex-wrap items-center gap-2">
         <Badge>AI</Badge>
         <Badge>Policy</Badge>

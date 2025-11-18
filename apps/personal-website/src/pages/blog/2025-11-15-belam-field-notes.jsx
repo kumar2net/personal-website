@@ -91,7 +91,10 @@ const memePrompt =
 
 export default function BlogPost() {
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-10">
+    <div
+      className="max-w-3xl mx-auto p-6 space-y-10"
+      data-tldr-text="This week's field notes cover Tamil Nadu's new climate tracker dashboard, the logistical challenges of COP30 in Belém, and the growing data center race across Indian states. We also look at the water consumption impact of AI infrastructure and the key highlights of the new Digital Personal Data Protection Act."
+    >
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
           <Badge key={tag}>{tag}</Badge>

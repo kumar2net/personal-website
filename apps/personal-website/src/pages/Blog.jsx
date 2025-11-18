@@ -30,15 +30,11 @@ const Blog = () => {
   return (
     <Box
       component="section"
-      sx={(theme) => ({
+      sx={{
         py: { xs: 5, md: 8 },
         position: "relative",
-        backgroundColor: theme.vars.palette.background.default,
-        backgroundImage:
-          theme.palette.mode === "dark"
-            ? "radial-gradient(circle at 20% 20%, rgba(56,189,248,0.12), transparent 45%), radial-gradient(circle at 80% 0%, rgba(129,140,248,0.1), transparent 55%)"
-            : "linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,250,252,0.75) 100%)",
-      })}
+        backgroundColor: "background.default",
+      }}
     >
       <SEO
         title="Blog"
@@ -83,38 +79,15 @@ const Blog = () => {
                     flexDirection: "column",
                     position: "relative",
                     borderRadius: 3,
-                    border: `1px solid ${
-                      theme.palette.mode === "dark"
-                        ? alpha("#94a3b8", 0.35)
-                        : alpha("#0f172a", 0.08)
-                    }`,
-                    backgroundColor:
-                      theme.palette.mode === "dark"
-                        ? alpha(theme.vars.palette.background.paper, 0.8)
-                        : theme.vars.palette.background.paper,
-                    backgroundImage:
-                      theme.palette.mode === "dark"
-                        ? "linear-gradient(180deg, rgba(15,23,42,0.55) 0%, rgba(2,6,23,0.9) 100%)"
-                        : "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.92) 100%)",
-                    boxShadow:
-                      theme.palette.mode === "dark"
-                        ? "0 28px 65px -35px rgba(2,6,23,0.95)"
-                        : theme.shadows[3],
-                    overflow: "hidden",
-                    backdropFilter:
-                      theme.palette.mode === "dark" ? "blur(16px)" : "none",
+                    border: "1px solid",
+                    borderColor: "divider",
+                    backgroundColor: "background.paper",
                     transition:
                       "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease",
                     "&:hover": {
                       transform: "translateY(-6px)",
-                      borderColor:
-                        theme.palette.mode === "dark"
-                          ? alpha(theme.palette.primary.light, 0.5)
-                          : alpha(theme.palette.primary.main, 0.25),
-                      boxShadow:
-                        theme.palette.mode === "dark"
-                          ? "0 35px 70px -30px rgba(3,7,18,0.95)"
-                          : theme.shadows[8],
+                      borderColor: "primary.main",
+                      boxShadow: theme.shadows[8],
                     },
                   })}
                 >
@@ -141,7 +114,7 @@ const Blog = () => {
                         objectFit: "cover",
                         objectPosition:
                           post.title ===
-                          "A Sobering Week: Reflections on Loss, Life, and Learning"
+                            "A Sobering Week: Reflections on Loss, Life, and Learning"
                             ? "center 30%"
                             : "center",
                       }}
@@ -175,14 +148,8 @@ const Blog = () => {
                           sx={(theme) => ({
                             fontWeight: 500,
                             borderRadius: 999,
-                            backgroundColor:
-                              theme.palette.mode === "dark"
-                                ? alpha(theme.palette.primary.main, 0.15)
-                                : alpha(theme.palette.primary.light, 0.15),
-                            color:
-                              theme.palette.mode === "dark"
-                                ? theme.palette.primary.light
-                                : theme.palette.primary.main,
+                            backgroundColor: alpha(theme.palette.primary.main, 0.15),
+                            color: "primary.main",
                           })}
                         />
                       ))}
@@ -191,51 +158,40 @@ const Blog = () => {
                       component={RouterLink}
                       to={post.link}
                       variant="h6"
-                      sx={(theme) => ({
+                      sx={{
                         display: "inline-flex",
                         textDecoration: "none",
-                        color:
-                          theme.palette.mode === "dark"
-                            ? "rgba(248,250,252,0.95)"
-                            : theme.palette.text.primary,
+                        color: "text.primary",
                         mb: 0.5,
                         transition: "color 200ms ease",
                         "&:hover": {
-                          color: theme.palette.primary.main,
+                          color: "primary.main",
                         },
-                      })}
+                      }}
                       itemProp="headline"
                     >
                       {post.title}
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={(theme) => ({
-                        color:
-                          theme.palette.mode === "dark"
-                            ? alpha("#cbd5f5", 0.95)
-                            : theme.palette.text.secondary,
-                      })}
+                      sx={{
+                        color: "text.secondary",
+                      }}
                       itemProp="description"
                     >
                       {post.excerpt}
                     </Typography>
                   </CardContent>
                   <CardActions
-                    sx={(theme) => ({
+                    sx={{
                       mt: "auto",
                       px: 3,
                       pb: 3,
                       justifyContent: "space-between",
-                      borderTop:
-                        theme.palette.mode === "dark"
-                          ? "1px solid rgba(148,163,184,0.2)"
-                          : "1px solid rgba(226,232,240,0.7)",
-                      backgroundColor:
-                        theme.palette.mode === "dark"
-                          ? "rgba(15,23,42,0.65)"
-                          : alpha(theme.palette.primary.light, 0.05),
-                    })}
+                      borderTop: "1px solid",
+                      borderColor: "divider",
+                      backgroundColor: "action.hover",
+                    }}
                   >
                     <Button
                       component={RouterLink}
@@ -243,47 +199,26 @@ const Blog = () => {
                       variant="contained"
                       size="small"
                       aria-label={`Read more: ${post.title}`}
-                      sx={(theme) => ({
-                        background:
-                          theme.palette.mode === "dark"
-                            ? "linear-gradient(135deg,#2563eb,#22d3ee)"
-                            : theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
+                      sx={{
                         fontWeight: 600,
                         borderRadius: 999,
                         px: 2.5,
-                        boxShadow:
-                          theme.palette.mode === "dark"
-                            ? "0 15px 30px -15px rgba(14,165,233,0.7)"
-                            : theme.shadows[2],
-                        "&:hover": {
-                          background:
-                            theme.palette.mode === "dark"
-                              ? "linear-gradient(135deg,#1d4ed8,#06b6d4)"
-                              : theme.palette.primary.dark,
-                        },
-                      })}
+                      }}
                     >
                       Read more
                     </Button>
                     <Stack direction="row" spacing={1} alignItems="center">
                       <EventIcon
                         fontSize="small"
-                        sx={(theme) => ({
-                          color:
-                            theme.palette.mode === "dark"
-                              ? "rgba(148,163,184,0.9)"
-                              : theme.palette.text.secondary,
-                        })}
+                        sx={{
+                          color: "text.secondary",
+                        }}
                       />
                       <Typography
                         variant="caption"
-                        sx={(theme) => ({
-                          color:
-                            theme.palette.mode === "dark"
-                              ? "rgba(148,163,184,0.9)"
-                              : theme.palette.text.secondary,
-                        })}
+                        sx={{
+                          color: "text.secondary",
+                        }}
                         itemProp="datePublished"
                         content={post.date}
                       >
@@ -297,33 +232,9 @@ const Blog = () => {
           </Grid>
           <Box
             textAlign="center"
-            sx={(theme) => ({
+            sx={{
               mt: 4,
-              "& .MuiButton-root": {
-                color:
-                  theme.palette.mode === "dark"
-                    ? "rgba(226,232,240,0.95)"
-                    : undefined,
-                borderColor:
-                  theme.palette.mode === "dark"
-                    ? "rgba(94,234,212,0.6)"
-                    : undefined,
-                backgroundColor:
-                  theme.palette.mode === "dark"
-                    ? "rgba(14,165,233,0.08)"
-                    : undefined,
-                "&:hover": {
-                  borderColor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(125,211,252,0.9)"
-                      : undefined,
-                  backgroundColor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(14,165,233,0.18)"
-                      : undefined,
-                },
-              },
-            })}
+            }}
           >
             <Button
               variant="outlined"
@@ -335,7 +246,7 @@ const Blog = () => {
           </Box>
         </Stack>
       </Container>
-    </Box>
+    </Box >
   );
 };
 

@@ -12,7 +12,10 @@ const publishedDate = new Date().toLocaleDateString("en-US", {
 
 export default function BlogPost() {
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-8">
+    <div
+      className="max-w-3xl mx-auto p-6 space-y-8"
+      data-tldr-text="This week's ruminations cover the practical use of AI and data tools by friends and family, an explainer on rare earth minerals and their role in clean energy, and key health insights from Happiest Health. It also includes updates on the unit converter tool and a curated music playlist."
+    >
       <div className="flex flex-wrap items-center gap-2">
         <Badge>AI</Badge>
         <Badge>Health</Badge>

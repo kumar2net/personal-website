@@ -218,6 +218,7 @@ export default function DirtyGridSmartGrid() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
       className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8"
+      data-tldr-text="India's power grid loses nearly 20% of electricity to inefficiencies. This post argues for a three-pronged solution: deploying battery storage to manage peak demand, adopting small modular reactors (SMRs) for clean baseload, and using AI to digitize grid operations. These steps are crucial to meeting the growing energy demands of the AI era without increasing coal reliance."
     >
       <div className="flex flex-wrap items-center justify-between gap-4 pb-8">
         <button

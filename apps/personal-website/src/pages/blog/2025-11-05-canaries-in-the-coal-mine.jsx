@@ -159,6 +159,7 @@ export default function CanariesInTheCoalMine() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="mx-auto max-w-5xl px-4 py-10 text-slate-900 sm:px-6 lg:px-8"
+      data-tldr-text="A new Stanford study reveals that young, entry-level workers in AI-exposed fields like software development are seeing a 13% decline in hiring. This 'canary in the coal mine' signal suggests AI is replacing junior roles rather than just augmenting them. The post discusses the implications for career development and the need for 'human-in-the-loop' skills."
     >
       <div className="flex flex-wrap items-center justify-between gap-4 pb-8">
         <button
