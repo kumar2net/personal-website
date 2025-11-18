@@ -23,6 +23,29 @@ function getApiKey() {
   return process.env.GEMINI_API_KEY?.trim() || "";
 }
 
+function maybeDecodeBase64(value) {
+  if (!value || typeof value !== "string") {
+    return null;
+  }
+  const compact = value.replace(/\s+/g, "");
+  if (!compact) {
+    return null;
+  }
+  const looksLikeBase64 =
+    !compact.startsWith("{") &&
+    compact.length % 4 === 0 &&
+    /^[A-Za-z0-9+/=]+$/.test(compact);
+  if (!looksLikeBase64) {
+    return null;
+  }
+  try {
+    const decoded = Buffer.from(compact, "base64").toString("utf8");
+    return decoded && decoded !== value ? decoded : null;
+  } catch {
+    return null;
+  }
+}
+
 function parseServiceAccount(raw, label) {
   if (!raw || typeof raw !== "string") {
     return null;
@@ -34,21 +57,34 @@ function parseServiceAccount(raw, label) {
   ) {
     return null;
   }
-  try {
-    const parsed = JSON.parse(raw);
-    if (
-      !parsed?.private_key ||
-      typeof parsed.private_key !== "string" ||
-      parsed.private_key.includes("...")
-    ) {
-      return null;
-    }
-    return parsed;
-  } catch (err) {
-    throw new Error(
-      `${label} is not valid JSON: ${err.message || err}`,
-    );
+  const trimmed = raw.trim();
+  if (!trimmed) {
+    return null;
   }
+  const attempts = [trimmed];
+  const decoded = maybeDecodeBase64(trimmed);
+  if (decoded) {
+    attempts.push(decoded);
+  }
+  let lastError;
+  for (const candidate of attempts) {
+    try {
+      const parsed = JSON.parse(candidate);
+      if (
+        !parsed?.private_key ||
+        typeof parsed.private_key !== "string" ||
+        parsed.private_key.includes("...")
+      ) {
+        return null;
+      }
+      return parsed;
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw new Error(
+    `${label} is not valid JSON: ${lastError?.message || lastError}`,
+  );
 }
 
 function loadServiceAccountCredentials() {
