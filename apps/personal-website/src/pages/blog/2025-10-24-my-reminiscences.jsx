@@ -17,7 +17,7 @@ const MyReminiscences = () => {
         />
         <link
           rel="canonical"
-          href="https://kumar.website/blog/2025-10-24-my-reminiscences"
+          href="https://kumar2net.com/blog/2025-10-24-my-reminiscences"
         />
       </Helmet>
 

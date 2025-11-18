@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import BlogPostLayout from "../../components/BlogPostLayout";
 import { getBlogSeo } from "../../data/blogIndex";
@@ -12,10 +12,43 @@ const mdModules = import.meta.glob("/src/pages/blog/*.md", {
   import: "default",
 });
 
+const pathToSlug = (filePath) => {
+  const match = filePath.match(/\/([^/]+)\.(jsx|md)$/);
+  return match ? match[1] : null;
+};
+
+const availableSlugs = [
+  ...Object.keys(jsxModules),
+  ...Object.keys(mdModules),
+]
+  .map(pathToSlug)
+  .filter(Boolean);
+
+const datedSlugMap = availableSlugs.reduce((acc, slug) => {
+  const match = slug.match(/^\d{4}-\d{2}-\d{2}-(.+)$/);
+  if (match && !acc[match[1]]) {
+    acc[match[1]] = slug;
+  }
+  return acc;
+}, {});
+
 export default function PostDynamic() {
-  const { slug } = useParams();
+  const navigate = useNavigate();
+  const { slug: rawSlug } = useParams();
+  const slug = datedSlugMap[rawSlug] || rawSlug;
+  const shouldRedirect = slug !== rawSlug;
   const [markdown, setMarkdown] = useState("");
   const postSeo = getBlogSeo(slug);
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate(`/blog/${slug}`, { replace: true });
+    }
+  }, [shouldRedirect, slug, navigate]);
+
+  useEffect(() => {
+    setMarkdown("");
+  }, [slug]);
 
   const LazyComponent = useMemo(() => {
     const path = `/src/pages/blog/${slug}.jsx`;
@@ -33,6 +66,10 @@ export default function PostDynamic() {
       setMarkdown("");
     }
   }, [slug]);
+
+  if (shouldRedirect) {
+    return null;
+  }
 
   if (LazyComponent) {
     return (
