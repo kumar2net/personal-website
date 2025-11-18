@@ -73,7 +73,7 @@ The semantic search API reads vectors from `src/data/semantic-index.json`. Regen
 npm run --workspace apps/personal-website semantic:index
 ```
 
-The script loads every `src/pages/blog/*.jsx` file, strips JSX to text, calls Gemini `text-embedding-004`, and snapshots the embeddings plus metadata into the JSON index. Production builds run the same command via `npm run build`, so keeping `GEMINI_API_KEY` set ensures Vercel/Netlify builds stay up to date.
+The script loads every `src/pages/blog/*.jsx` file, strips JSX to text, calls Gemini `text-embedding-004`, and snapshots the embeddings plus metadata into the JSON index. Production builds run the same command via `npm run build`, so keeping `GEMINI_API_KEY` set ensures Vercel/Netlify builds stay up to date. Google now requires OAuth credentials for server-side embeddings, so add `GCP_SERVICE_ACCOUNT_JSON` (or `GCP_SERVICE_ACCOUNT_JSON_BASE64` if your host dislikes multiline env vars) to Vercel/Netlify so `/api/semantic-search` can mint access tokens at runtime.
 
 ### Start a Dev Server
 

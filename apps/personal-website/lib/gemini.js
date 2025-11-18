@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { GoogleAuth } from "google-auth-library";
 
 const GEMINI_SCOPES = [
@@ -5,6 +7,7 @@ const GEMINI_SCOPES = [
 ];
 
 let authClientPromise = null;
+let serviceAccountCache;
 
 function getDefaultModel() {
   return process.env.GEMINI_EMBED_MODEL || "text-embedding-004";
@@ -20,9 +23,8 @@ function getApiKey() {
   return process.env.GEMINI_API_KEY?.trim() || "";
 }
 
-function getServiceAccountCredentials() {
-  const raw = process.env.GCP_SERVICE_ACCOUNT_JSON;
-  if (!raw) {
+function parseServiceAccount(raw, label) {
+  if (!raw || typeof raw !== "string") {
     return null;
   }
   if (
@@ -44,9 +46,73 @@ function getServiceAccountCredentials() {
     return parsed;
   } catch (err) {
     throw new Error(
-      `GCP_SERVICE_ACCOUNT_JSON is not valid JSON: ${err.message || err}`,
+      `${label} is not valid JSON: ${err.message || err}`,
     );
   }
+}
+
+function loadServiceAccountCredentials() {
+  const sources = [
+    { key: "GCP_SERVICE_ACCOUNT_JSON", base64: false },
+    { key: "GCP_SERVICE_ACCOUNT_JSON_BASE64", base64: true },
+    { key: "GOOGLE_SERVICE_ACCOUNT_JSON", base64: false },
+  ];
+  for (const source of sources) {
+    const value = process.env[source.key];
+    if (!value || typeof value !== "string") {
+      continue;
+    }
+    const trimmed = value.trim();
+    if (!trimmed) {
+      continue;
+    }
+    let raw = trimmed;
+    if (source.base64) {
+      try {
+        raw = Buffer.from(trimmed, "base64").toString("utf8");
+      } catch (err) {
+        console.warn(
+          `[gemini] Failed to decode ${source.key} as base64: ${err?.message || err}`,
+        );
+        continue;
+      }
+    }
+    const parsed = parseServiceAccount(raw, source.key);
+    if (parsed) {
+      return parsed;
+    }
+  }
+  const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim();
+  if (credentialsPath) {
+    try {
+      const resolved = path.resolve(credentialsPath);
+      if (fs.existsSync(resolved)) {
+        const raw = fs.readFileSync(resolved, "utf8");
+        const parsed = parseServiceAccount(raw, resolved);
+        if (parsed) {
+          return parsed;
+        }
+      } else {
+        console.warn(
+          `[gemini] GOOGLE_APPLICATION_CREDENTIALS file not found at ${resolved}`,
+        );
+      }
+    } catch (err) {
+      console.warn(
+        "[gemini] Failed to read GOOGLE_APPLICATION_CREDENTIALS file:",
+        err?.message || err,
+      );
+    }
+  }
+  return null;
+}
+
+function getServiceAccountCredentials() {
+  if (serviceAccountCache !== undefined) {
+    return serviceAccountCache;
+  }
+  serviceAccountCache = loadServiceAccountCredentials();
+  return serviceAccountCache;
 }
 
 async function getAuthClient() {
@@ -124,6 +190,15 @@ export async function embedTextWithGemini(
 
   if (!res.ok) {
     const errText = await res.text();
+    if (
+      res.status === 401 &&
+      !requestHeaders.Authorization &&
+      errText.includes("API keys are not supported")
+    ) {
+      throw new Error(
+        "Gemini now requires OAuth credentials. Set GCP_SERVICE_ACCOUNT_JSON (or *_BASE64 / GOOGLE_APPLICATION_CREDENTIALS) so server-side requests can mint access tokens.",
+      );
+    }
     throw new Error(
       `${headers.Authorization ? "Gemini OAuth embed error" : "Gemini embed error"}: ${
         res.status

@@ -4,7 +4,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 - Node.js 20+ (backend declares `>=18`, Vite dev server benefits from 20).
 - npm 11.6.2 (locked via `package-lock.json`).
 - Optional: Python 3.11 for the experimental GNN backend (`backend/gnn_server.py`).
-- Access to a Google Cloud project with GA4 BigQuery export (and Vertex AI if you want live topic suggestions). Semantic search now runs entirely on Gemini + a JSON index, so you only need `GEMINI_API_KEY` to rebuild/query embeddings.
+- Access to a Google Cloud project with GA4 BigQuery export (and Vertex AI if you want live topic suggestions). Semantic search now runs entirely on Gemini + a JSON index: keep `GEMINI_API_KEY` around for local indexing, but production queries must use OAuth tokens via `GCP_SERVICE_ACCOUNT_JSON` (or the new `_BASE64` helper).
 - API keys: Gemini (`GEMINI_API_KEY`), OpenAI (`OPENAI_API_KEY`), X bearer token. TL;DR reuses the OpenAI key for summary generation.
 
 ## Directory Ownership
@@ -20,10 +20,11 @@ Populate `.env` at repo root (copy from `.env.example`) and `backend/.env` (from
 
 | Var | Location | Notes |
 | --- | --- | --- |
-| `GEMINI_API_KEY` | root | Required for semantic search indexing (`scripts/build-semantic-index.mjs`) and query-time embeddings. No fallback path exists without it.
+| `GEMINI_API_KEY` | root | Required for semantic search indexing (`scripts/build-semantic-index.mjs`). Runtime now prefers OAuth tokens, so use this only as a local fallback.
 | `OPENAI_API_KEY`, `OPENAI_MODEL` | root | Needed for `/api/tldr` (OpenAI summaries). Set `TLDR_DEV_FAKE=1` if no key is available.
 | `GCP_PROJECT_ID`, `GCP_LOCATION` | root + backend | Required for Vertex AI + BigQuery clients.
-| `GCP_SERVICE_ACCOUNT_JSON` | root | Inline JSON used by semantic search/Vertex clients during local dev.
+| `GCP_SERVICE_ACCOUNT_JSON` | root | Inline JSON used by semantic search/Vertex clients; production deployments must set this (or `GCP_SERVICE_ACCOUNT_JSON_BASE64`/`GOOGLE_APPLICATION_CREDENTIALS`) because Google rejects API-key-only requests.
+| `GCP_SERVICE_ACCOUNT_JSON_BASE64` | root | Base64 encoded variant for hosts that cannot store multiline secrets; decoded automatically by the Gemini helper.
 | `VITE_NEWS_API_KEY`, `VITE_CLIMATIQ_API_KEY` | root | Used by climate/news widgets. Provide dummy strings for local dev if hitting external APIs is optional.
 | `VITE_FEATURE_UNREAD` | root | Feature flag toggling unread badge logic.
 | `X_BEARER_TOKEN` | root | Enables `/api/x-latest` for Elsewhere page.
@@ -102,7 +103,7 @@ The UI theme package is part of the workspace, so no extra steps are required.
 
 ## Troubleshooting
 - **Port conflicts**: Vite uses `strictPort`; if 5173 is taken you must free it or override `server.port` in `vite.config.js`.
-- **Semantic search 404/500**: run `npm run dev` (Turbo) so both `/api/convert` and `/api/semantic-search` are proxied, set `GEMINI_API_KEY`, and re-run `npm run semantic:index --prefix apps/personal-website` so `src/data/semantic-index.json` exists.
+- **Semantic search 404/500**: run `npm run dev` (Turbo) so both `/api/convert` and `/api/semantic-search` are proxied, set `GEMINI_API_KEY`, and re-run `npm run semantic:index --prefix apps/personal-website` so `src/data/semantic-index.json` exists. If production logs show `API keys are not supported`, add `GCP_SERVICE_ACCOUNT_JSON` (or `_BASE64`) so the handler can mint OAuth tokens.
 - **GA4/Vertex auth errors**: confirm service-account JSON is valid and `GA4_DATASET` matches `analytics_<property>` naming.
 - **Graph recommender unavailable**: Graph components silently hide themselves until `GNN_API_BASE_URL` responds with `{ initialized: true }`. Run the Python server or change `import.meta.env.VITE_GNN_API_BASE_URL` to a reachable endpoint.
 - **Webhook integration UI**: `src/services/webhookService.js` intentionally keeps `webhookUrl=null`, so registration UI only acts as a stub. Enable once backend endpoints exist.
