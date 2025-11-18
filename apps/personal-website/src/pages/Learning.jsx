@@ -43,36 +43,6 @@ const Learning = () => {
         </MotionDiv>
       </div>
 
-      {/* Reflections Demo */}
-      <MotionDiv
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.25 }}
-        className="mb-12"
-      >
-        <div className="bg-white rounded-2xl shadow-md p-8 border border-gray-100">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Reflections Micro Engagement Demo
-          </h2>
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            This lightweight experience is a totally different vibe from
-            Instagram, WhatsApp, or any heavy social feed—no logins, no tracking,
-            just pure micro engagement where you and I can check the pulse in a
-            lighthearted way. Enjoy this quick look at the new Reflections feature
-            and keep the insights coming!
-          </p>
-          <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-            <iframe
-              src="https://www.youtube.com/embed/fJwoyPctOfc"
-              title="Reflections Feature Demo"
-              className="absolute inset-0 w-full h-full rounded-xl border-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      </MotionDiv>
-
       {/* Stats */}
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}

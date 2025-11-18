@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
 import ChromeReaderModeNudge from "./ChromeReaderModeNudge";
+import ReactionBar from "./engagement/ReactionBar";
+import PromptBox from "./engagement/PromptBox";
 
 export default function BlogPostLayout({ slug, post, children }) {
   const articleRef = useRef(null);
@@ -46,7 +48,13 @@ export default function BlogPostLayout({ slug, post, children }) {
       <main className="prose max-w-none px-4 md:px8">
         <BlogAudioPlayer slug={slug} articleRef={articleRef} />
         <ChromeReaderModeNudge slug={slug} />
-        <article ref={articleRef}>{children}</article>
+        <article ref={articleRef}>
+          {children}
+          <div className="not-prose mt-12 space-y-4">
+            <ReactionBar slug={slug} />
+            <PromptBox slug={slug} />
+          </div>
+        </article>
       </main>
     </>
   );

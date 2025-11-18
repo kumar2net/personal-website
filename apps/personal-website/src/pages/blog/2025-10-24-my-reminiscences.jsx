@@ -1,6 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import InspiredBy from "../../components/InspiredBy";
+import ReactionBar from "../../components/engagement/ReactionBar";
+import PromptBox from "../../components/engagement/PromptBox";
 
 const MyReminiscences = () => {
   return (
@@ -316,6 +318,11 @@ const MyReminiscences = () => {
             <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">
               Personal Reflections
             </span>
+          </div>
+
+          <div className="space-y-4 mb-8">
+            <ReactionBar slug="2025-10-24-my-reminiscences" />
+            <PromptBox slug="2025-10-24-my-reminiscences" />
           </div>
         </div>
       </div>

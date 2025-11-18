@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import QuickForm from "@/components/QuickForm";
 
 const heroImage = "/media/generated/openai-cop30-tn-tracker.png";
 const waterMemeImage = "/media/generated/openai-water-shortage-meme.png";
@@ -400,10 +399,6 @@ export default function BlogPost() {
         mother leading her child. The clipping is in the Interesting Images
         album for your reading.
       </p>
-      <div className="mt-6">
-        <QuickForm postId={postSlug} sectionId="reflections" />
-      </div>
-
     </div>
   );
 }
