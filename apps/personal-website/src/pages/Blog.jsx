@@ -12,6 +12,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import EventIcon from "@mui/icons-material/Event";
 import { Link as RouterLink } from "react-router-dom";
 import ContentBadge from "../components/ContentBadge";
@@ -27,7 +28,18 @@ const Blog = () => {
   );
 
   return (
-    <Box component="section" sx={{ py: { xs: 5, md: 8 } }}>
+    <Box
+      component="section"
+      sx={(theme) => ({
+        py: { xs: 5, md: 8 },
+        position: "relative",
+        backgroundColor: theme.vars.palette.background.default,
+        backgroundImage:
+          theme.palette.mode === "dark"
+            ? "radial-gradient(circle at 20% 20%, rgba(56,189,248,0.12), transparent 45%), radial-gradient(circle at 80% 0%, rgba(129,140,248,0.1), transparent 55%)"
+            : "linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,250,252,0.75) 100%)",
+      })}
+    >
       <SEO
         title="Blog"
         description="Latest posts on technology, learning, notes, and personal writing."
@@ -60,6 +72,8 @@ const Blog = () => {
               <Grid key={post.link} size={{ xs: 12, sm: 6, md: 4 }}>
                 <Card
                   component={motion.article}
+                  itemScope
+                  itemType="https://schema.org/BlogPosting"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: index * 0.08 }}
@@ -67,19 +81,47 @@ const Blog = () => {
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
+                    position: "relative",
                     borderRadius: 3,
-                    border:
+                    border: `1px solid ${
                       theme.palette.mode === "dark"
-                        ? "1px solid rgba(148,163,184,0.25)"
-                        : "1px solid rgba(15,23,42,0.08)",
+                        ? alpha("#94a3b8", 0.35)
+                        : alpha("#0f172a", 0.08)
+                    }`,
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? alpha(theme.vars.palette.background.paper, 0.8)
+                        : theme.vars.palette.background.paper,
+                    backgroundImage:
+                      theme.palette.mode === "dark"
+                        ? "linear-gradient(180deg, rgba(15,23,42,0.55) 0%, rgba(2,6,23,0.9) 100%)"
+                        : "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.92) 100%)",
                     boxShadow:
                       theme.palette.mode === "dark"
-                        ? "0 25px 55px -25px rgba(15,23,42,0.9)"
+                        ? "0 28px 65px -35px rgba(2,6,23,0.95)"
                         : theme.shadows[3],
+                    overflow: "hidden",
                     backdropFilter:
                       theme.palette.mode === "dark" ? "blur(16px)" : "none",
+                    transition:
+                      "transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease",
+                    "&:hover": {
+                      transform: "translateY(-6px)",
+                      borderColor:
+                        theme.palette.mode === "dark"
+                          ? alpha(theme.palette.primary.light, 0.5)
+                          : alpha(theme.palette.primary.main, 0.25),
+                      boxShadow:
+                        theme.palette.mode === "dark"
+                          ? "0 35px 70px -30px rgba(3,7,18,0.95)"
+                          : theme.shadows[8],
+                    },
                   })}
                 >
+                  <meta
+                    itemProp="mainEntityOfPage"
+                    content={`https://kumar2net.com${post.link}`}
+                  />
                   <Box
                     sx={{
                       position: "relative",
@@ -109,34 +151,38 @@ const Blog = () => {
                       lastModified={post.lastModified}
                     />
                   </Box>
-                  <CardContent sx={{ flexGrow: 1 }}>
+                  <CardContent
+                    sx={{
+                      flexGrow: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 2,
+                      px: 3,
+                      py: 3,
+                    }}
+                  >
                     <Stack
                       direction="row"
                       spacing={1}
                       flexWrap="wrap"
                       useFlexGap
-                      sx={{ mb: 2 }}
                     >
                       {post.tags.map((tag) => (
                         <Chip
                           key={tag}
                           label={tag}
                           size="small"
-                          color="primary"
-                          variant="outlined"
                           sx={(theme) => ({
-                            borderColor:
-                              theme.palette.mode === "dark"
-                                ? "rgba(94,234,212,0.5)"
-                                : undefined,
-                            color:
-                              theme.palette.mode === "dark"
-                                ? "rgba(226,232,240,0.9)"
-                                : undefined,
+                            fontWeight: 500,
+                            borderRadius: 999,
                             backgroundColor:
                               theme.palette.mode === "dark"
-                                ? "rgba(45,212,191,0.12)"
-                                : undefined,
+                                ? alpha(theme.palette.primary.main, 0.15)
+                                : alpha(theme.palette.primary.light, 0.15),
+                            color:
+                              theme.palette.mode === "dark"
+                                ? theme.palette.primary.light
+                                : theme.palette.primary.main,
                           })}
                         />
                       ))}
@@ -152,14 +198,13 @@ const Blog = () => {
                           theme.palette.mode === "dark"
                             ? "rgba(248,250,252,0.95)"
                             : theme.palette.text.primary,
-                        mb: 1,
+                        mb: 0.5,
+                        transition: "color 200ms ease",
                         "&:hover": {
-                          color:
-                            theme.palette.mode === "dark"
-                              ? "rgba(125,211,252,0.95)"
-                              : theme.palette.primary.main,
+                          color: theme.palette.primary.main,
                         },
                       })}
+                      itemProp="headline"
                     >
                       {post.title}
                     </Typography>
@@ -168,9 +213,10 @@ const Blog = () => {
                       sx={(theme) => ({
                         color:
                           theme.palette.mode === "dark"
-                            ? "rgba(203,213,225,0.92)"
+                            ? alpha("#cbd5f5", 0.95)
                             : theme.palette.text.secondary,
                       })}
+                      itemProp="description"
                     >
                       {post.excerpt}
                     </Typography>
@@ -183,8 +229,12 @@ const Blog = () => {
                       justifyContent: "space-between",
                       borderTop:
                         theme.palette.mode === "dark"
-                          ? "1px solid rgba(148,163,184,0.15)"
+                          ? "1px solid rgba(148,163,184,0.2)"
                           : "1px solid rgba(226,232,240,0.7)",
+                      backgroundColor:
+                        theme.palette.mode === "dark"
+                          ? "rgba(15,23,42,0.65)"
+                          : alpha(theme.palette.primary.light, 0.05),
                     })}
                   >
                     <Button
@@ -197,18 +247,20 @@ const Blog = () => {
                         background:
                           theme.palette.mode === "dark"
                             ? "linear-gradient(135deg,#2563eb,#22d3ee)"
-                            : undefined,
-                        color: "#fff",
+                            : theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
                         fontWeight: 600,
+                        borderRadius: 999,
+                        px: 2.5,
                         boxShadow:
                           theme.palette.mode === "dark"
                             ? "0 15px 30px -15px rgba(14,165,233,0.7)"
-                            : undefined,
+                            : theme.shadows[2],
                         "&:hover": {
                           background:
                             theme.palette.mode === "dark"
                               ? "linear-gradient(135deg,#1d4ed8,#06b6d4)"
-                              : undefined,
+                              : theme.palette.primary.dark,
                         },
                       })}
                     >
@@ -232,6 +284,8 @@ const Blog = () => {
                               ? "rgba(148,163,184,0.9)"
                               : theme.palette.text.secondary,
                         })}
+                        itemProp="datePublished"
+                        content={post.date}
                       >
                         {post.date}
                       </Typography>
