@@ -10,6 +10,8 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 // Error handling and recovery system
 let initializationAttempts = 0;
 const MAX_INIT_ATTEMPTS = 3;
+const SHOULD_RENDER_SPEED_INSIGHTS =
+  typeof import.meta !== "undefined" && import.meta.env.PROD;
 
 // Function to handle vendor bundle initialization errors
 function handleVendorError(error) {
@@ -209,7 +211,9 @@ const renderApp = () => {
                 },
               },
               React.createElement(App, null),
-              React.createElement(SpeedInsights, null),
+              SHOULD_RENDER_SPEED_INSIGHTS
+                ? React.createElement(SpeedInsights, null)
+                : null,
             ),
           ),
         ),

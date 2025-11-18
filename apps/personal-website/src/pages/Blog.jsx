@@ -63,7 +63,26 @@ const Blog = () => {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: index * 0.08 }}
-                  sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+                  sx={(theme) => ({
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: 3,
+                    border:
+                      theme.palette.mode === "dark"
+                        ? "1px solid rgba(148,163,184,0.25)"
+                        : "1px solid rgba(15,23,42,0.08)",
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(15,23,42,0.92)"
+                        : theme.palette.background.paper,
+                    boxShadow:
+                      theme.palette.mode === "dark"
+                        ? "0 25px 55px -25px rgba(15,23,42,0.9)"
+                        : theme.shadows[3],
+                    backdropFilter:
+                      theme.palette.mode === "dark" ? "blur(16px)" : "none",
+                  })}
                 >
                   <Box
                     sx={{
@@ -108,7 +127,21 @@ const Blog = () => {
                           label={tag}
                           size="small"
                           color="primary"
-                          variant="soft"
+                          variant="outlined"
+                          sx={(theme) => ({
+                            borderColor:
+                              theme.palette.mode === "dark"
+                                ? "rgba(94,234,212,0.5)"
+                                : undefined,
+                            color:
+                              theme.palette.mode === "dark"
+                                ? "rgba(226,232,240,0.9)"
+                                : undefined,
+                            backgroundColor:
+                              theme.palette.mode === "dark"
+                                ? "rgba(45,212,191,0.12)"
+                                : undefined,
+                          })}
                         />
                       ))}
                     </Stack>
@@ -116,26 +149,51 @@ const Blog = () => {
                       component={RouterLink}
                       to={post.link}
                       variant="h6"
-                      sx={{
+                      sx={(theme) => ({
                         display: "inline-flex",
                         textDecoration: "none",
-                        color: "text.primary",
+                        color:
+                          theme.palette.mode === "dark"
+                            ? "rgba(248,250,252,0.95)"
+                            : theme.palette.text.primary,
                         mb: 1,
-                      }}
+                        "&:hover": {
+                          color:
+                            theme.palette.mode === "dark"
+                              ? "rgba(125,211,252,0.95)"
+                              : theme.palette.primary.main,
+                        },
+                      })}
                     >
                       {post.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      sx={(theme) => ({
+                        color:
+                          theme.palette.mode === "dark"
+                            ? "rgba(203,213,225,0.92)"
+                            : theme.palette.text.secondary,
+                      })}
+                    >
                       {post.excerpt}
                     </Typography>
                   </CardContent>
                   <CardActions
-                    sx={{
+                    sx={(theme) => ({
                       mt: "auto",
                       px: 3,
                       pb: 3,
                       justifyContent: "space-between",
-                    }}
+                      borderTop:
+                        theme.palette.mode === "dark"
+                          ? "1px solid rgba(148,163,184,0.15)"
+                          : "1px solid rgba(226,232,240,0.7)",
+                      backgroundColor:
+                        theme.palette.mode === "dark"
+                          ? "rgba(15,23,42,0.85)"
+                          : "transparent",
+                    })}
                   >
                     <Button
                       component={RouterLink}
@@ -143,12 +201,46 @@ const Blog = () => {
                       variant="contained"
                       size="small"
                       aria-label={`Read more: ${post.title}`}
+                      sx={(theme) => ({
+                        background:
+                          theme.palette.mode === "dark"
+                            ? "linear-gradient(135deg,#2563eb,#22d3ee)"
+                            : undefined,
+                        color: "#fff",
+                        fontWeight: 600,
+                        boxShadow:
+                          theme.palette.mode === "dark"
+                            ? "0 15px 30px -15px rgba(14,165,233,0.7)"
+                            : undefined,
+                        "&:hover": {
+                          background:
+                            theme.palette.mode === "dark"
+                              ? "linear-gradient(135deg,#1d4ed8,#06b6d4)"
+                              : undefined,
+                        },
+                      })}
                     >
                       Read more
                     </Button>
                     <Stack direction="row" spacing={1} alignItems="center">
-                      <EventIcon fontSize="small" sx={{ color: "text.secondary" }} />
-                      <Typography variant="caption" color="text.secondary">
+                      <EventIcon
+                        fontSize="small"
+                        sx={(theme) => ({
+                          color:
+                            theme.palette.mode === "dark"
+                              ? "rgba(148,163,184,0.9)"
+                              : theme.palette.text.secondary,
+                        })}
+                      />
+                      <Typography
+                        variant="caption"
+                        sx={(theme) => ({
+                          color:
+                            theme.palette.mode === "dark"
+                              ? "rgba(148,163,184,0.9)"
+                              : theme.palette.text.secondary,
+                        })}
+                      >
                         {post.date}
                       </Typography>
                     </Stack>
@@ -157,7 +249,36 @@ const Blog = () => {
               </Grid>
             ))}
           </Grid>
-          <Box textAlign="center" sx={{ mt: 4 }}>
+          <Box
+            textAlign="center"
+            sx={(theme) => ({
+              mt: 4,
+              "& .MuiButton-root": {
+                color:
+                  theme.palette.mode === "dark"
+                    ? "rgba(226,232,240,0.95)"
+                    : undefined,
+                borderColor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(94,234,212,0.6)"
+                    : undefined,
+                backgroundColor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(14,165,233,0.08)"
+                    : undefined,
+                "&:hover": {
+                  borderColor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(125,211,252,0.9)"
+                      : undefined,
+                  backgroundColor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(14,165,233,0.18)"
+                      : undefined,
+                },
+              },
+            })}
+          >
             <Button
               variant="outlined"
               size="large"

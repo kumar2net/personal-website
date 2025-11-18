@@ -37,6 +37,7 @@ import Logo from "./components/Logo";
 import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
+import PasswordGate from "./components/PasswordGate";
 import { useColorMode } from "./providers/ColorModeProvider";
 
 // Eagerly load critical components
@@ -909,7 +910,9 @@ function App() {
                         canonicalPath="/utilities"
                         type="website"
                       />
-                      <UtilitiesDashboard />
+                      <PasswordGate>
+                        <UtilitiesDashboard />
+                      </PasswordGate>
                     </>
                   }
                 />

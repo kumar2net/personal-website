@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import { DataGrid } from '@mui/x-data-grid';
 import { LineChart } from '@mui/x-charts/LineChart';
@@ -498,6 +499,11 @@ export default function UtilitiesDashboard() {
     ...DATA.water.map((d) => toUsdEquivalent(d.currency, d.costPerM3) || 0),
     0
   );
+  const utilityLegend = [
+    { label: 'Electricity', color: '#6366f1' },
+    { label: 'Gas', color: '#f59e0b' },
+    { label: 'Water', color: '#06b6d4' },
+  ];
 
   const carbonSummaries = useMemo(() => {
     const summaries = new Map();
@@ -607,8 +613,95 @@ export default function UtilitiesDashboard() {
               </ul>
             </div>
           </div>
-        </div>
       </div>
+    </div>
+
+      <section className="mb-12 space-y-5">
+        <div className="text-slate-100">
+          <h2 className="text-2xl font-semibold text-white">
+            Household carbon footprint snapshot
+          </h2>
+          <p className="text-slate-300">
+            Using each billing cycle’s electricity, gas, and water volumes plus
+            region-specific emission factors, here’s the rough CO₂e impact for
+            every city featured on this page.
+          </p>
+        </div>
+        <div className="overflow-x-auto rounded-3xl border border-slate-800/80 bg-gradient-to-br from-slate-950/95 via-slate-900/90 to-slate-950/85 shadow-[0_30px_60px_-20px_rgba(15,23,42,0.7)]">
+          <table className="min-w-full divide-y divide-slate-800/60 text-sm text-slate-100">
+            <thead className="text-left text-xs uppercase tracking-[0.25em] text-slate-400 bg-slate-900/40">
+              <tr>
+                <th className="px-5 py-4 font-semibold">City</th>
+                <th className="px-5 py-4 font-semibold text-right">Estimated total</th>
+                <th className="px-5 py-4 font-semibold">Breakdown</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/50">
+              {carbonSummaries.map((summary) => (
+                <tr
+                  key={summary.city}
+                  className="align-top transition-colors hover:bg-slate-900/40 bg-slate-900/20"
+                >
+                  <td className="px-5 py-4 font-semibold text-slate-100">
+                    {summary.city}
+                  </td>
+                  <td className="px-5 py-4 font-semibold text-sky-300 text-right">
+                    {formatKg(summary.total)}
+                  </td>
+                  <td className="px-5 py-4">
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {Object.entries(summary.breakdown).map(
+                        ([key, value]) => (
+                          <span
+                            key={`${summary.city}-${key}`}
+                            className="rounded-full border border-slate-700/70 bg-slate-900/60 px-3 py-1 font-semibold text-slate-200"
+                          >
+                            {EMISSION_LABELS[key] || key}:{' '}
+                            <span className="font-bold text-sky-200">
+                              {formatKg(value)}
+                            </span>
+                          </span>
+                        )
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="rounded-2xl border border-sky-500/30 bg-slate-900/50 p-4 text-sm text-slate-100 space-y-2 shadow-[0_20px_50px_-25px_rgba(14,165,233,0.5)]">
+          <h3 className="text-base font-semibold text-sky-300">
+            Practical ideas to shrink these bars
+          </h3>
+          <ul className="list-disc list-inside space-y-2 text-slate-200">
+            <li>
+              <strong>Altamonte Springs, FL (~0.71 t/mo):</strong> Pool pumps
+              and irrigation drive the spike. Covering the pool, switching to a
+              variable-speed pump, and scheduling lawn watering after rain
+              events easily trims 100+ kWh and thousands of gallons every month.
+            </li>
+            <li>
+              <strong>Coimbatore, India (~0.26 t/mo):</strong> Coal-heavy grid
+              plus LPG cylinders dominate. A 3 kW rooftop solar net-metered
+              array offsets ~360 kWh per cycle, while sharing induction
+              cooktops for daytime cooking halves LPG runs.
+            </li>
+            <li>
+              <strong>Toronto, Canada (~0.18 t/mo):</strong> Natural-gas space
+              heating is the main contributor. Dropping the thermostat 1–2 °C at
+              night, sealing ducts, and pre-heating with a mini-split heat pump
+              can cut winter gas draw by 15–20%.
+            </li>
+            <li>
+              <strong>Singapore (&lt;0.1 t/mo):</strong> Already efficient, so
+              focus on water and city-gas intensity. Bundling laundry/dish loads
+              and installing low-flow fixtures keeps usage flat even as
+              households grow.
+            </li>
+          </ul>
+        </div>
+      </section>
 
       {/* Quick Summary Cards */}
       <section className="mb-8">
@@ -1282,74 +1375,126 @@ export default function UtilitiesDashboard() {
               );
             })}
           </div>
-          <div className="flex gap-4 mt-4 text-sm text-gray-700">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 bg-indigo-500" />
-              Electricity
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 bg-amber-500" />
-              Gas
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 bg-cyan-600" />
-              Water
-            </div>
+          <div className="flex flex-wrap gap-3 mt-6">
+            {utilityLegend.map((item) => (
+              <Chip
+                key={item.label}
+                label={item.label}
+                size="small"
+                variant="outlined"
+                icon={
+                  <span
+                    className="inline-block h-2 w-2 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  />
+                }
+                sx={{
+                  color: '#e2e8f0',
+                  borderColor: `${item.color}99`,
+                  backgroundColor: 'rgba(15,23,42,0.4)',
+                  fontWeight: 600,
+                  letterSpacing: 0.3,
+                  '& .MuiChip-icon': {
+                    marginLeft: '4px',
+                    marginRight: '6px',
+                  },
+                  '&:hover': {
+                    backgroundColor: 'rgba(15,23,42,0.55)',
+                  },
+                }}
+              />
+            ))}
           </div>
 
           {/* Cost Breakdown Table */}
-          <div className="mt-6 overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="text-left p-3 border border-gray-200 font-semibold">
-                    City
-                  </th>
-                  <th className="text-right p-3 border border-gray-200 font-semibold">
-                    Electricity
-                  </th>
-                  <th className="text-right p-3 border border-gray-200 font-semibold">
-                    Gas
-                  </th>
-                  <th className="text-right p-3 border border-gray-200 font-semibold">
-                    Water
-                  </th>
-                  <th className="text-right p-3 border border-gray-200 font-semibold bg-gray-100">
-                    Total (USD)
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {stackedData.map((d, index) => {
-                  const e = d.electricity || 0;
-                  const g = d.gas || 0;
-                  const w = d.water || 0;
-                  const total = d.total || 0;
-                  return (
-                    <tr
-                      key={`table-${d.city}`}
-                      className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
-                    >
-                      <td className="p-3 border border-gray-200 font-medium">
-                        {d.city}
-                      </td>
-                      <td className="p-3 border border-gray-200 text-right">
-                        {e > 0 ? `$${e.toFixed(2)}` : '—'}
-                      </td>
-                      <td className="p-3 border border-gray-200 text-right">
-                        {g > 0 ? `$${g.toFixed(2)}` : '—'}
-                      </td>
-                      <td className="p-3 border border-gray-200 text-right">
-                        {w > 0 ? `$${w.toFixed(2)}` : '—'}
-                      </td>
-                      <td className="p-3 border border-gray-200 text-right font-semibold bg-gray-100">
-                        ${total.toFixed(2)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="mt-10 rounded-3xl border border-slate-800/80 bg-gradient-to-br from-slate-950/90 via-slate-900/90 to-slate-950/80 shadow-[0_35px_60px_-15px_rgba(15,23,42,0.6)]">
+            <div className="px-6 py-5 border-b border-slate-800/70">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
+                Cost matrix
+              </p>
+              <h3 className="text-lg font-semibold text-slate-50">
+                Monthly spend by utility
+              </h3>
+              <p className="text-sm text-slate-400">
+                Hover a row to spotlight where each city is burning the most
+                cash.
+              </p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm text-slate-100">
+                <thead>
+                  <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
+                    <th className="p-4 font-semibold border-b border-slate-800/70">
+                      City
+                    </th>
+                    <th className="p-4 font-semibold text-right border-b border-slate-800/70">
+                      Electricity
+                    </th>
+                    <th className="p-4 font-semibold text-right border-b border-slate-800/70">
+                      Gas
+                    </th>
+                    <th className="p-4 font-semibold text-right border-b border-slate-800/70">
+                      Water
+                    </th>
+                    <th className="p-4 font-semibold text-right border-b border-slate-800/70 text-emerald-200 bg-slate-900/40">
+                      Total (USD)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stackedData.map((d, index) => {
+                    const e = d.electricity || 0;
+                    const g = d.gas || 0;
+                    const w = d.water || 0;
+                    const total = d.total || 0;
+                    return (
+                      <tr
+                        key={`table-${d.city}`}
+                        className={`border-b border-slate-800/60 transition-colors hover:bg-slate-800/60 ${
+                          index % 2 === 0
+                            ? 'bg-slate-900/20'
+                            : 'bg-slate-900/35'
+                        }`}
+                      >
+                        <td className="p-4 font-semibold text-slate-100">
+                          {d.city}
+                        </td>
+                        <td className="p-4 text-right">
+                          {e > 0 ? (
+                            <span className="text-slate-100">
+                              ${e.toFixed(2)}
+                            </span>
+                          ) : (
+                            <span className="text-slate-500">—</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-right">
+                          {g > 0 ? (
+                            <span className="text-slate-100">
+                              ${g.toFixed(2)}
+                            </span>
+                          ) : (
+                            <span className="text-slate-500">—</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-right">
+                          {w > 0 ? (
+                            <span className="text-slate-100">
+                              ${w.toFixed(2)}
+                            </span>
+                          ) : (
+                            <span className="text-slate-500">—</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-right font-semibold text-emerald-200 bg-slate-900/40">
+                          ${total.toFixed(2)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -1453,67 +1598,6 @@ export default function UtilitiesDashboard() {
         </div>
       </section>
 
-      <section className="mb-12 space-y-5">
-        <div>
-          <h2 className="text-2xl font-semibold">
-            Household carbon footprint snapshot
-          </h2>
-          <p className="text-gray-600 dark:text-slate-300">
-            Using each billing cycle’s electricity, gas, and water volumes plus
-            region-specific emission factors, here’s the rough CO₂e impact for
-            every family featured on this page.
-          </p>
-        </div>
-        <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50 text-left text-sm font-semibold text-slate-600">
-              <tr>
-                <th className="px-4 py-3">City / family</th>
-                <th className="px-4 py-3">Estimated total</th>
-                <th className="px-4 py-3">Breakdown</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-sm">
-              {carbonSummaries.map((summary) => (
-                <tr key={summary.city} className="align-top">
-                  <td className="px-4 py-4 font-semibold text-slate-900">
-                    {summary.city}
-                  </td>
-                  <td className="px-4 py-4 font-medium text-emerald-700">
-                    {formatKg(summary.total)}
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="flex flex-wrap gap-2">
-                      {Object.entries(summary.breakdown).map(
-                        ([key, value]) => (
-                          <span
-                            key={`${summary.city}-${key}`}
-                            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
-                          >
-                            {EMISSION_LABELS[key] || key}:{' '}
-                            <span className="font-bold">
-                              {formatKg(value)}
-                            </span>
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-sm text-gray-600 leading-relaxed">
-          Florida’s household now clocks the largest monthly footprint (~0.71 t)
-          because pool + irrigation push both kWh and water volumes sky high.
-          Coimbatore trails at ~0.26 t thanks to India’s carbon-heavy grid and
-          LPG cooking. Singapore’s compact lifestyle plus efficient city-gas
-          keeps emissions under 0.1 t, while Toronto benefits most from a
-          hydro/nuclear grid—electricity is almost a rounding error compared to
-          the 21 m³ of natural-gas heating.
-        </p>
-      </section>
     </motion.div>
   );
 }
