@@ -126,6 +126,12 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       language: selectedLanguage,
       text,
     };
+    const payload = JSON.stringify(body);
+    const createPostRequest = () => ({
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload,
+    });
 
     try {
       let response = null;
@@ -133,11 +139,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
       for (const endpoint of endpoints) {
         try {
-          response = await fetch(endpoint, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          });
+          response = await fetch(endpoint, createPostRequest());
 
           if (!response.ok) {
             let message = `Request failed with ${response.status}`;
