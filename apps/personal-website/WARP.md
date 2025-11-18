@@ -36,14 +36,14 @@ Platform and deployment
 Environment
 - Copy .env.example to .env for local development when using analytics/AI features
 - Example flags:
-  - `user_last_catchup_v1` localStorage entry powers the header catch-up pill; reset it from `/status` during QA
+  - `user_last_catchup_v1` localStorage entry powers the header catch-up pill; reset it manually in localStorage during QA
   - Google/Vertex AI and GA4/BigQuery credentials are required for recommender/semantic features
 
 Architecture overview (big picture)
 - Entry and error hardening: src/main.jsx sets up BrowserRouter and react-helmet-async, with robust vendor-bundle error detection and fallback rendering
 - Routing and composition: src/App.jsx declares all routes; only the About page is eagerly loaded, the rest are lazy() split for performance
   - Dynamic routes: /blog/:slug resolves via pages/blog/PostDynamic
-  - Other notable pages: Recommendations (/reco), Trends (/trends), Utilities (/utilities), Status (/status)
+- Other notable pages: Utilities (/utilities)
 - SEO: components/SEO wraps react-helmet-async; routes set per-page title/description/canonical/type
 - Analytics: simple gtag page view and navigation event tracking on route changes
 - Content data: src/data/blogIndex.js exposes getBlogSeo(slug) and post metadata consumed by Blog/Post pages

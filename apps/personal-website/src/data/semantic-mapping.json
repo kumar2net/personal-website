@@ -69,7 +69,7 @@
     "id": "2025-09-13-andrej-karpathy-yc-ai-startup-school",
     "title": "Andrej Karpathy Yc Ai Startup School",
     "url": "/blog/2025-09-13-andrej-karpathy-yc-ai-startup-school",
-    "excerpt": "// import GraphRecommendations from '../../components/GraphRecommendations'; const AndrejKarpathyYcAiStartupSchool = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog And"
+    "excerpt": "const AndrejKarpathyYcAiStartupSchool = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog And"
   },
   {
     "id": "2025-09-13-applying-robinson-method",
@@ -81,7 +81,7 @@
     "id": "2025-09-13-autophagy",
     "title": "Autophagy",
     "url": "/blog/2025-09-13-autophagy",
-    "excerpt": "// import GraphRecommendations from '../../components/GraphRecommendations'; const Autophagy = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Ekadasi morphs into IF an"
+    "excerpt": "const Autophagy = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center\" > Back to Blog Ekadasi morphs into IF an"
   },
   {
     "id": "2025-10-23-bitcoin-disintermediation",
@@ -339,7 +339,7 @@
     "id": "2025-09-13-the-great-pivot",
     "title": "The Great Pivot",
     "url": "/blog/2025-09-13-the-great-pivot",
-    "excerpt": "// import TldrSummary from '../../components/TldrSummary'; // import GraphRecommendations from '../../components/GraphRecommendations'; const TheGreatPivot = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-col"
+    "excerpt": "// import TldrSummary from '../../components/TldrSummary'; const TheGreatPivot = () => className=\"px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-col"
   },
   {
     "id": "2025-09-13-tnpdcl-automated-meter-reading",

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-// import GraphRecommendations from '../../components/GraphRecommendations';
 
 const AndrejKarpathyYcAiStartupSchool = () => {
   const navigate = useNavigate();
@@ -295,13 +294,6 @@ const AndrejKarpathyYcAiStartupSchool = () => {
           </div>
         </div>
 
-        {/* Neural Graph Recommendations */}
-        {/* <div className="mt-12">
-          <GraphRecommendations 
-            currentPostId="andrej-karpathy-yc-ai-startup-school" 
-            maxRecommendations={5} 
-          />
-        </div> */}
       </div>
 
       {/* Blog interactions */}

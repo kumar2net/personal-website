@@ -47,13 +47,11 @@ import About from "./pages/About";
 const Album = lazy(() => import("./pages/Album"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Books = lazy(() => import("./pages/Books"));
-const Recommendations = lazy(() => import("./pages/Recommendations"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
-const Trends = lazy(() => import("./pages/Trends"));
 const Reflections = lazy(() => import("./pages/Reflections"));
 
 // Lazy load blog posts
@@ -66,7 +64,6 @@ const ApplyingCornellMethodMd = lazy(
 );
 const Atheism = lazy(() => import("./pages/books/atheism"));
 const HowToStopCaring = lazy(() => import("./pages/books/how-to-stop-caring"));
-const PDFExtractorPage = lazy(() => import("./pages/books/pdf-extractor"));
 const TheBrainStoryContent = lazy(
   () => import("./pages/books/the-brain-story-content"),
 );
@@ -75,11 +72,9 @@ const TheLastDropOfWater = lazy(
 );
 
 // Lazy load other pages
-const DossierPage = lazy(() => import("./pages/Dossier"));
 const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
-const Status = lazy(() => import("./pages/Status"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
@@ -716,34 +711,6 @@ function App() {
                   }
                 />
                 <Route
-                  path="/reco"
-                  element={
-                    <>
-                      <SEO
-                        title="AI Recommendations"
-                        description="Get AI-powered content recommendations using Neural Graph Intelligence. Discover trending topics and personalized suggestions."
-                        canonicalPath="/reco"
-                        type="website"
-                      />
-                      <Recommendations />
-                    </>
-                  }
-                />
-                <Route
-                  path="/trends"
-                  element={
-                    <>
-                      <SEO
-                        title="Trends"
-                        description="Trends and insights."
-                        canonicalPath="/trends"
-                        type="website"
-                      />
-                      <Trends />
-                    </>
-                  }
-                />
-                <Route
                   path="/learning"
                   element={
                     <>
@@ -822,10 +789,6 @@ function App() {
                   element={<TheBrainStoryContent />}
                 />
                 <Route
-                  path="/books/pdf-extractor"
-                  element={<PDFExtractorPage />}
-                />
-                <Route
                   path="/books/atheism"
                   element={
                     <>
@@ -885,21 +848,6 @@ function App() {
                   }
                 />
 
-                {/* All blog posts now handled by PostDynamic */}
-                <Route
-                  path="/dossier"
-                  element={
-                    <>
-                      <SEO
-                        title="Dossier"
-                        description="Weekly dossiers and research notes."
-                        canonicalPath="/dossier"
-                        type="website"
-                      />
-                      <DossierPage />
-                    </>
-                  }
-                />
                 <Route
                   path="/utilities"
                   element={
@@ -958,20 +906,6 @@ function App() {
                         type="website"
                       />
                       <Contact />
-                    </>
-                  }
-                />
-                <Route
-                  path="/status"
-                  element={
-                    <>
-                      <SEO
-                        title="Status"
-                        description="Deployment status of the website."
-                        canonicalPath="/status"
-                        type="website"
-                      />
-                      <Status />
                     </>
                   }
                 />

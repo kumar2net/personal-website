@@ -32,18 +32,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kumar2net.com/reco</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kumar2net.com/trends</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kumar2net.com/learning</loc>
     <lastmod>2025-11-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -98,12 +86,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kumar2net.com/books/pdf-extractor</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kumar2net.com/books/atheism</loc>
     <lastmod>2025-11-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -122,12 +104,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kumar2net.com/dossier</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://kumar2net.com/utilities</loc>
     <lastmod>2025-11-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -141,12 +117,6 @@
   </url>
   <url>
     <loc>https://kumar2net.com/contact</loc>
-    <lastmod>2025-11-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://kumar2net.com/status</loc>
     <lastmod>2025-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

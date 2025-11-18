@@ -16,8 +16,6 @@ const STATIC_ROUTES = [
   '/projects',
   '/projects/ai-recommender-code',
   '/blog',
-  '/reco',
-  '/trends',
   '/learning',
   '/learning/shortcuts',
   '/learning/vocab-additions',
@@ -27,15 +25,12 @@ const STATIC_ROUTES = [
   '/books',
   '/books/applying-cornell-method',
   '/books/the-brain-story-content',
-  '/books/pdf-extractor',
   '/books/atheism',
   '/books/how-to-stop-caring',
   '/books/the-last-drop-of-water',
-  '/dossier',
   '/utilities',
   '/naruvi',
   '/contact',
-  '/status',
   // '/news' is an external redirect; omit from sitemap to avoid soft-404 noise
 ];
 
@@ -192,7 +187,7 @@ const main = async () => {
       .sort((a, b) => a.url.localeCompare(b.url));
 
     const mainRoutes = [
-      '/', '/about', '/projects', '/blog', '/trends', '/learning', '/music', '/album', '/books', '/contact', '/elsewhere', '/status'
+      '/', '/about', '/projects', '/blog', '/learning', '/music', '/album', '/books', '/contact', '/elsewhere'
     ];
 
     const sitemapHtml = generateHtmlSitemap({ mainRoutes, blogEntries });

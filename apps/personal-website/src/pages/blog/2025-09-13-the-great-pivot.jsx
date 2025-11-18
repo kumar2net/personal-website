@@ -5,7 +5,6 @@ import { getBlogPostDates } from '../../utils/blogPostDates';
 
 const { formattedPublishDate } = getBlogPostDates(import.meta.url);
 // import TldrSummary from '../../components/TldrSummary';
-// import GraphRecommendations from '../../components/GraphRecommendations';
 
 const TheGreatPivot = () => {
   const navigate = useNavigate();
@@ -322,14 +321,6 @@ const TheGreatPivot = () => {
               it's the dawn of the 'Invented in India' era.
             </p>
           </div>
-
-          {/* Neural Graph Recommendations */}
-          {/* <div className="mt-12">
-            <GraphRecommendations 
-              currentPostId="the-great-pivot" 
-              maxRecommendations={5} 
-            />
-          </div> */}
 
           {/* <div className="mt-8 pt-8 border-t border-gray-200">
             <h3 className="text-lg font-semibold mb-4 text-gray-800">🔗 Related Topics</h3>

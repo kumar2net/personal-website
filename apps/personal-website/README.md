@@ -114,7 +114,7 @@ The global "Catch up" pill highlights blog posts published since you last marked
 - Storage: the most recent catch-up time is stored in `localStorage` under `user_last_catchup_v1`.
 - Header UI: the navigation pill shows a badge with the number of new posts and opens a modal list capped at 12 items.
 - Blog page: a banner surfaces the same count, lets you filter to recent posts, and exposes a "Mark as caught up" action.
-- Status page: visit `/status` to review the stored timestamp, see the waiting posts, or reset the local timestamp during QA.
+- QA tip: inspect `user_last_catchup_v1` in your browser's localStorage to review or reset the stored timestamp.
 
 ## Deployment Notes
 
