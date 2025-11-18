@@ -1,6 +1,5 @@
 import React from "react";
 import SEO from "./SEO";
-import RelatedPostsCard from "./RelatedPostsCard";
 
 export default function BlogPostLayout({ slug, post, children }) {
   const structuredData = {
@@ -42,7 +41,6 @@ export default function BlogPostLayout({ slug, post, children }) {
       </script>
       <main className="prose max-w-none px-4 md:px8">
         <article>{children}</article>
-        <RelatedPostsCard slug={slug} post={post} />
       </main>
     </>
   );
