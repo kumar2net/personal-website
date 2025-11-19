@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { Box, Container, alpha } from "@mui/material";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
-import PromptBox from "./engagement/PromptBox";
 
 export default function BlogPostLayout({ slug, post, children }) {
   const articleRef = useRef(null);
@@ -74,26 +73,26 @@ export default function BlogPostLayout({ slug, post, children }) {
                 fontSize: { xs: "1.5rem", md: "2rem" },
                 mt: 6,
                 mb: 3,
-                color: "text.primary",
+                color: `${theme.palette.text.primary} !important`,
               },
               "& h3": {
                 ...theme.typography.h3,
                 fontSize: { xs: "1.25rem", md: "1.5rem" },
                 mt: 4,
                 mb: 2,
-                color: "text.primary",
+                color: `${theme.palette.text.primary} !important`,
               },
               "& h4": {
                 ...theme.typography.h4,
                 fontSize: "1.125rem",
                 mt: 3,
                 mb: 2,
-                color: "text.primary",
+                color: `${theme.palette.text.primary} !important`,
               },
               "& p": {
                 ...theme.typography.body1,
                 mb: 2.5,
-                color: "text.secondary",
+                color: `${theme.palette.text.secondary} !important`,
                 lineHeight: 1.8,
               },
               "& ul, & ol": {
@@ -279,9 +278,6 @@ export default function BlogPostLayout({ slug, post, children }) {
           }}
         >
           {children}
-          <Box sx={{ mt: 8, pt: 4, borderTop: "1px solid", borderColor: "divider" }}>
-            <PromptBox slug={slug} />
-          </Box>
         </Box>
       </Container>
     </>

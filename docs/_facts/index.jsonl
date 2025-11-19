@@ -98,7 +98,6 @@
 {"path":"apps/personal-website/src/pages/Trends.jsx","symbols":["Trends"]}
 {"path":"apps/personal-website/src/pages/UtilitiesDashboard.jsx","symbols":["BarRow","UtilitiesDashboard","addToCity","formatCurrency","normalizeCity","normalizedGasUsdPerKwh","toUsdEquivalent"]}
 {"path":"apps/personal-website/src/pages/VimShortcuts.jsx","symbols":["VimShortcuts","handleKeyPress","progress"]}
-{"path":"apps/personal-website/src/pages/VocabAdditions.jsx","symbols":["VocabAdditions","handleKeyPress","progress"]}
 {"path":"apps/personal-website/src/pages/blog/2025-09-13-Latest_Happenings.jsx","symbols":["LatestHappenings"]}
 {"path":"apps/personal-website/src/pages/blog/2025-09-13-acronym-soup-revisited-2025.jsx","symbols":["AcronymSoupRevisited2025"]}
 {"path":"apps/personal-website/src/pages/blog/2025-09-13-agentic-feature-in-a-browser.jsx","symbols":["AgenticFeatureInABrowser"]}

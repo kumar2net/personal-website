@@ -18,7 +18,6 @@ const STATIC_ROUTES = [
   '/blog',
   '/learning',
   '/learning/shortcuts',
-  '/learning/vocab-additions',
   '/music',
   '/album',
   '/elsewhere',
