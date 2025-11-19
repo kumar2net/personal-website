@@ -121,6 +121,7 @@ export default function BlogPost() {
 - [x] Migration guide created
 - [x] All documentation updated
 - [x] Example blog post migrated: `2025-11-19-lots-of-new-announcements-frontier-labs.jsx`
+- [x] Legacy posts migrated: `2025-09-13-price-parity.jsx`, `2025-09-13-agentic-feature-in-a-browser.jsx`
 - [x] Tested in both light and dark modes
 - [x] Verified responsive behavior
 

@@ -1,71 +1,120 @@
-import { motion } from 'framer-motion';
-import ReactMarkdown from 'react-markdown';
-import { useNavigate } from 'react-router-dom';
-import remarkGfm from 'remark-gfm';
-import markdownContent from './compare.md?raw';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Typography } from "@mui/material";
+import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import { Link as RouterLink } from "react-router-dom";
+import remarkGfm from "remark-gfm";
+import markdownContent from "./compare.md?raw";
 
-const lines = markdownContent.split('\n');
-const title = lines[0].replace(/^#\s*/, '');
-const date = lines[2].replace(/^\*\s*|\s*\*$/g, '');
-const body = lines.slice(4).join('\n');
+const lines = markdownContent.split("\n");
+const title = lines[0].replace(/^#\s*/, "");
+const date = lines[2].replace(/^\*\s*|\s*\*$/g, "");
+const body = lines.slice(4).join("\n");
+
+const MotionBox = motion(Box);
 
 const PriceParity = () => {
-  const navigate = useNavigate();
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto px-4 py-8"
+    <MotionBox
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      sx={{
+        maxWidth: 960,
+        mx: "auto",
+        px: { xs: 2, md: 4 },
+        py: { xs: 4, md: 6 },
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+      }}
     >
-      <div className="flex justify-between items-center mb-8">
-        <button
-          onClick={() => navigate('/blog')}
-          className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex items-center"
-        >
-          <svg
-            className="w-5 h-5 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-          Back to Blog
-        </button>
-      </div>
+      <Button
+        component={RouterLink}
+        to="/blog"
+        variant="outlined"
+        startIcon={<ArrowBackIcon fontSize="small" />}
+        sx={{ alignSelf: "flex-start", borderRadius: 999 }}
+      >
+        Back to Blog
+      </Button>
 
-      <h1 className="text-4xl font-bold mb-6">{title}</h1>
+      <Box>
+        <Typography variant="h3" sx={{ fontWeight: 700, color: "text.primary" }}>
+          {title}
+        </Typography>
+        <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
+          {date}
+        </Typography>
+      </Box>
 
-      <div className="flex items-center text-gray-600 mb-8">
-        <svg
-          className="w-4 h-4 mr-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-        </svg>
-        <span>{date}</span>
-      </div>
-
-      <div className="prose prose-lg max-w-none">
+      <Box
+        sx={{
+          "& h1": {
+            fontSize: { xs: "1.75rem", md: "2.125rem" },
+            fontWeight: 700,
+            color: "text.primary",
+            mt: 6,
+            mb: 2,
+          },
+          "& h2": {
+            fontSize: { xs: "1.5rem", md: "1.875rem" },
+            fontWeight: 600,
+            color: "text.primary",
+            mt: 5,
+            mb: 2,
+          },
+          "& h3": {
+            fontSize: "1.25rem",
+            fontWeight: 600,
+            color: "text.primary",
+            mt: 4,
+            mb: 1.5,
+          },
+          "& p": {
+            color: "text.primary",
+            lineHeight: 1.8,
+            mb: 2,
+          },
+          "& ul, & ol": {
+            color: "text.primary",
+            pl: 3,
+            mb: 3,
+          },
+          "& li": {
+            mb: 1,
+          },
+          "& a": {
+            color: "primary.main",
+            textDecoration: "none",
+            fontWeight: 600,
+          },
+          "& img": {
+            maxWidth: "100%",
+            borderRadius: 2,
+            my: 3,
+          },
+          "& blockquote": {
+            borderLeft: "4px solid",
+            borderColor: "primary.main",
+            pl: 2,
+            my: 3,
+            color: "text.secondary",
+            fontStyle: "italic",
+          },
+          "& code": {
+            fontFamily: "Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace",
+            backgroundColor: "action.hover",
+            px: 0.5,
+            py: 0.25,
+            borderRadius: 1,
+            fontSize: "0.95em",
+          },
+        }}
+      >
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
-      </div>
-
-      {/* Blog interactions */}
-    </motion.div>
+      </Box>
+    </MotionBox>
   );
 };
 

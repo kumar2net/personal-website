@@ -421,6 +421,8 @@ Track migration status here:
 
 ### ✅ Migrated
 - `2025-11-19-lots-of-new-announcements-frontier-labs.jsx`
+- `2025-09-13-price-parity.jsx`
+- `2025-09-13-agentic-feature-in-a-browser.jsx`
 
 ### 🔄 In Progress
 - (List files currently being migrated)
