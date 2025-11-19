@@ -92,14 +92,14 @@ export default function BlogPostLayout({ slug, post, children }) {
               "& p": {
                 ...theme.typography.body1,
                 mb: 2.5,
-                color: theme.palette.text.secondary,
+                color: theme.palette.text.primary,
                 lineHeight: 1.8,
               },
               "& ul, & ol": {
                 ...theme.typography.body1,
                 mb: 2.5,
                 pl: 4,
-                color: "text.secondary",
+                color: theme.palette.text.primary,
               },
               "& li": {
                 mb: 1,
