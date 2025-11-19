@@ -41,7 +41,7 @@ export default function BlogPost() {
           sx={{
             fontSize: "1.125rem",
             lineHeight: 1.8,
-            color: "text.primary",
+            color: "common.white",
           }}
         >
           As we approach the Thanksgiving weekend, I sense that major
@@ -91,7 +91,7 @@ export default function BlogPost() {
           sx={{
             fontSize: "1.125rem",
             lineHeight: 1.8,
-            color: "text.primary",
+            color: "common.white",
           }}
         >
           Regardless of the agreements or disagreements in the tech world, it
@@ -140,7 +140,7 @@ export default function BlogPost() {
           sx={{
             fontSize: "1.125rem",
             lineHeight: 1.8,
-            color: "text.primary",
+            color: "common.white",
           }}
         >
           What happens when Artificial General Intelligence (AGI) is achieved
@@ -189,7 +189,7 @@ export default function BlogPost() {
           sx={{
             fontSize: "1.125rem",
             lineHeight: 1.8,
-            color: "text.primary",
+            color: "common.white",
           }}
         >
           Skills like typing at good speeds, shorthand writing, stenography,
