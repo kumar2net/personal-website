@@ -242,47 +242,11 @@ export default function BlogPost() {
         </p>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">
-          5. India’s data-centre race is officially a spreadsheet sport
-        </h2>
-        <p>
-          Here’s the shortlist of announcements everyone in policy WhatsApp
-          groups is benchmarking:
-        </p>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border border-gray-200 rounded-xl overflow-hidden text-sm">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="p-3 font-semibold text-gray-600">State</th>
-                <th className="p-3 font-semibold text-gray-600">Project</th>
-                <th className="p-3 font-semibold text-gray-600">Highlights</th>
-                <th className="p-3 font-semibold text-gray-600">Why it matters</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dataCentreRace.map((item) => (
-                <tr key={item.state} className="border-t border-gray-100">
-                  <td className="p-3">{item.state}</td>
-                  <td className="p-3 font-medium">{item.headline}</td>
-                  <td className="p-3 text-gray-600">{item.detail}</td>
-                  <td className="p-3 text-gray-600">{item.impact}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p>
-          The pattern is obvious: capital is flowing to whichever state can
-          guarantee land, clean power, and streamlined permits. Tamil Nadu’s edge
-          lies in matching investment headlines with the renewable-storage stack
-          already mapped inside the tracker.
-        </p>
-      </section>
+
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">
-          6. The water math behind AI infrastructure
+          5. The water math behind AI infrastructure
         </h2>
         <div className="rounded-2xl overflow-hidden shadow-lg">
           <img
@@ -314,7 +278,7 @@ export default function BlogPost() {
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">
-          7. Enforcing the greywater promise
+          6. Enforcing the greywater promise
         </h2>
         <p>
           Every glossy MoU now mentions “treated wastewater for cooling,” but
@@ -346,7 +310,7 @@ export default function BlogPost() {
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">
-          8. DPDP Act: the rights, the duties, the caveats
+          7. DPDP Act: the rights, the duties, the caveats
         </h2>
         <p>
           The Digital Personal Data Protection Act has cleared Parliament; rules
@@ -372,7 +336,7 @@ export default function BlogPost() {
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">
-          9. Packing list before the Belém flight
+          8. Packing list before the Belém flight
         </h2>
         <p>
           My mental checklist for Tamil Nadu’s COP30 delegation:
@@ -393,15 +357,7 @@ export default function BlogPost() {
         </ul>
       </section>
 
-      <p className="text-sm text-gray-700">
-        <strong>PS:</strong> The Hindu’s “Faith” column on Vishnu Sahasranama,
-        which I make it a point to read daily, reminds us that nama (the divine
-        name) outweighs even the Nami (bearer). Hanuman crossed the ocean by
-        chanting Rama Nama while Lord Rama had to build a bridge—proof that
-        repeating the Sahasranama is the gentlest guide to righteousness, like a
-        mother leading her child. The clipping is in the Interesting Images
-        album for your reading.
-      </p>
+
     </div>
   );
 }

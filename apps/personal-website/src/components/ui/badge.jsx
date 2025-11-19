@@ -1,10 +1,19 @@
-const baseClass =
-  "inline-flex items-center rounded-full border border-transparent bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100";
+import { Chip, alpha } from "@mui/material";
 
 export function Badge({ className = '', children, ...props }) {
   return (
-    <span className={[baseClass, className].filter(Boolean).join(' ')} {...props}>
-      {children}
-    </span>
+    <Chip
+      label={children}
+      size="small"
+      sx={(theme) => ({
+        fontWeight: 600,
+        borderRadius: 1.5,
+        backgroundColor: alpha(theme.palette.primary.main, 0.1),
+        color: "primary.main",
+        border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+        ...props.sx
+      })}
+      {...props}
+    />
   );
 }

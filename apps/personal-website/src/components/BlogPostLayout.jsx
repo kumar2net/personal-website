@@ -2,8 +2,6 @@ import React, { useRef } from "react";
 import { Box, Container, alpha } from "@mui/material";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
-import ChromeReaderModeNudge from "./ChromeReaderModeNudge";
-import ReactionBar from "./engagement/ReactionBar";
 import PromptBox from "./engagement/PromptBox";
 
 export default function BlogPostLayout({ slug, post, children }) {
@@ -48,7 +46,6 @@ export default function BlogPostLayout({ slug, post, children }) {
       </script>
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 8 } }}>
         <BlogAudioPlayer slug={slug} articleRef={articleRef} />
-        <ChromeReaderModeNudge slug={slug} />
         <Box
           component="article"
           ref={articleRef}
@@ -170,10 +167,10 @@ export default function BlogPostLayout({ slug, post, children }) {
 
               // Text Colors
               "& .text-gray-500, & .text-gray-600, & .text-gray-700": {
-                color: "text.secondary",
+                color: "text.secondary !important",
               },
               "& .text-gray-800, & .text-gray-900, & .text-black": {
-                color: "text.primary",
+                color: "text.primary !important",
               },
               "& .text-blue-600, & .text-blue-700, & .text-blue-800": { color: colors.blue },
               "& .text-green-600, & .text-green-700, & .text-green-800": { color: colors.green },
@@ -188,9 +185,9 @@ export default function BlogPostLayout({ slug, post, children }) {
                 backgroundColor: "background.paper",
                 borderColor: "divider",
               },
-              "& .bg-gray-50, & .bg-gray-100": {
+              "& .bg-gray-50, & .bg-gray-100, & .bg-gray-200": {
                 backgroundColor: isDark ? alpha(theme.palette.text.primary, 0.05) : theme.palette.grey[50],
-                color: "text.primary",
+                color: "text.primary !important",
               },
               "& .bg-blue-50, & .bg-blue-100": {
                 backgroundColor: alpha(theme.palette.primary.main, isDark ? 0.15 : 0.08),
@@ -283,7 +280,6 @@ export default function BlogPostLayout({ slug, post, children }) {
         >
           {children}
           <Box sx={{ mt: 8, pt: 4, borderTop: "1px solid", borderColor: "divider" }}>
-            <ReactionBar slug={slug} />
             <PromptBox slug={slug} />
           </Box>
         </Box>

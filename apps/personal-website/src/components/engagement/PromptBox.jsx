@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Chip,
   Divider,
   Stack,
   TextField,
   Typography,
+  alpha,
+  useTheme,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
+import { Send as SendIcon } from "@mui/icons-material";
 import { getPrompts, savePrompt } from "../../../lib/engagement/blob";
 
 const PROMPTS = [
@@ -30,6 +31,7 @@ const getWordCount = (value) =>
   value.trim() ? value.trim().split(/\s+/).filter(Boolean).length : 0;
 
 export default function PromptBox({ slug }) {
+  const theme = useTheme();
   const [answer, setAnswer] = useState("");
   const [entries, setEntries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +62,7 @@ export default function PromptBox({ slug }) {
       })
       .catch(() => {
         if (!cancelled) {
-          setError("Couldn't load prompt replies yet.");
+          // Silent fail or minimal error
         }
       })
       .finally(() => {
@@ -118,115 +120,198 @@ export default function PromptBox({ slug }) {
   const visibleEntries = entries.slice(0, 3);
 
   return (
-    <Card
-      elevation={0}
-      sx={(theme) => ({
-        borderRadius: 3,
-        border: `1px solid ${alpha(theme.palette.secondary.main, 0.15)}`,
-        background: alpha(theme.palette.secondary.main, 0.04),
-      })}
+    <Box
+      component={motion.div}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      sx={{
+        position: "relative",
+        mt: 8,
+        mb: 4,
+        p: 3,
+        borderRadius: "24px",
+        background: alpha(theme.palette.background.paper, 0.6),
+        backdropFilter: "blur(12px)",
+        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+        boxShadow: theme.palette.mode === 'dark'
+          ? `0 8px 32px ${alpha('#000', 0.4)}`
+          : `0 8px 32px ${alpha('#000', 0.05)}`,
+        overflow: "hidden"
+      }}
     >
-      <CardContent sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <Stack spacing={0.5}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Typography variant="subtitle2" fontWeight={600}>
-              Weekly Prompt
+      {/* Decorative gradient blob */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: -100,
+          right: -100,
+          width: 300,
+          height: 300,
+          background: `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.15)} 0%, transparent 70%)`,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+
+      <Stack spacing={3} sx={{ position: "relative", zIndex: 1 }}>
+        <Stack spacing={1}>
+          <Stack direction="row" alignItems="center" spacing={1.5}>
+            <Typography variant="h6" fontWeight={700} sx={{ fontSize: "1.1rem", color: 'text.primary' }}>
+              Weekly Whisper
             </Typography>
-            <Chip label="New each week" size="small" variant="outlined" />
+            <Chip
+              label="New"
+              size="small"
+              sx={{
+                height: 20,
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                background: alpha(theme.palette.primary.main, 0.1),
+                color: theme.palette.primary.main,
+                border: 'none'
+              }}
+            />
           </Stack>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body1" sx={{ fontSize: "1.05rem", lineHeight: 1.5, color: 'text.primary' }}>
             {promptQuestion}
           </Typography>
         </Stack>
 
-        <TextField
-          value={answer}
-          onChange={(event) => setAnswer(event.target.value)}
-          placeholder="Keep it crisp — 5 to 10 words."
-          multiline
-          minRows={2}
-          maxRows={3}
-          size="small"
-          variant="outlined"
-          fullWidth
-        />
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Typography
-            variant="caption"
-            color={isWordCountValid ? "text.secondary" : "error"}
-          >
-            Words: {wordCount} • target 5–10
-          </Typography>
-          <Button
-            size="small"
-            variant="contained"
-            disableElevation
-            onClick={handleSubmit}
-            disabled={
-              !answer.trim() || wordCount < 5 || wordCount > 10 || isSaving || isLoading
-            }
-          >
-            {isSaving ? "Saving…" : "Send"}
-          </Button>
-        </Stack>
-
-        {success && (
-          <Typography variant="caption" color="success.main">
-            Saved anonymously ✓
-          </Typography>
-        )}
-        {error && (
-          <Typography variant="caption" color="error">
-            {error}
-          </Typography>
-        )}
-
-        <Divider />
-
         <Box>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Typography variant="subtitle2" fontWeight={600}>
-              Recent whispers
+          <TextField
+            value={answer}
+            onChange={(event) => setAnswer(event.target.value)}
+            placeholder="Share your thought (5-10 words)..."
+            multiline
+            minRows={2}
+            maxRows={4}
+            variant="outlined"
+            fullWidth
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "16px",
+                backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                color: 'text.primary',
+                "& fieldset": {
+                  borderColor: alpha(theme.palette.divider, 0.2),
+                },
+                "&:hover fieldset": {
+                  borderColor: alpha(theme.palette.primary.main, 0.3),
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: theme.palette.primary.main,
+                },
+              },
+              "& .MuiInputBase-input": {
+                color: 'text.primary',
+              },
+              "& .MuiInputBase-input::placeholder": {
+                color: 'text.secondary',
+                opacity: 1,
+              },
+              "& .MuiInputBase-root": {
+                color: 'text.primary',
+              }
+            }}
+          />
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ mt: 1.5, px: 0.5 }}
+          >
+            <Typography
+              variant="caption"
+              sx={{
+                color: isWordCountValid ? "text.secondary" : "error.main",
+                fontWeight: 500,
+                transition: "color 0.2s"
+              }}
+            >
+              {wordCount} words <span style={{ opacity: 0.5 }}>(target 5–10)</span>
             </Typography>
-            {isLoading && <Chip size="small" label="Loading…" />}
+
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              disabled={!answer.trim() || wordCount < 5 || wordCount > 10 || isSaving || isLoading}
+              endIcon={!isSaving && <SendIcon sx={{ fontSize: "1rem !important" }} />}
+              sx={{
+                borderRadius: "12px",
+                textTransform: "none",
+                fontWeight: 600,
+                boxShadow: "none",
+                px: 3,
+                "&:hover": {
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                }
+              }}
+            >
+              {isSaving ? "Saving..." : "Whisper"}
+            </Button>
           </Stack>
-          {visibleEntries.length === 0 && !isLoading ? (
-            <Typography variant="caption" color="text.secondary">
-              No replies yet — be the first to leave a spark.
-            </Typography>
-          ) : (
-            <Stack spacing={1.5} mt={1.5}>
-              {visibleEntries.map((entry) => (
-                <Box
-                  key={`${entry.anonymousID}-${entry.timestamp}`}
-                  sx={(theme) => ({
-                    borderRadius: 2,
-                    border: `1px solid ${alpha(theme.palette.secondary.main, 0.2)}`,
-                    backgroundColor: alpha(theme.palette.background.paper, 0.9),
-                    p: 1.25,
-                  })}
+
+          <AnimatePresence>
+            {(success || error) && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+              >
+                <Typography
+                  variant="caption"
+                  color={error ? "error" : "success.main"}
+                  sx={{ display: "block", mt: 1, fontWeight: 600 }}
                 >
-                  <Typography variant="body2" color="text.primary">
-                    {entry.answer}
-                  </Typography>
-                  <Stack direction="row" spacing={1} alignItems="center" mt={0.5}>
-                    <Chip
-                      size="small"
-                      variant="outlined"
-                      label={formatDistanceToNow(new Date(entry.timestamp), {
-                        addSuffix: true,
-                      })}
-                    />
-                    <Typography variant="caption" color="text.secondary">
-                      anon-{entry.anonymousID.slice(-4)}
-                    </Typography>
-                  </Stack>
-                </Box>
-              ))}
-            </Stack>
-          )}
+                  {error || "Saved anonymously. Thank you."}
+                </Typography>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Box>
-      </CardContent>
-    </Card>
+
+        {visibleEntries.length > 0 && (
+          <Box>
+            <Divider sx={{ mb: 3, borderColor: alpha(theme.palette.divider, 0.1) }} />
+            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", fontSize: "0.75rem" }}>
+              Recent Whispers
+            </Typography>
+            <Stack spacing={2}>
+              <AnimatePresence mode="popLayout">
+                {visibleEntries.map((entry) => (
+                  <motion.div
+                    key={`${entry.anonymousID}-${entry.timestamp}`}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    layout
+                  >
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderRadius: "16px",
+                        backgroundColor: alpha(theme.palette.background.default, 0.4),
+                        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ fontStyle: "italic", mb: 1, color: 'text.primary' }}>
+                        "{entry.answer}"
+                      </Typography>
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Box sx={{ width: 6, height: 6, borderRadius: "50%", bgcolor: alpha(theme.palette.text.secondary, 0.3) }} />
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          {formatDistanceToNow(new Date(entry.timestamp), { addSuffix: true })}
+                        </Typography>
+                      </Stack>
+                    </Box>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </Stack>
+          </Box>
+        )}
+      </Stack>
+    </Box>
   );
 }

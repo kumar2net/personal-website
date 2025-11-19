@@ -9,11 +9,12 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
 - **Production**: https://kumar2net.com  
 - **Primary branch**: `master`
 
-## Latest Highlights · October 30, 2025
+## Latest Highlights · November 19, 2025
 
-- Verified Bing Webmaster Tools via the site-wide `msvalidate.01` meta tag and captured the workflow for future redeploys.
-- Reconfirmed Google Search Console file verification and standardized sitemap submissions on `https://kumar2net.com/sitemap.xml`.
-- Documented crawler guidance for LLMs (`robots.txt`, `llm.txt`, newly added `ai.txt`) across the SEO runbooks.
+- **Engagement Features**: Refactored "Weekly Whisper" with a modern glassmorphism design and fixed dark mode visibility. Removed "Vibe Check" and "Reader Tip" components for a cleaner reading experience.
+- **Dark Mode Polish**: Implemented comprehensive dark mode fixes across blog posts, ensuring all text (including legacy Tailwind gray classes) is visible and compliant with MUI v8 theming.
+- **MUI Compliance**: Added Google Fonts (Inter, Roboto) and Material Icons to `index.html` to fully align with MUI design guidelines.
+- **Local Dev**: Fixed API routing for `/api/engagement` to prevent 404 errors during local development.
 
 See `docs/CHANGELOG.md` for a detailed history.
 

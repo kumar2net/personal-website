@@ -204,7 +204,7 @@ export default function BlogPost() {
         </p>
       </section>
 
-      <Card className="mt-8" style={{ display: 'block', background: 'white', visibility: 'visible', opacity: 1 }}>
+      <Card className="mt-8">
         <CardContent className="p-4 space-y-2">
           <h3 className="font-semibold text-lg text-gray-900">🔎 TL;DR</h3>
           <ul className="list-disc ml-6 text-gray-900">

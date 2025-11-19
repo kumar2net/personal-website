@@ -6,6 +6,7 @@ import fs from "node:fs";
 import dotenv from "dotenv";
 import semanticSearchHandler from "./api/semantic-search.js";
 import blogTtsHandler from "./api/blog-tts.js";
+import engagementHandler from "./api/engagement.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,6 +56,7 @@ function enhanceResponse(res) {
 const LOCAL_API_ROUTES = [
   { prefix: "/api/semantic-search", handler: semanticSearchHandler },
   { prefix: "/api/blog-tts", handler: blogTtsHandler },
+  { prefix: "/api/engagement", handler: engagementHandler },
 ];
 
 function localApiPlugin() {
