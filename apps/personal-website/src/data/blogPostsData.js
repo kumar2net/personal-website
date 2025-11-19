@@ -7,7 +7,7 @@ export const blogPosts = [
       "A look at the latest announcements from Frontier Labs, the race for AGI, and the need for sustainable tech. Plus, a glimpse into a future of natural interfaces and reduced carbon footprints.",
     tags: ["AI", "Frontier Labs", "Sustainability", "Future Tech", "AGI"],
     image:
-      "https://oaidalleapiprodscus.blob.core.windows.net/private/org-alKt26JO7M7biVXF9ceaWChd/user-YjTrTRAgTLLT1HoDP6tqaTTv/img-JyszoQUISKTMukYFvdwa2cH7.png?st=2025-11-19T01%3A26%3A28Z&se=2025-11-19T03%3A26%3A28Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-11-19T02%3A26%3A28Z&ske=2025-11-20T02%3A26%3A28Z&sks=b&skv=2024-08-04&sig=DqYoiqrhmahU/oRMAcLwGaaj8MksgO2cpPvZDiX4d8o%3D",
+      "/media/generated/2025-11-19-lots-of-new-announcements-frontier-labs.png",
     link: "/blog/2025-11-19-lots-of-new-announcements-frontier-labs",
   },
   {

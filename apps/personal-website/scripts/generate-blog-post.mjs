@@ -89,6 +89,30 @@ function parseResponseJSON(response) {
     return null;
 }
 
+async function downloadImage(url, fileName) {
+    if (!url) return null;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to download image: ${response.statusText}`);
+        }
+        const buffer = await response.arrayBuffer();
+        const mediaDir = path.join(repoRoot, 'apps', 'personal-website', 'public', 'media', 'generated');
+
+        // Ensure the directory exists
+        await fsp.mkdir(mediaDir, { recursive: true });
+
+        const filePath = path.join(mediaDir, fileName);
+        await fsp.writeFile(filePath, Buffer.from(buffer));
+
+        log(`Image saved to: ${filePath}`);
+        return `/media/generated/${fileName}`;
+    } catch (error) {
+        warn(`Image download failed: ${error.message}`);
+        return null;
+    }
+}
+
 async function generateImage(prompt) {
     if (!client) return null;
     try {
@@ -182,45 +206,91 @@ function buildBlogJSX(meta, sections, imageUrl) {
     const date = formatIsoDate();
     const slug = meta.slug || slugify(meta.title);
 
-    let contentJSX = '';
+    let sectionsJSX = '';
     sections.forEach((section, index) => {
-        contentJSX += `
-      <section className="mb-12">
-        <h2 className="text-3xl font-semibold mb-6 flex items-center gap-3">
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 !text-white font-bold text-lg shadow-lg">
+        sectionsJSX += `
+      <Box component="section">
+        <Typography
+          variant="h2"
+          sx={{
+            fontSize: { xs: "1.5rem", md: "1.875rem" },
+            fontWeight: 600,
+            mb: 3,
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+          }}
+        >
+          <Box
+            component="span"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 40,
+              height: 40,
+              borderRadius: "50%",
+              bgcolor: "primary.main",
+              color: "primary.contrastText",
+              fontWeight: 700,
+              fontSize: "1.125rem",
+              boxShadow: 2,
+            }}
+          >
             ${index + 1}
-          </span>
+          </Box>
           ${section.heading}
-        </h2>
-        <div className="prose prose-lg max-w-none">
-          <p className="text-lg leading-relaxed">
-            ${section.content}
-          </p>
-        </div>
-      </section>
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: "1.125rem",
+            lineHeight: 1.8,
+            color: "text.primary",
+          }}
+        >
+          ${section.content}
+        </Typography>
+      </Box>
 `;
     });
 
     if (imageUrl) {
-        contentJSX += `
-      <section className="mb-12">
-        <img 
-          src="${imageUrl}" 
-          alt="AI Generated Illustration" 
-          className="rounded-lg shadow-lg w-full" 
+        sectionsJSX += `
+      <Box component="section">
+        <Box
+          component="img"
+          src="${imageUrl}"
+          alt="AI Generated Illustration"
+          sx={{
+            width: "100%",
+            borderRadius: 2,
+            boxShadow: 3,
+          }}
         />
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center italic">
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            mt: 1,
+            textAlign: "center",
+            fontStyle: "italic",
+            color: "text.secondary",
+          }}
+        >
           AI Generated Illustration
-        </p>
-      </section>
+        </Typography>
+      </Box>
 `;
     }
 
-    return `export default function BlogPost() {
+    return `import { Box, Typography } from "@mui/material";
+
+export default function BlogPost() {
   return (
-    <div className="space-y-8">
-      ${contentJSX}
-    </div>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      ${sectionsJSX}
+    </Box>
   );
 }
 `;
@@ -247,8 +317,13 @@ async function main() {
         let imageUrl = null;
         if (plan.imagePrompt) {
             log(`Generating image with prompt: ${plan.imagePrompt}`);
-            imageUrl = await generateImage(plan.imagePrompt);
-            // imageUrl = "https://placehold.co/1024x1024?text=AI+Generated+Image"; // Placeholder
+            const tempImageUrl = await generateImage(plan.imagePrompt);
+            if (tempImageUrl) {
+                const slug = plan.slug || slugify(plan.title);
+                const date = formatIsoDate();
+                const imageFileName = `${date}-${slug}.png`;
+                imageUrl = await downloadImage(tempImageUrl, imageFileName);
+            }
         }
 
         const jsxContent = buildBlogJSX(plan, plan.sections, imageUrl);
