@@ -4,7 +4,7 @@ export default function BlogPost() {
 
       <section className="mb-12">
         <h2 className="text-3xl font-semibold mb-6 flex items-center gap-3">
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 !text-white font-bold text-lg shadow-lg">
+          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white dark:bg-blue-500 font-bold text-lg shadow-lg">
             1
           </span>
           Anticipating Major Announcements from Frontier Labs
@@ -18,7 +18,7 @@ export default function BlogPost() {
 
       <section className="mb-12">
         <h2 className="text-3xl font-semibold mb-6 flex items-center gap-3">
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 !text-white font-bold text-lg shadow-lg">
+          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white dark:bg-blue-500 font-bold text-lg shadow-lg">
             2
           </span>
           Our Shared Responsibility to Reduce Carbon Footprint
@@ -32,7 +32,7 @@ export default function BlogPost() {
 
       <section className="mb-12">
         <h2 className="text-3xl font-semibold mb-6 flex items-center gap-3">
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 !text-white font-bold text-lg shadow-lg">
+          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white dark:bg-blue-500 font-bold text-lg shadow-lg">
             3
           </span>
           Imagining a Future with AGI and Automation
@@ -46,7 +46,7 @@ export default function BlogPost() {
 
       <section className="mb-12">
         <h2 className="text-3xl font-semibold mb-6 flex items-center gap-3">
-          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 !text-white font-bold text-lg shadow-lg">
+          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white dark:bg-blue-500 font-bold text-lg shadow-lg">
             4
           </span>
           The Evolution of Skills and Interfaces in the Digital Age
