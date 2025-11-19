@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js",
-    "semantic:index": "node scripts/build-semantic-index.mjs"
+    "semantic:index": "node scripts/build-semantic-index.mjs",
+    "sitemap:submit": "node scripts/submit-sitemap.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
