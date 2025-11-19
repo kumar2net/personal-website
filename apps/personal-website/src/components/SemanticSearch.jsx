@@ -92,9 +92,9 @@ export default function SemanticSearch() {
         border: "1px solid",
         borderColor: "divider",
         backdropFilter: "blur(8px)",
-        backgroundImage: isDarkMode
-          ? "linear-gradient(135deg, rgba(2,6,23,0.95), rgba(15,23,42,0.8))"
-          : "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(236,244,255,0.9))",
+        backgroundColor: isDarkMode
+          ? "rgba(2, 6, 23, 0.8)"
+          : "rgba(255, 255, 255, 0.8)",
         "&:has(input:focus)": {
           borderColor: theme.palette.primary.main,
           boxShadow: isDarkMode
