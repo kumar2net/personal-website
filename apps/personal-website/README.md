@@ -9,11 +9,25 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
 - **Production**: https://kumar2net.com  
 - **Primary branch**: `master`
 
-## Latest Highlights · November 19, 2025
+## Latest Highlights
 
-- **Engagement Features**: Refactored "Weekly Whisper" with a modern glassmorphism design and fixed dark mode visibility. Removed "Vibe Check" and "Reader Tip" components for a cleaner reading experience.
-- **Dark Mode Polish**: Implemented comprehensive dark mode fixes across blog posts, ensuring all text (including legacy Tailwind gray classes) is visible and compliant with MUI v8 theming.
-- **MUI Compliance**: Added Google Fonts (Inter, Roboto) and Material Icons to `index.html` to fully align with MUI design guidelines.
+- **AI-Powered Blog Generation** (Nov 2025): Automated blog post creation using OpenAI GPT-4 and DALL-E 3
+  - New `generate-blog-post.mjs` script for creating blog posts from markdown hints
+  - Automatic content generation with structured sections
+  - AI-generated hero images using DALL-E 3
+  - Seamless integration with existing blog infrastructure
+- **Dark Mode Fixes** (Nov 2025): Comprehensive dark mode text visibility improvements
+  - Fixed BlogPostLayout with `!important` color overrides for all text elements
+  - Ensured proper contrast for headings, paragraphs, and UI elements
+  - Fixed semantic search input background for better visibility
+- **Engagement Simplification** (Nov 2025): Streamlined user engagement features
+  - Removed Weekly Whisper (PromptBox) from all blog posts
+  - Removed ReactionBar and ChromeReaderModeNudge components
+  - Cleaner, more focused reading experience
+- **Sitemap & SEO** (Nov 2025): Enhanced search engine optimization
+  - Regenerated sitemap.xml and sitemap.html with latest content
+  - Added Google Search Console API submission script
+  - MUI font compliance (Inter, Roboto, Material Icons) to fully align with MUI design guidelines.
 - **Local Dev**: Fixed API routing for `/api/engagement` to prevent 404 errors during local development.
 
 See `docs/CHANGELOG.md` for a detailed history.
