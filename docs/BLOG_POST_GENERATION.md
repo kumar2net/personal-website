@@ -15,8 +15,8 @@ This guide documents the automated blog post generation workflow, including rece
    ```
 3. The script will:
    - Generate blog post content using OpenAI
-   - Create AI-generated illustrations (if requested)
-   - Download images to local storage
+   - Create AI-generated illustrations using OpenAI Image API
+   - Save the generated image to `/generate/` and copy it to `apps/personal-website/public/generate/` for serving
    - Create a properly formatted JSX file with dark mode support
 4. Manually update `apps/personal-website/src/data/blogPostsData.js` with the new post metadata
 
@@ -136,15 +136,17 @@ export default function BlogPost() {
 
 ### 2. AI-Generated Images
 
-**Storage Location**: `apps/personal-website/public/media/generated/`
+**Storage Locations**:
+- Working output: `/generate/[YYYY-MM-DD]-[slug].png` (checked into repo)
+- Public URL: `apps/personal-website/public/generate/[YYYY-MM-DD]-[slug].png` (served at `/generate/[filename].png`)
 
 **Naming Convention**: `[YYYY-MM-DD]-[slug].png`
 
 **Process**:
-1. Script generates image using DALL-E 3
-2. Downloads image from temporary Azure blob URL
-3. Saves to local storage with permanent path
-4. Uses local path in JSX (`/media/generated/[filename].png`)
+1. Script generates image using OpenAI Image API (DALL-E)
+2. Saves the PNG to `/generate/` inside the repo
+3. Copies the PNG to `apps/personal-website/public/generate/` so it is served at `/generate/[filename].png`
+4. Uses that `/generate/[filename].png` path in the JSX and data files
 
 **Benefits**:
 - ✅ Images never expire

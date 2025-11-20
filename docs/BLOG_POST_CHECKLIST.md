@@ -10,7 +10,8 @@
 
 - [ ] Run: `node apps/personal-website/scripts/generate-blog-post.mjs`
 - [ ] Verify no errors in console output
-- [ ] Check that image was downloaded to `public/media/generated/`
+- [ ] Generate a cover image with OpenAI Image API and save to `/generate/` (e.g. `generate/2025-11-21-my-slug.png`)
+- [ ] Copy/move the saved image to `apps/personal-website/public/generate/` (served at `/generate/filename.png`)
 
 ## Post-Generation
 
@@ -23,7 +24,7 @@
   - [ ] `bgcolor: "primary.main"` for badges
   - [ ] `color: "text.primary"` for body text
   - [ ] `color: "text.secondary"` for captions
-- [ ] Verify image path uses local storage: `/media/generated/[filename].png`
+- [ ] Verify image path uses local storage: `/generate/[filename].png`
 - [ ] No Tailwind classes present (no `className` with Tailwind utilities)
 
 ## Update Blog Data
@@ -37,7 +38,7 @@
     lastModified: "Month DD, YYYY",
     excerpt: "Brief description",
     tags: ["Tag1", "Tag2"],
-    image: "/media/generated/YYYY-MM-DD-slug.png", // ⚠️ LOCAL PATH!
+    image: "/generate/YYYY-MM-DD-slug.png", // ⚠️ LOCAL PATH!
     link: "/blog/YYYY-MM-DD-slug",
   }
   ```
