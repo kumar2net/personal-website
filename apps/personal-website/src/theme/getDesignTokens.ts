@@ -137,6 +137,10 @@ export const createAppTheme = () => {
       borderRadius: 16,
     },
     typography: {
+      allVariants: {
+        // Force readable text across MUI v8 + Markdown content
+        color: "var(--mui-palette-text-primary)",
+      },
       fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
       fontWeightRegular: 400,
       fontWeightMedium: 500,

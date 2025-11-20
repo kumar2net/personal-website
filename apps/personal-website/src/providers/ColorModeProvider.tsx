@@ -1,55 +1,91 @@
-import { createContext, useContext, useEffect, useMemo } from "react";
-import { CssVarsProvider, useColorScheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import type { ReactNode } from "react";
-import { createAppTheme, type SupportedColorMode } from "../theme/getDesignTokens";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 const STORAGE_KEY = "k2n-color-scheme";
-const theme = createAppTheme();
+
+export type SupportedColorMode = "light" | "dark";
+
+type Updater = SupportedColorMode | ((prev: SupportedColorMode) => SupportedColorMode);
 
 type ColorModeContextValue = {
   mode: SupportedColorMode;
   toggleColorMode: () => void;
-  setMode: (mode: SupportedColorMode) => void;
+  setMode: (mode: Updater) => void;
 };
 
 const ColorModeContext = createContext<ColorModeContextValue | undefined>(
   undefined,
 );
 
-function ModeBridge({ children }: { children: ReactNode }) {
-  const { mode, setMode, systemMode } = useColorScheme();
-  const effectiveMode = mode === "system" ? systemMode : mode;
-  const resolvedMode: SupportedColorMode =
-    effectiveMode === "dark" ? "dark" : "light";
+function getInitialMode(): SupportedColorMode {
+  if (typeof window === "undefined") return "dark";
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  if (stored === "light" || stored === "dark") return stored;
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return prefersDark ? "dark" : "light";
+}
 
-  const value = useMemo<ColorModeContextValue>(() => {
-    const persist = (nextMode: SupportedColorMode) => {
-      setMode(nextMode);
+function ColorModeBridge({ children }: { children: ReactNode }) {
+  const [mode, setModeState] = useState<SupportedColorMode>(getInitialMode);
+
+  const setMode = (next: Updater) => {
+    setModeState((prev) => {
+      const resolved = typeof next === "function" ? next(prev) : next;
       if (typeof window !== "undefined") {
-        window.localStorage.setItem(STORAGE_KEY, nextMode);
+        window.localStorage.setItem(STORAGE_KEY, resolved);
       }
-    };
+      return resolved;
+    });
+  };
 
-    return {
-      mode: resolvedMode,
-      setMode: persist,
-      toggleColorMode: () => {
-        const next = resolvedMode === "dark" ? "light" : "dark";
-        persist(next);
-      },
-    };
-  }, [resolvedMode, setMode]);
+  const value = useMemo<ColorModeContextValue>(
+    () => ({
+      mode,
+      setMode,
+      toggleColorMode: () => setMode((prev) => (prev === "dark" ? "light" : "dark")),
+    }),
+    [mode],
+  );
 
   useEffect(() => {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
-    if (resolvedMode === "dark") {
+    if (mode === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
-  }, [resolvedMode]);
+  }, [mode]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (event: MediaQueryListEvent) => {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored === "light" || stored === "dark") return;
+      setModeState(event.matches ? "dark" : "light");
+    };
+    media.addEventListener("change", handler);
+    return () => media.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handler = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY) return;
+      if (event.newValue === "light" || event.newValue === "dark") {
+        setModeState(event.newValue);
+      }
+    };
+    window.addEventListener("storage", handler);
+    return () => window.removeEventListener("storage", handler);
+  }, []);
 
   return (
     <ColorModeContext.Provider value={value}>
@@ -59,16 +95,7 @@ function ModeBridge({ children }: { children: ReactNode }) {
 }
 
 export function ColorModeProvider({ children }: { children: ReactNode }) {
-  return (
-    <CssVarsProvider
-      theme={theme}
-      defaultMode="system"
-      modeStorageKey={STORAGE_KEY}
-    >
-      <CssBaseline enableColorScheme />
-      <ModeBridge>{children}</ModeBridge>
-    </CssVarsProvider>
-  );
+  return <ColorModeBridge>{children}</ColorModeBridge>;
 }
 
 export function useColorMode() {

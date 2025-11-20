@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import { CssBaseline } from "@mui/material";
 import { CssVarsProvider } from "@mui/material/styles";
-import theme from "./theme";
+import { getTheme, type Scheme } from "./theme";
 
 export type ThemeProviderProps = PropsWithChildren<{
-  defaultMode?: "light" | "dark" | "system";
-  themeOverride?: typeof theme;
+  defaultMode?: Scheme | "system";
+  themeOverride?: ReturnType<typeof getTheme>;
 }>;
 
 export function ThemeProvider({
@@ -13,9 +13,16 @@ export function ThemeProvider({
   defaultMode = "system",
   themeOverride,
 }: ThemeProviderProps) {
+  const resolvedMode: Scheme =
+    defaultMode === "system" ? "light" : defaultMode;
+  const theme = useMemo(
+    () => themeOverride ?? getTheme(resolvedMode),
+    [resolvedMode, themeOverride],
+  );
+
   return (
     <CssVarsProvider
-      theme={themeOverride ?? theme}
+      theme={theme}
       defaultMode={defaultMode}
       modeStorageKey="k2n-color-scheme"
     >
