@@ -31,8 +31,6 @@ import {
   Typography,
 } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
@@ -40,6 +38,7 @@ import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
 import PasswordGate from "./components/PasswordGate";
+import HeroGreeting from "./components/HeroGreeting";
 
 // Eagerly load critical components
 import About from "./pages/About";
@@ -165,15 +164,11 @@ function useGaPageViews() {
   }, [location.pathname, location.search]);
 }
 
-const App = ({ mode, setMode }) => {
+const App = ({ mode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const isDarkMode = mode === "dark";
-
-  const toggleMode = () => {
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
-  };
 
   const trackClick = (eventName, parameters = {}) => {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
@@ -296,25 +291,6 @@ const App = ({ mode, setMode }) => {
 
   return (
     <ErrorBoundary>
-      <IconButton
-        onClick={toggleMode}
-        sx={{
-          position: "fixed",
-          top: 16,
-          right: 16,
-          zIndex: 2000,
-          backgroundColor: "surfaceContainerHigh",
-          borderRadius: "50%",
-          boxShadow: 3,
-          "&:hover": { backgroundColor: "surfaceContainer" },
-        }}
-      >
-        {mode === "light" ? (
-          <DarkModeRoundedIcon sx={{ color: "onSurface" }} />
-        ) : (
-          <LightModeRoundedIcon sx={{ color: "onSurface" }} />
-        )}
-      </IconButton>
       <Box
         className="mobile-fix"
         sx={{
@@ -521,17 +497,7 @@ const App = ({ mode, setMode }) => {
                         gap: 4,
                       }}
                     >
-                      <Typography variant="h1" sx={{ mb: 1 }}>
-                        Welcome to My Personal Website
-                      </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        component="p"
-                        color="text.secondary"
-                        sx={{ maxWidth: 560, mx: "auto" }}
-                      >
-                        AI Enthusiast
-                      </Typography>
+                      <HeroGreeting />
                       <Grid container spacing={3}>
                         {heroSections.map((section, index) => (
                           <Grid

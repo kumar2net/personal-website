@@ -27,18 +27,11 @@ const DarkModeWrapper = () => {
 };
 
 const ColorModeBridge = ({ setOuterMode }) => {
-  const { mode, setMode } = useColorMode();
+  const { mode } = useColorMode();
 
   React.useEffect(() => {
     setOuterMode(mode);
   }, [mode, setOuterMode]);
-
-  const handleSetMode = (nextMode) => {
-    const resolvedMode =
-      typeof nextMode === "function" ? nextMode(mode) : nextMode;
-    setMode(resolvedMode);
-    setOuterMode(resolvedMode);
-  };
 
   return (
     <HelmetProvider>
@@ -48,7 +41,7 @@ const ColorModeBridge = ({ setOuterMode }) => {
           v7_relativeSplatPath: true,
         }}
       >
-        <App mode={mode} setMode={handleSetMode} />
+        <App mode={mode} />
         {SHOULD_RENDER_SPEED_INSIGHTS ? <SpeedInsights /> : null}
       </BrowserRouter>
     </HelmetProvider>
