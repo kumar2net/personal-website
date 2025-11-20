@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import OpenAI from "openai";
 
 const CORS_HEADERS = {
@@ -28,23 +29,58 @@ const DEFAULT_TRANSLATION_MODEL =
   process.env.BLOG_TTS_TRANSLATION_MODEL ||
   "gpt-4o-mini";
 
+const FALLBACK_TTS_MODELS = [
+  "gpt-4o-mini-tts",
+  "gpt-4o-audio-preview",
+  "tts-1",
+  "tts-1-hd",
+];
+
 const TTS_MODEL_CANDIDATES = Array.from(
   new Set(
     [
       process.env.BLOG_TTS_MODEL,
-      process.env.OPENAI_TTS_MODEL,
       process.env.OPENAI_GPT_TTS_MODEL,
-      "gpt-4o-audio-preview",
-      "gpt-4o-mini-tts",
-      "tts-1",
-      "tts-1-hd",
+      process.env.OPENAI_TTS_MODEL,
+      ...FALLBACK_TTS_MODELS,
     ].filter(Boolean),
   ),
 );
 
-const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 8000);
+const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 3200);
+const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
+const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
 
 let cachedClient;
+const translationCache = new Map();
+const audioCache = new Map();
+
+function createHash(text) {
+  return crypto.createHash("sha256").update(text).digest("hex");
+}
+
+function getCacheEntry(cache, key) {
+  const entry = cache.get(key);
+  if (!entry) {
+    return null;
+  }
+  if (entry.expiresAt && entry.expiresAt < Date.now()) {
+    cache.delete(key);
+    return null;
+  }
+  return entry.value;
+}
+
+function setCacheEntry(cache, key, value) {
+  cache.set(key, {
+    value,
+    expiresAt: Date.now() + CACHE_TTL_MS,
+  });
+  if (cache.size > CACHE_LIMIT) {
+    const firstKey = cache.keys().next().value;
+    cache.delete(firstKey);
+  }
+}
 
 function applyCors(res) {
   Object.entries(CORS_HEADERS).forEach(([key, value]) => {
@@ -244,25 +280,72 @@ export default async function handler(req, res) {
   let contentForSpeech = limitedText;
   let translationUsed = false;
   let translationFailed = false;
+  const textHash = createHash(limitedText);
 
   try {
     const client = getOpenAIClient();
 
     if (languageConfig.requiresTranslation) {
-      try {
-        contentForSpeech = await translateText(client, limitedText, languageConfig);
-        translationUsed = true;
-      } catch (translationError) {
-        translationFailed = true;
-        console.warn("[blog-tts] Translation failed, falling back to original text:", translationError?.message || translationError);
-        contentForSpeech = limitedText;
+      const translationCacheKey = `${languageCode}:${textHash}`;
+      const cachedTranslation = getCacheEntry(translationCache, translationCacheKey);
+      if (cachedTranslation) {
+        contentForSpeech = cachedTranslation.text;
+        translationFailed = cachedTranslation.translationFailed;
+        translationUsed = !translationFailed;
+      } else {
+        try {
+          contentForSpeech = await translateText(client, limitedText, languageConfig);
+          translationUsed = true;
+          setCacheEntry(translationCache, translationCacheKey, {
+            text: contentForSpeech,
+            translationFailed: false,
+          });
+        } catch (translationError) {
+          translationFailed = true;
+          console.warn("[blog-tts] Translation failed, falling back to original text:", translationError?.message || translationError);
+          contentForSpeech = limitedText;
+          setCacheEntry(translationCache, translationCacheKey, {
+            text: contentForSpeech,
+            translationFailed: true,
+          });
+        }
       }
+    }
+
+    const speechHash = createHash(
+      `${languageCode}:${languageConfig.voice}:${contentForSpeech}`,
+    );
+    const cachedAudio = getCacheEntry(audioCache, speechHash);
+
+    if (cachedAudio) {
+      res.setHeader("X-Blogtts-Cache", "hit");
+      res.setHeader("Content-Type", "audio/mpeg");
+      res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
+      res.setHeader("Content-Length", cachedAudio.buffer.length);
+      res.setHeader("X-Blogtts-Language", languageCode);
+      res.setHeader("X-Blogtts-Slug", slug);
+      res.setHeader("X-Blogtts-Translated", cachedAudio.translationUsed ? "1" : "0");
+      res.setHeader("X-Blogtts-Translation-Failed", cachedAudio.translationFailed ? "1" : "0");
+      res.setHeader("X-Blogtts-Truncated", cachedAudio.truncated ? "1" : "0");
+      if (cachedAudio.model) {
+        res.setHeader("X-Blogtts-Model", cachedAudio.model);
+      }
+      return res.status(200).send(cachedAudio.buffer);
     }
 
     const { buffer, model: resolvedModel } = await synthesizeSpeech(client, {
       voice: languageConfig.voice,
       text: contentForSpeech,
     });
+    const responsePayload = {
+      buffer,
+      model: resolvedModel,
+      translationFailed,
+      translationUsed,
+      truncated,
+    };
+    setCacheEntry(audioCache, speechHash, responsePayload);
+    res.setHeader("X-Blogtts-Cache", "miss");
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
     res.setHeader("Content-Length", buffer.length);
