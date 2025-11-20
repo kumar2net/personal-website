@@ -1,0 +1,32 @@
+# Repository Guidelines
+
+## Project Structure & Modules
+- Monorepo managed by npm workspaces and Turborepo. Apps live in `apps/`, shared packages in `packages/`.
+- Primary app: `apps/personal-website` (Vite + React 18 + MUI v7). Theme package: `packages/ui-theme` (exports `getTheme`, `ThemeProvider`, `colorTokens`; no default exports).
+- Assets: Tailwind output and global styles in `apps/personal-website/src/output.css`; scripts in `apps/personal-website/scripts/`.
+
+## Build, Test, and Development
+- Install: `npm install`.
+- Dev (app only): `npm run dev` (runs `turbo dev --filter=personal-website`; uses Vite dev server).
+- Build all: `npm run build` (turborepo), or app-only `npm run --workspace apps/personal-website build`.
+- Preview: `npm run --workspace apps/personal-website preview`.
+- Lint/tests (if added): `npm run lint`, `npm run test` (delegated through turbo).
+- Sitemaps: `npm run sitemap` (root) or `npm run --workspace apps/personal-website sitemap:submit`.
+
+## Coding Style & Naming
+- Languages: TypeScript/JavaScript with ES modules; React function components.
+- Formatting: match existing 2-space indentation; avoid default exports in `packages/ui-theme`; prefer named exports elsewhere.
+- Theming: use `getTheme(mode)` and `<ThemeProvider>` from `@kumar2net/ui-theme`; do not reintroduce nested `CssVarsProvider`s.
+- Components: keep props typed (TS) and use descriptive names (`DarkModeWrapper`, `ColorModeProvider`).
+
+## Testing Guidelines
+- No formal test suite is present; add tests colocated under `__tests__` or `*.test.(ts|tsx|js)` when modifying complex logic.
+- Prefer lightweight component tests (React Testing Library) and utility unit tests; keep fixtures small and deterministic.
+
+## Commit & Pull Request Guidelines
+- Commits: concise, imperative summaries (e.g., “Fix MUI dark mode theme integration”). Keep scope focused; avoid bundling unrelated docs or backup files.
+- PRs: describe intent, highlight app/package touched, list manual verification steps (dev server, build). Include screenshots/gifs for UI changes and note any new scripts or env needs.
+
+## Security & Configuration Tips
+- Env: `.env` values are used by Vite; never commit secrets. For local preview, copy `.env.example` if present or define required Vite `VITE_*` vars manually.
+- Packages: `@kumar2net/ui-theme` is a workspace package; ensure workspace install to avoid registry 404s.***
