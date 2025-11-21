@@ -214,9 +214,10 @@ function TheLastDropOfWater() {
           <p className="text-sm text-gray-700 mb-1">Location: Vadavalli, Coimbatore, Tamil Nadu, India</p>
           <p className="text-sm text-gray-700">Language: English with Tamil names (<span className="text-red-600 font-semibold">கருப்பு வண்டு</span>)</p>
         </div>
-      </motion.article>
-    </BookPageContainer>
-  );
+      </div>
+    </motion.article>
+  </BookPageContainer>
+);
 }
 
 export default TheLastDropOfWater;
