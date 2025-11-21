@@ -1,7 +1,17 @@
-import { motion } from 'framer-motion';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Chip from '@mui/material/Chip';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link, useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
 import BookCover from '../../components/BookCover';
 import autoBooks from '../../data/autoBooks.json';
@@ -76,90 +86,176 @@ export default function BookDynamic() {
     );
   }
 
-  if (markdown) {
+  const renderHero = () => {
+    if (!bookMeta) return null;
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-4xl mx-auto px-4 py-8"
+      <Card
+        elevation={3}
+        sx={{
+          mb: 4,
+          borderRadius: 3,
+          overflow: 'hidden',
+        }}
       >
-        <div className="mb-8">
-          <Link
-            to="/books"
-            className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
-          >
-            ← Back to Books
-          </Link>
-        </div>
-        {bookMeta && (
-          <div className="bg-white rounded-lg shadow mb-8 p-6 flex flex-col md:flex-row gap-6">
-            <div className="w-full md:w-48">
-              <div className="w-full h-72 md:h-64 rounded-lg overflow-hidden shadow">
-                {bookMeta.coverImage ? (
-                  <img
-                    src={bookMeta.coverImage}
-                    alt={heroAlt}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <BookCover
-                    bookId={bookMeta.slug}
-                    title={bookMeta.title}
-                    author={bookMeta.author}
-                    className="w-full h-full object-cover"
-                  />
-                )}
-              </div>
-            </div>
-            <div className="flex-1">
-              <p className="text-sm text-gray-500 mb-1">
+        <Grid container spacing={0}>
+          <Grid item xs={12} md={5}>
+            {bookMeta.coverImage ? (
+              <CardMedia
+                component="img"
+                image={bookMeta.coverImage}
+                alt={heroAlt}
+                sx={{ height: '100%', maxHeight: 360, objectFit: 'cover' }}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <Box
+                sx={{
+                  height: '100%',
+                  minHeight: 280,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background:
+                    'linear-gradient(135deg, #e0f2fe 0%, #ede9fe 50%, #fef9c3 100%)',
+                }}
+              >
+                <BookCover
+                  bookId={bookMeta.slug}
+                  title={bookMeta.title}
+                  author={bookMeta.author}
+                  className="w-full h-full"
+                />
+              </Box>
+            )}
+          </Grid>
+          <Grid item xs={12} md={7}>
+            <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography variant="overline" color="text.secondary">
                 {bookMeta.publishDate || 'Fresh read'}
-              </p>
-              <h1 className="text-3xl font-bold text-gray-900">
+              </Typography>
+              <Typography variant="h4" fontWeight={800}>
                 {bookMeta.title}
-              </h1>
-              <p className="text-gray-600 text-lg mt-1 mb-3">
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
                 {bookMeta.author}
-              </p>
+              </Typography>
               {bookMeta.summary && (
-                <p className="text-gray-700 mb-3">{bookMeta.summary}</p>
+                <Typography variant="body1" sx={{ mt: 1.5 }}>
+                  {bookMeta.summary}
+                </Typography>
               )}
               {Array.isArray(bookMeta.tags) && bookMeta.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
                   {bookMeta.tags.map((tag) => (
-                    <span
-                      key={`${bookMeta.slug}-${tag}`}
-                      className="px-3 py-1 bg-slate-100 text-slate-800 rounded-full text-xs font-semibold"
-                    >
-                      {tag}
-                    </span>
+                    <Chip key={`${bookMeta.slug}-${tag}`} label={tag} variant="outlined" size="small" />
                   ))}
-                </div>
+                </Stack>
               )}
-            </div>
-          </div>
-        )}
-        <div className="prose prose-lg max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
-        </div>
-      </motion.div>
+              {bookMeta.pdf && (
+                <Box sx={{ mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    component="a"
+                    href={bookMeta.pdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open original PDF
+                  </Button>
+                </Box>
+              )}
+            </CardContent>
+          </Grid>
+        </Grid>
+      </Card>
+    );
+  };
+
+  if (bookMeta?.pdf) {
+    return (
+      <Container maxWidth="md" sx={{ py: 6 }}>
+        <Button
+          component={RouterLink}
+          to="/books"
+          variant="text"
+          sx={{ mb: 2, alignSelf: 'flex-start' }}
+        >
+          ← Back to Books
+        </Button>
+        {renderHero()}
+        <Paper sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: 3, boxShadow: 3 }}>
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+              Inline PDF viewer
+            </Typography>
+            <Box
+              component="object"
+              data={bookMeta.pdf}
+              type="application/pdf"
+              sx={{
+                width: '100%',
+                height: { xs: 400, md: 640 },
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
+              <Box sx={{ p: 2 }}>
+                <Typography variant="body2" color="text.secondary">
+                  PDF viewer is unavailable on this device. You can download it instead.
+                </Typography>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  component="a"
+                  href={bookMeta.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{ mt: 1 }}
+                >
+                  Download PDF
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        </Paper>
+      </Container>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="mb-8">
-        <Link
-          to="/books"
-          className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
-        >
-          ← Back to Books
-        </Link>
-      </div>
-      <div className="text-gray-600">Book not found.</div>
-    </div>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Button
+        component={RouterLink}
+        to="/books"
+        variant="text"
+        sx={{ mb: 2, alignSelf: 'flex-start' }}
+      >
+        ← Back to Books
+      </Button>
+
+      {renderHero()}
+
+      {markdown ? (
+        <Paper sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: 3, boxShadow: 3 }}>
+          <Box
+            sx={{
+              '& .markdown-body h1': { marginBottom: '0.5em', fontSize: '1.6rem' },
+              '& .markdown-body h2': { marginTop: '1.4em', marginBottom: '0.6em', fontSize: '1.25rem' },
+              '& .markdown-body p': { marginBottom: '0.8em', lineHeight: 1.7 },
+              '& .markdown-body ul': { paddingLeft: '1.4em', marginBottom: '0.8em' },
+            }}
+            className="markdown-body"
+          >
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+          </Box>
+        </Paper>
+      ) : (
+        <Typography color="text.secondary">Book not found.</Typography>
+      )}
+    </Container>
   );
 }

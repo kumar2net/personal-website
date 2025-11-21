@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import BookPageContainer from '../../components/BookPageContainer';
 
 function ItsNotAboutYou() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <BookPageContainer>
       <div className="mb-8">
         <Link
           to="/books"
@@ -147,7 +148,7 @@ function ItsNotAboutYou() {
           </p>
         </div>
       </div>
-    </div>
+    </BookPageContainer>
   );
 }
 

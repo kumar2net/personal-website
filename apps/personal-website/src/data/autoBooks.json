@@ -1,5 +1,24 @@
 [
   {
+    "slug": "thinking-fast-and-slow",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "summary": "Fast System 1 vs deliberate System 2; anchored to the dropped PDF notes.",
+    "description": "Notes from revisiting Kahneman's dual-system thinking classic.",
+    "tags": [
+      "Psychology",
+      "Decision-making",
+      "Notes"
+    ],
+    "publishDate": "November 15, 2025",
+    "lastModified": "November 15, 2025",
+    "readingTime": "7 min read",
+    "sourceFile": "docs/bookhints/ThinkingFastandSlow..pdf",
+    "heroGradient": "from-slate-100 to-stone-200",
+    "coverImage": "/media/thinkingFS.jpeg",
+    "pdf": "/media/pdfs/thinking-fast-and-slow.pdf"
+  },
+  {
     "slug": "sevenstoriesrb-md",
     "title": "Seven Must Read Nature Stories (Rupa Quick Reads)",
     "author": "Ruskin Bond",

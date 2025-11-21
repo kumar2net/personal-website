@@ -1,20 +1,22 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import BookPageContainer from '../../components/BookPageContainer';
 
 function TheLastDropOfWater() {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto px-4 py-8"
-    >
-      <Link 
-        to="/books" 
-        className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 transition-colors"
+    <BookPageContainer>
+      <motion.article
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-4xl mx-auto"
       >
-        ← Back to Books
-      </Link>
+        <Link 
+          to="/books" 
+          className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 transition-colors"
+        >
+          ← Back to Books
+        </Link>
 
       <header className="text-center mb-8">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -212,10 +214,9 @@ function TheLastDropOfWater() {
           <p className="text-sm text-gray-700 mb-1">Location: Vadavalli, Coimbatore, Tamil Nadu, India</p>
           <p className="text-sm text-gray-700">Language: English with Tamil names (<span className="text-red-600 font-semibold">கருப்பு வண்டு</span>)</p>
         </div>
-      </div>
-    </motion.article>
+      </motion.article>
+    </BookPageContainer>
   );
 }
 
 export default TheLastDropOfWater;
-

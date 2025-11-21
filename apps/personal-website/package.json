@@ -8,6 +8,7 @@
     "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "vite build",
     "preview": "vite preview",
+    "lint": "eslint . --max-warnings=0",
     "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js",
     "semantic:index": "node scripts/build-semantic-index.mjs",
     "sitemap:submit": "node scripts/submit-sitemap.mjs"
@@ -40,8 +41,14 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
+    "eslint": "^9.18.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "globals": "^15.12.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "vite": "^7.2.2"

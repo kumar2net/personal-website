@@ -16,14 +16,17 @@ async function main() {
   const srcPdf = path.isAbsolute(inputFile)
     ? inputFile
     : path.join(projectRoot, inputFile);
-  const outDir = path.join(projectRoot, 'src', 'pages', 'books');
+  const outDir = await resolveOutDir(projectRoot);
 
   // Generate output filename based on input filename
   const inputBasename = path.basename(inputFile, '.pdf');
   const slug = slugify(inputBasename);
   const outMd = path.join(outDir, `${slug}.md`);
 
-  await fs.mkdir(outDir, { recursive: true });
+  const preservePageHeaders =
+    process.env.ADD_PAGE_HEADERS === '1' || process.env.VERBATIM === '1';
+  const preserveLineBreaks =
+    process.env.PRESERVE_BREAKS === '1' || process.env.VERBATIM === '1';
 
   try {
     console.log(`📖 Reading PDF file: ${srcPdf}`);
@@ -40,17 +43,25 @@ async function main() {
       const page = await pdfDoc.getPage(pageNum);
       const content = await page.getTextContent();
       let pageText = '';
+
       for (const item of content.items) {
         pageText += item.str;
         if (item.hasEOL) {
           pageText += '\n';
-        } else {
-          if (!pageText.endsWith(' ')) {
-            pageText += ' ';
-          }
+        } else if (!pageText.endsWith(' ')) {
+          pageText += ' ';
         }
       }
-      extracted += `${pageText.trimEnd()}\n\n`;
+
+      const pageBlock = preserveLineBreaks
+        ? pageText
+        : pageText.trimEnd();
+
+      if (preservePageHeaders) {
+        extracted += `\n\n## Page ${pageNum}\n\n${pageBlock}\n`;
+      } else {
+        extracted += `${pageBlock.trimEnd()}\n\n`;
+      }
     }
 
     console.log('📝 Converting to Markdown...');
@@ -67,6 +78,27 @@ async function main() {
   }
 }
 
+async function resolveOutDir(projectRoot) {
+  const candidates = [
+    path.join(projectRoot, 'apps', 'personal-website', 'src', 'pages', 'books'),
+    path.join(projectRoot, 'src', 'pages', 'books'),
+  ];
+
+  for (const dir of candidates) {
+    try {
+      await fs.access(dir);
+      return dir;
+    } catch (error) {
+      // Keep looking.
+    }
+  }
+
+  // Default to first candidate if none exist yet.
+  const fallback = candidates[0];
+  await fs.mkdir(fallback, { recursive: true });
+  return fallback;
+}
+
 function slugify(name) {
   // Insert hyphen between camelCase boundaries, then normalize
   const withHyphens = name.replace(/([a-z0-9])([A-Z])/g, '$1-$2');
@@ -78,9 +110,10 @@ function slugify(name) {
 
 function convertToMarkdown(text, rawTitle) {
   const { title, author, tags } = inferTitleAuthorTags(rawTitle);
+  const preserveVerbatim = process.env.VERBATIM === '1';
 
   // VERBATIM mode: keep user's notes as-is
-  if (process.env.VERBATIM === '1') {
+  if (preserveVerbatim) {
     const frontmatter =
       `---\n` +
       `title: "${title}"\n` +

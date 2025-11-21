@@ -1,211 +1,314 @@
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { alpha, useTheme } from '@mui/material/styles';
 import { HiArrowLeft, HiDownload, HiExternalLink } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import BookCover from '../../components/BookCover';
+import BookPageContainer from '../../components/BookPageContainer';
 
 function TheBrainStoryContent() {
+  const theme = useTheme();
+
   const handleReadBook = () => {
-    // Open PDF in default PDF reader
     window.open('/The_Brain_The_Story.pdf', '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <Link
-                to="/books"
-                className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+    <BookPageContainer>
+      <Stack spacing={3}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          rowGap={1.5}
+        >
+          <Button
+            component={Link}
+            to="/books"
+            startIcon={<HiArrowLeft />}
+            variant="text"
+            size="small"
+          >
+            Back to Books
+          </Button>
+          <Typography variant="h5" fontWeight={800}>
+            The Brain: The Story of You
+          </Typography>
+          <Button
+            component="a"
+            href="/The_Brain_The_Story.pdf"
+            download
+            startIcon={<HiDownload />}
+            variant="outlined"
+            size="small"
+          >
+            Download PDF
+          </Button>
+        </Stack>
+
+        <Paper sx={{ p: { xs: 2.5, md: 3 }, borderRadius: 3, boxShadow: 4 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md="auto">
+              <Box
+                sx={{
+                  width: 190,
+                  height: 250,
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                  boxShadow: 3,
+                  mx: { xs: 'auto', md: 0 },
+                }}
               >
-                <HiArrowLeft className="w-5 h-5 mr-2" />
-                <span className="hidden sm:inline">Back to Books</span>
-              </Link>
-              <h1 className="text-lg font-semibold text-gray-900">
-                The Brain: The Story of You
-              </h1>
-            </div>
-
-            <a
-              href="/The_Brain_The_Story.pdf"
-              download
-              className="flex items-center text-sm text-blue-600 hover:text-blue-700 transition-colors"
-            >
-              <HiDownload className="w-4 h-4 mr-1" />
-              Download PDF
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* Book Cover and Description */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-shrink-0">
-              <div className="w-48 h-64 rounded-lg overflow-hidden shadow-lg">
                 <BookCover
                   bookId="the-brain-story"
                   title="The Brain: The Story of You"
                   author="David Eagleman"
                   className="w-full h-full"
                 />
-              </div>
-              <p className="text-center text-sm text-gray-600 mt-2">
+              </Box>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                align="center"
+                sx={{ mt: 1.5 }}
+              >
                 David Eagleman
-              </p>
-            </div>
-            <div className="flex-1">
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md>
+              <Typography variant="h6" fontWeight={700} gutterBottom>
                 About This Book
-              </h2>
-              <p className="text-gray-700 leading-relaxed">
+              </Typography>
+              <Typography color="text.primary" sx={{ mb: 2, lineHeight: 1.7 }}>
                 One of the best books I have read in a while. Observing all the
                 advances in AI and listening to gyan from my kin on neurology
                 brain implants, wanted to dig deeper. As they say these days -
                 learn from First Principles
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <img
+              </Typography>
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                <Box
+                  component="img"
                   loading="lazy"
                   decoding="async"
                   src="https://img.shields.io/badge/Neuroscience-Brain%20Science-purple"
                   alt="Neuroscience badge"
+                  sx={{ height: 28 }}
                 />
-                <img
+                <Box
+                  component="img"
                   loading="lazy"
                   decoding="async"
                   src="https://img.shields.io/badge/AI%20%26%20Technology-Neural%20Implants-orange"
                   alt="AI Technology badge"
+                  sx={{ height: 28 }}
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Paper>
 
-      {/* Read Book Section */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-8 py-12 text-center">
-            <div className="max-w-2xl mx-auto">
-              <div className="mb-6">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <HiExternalLink className="w-10 h-10 text-blue-600" />
-                </div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                  Ready to Read?
-                </h2>
-                <p className="text-lg text-gray-600 mb-8">
-                  Click the button below to open "The Brain: The Story of You"
-                  in your default PDF reader for the best reading experience.
-                </p>
-              </div>
+        <Paper sx={{ overflow: 'hidden', borderRadius: 3, boxShadow: 6 }}>
+          <Box
+            sx={{
+              px: { xs: 3, md: 5 },
+              py: { xs: 5, md: 7 },
+              textAlign: 'center',
+              background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.16)} 0%, ${alpha(theme.palette.secondary.main, 0.16)} 60%, ${alpha(theme.palette.info.main, 0.14)} 100%)`,
+            }}
+          >
+            <Box
+              sx={{
+                width: 86,
+                height: 86,
+                borderRadius: '50%',
+                backgroundColor: alpha(theme.palette.primary.main, 0.12),
+                color: 'primary.main',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mx: 'auto',
+                mb: 3,
+                boxShadow: 2,
+              }}
+            >
+              <HiExternalLink size={34} />
+            </Box>
 
-              <div className="space-y-4">
-                <button
-                  onClick={handleReadBook}
-                  className="inline-flex items-center px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-                >
-                  <HiExternalLink className="w-6 h-6 mr-3" />
-                  Click to Read
-                </button>
+            <Typography variant="h4" fontWeight={800} gutterBottom>
+              Ready to Read?
+            </Typography>
+            <Typography
+              color="text.secondary"
+              sx={{ maxWidth: 560, mx: 'auto', mb: 3 }}
+            >
+              Click the button below to open "The Brain: The Story of You" in
+              your default PDF reader for the best reading experience.
+            </Typography>
 
-                <p className="text-sm text-gray-500">
-                  Opens in your default PDF reader application
-                </p>
-              </div>
-            </div>
-          </div>
+            <Stack spacing={1.5} alignItems="center">
+              <Button
+                onClick={handleReadBook}
+                startIcon={<HiExternalLink />}
+                variant="contained"
+                size="large"
+                sx={{ px: 4, fontWeight: 700, boxShadow: 6 }}
+              >
+                Click to Read
+              </Button>
+              <Typography variant="body2" color="text.secondary">
+                Opens in your default PDF reader application
+              </Typography>
+            </Stack>
+          </Box>
 
-          <div className="bg-gray-50 px-6 py-4">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <div className="flex items-center space-x-4">
-                <span className="flex items-center">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                  Native PDF Reader
-                </span>
-                <span className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                  Full Features
-                </span>
-              </div>
-              <span>📖 Zoom, search, bookmarks, and more</span>
-            </div>
-          </div>
-        </div>
-      </div>
+          <Box
+            sx={{
+              px: { xs: 2.5, md: 3.5 },
+              py: 2.5,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              rowGap: 1,
+              color: 'text.secondary',
+              backgroundColor: alpha(theme.palette.primary.main, 0.07),
+            }}
+          >
+            <Stack direction="row" spacing={3} alignItems="center">
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Box
+                  sx={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: '50%',
+                    backgroundColor: 'success.main',
+                  }}
+                />
+                <Typography variant="body2">Native PDF Reader</Typography>
+              </Stack>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Box
+                  sx={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: '50%',
+                    backgroundColor: 'primary.main',
+                  }}
+                />
+                <Typography variant="body2">Full features</Typography>
+              </Stack>
+            </Stack>
+            <Typography variant="body2" fontWeight={600}>
+              📖 Zoom, search, bookmarks, and more
+            </Typography>
+          </Box>
+        </Paper>
 
-      {/* Reading Options */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Download Option */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <HiDownload className="w-8 h-8 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Paper
+              sx={{
+                p: 3,
+                height: '100%',
+                borderRadius: 3,
+                boxShadow: 4,
+                display: 'flex',
+                gap: 2,
+              }}
+            >
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  backgroundColor: alpha(theme.palette.success.main, 0.15),
+                  color: 'success.main',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <HiDownload size={20} />
+              </Box>
+              <Box>
+                <Typography variant="h6" fontWeight={700} gutterBottom>
                   Download & Read Offline
-                </h3>
-                <p className="text-gray-600 mb-4">
+                </Typography>
+                <Typography color="text.secondary" sx={{ mb: 2 }}>
                   Download the PDF to read offline or transfer to your preferred
                   device.
-                </p>
-                <a
+                </Typography>
+                <Button
+                  component="a"
                   href="/The_Brain_The_Story.pdf"
                   download
-                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                  variant="contained"
+                  size="small"
+                  startIcon={<HiDownload />}
+                  sx={{ backgroundColor: 'success.main', '&:hover': { backgroundColor: 'success.dark' } }}
                 >
-                  <HiDownload className="w-4 h-4 mr-2" />
                   Download PDF
-                </a>
-              </div>
-            </div>
-          </div>
+                </Button>
+              </Box>
+            </Paper>
+          </Grid>
 
-          {/* Browser Reading Option */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg
-                  className="w-8 h-8 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"
-                  />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <Grid item xs={12} md={6}>
+            <Paper
+              sx={{
+                p: 3,
+                height: '100%',
+                borderRadius: 3,
+                boxShadow: 4,
+                display: 'flex',
+                gap: 2,
+              }}
+            >
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: '50%',
+                  backgroundColor: alpha(theme.palette.info.main, 0.15),
+                  color: 'info.main',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <HiExternalLink size={20} />
+              </Box>
+              <Box>
+                <Typography variant="h6" fontWeight={700} gutterBottom>
                   Read in Browser
-                </h3>
-                <p className="text-gray-600 mb-4">
+                </Typography>
+                <Typography color="text.secondary" sx={{ mb: 2 }}>
                   Open the PDF directly in your web browser for quick access.
-                </p>
-                <a
+                </Typography>
+                <Button
+                  component="a"
                   href="/The_Brain_The_Story.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  variant="outlined"
+                  size="small"
+                  startIcon={<HiExternalLink />}
                 >
-                  <HiExternalLink className="w-4 h-4 mr-2" />
                   Open in Browser
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                </Button>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Stack>
+    </BookPageContainer>
   );
 }
 

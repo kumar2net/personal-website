@@ -42,3 +42,15 @@ npm run bookhints:watch
 3. **Book detail hero** (inside `BookDynamic.jsx`) automatically pulls from `autoBooks`, so your drop-in file immediately has a cover, metadata chips, and intro above the markdown body.
 
 All updates are idempotent per source file. Delete the file from `docs/bookhints` (and rerun the script) if you no longer want it in the carousel.
+
+## PDF drops (verbatim)
+
+Need your Kindle/PDF notes to render exactly as-is? Drop the PDF into `docs/bookhints` and run:
+
+```
+VERBATIM=1 node apps/personal-website/scripts/convert-pdf-to-md.mjs docs/bookhints/YourFile.pdf
+```
+
+- Writes a matching markdown file into `apps/personal-website/src/pages/books` so `/books/:slug` resolves.
+- Keeps every line from the PDF verbatim; you can still tweak the frontmatter afterwards if needed.
+- The bookhints agent will pick up the slug + metadata from `autoBooks.json`, so add/update the entry there for cover art and tags.
