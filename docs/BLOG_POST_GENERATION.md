@@ -18,7 +18,9 @@ This guide documents the automated blog post generation workflow, including rece
    - Create AI-generated illustrations using OpenAI Image API
    - Save the generated image to `/generate/` and copy it to `apps/personal-website/public/generate/` for serving
    - Create a properly formatted JSX file with dark mode support
+   - Render tags as shields.io badges at the top of the post
 4. Manually update `apps/personal-website/src/data/blogPostsData.js` with the new post metadata
+5. Start the dev server (`npm run dev -- --filter=personal-website`) and visually review the new blog page and image before staging/committing
 
 ## Blog Hint File Format
 

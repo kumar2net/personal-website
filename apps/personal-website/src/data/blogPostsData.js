@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "What Money Can’t Buy — Modules 5 & 6 (Prof. Sandel × Kumar A. × ChatGPT)",
+    date: "November 21, 2025",
+    lastModified: "November 21, 2025",
+    excerpt:
+      "Reflections on market triumphalism, moral boundaries, and keeping family spaces human-first, framed as a dialogue between Prof. Michael Sandel, Kumar A., and ChatGPT.",
+    tags: ["Michael Sandel", "Ethics", "Markets", "AI & Society", "Family Values"],
+    image: "/generate/2025-11-21-what-money-cant-buy-modules-5-6.png",
+    link: "/blog/2025-11-21-what-money-cant-buy-modules-5-6",
+  },
+  {
     title: "Lots of New Announcements from Frontier Labs and Our Role in the Future",
     date: "November 19, 2025",
     lastModified: "November 19, 2025",

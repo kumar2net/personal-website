@@ -97,16 +97,21 @@ async function downloadImage(url, fileName) {
             throw new Error(`Failed to download image: ${response.statusText}`);
         }
         const buffer = await response.arrayBuffer();
-        const mediaDir = path.join(repoRoot, 'apps', 'personal-website', 'public', 'media', 'generated');
+        const workingDir = path.join(repoRoot, 'generate');
+        const publicDir = path.join(repoRoot, 'apps', 'personal-website', 'public', 'generate');
 
         // Ensure the directory exists
-        await fsp.mkdir(mediaDir, { recursive: true });
+        await fsp.mkdir(workingDir, { recursive: true });
+        await fsp.mkdir(publicDir, { recursive: true });
 
-        const filePath = path.join(mediaDir, fileName);
-        await fsp.writeFile(filePath, Buffer.from(buffer));
+        const workingPath = path.join(workingDir, fileName);
+        const publicPath = path.join(publicDir, fileName);
+        await fsp.writeFile(workingPath, Buffer.from(buffer));
+        await fsp.writeFile(publicPath, Buffer.from(buffer));
 
-        log(`Image saved to: ${filePath}`);
-        return `/media/generated/${fileName}`;
+        log(`Image saved to: ${workingPath}`);
+        log(`Image saved to: ${publicPath}`);
+        return `/generate/${fileName}`;
     } catch (error) {
         warn(`Image download failed: ${error.message}`);
         return null;
@@ -205,6 +210,7 @@ async function agenticBlog(content, fileName) {
 function buildBlogJSX(meta, sections, imageUrl) {
     const date = formatIsoDate();
     const slug = meta.slug || slugify(meta.title);
+    const tags = Array.isArray(meta.tags) ? meta.tags.filter(Boolean) : [];
 
     let sectionsJSX = '';
     sections.forEach((section, index) => {
@@ -255,6 +261,39 @@ function buildBlogJSX(meta, sections, imageUrl) {
 `;
     });
 
+    let badgesJSX = '';
+    if (tags.length) {
+        const badgeImages = tags
+            .map((tag) => {
+                const label = encodeURIComponent(tag.replace(/\s+/g, '_'));
+                const badgeUrl = `https://img.shields.io/badge/${label}-2563EB?style=for-the-badge&labelColor=1F2937&logoColor=white`;
+                return `
+        <Box
+          component="img"
+          src="${badgeUrl}"
+          alt="${tag} badge"
+          loading="lazy"
+          decoding="async"
+          sx={{ height: 28, width: "auto" }}
+        />`;
+            })
+            .join('');
+
+        badgesJSX = `
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 1,
+          alignItems: "center",
+          justifyContent: "flex-start",
+        }}
+      >
+        ${badgeImages}
+      </Box>
+`;
+    }
+
     if (imageUrl) {
         sectionsJSX += `
       <Box component="section">
@@ -266,6 +305,8 @@ function buildBlogJSX(meta, sections, imageUrl) {
             width: "100%",
             borderRadius: 2,
             boxShadow: 3,
+            aspectRatio: "1 / 1",
+            objectFit: "cover",
           }}
         />
         <Typography
@@ -289,6 +330,7 @@ function buildBlogJSX(meta, sections, imageUrl) {
 export default function BlogPost() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 6 }}>
+      ${badgesJSX}
       ${sectionsJSX}
     </Box>
   );
@@ -297,7 +339,9 @@ export default function BlogPost() {
 }
 
 async function main() {
-    const inputFile = path.join(repoRoot, 'docs', 'bloghints', 'FrontierLabs.md');
+    const inputFile =
+        process.argv[2] ||
+        path.join(repoRoot, 'docs', 'bloghints', 'Sandell_modules_5_6.md');
     if (!fs.existsSync(inputFile)) {
         throw new Error(`Input file missing: ${inputFile}`);
     }
@@ -311,7 +355,7 @@ async function main() {
     log(`Reading ${inputFile}...`);
 
     try {
-        const plan = await agenticBlog(rawContent, 'FrontierLabs.md');
+        const plan = await agenticBlog(rawContent, path.basename(inputFile));
         log(`Agentic plan generated for ${plan.title}`);
 
         let imageUrl = null;

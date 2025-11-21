@@ -183,16 +183,39 @@ export default function HeroGreeting() {
     <Stack spacing={2} alignItems="center" sx={{ textAlign: "center" }}>
       <Typography
         variant="h2"
-        sx={{ mb: 0.5, fontSize: { xs: "1.8rem", sm: "2rem", md: "2.3rem" }, fontWeight: 700 }}
+        sx={{
+          mb: 0.5,
+          fontSize: { xs: "1.8rem", sm: "2rem", md: "2.3rem" },
+          fontWeight: 700,
+          minHeight: { xs: 42, sm: 48, md: 54 },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
         {salutation}
       </Typography>
-      <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: "wrap", justifyContent: "center" }}>
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        sx={{
+          flexWrap: "wrap",
+          justifyContent: "center",
+          minHeight: 48,
+          rowGap: 1,
+        }}
+      >
         <Chip
           icon={<RoomIcon />}
           label={locationLabel || "Locating…"}
           variant="outlined"
-          sx={{ borderColor: "divider", color: "text.primary" }}
+          sx={{
+            borderColor: "divider",
+            color: "text.primary",
+            minWidth: 140,
+            height: 36,
+          }}
         />
         <Card
           elevation={0}
@@ -205,7 +228,8 @@ export default function HeroGreeting() {
             display: "inline-flex",
             alignItems: "center",
             gap: 1.5,
-            minWidth: 180,
+            minWidth: 210,
+            minHeight: 76,
             bgcolor: "background.paper",
           }}
         >

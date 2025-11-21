@@ -12,6 +12,8 @@
 - [ ] Verify no errors in console output
 - [ ] Generate a cover image with OpenAI Image API and save to `/generate/` (e.g. `generate/2025-11-21-my-slug.png`)
 - [ ] Copy/move the saved image to `apps/personal-website/public/generate/` (served at `/generate/filename.png`)
+- [ ] Start dev server (`npm run dev -- --filter=personal-website`) and review the generated page and image manually before staging/committing
+- [ ] Ensure tags render as shields.io badges at the top of the post; confirm all tags from the data entry are present
 
 ## Post-Generation
 
