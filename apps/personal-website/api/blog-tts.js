@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { PassThrough, Readable } from "stream";
 import OpenAI from "openai";
 
 const CORS_HEADERS = {
@@ -30,9 +31,10 @@ const DEFAULT_TRANSLATION_MODEL =
   "gpt-4o-mini";
 
 const FALLBACK_TTS_MODELS = [
+  // Prioritize faster/lighter payloads first
   "gpt-4o-mini-tts",
-  "gpt-4o-audio-preview",
   "tts-1",
+  "gpt-4o-audio-preview",
   "tts-1-hd",
 ];
 
@@ -50,6 +52,8 @@ const TTS_MODEL_CANDIDATES = Array.from(
 const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 3200);
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
+const USE_STREAMING =
+  process.env.BLOG_TTS_STREAMING === "false" ? false : true;
 
 let cachedClient;
 const translationCache = new Map();
@@ -222,6 +226,90 @@ async function synthesizeSpeech(client, { voice, text }) {
   throw fallbackError;
 }
 
+async function synthesizeSpeechStreaming(client, { voice, text }) {
+  if (!USE_STREAMING) {
+    return null;
+  }
+
+  const attempts = [];
+  for (const model of TTS_MODEL_CANDIDATES) {
+    try {
+      const response = await client.audio.speech.create({
+        model,
+        voice,
+        input: text,
+        format: "mp3",
+        stream: true,
+      });
+
+      const iterable =
+        typeof response?.[Symbol.asyncIterator] === "function"
+          ? response
+          : response?.body
+            ? (() => {
+                try {
+                  return Readable.fromWeb(response.body);
+                } catch (streamError) {
+                  const err = new Error("Audio response does not expose a stream");
+                  err.cause = streamError;
+                  throw err;
+                }
+              })()
+            : null;
+
+      if (!iterable || typeof iterable[Symbol.asyncIterator] !== "function") {
+        throw new TypeError("Audio response is not async iterable");
+      }
+
+      const passThrough = new PassThrough();
+      const chunks = [];
+
+      const bufferPromise = new Promise((resolve, reject) => {
+        passThrough.on("finish", () => resolve(Buffer.concat(chunks)));
+        passThrough.on("error", reject);
+      });
+
+      (async () => {
+        try {
+          for await (const chunk of iterable) {
+            const bufferChunk =
+              chunk instanceof Uint8Array
+                ? Buffer.from(chunk)
+                : Buffer.from(chunk || []);
+            chunks.push(bufferChunk);
+            passThrough.write(bufferChunk);
+          }
+          passThrough.end();
+        } catch (error) {
+          passThrough.destroy(error);
+        }
+      })();
+
+      return { stream: passThrough, bufferPromise, model };
+    } catch (error) {
+      const recoverable = isRecoverableTtsError(error);
+      const reason =
+        error?.error?.message ||
+        error?.response?.data?.error?.message ||
+        error?.message ||
+        String(error);
+      attempts.push({ model, reason, recoverable });
+      if (!recoverable) {
+        throw error;
+      }
+    }
+  }
+
+  const detail = attempts
+    .map((attempt) => `${attempt.model}: ${attempt.reason}`)
+    .join(" | ");
+  const fallbackError = new Error(
+    `No permitted OpenAI TTS models responded successfully. Attempts: ${detail}`,
+  );
+  fallbackError.status = 503;
+  throw fallbackError;
+}
+
 export const runtime = "nodejs";
 
 export default async function handler(req, res) {
@@ -331,6 +419,68 @@ export default async function handler(req, res) {
         res.setHeader("X-Blogtts-Model", cachedAudio.model);
       }
       return res.status(200).send(cachedAudio.buffer);
+    }
+
+    let streamed = null;
+    if (USE_STREAMING) {
+      try {
+        streamed = await synthesizeSpeechStreaming(client, {
+          voice: languageConfig.voice,
+          text: contentForSpeech,
+        });
+      } catch (streamError) {
+        if (!isRecoverableTtsError(streamError)) {
+          throw streamError;
+        }
+        console.warn(
+          "[blog-tts] Streaming attempt failed, falling back to buffered synthesis:",
+          streamError?.message || streamError,
+        );
+        streamed = null;
+      }
+    }
+
+    if (streamed) {
+      res.setHeader("X-Blogtts-Cache", "miss");
+      res.setHeader("Content-Type", "audio/mpeg");
+      res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
+      res.setHeader("X-Blogtts-Language", languageCode);
+      res.setHeader("X-Blogtts-Slug", slug);
+      res.setHeader("X-Blogtts-Translated", translationUsed ? "1" : "0");
+      res.setHeader("X-Blogtts-Translation-Failed", translationFailed ? "1" : "0");
+      res.setHeader("X-Blogtts-Truncated", truncated ? "1" : "0");
+      if (streamed.model) {
+        res.setHeader("X-Blogtts-Model", streamed.model);
+      }
+
+      streamed.stream.on("error", (streamErr) => {
+        console.error("[blog-tts] Stream to client failed:", streamErr);
+        if (!res.headersSent) {
+          res.status(500).json({ error: "Failed to stream audio" });
+        } else {
+          res.destroy(streamErr);
+        }
+      });
+
+      streamed.stream.pipe(res);
+
+      streamed.bufferPromise
+        .then((buffer) => {
+          setCacheEntry(audioCache, speechHash, {
+            buffer,
+            model: streamed.model,
+            translationFailed,
+            translationUsed,
+            truncated,
+          });
+        })
+        .catch((cacheError) => {
+          console.warn(
+            "[blog-tts] Failed to cache streamed audio:",
+            cacheError?.message || cacheError,
+          );
+        });
+      return;
     }
 
     const { buffer, model: resolvedModel } = await synthesizeSpeech(client, {
