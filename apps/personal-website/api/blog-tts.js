@@ -53,6 +53,10 @@ const AUDIO_FORMAT = "opus";
 const AUDIO_MIME = "audio/ogg";
 
 const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 3200);
+const DEFAULT_MAX_OUTPUT_TOKENS = Number(
+  process.env.BLOG_TTS_MAX_OUTPUT_TOKENS || 150,
+);
+const APPROX_CHARS_PER_TOKEN = 4;
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
 const USE_STREAMING =
@@ -146,6 +150,43 @@ function clampText(text) {
   return { text: text.slice(0, MAX_INPUT_CHARS), truncated: true };
 }
 
+function chunkTextForTts(text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS) {
+  const maxTokens = Math.max(40, Math.round(maxOutputTokens));
+  const maxChars = Math.max(160, maxTokens * APPROX_CHARS_PER_TOKEN);
+  const sentences = text
+    .split(/(?<=[.!?])\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  const chunks = [];
+  let current = "";
+
+  for (const sentence of sentences) {
+    if ((current + " " + sentence).trim().length <= maxChars) {
+      current = current ? `${current} ${sentence}` : sentence;
+      continue;
+    }
+
+    if (current) {
+      chunks.push(current);
+      current = sentence;
+    } else {
+      let remaining = sentence;
+      while (remaining.length > maxChars) {
+        chunks.push(remaining.slice(0, maxChars));
+        remaining = remaining.slice(maxChars);
+      }
+      current = remaining;
+    }
+  }
+
+  if (current) {
+    chunks.push(current);
+  }
+
+  return chunks.length ? chunks : [text];
+}
+
 function getOpenAIClient() {
   if (cachedClient) {
     return cachedClient;
@@ -202,6 +243,7 @@ async function synthesizeSpeech(client, { voice, text }) {
         voice,
         input: text,
         format: AUDIO_FORMAT,
+        max_output_tokens: DEFAULT_MAX_OUTPUT_TOKENS,
       });
       const buffer = Buffer.from(await speech.arrayBuffer());
       return { buffer, model };
@@ -229,7 +271,10 @@ async function synthesizeSpeech(client, { voice, text }) {
   throw fallbackError;
 }
 
-async function synthesizeSpeechStreaming(client, { voice, text }) {
+async function synthesizeSpeechStreamingSingle(
+  client,
+  { voice, text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS },
+) {
   if (!USE_STREAMING) {
     return null;
   }
@@ -242,6 +287,7 @@ async function synthesizeSpeechStreaming(client, { voice, text }) {
         voice,
         input: text,
         format: AUDIO_FORMAT,
+        max_output_tokens: maxOutputTokens,
         stream: true,
       });
 
@@ -311,6 +357,70 @@ async function synthesizeSpeechStreaming(client, { voice, text }) {
   );
   fallbackError.status = 503;
   throw fallbackError;
+}
+
+async function synthesizeSpeechStreaming(
+  client,
+  { voice, text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS },
+) {
+  const chunks = chunkTextForTts(text, maxOutputTokens);
+
+  if (chunks.length <= 1) {
+    return synthesizeSpeechStreamingSingle(client, {
+      voice,
+      text,
+      maxOutputTokens,
+    });
+  }
+
+  const passThrough = new PassThrough();
+  const bufferPromises = [];
+  let selectedModel = null;
+
+  const bufferPromise = new Promise((resolve, reject) => {
+    passThrough.on("finish", async () => {
+      try {
+        const buffers = await Promise.all(bufferPromises);
+        resolve(Buffer.concat(buffers));
+      } catch (err) {
+        reject(err);
+      }
+    });
+    passThrough.on("error", reject);
+  });
+
+  (async () => {
+    try {
+      for (const chunk of chunks) {
+        const streamed = await synthesizeSpeechStreamingSingle(client, {
+          voice,
+          text: chunk,
+          maxOutputTokens,
+        });
+        if (!streamed) {
+          throw new Error("Streaming not available");
+        }
+        if (!selectedModel && streamed.model) {
+          selectedModel = streamed.model;
+        }
+
+        bufferPromises.push(
+          streamed.bufferPromise.then((buf) => buf || Buffer.alloc(0)),
+        );
+
+        await new Promise((resolve, reject) => {
+          streamed.stream.on("data", (data) => passThrough.write(data));
+          streamed.stream.on("end", resolve);
+          streamed.stream.on("error", reject);
+        });
+      }
+      passThrough.end();
+    } catch (err) {
+      passThrough.destroy(err);
+    }
+  })();
+
+  return { stream: passThrough, bufferPromise, model: selectedModel };
 }
 
 export const runtime = "nodejs";
