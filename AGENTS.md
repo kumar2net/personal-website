@@ -13,6 +13,13 @@
 - Lint/tests (if added): `npm run lint`, `npm run test` (delegated through turbo).
 - Sitemaps: `npm run sitemap` (root) or `npm run --workspace apps/personal-website sitemap:submit`.
 
+## Audio & TTS (OpenAI)
+- Uses OpenAI Audio Speech; streams `audio/ogg` (opus) via `/api/blog-tts`. Caches full buffers after streaming.
+- Frontend (`BlogAudioPlayer`) streams with MediaSource when supported; falls back to blob otherwise.
+- Required env: `OPENAI_API_KEY`.
+- Local (Vercel): run `vercel dev` (serverless on port 3000 by default; override with `VITE_VERCEL_DEV_PORT`). Vite dev on 5173.
+- Optional override endpoint: set `VITE_BLOG_TTS_ENDPOINT` if you want to hit a different API host.
+
 ## Coding Style & Naming
 - Languages: TypeScript/JavaScript with ES modules; React function components.
 - Formatting: match existing 2-space indentation; avoid default exports in `packages/ui-theme`; prefer named exports elsewhere.
