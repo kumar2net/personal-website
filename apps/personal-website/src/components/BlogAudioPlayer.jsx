@@ -19,12 +19,9 @@ const LANGUAGES = [
   },
 ];
 
-const DEFAULT_ENDPOINTS = [
-  "/api/blog-tts",
-  "/.netlify/functions/blog-tts",
-];
-const DEFAULT_NETLIFY_PORT =
-  import.meta.env.VITE_BLOG_TTS_NETLIFY_PORT || "8888";
+const DEFAULT_ENDPOINTS = ["/api/blog-tts"];
+const DEFAULT_VERCEL_PORT =
+  import.meta.env.VITE_VERCEL_DEV_PORT || "3000";
 const MODEL_LABEL =
   import.meta.env.VITE_TTS_MODEL_LABEL || "auto-select";
 
@@ -32,6 +29,7 @@ const HEADING_TAG_PATTERN = /^h([1-6])$/i;
 const TLDR_PATTERN = /tl;?dr/i;
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
+const AUDIO_MIME = "audio/ogg; codecs=opus";
 
 function getHeadingLevel(element) {
   const tagName = element?.tagName || "";
@@ -142,6 +140,9 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const [audioCache, setAudioCache] = useState({});
   const [autoPlayNonce, setAutoPlayNonce] = useState(0);
   const cacheRef = useRef(audioCache);
+  const mediaSourceRef = useRef(null);
+  const sourceBufferRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     cacheRef.current = audioCache;
@@ -155,6 +156,13 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           URL.revokeObjectURL(entry.url);
         }
       });
+      if (mediaSourceRef.current) {
+        try {
+          mediaSourceRef.current.endOfStream?.();
+        } catch {
+          // ignore
+        }
+      }
     };
   }, []);
 
@@ -163,28 +171,45 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     const customEndpoint = import.meta.env.VITE_BLOG_TTS_ENDPOINT;
     const isBrowser = typeof window !== "undefined";
 
-    if (isBrowser) {
-      const { hostname, port } = window.location;
-      const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
-      const isVitePort = port === "5173" || port === "5174";
-
-      if (isLocalHost && isVitePort) {
-        candidateEndpoints.push(
-          `http://localhost:${DEFAULT_NETLIFY_PORT}/.netlify/functions/blog-tts`,
-        );
-      }
-    }
-
+    // 1) Explicit override wins
     if (customEndpoint) {
       candidateEndpoints.push(customEndpoint);
     }
 
+    if (isBrowser) {
+      const { hostname, port, origin } = window.location;
+      const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
+      const isVitePort = port === "5173" || port === "5174";
+
+      // 2) Local dev with vercel dev (serverless functions on 3000 by default)
+      if (isLocalHost && isVitePort) {
+        candidateEndpoints.push(
+          `http://localhost:${DEFAULT_VERCEL_PORT}/api/blog-tts`,
+        );
+      }
+
+      // 3) Non-localhost origin (deployed) uses same-origin API/function
+      if (!isLocalHost) {
+        candidateEndpoints.push(`${origin}/api/blog-tts`);
+      }
+    }
+
+    // 4) Fallbacks (kept last)
     candidateEndpoints.push(...DEFAULT_ENDPOINTS);
     return Array.from(new Set(candidateEndpoints.filter(Boolean)));
   }, []);
 
   const activeEntry = audioCache[selectedLanguage];
   const hasAudio = Boolean(activeEntry?.url);
+  const supportsMse = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    const MS = window.MediaSource;
+    return (
+      typeof MS !== "undefined" &&
+      typeof MS.isTypeSupported === "function" &&
+      MS.isTypeSupported(AUDIO_MIME)
+    );
+  }, []);
 
   const metaNotice = useMemo(() => {
     const cacheEntry = audioCache[selectedLanguage];
@@ -209,6 +234,34 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const buttonLabel = hasAudio ? "Refresh audio" : "Generate audio";
   const disableActions = loadingLanguage === selectedLanguage;
 
+  function cleanupCurrentStream() {
+    if (sourceBufferRef.current) {
+      try {
+        sourceBufferRef.current.abort();
+      } catch {
+        // ignore
+      }
+      sourceBufferRef.current = null;
+    }
+    if (mediaSourceRef.current) {
+      try {
+        mediaSourceRef.current.endOfStream?.();
+      } catch {
+        // ignore
+      }
+      mediaSourceRef.current = null;
+    }
+    const entry = cacheRef.current?.[selectedLanguage];
+    if (entry?.url) {
+      URL.revokeObjectURL(entry.url);
+      setAudioCache((prev) => {
+        const next = { ...prev };
+        delete next[selectedLanguage];
+        return next;
+      });
+    }
+  }
+
   async function fetchAudio() {
     const text = collectArticleText(articleRef);
     if (!text) {
@@ -218,6 +271,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
     setError("");
     setLoadingLanguage(selectedLanguage);
+    cleanupCurrentStream();
 
     const body = {
       slug,
@@ -273,26 +327,107 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         throw lastError || new Error("Unable to generate audio");
       }
 
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      setAudioCache((prev) => {
-        if (prev[selectedLanguage]?.url) {
-          URL.revokeObjectURL(prev[selectedLanguage].url);
+      const contentType = response.headers.get("content-type") || "";
+      if (!contentType.includes("audio/")) {
+        let message = `Unexpected response type (${contentType || "unknown"})`;
+        try {
+          const payload = await response.json();
+          if (payload?.error) {
+            message = payload.error;
+          }
+        } catch {
+          // ignore
         }
-        return {
-          ...prev,
-          [selectedLanguage]: {
-            url,
-            fetchedAt: Date.now(),
-            translated: response.headers.get("x-blogtts-translated") === "1",
-            translationFailed:
-              response.headers.get("x-blogtts-translation-failed") === "1",
-            truncated: response.headers.get("x-blogtts-truncated") === "1",
-            model: response.headers.get("x-blogtts-model") || "",
-          },
+        throw new Error(message);
+      }
+
+      if (supportsMse) {
+        const mediaSource = new MediaSource();
+        mediaSourceRef.current = mediaSource;
+        const objectUrl = URL.createObjectURL(mediaSource);
+
+        const streamMeta = {
+          fetchedAt: Date.now(),
+          translated: response.headers.get("x-blogtts-translated") === "1",
+          translationFailed:
+            response.headers.get("x-blogtts-translation-failed") === "1",
+          truncated: response.headers.get("x-blogtts-truncated") === "1",
+          model: response.headers.get("x-blogtts-model") || "",
+          url: objectUrl,
         };
-      });
-      setAutoPlayNonce((prev) => prev + 1);
+
+        setAudioCache((prev) => ({
+          ...prev,
+          [selectedLanguage]: streamMeta,
+        }));
+        setAutoPlayNonce((prev) => prev + 1);
+
+        const reader = response.body?.getReader
+          ? response.body.getReader()
+          : null;
+        if (!reader) {
+          throw new Error("Streaming is not available in this browser.");
+        }
+
+        mediaSource.addEventListener("sourceopen", () => {
+          let sourceBuffer;
+          try {
+            sourceBuffer = mediaSource.addSourceBuffer(AUDIO_MIME);
+          } catch (bufErr) {
+            console.warn("[blog-tts] SourceBuffer unsupported, falling back to blob:", bufErr);
+            mediaSource.endOfStream();
+            fetchAudioAsBlobFallback(response);
+            return;
+          }
+          sourceBufferRef.current = sourceBuffer;
+          const queue = [];
+          let doneReading = false;
+
+          const processQueue = () => {
+            if (!sourceBuffer || sourceBuffer.updating) return;
+            if (queue.length > 0) {
+              sourceBuffer.appendBuffer(queue.shift());
+            } else if (doneReading) {
+              try {
+                mediaSource.endOfStream();
+              } catch {
+                // ignore
+              }
+            }
+          };
+
+          sourceBuffer.addEventListener("updateend", processQueue);
+
+          const pump = async () => {
+            try {
+              while (true) {
+                const { value, done } = await reader.read();
+                if (done) {
+                  doneReading = true;
+                  processQueue();
+                  break;
+                }
+                if (value) {
+                  queue.push(value instanceof Uint8Array ? value : new Uint8Array(value));
+                  processQueue();
+                }
+              }
+            } catch (streamErr) {
+              console.error("[blog-tts] Streaming to MediaSource failed:", streamErr);
+              setError("Audio streaming was interrupted. Please try again.");
+              try {
+                mediaSource.endOfStream("network");
+              } catch {
+                // ignore
+              }
+            }
+          };
+
+          pump();
+        });
+      } else {
+        await fetchAudioAsBlobFallback(response);
+      }
     } catch (err) {
       setError(err?.message || "Failed to generate audio");
     } finally {
@@ -301,6 +436,29 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   }
 
   const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
+
+  async function fetchAudioAsBlobFallback(response) {
+    try {
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioCache((prev) => ({
+        ...prev,
+        [selectedLanguage]: {
+          url,
+          fetchedAt: Date.now(),
+          translated: response.headers.get("x-blogtts-translated") === "1",
+          translationFailed:
+            response.headers.get("x-blogtts-translation-failed") === "1",
+          truncated: response.headers.get("x-blogtts-truncated") === "1",
+          model: response.headers.get("x-blogtts-model") || "",
+        },
+      }));
+      setAutoPlayNonce((prev) => prev + 1);
+    } catch (blobErr) {
+      console.error("[blog-tts] Blob fallback failed:", blobErr);
+      setError("Audio playback is not supported in this browser.");
+    }
+  }
 
   return (
     <section className="not-prose mb-8 rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/60">
@@ -371,6 +529,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             autoPlay
             preload="auto"
             src={currentAudioUrl}
+            ref={audioRef}
           />
           {(metaNotice || activeEntry?.model) && (
             <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">

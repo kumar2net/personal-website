@@ -49,6 +49,9 @@ const TTS_MODEL_CANDIDATES = Array.from(
   ),
 );
 
+const AUDIO_FORMAT = "opus";
+const AUDIO_MIME = "audio/ogg";
+
 const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 3200);
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
@@ -198,7 +201,7 @@ async function synthesizeSpeech(client, { voice, text }) {
         model,
         voice,
         input: text,
-        format: "mp3",
+        format: AUDIO_FORMAT,
       });
       const buffer = Buffer.from(await speech.arrayBuffer());
       return { buffer, model };
@@ -238,7 +241,7 @@ async function synthesizeSpeechStreaming(client, { voice, text }) {
         model,
         voice,
         input: text,
-        format: "mp3",
+        format: AUDIO_FORMAT,
         stream: true,
       });
 
@@ -407,7 +410,7 @@ export default async function handler(req, res) {
 
     if (cachedAudio) {
       res.setHeader("X-Blogtts-Cache", "hit");
-      res.setHeader("Content-Type", "audio/mpeg");
+      res.setHeader("Content-Type", `${AUDIO_MIME}`);
       res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
       res.setHeader("Content-Length", cachedAudio.buffer.length);
       res.setHeader("X-Blogtts-Language", languageCode);
@@ -442,7 +445,7 @@ export default async function handler(req, res) {
 
     if (streamed) {
       res.setHeader("X-Blogtts-Cache", "miss");
-      res.setHeader("Content-Type", "audio/mpeg");
+      res.setHeader("Content-Type", `${AUDIO_MIME}`);
       res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
       res.setHeader("X-Blogtts-Language", languageCode);
       res.setHeader("X-Blogtts-Slug", slug);
@@ -496,7 +499,7 @@ export default async function handler(req, res) {
     };
     setCacheEntry(audioCache, speechHash, responsePayload);
     res.setHeader("X-Blogtts-Cache", "miss");
-    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Content-Type", `${AUDIO_MIME}`);
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
     res.setHeader("Content-Length", buffer.length);
     res.setHeader("X-Blogtts-Language", languageCode);
