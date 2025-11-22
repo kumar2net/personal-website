@@ -371,6 +371,16 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
         mediaSource.addEventListener("sourceopen", () => {
           let sourceBuffer;
+          let startedPlayback = false;
+          const startPlayback = () => {
+            if (startedPlayback) return;
+            if (audioRef.current) {
+              startedPlayback = true;
+              audioRef.current.play().catch(() => {
+                // Autoplay may be blocked; user can press play manually.
+              });
+            }
+          };
           try {
             sourceBuffer = mediaSource.addSourceBuffer(AUDIO_MIME);
           } catch (bufErr) {
@@ -387,6 +397,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             if (!sourceBuffer || sourceBuffer.updating) return;
             if (queue.length > 0) {
               sourceBuffer.appendBuffer(queue.shift());
+              startPlayback();
             } else if (doneReading) {
               try {
                 mediaSource.endOfStream();
