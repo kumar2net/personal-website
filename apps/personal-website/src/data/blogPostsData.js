@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "My Carbon Foot Print",
+    date: "November 20, 2025",
+    lastModified: "November 20, 2025",
+    excerpt:
+      "Transparent Coimbatore household footprint with MUI X charts, clear line-item math, and the mantra: you need to measuer to improve. Compare to India and global per-capita baselines.",
+    tags: ["Climate", "Footprint", "Data Viz", "Sustainability"],
+    image: "/media/generated/openai-cop30-tn-tracker.png",
+    link: "/blog/2025-11-20-my-carbon-foot-print",
+  },
+  {
     title: "What Money Can’t Buy — Modules 5 & 6 (Prof. Sandel × Kumar A. × ChatGPT)",
     date: "November 21, 2025",
     lastModified: "November 21, 2025",

@@ -30,6 +30,15 @@ export const blogIndex = {
     datePublished: "2025-10-31",
     dateModified: "2025-10-31",
   },
+  "2025-11-20-my-carbon-foot-print": {
+    title: "My Carbon Foot Print",
+    description:
+      "Transparent, calculator-style tour of our Coimbatore household emissions with MUI X charts, India vs global comparisons, and the mantra: you need to measuer to improve.",
+    image: "/media/generated/openai-cop30-tn-tracker.png",
+    tags: ["Climate", "Footprint", "Data Viz", "Sustainability"],
+    datePublished: "2025-11-20",
+    dateModified: "2025-11-20",
+  },
   "2025-10-27-markets-and-morals": {
     title: "Markets and Morals: A Dialogue with Michael Sandel",
     description:
