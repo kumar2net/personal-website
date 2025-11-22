@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: 'The Weekend Roundup: Hidden Fees, "Panruti" Gold, and the Speed Gun Debate',
+    date: "November 22, 2025",
+    lastModified: "November 22, 2025",
+    excerpt:
+      "Drip pricing gets outlawed, Tamil Nadu racks up new GI tags, natural farming goes export-first, Japan’s debt loop faces a demographic test, and cricket fans revive the kmph vs mph fight.",
+    tags: ["Consumer rights", "India trade", "Policy watch", "Cricket"],
+    image: "/generate/2025-11-22-weekend-roundup-hidden-fees-panruti-gold-speed-gun-debate.png",
+    link: "/blog/2025-11-22-weekend-roundup-hidden-fees-panruti-gold-speed-gun-debate",
+  },
+  {
     title: "My Carbon Foot Print",
     date: "November 20, 2025",
     lastModified: "November 20, 2025",

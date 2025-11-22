@@ -155,6 +155,19 @@ export default function MyCarbonFootPrint() {
             “{quote}” — transparent math for our 2-person family using Coimbatore utility bills, ₹20k groceries, and 100 km
             travel.
           </Typography>
+          <Alert
+            severity="info"
+            icon={false}
+            sx={{
+              mt: 1,
+              borderRadius: 2,
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
+            }}
+          >
+            Are you keen on finding your own carbon footprint? Ping me — I’ve got the formulas sorted and can help you run
+            your numbers quickly.
+          </Alert>
           <Divider />
           <Box
             sx={{
@@ -194,7 +207,7 @@ export default function MyCarbonFootPrint() {
       <Card variant="outlined" sx={{ borderRadius: 3 }}>
         <CardContent sx={{ height: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            Transparent math (MUI X Data Grid)
+            Transparent math
           </Typography>
             <Box sx={{ height: 420 }}>
               <DataGrid

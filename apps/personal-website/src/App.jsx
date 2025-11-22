@@ -553,15 +553,15 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          “To the mind that is still, the whole universe
-                          surrenders.”
+                          “Impermanence — everything changes. Dependent
+                          Origination — everything is connected.”
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          — Lao Tzu
+                          — Key Buddhist teachings
                         </Typography>
                       </Paper>
                       <WorldClock />

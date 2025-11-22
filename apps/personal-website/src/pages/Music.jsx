@@ -58,48 +58,33 @@ const MusicPage = () => {
             Fresh spins
           </h3>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            The last two tracks I tucked into the playlist change the tempo and
-            mood in the best way possible.
+            The last two adds swing from vintage Carnatic to modern fusion—proof
+            the playlist still zigzags across eras and genres for Gen Z and
+            millennials.
           </p>
           <div className="space-y-4">
             <div className="rounded-lg border border-gray-100 dark:border-slate-800 p-4">
               <p className="text-sm uppercase tracking-[0.2em] text-red-500 mb-1">
-                Pointless — Lewis Capaldi
+                Nagumomu — Tyagaraja, Agam version
               </p>
               <p className="text-gray-700 dark:text-gray-200">
-                Piano-forward confessionals with Capaldi’s grainy vocals remind
-                me why slow pop ballads still hit harder than EDM drops. It’s
-                become my go-to cooldown after late-night writing sessions.
+                I grew up hearing Vidwan Karaikurichi Arunachalam render this on
+                a gramophone; now Agam’s live take pulls the kriti into stadium
+                fusion. Same raga soul, fresh pulse—perfect bridge between
+                memory and mosh pit.
               </p>
             </div>
             <div className="rounded-lg border border-gray-100 dark:border-slate-800 p-4">
               <p className="text-sm uppercase tracking-[0.2em] text-red-500 mb-1">
-                7 Years — Lukas Graham
+                Vellai Thamarai — Agam
               </p>
               <p className="text-gray-700 dark:text-gray-200">
-                The coming-of-age anthem that keeps looping through my head.
-                Its reflective verses are the perfect reset between upbeat
-                Tamil hooks and synth drops.
+                A reminder that Agam is back and loud—their Tamil-fusion signature
+                keeps the mridangam heartbeat under electric guitars. Gen Z and
+                millennials are leaning in, because this is tradition with a
+                festival glow.
               </p>
             </div>
-          </div>
-
-          <div className="rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900/80 border border-slate-200 dark:border-slate-800 p-6">
-            <p className="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mb-3">
-              Growing with the playlist
-            </p>
-            <blockquote className="text-lg font-medium text-slate-800 dark:text-slate-100 leading-relaxed">
-              “Once, I was seven years old, my mama told me<br />
-              Go make yourself some friends or you’ll be lonely.”<br />
-              …<br />
-              “Soon, I’ll be sixty years old, will I think the world is cold<br />
-              Or will I have a lot of children who can warm me?”
-            </blockquote>
-            <p className="text-sm text-slate-600 dark:text-slate-300 mt-4">
-              Lukas Graham’s lyrics hit different lately—I’m closer to that
-              sixty-year mark than the seven-year swagger, and the playlist is
-              turning into a scrapbook of everyone warming the journey.
-            </p>
           </div>
         </motion.div>
       </div>
