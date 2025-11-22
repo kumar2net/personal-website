@@ -35,7 +35,7 @@ export const blogIndex = {
     description:
       "Transparent, calculator-style tour of our Coimbatore household emissions with MUI X charts, India vs global comparisons, and the mantra: you need to measuer to improve.",
     image:
-      "https://images.unsplash.com/photo-1518303676762-4c71cdea3f92?auto=format&fit=crop&w=1600&q=80&sat=-10&hue=-10",
+      "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1600&q=80",
     tags: ["Climate", "Footprint", "Data Viz", "Sustainability"],
     datePublished: "2025-11-20",
     dateModified: "2025-11-20",
