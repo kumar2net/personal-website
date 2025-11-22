@@ -6,7 +6,8 @@ export const blogPosts = [
     excerpt:
       "Transparent Coimbatore household footprint with MUI X charts, clear line-item math, and the mantra: you need to measuer to improve. Compare to India and global per-capita baselines.",
     tags: ["Climate", "Footprint", "Data Viz", "Sustainability"],
-    image: "/media/generated/openai-cop30-tn-tracker.png",
+    image:
+      "https://images.unsplash.com/photo-1518303676762-4c71cdea3f92?auto=format&fit=crop&w=1600&q=80&sat=-10&hue=-10",
     link: "/blog/2025-11-20-my-carbon-foot-print",
   },
   {

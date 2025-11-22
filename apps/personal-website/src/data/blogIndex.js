@@ -34,7 +34,8 @@ export const blogIndex = {
     title: "My Carbon Foot Print",
     description:
       "Transparent, calculator-style tour of our Coimbatore household emissions with MUI X charts, India vs global comparisons, and the mantra: you need to measuer to improve.",
-    image: "/media/generated/openai-cop30-tn-tracker.png",
+    image:
+      "https://images.unsplash.com/photo-1518303676762-4c71cdea3f92?auto=format&fit=crop&w=1600&q=80&sat=-10&hue=-10",
     tags: ["Climate", "Footprint", "Data Viz", "Sustainability"],
     datePublished: "2025-11-20",
     dateModified: "2025-11-20",
