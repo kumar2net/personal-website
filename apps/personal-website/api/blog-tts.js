@@ -151,6 +151,11 @@ function clampText(text) {
 function chunkTextForTts(text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS) {
   const maxTokens = Math.max(40, Math.round(maxOutputTokens));
   const maxChars = Math.max(160, maxTokens * APPROX_CHARS_PER_TOKEN);
+  // Use a smaller first chunk (approx 200 chars) to ensure playback starts quickly
+  // 200 chars is roughly 15-20 seconds of audio, which is plenty of buffer
+  // while the next chunk (up to ~600 chars) generates.
+  const firstChunkMaxChars = Math.min(maxChars, 200);
+
   const sentences = text
     .split(/(?<=[.!?])\s+/)
     .map((part) => part.trim())
@@ -160,7 +165,9 @@ function chunkTextForTts(text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS) {
   let current = "";
 
   for (const sentence of sentences) {
-    if ((current + " " + sentence).trim().length <= maxChars) {
+    const currentLimit = chunks.length === 0 ? firstChunkMaxChars : maxChars;
+
+    if ((current + " " + sentence).trim().length <= currentLimit) {
       current = current ? `${current} ${sentence}` : sentence;
       continue;
     }
@@ -169,10 +176,18 @@ function chunkTextForTts(text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS) {
       chunks.push(current);
       current = sentence;
     } else {
+      // If the single sentence itself is longer than the limit
       let remaining = sentence;
-      while (remaining.length > maxChars) {
-        chunks.push(remaining.slice(0, maxChars));
-        remaining = remaining.slice(maxChars);
+      // For the first chunk, we strictly enforce the smaller limit
+      // For subsequent chunks, we use the normal limit
+      let limit = chunks.length === 0 ? firstChunkMaxChars : maxChars;
+
+      while (remaining.length > limit) {
+        chunks.push(remaining.slice(0, limit));
+        remaining = remaining.slice(limit);
+        // After the first slice is pushed, the next slice is effectively a new chunk
+        // so it can use the full maxChars limit.
+        limit = maxChars;
       }
       current = remaining;
     }
