@@ -31,6 +31,27 @@ const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const AUDIO_MIME = "audio/ogg; codecs=opus";
 
+function resolveAudioMime(contentTypeHeader) {
+  if (!contentTypeHeader) return AUDIO_MIME;
+  const [typePart, ...rest] = contentTypeHeader.split(";");
+  const baseType = (typePart || "").trim();
+  const params = rest.join(";").trim();
+  if (!baseType) {
+    return AUDIO_MIME;
+  }
+  return params ? `${baseType}; ${params}` : baseType;
+}
+
+function canUseMse(mimeType = AUDIO_MIME) {
+  if (typeof window === "undefined") return false;
+  const MS = window.MediaSource;
+  return (
+    MS &&
+    typeof MS.isTypeSupported === "function" &&
+    MS.isTypeSupported(mimeType)
+  );
+}
+
 function getHeadingLevel(element) {
   const tagName = element?.tagName || "";
   const match = tagName.match(HEADING_TAG_PATTERN);
@@ -201,15 +222,6 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
   const activeEntry = audioCache[selectedLanguage];
   const hasAudio = Boolean(activeEntry?.url);
-  const supportsMse = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    const MS = window.MediaSource;
-    return (
-      typeof MS !== "undefined" &&
-      typeof MS.isTypeSupported === "function" &&
-      MS.isTypeSupported(AUDIO_MIME)
-    );
-  }, []);
 
   const metaNotice = useMemo(() => {
     const cacheEntry = audioCache[selectedLanguage];
@@ -341,7 +353,13 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         throw new Error(message);
       }
 
-      if (supportsMse) {
+      const resolvedMime = resolveAudioMime(contentType);
+      const supportsStreaming =
+        canUseMse(resolvedMime) &&
+        response.body &&
+        typeof response.body.getReader === "function";
+      if (supportsStreaming) {
+        const reader = response.body.getReader();
         const mediaSource = new MediaSource();
         mediaSourceRef.current = mediaSource;
         const objectUrl = URL.createObjectURL(mediaSource);
@@ -353,6 +371,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             response.headers.get("x-blogtts-translation-failed") === "1",
           truncated: response.headers.get("x-blogtts-truncated") === "1",
           model: response.headers.get("x-blogtts-model") || "",
+          mimeType: resolvedMime,
           url: objectUrl,
         };
 
@@ -361,13 +380,6 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           [selectedLanguage]: streamMeta,
         }));
         setAutoPlayNonce((prev) => prev + 1);
-
-        const reader = response.body?.getReader
-          ? response.body.getReader()
-          : null;
-        if (!reader) {
-          throw new Error("Streaming is not available in this browser.");
-        }
 
         mediaSource.addEventListener("sourceopen", () => {
           let sourceBuffer;
@@ -382,11 +394,11 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             }
           };
           try {
-            sourceBuffer = mediaSource.addSourceBuffer(AUDIO_MIME);
+            sourceBuffer = mediaSource.addSourceBuffer(resolvedMime);
           } catch (bufErr) {
             console.warn("[blog-tts] SourceBuffer unsupported, falling back to blob:", bufErr);
             mediaSource.endOfStream();
-            fetchAudioAsBlobFallback(response);
+            fetchAudioAsBlobFallback(response, resolvedMime);
             return;
           }
           sourceBufferRef.current = sourceBuffer;
@@ -437,7 +449,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           pump();
         });
       } else {
-        await fetchAudioAsBlobFallback(response);
+        await fetchAudioAsBlobFallback(response, resolvedMime);
       }
     } catch (err) {
       setError(err?.message || "Failed to generate audio");
@@ -448,7 +460,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
   const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
 
-  async function fetchAudioAsBlobFallback(response) {
+  async function fetchAudioAsBlobFallback(response, mimeType = AUDIO_MIME) {
     try {
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -462,6 +474,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             response.headers.get("x-blogtts-translation-failed") === "1",
           truncated: response.headers.get("x-blogtts-truncated") === "1",
           model: response.headers.get("x-blogtts-model") || "",
+          mimeType,
         },
       }));
       setAutoPlayNonce((prev) => prev + 1);

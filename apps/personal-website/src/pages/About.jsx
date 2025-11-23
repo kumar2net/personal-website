@@ -18,7 +18,7 @@ const About = () => {
       className="max-w-6xl mx-auto px-4 py-8 space-y-12"
     >
       <section className="space-y-4">
-        <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
+        <p className="text-sm uppercase tracking-[0.3em] text-blue-500 dark:text-blue-400">
           Hello Gen Z & Gen AI curious folks 👋
         </p>
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -51,7 +51,7 @@ const About = () => {
             multiple times a day. Every story ships with structured metadata so
             it lands in Discover, Bing AI, and your favourite reader.
           </p>
-          <div className="space-y-3 text-sm">
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
             <div className="flex items-center gap-3">
               <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
               <span>Primary domain: kumar2net.com (Vercel auto SSL)</span>
@@ -63,7 +63,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/60 p-6 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold mb-3">Stack cheat sheet</h2>
           <p className="text-slate-600 dark:text-slate-200 mb-4">
             Real tools instead of novelty shields. Here&apos;s the ground truth.

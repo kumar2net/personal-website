@@ -32,9 +32,7 @@ const DEFAULT_TRANSLATION_MODEL =
 
 const FALLBACK_TTS_MODELS = [
   // Prioritize faster/lighter payloads first
-  "gpt-4o-mini-tts",
   "tts-1",
-  "gpt-4o-audio-preview",
   "tts-1-hd",
 ];
 
@@ -296,14 +294,14 @@ async function synthesizeSpeechStreamingSingle(
           ? response
           : response?.body
             ? (() => {
-                try {
-                  return Readable.fromWeb(response.body);
-                } catch (streamError) {
-                  const err = new Error("Audio response does not expose a stream");
-                  err.cause = streamError;
-                  throw err;
-                }
-              })()
+              try {
+                return Readable.fromWeb(response.body);
+              } catch (streamError) {
+                const err = new Error("Audio response does not expose a stream");
+                err.cause = streamError;
+                throw err;
+              }
+            })()
             : null;
 
       if (!iterable || typeof iterable[Symbol.asyncIterator] !== "function") {
@@ -391,17 +389,37 @@ async function synthesizeSpeechStreaming(
 
   (async () => {
     try {
-      for (const chunk of chunks) {
-        const streamed = await synthesizeSpeechStreamingSingle(client, {
-          voice,
-          text: chunk,
-          maxOutputTokens,
-        });
+      let nextChunkPromise = null;
+
+      for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        let streamed;
+
+        if (nextChunkPromise) {
+          streamed = await nextChunkPromise;
+          nextChunkPromise = null;
+        } else {
+          streamed = await synthesizeSpeechStreamingSingle(client, {
+            voice,
+            text: chunk,
+            maxOutputTokens,
+          });
+        }
+
         if (!streamed) {
           throw new Error("Streaming not available");
         }
         if (!selectedModel && streamed.model) {
           selectedModel = streamed.model;
+        }
+
+        // Prefetch the next chunk while streaming the current one
+        if (i + 1 < chunks.length) {
+          nextChunkPromise = synthesizeSpeechStreamingSingle(client, {
+            voice,
+            text: chunks[i + 1],
+            maxOutputTokens,
+          });
         }
 
         bufferPromises.push(
