@@ -16,7 +16,7 @@ const LANGUAGE_CONFIG = {
   },
   hi: {
     label: "Hindi",
-    voice: process.env.BLOG_TTS_HI_VOICE || "verse",
+    voice: process.env.BLOG_TTS_HI_VOICE || "alloy",
     requiresTranslation: true,
   },
   ta: {
@@ -35,6 +35,17 @@ const FALLBACK_TTS_MODELS = [
   "tts-1",
   "tts-1-hd",
 ];
+const ALLOWED_VOICES = new Set([
+  "nova",
+  "shimmer",
+  "echo",
+  "onyx",
+  "fable",
+  "alloy",
+  "ash",
+  "sage",
+  "coral",
+]);
 
 const TTS_MODEL_CANDIDATES = Array.from(
   new Set(
@@ -218,6 +229,18 @@ function resolveFormat(requestedFormat) {
   const format = (requestedFormat || DEFAULT_AUDIO_FORMAT).toLowerCase();
   if (format === "mp3") return { format: "mp3", mime: AUDIO_MIME_MAP.mp3 };
   return { format: "opus", mime: AUDIO_MIME_MAP.opus };
+}
+
+function resolveVoice(requestedVoice) {
+  if (requestedVoice && ALLOWED_VOICES.has(requestedVoice)) {
+    return requestedVoice;
+  }
+  const envVoice = (requestedVoice || "").trim().toLowerCase();
+  if (envVoice && ALLOWED_VOICES.has(envVoice)) {
+    return envVoice;
+  }
+  // Default to alloy when an unsupported voice is provided
+  return "alloy";
 }
 
 function getOpenAIClient() {
@@ -552,7 +575,13 @@ export default async function handler(req, res) {
     payload?.format,
   );
 
-  const languageConfig = LANGUAGE_CONFIG[languageCode];
+  const languageConfigBase = LANGUAGE_CONFIG[languageCode];
+  const languageConfig = languageConfigBase
+    ? {
+        ...languageConfigBase,
+        voice: resolveVoice(languageConfigBase.voice),
+      }
+    : null;
   if (!languageConfig) {
     return res.status(400).json({
       error: `Unsupported language "${languageCode}".`,
