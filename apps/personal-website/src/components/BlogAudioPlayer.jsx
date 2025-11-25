@@ -30,6 +30,7 @@ const TLDR_PATTERN = /tl;?dr/i;
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const AUDIO_MIME = "audio/ogg; codecs=opus";
+const MAX_CLIENT_CHARS = 1200;
 
 function resolveAudioMime(contentTypeHeader) {
   if (!contentTypeHeader) return AUDIO_MIME;
@@ -164,6 +165,8 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const mediaSourceRef = useRef(null);
   const sourceBufferRef = useRef(null);
   const audioRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const prefetchedRef = useRef(false);
 
   useEffect(() => {
     cacheRef.current = audioCache;
@@ -246,7 +249,11 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const buttonLabel = hasAudio ? "Refresh audio" : "Generate audio";
   const disableActions = loadingLanguage === selectedLanguage;
 
-  function cleanupCurrentStream() {
+  function cleanupCurrentStream(language = selectedLanguage) {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
     if (sourceBufferRef.current) {
       try {
         sourceBufferRef.current.abort();
@@ -263,38 +270,56 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       }
       mediaSourceRef.current = null;
     }
-    const entry = cacheRef.current?.[selectedLanguage];
+    const entry = cacheRef.current?.[language];
     if (entry?.url) {
       URL.revokeObjectURL(entry.url);
       setAudioCache((prev) => {
         const next = { ...prev };
-        delete next[selectedLanguage];
+        delete next[language];
         return next;
       });
     }
   }
 
-  async function fetchAudio() {
+  useEffect(() => {
+    if (prefetchedRef.current) return;
+    if (!articleRef?.current) return;
+    prefetchedRef.current = true;
+    fetchAudio({ language: "en", isPrefetch: true });
+  }, [articleRef]);
+
+  async function fetchAudio({ language, isPrefetch } = {}) {
+    const targetLanguage = language || selectedLanguage;
     const text = collectArticleText(articleRef);
     if (!text) {
-      setError("Blog content is still loading. Please try again in a moment.");
+      if (!isPrefetch) {
+        setError("Blog content is still loading. Please try again in a moment.");
+      }
       return;
     }
 
+    const excerpt =
+      text.length > MAX_CLIENT_CHARS
+        ? `${text.slice(0, MAX_CLIENT_CHARS)}`
+        : text;
+
     setError("");
-    setLoadingLanguage(selectedLanguage);
-    cleanupCurrentStream();
+    setLoadingLanguage(targetLanguage);
+    cleanupCurrentStream(targetLanguage);
+    abortControllerRef.current = new AbortController();
 
     const body = {
       slug,
-      language: selectedLanguage,
-      text,
+      language: targetLanguage,
+      text: excerpt,
+      format: canUseMse(AUDIO_MIME) ? "opus" : "mp3",
     };
     const payload = JSON.stringify(body);
     const createPostRequest = () => ({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: payload,
+      signal: abortControllerRef.current?.signal,
     });
 
     try {
@@ -377,7 +402,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
         setAudioCache((prev) => ({
           ...prev,
-          [selectedLanguage]: streamMeta,
+          [targetLanguage]: streamMeta,
         }));
         setAutoPlayNonce((prev) => prev + 1);
 
@@ -398,7 +423,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           } catch (bufErr) {
             console.warn("[blog-tts] SourceBuffer unsupported, falling back to blob:", bufErr);
             mediaSource.endOfStream();
-            fetchAudioAsBlobFallback(response, resolvedMime);
+            fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
             return;
           }
           sourceBufferRef.current = sourceBuffer;
@@ -449,9 +474,12 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           pump();
         });
       } else {
-        await fetchAudioAsBlobFallback(response, resolvedMime);
+        await fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
       }
     } catch (err) {
+      if (err?.name === "AbortError") {
+        return;
+      }
       setError(err?.message || "Failed to generate audio");
     } finally {
       setLoadingLanguage("");
@@ -460,13 +488,17 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
   const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
 
-  async function fetchAudioAsBlobFallback(response, mimeType = AUDIO_MIME) {
+  async function fetchAudioAsBlobFallback(
+    response,
+    mimeType = AUDIO_MIME,
+    language = selectedLanguage,
+  ) {
     try {
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       setAudioCache((prev) => ({
         ...prev,
-        [selectedLanguage]: {
+        [language]: {
           url,
           fetchedAt: Date.now(),
           translated: response.headers.get("x-blogtts-translated") === "1",

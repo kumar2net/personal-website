@@ -47,12 +47,18 @@ const TTS_MODEL_CANDIDATES = Array.from(
   ),
 );
 
-const AUDIO_FORMAT = "opus";
-const AUDIO_MIME = "audio/ogg";
+const DEFAULT_AUDIO_FORMAT = "opus";
+const AUDIO_MIME_MAP = {
+  opus: "audio/ogg",
+  mp3: "audio/mpeg",
+};
 
 const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 3200);
 const DEFAULT_MAX_OUTPUT_TOKENS = Number(
   process.env.BLOG_TTS_MAX_OUTPUT_TOKENS || 150,
+);
+const FIRST_CHUNK_MAX_OUTPUT_TOKENS = Number(
+  process.env.BLOG_TTS_FIRST_CHUNK_MAX_TOKENS || 80,
 );
 const APPROX_CHARS_PER_TOKEN = 4;
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
@@ -148,13 +154,21 @@ function clampText(text) {
   return { text: text.slice(0, MAX_INPUT_CHARS), truncated: true };
 }
 
-function chunkTextForTts(text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS) {
+function chunkTextForTts(
+  text,
+  {
+    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
+    firstChunkMaxOutputTokens = FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+  } = {},
+) {
   const maxTokens = Math.max(40, Math.round(maxOutputTokens));
+  const firstChunkTokens = Math.max(20, Math.round(firstChunkMaxOutputTokens));
   const maxChars = Math.max(160, maxTokens * APPROX_CHARS_PER_TOKEN);
-  // Use a smaller first chunk (approx 200 chars) to ensure playback starts quickly
-  // 200 chars is roughly 15-20 seconds of audio, which is plenty of buffer
-  // while the next chunk (up to ~600 chars) generates.
-  const firstChunkMaxChars = Math.min(maxChars, 200);
+  // Use a smaller first chunk to ensure playback starts quickly.
+  const firstChunkMaxChars = Math.min(
+    maxChars,
+    firstChunkTokens * APPROX_CHARS_PER_TOKEN,
+  );
 
   const sentences = text
     .split(/(?<=[.!?])\s+/)
@@ -200,6 +214,12 @@ function chunkTextForTts(text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS) {
   return chunks.length ? chunks : [text];
 }
 
+function resolveFormat(requestedFormat) {
+  const format = (requestedFormat || DEFAULT_AUDIO_FORMAT).toLowerCase();
+  if (format === "mp3") return { format: "mp3", mime: AUDIO_MIME_MAP.mp3 };
+  return { format: "opus", mime: AUDIO_MIME_MAP.opus };
+}
+
 function getOpenAIClient() {
   if (cachedClient) {
     return cachedClient;
@@ -241,7 +261,16 @@ function isRecoverableTtsError(error) {
   return status === 403 || status === 404 || code === "model_not_found";
 }
 
-async function synthesizeSpeech(client, { voice, text }) {
+async function synthesizeSpeech(
+  client,
+  {
+    voice,
+    text,
+    format = DEFAULT_AUDIO_FORMAT,
+    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
+    signal,
+  },
+) {
   if (!TTS_MODEL_CANDIDATES.length) {
     const err = new Error("No TTS models configured");
     err.status = 503;
@@ -255,8 +284,9 @@ async function synthesizeSpeech(client, { voice, text }) {
         model,
         voice,
         input: text,
-        format: AUDIO_FORMAT,
-        max_output_tokens: DEFAULT_MAX_OUTPUT_TOKENS,
+        format,
+        max_output_tokens: maxOutputTokens,
+        signal,
       });
       const buffer = Buffer.from(await speech.arrayBuffer());
       return { buffer, model };
@@ -286,7 +316,13 @@ async function synthesizeSpeech(client, { voice, text }) {
 
 async function synthesizeSpeechStreamingSingle(
   client,
-  { voice, text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS },
+  {
+    voice,
+    text,
+    format = DEFAULT_AUDIO_FORMAT,
+    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
+    signal,
+  },
 ) {
   if (!USE_STREAMING) {
     return null;
@@ -299,8 +335,9 @@ async function synthesizeSpeechStreamingSingle(
         model,
         voice,
         input: text,
-        format: AUDIO_FORMAT,
+        format,
         max_output_tokens: maxOutputTokens,
+        signal,
         stream: true,
       });
 
@@ -374,15 +411,27 @@ async function synthesizeSpeechStreamingSingle(
 
 async function synthesizeSpeechStreaming(
   client,
-  { voice, text, maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS },
+  {
+    voice,
+    text,
+    format = DEFAULT_AUDIO_FORMAT,
+    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
+    firstChunkMaxOutputTokens = FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+    signal,
+  },
 ) {
-  const chunks = chunkTextForTts(text, maxOutputTokens);
+  const chunks = chunkTextForTts(text, {
+    maxOutputTokens,
+    firstChunkMaxOutputTokens,
+  });
 
   if (chunks.length <= 1) {
     return synthesizeSpeechStreamingSingle(client, {
       voice,
       text,
       maxOutputTokens,
+      format,
+      signal,
     });
   }
 
@@ -410,16 +459,18 @@ async function synthesizeSpeechStreaming(
         const chunk = chunks[i];
         let streamed;
 
-        if (nextChunkPromise) {
-          streamed = await nextChunkPromise;
-          nextChunkPromise = null;
-        } else {
-          streamed = await synthesizeSpeechStreamingSingle(client, {
-            voice,
-            text: chunk,
-            maxOutputTokens,
-          });
-        }
+      if (nextChunkPromise) {
+        streamed = await nextChunkPromise;
+        nextChunkPromise = null;
+      } else {
+        streamed = await synthesizeSpeechStreamingSingle(client, {
+          voice,
+          text: chunk,
+          maxOutputTokens,
+          format,
+          signal,
+        });
+      }
 
         if (!streamed) {
           throw new Error("Streaming not available");
@@ -434,6 +485,8 @@ async function synthesizeSpeechStreaming(
             voice,
             text: chunks[i + 1],
             maxOutputTokens,
+            format,
+            signal,
           });
         }
 
@@ -495,6 +548,9 @@ export default async function handler(req, res) {
     typeof payload?.slug === "string" && payload.slug.trim()
       ? payload.slug.trim()
       : "blog-post";
+  const { format: responseFormat, mime: responseMime } = resolveFormat(
+    payload?.format,
+  );
 
   const languageConfig = LANGUAGE_CONFIG[languageCode];
   if (!languageConfig) {
@@ -517,6 +573,8 @@ export default async function handler(req, res) {
   const textHash = createHash(limitedText);
 
   try {
+    const abortController = new AbortController();
+    req.on("aborted", () => abortController.abort());
     const client = getOpenAIClient();
 
     if (languageConfig.requiresTranslation) {
@@ -547,15 +605,16 @@ export default async function handler(req, res) {
     }
 
     const speechHash = createHash(
-      `${languageCode}:${languageConfig.voice}:${contentForSpeech}`,
+      `${languageCode}:${languageConfig.voice}:${slug}:${responseFormat}:${contentForSpeech}`,
     );
     const cachedAudio = getCacheEntry(audioCache, speechHash);
 
     if (cachedAudio) {
       res.setHeader("X-Blogtts-Cache", "hit");
-      res.setHeader("Content-Type", `${AUDIO_MIME}`);
+      res.setHeader("Content-Type", `${cachedAudio.mime}`);
       res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
       res.setHeader("Content-Length", cachedAudio.buffer.length);
+      res.setHeader("Accept-Ranges", "bytes");
       res.setHeader("X-Blogtts-Language", languageCode);
       res.setHeader("X-Blogtts-Slug", slug);
       res.setHeader("X-Blogtts-Translated", cachedAudio.translationUsed ? "1" : "0");
@@ -573,6 +632,9 @@ export default async function handler(req, res) {
         streamed = await synthesizeSpeechStreaming(client, {
           voice: languageConfig.voice,
           text: contentForSpeech,
+          format: responseFormat,
+          firstChunkMaxOutputTokens: FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+          signal: abortController.signal,
         });
       } catch (streamError) {
         if (!isRecoverableTtsError(streamError)) {
@@ -588,7 +650,7 @@ export default async function handler(req, res) {
 
     if (streamed) {
       res.setHeader("X-Blogtts-Cache", "miss");
-      res.setHeader("Content-Type", `${AUDIO_MIME}`);
+      res.setHeader("Content-Type", `${responseMime}`);
       res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
       res.setHeader("X-Blogtts-Language", languageCode);
       res.setHeader("X-Blogtts-Slug", slug);
@@ -598,6 +660,7 @@ export default async function handler(req, res) {
       if (streamed.model) {
         res.setHeader("X-Blogtts-Model", streamed.model);
       }
+      res.setHeader("Accept-Ranges", "bytes");
 
       streamed.stream.on("error", (streamErr) => {
         console.error("[blog-tts] Stream to client failed:", streamErr);
@@ -618,6 +681,8 @@ export default async function handler(req, res) {
             translationFailed,
             translationUsed,
             truncated,
+            format: responseFormat,
+            mime: responseMime,
           });
         })
         .catch((cacheError) => {
@@ -632,6 +697,9 @@ export default async function handler(req, res) {
     const { buffer, model: resolvedModel } = await synthesizeSpeech(client, {
       voice: languageConfig.voice,
       text: contentForSpeech,
+      format: responseFormat,
+      maxOutputTokens: DEFAULT_MAX_OUTPUT_TOKENS,
+      signal: abortController.signal,
     });
     const responsePayload = {
       buffer,
@@ -639,12 +707,15 @@ export default async function handler(req, res) {
       translationFailed,
       translationUsed,
       truncated,
+      format: responseFormat,
+      mime: responseMime,
     };
     setCacheEntry(audioCache, speechHash, responsePayload);
     res.setHeader("X-Blogtts-Cache", "miss");
-    res.setHeader("Content-Type", `${AUDIO_MIME}`);
+    res.setHeader("Content-Type", `${responseMime}`);
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300");
     res.setHeader("Content-Length", buffer.length);
+    res.setHeader("Accept-Ranges", "bytes");
     res.setHeader("X-Blogtts-Language", languageCode);
     res.setHeader("X-Blogtts-Slug", slug);
     res.setHeader("X-Blogtts-Translated", translationUsed ? "1" : "0");
