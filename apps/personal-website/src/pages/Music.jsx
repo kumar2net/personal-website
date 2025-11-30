@@ -108,20 +108,45 @@ const MusicPage = () => {
               Fresh spins
             </Typography>
             <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 4 }}>
-              The last two adds swing from vintage Carnatic to modern fusion—proof
-              the playlist still zigzags across eras and genres for Gen Z and
-              millennials.
+              The latest eight adds (straight from the playlist above) keep zigzagging across eras:
+              Carnatic reworks, Tamil fusion, and a few morning bhajans to
+              balance the energy. Still hopping between nostalgia and fresh
+              finds.
             </Typography>
 
             <Stack spacing={2}>
               {[
                 {
-                  title: "Nagumomu — Tyagaraja, Agam version",
-                  desc: "I grew up hearing Vidwan Karaikurichi Arunachalam render this on a gramophone; now Agam’s live take pulls the kriti into stadium fusion. Same raga soul, fresh pulse—perfect bridge between memory and mosh pit.",
+                  title: "Kannu munna nee iruka (From “Acacia”)",
+                  desc: "Soft Tamil opener with a steady pulse; great as a gentle warmup before the day starts.",
                 },
                 {
-                  title: "Vellai Thamarai — Agam",
-                  desc: "A reminder that Agam is back and loud—their Tamil-fusion signature keeps the mridangam heartbeat under electric guitars. Gen Z and millennials are leaning in, because this is tradition with a festival glow.",
+                  title: "Kaathodu Poguma (From “Indian Penal Law (IPL)”)",
+                  desc: "Breezy contemporary cut—light guitars, easy chorus, weekend-drive energy.",
+                },
+                {
+                  title: "Nadhiye",
+                  desc: "River-paced melody; unhurried vocals and a calm, flowing arrangement.",
+                },
+                {
+                  title: "Chill Makkaa (From “Good Night”)",
+                  desc: "Laid-back, percussive, and smile-inducing—perfect for an evening wind-down.",
+                },
+                {
+                  title: "Oonjala Oonjala",
+                  desc: "Swinging lullaby vibe; warm strings and an easy hook.",
+                },
+                {
+                  title: "Ennai Vittu Ni (From “Cristina Kathirvelan”)",
+                  desc: "Heart-on-sleeve ballad with a clean vocal lead—simple, sincere, repeatable.",
+                },
+                {
+                  title: "FEAR",
+                  desc: "NF in reflective mode; tight production, introspective bars, motivating drumline.",
+                },
+                {
+                  title: "The Search — NF",
+                  desc: "NF’s signature urgency—strings, marching beat, and a sprint of honest verses.",
                 },
               ].map((item) => (
                 <Box

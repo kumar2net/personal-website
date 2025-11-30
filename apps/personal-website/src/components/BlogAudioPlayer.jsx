@@ -246,8 +246,19 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     return "";
   }, [audioCache, selectedLanguage]);
 
-  const buttonLabel = hasAudio ? "Refresh audio" : "Generate audio";
+  const buttonLabel = "Generate audio";
   const disableActions = loadingLanguage === selectedLanguage;
+  const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
+
+  async function tryPlayAudio() {
+    try {
+      if (audioRef.current) {
+        await audioRef.current.play();
+      }
+    } catch (err) {
+      console.warn("[blog-tts] Autoplay blocked:", err);
+    }
+  }
 
   function cleanupCurrentStream(language = selectedLanguage) {
     if (abortControllerRef.current) {
@@ -291,12 +302,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   async function fetchAudio({ language, isPrefetch } = {}) {
     const targetLanguage = language || selectedLanguage;
     const text = collectArticleText(articleRef);
-    if (!text) {
-      if (!isPrefetch) {
-        setError("Blog content is still loading. Please try again in a moment.");
-      }
-      return;
-    }
+    if (!text) return;
 
     const excerpt =
       text.length > MAX_CLIENT_CHARS
@@ -405,6 +411,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           [targetLanguage]: streamMeta,
         }));
         setAutoPlayNonce((prev) => prev + 1);
+        tryPlayAudio();
 
         mediaSource.addEventListener("sourceopen", () => {
           let sourceBuffer;
@@ -486,7 +493,11 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     }
   }
 
-  const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
+  useEffect(() => {
+    if (currentAudioUrl && !loadingLanguage) {
+      tryPlayAudio();
+    }
+  }, [currentAudioUrl, autoPlayNonce, loadingLanguage]);
 
   async function fetchAudioAsBlobFallback(
     response,
@@ -510,6 +521,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         },
       }));
       setAutoPlayNonce((prev) => prev + 1);
+      tryPlayAudio();
     } catch (blobErr) {
       console.error("[blog-tts] Blob fallback failed:", blobErr);
       setError("Audio playback is not supported in this browser.");

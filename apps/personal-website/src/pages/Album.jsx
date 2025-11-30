@@ -84,11 +84,7 @@ const Album = () => {
             }}
           >
             <Typography variant="body1" color="text.primary">
-              A rolling gallery—from Duke-boy’s DC visit and Mylapore Bhavan
-              pitstops to on-ground shots from our budding dentist’s internship
-              camps. Tap through to wander the latest frames straight from the
-              phone roll, browse scanned newspaper clippings, and soak in SB’s
-              autumn mood photos that set a mellow tone.
+              Lovely images from Pacific Grove, Monterey, California.
             </Typography>
           </Box>
         </Box>

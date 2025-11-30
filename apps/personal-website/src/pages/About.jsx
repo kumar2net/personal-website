@@ -22,16 +22,17 @@ const About = () => {
           Hello Gen Z & Gen AI curious folks 👋
         </p>
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-          I run kumar2net.com like a personal control tower for agents, feeds,
-          and shipping ideas.
+          kumar2net.com has been my digital home since dial-up—now it’s a
+          control tower for agents, feeds, and slow-tech living.
         </h1>
         <p className="text-lg text-slate-600 dark:text-slate-200 leading-relaxed">
-          Telecom-tested. AI-obsessed. I started in wireless test beds and now I
-          obsess over Model Context Protocol, LLM agents, and making them useful
-          for everyday shipping. This site is wired for experiments—from
-          WordPress cross-posts to live X updates, semantic search powered by
-          Gemini embeddings, and OpenAI-powered TL;DRs. Everything you read is
-          stitched together in public.
+          I’ve been online since the late ’90s—first on Indian forums, then
+          Blogspot and WordPress—writing about open tech, privacy, and why
+          minimal, sustainable computing matters. I retired from a telecom
+          career (IP/MPLS networks, access & backbone) and now blend AI
+          experiments with climate-aware habits: solar power, small phones,
+          e-ink reading, and no car. The throughline: open culture, privacy,
+          resilience, and human-speed tech.
         </p>
       </section>
 
@@ -59,6 +60,10 @@ const About = () => {
             <div className="flex items-center gap-3">
               <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
               <span>Mirror feeds: WordPress + X (restreamed below)</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+              <span>20+ years of uptime across minimal VPS + CDN mirrors</span>
             </div>
           </div>
         </div>
@@ -89,6 +94,40 @@ const About = () => {
         </div>
       </section>
 
+      <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/60 p-8 shadow-sm">
+        <h2 className="text-2xl font-semibold mb-3">Digital footprint</h2>
+        <div className="space-y-3 text-slate-700 dark:text-slate-200">
+          <p>
+            <strong>1990s–2000s:</strong> Early Indian web forums, Rediff/Yahoo
+            Groups; kumar2.net registered; open-source advocacy and Microsoft
+            critiques in the local context.
+          </p>
+          <p>
+            <strong>2005–2010:</strong> Blogspot → self-hosted WordPress on
+            kumar2.net. Wrote on digital rights, Aadhaar skepticism, net
+            neutrality, Creative Commons, and open data.
+          </p>
+          <p>
+            <strong>2011–2016:</strong> Google+ networks; @kumar2net on X
+            (Twitter) gets active; themes on solitude, thermodynamics in tech,
+            Indian elections, water, big data, Chromecast, NSA, and occasional
+            rants at Motorola support. Professionally in telecom IP/MPLS.
+          </p>
+          <p>
+            <strong>2017–2020:</strong> AI curiosity deepens (NIPS 2017
+            workshops, automation ethics), data sovereignty, de-Googling, and
+            Indian FOSS alternatives.
+          </p>
+          <p>
+            <strong>2021–2025:</strong> AI × climate action, local-language
+            models, energy-efficient computing, and responsible AI. Still a
+            minimalist: solar, small phones, e-ink, cycling/public transport,
+            no car. Print loyalist to The Hindu, allergic to dark-pattern
+            paywalls.
+          </p>
+        </div>
+      </section>
+
       <section className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-r from-slate-900 to-slate-800 text-slate-100 p-8 shadow-lg">
         <h2 className="text-2xl font-semibold mb-3">
           LLM Ops, bold and transparent
@@ -98,10 +137,10 @@ const About = () => {
           search via Gemini&apos;s{" "}
           <span className="font-semibold">text-embedding-004</span>, TL;DR
           summaries via{" "}
-          <span className="font-semibold">OpenAI GPT-5</span>, and
-          WordPress/X feeds proxied through custom serverless handlers. You&apos;ll see agents cited in
-          blog posts, CLI workflows documented in docs/, and a running changelog
-          on the Status page. Ask me anything on{" "}
+          <span className="font-semibold">OpenAI GPT-5</span>, and WordPress/X
+          feeds proxied through custom serverless handlers. You&apos;ll see
+          agents cited in blog posts, CLI workflows documented in docs/, and a
+          running changelog on the Status page. Ask me anything on{" "}
           <a
             href="https://x.com/kumar2net"
             className="underline decoration-dotted text-blue-300 hover:text-blue-100"

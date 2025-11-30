@@ -553,15 +553,14 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          “Impermanence — everything changes. Dependent
-                          Origination — everything is connected.”
+                          “Everything is possible. The impossible just takes longer.”
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          — Key Buddhist teachings
+                          — Dan Brown
                         </Typography>
                       </Paper>
                       <WorldClock />

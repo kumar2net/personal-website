@@ -1,5 +1,16 @@
 export const blogPosts = [
   {
+    title:
+      "From Thinking Machines to Rudram Mornings — AI, Insulin, Stories, and Nostalgia",
+    date: "November 30, 2025",
+    lastModified: "November 30, 2025",
+    excerpt:
+      "A Thanksgiving-week thread linking AlphaFold and insulin, audiobook vs paperback mindspace, Ponniyin Selvan on screen, radio memories, and hacking Google Home to play Rudram reliably.",
+    tags: ["AI", "Insulin", "Storytelling", "Google Home", "Nostalgia"],
+    image: "/generate/2025-11-30-thinking-machines-to-rudram-mornings.png",
+    link: "/blog/2025-11-30-thinking-machines-to-rudram-mornings",
+  },
+  {
     title: 'The Weekend Roundup: Hidden Fees, "Panruti" Gold, and the Speed Gun Debate',
     date: "November 22, 2025",
     lastModified: "November 22, 2025",

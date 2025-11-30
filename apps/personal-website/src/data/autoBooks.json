@@ -1,5 +1,24 @@
 [
   {
+    "slug": "family-book-digest-15-bullets",
+    "title": "15 Book Nuggets for Gen Z & Millennials",
+    "author": "Kumar2net Reading Desk",
+    "summary": "A crisp family cheat sheet: 15 bullets spanning Kahneman, Stoics, service-first living, Cornell method, and more.",
+    "description": "A one-page digest from the /books shelf to nudge Gen Z and Millennials.",
+    "tags": [
+      "Cheat Sheet",
+      "Gen Z",
+      "Millennial",
+      "Notes"
+    ],
+    "publishDate": "November 30, 2025",
+    "lastModified": "November 30, 2025",
+    "readingTime": "2 min read",
+    "sourceFile": "apps/personal-website/src/pages/books/family-book-digest-15-bullets.md",
+    "heroGradient": "from-blue-100 to-emerald-100",
+    "coverImage": "https://images.unsplash.com/photo-1506765515384-028b60a970df?auto=format&fit=crop&w=1400&q=80"
+  },
+  {
     "slug": "thinking-fast-and-slow",
     "title": "Thinking, Fast and Slow",
     "author": "Daniel Kahneman",
