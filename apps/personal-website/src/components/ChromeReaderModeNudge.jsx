@@ -56,7 +56,7 @@ function getInstructions() {
 export default function ChromeReaderModeNudge({ slug }) {
   const [visible, setVisible] = useState(false);
 
-  const instructions = useMemo(() => getInstructions(), [slug]);
+  const instructions = useMemo(() => getInstructions(), []);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -73,7 +73,7 @@ export default function ChromeReaderModeNudge({ slug }) {
     if (isChrome()) {
       setVisible(true);
     }
-  }, [slug]);
+  }, []);
 
   const dismiss = () => {
     setVisible(false);

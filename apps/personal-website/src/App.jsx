@@ -38,7 +38,6 @@ import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
 import PasswordGate from "./components/PasswordGate";
-import HeroGreeting from "./components/HeroGreeting";
 
 // Eagerly load critical components
 import About from "./pages/About";
@@ -497,7 +496,6 @@ const App = ({ mode }) => {
                         gap: 4,
                       }}
                     >
-                      <HeroGreeting />
                       <Grid container spacing={3}>
                         {heroSections.map((section, index) => (
                           <Grid

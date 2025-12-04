@@ -297,6 +297,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     if (!articleRef?.current) return;
     prefetchedRef.current = true;
     fetchAudio({ language: "en", isPrefetch: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articleRef]);
 
   async function fetchAudio({ language, isPrefetch } = {}) {
