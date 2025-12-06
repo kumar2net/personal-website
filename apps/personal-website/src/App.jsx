@@ -98,6 +98,7 @@ const navLinks = [
   { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
   { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
   { label: "Learning", to: "/learning", analyticsKey: "nav_learning" },
+  { label: "Science", to: "/science", analyticsKey: "nav_science" },
   { label: "Music", to: "/music", analyticsKey: "nav_music" },
   { label: "Album", to: "/album", analyticsKey: "nav_album" },
   { label: "Contact", to: "/contact", analyticsKey: "nav_contact" },
@@ -109,6 +110,7 @@ const heroSections = [
   { label: "Books", description: "Reading list & notes.", to: "/books" },
   { label: "Blog", description: "Long-form writing.", to: "/blog" },
   { label: "Learning", description: "Study notes & flashcards.", to: "/learning" },
+  { label: "Science", description: "Biology, metabolism, cardiology notes.", to: "/science" },
   { label: "Music", description: "Playlists on repeat.", to: "/music" },
   { label: "Album", description: "Photo essays & trips.", to: "/album" },
 ];
