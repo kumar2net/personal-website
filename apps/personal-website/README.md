@@ -28,6 +28,7 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
   - Regenerated sitemap.xml and sitemap.html with latest content
   - Added Google Search Console API submission script
   - MUI font compliance (Inter, Roboto, Material Icons) to fully align with MUI design guidelines.
+- **Science (Feb 2026)**: Added `/science` hub with the “Protein Folding – Insulin & Heart Medication Insights” page featuring a WebGPU/WebGL2 insulin folding visualization and cardiometabolic context for Bisolong, Ecosprin, Dytor, glimepiride, and metformin.
 - **Local Dev**: Fixed API routing for `/api/engagement` to prevent 404 errors during local development.
 
 See `docs/CHANGELOG.md` for a detailed history.
