@@ -51,6 +51,7 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
+const ScienceIndex = lazy(() => import("./pages/science"));
 const ProteinFoldingPage = lazy(
   () => import("./pages/science/protein-folding"),
 );
@@ -829,6 +830,20 @@ const App = ({ mode }) => {
                       <PasswordGate>
                         <UtilitiesDashboard />
                       </PasswordGate>
+                    </>
+                  }
+                />
+                <Route
+                  path="/science"
+                  element={
+                    <>
+                      <SEO
+                        title="Science"
+                        description="Science explorations across biology, metabolism, and cardiology."
+                        canonicalPath="/science"
+                        type="website"
+                      />
+                      <ScienceIndex />
                     </>
                   }
                 />
