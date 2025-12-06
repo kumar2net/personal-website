@@ -82,7 +82,12 @@ export default function ProteinFoldingPage() {
                 control, stress beta cells, and blunt the insulin signal, making it
                 harder to keep blood glucose steady. Consistent, well-folded insulin
                 is why dosing and timing matter: it keeps hepatic glucose output in
-                check and ensures muscles actually import sugar after meals.
+                check and ensures muscles actually import sugar after meals. My
+                diabetic meds layer in: glimepiride nudges the pancreas to secrete
+                more insulin, so proper folding and timely release matter for
+                avoiding lows; metformin reins in hepatic glucose production and
+                improves peripheral sensitivity, making each unit of correctly
+                folded insulin more effective and less likely to drive swings.
               </Typography>
             </CardContent>
           </Card>
