@@ -51,6 +51,9 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
+const ProteinFoldingPage = lazy(
+  () => import("./pages/science/protein-folding"),
+);
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -826,6 +829,20 @@ const App = ({ mode }) => {
                       <PasswordGate>
                         <UtilitiesDashboard />
                       </PasswordGate>
+                    </>
+                  }
+                />
+                <Route
+                  path="/science/protein-folding"
+                  element={
+                    <>
+                      <SEO
+                        title="Protein Folding – Insulin & Heart Medication Insights"
+                        description="Interactive WebGPU visual of insulin folding with cardiometabolic explanations."
+                        canonicalPath="/science/protein-folding"
+                        type="website"
+                      />
+                      <ProteinFoldingPage />
                     </>
                   }
                 />
