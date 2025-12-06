@@ -37,7 +37,7 @@ export default function ProteinFoldingVisualization() {
       ] = await Promise.all([
         import("three"),
         import("three/examples/jsm/controls/OrbitControls.js"),
-        import("three/examples/jsm/renderers/webgpu/WebGPURenderer.js"),
+        import("three/webgpu"),
       ]);
 
       const {
@@ -71,10 +71,7 @@ export default function ProteinFoldingVisualization() {
       camera.position.set(0, 1.4, 4.2);
 
       const isWebGPUAvailable = typeof navigator !== "undefined" && "gpu" in navigator;
-      type RendererType =
-        | InstanceType<typeof WebGPURenderer>
-        | import("three").WebGLRenderer
-        | null;
+      type RendererType = InstanceType<typeof WebGPURenderer> | import("three").WebGLRenderer | null;
       let renderer: RendererType = null;
 
       if (isWebGPUAvailable) {
