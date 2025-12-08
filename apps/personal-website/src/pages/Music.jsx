@@ -13,6 +13,11 @@ import {
 
 const MusicPage = () => {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const playlistBg = isDark ? alpha(theme.palette.error.main, 0.9) : theme.palette.error.main;
+  const playlistTextColor = isDark
+    ? theme.palette.common.white
+    : theme.palette.getContrastText(theme.palette.error.main);
 
   return (
     <Box
@@ -77,12 +82,21 @@ const MusicPage = () => {
                 startIcon={<Play size={20} />}
                 endIcon={<ExternalLink size={16} />}
                 sx={{
+                  backgroundColor: playlistBg,
                   px: 3,
                   py: 1.5,
                   borderRadius: 2,
                   textTransform: "none",
                   fontSize: "1.1rem",
                   fontWeight: 600,
+                  color: playlistTextColor,
+                  boxShadow: "none",
+                  "&:hover": {
+                    boxShadow: "none",
+                    backgroundColor: isDark
+                      ? alpha(theme.palette.error.main, 0.8)
+                      : alpha(theme.palette.error.main, 0.88),
+                  },
                 }}
               >
                 Listen to Kumar Playlist
@@ -104,54 +118,36 @@ const MusicPage = () => {
               border: `1px solid ${theme.palette.divider}`,
             }}
           >
-            <Typography variant="h5" component="h3" gutterBottom fontWeight="600">
-              Fresh spins
-            </Typography>
-            <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 4 }}>
-              The latest eight adds (straight from the playlist above) keep zigzagging across eras:
-              Carnatic reworks, Tamil fusion, and a few morning bhajans to
-              balance the energy. Still hopping between nostalgia and fresh
-              finds.
-            </Typography>
+          <Typography variant="h5" component="h3" gutterBottom fontWeight="600">
+            Fresh spins
+          </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 4 }}>
+            Added four tracks this week—two “Heart” anthems, a Shiva cover, and a Malayalam
+            Ayyappa single—jumping between faith, hip-hop energy, and temple percussion.
+          </Typography>
 
-            <Stack spacing={2}>
-              {[
-                {
-                  title: "Kannu munna nee iruka (From “Acacia”)",
-                  desc: "Soft Tamil opener with a steady pulse; great as a gentle warmup before the day starts.",
-                },
-                {
-                  title: "Kaathodu Poguma (From “Indian Penal Law (IPL)”)",
-                  desc: "Breezy contemporary cut—light guitars, easy chorus, weekend-drive energy.",
-                },
-                {
-                  title: "Nadhiye",
-                  desc: "River-paced melody; unhurried vocals and a calm, flowing arrangement.",
-                },
-                {
-                  title: "Chill Makkaa (From “Good Night”)",
-                  desc: "Laid-back, percussive, and smile-inducing—perfect for an evening wind-down.",
-                },
-                {
-                  title: "Oonjala Oonjala",
-                  desc: "Swinging lullaby vibe; warm strings and an easy hook.",
-                },
-                {
-                  title: "Ennai Vittu Ni (From “Cristina Kathirvelan”)",
-                  desc: "Heart-on-sleeve ballad with a clean vocal lead—simple, sincere, repeatable.",
-                },
-                {
-                  title: "FEAR",
-                  desc: "NF in reflective mode; tight production, introspective bars, motivating drumline.",
-                },
-                {
-                  title: "The Search — NF",
-                  desc: "NF’s signature urgency—strings, marching beat, and a sprint of honest verses.",
-                },
-              ].map((item) => (
-                <Box
-                  key={item.title}
-                  sx={{
+          <Stack spacing={2}>
+            {[
+              {
+                title: "HEART REBUILT BY JESUS",
+                desc: "Bryanforchrist short—16 seconds of pure uplift; a quick jolt of faith before coffee.",
+              },
+              {
+                title: "Heart (Lyrics) — Kieran The Light",
+                desc: "After Light production; reflective hip-hop hook with a bounce that sticks.",
+              },
+              {
+                title: "Chandrachooda Siva Sankara Parvati (Cover)",
+                desc: "R Harikrishnan’s take—slow build, devotional heft, and a satisfying crescendo.",
+              },
+              {
+                title: "പുതിയ അയ്യപ്പാട്ട്‌ഗാനം | പമ്പാവാസൻ (DK Musicals)",
+                desc: "Malayalam Ayyappa cut—layered drums, chorus lift, and a road-trip-ready groove.",
+              },
+            ].map((item) => (
+              <Box
+                key={item.title}
+                sx={{
                     p: 2,
                     borderRadius: 2,
                     border: `1px solid ${theme.palette.divider}`,

@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Walk the Talk",
+    date: "December 8, 2025",
+    lastModified: "December 8, 2025",
+    excerpt:
+      "Owning your domain, reflecting on consciousness and cultural heritage, comparing India–US indicators, and the songs and stories that keep me inspired.",
+    tags: ["Personal branding", "Education", "Culture", "Music", "Inspiration"],
+    image: "/generate/2025-12-08-walk-the-talk.png",
+    link: "/blog/2025-12-08-walk-the-talk",
+  },
+  {
     title:
       "From Thinking Machines to Rudram Mornings — AI, Insulin, Stories, and Nostalgia",
     date: "November 30, 2025",

@@ -557,14 +557,14 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          “Everything is possible. The impossible just takes longer.”
+                          “Life is not easy for any of us. But what of that? We must have perseverance and above all confidence in ourselves. We must believe that we are gifted for something and that this thing must be attained.”
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          — Dan Brown
+                          — Marie Curie
                         </Typography>
                       </Paper>
                       <WorldClock />
