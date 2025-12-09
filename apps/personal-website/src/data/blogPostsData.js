@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "HH DEC Magazine: Sleep, Health, and Performance",
+    date: "December 9, 2025",
+    lastModified: "December 9, 2025",
+    excerpt:
+      "Sleep discipline, infant circadian coaching, sensory aids, Ayurveda’s take, survey data on parents and kids, melatonin caveats, and performance lessons from sprinting.",
+    tags: ["Sleep", "Health", "Wellness", "Ayurveda", "Performance"],
+    image: "/generate/2025-12-09-hh-dec-magazine-sleep-health-performance.png",
+    link: "/blog/2025-12-09-hh-dec-magazine-sleep-health-performance",
+  },
+  {
     title: "Walk the Talk",
     date: "December 8, 2025",
     lastModified: "December 8, 2025",
