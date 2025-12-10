@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useColorMode } from "../providers/ColorModeProvider";
 
 const Clock = ({ timeZone, label, city, isDarkMode }) => {
-  const [time, setTime] = useState("");
-
-  useEffect(() => {
-    const timer = setInterval(() => {
+  const formatTime = useMemo(
+    () => (zone) => {
       const now = new Date();
       const options = {
-        timeZone,
+        timeZone: zone,
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       };
-      setTime(now.toLocaleTimeString("en-GB", options));
+      return now.toLocaleTimeString("en-GB", options).substring(0, 5);
+    },
+    [],
+  );
+
+  const [time, setTime] = useState(() => formatTime(timeZone));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(formatTime(timeZone));
     }, 1000);
     return () => clearInterval(timer);
-  }, [timeZone]);
+  }, [formatTime, timeZone]);
 
   return (
     <Paper
@@ -27,6 +34,7 @@ const Clock = ({ timeZone, label, city, isDarkMode }) => {
       sx={{
         px: 2.5,
         py: 1.5,
+        minHeight: 108,
         minWidth: 86,
         textAlign: "center",
         borderRadius: 3,
@@ -52,7 +60,7 @@ const Clock = ({ timeZone, label, city, isDarkMode }) => {
         component="div"
         sx={{ fontWeight: 700, mt: 0.5 }}
       >
-        {time.substring(0, 5)}
+        {time || "--:--"}
       </Typography>
       <Typography
         variant="caption"
@@ -85,7 +93,12 @@ const WorldClock = () => {
       spacing={{ xs: 1.5, md: 2.5 }}
       justifyContent="center"
       alignItems="stretch"
-      sx={{ mt: 8, flexWrap: "wrap" }}
+      sx={{
+        mt: 8,
+        flexWrap: "wrap",
+        contentVisibility: "auto",
+        containIntrinsicSize: "120px",
+      }}
     >
       {timeZones.map(({ label, timeZone, city }) => (
         <Clock

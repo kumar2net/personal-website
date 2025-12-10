@@ -173,6 +173,7 @@ const App = ({ mode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [showWorldClock, setShowWorldClock] = useState(false);
   const isDarkMode = mode === "dark";
 
   const trackClick = (eventName, parameters = {}) => {
@@ -212,6 +213,22 @@ const App = ({ mode }) => {
   useEffect(() => {
     // Remove artificial delay for faster loading
     setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    const reveal = () => setShowWorldClock(true);
+    const idleId =
+      "requestIdleCallback" in window
+        ? window.requestIdleCallback(reveal, { timeout: 1500 })
+        : window.setTimeout(reveal, 400);
+    return () => {
+      if ("cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
+    };
   }, []);
 
   // Error boundary for mobile browsers
@@ -554,6 +571,8 @@ const App = ({ mode }) => {
                           textAlign: "left",
                           p: { xs: 4, md: 5 },
                           borderRadius: 4,
+                          contentVisibility: "auto",
+                          containIntrinsicSize: "320px",
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
@@ -567,7 +586,11 @@ const App = ({ mode }) => {
                           — Marie Curie
                         </Typography>
                       </Paper>
-                      <WorldClock />
+                      {showWorldClock ? (
+                        <WorldClock />
+                      ) : (
+                        <Box sx={{ mt: 8, minHeight: 140 }} aria-hidden />
+                      )}
                       <Stack
                         direction="row"
                         spacing={2}
