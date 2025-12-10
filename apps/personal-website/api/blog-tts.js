@@ -31,7 +31,8 @@ const DEFAULT_TRANSLATION_MODEL =
   "gpt-4o-mini";
 
 const FALLBACK_TTS_MODELS = [
-  // Prioritize faster/lighter payloads first
+  // Prefer fastest-start models first
+  "gpt-4o-mini-tts",
   "tts-1",
   "tts-1-hd",
 ];
@@ -60,7 +61,7 @@ const TTS_MODEL_CANDIDATES = Array.from(
 
 const DEFAULT_AUDIO_FORMAT = "opus";
 const AUDIO_MIME_MAP = {
-  opus: "audio/ogg",
+  opus: "audio/ogg; codecs=opus",
   mp3: "audio/mpeg",
 };
 

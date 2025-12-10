@@ -167,6 +167,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const audioRef = useRef(null);
   const abortControllerRef = useRef(null);
   const prefetchedRef = useRef(false);
+  const prefetchedLanguagesRef = useRef(new Set());
 
   useEffect(() => {
     cacheRef.current = audioCache;
@@ -296,9 +297,19 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     if (prefetchedRef.current) return;
     if (!articleRef?.current) return;
     prefetchedRef.current = true;
+    prefetchedLanguagesRef.current.add("en");
     fetchAudio({ language: "en", isPrefetch: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articleRef]);
+
+  useEffect(() => {
+    if (!articleRef?.current) return;
+    if (prefetchedLanguagesRef.current.has(selectedLanguage)) return;
+    if (loadingLanguage === selectedLanguage) return;
+    prefetchedLanguagesRef.current.add(selectedLanguage);
+    fetchAudio({ language: selectedLanguage, isPrefetch: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLanguage, loadingLanguage, articleRef]);
 
   async function fetchAudio({ language, isPrefetch } = {}) {
     const targetLanguage = language || selectedLanguage;
