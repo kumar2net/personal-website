@@ -55,6 +55,7 @@ const ScienceIndex = lazy(() => import("./pages/science"));
 const ProteinFoldingPage = lazy(
   () => import("./pages/science/protein-folding"),
 );
+const BrainVsAiPrimerPage = lazy(() => import("./pages/science/brain-vs-ai"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -883,6 +884,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <ProteinFoldingPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/science/brain-vs-ai"
+                  element={
+                    <>
+                      <SEO
+                        title="Brain Vs AI Neural Network Primer"
+                        description="WebGPU visualization comparing neurons + synapses with transformer-style neural nets powering LLMs."
+                        canonicalPath="/science/brain-vs-ai"
+                        type="website"
+                      />
+                      <BrainVsAiPrimerPage />
                     </>
                   }
                 />

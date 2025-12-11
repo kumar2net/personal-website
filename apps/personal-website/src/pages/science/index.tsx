@@ -47,6 +47,24 @@ export default function ScienceIndex() {
           <Card sx={cardSx}>
             <CardActionArea
               component={RouterLink}
+              to="/science/brain-vs-ai"
+              sx={{ height: "100%" }}
+            >
+              <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                  Brain Vs AI Neural Network Primer
+                </Typography>
+                <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                  WebGPU visualization of neurons, synapses, and how transformer layers
+                  borrow those ideas to power LLMs.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+
+          <Card sx={cardSx}>
+            <CardActionArea
+              component={RouterLink}
               to="/science/protein-folding"
               sx={{ height: "100%" }}
             >
