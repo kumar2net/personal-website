@@ -56,6 +56,7 @@ const ProteinFoldingPage = lazy(
   () => import("./pages/science/protein-folding"),
 );
 const BrainVsAiPrimerPage = lazy(() => import("./pages/science/brain-vs-ai"));
+const BackPainPlanPage = lazy(() => import("./pages/science/back-pain"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -898,6 +899,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <BrainVsAiPrimerPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/science/back-pain"
+                  element={
+                    <>
+                      <SEO
+                        title="Back Pain Relief – Paraspinal Calm-Down Plan"
+                        description="Annotated, voiceover-friendly plan to reduce paraspinal spasm with low-gravity moves and safety guardrails."
+                        canonicalPath="/science/back-pain"
+                        type="website"
+                      />
+                      <BackPainPlanPage />
                     </>
                   }
                 />

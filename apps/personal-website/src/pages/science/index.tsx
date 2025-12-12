@@ -3,6 +3,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Chip,
   Container,
   Stack,
   Typography,
@@ -43,6 +44,13 @@ export default function ScienceIndex() {
           <Typography variant="headlineSmall" sx={{ color: onSurface }}>
             Science Notes
           </Typography>
+          <Typography
+            variant="bodyMedium"
+            sx={{ color: alpha(onSurface, 0.82), maxWidth: 640 }}
+          >
+            Tap a card to open the interactive WebGPU render. Each scene streams only
+            after you open it to keep the page light.
+          </Typography>
 
           <Card sx={cardSx}>
             <CardActionArea
@@ -51,30 +59,90 @@ export default function ScienceIndex() {
               sx={{ height: "100%" }}
             >
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                <Chip
+                  size="small"
+                  label="Interactive WebGPU"
+                  sx={{
+                    width: "fit-content",
+                    backgroundColor: alpha(primaryContainer, 0.14),
+                    color: primaryContainer,
+                    fontWeight: 600,
+                  }}
+                />
                 <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
                   Brain Vs AI Neural Network Primer
                 </Typography>
                 <Typography variant="bodyLarge" sx={{ color: onSurface }}>
                   WebGPU visualization of neurons, synapses, and how transformer layers
                   borrow those ideas to power LLMs.
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+              </Typography>
+              <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                Click to stream the neural network render and see how each layer
+                lights up.
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
 
-          <Card sx={cardSx}>
-            <CardActionArea
-              component={RouterLink}
-              to="/science/protein-folding"
-              sx={{ height: "100%" }}
+        <Card sx={cardSx}>
+          <CardActionArea
+            component={RouterLink}
+            to="/science/back-pain"
+            sx={{ height: "100%" }}
+          >
+            <CardContent sx={{ display: "grid", gap: 1.25 }}>
+              <Chip
+                size="small"
+                label="Guided Routine"
+                sx={{
+                  width: "fit-content",
+                  backgroundColor: alpha(primaryContainer, 0.14),
+                  color: primaryContainer,
+                  fontWeight: 600,
+                }}
+              />
+              <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                Back Pain Relief Plan
+              </Typography>
+              <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                Annotated, voiceover-ready plan to calm paraspinal spasm: micro-moves,
+                sit/stand technique, and when to pause for clinical care.
+              </Typography>
+              <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                Built to be read aloud or turned into a guided video—no gear, minimal
+                gravity load.
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+
+        <Card sx={cardSx}>
+          <CardActionArea
+            component={RouterLink}
+            to="/science/protein-folding"
+            sx={{ height: "100%" }}
             >
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                <Chip
+                  size="small"
+                  label="Interactive WebGPU"
+                  sx={{
+                    width: "fit-content",
+                    backgroundColor: alpha(primaryContainer, 0.14),
+                    color: primaryContainer,
+                    fontWeight: 600,
+                  }}
+                />
                 <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
                   Insulin Protein Folding & Heart Meds
                 </Typography>
                 <Typography variant="bodyLarge" sx={{ color: onSurface }}>
                   WebGPU visualization of insulin A/B chains with context on my low
                   LVEF medications and how they shape cardiometabolic pathways.
+                </Typography>
+                <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                  Click to open the 3D folding animation and explore the molecules
+                  powering the writeup.
                 </Typography>
               </CardContent>
             </CardActionArea>
