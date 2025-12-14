@@ -84,7 +84,7 @@ const Album = () => {
             }}
           >
             <Typography variant="body1" color="text.primary">
-              Lovely images from Pacific Grove, Monterey, California.
+              Reet
             </Typography>
           </Box>
         </Box>
