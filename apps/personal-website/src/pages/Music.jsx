@@ -18,6 +18,7 @@ const MusicPage = () => {
   const playlistTextColor = isDark
     ? theme.palette.common.white
     : theme.palette.getContrastText(theme.palette.error.main);
+  const playlistId = "PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu";
 
   return (
     <Box
@@ -76,7 +77,7 @@ const MusicPage = () => {
                 variant="contained"
                 color="error"
                 size="large"
-                href="https://music.youtube.com/playlist?list=PLUTFXCgXawk8yPaOn2iiq1hH24OEeRVNu&si=bb_bAFMsmnMXfRWr"
+                href={`https://music.youtube.com/playlist?list=${playlistId}&si=bb_bAFMsmnMXfRWr`}
                 target="_blank"
                 rel="noopener noreferrer"
                 startIcon={<Play size={20} />}
@@ -122,27 +123,24 @@ const MusicPage = () => {
             Fresh spins
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 4 }}>
-            Added four tracks this week—two “Heart” anthems, a Shiva cover, and a Malayalam
-            Ayyappa single—jumping between faith, hip-hop energy, and temple percussion.
+            Latest 3 songs added to the playlist:
           </Typography>
 
-          <Stack spacing={2}>
+            <Stack spacing={2}>
             {[
               {
-                title: "HEART REBUILT BY JESUS",
-                desc: "Bryanforchrist short—16 seconds of pure uplift; a quick jolt of faith before coffee.",
+                title:
+                  '"சென்னையில் சங்கீத உத்சவ்" கர்நாடக இசை பாடகி ஸ்ரீரஞ்சனி வழங்கும் வாய்ப்பாட்டு 03',
+                videoId: "yIagpS0KxvQ",
               },
               {
-                title: "Heart (Lyrics) — Kieran The Light",
-                desc: "After Light production; reflective hip-hop hook with a bounce that sticks.",
+                title: "Ed sheeran & Taylor swift-Make Me Good (Christmas Special)🎄",
+                videoId: "a9TR_Ozwr88",
               },
               {
-                title: "Chandrachooda Siva Sankara Parvati (Cover)",
-                desc: "R Harikrishnan’s take—slow build, devotional heft, and a satisfying crescendo.",
-              },
-              {
-                title: "പുതിയ അയ്യപ്പാട്ട്‌ഗാനം | പമ്പാവാസൻ (DK Musicals)",
-                desc: "Malayalam Ayyappa cut—layered drums, chorus lift, and a road-trip-ready groove.",
+                title:
+                  "Challa (Official Music Video) | Hadiqa Kiani | Irfan Kiani | Sufiscore | Punjabi Folk Song",
+                videoId: "NC1rTd7Nm98",
               },
             ].map((item) => (
               <Box
@@ -165,9 +163,18 @@ const MusicPage = () => {
                   >
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" color="text.primary">
-                    {item.desc}
-                  </Typography>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    href={`https://music.youtube.com/watch?v=${item.videoId}&list=${playlistId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    endIcon={<ExternalLink size={16} />}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Listen
+                  </Button>
                 </Box>
               ))}
             </Stack>

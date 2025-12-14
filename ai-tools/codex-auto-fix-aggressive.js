@@ -207,7 +207,7 @@ class CodexAutoFixAggressive {
   supportsReasoning(modelName) {
     if (!modelName) return false;
     const normalized = modelName.toLowerCase();
-    return normalized.includes('codex') || normalized.includes('gpt-5.1') || normalized.includes('o1');
+    return normalized.includes('codex') || normalized.includes('gpt-5') || normalized.includes('o1');
   }
 
   chunkIssues(issues) {

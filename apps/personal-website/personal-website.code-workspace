@@ -7,6 +7,6 @@
 	"settings": {
 		"editor.wordWrap": "on",
 		"chatgpt.openOnStartup": true,
-		"chatgpt.defaultModel": "gpt-5.1"
+		"chatgpt.defaultModel": "gpt-5.2"
 	}
 }
