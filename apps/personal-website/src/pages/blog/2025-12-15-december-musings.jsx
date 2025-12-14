@@ -229,343 +229,36 @@ export default function BlogPost() {
           variant="body1"
           sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "text.primary" }}
         >
-          It&apos;s less about memorization and more about building mental leverage. And summarixe it crisply for Gen Z and millenial users
+          It&apos;s less about memorization and more about building mental leverage. Crisp take:
         </Typography>
 
-        <Stack spacing={2.25}>
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              1. Start With First Principles (Not Definitions)
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Don&apos;t begin with textbook definitions. Start by asking:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                What problem does this exist to solve?
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                What would reality look like if this didn&apos;t exist?
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              Understanding flows from necessity, not vocabulary. If you can&apos;t explain why something exists, you don&apos;t understand it.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              2. Reduce It to the Smallest Moving Parts
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Everything complex is built from a few primitives. Break things down into:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Inputs
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Processes
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Outputs
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Constraints
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Incentives
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              If it still feels confusing, you haven&apos;t reduced it far enough.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              3. Identify the Core Variable That Actually Matters
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Most systems look complicated because we focus on the wrong variables. Ask:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                What variable, if changed, would disproportionately affect the outcome?
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                What do experts obsess over quietly?
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              That variable is the lever.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              4. Learn the Mental Models, Not the Facts
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Facts expire. Models compound. Examples:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Incentives
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Feedback loops
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Trade-offs
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Non-linear effects
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Second-order consequences
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              Once you have the model, facts plug themselves in.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              5. Understand Incentives Before Behavior
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              People, systems, and markets do exactly what they&apos;re incentivized to do. If behavior seems irrational:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                You&apos;re missing an incentive
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Or misunderstanding the payoff structure
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              This single lens explains politics, markets, organizations, and tech adoption.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              6. Use Analogies Across Domains
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Deep understanding shows up as transferability. If you truly understand something, you can explain it using:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Biology
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Physics
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Economics
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Everyday life
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              Analogies reveal structure. Memorization hides ignorance.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              7. Ask &quot;Comed to What?&quot;
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Nothing makes sense in isolation. Always come:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Alternatives
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Opportunity cost
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Counterfactuals
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              Understanding is relative, not absolute.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              8. Teach It Simply (Feynman Test)
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              If you can&apos;t explain it to:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                a smart 12-year-old
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                or in 3-5 sentences
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              You don&apos;t understand it yet. Clarity is a ruthless filter.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              9. Seate Signal From Noise
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Most information is noise masquerading as insight. PolymathInvestor&apos;s rule:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Ignore opinions
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Ignore headlines
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Ignore narratives
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              Focus on:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Data
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Structure
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Incentives
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Long-term dynamics
-              </Typography>
-            </Stack>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1.2rem", md: "1.35rem" },
-                fontWeight: 700,
-                mb: 1,
-              }}
-            >
-              10. Revisit With Better Questions
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-              Understanding is iterative. Each pass should:
-            </Typography>
-            <Stack spacing={0.75} component="ul" sx={{ pl: 2 }}>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Remove assumptions
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Reduce complexity
-              </Typography>
-              <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.6 }}>
-                Improve prediction ability
-              </Typography>
-            </Stack>
-            <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7, mt: 1 }}>
-              If your understanding doesn&apos;t help you predict or decide, it&apos;s incomplete.
-            </Typography>
-          </Box>
+        <Stack spacing={1.25} component="ul" sx={{ pl: 2 }}>
+          <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
+            Start with the why: what problem exists and what breaks if it didn&apos;t?
+          </Typography>
+          <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
+            Reduce to primitives: inputs, processes, outputs, constraints, incentives.
+          </Typography>
+          <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
+            Find the lever: the one variable experts obsess over that swings outcomes.
+          </Typography>
+          <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
+            Think in models, not facts: incentives, feedback loops, trade-offs, second-order effects.
+          </Typography>
+          <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
+            Teach it simply: if you can&apos;t explain it to a smart 12-year-old in 3–5 sentences, you don&apos;t own it yet.
+          </Typography>
+          <Typography component="li" variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
+            Cut noise: ignore opinions/headlines; trust data, structure, incentives, and long-term dynamics.
+          </Typography>
         </Stack>
 
-        <Box>
-          <Typography
-            variant="h3"
-            sx={{
-              fontSize: { xs: "1.2rem", md: "1.35rem" },
-              fontWeight: 700,
-              mb: 1,
-            }}
-          >
-            One-Line Summary
-          </Typography>
-          <Typography variant="body1" sx={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
-            Understand the problem → reduce to primitives → identify incentives → apply mental models → test via explanation.
-          </Typography>
-        </Box>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "text.secondary" }}
+        >
+          One-liner: Understand the problem → reduce to primitives → identify incentives → apply models → explain it back.
+        </Typography>
       </Paper>
     </Box>
   );

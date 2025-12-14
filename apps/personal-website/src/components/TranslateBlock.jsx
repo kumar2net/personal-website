@@ -21,6 +21,7 @@ export default function TranslateBlock({ slug, articleRef }) {
   const [translations, setTranslations] = useState({});
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState("");
+  const [activeLang, setActiveLang] = useState("");
 
   const hasArticleContent = Boolean(articleRef?.current?.innerText?.trim());
 
@@ -33,8 +34,11 @@ export default function TranslateBlock({ slug, articleRef }) {
     return "";
   }, []);
 
-  const getArticleText = () =>
-    articleRef?.current?.innerText?.replace(/\s+/g, " ").trim() || "";
+  const getArticleText = () => {
+    const raw = articleRef?.current?.innerText;
+    if (!raw) return "";
+    return raw.replace(/\r\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  };
 
   const handleTranslate = async (code) => {
     setError("");
@@ -45,6 +49,7 @@ export default function TranslateBlock({ slug, articleRef }) {
     }
 
     if (translations[code]) {
+      setActiveLang(code);
       setOpen(true);
       return;
     }
@@ -62,6 +67,7 @@ export default function TranslateBlock({ slug, articleRef }) {
       }
       const payload = await response.json();
       setTranslations((prev) => ({ ...prev, [code]: payload.translated }));
+      setActiveLang(code);
       setOpen(true);
     } catch (err) {
       setError(err?.message || "Translation failed");
@@ -134,11 +140,12 @@ export default function TranslateBlock({ slug, articleRef }) {
         </Alert>
       </Collapse>
 
-      <Collapse in={open && Boolean(Object.keys(translations).length)} unmountOnExit>
+      <Collapse in={open && Boolean(activeLang && translations[activeLang])} unmountOnExit>
         <Stack spacing={2} sx={{ mt: 2 }}>
-          {LANGUAGES.map((lang) => {
-            const copy = translations[lang.code];
-            if (!copy) return null;
+          {(() => {
+            const lang = LANGUAGES.find((l) => l.code === activeLang);
+            const copy = translations[activeLang];
+            if (!lang || !copy) return null;
             return (
               <Paper
                 key={lang.code}
@@ -167,7 +174,7 @@ export default function TranslateBlock({ slug, articleRef }) {
                 </Typography>
               </Paper>
             );
-          })}
+          })()}
         </Stack>
       </Collapse>
     </Paper>

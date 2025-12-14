@@ -578,14 +578,14 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          “Life is not easy for any of us. But what of that? We must have perseverance and above all confidence in ourselves. We must believe that we are gifted for something and that this thing must be attained.”
+                          “Science is a differential equation. Religion is a boundary condition.”
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          — Marie Curie
+                          — Alan Turing
                         </Typography>
                       </Paper>
                       {showWorldClock ? (
