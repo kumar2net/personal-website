@@ -1,5 +1,25 @@
 export const blogPosts = [
   {
+    title: "December Musings",
+    date: "December 15, 2025",
+    lastModified: "December 15, 2025",
+    excerpt:
+      "Margazhi music surprises, Janaki Patti’s retro ecommerce hustle, Indigo’s low-cost trade-offs, and a mental model playbook.",
+    tags: ["Margazhi", "Music", "Aviation", "Mental Models", "Tamil"],
+    image: "/generate/2025-12-15-december-musings.svg",
+    link: "/blog/2025-12-15-december-musings",
+  },
+  {
+    title: "Your 2025 X Wrapped",
+    date: "December 12, 2025",
+    lastModified: "December 12, 2025",
+    excerpt:
+      "A fighter’s recap on X: accountability threads, AI ethics nudges, Tamil shout-outs, and goals for 2026.",
+    tags: ["X", "Accountability", "AI Ethics", "Tamil", "2025"],
+    image: "/generate/2025-12-12-your-2025-x-wrapped.svg",
+    link: "/blog/2025-12-12-your-2025-x-wrapped",
+  },
+  {
     title: "HH DEC Magazine: Sleep, Health, and Performance",
     date: "December 9, 2025",
     lastModified: "December 9, 2025",

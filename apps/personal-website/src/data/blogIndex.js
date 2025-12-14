@@ -2,6 +2,24 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2025-12-15-december-musings": {
+    title: "December Musings",
+    description:
+      "Margazhi music season surprises with AR Rahman and Bands of Cooum, Janaki Patti’s retro ecommerce hustle, Indigo’s low-cost trade-offs, plus a clean 10-step PolymathInvestor playbook for understanding anything.",
+    image: "/generate/2025-12-15-december-musings.svg",
+    tags: ["Margazhi", "Music", "Aviation", "Mental Models", "Tamil"],
+    datePublished: "2025-12-15",
+    dateModified: "2025-12-15",
+  },
+  "2025-12-12-your-2025-x-wrapped": {
+    title: "Your 2025 X Wrapped",
+    description:
+      "An unapologetic recap of accountability threads, AI ethics nudges, Tamil shout-outs, and next-year prompts for @kumar2net’s 2025 on X.",
+    image: "/generate/2025-12-12-your-2025-x-wrapped.svg",
+    tags: ["X", "Accountability", "AI Ethics", "Tamil", "2025"],
+    datePublished: "2025-12-12",
+    dateModified: "2025-12-12",
+  },
   "2025-11-15-belam-field-notes": {
     title: "From Belém Rumours to Chennai Dashboards: Weekend Climate Field Notes",
     description:

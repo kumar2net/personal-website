@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="December musings: Margazhi music, Janaki Patti snacks, Indigo trade-offs, and mental models framework">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="40%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#22d3ee" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="80" y="80" width="1040" height="470" rx="32" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="3" />
+  <text x="120" y="170" fill="#e0f2fe" font-family="'Inter', 'Segoe UI', sans-serif" font-size="64" font-weight="700">December Musings</text>
+  <text x="120" y="230" fill="#bfdbfe" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="600">Margazhi • Janaki Patti • Indigo trade-offs • Mental models</text>
+  <text x="120" y="300" fill="#e2e8f0" font-family="'Inter', 'Segoe UI', sans-serif" font-size="24" font-weight="500">AR Rahman opens the season, Bands of Cooum surprise slot</text>
+  <text x="120" y="340" fill="#e2e8f0" font-family="'Inter', 'Segoe UI', sans-serif" font-size="24" font-weight="500">Snacks shipped worldwide with a retro newsletter vibe</text>
+  <text x="120" y="380" fill="#e2e8f0" font-family="'Inter', 'Segoe UI', sans-serif" font-size="24" font-weight="500">Low-cost aviation: price vs quantity, monopoly math</text>
+  <text x="120" y="420" fill="#e2e8f0" font-family="'Inter', 'Segoe UI', sans-serif" font-size="24" font-weight="500">10-step PolymathInvestor playbook for understanding anything</text>
+  <rect x="120" y="460" width="360" height="80" rx="20" fill="url(#accent)" opacity="0.9" />
+  <text x="150" y="510" fill="#0b1220" font-family="'Inter', 'Segoe UI', sans-serif" font-size="30" font-weight="800">Kumar Writes</text>
+  <text x="120" y="560" fill="#cbd5e1" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="600">/blog/2025-12-15-december-musings</text>
+</svg>

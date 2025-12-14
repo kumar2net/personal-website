@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Box, Container, alpha } from "@mui/material";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
+import TranslateBlock from "./TranslateBlock";
 
 export default function BlogPostLayout({ slug, post, children }) {
   const articleRef = useRef(null);
@@ -59,6 +60,7 @@ export default function BlogPostLayout({ slug, post, children }) {
       </script>
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 8 } }}>
         <BlogAudioPlayer slug={slug} articleRef={articleRef} />
+        <TranslateBlock slug={slug} articleRef={articleRef} />
         <Box
           sx={(theme) => ({
             display: "flex",
