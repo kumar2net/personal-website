@@ -133,7 +133,7 @@ export const getTheme = (scheme: Scheme) =>
       MuiTypography: {
         styleOverrides: {
           root: {
-            color: "inherit",
+            color: "var(--mui-palette-text-primary)",
           },
         },
       },
