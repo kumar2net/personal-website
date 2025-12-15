@@ -178,10 +178,10 @@ export default function BlogPostLayout({ slug, post, children }) {
 
               // Text Colors
               "& .text-gray-500, & .text-gray-600, & .text-gray-700": {
-                color: "text.secondary !important",
+                color: `${theme.palette.text.secondary} !important`,
               },
               "& .text-gray-800, & .text-gray-900, & .text-black": {
-                color: "text.primary !important",
+                color: `${theme.palette.text.primary} !important`,
               },
               "& .text-blue-600, & .text-blue-700, & .text-blue-800": { color: colors.blue },
               "& .text-green-600, & .text-green-700, & .text-green-800": { color: colors.green },
@@ -198,7 +198,7 @@ export default function BlogPostLayout({ slug, post, children }) {
               },
               "& .bg-gray-50, & .bg-gray-100, & .bg-gray-200": {
                 backgroundColor: isDark ? alpha(theme.palette.text.primary, 0.05) : theme.palette.grey[50],
-                color: "text.primary !important",
+                color: `${theme.palette.text.primary} !important`,
               },
               "& .bg-blue-50, & .bg-blue-100": {
                 backgroundColor: alpha(theme.palette.primary.main, isDark ? 0.15 : 0.08),

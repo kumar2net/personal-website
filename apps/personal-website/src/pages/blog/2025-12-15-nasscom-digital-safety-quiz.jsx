@@ -1,5 +1,5 @@
 import React from 'react';
-import MarkdownSurface from '../../../components/MarkdownSurface';
+import MarkdownSurface from '../../components/MarkdownSurface';
 
 export default function NasscomDigitalSafetyQuiz() {
   return (
