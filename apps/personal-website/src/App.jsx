@@ -153,11 +153,15 @@ function useGaPageViews() {
   // Track GA4 page_view on route change
   useEffect(() => {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("event", "page_view", {
+      // GA4 SPA best practice: use `gtag('config', measurementId, { page_path })`
+      // on route changes. This reliably produces GA4 pageviews for client-side
+      // routing even when the initial `gtag('config', ...)` uses `send_page_view: false`.
+      const GA_MEASUREMENT_ID = "G-PZ37S6E5BL";
+      window.gtag("config", GA_MEASUREMENT_ID, {
+        send_page_view: true,
         page_path: location.pathname + location.search,
         page_location: window.location.href,
         page_title: document.title,
-        page_referrer: document.referrer || "direct",
       });
 
       // Also track custom event for better analytics

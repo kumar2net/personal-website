@@ -24,6 +24,8 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
   - Removed Weekly Whisper (PromptBox) from all blog posts
   - Removed ReactionBar and ChromeReaderModeNudge components
   - Cleaner, more focused reading experience
+- **GA4 Pageview Tracking** (Dec 2025): Improved SPA analytics accuracy
+  - Keeps `send_page_view: false` on initial load and triggers pageviews on React Router changes using `gtag('config', ...)`.
 - **Sitemap & SEO** (Nov 2025): Enhanced search engine optimization
   - Regenerated sitemap.xml and sitemap.html with latest content
   - Added Google Search Console API submission script
