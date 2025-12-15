@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2025-12-15-nasscom-digital-safety-quiz": {
+    title: "Take the NASSCOM Quiz: a fast upgrade to your digital safety instincts",
+    description:
+      "A quick challenge for all digital users: pressure-test your everyday security and privacy instincts with NASSCOM’s quiz, then improve one habit this week.",
+    image: "/media/nasscomquiz.png",
+    tags: ["NASSCOM", "Cybersecurity", "Privacy", "Digital Hygiene", "Learning"],
+    datePublished: "2025-12-15",
+    dateModified: "2025-12-15",
+  },
   "2025-12-15-december-musings": {
     title: "December Musings",
     description:

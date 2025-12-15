@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Take the NASSCOM Quiz: a fast upgrade to your digital safety instincts",
+    date: "December 15, 2025",
+    lastModified: "December 15, 2025",
+    excerpt:
+      "A quick challenge for all digital users: pressure-test your everyday security and privacy instincts with NASSCOM’s quiz, then improve one habit this week.",
+    tags: ["NASSCOM", "Cybersecurity", "Privacy", "Digital Hygiene", "Learning"],
+    image: "/media/nasscomquiz.png",
+    link: "/blog/2025-12-15-nasscom-digital-safety-quiz",
+  },
+  {
     title: "December Musings",
     date: "December 15, 2025",
     lastModified: "December 15, 2025",
