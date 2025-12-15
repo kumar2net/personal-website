@@ -7,7 +7,7 @@ export default function BlogPost() {
   const cardHeadingSx = {
     fontSize: { xs: "1.375rem", md: "1.75rem" },
     fontWeight: 700,
-    color: "text.primary",
+    color: "var(--mui-palette-text-primary)",
   };
 
   return (
@@ -62,7 +62,7 @@ export default function BlogPost() {
             fontSize: { xs: "1.875rem", md: "2.5rem" },
             fontWeight: 700,
             lineHeight: 1.2,
-            color: "text.primary",
+            color: "var(--mui-palette-text-primary)",
           }}
         >
           Blog post topics hints: December musings
@@ -111,7 +111,7 @@ export default function BlogPost() {
         </Typography>
         <Typography
           variant="body1"
-          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "text.primary" }}
+          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "var(--mui-palette-text-primary)" }}
         >
           Janaki patti is spamming me these days -but I end up reading their newsletter, maybe I love the retro feel. I think the Gen Z in her family is taking this e-commerce initiative to next level with nifty mobile apps and shipping mixture, murukku, athirasam all over the world
         </Typography>
@@ -211,7 +211,7 @@ export default function BlogPost() {
         </Typography>
         <Typography
           variant="body1"
-          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "text.primary" }}
+          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "var(--mui-palette-text-primary)" }}
         >
           It&apos;s less about memorization and more about building mental leverage. Crisp take:
         </Typography>
@@ -239,7 +239,7 @@ export default function BlogPost() {
 
         <Typography
           variant="body1"
-          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "text.secondary" }}
+          sx={{ fontSize: "1.0625rem", lineHeight: 1.8, color: "var(--mui-palette-text-secondary)" }}
         >
           One-liner: Understand the problem → reduce to primitives → identify incentives → apply models → explain it back.
         </Typography>

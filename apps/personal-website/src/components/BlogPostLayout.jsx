@@ -70,35 +70,35 @@ export default function BlogPostLayout({ slug, post, children }) {
               borderRadius: 0,
               backgroundColor: "transparent",
               boxShadow: "none",
-              color: "text.primary",
+              color: "var(--mui-palette-text-primary)",
 
               // Typography
               "& h1": {
                 ...theme.typography.h1,
                 fontSize: { xs: "2rem", md: "2.5rem" },
                 mb: 3,
-                color: "text.primary",
+                color: "var(--mui-palette-text-primary)",
               },
               "& h2": {
                 ...theme.typography.h2,
                 fontSize: { xs: "1.5rem", md: "2rem" },
                 mt: 6,
                 mb: 3,
-                color: theme.palette.text.primary,
+                color: "var(--mui-palette-text-primary)",
               },
               "& h3": {
                 ...theme.typography.h3,
                 fontSize: { xs: "1.25rem", md: "1.5rem" },
                 mt: 4,
                 mb: 2,
-                color: theme.palette.text.primary,
+                color: "var(--mui-palette-text-primary)",
               },
               "& h4": {
                 ...theme.typography.h4,
                 fontSize: "1.125rem",
                 mt: 3,
                 mb: 2,
-                color: theme.palette.text.primary,
+                color: "var(--mui-palette-text-primary)",
               },
               "& p": {
                 ...theme.typography.body1,
@@ -135,7 +135,7 @@ export default function BlogPostLayout({ slug, post, children }) {
                 "& p": {
                   mb: 0,
                   fontStyle: "italic",
-                  color: "text.primary",
+                  color: "var(--mui-palette-text-primary)",
                 },
               },
 
@@ -178,10 +178,10 @@ export default function BlogPostLayout({ slug, post, children }) {
 
               // Text Colors
               "& .text-gray-500, & .text-gray-600, & .text-gray-700": {
-                color: `${theme.palette.text.secondary} !important`,
+                color: "var(--mui-palette-text-secondary) !important",
               },
               "& .text-gray-800, & .text-gray-900, & .text-black": {
-                color: `${theme.palette.text.primary} !important`,
+                color: "var(--mui-palette-text-primary) !important",
               },
               "& .text-blue-600, & .text-blue-700, & .text-blue-800": { color: colors.blue },
               "& .text-green-600, & .text-green-700, & .text-green-800": { color: colors.green },
@@ -198,7 +198,7 @@ export default function BlogPostLayout({ slug, post, children }) {
               },
               "& .bg-gray-50, & .bg-gray-100, & .bg-gray-200": {
                 backgroundColor: isDark ? alpha(theme.palette.text.primary, 0.05) : theme.palette.grey[50],
-                color: `${theme.palette.text.primary} !important`,
+                color: "var(--mui-palette-text-primary) !important",
               },
               "& .bg-blue-50, & .bg-blue-100": {
                 backgroundColor: alpha(theme.palette.primary.main, isDark ? 0.15 : 0.08),
@@ -277,7 +277,7 @@ export default function BlogPostLayout({ slug, post, children }) {
                 fontWeight: 600,
                 p: 2,
                 borderBottom: `2px solid ${theme.palette.divider}`,
-                color: "text.primary",
+                color: "var(--mui-palette-text-primary)",
               },
               "& td": {
                 p: 2,
