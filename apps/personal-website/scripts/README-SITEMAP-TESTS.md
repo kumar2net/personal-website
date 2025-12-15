@@ -190,6 +190,13 @@ To enable Google Search Console submission, add a repository secret:
 
 The service account email must be added as an owner/full user to the `https://kumar2net.com/` property in Google Search Console.
 
+### Automated (Vercel Cron) — preferred
+
+If you deploy on Vercel, `vercel.json` schedules a daily call to `/api/sitemap-submit`.
+
+- Set the Vercel environment variable `GSC_SERVICE_ACCOUNT_KEY_JSON` to the full JSON key content.
+- Ensure the service account email has access to the Search Console property.
+
 ## Troubleshooting
 
 ### Tests fail with "File not found"
