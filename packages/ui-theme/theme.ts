@@ -1,92 +1,131 @@
 // theme.ts
 // -------------------------------------------
-// MUI v8 + Material 3 compatible theme
-// with enforced text visibility to prevent
-// invisible paragraphs in blog posts.
+// MUI v8 theme using Material 3 color semantics (role-based),
+// implemented with CSS variables via `experimental_extendTheme`.
+//
+// Visual parity note:
+// This keeps existing palette values exactly as before, so the site
+// appearance should remain unchanged while enabling additive M3 roles.
 // -------------------------------------------
 
-import { alpha, createTheme } from "@mui/material/styles";
-import { colorTokens } from "./colorTokens"; // your palette file
+import { alpha, experimental_extendTheme } from "@mui/material/styles";
+import { colorTokens } from "./colorTokens";
 
-// Scheme type: "light" | "dark"
 export type Scheme = "light" | "dark";
 
-// Main function to generate theme per mode
-export const getTheme = (scheme: Scheme) => {
-  // Helper to pick color from colorTokens["key"][scheme]
-  const tokens = (key: keyof typeof colorTokens) =>
-    colorTokens[key][scheme];
+type Material3Roles = {
+  primaryContainer: string;
+  onPrimaryContainer: string;
+  secondaryContainer: string;
+  onSecondaryContainer: string;
+};
 
-  return createTheme({
-    // -------------------------------------------
-    // 🎨 PALETTE — The heart of your color system
-    // -------------------------------------------
-    palette: {
-      mode: scheme,
+declare module "@mui/material/styles" {
+  interface Palette {
+    /**
+     * Material Design 3 color roles.
+     *
+     * These are additive (non-breaking) roles intended for "tonal" surfaces
+     * and their matching foreground ("on") colors.
+     *
+     * Usage guidelines:
+     * - `primaryContainer` / `onPrimaryContainer`: for emphasized surfaces
+     *   like highlighted cards, callouts, and selected states.
+     * - `secondaryContainer` / `onSecondaryContainer`: for supporting
+     *   surfaces like less prominent highlights, filters, or chips.
+     *
+     * Keep using `palette.primary.*` for classic MUI components and existing
+     * `sx`/theme access patterns; use `palette.m3.*` when you want explicit
+     * Material 3 container semantics.
+     */
+    m3: Material3Roles;
+  }
 
-      // Material 3 primary roles
-      primary: { main: tokens("primary") },
-      secondary: { main: tokens("secondary") },
-      error: { main: tokens("error") },
-      warning: { main: tokens("warning") },
-      success: { main: tokens("success") },
+  interface PaletteOptions {
+    m3?: Partial<Material3Roles>;
+  }
+}
 
-      // Backgrounds
-      background: {
-        default: tokens("background"), // Page background
-        paper: tokens("surface"),      // Cards, containers
-      },
+const token = <K extends keyof typeof colorTokens>(key: K, scheme: Scheme) =>
+  colorTokens[key][scheme];
 
-      // --------------------------------------------------------
-      // 🔥 CRITICAL FIX #1 — Explicit text colors for MUI v8
-      //
-      // MUI v8 no longer assigns text.primary reliably.
-      // If this block is missing, text may inherit colors from
-      // parent containers (surfaceContainer, variant, etc.)
-      // causing **invisible paragraphs**.
-      // --------------------------------------------------------
-      text: {
-        primary: tokens("onSurface"),               // Main readable text
-        secondary: tokens("onSurfaceVariant"),      // Slightly muted text
-        disabled: alpha(tokens("onSurface"), 0.38), // Disabled text
-      },
+const buildScheme = (scheme: Scheme) => ({
+  palette: {
+    mode: scheme,
 
-      // Outline / Dividers
-      divider: tokens("outlineVariant"),
+    primary: {
+      main: token("primary", scheme),
+      contrastText: token("onPrimary", scheme),
+    },
+    secondary: {
+      main: token("secondary", scheme),
+      contrastText: token("onSecondary", scheme),
+    },
+    error: {
+      main: token("error", scheme),
+      contrastText: token("onError", scheme),
+    },
+    warning: {
+      main: token("warning", scheme),
+      contrastText: token("onWarning", scheme),
+    },
+    success: {
+      main: token("success", scheme),
+      contrastText: token("onSuccess", scheme),
     },
 
-    // --------------------------------------------------------
-    // 🔥 CRITICAL FIX #2 — Universal text color override
-    //
-    // MUI v8 Typography often uses `color: inherit`.
-    // Markdown, <p>, <div>, headings, lists ALL inherit colors.
-    // If a parent has a light background + light text,
-    // blog paragraphs become invisible.
-    //
-    // This forces **every text variant** to use onSurface.
-    // --------------------------------------------------------
+    background: {
+      default: token("background", scheme),
+      paper: token("surface", scheme),
+    },
+
+    text: {
+      primary: token("onSurface", scheme),
+      secondary: token("onSurfaceVariant", scheme),
+      disabled: alpha(token("onSurface", scheme), 0.38),
+    },
+
+    divider: token("outlineVariant", scheme),
+
+    // Material 3 container roles (additive, non-breaking).
+    m3: {
+      primaryContainer: token("primaryContainer", scheme),
+      onPrimaryContainer: token("onPrimaryContainer", scheme),
+      secondaryContainer: token("secondaryContainer", scheme),
+      onSecondaryContainer: token("onSecondaryContainer", scheme),
+    },
+  },
+});
+
+export const getTheme = (scheme: Scheme) =>
+  experimental_extendTheme({
+    // Provide both color schemes so `CssVarsProvider` can switch modes
+    // without needing to rebuild the theme object.
+    colorSchemes: {
+      light: buildScheme("light"),
+      dark: buildScheme("dark"),
+    },
+    defaultColorScheme: scheme,
+
+    // Keep typography, spacing, and component overrides unchanged.
     typography: {
       allVariants: {
-        color: tokens("onSurface"),
+        // Use CSS variables so the value follows the active color scheme.
+        color: "var(--mui-palette-text-primary)",
       },
     },
-
-    // --------------------------------------------------------
-    // COMPONENT OVERRIDES (optional section)
-    // You can add per-component color/style overrides here.
-    // --------------------------------------------------------
     components: {
       MuiPaper: {
         styleOverrides: {
           root: {
-            // Ensures all Paper surfaces use Material 3 surface
-            backgroundColor: tokens("surface"),
-            color: tokens("onSurface"),
+            // Use palette roles (backed by CSS variables) to stay in sync
+            // with `CssVarsProvider` when the active scheme changes.
+            backgroundColor: "var(--mui-palette-background-paper)",
+            color: "var(--mui-palette-text-primary)",
           },
         },
       },
     },
   });
-};
 
 export { colorTokens };
