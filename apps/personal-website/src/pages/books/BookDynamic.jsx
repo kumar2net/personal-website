@@ -14,6 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
 import BookCover from '../../components/BookCover';
+import MarkdownSurface from '../../components/MarkdownSurface';
 import autoBooks from '../../data/autoBooks.json';
 
 const jsxModules = import.meta.glob('/src/pages/books/*.jsx');
@@ -240,19 +241,9 @@ export default function BookDynamic() {
       {renderHero()}
 
       {markdown ? (
-        <Paper sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: 3, boxShadow: 3 }}>
-          <Box
-            sx={{
-              '& .markdown-body h1': { marginBottom: '0.5em', fontSize: '1.6rem' },
-              '& .markdown-body h2': { marginTop: '1.4em', marginBottom: '0.6em', fontSize: '1.25rem' },
-              '& .markdown-body p': { marginBottom: '0.8em', lineHeight: 1.7 },
-              '& .markdown-body ul': { paddingLeft: '1.4em', marginBottom: '0.8em' },
-            }}
-            className="markdown-body"
-          >
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
-          </Box>
-        </Paper>
+        <MarkdownSurface>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+        </MarkdownSurface>
       ) : (
         <Typography color="text.secondary">Book not found.</Typography>
       )}

@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import BlogPostLayout from "../../components/BlogPostLayout";
+import MarkdownSurface from "../../components/MarkdownSurface";
 import { getBlogSeo } from "../../data/blogIndex";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
@@ -83,7 +84,9 @@ export default function PostDynamic() {
   if (markdown) {
     return (
       <BlogPostLayout slug={slug} post={postSeo}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+        <MarkdownSurface>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+        </MarkdownSurface>
       </BlogPostLayout>
     );
   }
