@@ -4,7 +4,7 @@ Most of us spend hours every day inside apps and websites—banking, shopping, m
 
 NASSCOM has put together a short quiz that’s worth your time:
 
-- Quiz link: https://x.com/nasscom/status/2000483503738097872?s=20
+- Quiz link: https://nasscom.in/upskill-
 
 It’s a simple, structured way to pressure-test the “default behaviors” we’ve all picked up as digital users—often without realizing it.
 
