@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import TranslateIcon from "@mui/icons-material/GTranslate";
+import { useColorMode } from "../providers/ColorModeProvider";
 
 const LANGUAGES = [
   { code: "hi", label: "Hindi" },
@@ -17,6 +18,8 @@ const LANGUAGES = [
 ];
 
 export default function TranslateBlock({ slug, articleRef }) {
+  const { mode } = useColorMode();
+  const isDark = mode === "dark";
   const [open, setOpen] = useState(false);
   const [translations, setTranslations] = useState({});
   const [loading, setLoading] = useState(null);
@@ -84,10 +87,9 @@ export default function TranslateBlock({ slug, articleRef }) {
         p: { xs: 2, md: 2.5 },
         borderRadius: 2,
         border: `1px solid ${theme.palette.divider}`,
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.background.paper
-            : "rgba(248, 250, 252, 0.85)",
+        bgcolor: isDark
+          ? theme.palette.background.paper
+          : "rgba(248, 250, 252, 0.85)",
       })}
     >
       <Stack
@@ -154,10 +156,9 @@ export default function TranslateBlock({ slug, articleRef }) {
                   p: { xs: 1.75, md: 2 },
                   borderRadius: 2,
                   borderColor: theme.palette.divider,
-                  bgcolor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(255,255,255,0.03)"
-                      : "rgba(255,255,255,0.9)",
+                  bgcolor: isDark
+                    ? "rgba(255,255,255,0.03)"
+                    : "rgba(255,255,255,0.9)",
                 })}
               >
                 <Typography

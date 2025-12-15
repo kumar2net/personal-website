@@ -1,6 +1,10 @@
 import { Box, Typography, Stack, Paper, Link } from "@mui/material";
+import { useColorMode } from "../../providers/ColorModeProvider";
 
 export default function BlogPost() {
+  const { mode } = useColorMode();
+  const isDark = mode === "dark";
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <Box
@@ -130,8 +134,7 @@ export default function BlogPost() {
             maxWidth: "100%",
             borderRadius: 2,
             border: (theme) => `1px solid ${theme.palette.divider}`,
-            boxShadow: (theme) =>
-              theme.palette.mode === "dark" ? theme.shadows[8] : theme.shadows[3],
+            boxShadow: (theme) => (isDark ? theme.shadows[8] : theme.shadows[3]),
           }}
         />
         <Stack spacing={1}>

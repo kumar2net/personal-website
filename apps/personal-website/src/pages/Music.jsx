@@ -10,10 +10,12 @@ import {
   useTheme,
   alpha,
 } from "@mui/material";
+import { useColorMode } from "../providers/ColorModeProvider";
 
 const MusicPage = () => {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
+  const { mode } = useColorMode();
+  const isDark = mode === "dark";
   const playlistBg = isDark ? alpha(theme.palette.error.main, 0.9) : theme.palette.error.main;
   const playlistTextColor = isDark
     ? theme.palette.common.white

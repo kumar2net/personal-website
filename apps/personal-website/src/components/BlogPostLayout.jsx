@@ -3,10 +3,13 @@ import { Box, Container, alpha } from "@mui/material";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
 import TranslateBlock from "./TranslateBlock";
+import { useColorMode } from "../providers/ColorModeProvider";
 
 export default function BlogPostLayout({ slug, post, children }) {
   const articleRef = useRef(null);
   const [readingMode, setReadingMode] = useState(false);
+  const { mode } = useColorMode();
+  const isDark = mode === "dark";
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -72,7 +75,7 @@ export default function BlogPostLayout({ slug, post, children }) {
             borderRadius: 2,
             border: `1px solid ${alpha(theme.palette.divider, 0.8)}`,
             bgcolor: readingMode
-              ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.12 : 0.08)
+              ? alpha(theme.palette.primary.main, isDark ? 0.12 : 0.08)
               : alpha(theme.palette.background.paper, 0.7),
             boxShadow: readingMode
               ? `0 12px 50px ${alpha(theme.palette.primary.main, 0.18)}`
@@ -142,7 +145,6 @@ export default function BlogPostLayout({ slug, post, children }) {
           component="article"
           ref={articleRef}
           sx={(theme) => {
-            const isDark = theme.palette.mode === "dark";
             const colors = {
               blue: isDark ? theme.palette.primary.light : theme.palette.primary.main,
               green: isDark ? theme.palette.success.light : theme.palette.success.main,

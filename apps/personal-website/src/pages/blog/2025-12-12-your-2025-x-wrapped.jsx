@@ -1,6 +1,10 @@
 import { Box, Typography, Stack, Paper } from "@mui/material";
+import { useColorMode } from "../../providers/ColorModeProvider";
 
 export default function BlogPost() {
+  const { mode } = useColorMode();
+  const isDark = mode === "dark";
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <Box
@@ -247,10 +251,7 @@ export default function BlogPost() {
         sx={{
           p: { xs: 2.5, md: 3 },
           borderRadius: 3,
-          bgcolor: (theme) =>
-            theme.palette.mode === "dark"
-              ? "rgba(144, 202, 249, 0.08)"
-              : "rgba(37, 99, 235, 0.08)",
+          bgcolor: isDark ? "rgba(144, 202, 249, 0.08)" : "rgba(37, 99, 235, 0.08)",
           border: (theme) => `1px dashed ${theme.palette.primary.main}`,
         }}
       >
