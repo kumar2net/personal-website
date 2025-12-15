@@ -167,6 +167,29 @@ When updating `generate-sitemap.mjs`:
 4. **Update tests**: Add tests when adding new sitemap features
 5. **Verify manually**: Occasionally check generated sitemaps in browser
 
+## Keeping sitemap.xml updated (recommended)
+
+### Manual (local)
+
+1. Generate sitemap files: `npm run sitemap`
+2. Optionally submit to Google Search Console (requires credentials):
+   - `export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"`
+   - `npm run --workspace apps/personal-website sitemap:submit`
+
+### Automated (GitHub Actions)
+
+This repo includes a scheduled workflow at `.github/workflows/sitemap-refresh.yml` that:
+
+1. Runs `npm run sitemap` daily
+2. Commits/pushes updated `apps/personal-website/public/sitemap.xml` and `apps/personal-website/public/sitemap.html`
+3. Optionally submits the sitemap to Google Search Console
+
+To enable Google Search Console submission, add a repository secret:
+
+- `GSC_SERVICE_ACCOUNT_KEY_JSON`: the full service account JSON key contents
+
+The service account email must be added as an owner/full user to the `https://kumar2net.com/` property in Google Search Console.
+
 ## Troubleshooting
 
 ### Tests fail with "File not found"
