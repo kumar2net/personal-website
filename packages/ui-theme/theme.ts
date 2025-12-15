@@ -143,7 +143,9 @@ export const getTheme = (scheme: Scheme) =>
             // Use palette roles (backed by CSS variables) to stay in sync
             // with `CssVarsProvider` when the active scheme changes.
             backgroundColor: "var(--mui-palette-background-paper)",
-            color: "inherit",
+            // Paper is a reading surface; it should not inherit accidental
+            // "onPrimary"/container foregrounds from ancestors.
+            color: "var(--mui-palette-text-primary)",
           },
         },
       },
