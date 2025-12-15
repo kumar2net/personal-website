@@ -149,6 +149,47 @@ export const getTheme = (scheme: Scheme) =>
           },
         },
       },
+      // Guardrails: any surface-like UI should default to readable text in both schemes.
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "var(--mui-palette-background-paper)",
+            color: "var(--mui-palette-text-primary)",
+          },
+        },
+      },
+      MuiAccordion: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "var(--mui-palette-background-paper)",
+            color: "var(--mui-palette-text-primary)",
+          },
+        },
+      },
+      MuiDrawer: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: "var(--mui-palette-background-paper)",
+            color: "var(--mui-palette-text-primary)",
+          },
+        },
+      },
+      MuiPopover: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: "var(--mui-palette-background-paper)",
+            color: "var(--mui-palette-text-primary)",
+          },
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: "var(--mui-palette-background-paper)",
+            color: "var(--mui-palette-text-primary)",
+          },
+        },
+      },
     },
   });
 
