@@ -4,6 +4,11 @@ import { useColorMode } from "../../providers/ColorModeProvider";
 export default function BlogPost() {
   const { mode } = useColorMode();
   const isDark = mode === "dark";
+  const cardHeadingSx = {
+    fontSize: { xs: "1.375rem", md: "1.75rem" },
+    fontWeight: 700,
+    color: "text.primary",
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -76,13 +81,7 @@ export default function BlogPost() {
           gap: 2.5,
         }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: { xs: "1.375rem", md: "1.75rem" },
-            fontWeight: 700,
-          }}
-        >
+        <Typography variant="h2" sx={cardHeadingSx}>
           December and Marghazhi music season
         </Typography>
         <Stack spacing={1.25} component="ul" sx={{ pl: 2 }}>
@@ -107,13 +106,7 @@ export default function BlogPost() {
           gap: 2.5,
         }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: { xs: "1.375rem", md: "1.75rem" },
-            fontWeight: 700,
-          }}
-        >
+        <Typography variant="h2" sx={cardHeadingSx}>
           Janaki patti is spamming me
         </Typography>
         <Typography
@@ -185,13 +178,7 @@ export default function BlogPost() {
           gap: 2.5,
         }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: { xs: "1.375rem", md: "1.75rem" },
-            fontWeight: 700,
-          }}
-        >
+        <Typography variant="h2" sx={cardHeadingSx}>
           On Indigo saga my 2 cents.
         </Typography>
         <Stack spacing={1.25} component="ul" sx={{ pl: 2 }}>
@@ -219,13 +206,7 @@ export default function BlogPost() {
           gap: 2.25,
         }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: { xs: "1.375rem", md: "1.75rem" },
-            fontWeight: 700,
-          }}
-        >
+        <Typography variant="h2" sx={cardHeadingSx}>
           A clean, no-nonsense summary of PolymathInvestor&apos;s framework on &quot;how to understand anything&quot;
         </Typography>
         <Typography
