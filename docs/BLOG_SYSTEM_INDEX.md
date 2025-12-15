@@ -1,7 +1,7 @@
 # Blog System Documentation Index
 
 **Last Updated**: November 19, 2025  
-**Status**: MUI v8 Standard ✅
+**Status**: MUI 7 + CSS variables ✅
 
 ---
 
@@ -23,7 +23,7 @@ node apps/personal-website/scripts/generate-blog-post.mjs
 **Complete guide to blog post generation**
 - How to create blog hint files
 - Running the generation script
-- Generated output structure (MUI v8)
+- Generated output structure (MUI + CSS variables)
 - MUI theme integration
 - Manual steps required
 - Troubleshooting guide
@@ -39,7 +39,7 @@ node apps/personal-website/scripts/generate-blog-post.mjs
 **Script technical documentation**
 - How the generation script works
 - Configuration options
-- MUI v8 component structure
+- MUI component structure
 - Recent updates and fixes
 
 ---
@@ -48,34 +48,22 @@ node apps/personal-website/scripts/generate-blog-post.mjs
 
 ### 🔄 [TAILWIND_TO_MUI_MIGRATION.md](./TAILWIND_TO_MUI_MIGRATION.md)
 **Guide for migrating existing blog posts**
-- Why migrate from Tailwind to MUI v8
+- Why migrate from Tailwind to MUI
 - Step-by-step conversion patterns
 - Before/after examples
 - Theme token reference
 - Migration checklist
 - Common issues
 
-### 📊 [MUI_V8_MIGRATION_SUMMARY.md](./MUI_V8_MIGRATION_SUMMARY.md)
-**Complete migration summary**
-- What was done (all 3 tasks)
-- Benefits achieved
-- Migration status
-- Technical details
-- Testing results
-- Next steps
-
 ---
 
 ## Technical Documentation
 
-### 🐛 [MUI_V8_DARK_MODE_FIX.md](./MUI_V8_DARK_MODE_FIX.md)
-**Root cause analysis of dark mode issue**
-- Problem statement
-- Root cause (CSS specificity with `!important`)
-- Solution (removed `!important` from BlogPostLayout)
-- Why it happened
-- Lessons learned
-- Prevention strategies
+### 🐛 [MUI_CSS_VARS_DARK_MODE_FIX.md](./MUI_CSS_VARS_DARK_MODE_FIX.md)
+**Root cause analysis of dark mode text issues**
+- Why `color: "text.primary"` can be wrong under `CssVarsProvider`
+- Correct approach for long-form content (use `var(--mui-palette-...)`)
+- Where the fix lives (`BlogPostLayout`, `MarkdownSurface`)
 
 ---
 
@@ -87,14 +75,13 @@ node apps/personal-website/scripts/generate-blog-post.mjs
 | **BLOG_POST_CHECKLIST.md** | Quick checklist | All users | Every blog post creation |
 | **scripts/README.md** | Technical script docs | Developers | Understanding/modifying script |
 | **TAILWIND_TO_MUI_MIGRATION.md** | Migration guide | Developers | Converting old posts |
-| **MUI_V8_MIGRATION_SUMMARY.md** | Migration summary | Project leads | Understanding what changed |
-| **MUI_V8_DARK_MODE_FIX.md** | Root cause analysis | Developers | Understanding the fix |
+| **MUI_CSS_VARS_DARK_MODE_FIX.md** | Root cause analysis | Developers | Fixing dark-mode text |
 
 ---
 
 ## Quick Reference
 
-### MUI v8 Components
+### MUI Components (CSS Variables)
 
 ```jsx
 import { Box, Typography } from "@mui/material";
@@ -110,8 +97,8 @@ import { Box, Typography } from "@mui/material";
   Heading
 </Typography>
 
-// Body text
-<Typography variant="body1" sx={{ fontSize: "1.125rem", color: "text.primary" }}>
+// Body text (tracks active scheme)
+<Typography variant="body1" sx={{ fontSize: "1.125rem", color: "var(--mui-palette-text-primary)" }}>
   Content
 </Typography>
 
@@ -147,9 +134,8 @@ ls apps/personal-website/public/media/generated/
 
 | Date | Event |
 |------|-------|
-| **2025-11-18** | MUI v8 migration caused dark mode issues |
-| **2025-11-19** | Fixed dark mode by removing `!important` |
-| **2025-11-19** | Migrated to pure MUI v8 standard |
+| **2025-11-18** | Introduced MUI CSS-variable theming; uncovered dark mode text issues |
+| **2025-11-19** | Standardized long-form content colors on `var(--mui-palette-...)` |
 | **2025-11-19** | Updated all documentation |
 
 ---
@@ -157,17 +143,16 @@ ls apps/personal-website/public/media/generated/
 ## Current Status
 
 ### ✅ Completed
-- [x] Blog post generation script (MUI v8)
+- [x] Blog post generation script (MUI components)
 - [x] Migration guide created
 - [x] All documentation updated
-- [x] Example post migrated and tested
 - [x] Dark mode verified working
 
 ### 🎯 Current Standard
-- **Styling**: Pure MUI v8 (no Tailwind)
+- **Styling**: Prefer MUI `sx` + CSS variables; legacy Tailwind classes may exist in older posts
 - **Components**: `Box`, `Typography`
-- **Theme**: MUI theme tokens
-- **Dark Mode**: Automatic via theme
+- **Theme**: `@kumar2net/ui-theme` (`CssVarsProvider`)
+- **Dark Mode**: Use `var(--mui-palette-...)` for long-form content wrappers
 
 ---
 
@@ -178,18 +163,18 @@ ls apps/personal-website/public/media/generated/
 1. **Check the checklist**: [BLOG_POST_CHECKLIST.md](./BLOG_POST_CHECKLIST.md)
 2. **Read troubleshooting**: [BLOG_POST_GENERATION.md#troubleshooting](./BLOG_POST_GENERATION.md#troubleshooting)
 3. **Review migration guide**: [TAILWIND_TO_MUI_MIGRATION.md](./TAILWIND_TO_MUI_MIGRATION.md)
-4. **Check root cause doc**: [MUI_V8_DARK_MODE_FIX.md](./MUI_V8_DARK_MODE_FIX.md)
+4. **Check root cause doc**: [MUI_CSS_VARS_DARK_MODE_FIX.md](./MUI_CSS_VARS_DARK_MODE_FIX.md)
 
 ### Common Questions
 
-**Q: Why MUI v8 instead of Tailwind?**  
-A: Eliminates CSS conflicts, provides automatic dark mode, single source of truth for theming.
+**Q: Why prefer MUI over Tailwind for new posts?**  
+A: Keeps long-form content theme-aware via `CssVarsProvider` and reduces cross-system CSS conflicts.
 
 **Q: How do I migrate an old blog post?**  
 A: Follow [TAILWIND_TO_MUI_MIGRATION.md](./TAILWIND_TO_MUI_MIGRATION.md)
 
 **Q: Text is invisible in dark mode?**  
-A: Ensure using MUI theme tokens (`color: "text.primary"`), hard refresh browser.
+A: When using MUI `CssVarsProvider`, prefer CSS variables for long-form content (e.g. `color: "var(--mui-palette-text-primary)"`) or rely on `BlogPostLayout` / `MarkdownSurface` wrappers. Avoid assuming `color: "text.primary"` will track the active scheme in all cases.
 
 **Q: Image not showing?**  
 A: Check path uses `/media/generated/` not temporary Azure URL.
@@ -208,7 +193,8 @@ A: Check path uses `/media/generated/` not temporary Azure URL.
 - `apps/personal-website/src/data/blogPostsData.js`
 
 ### Theme
-- `apps/personal-website/src/theme/getDesignTokens.ts`
+- `packages/ui-theme/theme.ts`
+- `packages/ui-theme/ThemeProvider.tsx`
 - `apps/personal-website/src/providers/ColorModeProvider.tsx`
 
 ---

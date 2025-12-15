@@ -1,6 +1,6 @@
 # Personal Website Monorepo
 
-Vite + React 18 + MUI monorepo (Turborepo workspaces). Primary app lives in `apps/personal-website`; shared theme in `packages/ui-theme`.
+Vite + React 19 + MUI 7 monorepo (Turborepo workspaces). Primary app lives in `apps/personal-website`; shared theme in `packages/ui-theme`.
 
 ## Quick start
 - Install: `npm install`

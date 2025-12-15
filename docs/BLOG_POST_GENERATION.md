@@ -49,9 +49,9 @@ See `docs/bloghints/FrontierLabs.md` for a complete example.
 **Location**: `apps/personal-website/src/pages/blog/[YYYY-MM-DD]-[slug].jsx`
 
 **Features**:
-- ✅ Pure MUI v8 components (Box, Typography)
-- ✅ Theme-aware colors using MUI tokens (`primary.main`, `text.primary`)
-- ✅ Automatic dark mode support via MUI theme
+- ✅ MUI components (Box, Typography)
+- ✅ Theme-aware colors via MUI CSS variables (`var(--mui-palette-...)`)
+- ✅ Automatic light/dark/system via `CssVarsProvider`
 - ✅ Responsive typography with breakpoints
 - ✅ Local image paths (no temporary URLs)
 
@@ -99,7 +99,7 @@ export default function BlogPost() {
           sx={{
             fontSize: "1.125rem",
             lineHeight: 1.8,
-            color: "text.primary",
+            color: "var(--mui-palette-text-primary)",
           }}
         >
           Section content...
@@ -179,28 +179,28 @@ export const blogPosts = [
 
 **⚠️ IMPORTANT**: Always use local image paths (`/media/generated/...`) instead of temporary URLs!
 
-## MUI v8 Theme Integration
+## MUI Theme Integration (CSS Variables)
 
 ### Theme Tokens
 
-All generated blog posts use MUI v8 theme tokens for automatic dark mode support:
+All generated blog posts should use MUI CSS variables (via `@kumar2net/ui-theme`) so colors always track the active scheme:
 
-| Element | MUI Token | Light Mode | Dark Mode |
+| Element | Recommended value | Light Mode | Dark Mode |
 |---------|-----------|------------|-----------|
-| Headings | `text.primary` | Dark gray | White |
-| Body text | `text.primary` | Dark gray | White |
-| Captions | `text.secondary` | Medium gray | Light gray |
-| Badge background | `primary.main` | Blue | Blue |
-| Badge text | `primary.contrastText` | White | White |
+| Headings | `var(--mui-palette-text-primary)` | Dark | Light |
+| Body text | `var(--mui-palette-text-primary)` | Dark | Light |
+| Secondary text | `var(--mui-palette-text-secondary)` | Medium | Medium |
+| Card surface | `var(--mui-palette-background-paper)` | Light | Dark |
+| Divider/border | `var(--mui-palette-divider)` | Light | Dark |
 
 ### How It Works
 
-MUI v8's CSS variables system automatically handles theme switching:
+MUI's CSS variables system automatically handles theme switching:
 
 ```jsx
-// This color automatically changes based on theme mode
-<Typography sx={{ color: "text.primary" }}>
-  Text that's dark in light mode, white in dark mode
+// This color automatically changes based on scheme
+<Typography sx={{ color: "var(--mui-palette-text-primary)" }}>
+  Text that stays readable in both light and dark
 </Typography>
 
 // Primary color from theme
@@ -227,13 +227,13 @@ The `BlogPostLayout.jsx` component provides a theme bridge for blog content. It 
 **Symptoms**: Text appears invisible or hard to read in dark mode
 
 **Causes**:
-1. Using hardcoded colors instead of theme tokens
-2. BlogPostLayout has `!important` declarations (legacy issue)
+1. Using hardcoded colors
+2. Using `color: "text.primary"` / `theme.palette.text.primary` in long-form content while `CssVarsProvider` is active (can resolve from the default scheme)
 3. Missing MUI imports
 
 **Solution**:
-1. Ensure all colors use theme tokens: `color: "text.primary"`, `bgcolor: "primary.main"`
-2. Verify BlogPostLayout.jsx doesn't have `!important` in color properties
+1. Prefer CSS variables for long-form content: `color: "var(--mui-palette-text-primary)"`, `backgroundColor: "var(--mui-palette-background-paper)"`
+2. Wrap Markdown posts in `MarkdownSurface` and JSX posts in `BlogPostLayout` (both normalize dark-mode colors)
 3. Check imports: `import { Box, Typography } from "@mui/material";`
 4. Hard refresh browser (Cmd+Shift+R) to clear cached CSS
 
@@ -318,57 +318,24 @@ const imageDir = 'apps/personal-website/public/media/generated/'
 - **Fix**: Updated `buildBlogJSX()` template to include all necessary classes
 - **Impact**: Future posts automatically include dark mode support and local image paths
 
-### 4. MUI v8 Migration Dark Mode Issue (ROOT CAUSE)
-- **Issue**: After MUI v8 migration, Tailwind dark mode classes stopped working - text was invisible in dark mode
-- **Root Cause**: `BlogPostLayout.jsx` was using `!important` in its `sx` prop to force MUI theme colors, which prevented Tailwind classes from overriding them
-- **Fix**: Removed `!important` from color properties in `BlogPostLayout.jsx` to allow Tailwind dark mode classes to work
-- **Impact**: All blog posts now properly display text in both light and dark modes without requiring inline styles
+### 4. CSS Variables Dark Mode Issue (ROOT CAUSE)
+- **Issue**: Some headings rendered as black text on a dark background in dark mode.
+- **Root Cause**: With MUI `CssVarsProvider`, `theme.palette.*` / `color: "text.primary"` can resolve from the default scheme (often light) even when dark mode is active.
+- **Fix**: Use CSS variables (`var(--mui-palette-...)`) for long-form content wrappers and blog typography overrides.
+- **Reference**: See [MUI_CSS_VARS_DARK_MODE_FIX.md](./MUI_CSS_VARS_DARK_MODE_FIX.md)
 
-**Technical Details:**
-```jsx
-// BEFORE (broken in dark mode)
-"& h2": {
-  color: `${theme.palette.text.primary} !important`, // Blocks Tailwind
-}
-
-// AFTER (works in dark mode)
-"& h2": {
-  color: theme.palette.text.primary, // Allows Tailwind override
-}
-```
-
-The Tailwind classes `text-gray-900 dark:text-white` now properly override the MUI theme colors when dark mode is active.
-
-### 5. Complete Migration to MUI v8 Standard (LATEST)
-- **Issue**: Mixing Tailwind and MUI v8 caused CSS specificity conflicts and maintenance burden
-- **Decision**: Eliminate Tailwind completely, use pure MUI v8 components
-- **Fix**: 
-  - Updated `buildBlogJSX()` to generate MUI components instead of Tailwind classes
-  - Migrated existing blog posts to use `Box`, `Typography`, and `sx` prop
-  - Created comprehensive migration guide for converting remaining posts
-- **Impact**: 
-  - No more CSS conflicts between styling systems
-  - Automatic dark mode via MUI theme tokens
-  - Cleaner, more maintainable code
-  - Single source of truth for theming
-  - Better TypeScript support
-
-**New Template Structure:**
-```jsx
-import { Box, Typography } from "@mui/material";
-
-// Uses MUI theme tokens instead of Tailwind classes
-<Typography sx={{ color: "text.primary" }}>  // Auto dark mode
-<Box sx={{ bgcolor: "primary.main" }}>       // Theme-aware
-```
+### 5. Current Standard (LATEST)
+- Prefer MUI components + `sx` for new posts.
+- Long-form content should use CSS variables for colors so it stays readable across schemes.
+- Legacy posts may contain Tailwind classes; blog wrappers normalize most clashes.
 
 ## Best Practices
 
 ### ✅ DO
 
 - Always use local image paths (`/media/generated/...`)
-- Use MUI v8 components (`Box`, `Typography`) instead of HTML elements
-- Use MUI theme tokens (`primary.main`, `text.primary`) for all colors
+- Prefer MUI components (`Box`, `Typography`) instead of raw HTML for new posts
+- Use CSS variables for long-form content colors: `var(--mui-palette-text-primary)`, `var(--mui-palette-text-secondary)`
 - Test in both light and dark modes before publishing
 - Keep blog hint files in `docs/bloghints/` for reference
 - Use descriptive slugs for SEO
@@ -377,11 +344,10 @@ import { Box, Typography } from "@mui/material";
 ### ❌ DON'T
 
 - Don't use temporary Azure blob URLs in production
-- Don't use Tailwind classes (use MUI `sx` prop instead)
-- Don't hardcode colors (use theme tokens)
+- Don't hardcode colors
 - Don't skip updating `blogPostsData.js`
 - Don't delete blog hint files (they serve as documentation)
-- Don't mix styling systems (pure MUI v8 only)
+- Don't rely on `color: "text.primary"` for long-form content; use CSS variables instead
 
 ## Future Improvements
 

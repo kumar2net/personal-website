@@ -30,6 +30,7 @@ backend/.gcp/
 *.njsproj
 *.sln
 *.sw?
+docs/bloghints/*.rtf
 
 # Local Netlify folder
 .netlify

@@ -7,7 +7,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## Frontend: `apps/personal-website`
 ### Composition & Bootstrapping
-- `src/main.jsx` mounts React 18 with `CssVarsProvider` from `@kumar2net/ui-theme`, injects global error/retry logic for vendor bundles, registers listeners for DOM and promise errors, and renders both `<App />` and Vercel's `<SpeedInsights />` so real-user performance data streams automatically once the tree hydrates.
+- `src/main.jsx` mounts React 19 with `ThemeProvider` from `@kumar2net/ui-theme` (MUI `CssVarsProvider` under the hood), injects global vendor error recovery, and renders both `<App />` and Vercel's `<SpeedInsights />` so real-user performance data streams automatically once the tree hydrates.
 - Vite config (`apps/personal-website/vite.config.js`) adds a custom middleware that proxies `/api/convert` and `/api/semantic-search` requests to the real serverless handlers (loading `.env` from the repo root) so dev builds keep the same conversion + semantic-search code paths used in production.
 
 ### Routing & Layout

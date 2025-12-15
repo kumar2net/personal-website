@@ -1,6 +1,6 @@
 // theme.ts
 // -------------------------------------------
-// MUI v8 theme using Material 3 color semantics (role-based),
+// MUI v7 theme using Material 3 color semantics (role-based),
 // implemented with CSS variables via `extendTheme`.
 //
 // Visual parity note:

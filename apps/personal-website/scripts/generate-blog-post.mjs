@@ -252,7 +252,7 @@ function buildBlogJSX(meta, sections, imageUrl) {
           sx={{
             fontSize: "1.125rem",
             lineHeight: 1.8,
-            color: "text.primary",
+            color: "var(--mui-palette-text-primary)",
           }}
         >
           ${section.content}
@@ -316,7 +316,7 @@ function buildBlogJSX(meta, sections, imageUrl) {
             mt: 1,
             textAlign: "center",
             fontStyle: "italic",
-            color: "text.secondary",
+            color: "var(--mui-palette-text-secondary)",
           }}
         >
           AI Generated Illustration

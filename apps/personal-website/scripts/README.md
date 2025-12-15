@@ -8,7 +8,7 @@ Automated blog post generation script that converts markdown hints into fully-fo
 
 ✅ **OpenAI Integration**: Uses GPT-4.1-mini for content generation and DALL-E 3 for images  
 ✅ **Local Image Storage**: Downloads and saves images permanently to `/public/media/generated/`  
-✅ **Dark Mode Support**: Automatically includes proper dark mode CSS classes  
+✅ **Dark Mode Support**: Uses MUI CSS variables so content stays readable in light/dark  
 ✅ **Structured Output**: Generates clean JSX with numbered sections and proper styling  
 
 ### Usage
@@ -35,7 +35,7 @@ node apps/personal-website/scripts/generate-blog-post.mjs
 
 The script generates blog posts with the following features:
 
-#### MUI v8 Components
+#### MUI Components (CSS Variables)
 ```jsx
 import { Box, Typography } from "@mui/material";
 
@@ -51,18 +51,18 @@ import { Box, Typography } from "@mui/material";
 </Typography>
 
 // Body text with theme colors
-<Typography variant="body1" sx={{ color: "text.primary" }}>
+<Typography variant="body1" sx={{ color: "var(--mui-palette-text-primary)" }}>
   Content
 </Typography>
 ```
 
-#### Theme Tokens
+#### Theme Colors
 ```jsx
-// All colors use MUI theme tokens for automatic dark mode
+// Long-form content uses MUI CSS variables so it tracks the active scheme
 bgcolor: "primary.main"          // Primary color from theme
 color: "primary.contrastText"    // Contrast text (white)
-color: "text.primary"            // Primary text color (auto dark mode)
-color: "text.secondary"          // Secondary text color (auto dark mode)
+color: "var(--mui-palette-text-primary)"    // Primary text color
+color: "var(--mui-palette-text-secondary)"  // Secondary text color
 ```
 
 #### Image Handling
@@ -94,9 +94,8 @@ const mediaDir = 'apps/personal-website/public/media/generated/'  // Image stora
 ### Recent Updates (2025-11-19)
 
 #### Fixed: Dark Mode Text Visibility
-- Added `text-gray-900 dark:text-white` to all headings
-- Added `text-gray-700 dark:text-gray-300` to all paragraphs
-- Changed number badges from gradient to solid colors with dark mode variant
+- Standardized generated content colors on `var(--mui-palette-text-...)`
+- Avoids `color: "text.primary"` for long-form content under `CssVarsProvider`
 
 #### Fixed: Image Persistence
 - Added `downloadImage()` function to save images locally
@@ -108,12 +107,10 @@ const mediaDir = 'apps/personal-website/public/media/generated/'  // Image stora
 - Future posts automatically get proper styling
 - No manual fixes required after generation
 
-#### Migrated: Pure MUI v8 Standard (LATEST)
-- **Eliminated Tailwind completely** - Now generates pure MUI v8 components
-- **Theme-based styling** - All colors use MUI theme tokens
-- **Automatic dark mode** - No manual dark mode classes needed
-- **Better maintainability** - Single styling system, no CSS conflicts
-- **Type safety** - Full TypeScript support for all components
+#### Current Standard (LATEST)
+- **Prefer MUI-first** - Script generates MUI components with `sx`
+- **Theme-aware** - Content colors use CSS variables to stay correct in dark mode
+- **Maintainable** - Avoids cross-system CSS conflicts for new posts
 
 **Template Changes:**
 ```jsx
@@ -121,10 +118,10 @@ const mediaDir = 'apps/personal-website/public/media/generated/'  // Image stora
 <div className="space-y-8">
   <h2 className="text-gray-900 dark:text-white">
 
-// NEW (MUI v8)
+// NEW (MUI)
 import { Box, Typography } from "@mui/material";
 <Box sx={{ display: "flex", flexDirection: "column", gap: 6 }}>
-  <Typography variant="h2" sx={{ color: "text.primary" }}>
+  <Typography variant="h2" sx={{ color: "var(--mui-palette-text-primary)" }}>
 ```
 
 ### Troubleshooting
@@ -144,8 +141,8 @@ import { Box, Typography } from "@mui/material";
 
 #### Text Not Visible in Dark Mode
 - **Browser Cache**: Hard refresh (Cmd+Shift+R on Mac, Ctrl+Shift+R on Windows)
-- **Verify Classes**: Check JSX has `dark:text-white` and `dark:text-gray-300`
-- **Check Theme**: Ensure MUI theme is properly configured
+- **Check Colors**: Prefer `var(--mui-palette-text-primary)` / `var(--mui-palette-text-secondary)` for long-form content
+- **Check Theme**: Ensure `ThemeProvider` (`CssVarsProvider`) is mounted and scheme switches
 
 ### Manual Steps After Generation
 

@@ -3,7 +3,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 ## Workspace Summary
 | Package | Path | Purpose |
 | --- | --- | --- |
-| `personal-website` | `apps/personal-website` | React 18 + Vite SPA with blog, recommendations, semantic search, and automation tooling.
+| `personal-website` | `apps/personal-website` | React 19 + Vite SPA with blog, recommendations, semantic search, and automation tooling.
 | `@kumar2net/ui-theme` | `packages/ui-theme` | Shared MUI 7 theme + ThemeProvider exports.
 | (extra) `api` | `apps/personal-website/api/*` | Serverless handlers consumed by Vite + Vercel.
 | (extra) `backend` | `backend/` | Express analytics + GA4/Vertex topic recommender.
@@ -29,8 +29,8 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## `packages/@kumar2net/ui-theme`
 - Files: `theme.ts`, `ThemeProvider.tsx`, `index.ts`.
-- Exports: default theme object, Material 3 `colorTokens`, `ThemeProvider`, `ThemeProviderProps`.
-- Implementation: builds both light/dark palettes from the shared tokens via `@mui/material/styles/createTheme`, sets `CssVarsProvider` defaults (`modeStorageKey = "k2n-color-scheme"`), and keeps typography/component overrides consistent across apps.
+- Exports: `getTheme`, Material 3 `colorTokens`, `ThemeProvider`, `ThemeProviderProps` (no default exports).
+- Implementation: builds both light/dark schemes from `colorTokens` via `@mui/material/styles/extendTheme` and uses `CssVarsProvider` (`modeStorageKey = "k2n-color-scheme"`) so apps can switch `light`/`dark`/`system` without rebuilding the theme.
 - Consumed in `apps/personal-website/src/main.jsx` and available to other packages via workspace resolution.
 
 ## `apps/personal-website/api` (serverless)
