@@ -1,28 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Box, Container, alpha } from "@mui/material";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
-import TranslateBlock from "./TranslateBlock";
 import { useColorMode } from "../providers/ColorModeProvider";
 
 export default function BlogPostLayout({ slug, post, children }) {
   const articleRef = useRef(null);
-  const [readingMode, setReadingMode] = useState(false);
   const { mode } = useColorMode();
   const isDark = mode === "dark";
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const saved = window.localStorage.getItem("reading-mode");
-    if (saved === "on") {
-      setReadingMode(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.localStorage.setItem("reading-mode", readingMode ? "on" : "off");
-  }, [readingMode]);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -63,84 +48,6 @@ export default function BlogPostLayout({ slug, post, children }) {
       </script>
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 8 } }}>
         <BlogAudioPlayer slug={slug} articleRef={articleRef} />
-        <TranslateBlock slug={slug} articleRef={articleRef} />
-        <Box
-          sx={(theme) => ({
-            display: "flex",
-            alignItems: "center",
-            gap: 1.5,
-            mt: 2,
-            mb: 3,
-            p: 1.5,
-            borderRadius: 2,
-            border: `1px solid ${alpha(theme.palette.divider, 0.8)}`,
-            bgcolor: readingMode
-              ? alpha(theme.palette.primary.main, isDark ? 0.12 : 0.08)
-              : alpha(theme.palette.background.paper, 0.7),
-            boxShadow: readingMode
-              ? `0 12px 50px ${alpha(theme.palette.primary.main, 0.18)}`
-              : "none",
-          })}
-        >
-          <Box sx={{ flexGrow: 1 }}>
-            <Box
-              component="p"
-              sx={{
-                m: 0,
-                fontSize: 14,
-                letterSpacing: 0.1,
-                textTransform: "uppercase",
-                color: "text.secondary",
-              }}
-            >
-              Reading mode
-            </Box>
-            <Box
-              component="p"
-              sx={{
-                m: 0,
-                fontSize: 16,
-                fontWeight: 600,
-                color: "text.primary",
-              }}
-            >
-              Smooth, distraction-free view
-            </Box>
-          </Box>
-          <button
-            type="button"
-            aria-pressed={readingMode}
-            onClick={() => setReadingMode((prev) => !prev)}
-            className="inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
-            style={{
-              borderColor: readingMode ? "transparent" : "rgba(148, 163, 184, 0.6)",
-              background: readingMode ? "linear-gradient(120deg,#111827,#1f2937)" : "rgba(255,255,255,0.7)",
-              color: readingMode ? "#e5e7eb" : "#0f172a",
-              boxShadow: readingMode
-                ? "0 10px 30px rgba(15,23,42,0.35)"
-                : "0 8px 18px rgba(15,23,42,0.08)",
-            }}
-          >
-            <span
-              aria-hidden
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 20,
-                height: 20,
-                borderRadius: "999px",
-                background: readingMode ? "#fbbf24" : "#0ea5e9",
-                color: "#0b1220",
-                fontSize: 12,
-                fontWeight: 700,
-              }}
-            >
-              {readingMode ? "☾" : "✺"}
-            </span>
-            {readingMode ? "On" : "Off"}
-          </button>
-        </Box>
         <Box
           component="article"
           ref={articleRef}
@@ -156,37 +63,32 @@ export default function BlogPostLayout({ slug, post, children }) {
             };
 
             return {
-              maxWidth: readingMode ? "76ch" : "100%",
+              maxWidth: "100%",
               mx: "auto",
-              px: { xs: readingMode ? 1.5 : 0, md: readingMode ? 2 : 0 },
-              py: readingMode ? { xs: 3, md: 4 } : 0,
-              borderRadius: readingMode ? 3 : 0,
-              // Long-form content must always render on `background.default`.
-              backgroundColor: readingMode ? "background.default" : "transparent",
-              boxShadow: readingMode
-                ? `0 30px 80px ${alpha(theme.palette.common.black, 0.15)}`
-                : "none",
-              // Long-form content must default to `text.primary` and let nested
-              // typography inherit unless explicitly overridden.
+              px: { xs: 0, md: 0 },
+              py: 0,
+              borderRadius: 0,
+              backgroundColor: "transparent",
+              boxShadow: "none",
               color: "text.primary",
 
               // Typography
               "& h1": {
                 ...theme.typography.h1,
-                fontSize: readingMode ? { xs: "2.25rem", md: "2.75rem" } : { xs: "2rem", md: "2.5rem" },
+                fontSize: { xs: "2rem", md: "2.5rem" },
                 mb: 3,
                 color: "text.primary",
               },
               "& h2": {
                 ...theme.typography.h2,
-                fontSize: readingMode ? { xs: "1.6rem", md: "2.1rem" } : { xs: "1.5rem", md: "2rem" },
+                fontSize: { xs: "1.5rem", md: "2rem" },
                 mt: 6,
                 mb: 3,
                 color: theme.palette.text.primary,
               },
               "& h3": {
                 ...theme.typography.h3,
-                fontSize: readingMode ? { xs: "1.3rem", md: "1.6rem" } : { xs: "1.25rem", md: "1.5rem" },
+                fontSize: { xs: "1.25rem", md: "1.5rem" },
                 mt: 4,
                 mb: 2,
                 color: theme.palette.text.primary,
@@ -200,11 +102,10 @@ export default function BlogPostLayout({ slug, post, children }) {
               },
               "& p": {
                 ...theme.typography.body1,
-                fontSize: readingMode ? "1.05rem" : "1rem",
-                mb: readingMode ? 3 : 2.5,
+                fontSize: "1rem",
+                mb: 2.5,
                 color: "inherit",
-                lineHeight: readingMode ? 1.9 : 1.8,
-                letterSpacing: readingMode ? "0.004em" : undefined,
+                lineHeight: 1.8,
               },
               "& ul, & ol": {
                 ...theme.typography.body1,
@@ -229,8 +130,6 @@ export default function BlogPostLayout({ slug, post, children }) {
                 pl: 3,
                 py: 1,
                 my: 4,
-                // M3 suggestion: blockquotes are "container" surfaces; consider
-                // `bgcolor: theme.palette.m3.primaryContainer` + `color: theme.palette.m3.onPrimaryContainer`.
                 bgcolor: alpha(theme.palette.primary.main, 0.05),
                 borderRadius: "0 8px 8px 0",
                 "& p": {
@@ -302,9 +201,6 @@ export default function BlogPostLayout({ slug, post, children }) {
                 color: "text.primary !important",
               },
               "& .bg-blue-50, & .bg-blue-100": {
-                // M3 suggestion: map Tailwind "blue tint" containers to M3 roles:
-                // `backgroundColor: theme.palette.m3.primaryContainer`
-                // and readable text via `theme.palette.m3.onPrimaryContainer`.
                 backgroundColor: alpha(theme.palette.primary.main, isDark ? 0.15 : 0.08),
                 borderColor: alpha(theme.palette.primary.main, 0.2),
               },
@@ -335,9 +231,7 @@ export default function BlogPostLayout({ slug, post, children }) {
 
               // Gradients (often used in headers)
               "& .bg-gradient-to-r, & .bg-gradient-to-br": {
-                backgroundImage: "none", // Remove potentially clashing gradients
-                // M3 suggestion: for gradient fallbacks, prefer a container role:
-                // `backgroundColor: theme.palette.m3.primaryContainer`.
+                backgroundImage: "none",
                 backgroundColor: isDark ? alpha(theme.palette.primary.main, 0.1) : alpha(theme.palette.primary.main, 0.05),
               },
 
@@ -357,7 +251,6 @@ export default function BlogPostLayout({ slug, post, children }) {
                 "&:hover": {
                   backgroundColor: isDark ? alpha(theme.palette.text.primary, 0.2) : theme.palette.grey[200],
                 },
-                // Fix SVG icons inside buttons
                 "& svg": {
                   color: "inherit",
                 },
@@ -365,9 +258,8 @@ export default function BlogPostLayout({ slug, post, children }) {
 
               // SVGs in general
               "& svg": {
-                fill: "currentColor", // Force SVGs to use the text color
+                fill: "currentColor",
               },
-              // Specific SVG overrides if they have hardcoded text classes
               "& .text-indigo-600 svg": { color: colors.indigo },
               "& .text-yellow-400 svg": { color: colors.yellow },
               "& .text-green-800 svg": { color: colors.green },
