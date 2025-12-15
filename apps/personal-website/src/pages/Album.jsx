@@ -79,6 +79,8 @@ const Album = () => {
               mx: "auto",
               p: 3,
               borderRadius: 2,
+              // M3 suggestion: for tinted containers, prefer `theme.palette.m3.primaryContainer`
+              // with readable foreground `theme.palette.m3.onPrimaryContainer` (instead of alpha(primary.main)).
               bgcolor: alpha(theme.palette.primary.main, 0.08),
               borderLeft: `4px solid ${theme.palette.primary.main}`,
             }}

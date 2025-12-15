@@ -126,7 +126,18 @@ const BlogPost = () => {
           {/* Tags */}
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 8 }}>
             {["Frontier Labs", "AGI", "Automation", "Carbon Footprint", "Technology", "Future Skills"].map((tag) => (
-              <Chip key={tag} label={tag} sx={{ bgcolor: "primary.light", color: "primary.contrastText", fontWeight: 500 }} />
+              <Chip
+                key={tag}
+                label={tag}
+                sx={{
+                  // M3 suggestion: for "tinted" chip backgrounds, prefer
+                  // `bgcolor: (t) => t.palette.m3.primaryContainer` and
+                  // `color: (t) => t.palette.m3.onPrimaryContainer`.
+                  bgcolor: "primary.light",
+                  color: "primary.contrastText",
+                  fontWeight: 500,
+                }}
+              />
             ))}
           </Box>
 

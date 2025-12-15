@@ -148,6 +148,9 @@ const Blog = () => {
                           sx={(theme) => ({
                             fontWeight: 500,
                             borderRadius: 999,
+                            // M3 suggestion: replace this primary tint with
+                            // `backgroundColor: theme.palette.m3.primaryContainer`
+                            // and `color: theme.palette.m3.onPrimaryContainer`.
                             backgroundColor: alpha(theme.palette.primary.main, 0.15),
                             color: "primary.main",
                           })}

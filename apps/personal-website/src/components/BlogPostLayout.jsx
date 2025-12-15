@@ -227,6 +227,8 @@ export default function BlogPostLayout({ slug, post, children }) {
                 pl: 3,
                 py: 1,
                 my: 4,
+                // M3 suggestion: blockquotes are "container" surfaces; consider
+                // `bgcolor: theme.palette.m3.primaryContainer` + `color: theme.palette.m3.onPrimaryContainer`.
                 bgcolor: alpha(theme.palette.primary.main, 0.05),
                 borderRadius: "0 8px 8px 0",
                 "& p": {
@@ -298,6 +300,9 @@ export default function BlogPostLayout({ slug, post, children }) {
                 color: "text.primary !important",
               },
               "& .bg-blue-50, & .bg-blue-100": {
+                // M3 suggestion: map Tailwind "blue tint" containers to M3 roles:
+                // `backgroundColor: theme.palette.m3.primaryContainer`
+                // and readable text via `theme.palette.m3.onPrimaryContainer`.
                 backgroundColor: alpha(theme.palette.primary.main, isDark ? 0.15 : 0.08),
                 borderColor: alpha(theme.palette.primary.main, 0.2),
               },
@@ -329,6 +334,8 @@ export default function BlogPostLayout({ slug, post, children }) {
               // Gradients (often used in headers)
               "& .bg-gradient-to-r, & .bg-gradient-to-br": {
                 backgroundImage: "none", // Remove potentially clashing gradients
+                // M3 suggestion: for gradient fallbacks, prefer a container role:
+                // `backgroundColor: theme.palette.m3.primaryContainer`.
                 backgroundColor: isDark ? alpha(theme.palette.primary.main, 0.1) : alpha(theme.palette.primary.main, 0.05),
               },
 

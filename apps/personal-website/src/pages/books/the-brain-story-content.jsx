@@ -118,6 +118,9 @@ function TheBrainStoryContent() {
               px: { xs: 3, md: 5 },
               py: { xs: 5, md: 7 },
               textAlign: 'center',
+              // M3 suggestion: this is a primary-tinted surface. Consider migrating to
+              // `theme.palette.m3.primaryContainer` (and corresponding `onPrimaryContainer` for text)
+              // to align with Material 3 container semantics.
               background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.16)} 0%, ${alpha(theme.palette.secondary.main, 0.16)} 60%, ${alpha(theme.palette.info.main, 0.14)} 100%)`,
             }}
           >
@@ -126,6 +129,8 @@ function TheBrainStoryContent() {
                 width: 86,
                 height: 86,
                 borderRadius: '50%',
+                // M3 suggestion: container fill could be `theme.palette.m3.primaryContainer`
+                // with icon color `theme.palette.m3.onPrimaryContainer`.
                 backgroundColor: alpha(theme.palette.primary.main, 0.12),
                 color: 'primary.main',
                 display: 'flex',
@@ -176,6 +181,8 @@ function TheBrainStoryContent() {
               flexWrap: 'wrap',
               rowGap: 1,
               color: 'text.secondary',
+              // M3 suggestion: use `theme.palette.m3.primaryContainer` for this tinted footer bar,
+              // and set readable text to `theme.palette.m3.onPrimaryContainer`.
               backgroundColor: alpha(theme.palette.primary.main, 0.07),
             }}
           >

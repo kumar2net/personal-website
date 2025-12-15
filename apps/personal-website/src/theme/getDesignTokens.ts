@@ -286,6 +286,8 @@ export const createAppTheme = () => {
             fontWeight: 600,
             letterSpacing: 0.2,
             padding: `${density.chipPaddingY}rem ${density.chipPaddingX}rem`,
+            // M3 suggestion: use `theme.palette.m3.primaryContainer` for container-style chips,
+            // and `theme.palette.m3.onPrimaryContainer` for their text/icon color.
             backgroundColor: alpha(theme.palette.primary.main, 0.08),
           }),
         },

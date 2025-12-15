@@ -148,6 +148,8 @@ export default function PromptBox({ slug }) {
           right: -100,
           width: 300,
           height: 300,
+          // M3 suggestion: for decorative "primary tint" backgrounds, consider
+          // basing this on `theme.palette.m3.primaryContainer` (and alpha) instead of `primary.main`.
           background: `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.15)} 0%, transparent 70%)`,
           zIndex: 0,
           pointerEvents: "none",
@@ -167,6 +169,8 @@ export default function PromptBox({ slug }) {
                 height: 20,
                 fontSize: "0.65rem",
                 fontWeight: 700,
+                // M3 suggestion: this is a container chip treatment; prefer
+                // `background: theme.palette.m3.primaryContainer` + `color: theme.palette.m3.onPrimaryContainer`.
                 background: alpha(theme.palette.primary.main, 0.1),
                 color: theme.palette.primary.main,
                 border: 'none'
