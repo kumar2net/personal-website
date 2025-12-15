@@ -75,14 +75,27 @@ const buildScheme = (scheme: Scheme) => ({
     },
 
     background: {
-      default: token("background", scheme),
-      paper: token("surface", scheme),
+      // Non-negotiable reading surface defaults:
+      // - Long-form content uses `background.default` as the surface.
+      // - LIGHT mode must be white to avoid container-tinted reading surfaces.
+      default: scheme === "light" ? "#ffffff" : token("background", scheme),
+      paper: scheme === "light" ? "#ffffff" : token("surface", scheme),
     },
 
     text: {
-      primary: token("onSurface", scheme),
-      secondary: token("onSurfaceVariant", scheme),
-      disabled: alpha(token("onSurface", scheme), 0.38),
+      // Non-negotiable readability defaults for LIGHT mode:
+      // - Body text must meet WCAG AA on white backgrounds.
+      // - Do not let text inherit from container roles by default.
+      primary:
+        scheme === "light" ? "rgba(0,0,0,0.87)" : token("onSurface", scheme),
+      secondary:
+        scheme === "light"
+          ? "rgba(0,0,0,0.6)"
+          : token("onSurfaceVariant", scheme),
+      disabled:
+        scheme === "light"
+          ? "rgba(0,0,0,0.38)"
+          : alpha(token("onSurface", scheme), 0.38),
     },
 
     divider: token("outlineVariant", scheme),
@@ -108,20 +121,29 @@ export const getTheme = (scheme: Scheme) =>
     defaultColorScheme: scheme,
 
     // Keep typography, spacing, and component overrides unchanged.
-    typography: {
-      allVariants: {
-        // Use CSS variables so the value follows the active color scheme.
-        color: "var(--mui-palette-text-primary)",
-      },
-    },
     components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            color: "var(--mui-palette-text-primary)",
+            backgroundColor: "var(--mui-palette-background-default)",
+          },
+        },
+      },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            color: "inherit",
+          },
+        },
+      },
       MuiPaper: {
         styleOverrides: {
           root: {
             // Use palette roles (backed by CSS variables) to stay in sync
             // with `CssVarsProvider` when the active scheme changes.
             backgroundColor: "var(--mui-palette-background-paper)",
-            color: "var(--mui-palette-text-primary)",
+            color: "inherit",
           },
         },
       },

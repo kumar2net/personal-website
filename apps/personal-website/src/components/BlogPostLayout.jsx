@@ -159,14 +159,14 @@ export default function BlogPostLayout({ slug, post, children }) {
               px: { xs: readingMode ? 1.5 : 0, md: readingMode ? 2 : 0 },
               py: readingMode ? { xs: 3, md: 4 } : 0,
               borderRadius: readingMode ? 3 : 0,
-              backgroundColor: readingMode
-                ? isDark
-                  ? alpha(theme.palette.background.paper, 0.85)
-                  : "#fdf9f3"
-                : "transparent",
+              // Long-form content must always render on `background.default`.
+              backgroundColor: readingMode ? "background.default" : "transparent",
               boxShadow: readingMode
                 ? `0 30px 80px ${alpha(theme.palette.common.black, 0.15)}`
                 : "none",
+              // Long-form content must default to `text.primary` and let nested
+              // typography inherit unless explicitly overridden.
+              color: "text.primary",
 
               // Typography
               "& h1": {
@@ -200,7 +200,7 @@ export default function BlogPostLayout({ slug, post, children }) {
                 ...theme.typography.body1,
                 fontSize: readingMode ? "1.05rem" : "1rem",
                 mb: readingMode ? 3 : 2.5,
-                color: theme.palette.text.secondary,
+                color: "inherit",
                 lineHeight: readingMode ? 1.9 : 1.8,
                 letterSpacing: readingMode ? "0.004em" : undefined,
               },
@@ -208,7 +208,7 @@ export default function BlogPostLayout({ slug, post, children }) {
                 ...theme.typography.body1,
                 mb: 2.5,
                 pl: 4,
-                color: "text.secondary",
+                color: "inherit",
               },
               "& li": {
                 mb: 1,
@@ -388,7 +388,7 @@ export default function BlogPostLayout({ slug, post, children }) {
               "& td": {
                 p: 2,
                 borderBottom: `1px solid ${theme.palette.divider}`,
-                color: "text.secondary",
+                color: "inherit",
               },
             };
           }}
