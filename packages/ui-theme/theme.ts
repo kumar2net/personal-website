@@ -1,14 +1,14 @@
 // theme.ts
 // -------------------------------------------
 // MUI v8 theme using Material 3 color semantics (role-based),
-// implemented with CSS variables via `experimental_extendTheme`.
+// implemented with CSS variables via `extendTheme`.
 //
 // Visual parity note:
 // This keeps existing palette values exactly as before, so the site
 // appearance should remain unchanged while enabling additive M3 roles.
 // -------------------------------------------
 
-import { alpha, experimental_extendTheme } from "@mui/material/styles";
+import { alpha, extendTheme } from "@mui/material/styles";
 import { colorTokens } from "./colorTokens";
 
 export type Scheme = "light" | "dark";
@@ -111,7 +111,7 @@ const buildScheme = (scheme: Scheme) => ({
 });
 
 export const getTheme = (scheme: Scheme) =>
-  experimental_extendTheme({
+  extendTheme({
     // Provide both color schemes so `CssVarsProvider` can switch modes
     // without needing to rebuild the theme object.
     colorSchemes: {
