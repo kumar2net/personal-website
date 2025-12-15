@@ -1,13 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
-
-const STORAGE_KEY = "k2n-color-scheme";
+import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
+import { useColorScheme } from "@mui/material/styles";
 
 export type SupportedColorMode = "light" | "dark";
 
@@ -23,69 +15,43 @@ const ColorModeContext = createContext<ColorModeContextValue | undefined>(
   undefined,
 );
 
-function getInitialMode(): SupportedColorMode {
-  if (typeof window === "undefined") return "dark";
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "light" || stored === "dark") return stored;
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return prefersDark ? "dark" : "light";
-}
-
 function ColorModeBridge({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<SupportedColorMode>(getInitialMode);
+  const { mode, systemMode, setMode: setMuiMode } = useColorScheme();
+
+  const resolvedMode: SupportedColorMode =
+    (mode === "light" || mode === "dark"
+      ? mode
+      : systemMode === "dark"
+        ? "dark"
+        : "light") ?? "light";
 
   const setMode = (next: Updater) => {
-    setModeState((prev) => {
-      const resolved = typeof next === "function" ? next(prev) : next;
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(STORAGE_KEY, resolved);
-      }
-      return resolved;
-    });
+    const nextMode =
+      typeof next === "function" ? next(resolvedMode) : next;
+    setMuiMode(nextMode);
   };
 
   const value = useMemo<ColorModeContextValue>(
     () => ({
-      mode,
+      mode: resolvedMode,
       setMode,
       toggleColorMode: () => setMode((prev) => (prev === "dark" ? "light" : "dark")),
     }),
-    [mode],
+    [resolvedMode],
   );
 
   useEffect(() => {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
-    if (mode === "dark") {
+    // Tailwind's `dark:` variant keys off the `.dark` class, while MUI uses
+    // `data-mui-color-scheme`. Keep them in sync to avoid "dark text on light
+    // surface" (or vice versa) regressions.
+    if (resolvedMode === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
-  }, [mode]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (event: MediaQueryListEvent) => {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored === "light" || stored === "dark") return;
-      setModeState(event.matches ? "dark" : "light");
-    };
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const handler = (event: StorageEvent) => {
-      if (event.key !== STORAGE_KEY) return;
-      if (event.newValue === "light" || event.newValue === "dark") {
-        setModeState(event.newValue);
-      }
-    };
-    window.addEventListener("storage", handler);
-    return () => window.removeEventListener("storage", handler);
-  }, []);
+  }, [resolvedMode]);
 
   return (
     <ColorModeContext.Provider value={value}>

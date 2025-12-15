@@ -13,25 +13,20 @@ const SHOULD_RENDER_SPEED_INSIGHTS =
   typeof import.meta !== "undefined" && import.meta.env.PROD;
 
 const DarkModeWrapper = () => {
-  const [mode, setMode] = React.useState("dark");
-  const theme = React.useMemo(() => getTheme(mode), [mode]);
+  const theme = React.useMemo(() => getTheme("light"), []);
 
   return (
-    <ThemeProvider defaultMode={mode} themeOverride={theme}>
+    <ThemeProvider defaultMode="system" themeOverride={theme}>
       <CssBaseline />
       <ColorModeProvider>
-        <ColorModeBridge setOuterMode={setMode} />
+        <ColorModeBridge />
       </ColorModeProvider>
     </ThemeProvider>
   );
 };
 
-const ColorModeBridge = ({ setOuterMode }) => {
+const ColorModeBridge = () => {
   const { mode } = useColorMode();
-
-  React.useEffect(() => {
-    setOuterMode(mode);
-  }, [mode, setOuterMode]);
 
   return (
     <HelmetProvider>
