@@ -65,7 +65,7 @@ const AUDIO_MIME_MAP = {
   mp3: "audio/mpeg",
 };
 
-const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 3200);
+const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 25000);
 const DEFAULT_MAX_OUTPUT_TOKENS = Number(
   process.env.BLOG_TTS_MAX_OUTPUT_TOKENS || 150,
 );
@@ -336,6 +336,52 @@ async function synthesizeSpeech(
   );
   fallbackError.status = 503;
   throw fallbackError;
+}
+
+async function synthesizeSpeechBuffered(
+  client,
+  {
+    voice,
+    text,
+    format = DEFAULT_AUDIO_FORMAT,
+    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
+    firstChunkMaxOutputTokens = FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+    signal,
+  },
+) {
+  const chunks = chunkTextForTts(text, {
+    maxOutputTokens,
+    firstChunkMaxOutputTokens,
+  });
+
+  if (chunks.length <= 1) {
+    return synthesizeSpeech(client, {
+      voice,
+      text,
+      format,
+      maxOutputTokens,
+      signal,
+    });
+  }
+
+  const buffers = [];
+  let selectedModel = null;
+
+  for (const chunk of chunks) {
+    const { buffer, model } = await synthesizeSpeech(client, {
+      voice,
+      text: chunk,
+      format,
+      maxOutputTokens,
+      signal,
+    });
+    if (!selectedModel && model) {
+      selectedModel = model;
+    }
+    buffers.push(buffer || Buffer.alloc(0));
+  }
+
+  return { buffer: Buffer.concat(buffers), model: selectedModel };
 }
 
 async function synthesizeSpeechStreamingSingle(
@@ -724,11 +770,12 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { buffer, model: resolvedModel } = await synthesizeSpeech(client, {
+    const { buffer, model: resolvedModel } = await synthesizeSpeechBuffered(client, {
       voice: languageConfig.voice,
       text: contentForSpeech,
       format: responseFormat,
       maxOutputTokens: DEFAULT_MAX_OUTPUT_TOKENS,
+      firstChunkMaxOutputTokens: FIRST_CHUNK_MAX_OUTPUT_TOKENS,
       signal: abortController.signal,
     });
     const responsePayload = {
