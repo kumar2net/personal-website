@@ -2,6 +2,16 @@ import crypto from "crypto";
 import { PassThrough, Readable } from "stream";
 import OpenAI from "openai";
 
+function parseCsvEnv(value) {
+  if (!value || typeof value !== "string") {
+    return [];
+  }
+  return value
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -30,8 +40,13 @@ const DEFAULT_TRANSLATION_MODEL =
   process.env.BLOG_TTS_TRANSLATION_MODEL ||
   "gpt-4o-mini";
 
+const EXPLICIT_TTS_MODELS = parseCsvEnv(process.env.BLOG_TTS_MODELS);
+const CONFIGURED_FALLBACK_TTS_MODELS = parseCsvEnv(
+  process.env.BLOG_TTS_FALLBACK_MODELS,
+);
 const FALLBACK_TTS_MODELS = [
   // Prefer fastest-start models first
+  ...CONFIGURED_FALLBACK_TTS_MODELS,
   "gpt-4o-mini-tts",
   "tts-1",
   "tts-1-hd",
@@ -48,16 +63,18 @@ const ALLOWED_VOICES = new Set([
   "coral",
 ]);
 
-const TTS_MODEL_CANDIDATES = Array.from(
-  new Set(
-    [
-      process.env.BLOG_TTS_MODEL,
-      process.env.OPENAI_GPT_TTS_MODEL,
-      process.env.OPENAI_TTS_MODEL,
-      ...FALLBACK_TTS_MODELS,
-    ].filter(Boolean),
-  ),
-);
+const TTS_MODEL_CANDIDATES = EXPLICIT_TTS_MODELS.length
+  ? Array.from(new Set(EXPLICIT_TTS_MODELS))
+  : Array.from(
+      new Set(
+        [
+          process.env.BLOG_TTS_MODEL,
+          process.env.OPENAI_GPT_TTS_MODEL,
+          process.env.OPENAI_TTS_MODEL,
+          ...FALLBACK_TTS_MODELS,
+        ].filter(Boolean),
+      ),
+    );
 
 const DEFAULT_AUDIO_FORMAT = "opus";
 const AUDIO_MIME_MAP = {
@@ -598,7 +615,7 @@ export default async function handler(req, res) {
   if (!process.env.OPENAI_API_KEY) {
     return res.status(503).json({
       error:
-        "Text-to-speech is disabled. Set OPENAI_API_KEY (and optionally BLOG_TTS_MODEL) to enable audio generation.",
+        "Text-to-speech is disabled. Set OPENAI_API_KEY (and optionally BLOG_TTS_MODELS or BLOG_TTS_MODEL) to enable audio generation.",
     });
   }
 
