@@ -61,6 +61,10 @@ const ALLOWED_VOICES = new Set([
   "ash",
   "sage",
   "coral",
+  "ballad",
+  "verse",
+  "marin",
+  "cedar",
 ]);
 
 const TTS_MODEL_CANDIDATES = EXPLICIT_TTS_MODELS.length
@@ -83,13 +87,15 @@ const AUDIO_MIME_MAP = {
 };
 
 const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 25000);
-const DEFAULT_MAX_OUTPUT_TOKENS = Number(
-  process.env.BLOG_TTS_MAX_OUTPUT_TOKENS || 150,
+// Keep TTS requests below the OpenAI per-request `input` limit and reduce
+// end-to-end latency by avoiding too many small sequential calls.
+const DEFAULT_MAX_CHUNK_CHARS = Number(
+  process.env.BLOG_TTS_MAX_CHUNK_CHARS || 3600,
 );
-const FIRST_CHUNK_MAX_OUTPUT_TOKENS = Number(
-  process.env.BLOG_TTS_FIRST_CHUNK_MAX_TOKENS || 80,
+// Keep the first chunk smaller so playback can start quickly.
+const DEFAULT_FIRST_CHUNK_CHARS = Number(
+  process.env.BLOG_TTS_FIRST_CHUNK_CHARS || 900,
 );
-const APPROX_CHARS_PER_TOKEN = 4;
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
 const USE_STREAMING =
@@ -186,17 +192,15 @@ function clampText(text) {
 function chunkTextForTts(
   text,
   {
-    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
-    firstChunkMaxOutputTokens = FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+    maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
+    firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
   } = {},
 ) {
-  const maxTokens = Math.max(40, Math.round(maxOutputTokens));
-  const firstChunkTokens = Math.max(20, Math.round(firstChunkMaxOutputTokens));
-  const maxChars = Math.max(160, maxTokens * APPROX_CHARS_PER_TOKEN);
+  const maxChars = Math.max(400, Math.round(maxChunkChars));
   // Use a smaller first chunk to ensure playback starts quickly.
-  const firstChunkMaxChars = Math.min(
-    maxChars,
-    firstChunkTokens * APPROX_CHARS_PER_TOKEN,
+  const firstChunkMaxChars = Math.max(
+    200,
+    Math.min(maxChars, Math.round(firstChunkChars)),
   );
 
   const sentences = text
@@ -308,7 +312,6 @@ async function synthesizeSpeech(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
-    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
     signal,
   },
 ) {
@@ -325,8 +328,7 @@ async function synthesizeSpeech(
         model,
         voice,
         input: text,
-        format,
-        max_output_tokens: maxOutputTokens,
+        response_format: format,
         signal,
       });
       const buffer = Buffer.from(await speech.arrayBuffer());
@@ -361,14 +363,14 @@ async function synthesizeSpeechBuffered(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
-    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
-    firstChunkMaxOutputTokens = FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+    maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
+    firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
     signal,
   },
 ) {
   const chunks = chunkTextForTts(text, {
-    maxOutputTokens,
-    firstChunkMaxOutputTokens,
+    maxChunkChars,
+    firstChunkChars,
   });
 
   if (chunks.length <= 1) {
@@ -376,7 +378,6 @@ async function synthesizeSpeechBuffered(
       voice,
       text,
       format,
-      maxOutputTokens,
       signal,
     });
   }
@@ -389,7 +390,6 @@ async function synthesizeSpeechBuffered(
       voice,
       text: chunk,
       format,
-      maxOutputTokens,
       signal,
     });
     if (!selectedModel && model) {
@@ -407,7 +407,6 @@ async function synthesizeSpeechStreamingSingle(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
-    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
     signal,
   },
 ) {
@@ -422,29 +421,21 @@ async function synthesizeSpeechStreamingSingle(
         model,
         voice,
         input: text,
-        format,
-        max_output_tokens: maxOutputTokens,
+        response_format: format,
         signal,
-        stream: true,
       });
 
-      const iterable =
-        typeof response?.[Symbol.asyncIterator] === "function"
-          ? response
-          : response?.body
-            ? (() => {
-              try {
-                return Readable.fromWeb(response.body);
-              } catch (streamError) {
-                const err = new Error("Audio response does not expose a stream");
-                err.cause = streamError;
-                throw err;
-              }
-            })()
-            : null;
+      if (!response?.body) {
+        throw new Error("Audio response does not expose a body stream");
+      }
 
-      if (!iterable || typeof iterable[Symbol.asyncIterator] !== "function") {
-        throw new TypeError("Audio response is not async iterable");
+      let nodeStream;
+      try {
+        nodeStream = Readable.fromWeb(response.body);
+      } catch (streamError) {
+        const err = new Error("Audio response does not expose a stream");
+        err.cause = streamError;
+        throw err;
       }
 
       const passThrough = new PassThrough();
@@ -457,7 +448,7 @@ async function synthesizeSpeechStreamingSingle(
 
       (async () => {
         try {
-          for await (const chunk of iterable) {
+          for await (const chunk of nodeStream) {
             const bufferChunk =
               chunk instanceof Uint8Array
                 ? Buffer.from(chunk)
@@ -502,21 +493,20 @@ async function synthesizeSpeechStreaming(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
-    maxOutputTokens = DEFAULT_MAX_OUTPUT_TOKENS,
-    firstChunkMaxOutputTokens = FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+    maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
+    firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
     signal,
   },
 ) {
   const chunks = chunkTextForTts(text, {
-    maxOutputTokens,
-    firstChunkMaxOutputTokens,
+    maxChunkChars,
+    firstChunkChars,
   });
 
   if (chunks.length <= 1) {
     return synthesizeSpeechStreamingSingle(client, {
       voice,
       text,
-      maxOutputTokens,
       format,
       signal,
     });
@@ -553,7 +543,6 @@ async function synthesizeSpeechStreaming(
         streamed = await synthesizeSpeechStreamingSingle(client, {
           voice,
           text: chunk,
-          maxOutputTokens,
           format,
           signal,
         });
@@ -571,7 +560,6 @@ async function synthesizeSpeechStreaming(
           nextChunkPromise = synthesizeSpeechStreamingSingle(client, {
             voice,
             text: chunks[i + 1],
-            maxOutputTokens,
             format,
             signal,
           });
@@ -726,7 +714,8 @@ export default async function handler(req, res) {
           voice: languageConfig.voice,
           text: contentForSpeech,
           format: responseFormat,
-          firstChunkMaxOutputTokens: FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+          firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
+          maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
           signal: abortController.signal,
         });
       } catch (streamError) {
@@ -791,8 +780,8 @@ export default async function handler(req, res) {
       voice: languageConfig.voice,
       text: contentForSpeech,
       format: responseFormat,
-      maxOutputTokens: DEFAULT_MAX_OUTPUT_TOKENS,
-      firstChunkMaxOutputTokens: FIRST_CHUNK_MAX_OUTPUT_TOKENS,
+      maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
+      firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
       signal: abortController.signal,
     });
     const responsePayload = {
