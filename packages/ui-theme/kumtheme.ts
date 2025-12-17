@@ -66,6 +66,8 @@ export const getTheme = (scheme: Scheme) => {
     // This forces **every text variant** to use onSurface.
     // --------------------------------------------------------
     typography: {
+      fontFamily:
+        "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
       allVariants: {
         color: tokens("onSurface"),
       },

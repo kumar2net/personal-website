@@ -8,6 +8,7 @@ import App from "./App.jsx";
 import "./output.css";
 import { ColorModeProvider, useColorMode } from "./providers/ColorModeProvider";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import GoogleAnalytics from "./components/GoogleAnalytics.jsx";
 
 const SHOULD_RENDER_SPEED_INSIGHTS =
   typeof import.meta !== "undefined" && import.meta.env.PROD;
@@ -37,6 +38,7 @@ const ColorModeBridge = () => {
         }}
       >
         <App mode={mode} />
+        <GoogleAnalytics />
         {SHOULD_RENDER_SPEED_INSIGHTS ? <SpeedInsights /> : null}
       </BrowserRouter>
     </HelmetProvider>
