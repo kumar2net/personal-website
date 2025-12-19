@@ -52,12 +52,12 @@ export default function ScienceIndex() {
             after you open it to keep the page light.
           </Typography>
 
-          <Card sx={cardSx}>
-            <CardActionArea
-              component={RouterLink}
-              to="/science/brain-vs-ai"
-              sx={{ height: "100%" }}
-            >
+        <Card sx={cardSx}>
+          <CardActionArea
+            component={RouterLink}
+            to="/science/brain-vs-ai"
+            sx={{ height: "100%" }}
+          >
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
                 <Chip
                   size="small"
@@ -87,13 +87,13 @@ export default function ScienceIndex() {
         <Card sx={cardSx}>
           <CardActionArea
             component={RouterLink}
-            to="/science/back-pain"
+            to="/science/paper-sizes"
             sx={{ height: "100%" }}
           >
             <CardContent sx={{ display: "grid", gap: 1.25 }}>
               <Chip
                 size="small"
-                label="Guided Routine"
+                label="Interactive WebGPU"
                 sx={{
                   width: "fit-content",
                   backgroundColor: alpha(primaryContainer, 0.14),
@@ -102,15 +102,14 @@ export default function ScienceIndex() {
                 }}
               />
               <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
-                Back Pain Relief Plan
+                A-Series Paper Sizes: A4 to A0
               </Typography>
               <Typography variant="bodyLarge" sx={{ color: onSurface }}>
-                Annotated, voiceover-ready plan to calm paraspinal spasm: micro-moves,
-                sit/stand technique, and when to pause for clinical care.
+                WebGPU scene comparing the A-series sqrt(2) stack with golden ratio
+                geometry and a pi circle.
               </Typography>
               <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
-                Built to be read aloud or turned into a guided video—no gear, minimal
-                gravity load.
+                Cut, halve, repeat: the geometry behind every copier setting.
               </Typography>
             </CardContent>
           </CardActionArea>

@@ -14,10 +14,10 @@ const SHOULD_RENDER_SPEED_INSIGHTS =
   typeof import.meta !== "undefined" && import.meta.env.PROD;
 
 const DarkModeWrapper = () => {
-  const theme = React.useMemo(() => getTheme("light"), []);
+  const theme = React.useMemo(() => getTheme("dark"), []);
 
   return (
-    <ThemeProvider defaultMode="system" themeOverride={theme}>
+    <ThemeProvider defaultMode="dark" themeOverride={theme}>
       <CssBaseline />
       <ColorModeProvider>
         <ColorModeBridge />

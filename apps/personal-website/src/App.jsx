@@ -57,6 +57,7 @@ const ProteinFoldingPage = lazy(
 );
 const BrainVsAiPrimerPage = lazy(() => import("./pages/science/brain-vs-ai"));
 const BackPainPlanPage = lazy(() => import("./pages/science/back-pain"));
+const PaperSizesPage = lazy(() => import("./pages/science/paper-sizes"));
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -917,6 +918,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <BackPainPlanPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/science/paper-sizes"
+                  element={
+                    <>
+                      <SEO
+                        title="A-Series Paper Sizes – A4 to A0"
+                        description="WebGPU demo illustrating how A4 to A0 follow the sqrt(2) ratio."
+                        canonicalPath="/science/paper-sizes"
+                        type="website"
+                      />
+                      <PaperSizesPage />
                     </>
                   }
                 />

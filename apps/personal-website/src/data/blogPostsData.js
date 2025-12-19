@@ -1,5 +1,23 @@
 export const blogPosts = [
   {
+    title:
+      "AGU 2025: Hydrodynamics and Seagrass Growth in the Indian River Lagoon",
+    date: "December 16, 2025",
+    lastModified: "December 16, 2025",
+    excerpt:
+      "A seasonal field study shows how a growing seagrass meadow dampens waves and reduces suspended sediment, with density driving the biggest gains.",
+    tags: [
+      "Coastal Resilience",
+      "Seagrass",
+      "Hydrodynamics",
+      "Sediment Transport",
+      "AGU 2025",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+    link: "/blog/2025-12-16-agu-2025-seagrass-wave-climates",
+  },
+  {
     title: "Take the NASSCOM Quiz: a fast upgrade to your digital safety instincts",
     date: "December 15, 2025",
     lastModified: "December 15, 2025",
