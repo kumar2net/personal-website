@@ -86,7 +86,7 @@ const Album = () => {
             }}
           >
             <Typography variant="body1" color="text.primary">
-              Reet
+              Images from New Orleans, Luisiana by our UCF PG student.
             </Typography>
           </Box>
         </Box>

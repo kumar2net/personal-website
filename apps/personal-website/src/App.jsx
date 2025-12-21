@@ -583,14 +583,14 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          “Science is a differential equation. Religion is a boundary condition.”
+                          "Be like the cliff against which the waves continually break; but it stands firm and tames the fury of the water around it."
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          — Alan Turing
+                          - Marcus Aurelius
                         </Typography>
                       </Paper>
                       {showWorldClock ? (

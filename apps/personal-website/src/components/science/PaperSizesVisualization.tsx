@@ -348,61 +348,50 @@ export default function PaperSizesVisualization() {
   }, [palette]);
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        width: "100%",
-        height: { xs: 360, md: 520 },
-        borderRadius: 3,
-        overflow: "hidden",
-        background: `radial-gradient(circle at 25% 25%, ${alpha(palette.primaryContainer, 0.16)}, transparent 45%), radial-gradient(circle at 78% 22%, ${alpha(palette.secondaryContainer, 0.14)}, transparent 48%), linear-gradient(140deg, ${alpha(palette.surfaceContainer, 1)}, ${alpha(palette.surfaceContainer, 0.86)})`,
-        border: `1px solid ${alpha(palette.outlineVariant, 0.8)}`,
-        boxShadow: `0 32px 90px ${alpha(palette.onSurface, 0.16)}`,
-      }}
-    >
+    <Stack gap={2.5}>
       <Box
-        ref={containerRef}
         sx={{
+          position: "relative",
           width: "100%",
-          height: "100%",
-          "& canvas": { display: "block" },
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          top: 14,
-          left: 14,
-          px: 1.4,
-          py: 0.8,
-          borderRadius: 2,
-          backgroundColor: alpha(palette.surfaceContainer, 0.82),
-          border: `1px solid ${alpha(palette.outlineVariant, 0.9)}`,
-          backdropFilter: "blur(10px)",
-          maxWidth: 260,
+          height: { xs: 360, md: 520 },
+          borderRadius: 3,
+          overflow: "hidden",
+          background: `radial-gradient(circle at 25% 25%, ${alpha(palette.primaryContainer, 0.16)}, transparent 45%), radial-gradient(circle at 78% 22%, ${alpha(palette.secondaryContainer, 0.14)}, transparent 48%), linear-gradient(140deg, ${alpha(palette.surfaceContainer, 1)}, ${alpha(palette.surfaceContainer, 0.86)})`,
+          border: `1px solid ${alpha(palette.outlineVariant, 0.8)}`,
+          boxShadow: `0 32px 90px ${alpha(palette.onSurface, 0.16)}`,
         }}
       >
-        <Typography variant="labelLarge" sx={{ color: palette.onSurface }}>
-          Ratios that keep a shape
-        </Typography>
-        <Typography variant="bodySmall" sx={{ color: alpha(palette.onSurface, 0.8) }}>
-          A-series uses sqrt(2). Golden rectangles use phi. Circles whisper pi.
-        </Typography>
+        <Box
+          ref={containerRef}
+          sx={{
+            width: "100%",
+            height: "100%",
+            "& canvas": { display: "block" },
+          }}
+        />
       </Box>
-      <Box
+
+      <Stack
+        gap={1.5}
         sx={{
-          position: "absolute",
-          top: 14,
-          right: 14,
-          px: 1.25,
-          py: 0.8,
-          borderRadius: 2,
-          backgroundColor: alpha(palette.surfaceContainer, 0.82),
-          border: `1px solid ${alpha(palette.outlineVariant, 0.9)}`,
-          backdropFilter: "blur(10px)",
+          borderRadius: 3,
+          border: `1px solid ${alpha(palette.outlineVariant, 0.6)}`,
+          backgroundColor: alpha(palette.surfaceContainer, 0.7),
+          p: { xs: 2.5, md: 3 },
         }}
       >
-        <Stack spacing={0.6}>
+        <Box>
+          <Typography variant="labelLarge" sx={{ color: palette.onSurface }}>
+            Ratios that keep a shape
+          </Typography>
+          <Typography
+            variant="bodySmall"
+            sx={{ color: alpha(palette.onSurface, 0.8) }}
+          >
+            A-series uses sqrt(2). Golden rectangles use phi. Circles whisper pi.
+          </Typography>
+        </Box>
+        <Stack spacing={0.4}>
           <Typography variant="labelSmall" sx={{ color: palette.onSurface }}>
             A-series sizes
           </Typography>
@@ -422,57 +411,40 @@ export default function PaperSizesVisualization() {
             phi ≈ 1.618 | pi ≈ 3.1416
           </Typography>
         </Stack>
-      </Box>
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 12,
-          left: 16,
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-          px: 1.5,
-          py: 0.75,
-          borderRadius: 99,
-          backgroundColor: alpha(palette.surfaceContainer, 0.72),
-          border: `1px solid ${alpha(palette.outlineVariant, 0.9)}`,
-          backdropFilter: "blur(10px)",
-        }}
-      >
-        <Box
-          sx={{
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            backgroundColor: rendererInfo === "webgpu" ? palette.primaryContainer : palette.secondaryContainer,
-            boxShadow: `0 0 0 6px ${alpha(rendererInfo === "webgpu" ? palette.primaryContainer : palette.secondaryContainer, 0.35)}`,
-          }}
-        />
-        <Typography variant="labelMedium" sx={{ color: palette.onSurface }}>
-          {rendererInfo === "webgpu"
-            ? "WebGPU pipeline active"
-            : rendererInfo === "webgl2"
-              ? "WebGL2 fallback active"
-              : "Initializing visualization"}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 12,
-          right: 16,
-          px: 1.25,
-          py: 0.65,
-          borderRadius: 12,
-          backgroundColor: alpha(palette.surfaceContainer, 0.8),
-          border: `1px solid ${alpha(palette.outlineVariant, 0.9)}`,
-          color: palette.onSurface,
-          fontSize: 12,
-          letterSpacing: 0.4,
-        }}
-      >
-        Drag to orbit the trio
-      </Box>
-    </Box>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1}
+          alignItems={{ xs: "flex-start", sm: "center" }}
+          justifyContent="space-between"
+        >
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Box
+              sx={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                backgroundColor: rendererInfo === "webgpu"
+                  ? palette.primaryContainer
+                  : palette.secondaryContainer,
+                boxShadow: `0 0 0 6px ${alpha(rendererInfo === "webgpu" ? palette.primaryContainer : palette.secondaryContainer, 0.35)}`,
+              }}
+            />
+            <Typography variant="labelMedium" sx={{ color: palette.onSurface }}>
+              {rendererInfo === "webgpu"
+                ? "WebGPU pipeline active"
+                : rendererInfo === "webgl2"
+                  ? "WebGL2 fallback active"
+                  : "Initializing visualization"}
+            </Typography>
+          </Stack>
+          <Typography
+            variant="labelMedium"
+            sx={{ color: alpha(palette.onSurface, 0.8) }}
+          >
+            Drag to orbit the trio
+          </Typography>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 }

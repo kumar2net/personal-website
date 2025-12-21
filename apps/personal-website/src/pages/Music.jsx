@@ -125,15 +125,16 @@ const MusicPage = () => {
             Fresh spins
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 4 }}>
-            Latest 3 songs added to the playlist:
+            Latest drop: V2S2 (Vidya, Vinaya, Saindhavi, Suchitra) sing one
+            Thiruppavai each day and release it early in the morning during the
+            Margazhi month.
           </Typography>
 
             <Stack spacing={2}>
             {[
               {
-                title:
-                  '"சென்னையில் சங்கீத உத்சவ்" கர்நாடக இசை பாடகி ஸ்ரீரஞ்சனி வழங்கும் வாய்ப்பாட்டு 03',
-                videoId: "yIagpS0KxvQ",
+                title: "V2S2 - Thiruppavai (daily Margazhi release)",
+                videoId: "R_xsRSd5BDs",
               },
               {
                 title: "Ed sheeran & Taylor swift-Make Me Good (Christmas Special)🎄",

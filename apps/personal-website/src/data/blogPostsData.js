@@ -1,5 +1,22 @@
 export const blogPosts = [
   {
+    title: "New Kid on the Block: Reflections on Research, Health, and the Future",
+    date: "December 21, 2025",
+    lastModified: "December 21, 2025",
+    excerpt:
+      "A sweep of year-end reflections: Tracy-Widom vs Gaussian, a proud AGU moment, sugar vs sweeteners, AI’s next leap, the Ashes, and a gripping Dan Brown listen.",
+    tags: [
+      "Research",
+      "Science",
+      "Health",
+      "Artificial Intelligence",
+      "Sports",
+      "Books",
+    ],
+    image: "/generate/2025-12-21-new-kid-on-the-block.png",
+    link: "/blog/2025-12-21-new-kid-on-the-block",
+  },
+  {
     title:
       "AGU 2025: Hydrodynamics and Seagrass Growth in the Indian River Lagoon",
     date: "December 16, 2025",
