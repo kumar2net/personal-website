@@ -459,6 +459,28 @@ Auf Wiedersehen, and here’s to a thoughtful and inspiring year ahead.
       </Box>
 
       <Box component="section">
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: "1.125rem",
+            lineHeight: 1.8,
+            color: "var(--mui-palette-text-primary)",
+          }}
+        >
+          PS:{" "}
+          <a
+            href="https://youtube.com/shorts/dWhpSa58WhY?si=qTS_XI-oeWzI1aRS"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://youtube.com/shorts/dWhpSa58WhY?si=qTS_XI-oeWzI1aRS
+          </a>
+          . As I did yesterday, please make at home and enjoy with Thiruppavai.
+          The As and AAs in my city dont make VP anywhere close to this.
+        </Typography>
+      </Box>
+
+      <Box component="section">
         <Box
           component="img"
           src="/generate/2025-12-28-ninja-stuff-reflections-2025.png"
