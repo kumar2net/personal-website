@@ -14,8 +14,8 @@ export const blogPosts = [
       "Government",
       "Holiday",
     ],
-    image: "/generate/2025-12-28-ninja-stuff-reflections-2024.png",
-    link: "/blog/2025-12-28-ninja-stuff-reflections-2024",
+    image: "/generate/2025-12-28-ninja-stuff-reflections-2025.png",
+    link: "/blog/2025-12-28-ninja-stuff-reflections-2025",
   },
   {
     title: "New Kid on the Block: Reflections on Research, Health, and the Future",

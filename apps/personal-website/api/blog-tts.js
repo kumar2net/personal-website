@@ -47,6 +47,8 @@ const CONFIGURED_FALLBACK_TTS_MODELS = parseCsvEnv(
 const FALLBACK_TTS_MODELS = [
   // Prefer fastest-start models first
   ...CONFIGURED_FALLBACK_TTS_MODELS,
+  "gpt-4o-mini-tts-2025-12-15",
+  "gpt-4o-tts",
   "gpt-4o-mini-tts",
   "tts-1",
   "tts-1-hd",

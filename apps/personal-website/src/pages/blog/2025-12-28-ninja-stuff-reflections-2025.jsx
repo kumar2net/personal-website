@@ -113,7 +113,7 @@ export default function BlogPost() {
             color: "var(--mui-palette-text-primary)",
           }}
         >
-          As 2024 comes to a close, only a handful of people strike me as true experts — or as I like to call them, 'Ninjas.' These are individuals whose work or presence profoundly impacts me. For example, Andrej Karpathy recently coined the term 'Agency,' which resonated deeply. Charulatha Mani’s exquisite explanations of swaras in semi-Carnatic and film songs continue to inspire me — her masterpieces can be found in our /music playlist. And then there’s Jofra Archer, whose fluidity and poetry in motion when bowling at 150 kmph is simply mesmerizing.
+          As 2025 comes to a close, only a handful of people strike me as true experts — or as I like to call them, 'Ninjas.' These are individuals whose work or presence profoundly impacts me. For example, Andrej Karpathy recently coined the term 'Agency,' which resonated deeply. Charulatha Mani’s exquisite explanations of swaras in semi-Carnatic and film songs continue to inspire me — her masterpieces can be found in our /music playlist. And then there’s Jofra Archer, whose fluidity and poetry in motion when bowling at 150 kmph is simply mesmerizing.
         </Typography>
       </Box>
 
@@ -461,7 +461,7 @@ Auf Wiedersehen, and here’s to a thoughtful and inspiring year ahead.
       <Box component="section">
         <Box
           component="img"
-          src="/generate/2025-12-28-ninja-stuff-reflections-2024.png"
+          src="/generate/2025-12-28-ninja-stuff-reflections-2025.png"
           alt="AI Generated Illustration"
           sx={{
             width: "100%",
