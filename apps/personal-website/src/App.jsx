@@ -583,14 +583,14 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          "Be like the cliff against which the waves continually break; but it stands firm and tames the fury of the water around it."
+                          "You can’t split a human into parts and understand them."
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          - Marcus Aurelius
+                          - Adler
                         </Typography>
                       </Paper>
                       {showWorldClock ? (

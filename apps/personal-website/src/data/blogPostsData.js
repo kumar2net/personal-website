@@ -1,5 +1,23 @@
 export const blogPosts = [
   {
+    title: "Ninja Stuff: Reflections as 2025 Winds Down",
+    date: "December 28, 2025",
+    lastModified: "December 28, 2025",
+    excerpt:
+      "A year-end reflection on personal ninjas, curiosity, Adlerian psychology, faith, music season memories, governance hopes, and holiday cheer.",
+    tags: [
+      "Reflection",
+      "Inspiration",
+      "Psychology",
+      "Music",
+      "Technology",
+      "Government",
+      "Holiday",
+    ],
+    image: "/generate/2025-12-28-ninja-stuff-reflections-2024.png",
+    link: "/blog/2025-12-28-ninja-stuff-reflections-2024",
+  },
+  {
     title: "New Kid on the Block: Reflections on Research, Health, and the Future",
     date: "December 21, 2025",
     lastModified: "December 21, 2025",

@@ -86,7 +86,7 @@ const Album = () => {
             }}
           >
             <Typography variant="body1" color="text.primary">
-              Images from New Orleans, Luisiana by our UCF PG student.
+              beautiful Christmas decorations and lighting to see us off in 2025
             </Typography>
           </Box>
         </Box>

@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Container,
+  Link,
   Paper,
   Stack,
   Typography,
@@ -125,25 +126,25 @@ const MusicPage = () => {
             Fresh spins
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph sx={{ mb: 4 }}>
-            Latest drop: V2S2 (Vidya, Vinaya, Saindhavi, Suchitra) sing one
-            Thiruppavai each day and release it early in the morning during the
-            Margazhi month.
+            Latest drop: Charulatha Mani’s brilliant exploration in
+            "Pantuvarali Patterns | Margazhi 2025" — a crisp, immersive listen.{" "}
+            <Link
+              href="https://music.youtube.com/watch?v=yyLsAk7_xS4&si=9PC2OxqctNdS2oQO"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="inherit"
+              underline="always"
+            >
+              Listen here
+            </Link>
+            .
           </Typography>
 
             <Stack spacing={2}>
             {[
               {
-                title: "V2S2 - Thiruppavai (daily Margazhi release)",
-                videoId: "R_xsRSd5BDs",
-              },
-              {
-                title: "Ed sheeran & Taylor swift-Make Me Good (Christmas Special)🎄",
-                videoId: "a9TR_Ozwr88",
-              },
-              {
-                title:
-                  "Challa (Official Music Video) | Hadiqa Kiani | Irfan Kiani | Sufiscore | Punjabi Folk Song",
-                videoId: "NC1rTd7Nm98",
+                title: "Pantuvarali Patterns | Margazhi 2025 | Charulatha Mani",
+                videoId: "yyLsAk7_xS4",
               },
             ].map((item) => (
               <Box
