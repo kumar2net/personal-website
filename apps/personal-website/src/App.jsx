@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { keyframes } from "@emotion/react";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import {
@@ -90,6 +91,37 @@ const MyReminiscences = lazy(
 const AiRecommenderCode = lazy(
   () => import("./pages/projects/AiRecommenderCode"),
 );
+
+const confettiFall = keyframes`
+  0% {
+    transform: translateY(-20%) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(130%) rotate(340deg);
+    opacity: 0.9;
+  }
+`;
+
+const confettiPieces = [
+  { left: "6%", size: 10, delay: 0, duration: 7.2, color: "#F97316" },
+  { left: "12%", size: 7, delay: 0.5, duration: 6.4, color: "#60A5FA" },
+  { left: "18%", size: 12, delay: 1.1, duration: 7.8, color: "#FACC15" },
+  { left: "26%", size: 8, delay: 0.2, duration: 6.9, color: "#34D399" },
+  { left: "33%", size: 6, delay: 0.8, duration: 7.1, color: "#F472B6" },
+  { left: "41%", size: 11, delay: 1.4, duration: 7.6, color: "#A78BFA" },
+  { left: "48%", size: 7, delay: 0.3, duration: 6.6, color: "#FB7185" },
+  { left: "55%", size: 9, delay: 1.6, duration: 7.9, color: "#22D3EE" },
+  { left: "61%", size: 6, delay: 0.7, duration: 6.3, color: "#FDBA74" },
+  { left: "68%", size: 12, delay: 1.9, duration: 7.4, color: "#4ADE80" },
+  { left: "74%", size: 8, delay: 0.1, duration: 6.8, color: "#FDE047" },
+  { left: "81%", size: 10, delay: 1.2, duration: 7.7, color: "#38BDF8" },
+  { left: "88%", size: 7, delay: 0.9, duration: 6.5, color: "#FB923C" },
+  { left: "94%", size: 9, delay: 1.7, duration: 7.3, color: "#C084FC" },
+];
 
 // Admin CMS removed
 
@@ -524,8 +556,79 @@ const App = ({ mode }) => {
                         display: "flex",
                         flexDirection: "column",
                         gap: 4,
+                        position: "relative",
                       }}
                     >
+                      <Box
+                        component={motion.div}
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.05 }}
+                        sx={{
+                          position: "relative",
+                          overflow: "hidden",
+                          borderRadius: 4,
+                          px: { xs: 3, md: 6 },
+                          py: { xs: 4, md: 5 },
+                          border: "1px solid",
+                          borderColor: "divider",
+                          background:
+                            "linear-gradient(135deg, rgba(59,130,246,0.12), rgba(236,72,153,0.12), rgba(251,191,36,0.14))",
+                          boxShadow: "0 18px 40px rgba(15,23,42,0.12)",
+                        }}
+                      >
+                        <Box
+                          aria-hidden
+                          sx={{
+                            position: "absolute",
+                            inset: 0,
+                            pointerEvents: "none",
+                          }}
+                        >
+                          {confettiPieces.map((piece, index) => (
+                            <Box
+                              key={`${piece.left}-${index}`}
+                              sx={{
+                                position: "absolute",
+                                top: -24,
+                                left: piece.left,
+                                width: piece.size,
+                                height: piece.size * 1.6,
+                                borderRadius: "4px",
+                                bgcolor: piece.color,
+                                opacity: 0.9,
+                                animation: `${confettiFall} ${piece.duration}s linear ${piece.delay}s infinite`,
+                                transform: "translateZ(0)",
+                              }}
+                            />
+                          ))}
+                        </Box>
+                        <Stack spacing={1.5} sx={{ position: "relative", zIndex: 1 }}>
+                          <Typography
+                            variant="overline"
+                            sx={{ letterSpacing: 2, fontWeight: 700 }}
+                          >
+                            New Year Wishes
+                          </Typography>
+                          <Typography
+                            variant="h4"
+                            sx={{
+                              fontWeight: 700,
+                              color: "text.primary",
+                            }}
+                          >
+                            Happy New Year 2026
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            color="text.secondary"
+                            sx={{ maxWidth: 640, mx: "auto" }}
+                          >
+                            Wishing you a bright start, bold experiments, and
+                            calm momentum for everything you’re building.
+                          </Typography>
+                        </Stack>
+                      </Box>
                       <Grid container spacing={3}>
                         {heroSections.map((section, index) => (
                           <Grid
@@ -583,14 +686,14 @@ const App = ({ mode }) => {
                         }}
                       >
                         <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          "You can’t split a human into parts and understand them."
+                          "2026: A whole year of blank pages. Time to write something worth remembering."
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           color="text.secondary"
                           sx={{ mt: 3, textAlign: "right" }}
                         >
-                          - Adler
+                          - Kumar A
                         </Typography>
                       </Paper>
                       {showWorldClock ? (
