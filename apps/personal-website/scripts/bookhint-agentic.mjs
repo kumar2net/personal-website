@@ -296,6 +296,7 @@ async function agenticSummarize(content, fileName) {
     'You are the Agentic Book Producer for kumar2net.com.',
     'Convert raw research drops into the polished, sectioned format used on the /books route.',
     'Keep the tone thoughtful, concise, and in first-person plural when summarizing ideas.',
+    'Always include every field in the schema; use empty strings, 0, or empty arrays when data is missing.',
     'Return JSON only. Do not emit markdown or explanations.',
   ].join(' ');
 
@@ -304,7 +305,18 @@ async function agenticSummarize(content, fileName) {
     schema: {
       type: 'object',
       additionalProperties: false,
-      required: ['title', 'author', 'oneLine', 'slug', 'tags', 'sections'],
+      required: [
+        'title',
+        'author',
+        'slug',
+        'oneLine',
+        'description',
+        'punchline',
+        'tags',
+        'readingMinutes',
+        'sections',
+        'takeaways',
+      ],
       properties: {
         title: { type: 'string' },
         author: { type: 'string' },
@@ -324,7 +336,7 @@ async function agenticSummarize(content, fileName) {
           minItems: 2,
           items: {
             type: 'object',
-            required: ['heading', 'summary'],
+            required: ['heading', 'summary', 'bullets'],
             additionalProperties: false,
             properties: {
               heading: { type: 'string' },
@@ -348,7 +360,13 @@ async function agenticSummarize(content, fileName) {
     model: defaultModel,
     temperature: 0.35,
     max_output_tokens: 1600,
-    response_format: { type: 'json_schema', json_schema: schema },
+    text: {
+      format: {
+        type: 'json_schema',
+        name: schema.name,
+        schema: schema.schema,
+      },
+    },
     input: [
       {
         role: 'system',

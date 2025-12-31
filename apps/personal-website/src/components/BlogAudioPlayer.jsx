@@ -161,7 +161,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     return "";
   }, [audioCache, selectedLanguage]);
 
-  const buttonLabel = "Generate audio";
+  const buttonLabel = hasAudio ? "Play audio" : "Generate audio";
   const disableActions = loadingLanguage === selectedLanguage;
   const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
 
@@ -229,6 +229,9 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     const targetLanguage = language || selectedLanguage;
     const text = collectArticleText(articleRef);
     if (!text) return;
+    if (isPrefetch && cacheRef.current?.[targetLanguage]?.url) {
+      return;
+    }
 
     const excerpt = text.length > MAX_CLIENT_CHARS
       ? text.slice(0, MAX_CLIENT_CHARS)
@@ -453,6 +456,14 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     }
   }
 
+  const handlePrimaryAction = () => {
+    if (hasAudio) {
+      tryPlayAudio();
+      return;
+    }
+    fetchAudio();
+  };
+
   return (
     <section className="not-prose mb-8 rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/60">
       <div className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-100">
@@ -489,7 +500,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       <div className="mt-4 flex flex-wrap gap-3">
         <button
           type="button"
-          onClick={fetchAudio}
+          onClick={handlePrimaryAction}
           disabled={disableActions}
           className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-slate-800/20 transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
         >

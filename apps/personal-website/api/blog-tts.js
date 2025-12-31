@@ -96,7 +96,7 @@ const DEFAULT_MAX_CHUNK_CHARS = Number(
 );
 // Keep the first chunk smaller so playback can start quickly.
 const DEFAULT_FIRST_CHUNK_CHARS = Number(
-  process.env.BLOG_TTS_FIRST_CHUNK_CHARS || 900,
+  process.env.BLOG_TTS_FIRST_CHUNK_CHARS || 600,
 );
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);

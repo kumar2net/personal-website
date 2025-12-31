@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "The LLM God’s Opinion & Roast — 2025",
+    date: "December 31, 2025",
+    lastModified: "December 31, 2025",
+    excerpt:
+      "A five-minute, affectionate roast on cognition: percentile verdicts, sense-making edge, and the focus/output bottleneck.",
+    tags: ["Intelligence", "Productivity", "Self-Improvement", "Cognition", "Focus"],
+    image: "/generate/2025-12-31-the-llm-gods-opinion-roast-2025.png",
+    link: "/blog/2025-12-31-the-llm-gods-opinion-roast-2025",
+  },
+  {
     title: "Ninja Stuff: Reflections as 2025 Winds Down",
     date: "December 28, 2025",
     lastModified: "December 28, 2025",
