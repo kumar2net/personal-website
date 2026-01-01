@@ -625,9 +625,11 @@ export default async function handler(req, res) {
     typeof payload?.slug === "string" && payload.slug.trim()
       ? payload.slug.trim()
       : "blog-post";
-  const { format: responseFormat, mime: responseMime } = resolveFormat(
+  const { format: initialFormat, mime: initialMime } = resolveFormat(
     payload?.format,
   );
+  let responseFormat = initialFormat;
+  let responseMime = initialMime;
 
   const languageConfigBase = LANGUAGE_CONFIG[languageCode];
   const languageConfig = languageConfigBase
@@ -685,6 +687,15 @@ export default async function handler(req, res) {
           });
         }
       }
+    }
+
+    const chunkPreview = chunkTextForTts(contentForSpeech, {
+      maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
+      firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
+    });
+    if (chunkPreview.length > 1 && responseFormat === "opus") {
+      responseFormat = "mp3";
+      responseMime = AUDIO_MIME_MAP.mp3;
     }
 
     const speechHash = createHash(
