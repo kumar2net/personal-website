@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { PassThrough, Readable } from "stream";
+import { PassThrough, Readable, Transform } from "stream";
 import OpenAI from "openai";
 
 function parseCsvEnv(value) {
@@ -97,6 +97,12 @@ const DEFAULT_MAX_CHUNK_CHARS = Number(
 // Keep the first chunk smaller so playback can start quickly.
 const DEFAULT_FIRST_CHUNK_CHARS = Number(
   process.env.BLOG_TTS_FIRST_CHUNK_CHARS || 600,
+);
+const STREAMING_MAX_CHUNK_CHARS = Number(
+  process.env.BLOG_TTS_STREAMING_MAX_CHUNK_CHARS || 1200,
+);
+const STREAMING_FIRST_CHUNK_CHARS = Number(
+  process.env.BLOG_TTS_STREAMING_FIRST_CHUNK_CHARS || 400,
 );
 const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000);
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
@@ -249,6 +255,68 @@ function chunkTextForTts(
   return chunks.length ? chunks : [text];
 }
 
+function synchsafeToInt(bytes) {
+  if (!bytes || bytes.length < 4) return 0;
+  return (
+    ((bytes[0] & 0x7f) << 21) |
+    ((bytes[1] & 0x7f) << 14) |
+    ((bytes[2] & 0x7f) << 7) |
+    (bytes[3] & 0x7f)
+  );
+}
+
+function stripMp3Id3Header(buffer) {
+  if (!buffer || buffer.length < 10) return buffer;
+  if (buffer.slice(0, 3).toString("ascii") !== "ID3") {
+    return buffer;
+  }
+  const size = synchsafeToInt(buffer.slice(6, 10));
+  const total = Math.min(buffer.length, 10 + size);
+  return buffer.slice(total);
+}
+
+function createMp3HeaderStripper() {
+  let headerChecked = false;
+  let pending = Buffer.alloc(0);
+  let skipBytes = 0;
+
+  return new Transform({
+    transform(chunk, _enc, cb) {
+      const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk || []);
+      if (headerChecked) {
+        this.push(buf);
+        cb();
+        return;
+      }
+
+      pending = Buffer.concat([pending, buf]);
+      if (pending.length < 10) {
+        cb();
+        return;
+      }
+
+      if (pending.slice(0, 3).toString("ascii") === "ID3") {
+        skipBytes = 10 + synchsafeToInt(pending.slice(6, 10));
+      } else {
+        skipBytes = 0;
+      }
+      headerChecked = true;
+
+      if (pending.length > skipBytes) {
+        this.push(pending.slice(skipBytes));
+      }
+      pending = Buffer.alloc(0);
+      cb();
+    },
+    flush(cb) {
+      if (!headerChecked && pending.length) {
+        this.push(pending);
+      }
+      cb();
+    },
+  });
+}
+
 function resolveFormat(requestedFormat) {
   const format = (requestedFormat || DEFAULT_AUDIO_FORMAT).toLowerCase();
   if (format === "mp3") return { format: "mp3", mime: AUDIO_MIME_MAP.mp3 };
@@ -387,7 +455,8 @@ async function synthesizeSpeechBuffered(
   const buffers = [];
   let selectedModel = null;
 
-  for (const chunk of chunks) {
+  for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i];
     const { buffer, model } = await synthesizeSpeech(client, {
       voice,
       text: chunk,
@@ -397,7 +466,9 @@ async function synthesizeSpeechBuffered(
     if (!selectedModel && model) {
       selectedModel = model;
     }
-    buffers.push(buffer || Buffer.alloc(0));
+    const nextBuffer =
+      format === "mp3" && i > 0 ? stripMp3Id3Header(buffer) : buffer;
+    buffers.push(nextBuffer || Buffer.alloc(0));
   }
 
   return { buffer: Buffer.concat(buffers), model: selectedModel };
@@ -568,13 +639,23 @@ async function synthesizeSpeechStreaming(
         }
 
         bufferPromises.push(
-          streamed.bufferPromise.then((buf) => buf || Buffer.alloc(0)),
+          streamed.bufferPromise.then((buf) => {
+            const safeBuffer = buf || Buffer.alloc(0);
+            if (format === "mp3" && i > 0) {
+              return stripMp3Id3Header(safeBuffer);
+            }
+            return safeBuffer;
+          }),
         );
 
+        const sourceStream =
+          format === "mp3" && i > 0
+            ? streamed.stream.pipe(createMp3HeaderStripper())
+            : streamed.stream;
         await new Promise((resolve, reject) => {
-          streamed.stream.on("data", (data) => passThrough.write(data));
-          streamed.stream.on("end", resolve);
-          streamed.stream.on("error", reject);
+          sourceStream.on("data", (data) => passThrough.write(data));
+          sourceStream.on("end", resolve);
+          sourceStream.on("error", reject);
         });
       }
       passThrough.end();
@@ -689,10 +770,16 @@ export default async function handler(req, res) {
       }
     }
 
-    const chunkPreview = chunkTextForTts(contentForSpeech, {
-      maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
-      firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
-    });
+    const previewConfig = USE_STREAMING
+      ? {
+          maxChunkChars: STREAMING_MAX_CHUNK_CHARS,
+          firstChunkChars: STREAMING_FIRST_CHUNK_CHARS,
+        }
+      : {
+          maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
+          firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
+        };
+    const chunkPreview = chunkTextForTts(contentForSpeech, previewConfig);
     if (chunkPreview.length > 1 && responseFormat === "opus") {
       responseFormat = "mp3";
       responseMime = AUDIO_MIME_MAP.mp3;
@@ -727,8 +814,8 @@ export default async function handler(req, res) {
           voice: languageConfig.voice,
           text: contentForSpeech,
           format: responseFormat,
-          firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
-          maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
+          firstChunkChars: STREAMING_FIRST_CHUNK_CHARS,
+          maxChunkChars: STREAMING_MAX_CHUNK_CHARS,
           signal: abortController.signal,
         });
       } catch (streamError) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Languages, Loader2, Volume2 } from "lucide-react";
+import { Languages, Volume2 } from "lucide-react";
 
 const LANGUAGES = [
   {
@@ -504,11 +504,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           disabled={disableActions}
           className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-slate-800/20 transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
         >
-          {loadingLanguage === selectedLanguage ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Volume2 className="h-4 w-4" />
-          )}
+          <Volume2 className="h-4 w-4" />
           {buttonLabel} ({LANGUAGES.find((l) => l.code === selectedLanguage)?.label})
         </button>
         {currentAudioUrl && (
