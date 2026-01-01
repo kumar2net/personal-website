@@ -25,7 +25,9 @@ const DEFAULT_VERCEL_PORT =
 const MODEL_LABEL =
   import.meta.env.VITE_TTS_MODEL_LABEL || "auto-select";
 
-const AUDIO_MIME = "audio/ogg; codecs=opus";
+const OPUS_MIME = "audio/ogg; codecs=opus";
+const MP3_MIME = "audio/mpeg";
+const AUDIO_MIME = MP3_MIME;
 const MAX_CLIENT_CHARS = 25000;
 
 function resolveAudioMime(contentTypeHeader) {
@@ -47,6 +49,20 @@ function canUseMse(mimeType = AUDIO_MIME) {
     typeof MS.isTypeSupported === "function" &&
     MS.isTypeSupported(mimeType)
   );
+}
+
+function canPlayAudioType(mimeType) {
+  if (typeof document === "undefined") return "";
+  const audio = document.createElement("audio");
+  return audio?.canPlayType?.(mimeType) || "";
+}
+
+function resolvePreferredAudioFormat() {
+  const opusPlayable = canPlayAudioType(OPUS_MIME);
+  if (opusPlayable && canUseMse(OPUS_MIME)) {
+    return { format: "opus", mime: OPUS_MIME };
+  }
+  return { format: "mp3", mime: MP3_MIME };
 }
 
 function normalizeText(text) {
@@ -242,11 +258,12 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     cleanupCurrentStream(targetLanguage);
     abortControllerRef.current = new AbortController();
 
+    const { format: preferredFormat } = resolvePreferredAudioFormat();
     const body = {
       slug,
       language: targetLanguage,
       text: excerpt,
-      format: canUseMse(AUDIO_MIME) ? "opus" : "mp3",
+      response_format: preferredFormat,
     };
     const payload = JSON.stringify(body);
     const createPostRequest = () => ({
@@ -471,7 +488,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         Listen to this post
       </div>
       <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-        OpenAI Text-to-Speech (
+        Audio is AI-generated (not a human voice). OpenAI Text-to-Speech (
         {activeEntry?.model || MODEL_LABEL}) voices this post in English, Hindi,
         or Tamil.
       </p>

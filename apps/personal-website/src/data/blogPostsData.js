@@ -1,5 +1,22 @@
 export const blogPosts = [
   {
+    title: "Moral Reasoning Series (Modules 7–10)",
+    date: "January 1, 2026",
+    lastModified: "January 1, 2026",
+    excerpt:
+      "A Michael Sandel–inspired walkthrough of markets, merit, belonging, and moral responsibility in a tech-saturated age.",
+    tags: [
+      "Michael Sandel",
+      "Moral Reasoning",
+      "Markets",
+      "Meritocracy",
+      "Common Good",
+      "Technology Ethics",
+    ],
+    image: "/generate/2026-01-01-moral-reasoning-series-modules-7-10.svg",
+    link: "/blog/2026-01-01-moral-reasoning-series-modules-7-10",
+  },
+  {
     title: "The LLM God’s Opinion & Roast — 2025",
     date: "December 31, 2025",
     lastModified: "December 31, 2025",

@@ -74,7 +74,7 @@ const TTS_MODEL_CANDIDATES = EXPLICIT_TTS_MODELS.length
   : Array.from(
       new Set(
         [
-          process.env.BLOG_TTS_MODEL,
+          process.env.BLOG_TTS_MODEL || "gpt-4o-mini-tts",
           process.env.OPENAI_GPT_TTS_MODEL,
           process.env.OPENAI_TTS_MODEL,
           ...FALLBACK_TTS_MODELS,
@@ -82,10 +82,14 @@ const TTS_MODEL_CANDIDATES = EXPLICIT_TTS_MODELS.length
       ),
     );
 
-const DEFAULT_AUDIO_FORMAT = "opus";
+const DEFAULT_AUDIO_FORMAT = "mp3";
 const AUDIO_MIME_MAP = {
   opus: "audio/ogg; codecs=opus",
   mp3: "audio/mpeg",
+  aac: "audio/aac",
+  flac: "audio/flac",
+  wav: "audio/wav",
+  pcm: "audio/pcm",
 };
 
 const MAX_INPUT_CHARS = Number(process.env.BLOG_TTS_MAX_CHARS || 25000);
@@ -319,8 +323,12 @@ function createMp3HeaderStripper() {
 
 function resolveFormat(requestedFormat) {
   const format = (requestedFormat || DEFAULT_AUDIO_FORMAT).toLowerCase();
-  if (format === "mp3") return { format: "mp3", mime: AUDIO_MIME_MAP.mp3 };
-  return { format: "opus", mime: AUDIO_MIME_MAP.opus };
+  if (format === "opus") return { format: "opus", mime: AUDIO_MIME_MAP.opus };
+  if (format === "aac") return { format: "aac", mime: AUDIO_MIME_MAP.aac };
+  if (format === "flac") return { format: "flac", mime: AUDIO_MIME_MAP.flac };
+  if (format === "wav") return { format: "wav", mime: AUDIO_MIME_MAP.wav };
+  if (format === "pcm") return { format: "pcm", mime: AUDIO_MIME_MAP.pcm };
+  return { format: "mp3", mime: AUDIO_MIME_MAP.mp3 };
 }
 
 function resolveVoice(requestedVoice) {
@@ -382,6 +390,7 @@ async function synthesizeSpeech(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
+    instructions,
     signal,
   },
 ) {
@@ -399,6 +408,7 @@ async function synthesizeSpeech(
         voice,
         input: text,
         response_format: format,
+        ...(instructions ? { instructions } : {}),
         signal,
       });
       const buffer = Buffer.from(await speech.arrayBuffer());
@@ -435,6 +445,7 @@ async function synthesizeSpeechBuffered(
     format = DEFAULT_AUDIO_FORMAT,
     maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
     firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
+    instructions,
     signal,
   },
 ) {
@@ -461,6 +472,7 @@ async function synthesizeSpeechBuffered(
       voice,
       text: chunk,
       format,
+      instructions,
       signal,
     });
     if (!selectedModel && model) {
@@ -480,6 +492,7 @@ async function synthesizeSpeechStreamingSingle(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
+    instructions,
     signal,
   },
 ) {
@@ -495,6 +508,7 @@ async function synthesizeSpeechStreamingSingle(
         voice,
         input: text,
         response_format: format,
+        ...(instructions ? { instructions } : {}),
         signal,
       });
 
@@ -568,6 +582,7 @@ async function synthesizeSpeechStreaming(
     format = DEFAULT_AUDIO_FORMAT,
     maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
     firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
+    instructions,
     signal,
   },
 ) {
@@ -617,6 +632,7 @@ async function synthesizeSpeechStreaming(
           voice,
           text: chunk,
           format,
+          instructions,
           signal,
         });
       }
@@ -634,6 +650,7 @@ async function synthesizeSpeechStreaming(
             voice,
             text: chunks[i + 1],
             format,
+            instructions,
             signal,
           });
         }
@@ -707,10 +724,13 @@ export default async function handler(req, res) {
       ? payload.slug.trim()
       : "blog-post";
   const { format: initialFormat, mime: initialMime } = resolveFormat(
-    payload?.format,
+    payload?.response_format || payload?.format,
   );
   let responseFormat = initialFormat;
   let responseMime = initialMime;
+  const instructionsRaw =
+    typeof payload?.instructions === "string" ? payload.instructions.trim() : "";
+  const instructions = instructionsRaw ? instructionsRaw.slice(0, 400) : "";
 
   const languageConfigBase = LANGUAGE_CONFIG[languageCode];
   const languageConfig = languageConfigBase
@@ -786,7 +806,7 @@ export default async function handler(req, res) {
     }
 
     const speechHash = createHash(
-      `${languageCode}:${languageConfig.voice}:${slug}:${responseFormat}:${contentForSpeech}`,
+      `${languageCode}:${languageConfig.voice}:${slug}:${responseFormat}:${instructions}:${contentForSpeech}`,
     );
     const cachedAudio = getCacheEntry(audioCache, speechHash);
 
@@ -816,6 +836,7 @@ export default async function handler(req, res) {
           format: responseFormat,
           firstChunkChars: STREAMING_FIRST_CHUNK_CHARS,
           maxChunkChars: STREAMING_MAX_CHUNK_CHARS,
+          instructions,
           signal: abortController.signal,
         });
       } catch (streamError) {
@@ -882,6 +903,7 @@ export default async function handler(req, res) {
       format: responseFormat,
       maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
       firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
+      instructions,
       signal: abortController.signal,
     });
     const responsePayload = {
