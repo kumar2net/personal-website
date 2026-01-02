@@ -1,5 +1,23 @@
 export const blogPosts = [
   {
+    title: "The Ayurveda Issue: Aligning Ancient Wisdom with Modern Science in 2026",
+    date: "January 2, 2026",
+    lastModified: "January 2, 2026",
+    excerpt:
+      "Happiest Health | The Ayurveda Issue: January 2026 — a look at life-stage doshas, seasonal eating, daily routines, and the modern evidence (plus AI) behind them.",
+    tags: [
+      "Ayurveda",
+      "Health",
+      "Wellness",
+      "Nutrition",
+      "Seasonal Eating",
+      "AI in Medicine",
+      "Traditional Medicine",
+    ],
+    image: "/generate/2026-01-02-ayurveda-issue-2026.png",
+    link: "/blog/2026-01-02-ayurveda-issue-2026",
+  },
+  {
     title: "Moral Reasoning Series (Modules 7–10)",
     date: "January 1, 2026",
     lastModified: "January 1, 2026",
