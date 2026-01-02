@@ -2,6 +2,23 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-01-02-ayurveda-issue-2026": {
+    title: "Happiest Health | The Ayurveda Issue: January 2026",
+    description:
+      "A January 2026 Ayurveda special that connects life-stage doshas, seasonal eating, and daily routines with modern evidence and AI-driven diagnostics.",
+    image: "/generate/2026-01-02-ayurveda-issue-2026.png",
+    tags: [
+      "Ayurveda",
+      "Health",
+      "Wellness",
+      "Nutrition",
+      "Seasonal Eating",
+      "AI in Medicine",
+      "Traditional Medicine",
+    ],
+    datePublished: "2026-01-02",
+    dateModified: "2026-01-02",
+  },
   "2025-12-16-agu-2025-seagrass-wave-climates": {
     title:
       "AGU 2025: Hydrodynamics and Seagrass Growth in the Indian River Lagoon",
