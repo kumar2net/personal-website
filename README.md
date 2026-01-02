@@ -8,16 +8,15 @@ Vite + React 19 + MUI 7 monorepo (Turborepo workspaces). Primary app lives in `a
 - Build app only: `npm run --workspace apps/personal-website build`
 - Preview: `npm run --workspace apps/personal-website preview`
 
-## Audio TTS (OpenAI, streaming)
-- Backend: `apps/personal-website/api/blog-tts.js` streams OpenAI Audio Speech (opus via MSE, mp3 progressive fallback). Caches the full buffer after streaming.
-- Frontend: `BlogAudioPlayer` streams via MediaSource when supported; falls back to progressive audio if not. Prefetches English on view and sends a shortened excerpt for faster starts.
-- Env required: `OPENAI_API_KEY`.
-- Model selection: set `BLOG_TTS_MODELS` (comma-separated, ordered) to use the newest TTS model, e.g. `BLOG_TTS_MODELS=<new-tts-model>,gpt-4o-mini-tts`; or set `BLOG_TTS_MODEL` for a single preferred model. Optional `BLOG_TTS_FALLBACK_MODELS` prepends additional fallbacks without overriding defaults.
-- API compliance: uses `client.audio.speech.create({ input, voice, model, response_format })` and streams audio by piping the response body when available.
-- Latency tuning: `BLOG_TTS_FIRST_CHUNK_CHARS` controls how quickly the first chunk starts; `BLOG_TTS_MAX_CHUNK_CHARS` controls per-request chunk size (default `3600` to stay below the API’s per-request `input` limit). Set `BLOG_TTS_STREAMING=false` to disable streaming.
-- Local (Vercel): run `vercel dev` so `/api/blog-tts` is on port `3000` (or set `VITE_VERCEL_DEV_PORT`). Vite dev stays on 5173.
-- Optional override: set `VITE_BLOG_TTS_ENDPOINT` to a full URL (e.g., prod) if no local functions are running.
-- Voices: Hindi/Tamil now default to supported OpenAI voices (e.g., `alloy`); unsupported voices are coerced to a valid option to avoid 400s.
+## Audio TTS (OpenAI)
+- Backend: `apps/personal-website/api/blog-tts.js` uses OpenAI Audio Speech and now forces a progressive MP3 response for all languages (no MediaSource). It prefers `.env` over `.env.local` and trims API keys to avoid auth errors. Audio responses are cached.
+- Frontend: `BlogAudioPlayer` always fetches via a blob and renders a progress bar while TTS is generating. Playback starts after the user clicks; no background prefetching or MSE streaming paths remain.
+- Env required: `OPENAI_API_KEY` in the repo root `.env` (used directly server-side; no client exposure).
+- Model selection: set `BLOG_TTS_MODELS` (comma-separated, ordered) to pin the newest TTS model, e.g. `BLOG_TTS_MODELS=<new-tts-model>,gpt-4o-mini-tts`; or set `BLOG_TTS_MODEL` for a single preferred model. Optional `BLOG_TTS_FALLBACK_MODELS` prepends additional fallbacks without overriding defaults.
+- API compliance: `client.audio.speech.create({ model, voice, input, response_format })` (no deprecated Configuration wrapper). Translation for Hindi/Tamil uses chat completions (`gpt-4o-mini` by default).
+- Latency tuning: Requests clamp to `BLOG_TTS_MAX_CHARS` (default `25000`) and chunk for TTS as needed; streaming env vars are ignored by the player now.
+- Local (Vercel): run `vercel dev` so `/api/blog-tts` is on port `3000` (or set `VITE_VERCEL_DEV_PORT`). Vite dev stays on 5173. You can override the endpoint with `VITE_BLOG_TTS_ENDPOINT` if needed.
+- Voices: Hindi/Tamil default to supported OpenAI voices (`alloy` unless overridden); unsupported voices are coerced to a valid option to avoid 400s.
 
 ## Translations (Hindi/Tamil via OpenAI)
 - Backend: `apps/personal-website/api/translate.js` (also exported at root `api/translate.js`).

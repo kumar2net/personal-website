@@ -1,6 +1,25 @@
 import crypto from "crypto";
 import { PassThrough, Readable, Transform } from "stream";
 import OpenAI from "openai";
+import path from "node:path";
+import fs from "node:fs";
+import dotenv from "dotenv";
+
+const ENV_SNAPSHOT = {};
+const envCandidates = [
+  path.resolve(process.cwd(), ".env.local"),
+  path.resolve(process.cwd(), ".env"),
+];
+for (const candidate of envCandidates) {
+  if (fs.existsSync(candidate)) {
+    try {
+      const parsed = dotenv.parse(fs.readFileSync(candidate));
+      Object.assign(ENV_SNAPSHOT, parsed);
+    } catch {
+      // ignore env parse errors; fall back to process.env
+    }
+  }
+}
 
 function parseCsvEnv(value) {
   if (!value || typeof value !== "string") {
@@ -117,6 +136,16 @@ let cachedClient;
 const translationCache = new Map();
 const audioCache = new Map();
 
+function resolveApiKey() {
+  const raw =
+    ENV_SNAPSHOT.OPENAI_API_KEY ||
+    process.env.OPENAI_API_KEY ||
+    process.env.VITE_OPENAI_API_KEY ||
+    "";
+  if (!raw) return "";
+  return String(raw).trim().split(/\s+/)[0] || "";
+}
+
 function createHash(text) {
   return crypto.createHash("sha256").update(text).digest("hex");
 }
@@ -152,6 +181,14 @@ function applyCors(res) {
 
 async function readJsonBody(req) {
   if (req.body && typeof req.body === "object") {
+    if (Buffer.isBuffer(req.body)) {
+      const text = req.body.toString("utf8").trim();
+      return text ? JSON.parse(text) : {};
+    }
+    if (req.body instanceof Uint8Array) {
+      const text = Buffer.from(req.body).toString("utf8").trim();
+      return text ? JSON.parse(text) : {};
+    }
     return req.body;
   }
 
@@ -347,10 +384,11 @@ function getOpenAIClient() {
   if (cachedClient) {
     return cachedClient;
   }
-  if (!process.env.OPENAI_API_KEY) {
+  const apiKey = resolveApiKey();
+  if (!apiKey) {
     throw new Error("OPENAI_API_KEY is not configured");
   }
-  cachedClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  cachedClient = new OpenAI({ apiKey });
   return cachedClient;
 }
 
@@ -700,7 +738,7 @@ export default async function handler(req, res) {
     });
   }
 
-  if (!process.env.OPENAI_API_KEY) {
+  if (!resolveApiKey()) {
     return res.status(503).json({
       error:
         "Text-to-speech is disabled. Set OPENAI_API_KEY (and optionally BLOG_TTS_MODELS or BLOG_TTS_MODEL) to enable audio generation.",

@@ -14,6 +14,8 @@ const __dirname = path.dirname(__filename);
 const envCandidates = [
   path.resolve(__dirname, "../../.env.local"),
   path.resolve(__dirname, "../../.env"),
+  path.resolve(__dirname, ".env.local"),
+  path.resolve(__dirname, ".env"),
 ];
 for (const candidate of envCandidates) {
   if (fs.existsSync(candidate)) {

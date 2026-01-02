@@ -91,13 +91,10 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const [error, setError] = useState("");
   const [audioCache, setAudioCache] = useState({});
   const [autoPlayNonce, setAutoPlayNonce] = useState(0);
+  const [userInitiated, setUserInitiated] = useState(false);
   const cacheRef = useRef(audioCache);
-  const mediaSourceRef = useRef(null);
-  const sourceBufferRef = useRef(null);
   const audioRef = useRef(null);
   const abortControllerRef = useRef(null);
-  const prefetchedRef = useRef(false);
-  const prefetchedLanguagesRef = useRef(new Set());
 
   useEffect(() => {
     cacheRef.current = audioCache;
@@ -111,22 +108,15 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           URL.revokeObjectURL(entry.url);
         }
       });
-      if (mediaSourceRef.current) {
-        try {
-          mediaSourceRef.current.endOfStream?.();
-        } catch {
-          // ignore
-        }
-      }
     };
   }, []);
 
   const endpoints = useMemo(() => {
     const candidateEndpoints = [];
     const customEndpoint = import.meta.env.VITE_BLOG_TTS_ENDPOINT;
+    const useVercelDev = import.meta.env.VITE_USE_VERCEL_DEV === "true";
     const isBrowser = typeof window !== "undefined";
 
-    // 1) Explicit override wins
     if (customEndpoint) {
       candidateEndpoints.push(customEndpoint);
     }
@@ -136,20 +126,17 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
       const isVitePort = port === "5173" || port === "5174";
 
-      // 2) Local dev with vercel dev (serverless functions on 3000 by default)
-      if (isLocalHost && isVitePort) {
+      if (origin) {
+        candidateEndpoints.push(`${origin}/api/blog-tts`);
+      }
+
+      if (useVercelDev && isLocalHost && isVitePort) {
         candidateEndpoints.push(
           `http://localhost:${DEFAULT_VERCEL_PORT}/api/blog-tts`,
         );
       }
-
-      // 3) Non-localhost origin (deployed) uses same-origin API/function
-      if (!isLocalHost) {
-        candidateEndpoints.push(`${origin}/api/blog-tts`);
-      }
     }
 
-    // 4) Fallbacks (kept last)
     candidateEndpoints.push(...DEFAULT_ENDPOINTS);
     return Array.from(new Set(candidateEndpoints.filter(Boolean)));
   }, []);
@@ -181,9 +168,9 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const disableActions = loadingLanguage === selectedLanguage;
   const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
 
-  async function tryPlayAudio() {
+  async function tryPlayAudio(force = false) {
     try {
-      if (audioRef.current) {
+      if (audioRef.current && (force || userInitiated)) {
         await audioRef.current.play();
       }
     } catch (err) {
@@ -196,22 +183,6 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
-    if (sourceBufferRef.current) {
-      try {
-        sourceBufferRef.current.abort();
-      } catch {
-        // ignore
-      }
-      sourceBufferRef.current = null;
-    }
-    if (mediaSourceRef.current) {
-      try {
-        mediaSourceRef.current.endOfStream?.();
-      } catch {
-        // ignore
-      }
-      mediaSourceRef.current = null;
-    }
     const entry = cacheRef.current?.[language];
     if (entry?.url) {
       URL.revokeObjectURL(entry.url);
@@ -223,31 +194,10 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     }
   }
 
-  useEffect(() => {
-    if (prefetchedRef.current) return;
-    if (!articleRef?.current) return;
-    prefetchedRef.current = true;
-    prefetchedLanguagesRef.current.add("en");
-    fetchAudio({ language: "en", isPrefetch: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articleRef]);
-
-  useEffect(() => {
-    if (!articleRef?.current) return;
-    if (prefetchedLanguagesRef.current.has(selectedLanguage)) return;
-    if (loadingLanguage === selectedLanguage) return;
-    prefetchedLanguagesRef.current.add(selectedLanguage);
-    fetchAudio({ language: selectedLanguage, isPrefetch: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLanguage, loadingLanguage, articleRef]);
-
-  async function fetchAudio({ language, isPrefetch } = {}) {
+  async function fetchAudio({ language } = {}) {
     const targetLanguage = language || selectedLanguage;
     const text = collectArticleText(articleRef);
     if (!text) return;
-    if (isPrefetch && cacheRef.current?.[targetLanguage]?.url) {
-      return;
-    }
 
     const excerpt = text.length > MAX_CLIENT_CHARS
       ? text.slice(0, MAX_CLIENT_CHARS)
@@ -300,6 +250,9 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
               // Ignore JSON parse errors and fall back to default message
             }
             lastError = new Error(message);
+            if (response.status === 401 || response.status === 403) {
+              throw lastError;
+            }
             response = null;
             continue;
           }
@@ -330,104 +283,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       }
 
       const resolvedMime = resolveAudioMime(contentType);
-      const supportsStreaming =
-        canUseMse(resolvedMime) &&
-        response.body &&
-        typeof response.body.getReader === "function";
-      if (supportsStreaming) {
-        const reader = response.body.getReader();
-        const mediaSource = new MediaSource();
-        mediaSourceRef.current = mediaSource;
-        const objectUrl = URL.createObjectURL(mediaSource);
-
-        const streamMeta = {
-          fetchedAt: Date.now(),
-          translated: response.headers.get("x-blogtts-translated") === "1",
-          translationFailed:
-            response.headers.get("x-blogtts-translation-failed") === "1",
-          truncated: response.headers.get("x-blogtts-truncated") === "1",
-          model: response.headers.get("x-blogtts-model") || "",
-          mimeType: resolvedMime,
-          url: objectUrl,
-        };
-
-        setAudioCache((prev) => ({
-          ...prev,
-          [targetLanguage]: streamMeta,
-        }));
-        setAutoPlayNonce((prev) => prev + 1);
-        tryPlayAudio();
-
-        mediaSource.addEventListener("sourceopen", () => {
-          let sourceBuffer;
-          let startedPlayback = false;
-          const startPlayback = () => {
-            if (startedPlayback) return;
-            if (audioRef.current) {
-              startedPlayback = true;
-              audioRef.current.play().catch(() => {
-                // Autoplay may be blocked; user can press play manually.
-              });
-            }
-          };
-          try {
-            sourceBuffer = mediaSource.addSourceBuffer(resolvedMime);
-          } catch (bufErr) {
-            console.warn("[blog-tts] SourceBuffer unsupported, falling back to blob:", bufErr);
-            mediaSource.endOfStream();
-            fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
-            return;
-          }
-          sourceBufferRef.current = sourceBuffer;
-          const queue = [];
-          let doneReading = false;
-
-          const processQueue = () => {
-            if (!sourceBuffer || sourceBuffer.updating) return;
-            if (queue.length > 0) {
-              sourceBuffer.appendBuffer(queue.shift());
-              startPlayback();
-            } else if (doneReading) {
-              try {
-                mediaSource.endOfStream();
-              } catch {
-                // ignore
-              }
-            }
-          };
-
-          sourceBuffer.addEventListener("updateend", processQueue);
-
-          const pump = async () => {
-            try {
-              while (true) {
-                const { value, done } = await reader.read();
-                if (done) {
-                  doneReading = true;
-                  processQueue();
-                  break;
-                }
-                if (value) {
-                  queue.push(value instanceof Uint8Array ? value : new Uint8Array(value));
-                  processQueue();
-                }
-              }
-            } catch (streamErr) {
-              console.error("[blog-tts] Streaming to MediaSource failed:", streamErr);
-              setError("Audio streaming was interrupted. Please try again.");
-              try {
-                mediaSource.endOfStream("network");
-              } catch {
-                // ignore
-              }
-            }
-          };
-
-          pump();
-        });
-      } else {
-        await fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
-      }
+      await fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
     } catch (err) {
       if (err?.name === "AbortError") {
         return;
@@ -466,7 +322,8 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         },
       }));
       setAutoPlayNonce((prev) => prev + 1);
-      tryPlayAudio();
+      setUserInitiated(true);
+      tryPlayAudio(true);
     } catch (blobErr) {
       console.error("[blog-tts] Blob fallback failed:", blobErr);
       setError("Audio playback is not supported in this browser.");
@@ -474,8 +331,9 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   }
 
   const handlePrimaryAction = () => {
+    setUserInitiated(true);
     if (hasAudio) {
-      tryPlayAudio();
+      tryPlayAudio(true);
       return;
     }
     fetchAudio();
@@ -524,12 +382,23 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           <Volume2 className="h-4 w-4" />
           {buttonLabel} ({LANGUAGES.find((l) => l.code === selectedLanguage)?.label})
         </button>
-        {currentAudioUrl && (
+          {currentAudioUrl && (
           <div className="text-xs text-slate-500 dark:text-slate-400">
             Ready — press play below.
           </div>
         )}
       </div>
+
+      {loadingLanguage === selectedLanguage && (
+        <div className="mt-3 w-full">
+          <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+            Generating audio…
+          </div>
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+            <div className="h-full w-1/3 animate-pulse rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
+          </div>
+        </div>
+      )}
 
       {error && (
         <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-500/50 dark:bg-red-950/60 dark:text-red-200">
@@ -543,7 +412,6 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             key={`${selectedLanguage}-${autoPlayNonce}`}
             className="w-full"
             controls
-            autoPlay
             preload="auto"
             src={currentAudioUrl}
             ref={audioRef}
