@@ -617,7 +617,7 @@ const App = ({ mode }) => {
                               color: "text.primary",
                             }}
                           >
-                            Happy New Year 2026
+                            Seasons greetings
                           </Typography>
                           <Typography
                             variant="body1"

@@ -118,8 +118,8 @@ const Album = () => {
             </Typography>
           </Box>
 
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={12} md={8}>
               <Paper
                 elevation={0}
                 sx={{
@@ -130,7 +130,7 @@ const Album = () => {
                 }}
               >
                 <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-                  AIKumar Sothapalgal - சொத்தப்பல்
+                  AIKumar Sothapalgal - சொதப்பல்கள் 
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                   Follow the latest AIKumar drops and behind-the-scenes snippets.
@@ -146,24 +146,6 @@ const Album = () => {
                 >
                   Visit YouTube channel
                 </Button>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 3,
-                  borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
-                  bgcolor: alpha(theme.palette.primary.main, 0.08),
-                }}
-              >
-                <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-                  Studio Note
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Beautiful Christmas decorations and lighting to see us off in 2025.
-                </Typography>
               </Paper>
             </Grid>
           </Grid>
