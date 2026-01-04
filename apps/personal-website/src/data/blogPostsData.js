@@ -1,5 +1,23 @@
 export const blogPosts = [
   {
+    title: "New Year 2026 Musings",
+    date: "January 4, 2026",
+    lastModified: "January 4, 2026",
+    excerpt:
+      "New year reflections on Ayurveda debates, a calculus-education provocation, heavy crude geopolitics, political transparency, gig worker strikes, gingerbread curiosities, and a Bharatanatyam moment with World Cup energy.",
+    tags: [
+      "New Year",
+      "Ayurveda",
+      "Geopolitics",
+      "Politics",
+      "Culture",
+      "Festivities",
+      "Football World Cup",
+    ],
+    image: "/generate/2026-01-04-new-year-2026-musings.png",
+    link: "/blog/2026-01-04-new-year-2026-musings",
+  },
+  {
     title: "The Ayurveda Issue: Aligning Ancient Wisdom with Modern Science in 2026",
     date: "January 2, 2026",
     lastModified: "January 2, 2026",

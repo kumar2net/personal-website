@@ -2,6 +2,23 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-01-04-new-year-2026-musings": {
+    title: "New Year 2026 Musings",
+    description:
+      "A New Year sweep across Ayurveda debates, a calculus-education provocation, heavy crude geopolitics, political transparency, gig worker strikes, gingerbread curiosities, and a Bharatanatyam moment with World Cup anticipation.",
+    image: "/generate/2026-01-04-new-year-2026-musings.png",
+    tags: [
+      "New Year",
+      "Ayurveda",
+      "Geopolitics",
+      "Politics",
+      "Culture",
+      "Festivities",
+      "Football World Cup",
+    ],
+    datePublished: "2026-01-04",
+    dateModified: "2026-01-04",
+  },
   "2026-01-02-ayurveda-issue-2026": {
     title: "Happiest Health | The Ayurveda Issue: January 2026",
     description:

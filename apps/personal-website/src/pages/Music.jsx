@@ -178,19 +178,18 @@ const MusicPage = () => {
                   FRESH SPINS
                 </Typography>
                 <Typography variant="h4" component="h3" fontWeight="700" gutterBottom>
-                  Latest drop
+                  Latest spins
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  2026 pick: a Sufi Punjabi gem with soulful vocals and a calm,
-                  devotional lift that anchors the playlist’s mood.{" "}
+                  The full playlist rotation right now — every track in order.
                   <Link
-                    href="https://music.youtube.com/watch?v=pGPJLWt1mE4&si=JYPxs19qm_Q5Cxbr"
+                    href={`https://music.youtube.com/playlist?list=${playlistId}&si=${playlistShareId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     color="inherit"
                     underline="always"
                   >
-                    Listen here
+                    Open the playlist
                   </Link>
                   .
                 </Typography>
@@ -199,8 +198,36 @@ const MusicPage = () => {
                   {[
                     {
                       title:
-                        "Best Punjabi Sufi Live Performance | Dum Ba Dum Shukar | Sohana Rio | 2026",
-                      videoId: "pGPJLWt1mE4",
+                        "AMBADI KANNAN | K S CHITHRA | T S RADHAKRISHNAJI | SUDHAKARAN MENON",
+                      videoId: "W2B8B4ZL6X0",
+                    },
+                    {
+                      title:
+                        "Do Dil Mil Rahe Hain | Priyanka Barve | Priyanka's Playlist",
+                      videoId: "Gah9SRHTlO8",
+                    },
+                    {
+                      title:
+                        "Nachdi (Official Music Video) | Gurnam Bhullar | Kaptaan | Desi Crew | Diamondstar Worldwide",
+                      videoId: "BdgefeGodkw",
+                    },
+                    {
+                      title: "Love Can Grow",
+                      videoId: "Rof9Q88o_r0",
+                    },
+                    {
+                      title: "Olivia Dean - Man I Need",
+                      videoId: "oIv_Y2RPQ_A",
+                    },
+                    {
+                      title:
+                        "Uyi Amma | Rasha Thadani & Aaman Devgan | Madhubanti Bagchi & Amit Trivedi | Azaad | Lyrical",
+                      videoId: "JqS1_rwvtbY",
+                    },
+                    {
+                      title:
+                        "BORDER 2: Ghar Kab Aaoge | Sunny Deol | Anu,Mithoon, Sonu, Roop, Arijit, Vishal, Diljit, Javed,Manoj",
+                      videoId: "lOHVMmZ6n3o",
                     },
                   ].map((item) => (
                     <Box

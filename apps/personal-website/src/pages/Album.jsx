@@ -134,6 +134,7 @@ const Album = () => {
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                   Follow the latest AIKumar drops and behind-the-scenes snippets.
+                  New short: "Peanut Pains" offers a funny take.
                 </Typography>
                 <Button
                   variant="outlined"
