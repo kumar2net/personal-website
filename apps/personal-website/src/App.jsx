@@ -184,28 +184,44 @@ function useGaPageViews() {
   const location = useLocation();
 
   // Track GA4 page_view on route change
-  useEffect(() => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      // GA4 SPA best practice: use `gtag('config', measurementId, { page_path })`
-      // on route changes. This reliably produces GA4 pageviews for client-side
-      // routing even when the initial `gtag('config', ...)` uses `send_page_view: false`.
-      const GA_MEASUREMENT_ID = "G-PZ37S6E5BL";
-      window.gtag("config", GA_MEASUREMENT_ID, {
-        send_page_view: true,
-        page_path: location.pathname + location.search,
-        page_location: window.location.href,
-        page_title: document.title,
-      });
+  const trackPageView = React.useCallback(() => {
+    if (typeof window === "undefined") return;
+    if (typeof window.gtag !== "function") return;
 
-      // Also track custom event for better analytics
-      window.gtag("event", "page_view_custom", {
-        event_category: "engagement",
-        event_label: location.pathname,
-        page_path: location.pathname,
-        page_title: document.title,
-      });
-    }
+    // GA4 SPA best practice: use `gtag('config', measurementId, { page_path })`
+    // on route changes. This reliably produces GA4 pageviews for client-side
+    // routing even when the initial `gtag('config', ...)` uses `send_page_view: false`.
+    const GA_MEASUREMENT_ID = "G-PZ37S6E5BL";
+    const pagePath = location.pathname + location.search;
+    window.gtag("config", GA_MEASUREMENT_ID, {
+      send_page_view: true,
+      page_path: pagePath,
+      page_location: window.location.href,
+      page_title: document.title,
+    });
+
+    // Also track custom event for better analytics
+    window.gtag("event", "page_view_custom", {
+      event_category: "engagement",
+      event_label: location.pathname,
+      page_path: pagePath,
+      page_title: document.title,
+    });
   }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    trackPageView();
+  }, [trackPageView]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    const handleReady = () => trackPageView();
+    window.addEventListener("ga:ready", handleReady);
+    if (window.__gaReady) {
+      handleReady();
+    }
+    return () => window.removeEventListener("ga:ready", handleReady);
+  }, [trackPageView]);
 }
 
 const App = ({ mode }) => {

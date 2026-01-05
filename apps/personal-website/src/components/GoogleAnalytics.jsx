@@ -28,12 +28,20 @@ function initGtag() {
   window.gtag("config", MEASUREMENT_ID, { send_page_view: false });
 }
 
+function markGaReady() {
+  window.__gaReady = true;
+  window.dispatchEvent(new Event("ga:ready"));
+}
+
 export default function GoogleAnalytics() {
   React.useEffect(() => {
     if (typeof window === "undefined") return undefined;
     if (!getIsProd()) return undefined;
     if (navigator?.doNotTrack === "1") return undefined;
-    if (typeof window.gtag === "function") return undefined;
+    if (typeof window.gtag === "function") {
+      markGaReady();
+      return undefined;
+    }
 
     let canceled = false;
     let started = false;
@@ -47,6 +55,7 @@ export default function GoogleAnalytics() {
         );
         if (canceled) return;
         initGtag();
+        markGaReady();
       } catch (error) {
         console.warn("[ga] Failed to load gtag.js", error);
       }
