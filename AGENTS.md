@@ -65,6 +65,7 @@ repository_guidelines: |
   - Required env: `OPENAI_API_KEY`.
   - Local (Vercel): run `vercel dev` (serverless on port 3000 by default; override with `VITE_VERCEL_DEV_PORT`). Vite dev on 5173.
   - Optional override endpoint: set `VITE_BLOG_TTS_ENDPOINT` if you want to hit a different API host.
+  - Recency gate: If the OpenAI docs show updated audio/TTS examples, models, or deprecations after 2025-12-15, output (i) a one-paragraph diff summary, (ii) before->after code (Node & Python), (iii) a migration checklist (voice/model params, endpoints, feature flags). If last-updated dates cannot be verified from official docs, fail closed and ask for confirmation.
 
   ## Coding Style & Naming
   - Languages: TypeScript/JavaScript with ES modules; React function components.
@@ -83,3 +84,8 @@ repository_guidelines: |
   ## Security & Configuration Tips
   - Env: `.env` values are used by Vite; never commit secrets. For local preview, copy `.env.example` if present or define required Vite `VITE_*` vars manually.
   - Packages: `@kumar2net/ui-theme` is a workspace package; ensure workspace install to avoid registry 404s.***
+
+  ## Context7 Snapshot
+  <!--CTX7:BEGIN-->
+  Context7 has not been pulled yet. Run `node scripts/pull-context7.mjs`.
+  <!--CTX7:END-->

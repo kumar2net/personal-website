@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "context7": {
+      "url": "${CONTEXT7_URL}",
+      "headers": {
+        "Authorization": "Bearer ${CONTEXT7_API_KEY}"
+      },
+      "tools": ["getContext", "listDocs", "getSecrets"]
+    }
+  }
+}

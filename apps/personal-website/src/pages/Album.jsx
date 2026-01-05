@@ -19,7 +19,7 @@ const albums = [
   {
     title: "Latest Album Drop",
     description:
-      "A fresh set of everyday frames and warm highlights, stitched into one easy scroll.",
+      "A fresh set of everyday frames and warm highlights, including a Bharatanatyam dance bit and other interesting 2026 images.",
     url: "https://photos.app.goo.gl/7LgrDCzrsR9n8NbL6",
     accent: "secondary",
   },

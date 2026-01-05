@@ -1,0 +1,15 @@
+version: 1
+
+agents:
+  grounded:
+    instructions: ./AGENTS.md
+    mcp_servers:
+      - ./mcp.context7.json
+    hooks:
+      pre_run:
+        - node scripts/pull-context7.mjs
+
+tasks:
+  grounded:
+    agent: grounded
+    log_dir: .codex/logs
