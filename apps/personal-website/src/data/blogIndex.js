@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-01-10-spoofs-and-politics": {
+    title: "Spoofs and Politics",
+    description:
+      "A grab bag of notes on AI visuals, calculus pride, education reform, a favorite spoof, Adlerian psychology, food experiments, India markets, and regional beverages.",
+    image: "/generate/2026-01-10-spoofs-and-politics.svg",
+    tags: ["AI", "Education", "Politics", "Humor", "Books", "Markets"],
+    datePublished: "2026-01-10",
+    dateModified: "2026-01-10",
+  },
   "2026-01-04-new-year-2026-musings": {
     title: "New Year 2026 Musings",
     description:

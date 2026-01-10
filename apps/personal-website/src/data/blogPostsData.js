@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Spoofs and Politics",
+    date: "January 10, 2026",
+    lastModified: "January 10, 2026",
+    excerpt:
+      "A grab bag of notes on AI visuals, calculus pride, education reform, a favorite spoof, Adlerian psychology, food experiments, India markets, and regional beverages.",
+    tags: ["AI", "Education", "Politics", "Humor", "Books", "Markets"],
+    image: "/generate/2026-01-10-spoofs-and-politics.svg",
+    link: "/blog/2026-01-10-spoofs-and-politics",
+  },
+  {
     title: "New Year 2026 Musings",
     date: "January 4, 2026",
     lastModified: "January 4, 2026",

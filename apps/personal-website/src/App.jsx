@@ -1,6 +1,5 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { keyframes } from "@emotion/react";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import {
@@ -91,37 +90,6 @@ const MyReminiscences = lazy(
 const AiRecommenderCode = lazy(
   () => import("./pages/projects/AiRecommenderCode"),
 );
-
-const confettiFall = keyframes`
-  0% {
-    transform: translateY(-20%) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(130%) rotate(340deg);
-    opacity: 0.9;
-  }
-`;
-
-const confettiPieces = [
-  { left: "6%", size: 10, delay: 0, duration: 7.2, color: "#F97316" },
-  { left: "12%", size: 7, delay: 0.5, duration: 6.4, color: "#60A5FA" },
-  { left: "18%", size: 12, delay: 1.1, duration: 7.8, color: "#FACC15" },
-  { left: "26%", size: 8, delay: 0.2, duration: 6.9, color: "#34D399" },
-  { left: "33%", size: 6, delay: 0.8, duration: 7.1, color: "#F472B6" },
-  { left: "41%", size: 11, delay: 1.4, duration: 7.6, color: "#A78BFA" },
-  { left: "48%", size: 7, delay: 0.3, duration: 6.6, color: "#FB7185" },
-  { left: "55%", size: 9, delay: 1.6, duration: 7.9, color: "#22D3EE" },
-  { left: "61%", size: 6, delay: 0.7, duration: 6.3, color: "#FDBA74" },
-  { left: "68%", size: 12, delay: 1.9, duration: 7.4, color: "#4ADE80" },
-  { left: "74%", size: 8, delay: 0.1, duration: 6.8, color: "#FDE047" },
-  { left: "81%", size: 10, delay: 1.2, duration: 7.7, color: "#38BDF8" },
-  { left: "88%", size: 7, delay: 0.9, duration: 6.5, color: "#FB923C" },
-  { left: "94%", size: 9, delay: 1.7, duration: 7.3, color: "#C084FC" },
-];
 
 // Admin CMS removed
 
@@ -261,6 +229,8 @@ const App = ({ mode }) => {
     }
   };
   const currentYear = new Date().getFullYear();
+  const heroFont = '"Space Grotesk", "Satoshi", "Noto Sans", sans-serif';
+  const serifFont = '"Newsreader", "Iowan Old Style", "Palatino", serif';
 
   useGaPageViews();
 
@@ -568,10 +538,9 @@ const App = ({ mode }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6 }}
                       sx={{
-                        textAlign: "center",
                         display: "flex",
                         flexDirection: "column",
-                        gap: 4,
+                        gap: { xs: 6, md: 8 },
                         position: "relative",
                       }}
                     >
@@ -583,14 +552,17 @@ const App = ({ mode }) => {
                         sx={{
                           position: "relative",
                           overflow: "hidden",
-                          borderRadius: 4,
+                          borderRadius: 5,
                           px: { xs: 3, md: 6 },
-                          py: { xs: 4, md: 5 },
+                          py: { xs: 4, md: 6 },
                           border: "1px solid",
                           borderColor: "divider",
-                          background:
-                            "linear-gradient(135deg, rgba(59,130,246,0.12), rgba(236,72,153,0.12), rgba(251,191,36,0.14))",
-                          boxShadow: "0 18px 40px rgba(15,23,42,0.12)",
+                          backgroundImage: isDarkMode
+                            ? "radial-gradient(circle at 16% 20%, rgba(14,165,233,0.22), transparent 55%), radial-gradient(circle at 88% 12%, rgba(245,158,11,0.18), transparent 45%), linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.9))"
+                            : "radial-gradient(circle at 16% 20%, rgba(59,130,246,0.18), transparent 55%), radial-gradient(circle at 88% 12%, rgba(245,158,11,0.2), transparent 45%), linear-gradient(135deg, rgba(255,255,255,0.95), rgba(241,245,249,0.9))",
+                          boxShadow: isDarkMode
+                            ? "0 28px 60px rgba(2,6,23,0.65)"
+                            : "0 28px 60px rgba(15,23,42,0.12)",
                         }}
                       >
                         <Box
@@ -599,124 +571,483 @@ const App = ({ mode }) => {
                             position: "absolute",
                             inset: 0,
                             pointerEvents: "none",
+                            backgroundImage:
+                              "linear-gradient(90deg, rgba(148,163,184,0.12) 1px, transparent 1px), linear-gradient(0deg, rgba(148,163,184,0.12) 1px, transparent 1px)",
+                            backgroundSize: "48px 48px",
+                            opacity: isDarkMode ? 0.35 : 0.2,
                           }}
+                        />
+                        <Grid
+                          container
+                          spacing={{ xs: 3, md: 4 }}
+                          sx={{ position: "relative", zIndex: 1 }}
+                          alignItems="center"
                         >
-                          {confettiPieces.map((piece, index) => (
-                            <Box
-                              key={`${piece.left}-${index}`}
-                              sx={{
-                                position: "absolute",
-                                top: -24,
-                                left: piece.left,
-                                width: piece.size,
-                                height: piece.size * 1.6,
-                                borderRadius: "4px",
-                                bgcolor: piece.color,
-                                opacity: 0.9,
-                                animation: `${confettiFall} ${piece.duration}s linear ${piece.delay}s infinite`,
-                                transform: "translateZ(0)",
-                              }}
-                            />
-                          ))}
-                        </Box>
-                        <Stack spacing={1.5} sx={{ position: "relative", zIndex: 1 }}>
-                          <Typography
-                            variant="overline"
-                            sx={{ letterSpacing: 2, fontWeight: 700 }}
-                          >
-                            New Year Wishes
-                          </Typography>
-                          <Typography
-                            variant="h4"
-                            sx={{
-                              fontWeight: 700,
-                              color: "text.primary",
-                            }}
-                          >
-                            Seasons greetings
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            color="text.secondary"
-                            sx={{ maxWidth: 640, mx: "auto" }}
-                          >
-                            Wishing you a bright start, bold experiments, and
-                            calm momentum for everything you’re building.
-                          </Typography>
-                        </Stack>
-                      </Box>
-                      <Grid container spacing={3}>
-                        {heroSections.map((section, index) => (
-                          <Grid
-                            key={section.label}
-                            size={{ xs: 12, sm: 6, md: 4 }}
-                          >
-                            <Card
-                              component={motion.article}
-                              initial={{ opacity: 0, y: 30 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{
-                                duration: 0.45,
-                                delay: index * 0.05,
-                              }}
-                              sx={{ height: "100%" }}
-                            >
-                              <CardActionArea
-                                {...getLinkProps(section)}
-                                onClick={() =>
-                                  trackClick(
-                                    `hero_${section.label.toLowerCase()}_card`,
-                                  )
-                                }
-                                sx={{ height: "100%" }}
+                          <Grid size={{ xs: 12, md: 7 }}>
+                            <Stack spacing={{ xs: 2.5, md: 3 }}>
+                              <Stack spacing={1}>
+                                <Typography
+                                  variant="overline"
+                                  sx={{
+                                    letterSpacing: 3,
+                                    fontWeight: 700,
+                                    color: "text.secondary",
+                                  }}
+                                >
+                                  KUMAR2NET / 2026
+                                </Typography>
+                                <Typography
+                                  variant="h2"
+                                  sx={{
+                                    fontFamily: heroFont,
+                                    fontWeight: 700,
+                                    fontSize: { xs: "2.35rem", md: "3.6rem" },
+                                    lineHeight: 1.05,
+                                    letterSpacing: "-0.02em",
+                                    color: "text.primary",
+                                  }}
+                                >
+                                  Human-first AI, practical learning, and calm
+                                  tech notes.
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    fontSize: { xs: "1.05rem", md: "1.2rem" },
+                                    color: "text.secondary",
+                                    maxWidth: 560,
+                                  }}
+                                >
+                                  I build, test, and document AI workflows,
+                                  science notes, and cultural stories. Everything
+                                  here is meant to be reused.
+                                </Typography>
+                              </Stack>
+                              <Stack
+                                direction={{ xs: "column", sm: "row" }}
+                                spacing={2}
+                                sx={{
+                                  alignItems: { xs: "stretch", sm: "center" },
+                                  flexWrap: "wrap",
+                                }}
                               >
-                                <CardContent>
-                                  <Typography variant="h6" gutterBottom>
-                                    {section.label}
+                                <Button
+                                  variant="contained"
+                                  size="large"
+                                  {...getLinkProps({ to: "/blog" })}
+                                  onClick={() => trackClick("hero_blog_cta")}
+                                  sx={{
+                                    borderRadius: 999,
+                                    px: 3,
+                                    textTransform: "none",
+                                    fontWeight: 700,
+                                    boxShadow: isDarkMode
+                                      ? "0 16px 30px rgba(14,165,233,0.25)"
+                                      : "0 16px 30px rgba(37,99,235,0.25)",
+                                  }}
+                                >
+                                  Read the blog
+                                </Button>
+                                <Button
+                                  variant="outlined"
+                                  size="large"
+                                  {...getLinkProps({ to: "/projects" })}
+                                  onClick={() => trackClick("hero_projects_cta")}
+                                  sx={{
+                                    borderRadius: 999,
+                                    px: 3,
+                                    textTransform: "none",
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  Explore projects
+                                </Button>
+                                <Button
+                                  variant="text"
+                                  size="large"
+                                  {...getLinkProps({ to: "/contact" })}
+                                  onClick={() => trackClick("hero_contact_cta")}
+                                  sx={{
+                                    borderRadius: 999,
+                                    px: 2,
+                                    textTransform: "none",
+                                    fontWeight: 600,
+                                    color: "text.primary",
+                                  }}
+                                >
+                                  Contact
+                                </Button>
+                              </Stack>
+                              <Stack
+                                direction="row"
+                                spacing={1}
+                                useFlexGap
+                                flexWrap="wrap"
+                              >
+                                {[
+                                  "AI systems",
+                                  "Education",
+                                  "Markets",
+                                  "Culture",
+                                  "Science notes",
+                                ].map((item) => (
+                                  <Box
+                                    key={item}
+                                    sx={{
+                                      px: 1.5,
+                                      py: 0.6,
+                                      borderRadius: 999,
+                                      border: "1px solid",
+                                      borderColor: "divider",
+                                      fontSize: "0.7rem",
+                                      fontWeight: 700,
+                                      letterSpacing: "0.08em",
+                                      textTransform: "uppercase",
+                                      bgcolor: isDarkMode
+                                        ? "rgba(2,6,23,0.6)"
+                                        : "rgba(255,255,255,0.8)",
+                                    }}
+                                  >
+                                    {item}
+                                  </Box>
+                                ))}
+                              </Stack>
+                            </Stack>
+                          </Grid>
+                          <Grid size={{ xs: 12, md: 5 }}>
+                            <Stack spacing={2}>
+                              <Paper
+                                variant="outlined"
+                                sx={{
+                                  p: 3,
+                                  borderRadius: 3,
+                                  backgroundColor: isDarkMode
+                                    ? "rgba(2,6,23,0.65)"
+                                    : "rgba(255,255,255,0.75)",
+                                  backdropFilter: "blur(10px)",
+                                }}
+                              >
+                                <Stack spacing={1.5}>
+                                  <Typography
+                                    variant="overline"
+                                    sx={{
+                                      letterSpacing: 2,
+                                      fontWeight: 700,
+                                      color: "text.secondary",
+                                    }}
+                                  >
+                                    Now
+                                  </Typography>
+                                  <Typography
+                                    variant="h6"
+                                    sx={{
+                                      fontFamily: heroFont,
+                                      fontWeight: 700,
+                                    }}
+                                  >
+                                    2026 focus
+                                  </Typography>
+                                  <Stack spacing={1}>
+                                    <Typography
+                                      variant="body2"
+                                      color="text.secondary"
+                                    >
+                                      AI workflows that stay human-readable.
+                                    </Typography>
+                                    <Typography
+                                      variant="body2"
+                                      color="text.secondary"
+                                    >
+                                      Learning notes you can reuse in class or at
+                                      work.
+                                    </Typography>
+                                    <Typography
+                                      variant="body2"
+                                      color="text.secondary"
+                                    >
+                                      Markets, policy, and culture as lived
+                                      signals.
+                                    </Typography>
+                                  </Stack>
+                                </Stack>
+                              </Paper>
+                              <Paper
+                                variant="outlined"
+                                sx={{
+                                  p: 3,
+                                  borderRadius: 3,
+                                  backgroundColor: isDarkMode
+                                    ? "rgba(2,6,23,0.65)"
+                                    : "rgba(255,255,255,0.8)",
+                                  backdropFilter: "blur(10px)",
+                                }}
+                              >
+                                <Stack spacing={1}>
+                                  <Typography
+                                    variant="overline"
+                                    sx={{
+                                      letterSpacing: 2,
+                                      fontWeight: 700,
+                                      color: "text.secondary",
+                                    }}
+                                  >
+                                    Copyleft
                                   </Typography>
                                   <Typography
                                     variant="body2"
                                     color="text.secondary"
                                   >
-                                    {section.description}
+                                    Copy, reuse, and remix anything on this site.
+                                    Credit is appreciated but not required.
                                   </Typography>
-                                </CardContent>
-                              </CardActionArea>
-                            </Card>
+                                </Stack>
+                              </Paper>
+                            </Stack>
                           </Grid>
-                        ))}
+                        </Grid>
+                      </Box>
+                      <Box>
+                        <Stack spacing={1} sx={{ mb: 2 }}>
+                          <Typography
+                            variant="overline"
+                            sx={{
+                              letterSpacing: 2,
+                              fontWeight: 700,
+                              color: "text.secondary",
+                            }}
+                          >
+                            Navigate
+                          </Typography>
+                          <Typography
+                            variant="h5"
+                            sx={{ fontWeight: 700, fontFamily: heroFont }}
+                          >
+                            Explore the archive
+                          </Typography>
+                        </Stack>
+                        <Grid container spacing={3}>
+                          {heroSections.map((section, index) => (
+                            <Grid
+                              key={section.label}
+                              size={{ xs: 12, sm: 6, md: 4 }}
+                            >
+                              <Card
+                                component={motion.article}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  duration: 0.45,
+                                  delay: index * 0.05,
+                                }}
+                                sx={(theme) => ({
+                                  height: "100%",
+                                  borderRadius: 3,
+                                  border: "1px solid",
+                                  borderColor: "divider",
+                                  backgroundColor: isDarkMode
+                                    ? "rgba(2,6,23,0.55)"
+                                    : "rgba(255,255,255,0.9)",
+                                  backdropFilter: "blur(10px)",
+                                  transition:
+                                    "transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease",
+                                  "&:hover": {
+                                    transform: "translateY(-4px)",
+                                    borderColor: "primary.main",
+                                    boxShadow: theme.shadows[6],
+                                  },
+                                })}
+                              >
+                                <CardActionArea
+                                  {...getLinkProps(section)}
+                                  onClick={() =>
+                                    trackClick(
+                                      `hero_${section.label.toLowerCase()}_card`,
+                                    )
+                                  }
+                                  sx={{ height: "100%" }}
+                                >
+                                  <CardContent
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      gap: 1,
+                                    }}
+                                  >
+                                    <Typography
+                                      variant="overline"
+                                      sx={{
+                                        letterSpacing: 2,
+                                        fontWeight: 700,
+                                        color: "text.secondary",
+                                      }}
+                                    >
+                                      {String(index + 1).padStart(2, "0")}
+                                    </Typography>
+                                    <Typography variant="h6">
+                                      {section.label}
+                                    </Typography>
+                                    <Typography
+                                      variant="body2"
+                                      color="text.secondary"
+                                    >
+                                      {section.description}
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                              </Card>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Box>
+                      <Grid container spacing={3} alignItems="stretch">
+                        <Grid size={{ xs: 12, md: 7 }}>
+                          <Paper
+                            component={motion.blockquote}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.15 }}
+                            sx={{
+                              height: "100%",
+                              p: { xs: 4, md: 5 },
+                              borderRadius: 4,
+                              border: "1px solid",
+                              borderColor: "divider",
+                              backgroundColor: isDarkMode
+                                ? "rgba(2,6,23,0.65)"
+                                : "rgba(255,255,255,0.9)",
+                              boxShadow: isDarkMode
+                                ? "0 18px 40px rgba(2,6,23,0.4)"
+                                : "0 18px 40px rgba(15,23,42,0.12)",
+                            }}
+                          >
+                            <Typography
+                              variant="h5"
+                              sx={{
+                                fontFamily: serifFont,
+                                fontStyle: "italic",
+                                lineHeight: 1.6,
+                                color: "text.primary",
+                              }}
+                            >
+                              "Courage isn't having the strength to go on - it is
+                              going on when you don't have strength."
+                            </Typography>
+                            <Stack
+                              direction="row"
+                              alignItems="center"
+                              justifyContent="space-between"
+                              sx={{ mt: 3 }}
+                            >
+                              <Box
+                                sx={{
+                                  width: 48,
+                                  height: 4,
+                                  borderRadius: 999,
+                                  bgcolor: "primary.main",
+                                }}
+                              />
+                              <Typography
+                                variant="subtitle2"
+                                color="text.secondary"
+                              >
+                                - Napoleon Bonaparte
+                              </Typography>
+                            </Stack>
+                          </Paper>
+                        </Grid>
+                        <Grid size={{ xs: 12, md: 5 }}>
+                          <Paper
+                            variant="outlined"
+                            sx={{
+                              height: "100%",
+                              p: 3,
+                              borderRadius: 3,
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: 2,
+                              backgroundColor: isDarkMode
+                                ? "rgba(2,6,23,0.6)"
+                                : "rgba(255,255,255,0.85)",
+                              backdropFilter: "blur(10px)",
+                            }}
+                          >
+                            <Typography
+                              variant="overline"
+                              sx={{
+                                letterSpacing: 2,
+                                fontWeight: 700,
+                                color: "text.secondary",
+                              }}
+                            >
+                              Quick tools
+                            </Typography>
+                            <Typography
+                              variant="h6"
+                              sx={{ fontFamily: heroFont, fontWeight: 700 }}
+                            >
+                              Jump in fast
+                            </Typography>
+                            <Stack spacing={1}>
+                              {[
+                                {
+                                  label: "Unit converter",
+                                  to: "/convert",
+                                  analyticsKey: "hero_tool_convert",
+                                },
+                                {
+                                  label: "Utilities dashboard",
+                                  to: "/utilities",
+                                  analyticsKey: "hero_tool_utilities",
+                                },
+                                {
+                                  label: "Flashcards and learning",
+                                  to: "/learning",
+                                  analyticsKey: "hero_tool_learning",
+                                },
+                              ].map((tool) => (
+                                <Button
+                                  key={tool.label}
+                                  {...getLinkProps(tool)}
+                                  onClick={() => trackClick(tool.analyticsKey)}
+                                  variant="text"
+                                  size="small"
+                                  sx={{
+                                    justifyContent: "flex-start",
+                                    textTransform: "none",
+                                    fontWeight: 600,
+                                    color: "text.primary",
+                                  }}
+                                >
+                                  {tool.label}
+                                </Button>
+                              ))}
+                            </Stack>
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              Practical tools, trimmed for speed.
+                            </Typography>
+                          </Paper>
+                        </Grid>
                       </Grid>
-                      <Paper
-                        component={motion.blockquote}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.15 }}
-                        sx={{
-                          mx: "auto",
-                          maxWidth: 720,
-                          textAlign: "left",
-                          p: { xs: 4, md: 5 },
-                          borderRadius: 4,
-                          contentVisibility: "auto",
-                          containIntrinsicSize: "320px",
-                        }}
-                      >
-                        <Typography variant="h5" sx={{ fontStyle: "italic" }}>
-                          "2026: A whole year of blank pages. Time to write something worth remembering."
-                        </Typography>
+                      <Stack spacing={2} alignItems="center">
                         <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          sx={{ mt: 3, textAlign: "right" }}
+                          variant="overline"
+                          sx={{
+                            letterSpacing: 2,
+                            fontWeight: 700,
+                            color: "text.secondary",
+                          }}
                         >
-                          - Kumar A
+                          Live time
                         </Typography>
-                      </Paper>
-                      {showWorldClock ? (
-                        <WorldClock />
-                      ) : (
-                        <Box sx={{ mt: 8, minHeight: 140 }} aria-hidden />
-                      )}
+                        {showWorldClock ? (
+                          <WorldClock compact />
+                        ) : (
+                          <Box sx={{ mt: 2, minHeight: 140 }} aria-hidden />
+                        )}
+                      </Stack>
                       <Stack
                         direction="row"
                         spacing={2}

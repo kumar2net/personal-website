@@ -76,7 +76,7 @@ const Clock = ({ timeZone, label, city, isDarkMode }) => {
   );
 };
 
-const WorldClock = () => {
+const WorldClock = ({ compact = false }) => {
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
   const timeZones = [
@@ -94,7 +94,7 @@ const WorldClock = () => {
       justifyContent="center"
       alignItems="stretch"
       sx={{
-        mt: 8,
+        mt: compact ? 2 : 8,
         flexWrap: "wrap",
         contentVisibility: "auto",
         containIntrinsicSize: "120px",

@@ -78,8 +78,8 @@ const MusicPage = () => {
                 mx: "auto",
               }}
             >
-              My curated playlist and musical journey, now focused on mood,
-              momentum, and clean energy.
+              A 2026 listening journal with mood-first mixes, clean energy, and
+              story-driven tracks I keep on repeat.
             </Typography>
           </Box>
 
@@ -197,37 +197,16 @@ const MusicPage = () => {
                 <Stack spacing={2}>
                   {[
                     {
-                      title:
-                        "AMBADI KANNAN | K S CHITHRA | T S RADHAKRISHNAJI | SUDHAKARAN MENON",
-                      videoId: "W2B8B4ZL6X0",
+                      title: "Harivarasanam | New Age Bhakti | Gowry Lekshmi",
+                      videoId: "rc-QQ2bPYgA",
+                      context:
+                        "Soft bhakti energy with a modern texture - perfect for a calm reset.",
                     },
                     {
-                      title:
-                        "Do Dil Mil Rahe Hain | Priyanka Barve | Priyanka's Playlist",
-                      videoId: "Gah9SRHTlO8",
-                    },
-                    {
-                      title:
-                        "Nachdi (Official Music Video) | Gurnam Bhullar | Kaptaan | Desi Crew | Diamondstar Worldwide",
-                      videoId: "BdgefeGodkw",
-                    },
-                    {
-                      title: "Love Can Grow",
-                      videoId: "Rof9Q88o_r0",
-                    },
-                    {
-                      title: "Olivia Dean - Man I Need",
-                      videoId: "oIv_Y2RPQ_A",
-                    },
-                    {
-                      title:
-                        "Uyi Amma | Rasha Thadani & Aaman Devgan | Madhubanti Bagchi & Amit Trivedi | Azaad | Lyrical",
-                      videoId: "JqS1_rwvtbY",
-                    },
-                    {
-                      title:
-                        "BORDER 2: Ghar Kab Aaoge | Sunny Deol | Anu,Mithoon, Sonu, Roop, Arijit, Vishal, Diljit, Javed,Manoj",
-                      videoId: "lOHVMmZ6n3o",
+                      title: "Kannamoochi Yenada Live | Indosoul Mixtape",
+                      videoId: "FLIm0eWR1_A",
+                      context:
+                        "Soulful live mix that keeps the groove while honoring the original.",
                     },
                   ].map((item) => (
                     <Box
@@ -250,6 +229,9 @@ const MusicPage = () => {
                         }}
                       >
                         {item.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                        {item.context}
                       </Typography>
                       <Button
                         variant="outlined"
