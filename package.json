@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
+    "baseline-browser-mapping": "^2.9.14",
     "chrome-launcher": "^1.2.1",
     "lighthouse": "^13.0.1",
     "openai": "^6.9.0",

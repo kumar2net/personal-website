@@ -9,18 +9,19 @@ This guide documents the automated blog post generation workflow, including rece
 ### Generating a New Blog Post
 
 1. Create a blog hint file in `docs/bloghints/[TopicName].md`
-2. Run the generation script:
+2. Review `skills/writing-skill.md` (these rules are injected into the prompt)
+3. Run the generation script:
    ```bash
    node apps/personal-website/scripts/generate-blog-post.mjs
    ```
-3. The script will:
+4. The script will:
    - Generate blog post content using OpenAI
    - Create AI-generated illustrations using OpenAI Image API
    - Save the generated image to `/generate/` and copy it to `apps/personal-website/public/generate/` for serving
    - Create a properly formatted JSX file with dark mode support
    - Render tags as shields.io badges at the top of the post
-4. Manually update `apps/personal-website/src/data/blogPostsData.js` with the new post metadata
-5. Start the dev server (`npm run dev -- --filter=personal-website`) and visually review the new blog page and image before staging/committing
+5. Manually update `apps/personal-website/src/data/blogPostsData.js` with the new post metadata
+6. Start the dev server (`npm run dev -- --filter=personal-website`) and visually review the new blog page and image before staging/committing
 
 ## Blog Hint File Format
 

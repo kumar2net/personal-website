@@ -3,6 +3,7 @@
 ## Pre-Generation
 
 - [ ] Create blog hint file in `docs/bloghints/[TopicName].md`
+- [ ] Review `skills/writing-skill.md` (required style rules)
 - [ ] Verify `OPENAI_API_KEY` is set in `.env`
 - [ ] Ensure dev server is running (`npm run dev`)
 

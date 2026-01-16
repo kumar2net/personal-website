@@ -27,6 +27,7 @@ const blogDir = path.join(
     'pages',
     'blog'
 );
+const writingSkillPath = path.join(repoRoot, 'skills', 'writing-skill.md');
 
 const defaultModel =
     process.env.BLOGHINT_AGENT_MODEL ||
@@ -40,6 +41,15 @@ function log(message) {
 
 function warn(message) {
     console.warn(`[blog-agentic] ${message}`);
+}
+
+async function loadWritingSkill() {
+    try {
+        return await fsp.readFile(writingSkillPath, 'utf8');
+    } catch (error) {
+        warn(`Writing skill not found at ${writingSkillPath}. Proceeding without it.`);
+        return '';
+    }
 }
 
 function slugify(input, fallback = 'blog-post') {
@@ -139,13 +149,21 @@ async function agenticBlog(content, fileName) {
         return null;
     }
 
+    const writingSkill = await loadWritingSkill();
+    const skillBlock = writingSkill
+        ? `Writing skill rules (must follow):\n${writingSkill.trim()}`
+        : '';
+
     const instructions = [
         'You are the Agentic Blog Producer for kumar2net.com.',
         'Convert raw notes into a polished, sectioned blog post format used on the /blog route.',
         'Keep the tone thoughtful, concise, and in first-person.',
         'Return JSON only. Do not emit markdown or explanations.',
         'If an image generation request is present, include a prompt for it.',
-    ].join(' ');
+        skillBlock,
+    ]
+        .filter(Boolean)
+        .join('\n\n');
 
     const schema = {
         name: 'blog_blueprint',

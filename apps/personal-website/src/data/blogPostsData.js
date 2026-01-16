@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "The Next Sentence Is the Product",
+    date: "January 16, 2026",
+    lastModified: "January 16, 2026",
+    excerpt:
+      "Writing has one product: the next sentence. A tight guide to hooks, short lines, active voice, and ruthless cuts that keep readers moving.",
+    tags: ["Writing", "Clarity", "Editing", "Communication", "Craft"],
+    image: "/media/blogwordcloud.png",
+    link: "/blog/2026-01-16-next-sentence-is-the-product",
+  },
+  {
     title: "Spoofs and Politics",
     date: "January 10, 2026",
     lastModified: "January 10, 2026",

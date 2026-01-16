@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-01-16-next-sentence-is-the-product": {
+    title: "The Next Sentence Is the Product",
+    description:
+      "Writing has one product: the next sentence. A tight guide to hooks, short lines, active voice, and ruthless cuts that keep readers moving.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Writing", "Clarity", "Editing", "Communication", "Craft"],
+    datePublished: "2026-01-16",
+    dateModified: "2026-01-16",
+  },
   "2026-01-10-spoofs-and-politics": {
     title: "Spoofs and Politics",
     description:
