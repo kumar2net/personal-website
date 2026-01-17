@@ -18,6 +18,23 @@ export type FlashcardSet = {
 
 export const flashcardSets: FlashcardSet[] = [
   {
+    id: "vocab",
+    title: "Vocab",
+    description: "New words and terms I am collecting from tech and culture.",
+    cardCount: 1,
+    difficulty: "Beginner",
+    estimatedTime: "2 min",
+    category: "Vocabulary",
+    color: "bg-orange-500",
+    icon: "Type",
+    cards: [
+      {
+        front: "InfoFi",
+        back: "InfoFi (Information Finance) was a 2024-2025 crypto model that paid X users in tokens for posts, using X API engagement metrics to reward high performers. It spread via projects like Kaito (\"yap-to-earn\") and Cookie DAO. The promise of monetized attention collapsed into AI spam and bot replies. On Jan 15, 2026, X product head Nikita Bier banned reward-for-posting apps and revoked API access, triggering token crashes and shutdowns while cutting off micro-task income for many in India and Southeast Asia.",
+      },
+    ],
+  },
+  {
     id: "macos-shortcuts",
     title: "macOS Keyboard Shortcuts",
     description:
