@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Dilbert, One Pot Cooking, and Unexpected Lessons",
+    date: "January 17, 2026",
+    lastModified: "January 17, 2026",
+    excerpt:
+      "Small moments that steadied my week: Dilbert's farewell, OPOS cooking, a 6th grader's laptop lesson, old calendars, Gen Alpha slang, and the changing promise of university.",
+    tags: ["Dilbert", "OPOS", "Education", "Culture", "Gen Alpha", "Universities"],
+    image: "/generate/2026-01-17-dilbert-one-pot-cooking-lessons.png",
+    link: "/blog/2026-01-17-dilbert-one-pot-cooking-lessons",
+  },
+  {
     title: "The Next Sentence Is the Product",
     date: "January 16, 2026",
     lastModified: "January 16, 2026",

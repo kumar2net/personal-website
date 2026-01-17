@@ -24,6 +24,8 @@ const MusicPage = () => {
     : theme.palette.getContrastText(theme.palette.error.main);
   const playlistId = "PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH";
   const playlistShareId = "WfNRuoFY0s0sW-84";
+  const freshSpinUrl = "https://youtu.be/gQme2KrzzLw?si=N1b87h0uqqNNkheB";
+  const freshSpinUrlTwo = "https://youtu.be/ktbZIV22mRk?si=tK4impvvMqCqJtoM";
 
   return (
     <Box
@@ -181,32 +183,21 @@ const MusicPage = () => {
                   Latest spins
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  The full playlist rotation right now — every track in order.
-                  <Link
-                    href={`https://music.youtube.com/playlist?list=${playlistId}&si=${playlistShareId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    color="inherit"
-                    underline="always"
-                  >
-                    Open the playlist
-                  </Link>
-                  .
+                  The latest spins I am looping right now.
                 </Typography>
 
                 <Stack spacing={2}>
                   {[
                     {
-                      title: "Harivarasanam | New Age Bhakti | Gowry Lekshmi",
-                      videoId: "rc-QQ2bPYgA",
-                      context:
-                        "Soft bhakti energy with a modern texture - perfect for a calm reset.",
+                      title: "Their Voices BLEND So Perfectly It Gave People CHILLS | Bill Withers",
+                      context: "Harmony-forward and warm, the kind of loop that resets the room fast.",
+                      url: freshSpinUrl,
                     },
                     {
-                      title: "Kannamoochi Yenada Live | Indosoul Mixtape",
-                      videoId: "FLIm0eWR1_A",
-                      context:
-                        "Soulful live mix that keeps the groove while honoring the original.",
+                      title:
+                        "Amaidhi (Tamil) | Sid Sriram | Salim Sulaiman | Karthik Netha | Merchant Records South",
+                      context: "A calm Tamil pick with a steady lift for quiet focus hours.",
+                      url: freshSpinUrlTwo,
                     },
                   ].map((item) => (
                     <Box
@@ -237,7 +228,7 @@ const MusicPage = () => {
                         variant="outlined"
                         color="error"
                         size="small"
-                        href={`https://music.youtube.com/watch?v=${item.videoId}&list=${playlistId}`}
+                        href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         endIcon={<ExternalLink size={16} />}
