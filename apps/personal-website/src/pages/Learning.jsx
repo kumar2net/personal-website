@@ -150,11 +150,61 @@ const Learning = () => {
         })}
       </MotionDiv>
 
-      {/* Coming Soon Section */}
+      {/* Mac Tips Section */}
       <MotionDiv
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
+        className="mt-16"
+      >
+        <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-md text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Mac Tips</h2>
+          <p className="text-gray-800 mb-6 max-w-3xl">
+            Quick Terminal access and the core Homebrew maintenance commands I
+            run when macOS tools start to feel stale.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-800">
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 mb-2">
+                Get into Terminal fast
+              </h3>
+              <p className="text-gray-700">
+                Press <span className="font-semibold">Cmd + Spacebar</span>,
+                type <span className="font-semibold">Terminal</span>, and hit
+                Enter. Spotlight is the quickest way to open a shell without
+                digging through Applications.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 mb-2">
+                Homebrew cleanup cycle
+              </h3>
+              <ul className="space-y-3 text-gray-700">
+                <li>
+                  <code className="font-mono text-gray-900">brew update</code> -
+                  refreshes formula and cask metadata so upgrades pull the
+                  latest versions.
+                </li>
+                <li>
+                  <code className="font-mono text-gray-900">brew upgrade</code>{" "}
+                  - installs newer versions of what you already have to stay
+                  current and secure.
+                </li>
+                <li>
+                  <code className="font-mono text-gray-900">brew cleanup</code>{" "}
+                  - clears old versions and caches to free disk space.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </MotionDiv>
+
+      {/* Coming Soon Section */}
+      <MotionDiv
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
         className="mt-16 text-center"
       >
         <div className="bg-white rounded-xl p-8 border border-gray-200 shadow-md text-gray-900">
