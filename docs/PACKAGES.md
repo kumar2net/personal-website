@@ -30,7 +30,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 ## `packages/@kumar2net/ui-theme`
 - Files: `theme.ts`, `ThemeProvider.tsx`, `index.ts`.
 - Exports: `getTheme`, Material 3 `colorTokens`, `ThemeProvider`, `ThemeProviderProps` (no default exports).
-- Implementation: builds both light/dark schemes from `colorTokens` via `@mui/material/styles/extendTheme` and uses `CssVarsProvider` (`modeStorageKey = "k2n-color-scheme"`) so apps can switch `light`/`dark`/`system` without rebuilding the theme.
+- Implementation: builds both light/dark schemes from `colorTokens` via `@mui/material/styles/extendTheme` and uses `CssVarsProvider` (`modeStorageKey = "k2n-color-scheme-dark"`) so apps can switch `light`/`dark`/`system` without rebuilding the theme.
 - Consumed in `apps/personal-website/src/main.jsx` and available to other packages via workspace resolution.
 
 ## `apps/personal-website/api` (serverless)

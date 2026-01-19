@@ -28,7 +28,7 @@ Generated fresh from commit ad211ad40c64fcfce235e55a4390dc5225a3144c on 2025-11-
 
 ## Shared Design System: `packages/ui-theme`
 - `packages/ui-theme/theme.ts` exports Material 3-inspired `colorTokens` plus an MUI 7 theme that derives both light/dark palettes from those tokens (primary/on-primary, containers, outline variants) so downstream apps inherit the same contrast-safe styling.
-- `ThemeProvider.tsx` wraps children in `CssVarsProvider` with persistent `k2n-color-scheme` storage, supplying `CssBaseline` so each React tree can opt into dark/light/system modes.
+- `ThemeProvider.tsx` wraps children in `CssVarsProvider` with persistent `k2n-color-scheme-dark` storage, supplying `CssBaseline` so each React tree can opt into dark/light/system modes.
 
 ## Serverless Functions: `apps/personal-website/api`
 - `convert.js`: Request-aware unit converter with wide linear and temperature coverage plus CORS headers; consumed locally via the Vite middleware.
