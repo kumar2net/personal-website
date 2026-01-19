@@ -22,11 +22,21 @@ For long-form content (blog posts, markdown surfaces), use CSS variables so colo
 - Secondary text: `color: "var(--mui-palette-text-secondary)"`
 - Card/surface: `backgroundColor: "var(--mui-palette-background-paper)"`
 
+### Button/utility caveat (Tailwind overrides)
+
+Global dark-mode overrides in `apps/personal-website/src/output.css` force `.text-slate-*` utilities to light colors with `!important`. On light surfaces in dark mode (for example `bg-slate-100`), this can make button labels unreadable.
+
+Preferred fixes:
+
+- Use MUI components and palette tokens (`primary.main` + `primary.contrastText`) so color comes from CSS variables, not utility classes.
+- If you must stay in Tailwind, avoid `.text-slate-*` on light surfaces in dark mode; use a custom class that sets `color: var(--mui-palette-text-primary)` instead.
+
 ## Where it’s implemented
 
 - `apps/personal-website/src/components/BlogPostLayout.jsx` uses CSS variables for heading/body colors.
 - `apps/personal-website/src/components/MarkdownSurface.jsx` renders markdown posts on a “paper” surface using CSS variables.
 - `apps/personal-website/src/providers/ColorModeProvider.tsx` keeps Tailwind’s `.dark` class in sync with MUI’s active scheme.
+- `apps/personal-website/src/components/BlogAudioPlayer.jsx` uses an MUI `Button` with palette tokens to keep the TTS button legible in dark mode.
 
 ## Rule of thumb
 

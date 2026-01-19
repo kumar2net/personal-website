@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { Languages, Volume2 } from "lucide-react";
 
 const LANGUAGES = [
@@ -86,6 +88,8 @@ function collectArticleText(articleRef) {
 }
 
 export default function BlogAudioPlayer({ slug, articleRef }) {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [loadingLanguage, setLoadingLanguage] = useState("");
   const [error, setError] = useState("");
@@ -167,6 +171,15 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const buttonLabel = hasAudio ? "Play audio" : "Generate audio";
   const disableActions = loadingLanguage === selectedLanguage;
   const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
+  const primaryButtonBg = isDark
+    ? theme.palette.primary.main
+    : theme.palette.grey[900];
+  const primaryButtonHoverBg = isDark
+    ? theme.palette.grey[100]
+    : theme.palette.grey[800];
+  const primaryButtonText = isDark
+    ? theme.palette.primary.contrastText
+    : theme.palette.common.white;
 
   async function tryPlayAudio(force = false) {
     try {
@@ -373,15 +386,36 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         })}
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
-        <button
+        <Button
           type="button"
           onClick={handlePrimaryAction}
           disabled={disableActions}
-          className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-slate-800/20 transition hover:-translate-y-0.5 hover:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
+          startIcon={<Volume2 size={16} />}
+          variant="contained"
+          sx={{
+            px: 2,
+            py: 1,
+            borderRadius: "12px",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            textTransform: "none",
+            backgroundColor: primaryButtonBg,
+            color: primaryButtonText,
+            boxShadow: "0 12px 24px rgba(15, 23, 42, 0.2)",
+            transition: "transform 150ms ease, background-color 150ms ease",
+            "&:hover": {
+              backgroundColor: primaryButtonHoverBg,
+              transform: "translateY(-2px)",
+            },
+            "&.Mui-disabled": {
+              opacity: 0.5,
+              backgroundColor: primaryButtonBg,
+              color: primaryButtonText,
+            },
+          }}
         >
-          <Volume2 className="h-4 w-4" />
           {buttonLabel} ({LANGUAGES.find((l) => l.code === selectedLanguage)?.label})
-        </button>
+        </Button>
           {currentAudioUrl && (
           <div className="text-xs text-slate-500 dark:text-slate-400">
             Ready — press play below.
