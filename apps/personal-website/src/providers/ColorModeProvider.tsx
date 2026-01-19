@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  type ReactNode,
+} from "react";
 import { useColorScheme } from "@mui/material/styles";
 
 export type SupportedColorMode = "light" | "dark";
@@ -16,28 +23,24 @@ const ColorModeContext = createContext<ColorModeContextValue | undefined>(
 );
 
 function ColorModeBridge({ children }: { children: ReactNode }) {
-  const { mode, systemMode, setMode: setMuiMode } = useColorScheme();
+  const { setMode: setMuiMode } = useColorScheme();
 
-  const resolvedMode: SupportedColorMode =
-    (mode === "light" || mode === "dark"
-      ? mode
-      : systemMode === "dark"
-        ? "dark"
-        : "light") ?? "light";
+  const resolvedMode: SupportedColorMode = "dark";
 
-  const setMode = (next: Updater) => {
-    const nextMode =
-      typeof next === "function" ? next(resolvedMode) : next;
-    setMuiMode(nextMode);
-  };
+  const setMode = useCallback(
+    (_next: Updater) => {
+      setMuiMode("dark");
+    },
+    [setMuiMode],
+  );
 
   const value = useMemo<ColorModeContextValue>(
     () => ({
       mode: resolvedMode,
       setMode,
-      toggleColorMode: () => setMode((prev) => (prev === "dark" ? "light" : "dark")),
+      toggleColorMode: () => setMode("dark"),
     }),
-    [resolvedMode],
+    [resolvedMode, setMode],
   );
 
   useEffect(() => {
@@ -46,12 +49,9 @@ function ColorModeBridge({ children }: { children: ReactNode }) {
     // Tailwind's `dark:` variant keys off the `.dark` class, while MUI uses
     // `data-mui-color-scheme`. Keep them in sync to avoid "dark text on light
     // surface" (or vice versa) regressions.
-    if (resolvedMode === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [resolvedMode]);
+    root.classList.add("dark");
+    setMuiMode("dark");
+  }, [setMuiMode]);
 
   return (
     <ColorModeContext.Provider value={value}>

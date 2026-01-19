@@ -34,7 +34,6 @@ import Tooltip from "@mui/material/Tooltip";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
-import ModeToggle from "./components/ModeToggle";
 import ScrollToTop from "./components/ScrollToTop";
 import WorldClock from "./components/WorldClock";
 import PasswordGate from "./components/PasswordGate";
@@ -432,7 +431,6 @@ const App = ({ mode }) => {
                   {item.label}
                 </Button>
               ))}
-              <ModeToggle />
             </Stack>
             <Stack
               direction="row"
@@ -440,7 +438,6 @@ const App = ({ mode }) => {
               alignItems="center"
               sx={{ display: { xs: "flex", md: "none" }, ml: "auto" }}
             >
-              <ModeToggle />
               <IconButton
                 onClick={() => {
                   setIsMobileMenuOpen(true);
@@ -483,7 +480,6 @@ const App = ({ mode }) => {
             >
               Navigate
             </Typography>
-            <ModeToggle />
           </Stack>
           <Divider />
           <List dense>

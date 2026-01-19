@@ -24,7 +24,7 @@ export function ThemeProvider({
     <CssVarsProvider
       theme={theme}
       defaultMode={defaultMode}
-      modeStorageKey="k2n-color-scheme"
+      modeStorageKey="k2n-color-scheme-dark"
     >
       <CssBaseline enableColorScheme />
       {children}
