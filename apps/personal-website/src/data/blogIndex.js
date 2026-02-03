@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-03-microplastics-davos-da-vinci-intrigue": {
+    title: "Microplastics, Davos Flights, and Da Vinci: Thoughts on Modern Intrigue",
+    description:
+      "A three-part reflection on Davos optics, microplastic exposure, and how da Vinci still frames our idea of precision and tools.",
+    image: "/generate/2026-02-03-microplastics-davos-da-vinci-intrigue.png",
+    tags: ["Environment", "Health", "Science", "Public Health", "Technology", "History"],
+    datePublished: "2026-02-03",
+    dateModified: "2026-02-03",
+  },
   "2026-01-16-next-sentence-is-the-product": {
     title: "The Next Sentence Is the Product",
     description:

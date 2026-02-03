@@ -158,7 +158,6 @@ async function agenticBlog(content, fileName) {
         'You are the Agentic Blog Producer for kumar2net.com.',
         'Convert raw notes into a polished, sectioned blog post format used on the /blog route.',
         'Keep the tone thoughtful, concise, and in first-person.',
-        'Include a Self-check section with exactly 8 short bullets that verify compliance with the writing rules.',
         'Return JSON only. Do not emit markdown or explanations.',
         'If an image generation request is present, include a prompt for it.',
         skillBlock,
@@ -171,7 +170,7 @@ async function agenticBlog(content, fileName) {
         schema: {
             type: 'object',
             additionalProperties: false,
-            required: ['title', 'slug', 'description', 'tags', 'sections', 'selfCheck'],
+            required: ['title', 'slug', 'description', 'tags', 'sections'],
             properties: {
                 title: { type: 'string' },
                 slug: { type: 'string' },
@@ -194,12 +193,6 @@ async function agenticBlog(content, fileName) {
                             content: { type: 'string' },
                         },
                     },
-                },
-                selfCheck: {
-                    type: 'array',
-                    minItems: 8,
-                    maxItems: 8,
-                    items: { type: 'string' },
                 },
                 imagePrompt: { type: 'string' },
             },
@@ -232,11 +225,10 @@ async function agenticBlog(content, fileName) {
     return parsed;
 }
 
-function buildBlogJSX(meta, sections, imageUrl, selfCheck = []) {
+function buildBlogJSX(meta, sections, imageUrl) {
     const date = formatIsoDate();
     const slug = meta.slug || slugify(meta.title);
     const tags = Array.isArray(meta.tags) ? meta.tags.filter(Boolean) : [];
-    const checks = Array.isArray(selfCheck) ? selfCheck.filter(Boolean) : [];
 
     let sectionsJSX = '';
     sections.forEach((section, index) => {
@@ -351,43 +343,6 @@ function buildBlogJSX(meta, sections, imageUrl, selfCheck = []) {
 `;
     }
 
-    if (checks.length) {
-        const checkItems = checks
-            .map((item) => {
-                return `
-          <Typography
-            component="li"
-            variant="body1"
-            sx={{
-              fontSize: "1.125rem",
-              lineHeight: 1.8,
-              color: "var(--mui-palette-text-primary)",
-            }}
-          >
-            ${item}
-          </Typography>`;
-            })
-            .join('');
-
-        sectionsJSX += `
-      <Box component="section" sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: { xs: "1.5rem", md: "1.875rem" },
-            fontWeight: 600,
-            color: "var(--mui-palette-text-primary)",
-          }}
-        >
-          Self-check
-        </Typography>
-        <Box component="ul" sx={{ m: 0, pl: 3, display: "flex", flexDirection: "column", gap: 1.25 }}>
-          ${checkItems}
-        </Box>
-      </Box>
-`;
-    }
-
     return `import { Box, Typography } from "@mui/material";
 
 export default function BlogPost() {
@@ -433,7 +388,7 @@ async function main() {
             }
         }
 
-        const jsxContent = buildBlogJSX(plan, plan.sections, imageUrl, plan.selfCheck);
+        const jsxContent = buildBlogJSX(plan, plan.sections, imageUrl);
         const slug = plan.slug || slugify(plan.title);
         const date = formatIsoDate();
         const targetFile = path.join(blogDir, `${date}-${slug}.jsx`);

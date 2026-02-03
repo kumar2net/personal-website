@@ -12,4 +12,3 @@ Rules:
 7. Avoid cliches and corporate language.
 8. End without a summary. Last line should surprise but feel right.
 9. Read aloud pass: ensure rhythm and clarity.
-10. Add a Self-check section with 8 bullets that verify compliance.

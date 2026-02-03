@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Microplastics, Davos Flights, and Da Vinci: Thoughts on Modern Intrigue",
+    date: "February 3, 2026",
+    lastModified: "February 3, 2026",
+    excerpt:
+      "A three-part reflection on Davos optics, microplastic exposure, and how da Vinci still frames our idea of precision and tools.",
+    tags: ["Environment", "Health", "Science", "Public Health", "Technology", "History"],
+    image: "/generate/2026-02-03-microplastics-davos-da-vinci-intrigue.png",
+    link: "/blog/2026-02-03-microplastics-davos-da-vinci-intrigue",
+  },
+  {
     title: "Dilbert, One Pot Cooking, and Unexpected Lessons",
     date: "January 17, 2026",
     lastModified: "January 17, 2026",
