@@ -2,6 +2,22 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-08-reble-and-other-stuff": {
+    title: "Reble and Other Stuff",
+    description:
+      "A six-part reflection from February 8, 2026: Reble's rage-to-rhythm line, text terminators, bamboo rediscovery, AI medical machine ads, and consumer products that keep pushing for mindshare.",
+    image: "/media/texterminator.jpg",
+    tags: [
+      "Music",
+      "Humor",
+      "Bamboo",
+      "AI Healthcare",
+      "Consumer Culture",
+      "Reflections",
+    ],
+    datePublished: "2026-02-08",
+    dateModified: "2026-02-08",
+  },
   "2026-02-08-february-musings-health-slang-politics-legacy": {
     title: "February Musings: Health, Slang, Politics, and Legacy",
     description:

@@ -23,13 +23,6 @@ const albums = [
     url: "https://photos.app.goo.gl/7LgrDCzrsR9n8NbL6",
     accent: "secondary",
   },
-  {
-    title: "Family Highlights",
-    description:
-      "SB’s latest frames, mellow autumn mood pics, and a few favorite newspaper clippings stitched together.",
-    url: "https://photos.app.goo.gl/ej2zF3go6NVt7Pgv6",
-    accent: "primary",
-  },
 ];
 
 const Album = () => {

@@ -1,5 +1,22 @@
 export const blogPosts = [
   {
+    title: "Reble and Other Stuff",
+    date: "February 8, 2026",
+    lastModified: "February 8, 2026",
+    excerpt:
+      "Six quick notes on Reble's music, text terminators, bamboo, AI medical ads, and the products that keep chasing our attention.",
+    tags: [
+      "Music",
+      "Humor",
+      "Bamboo",
+      "AI Healthcare",
+      "Consumer Culture",
+      "Reflections",
+    ],
+    image: "/media/texterminator.jpg",
+    link: "/blog/2026-02-08-reble-and-other-stuff",
+  },
+  {
     title: "February Musings: Health, Slang, Politics, and Legacy",
     date: "February 8, 2026",
     lastModified: "February 8, 2026",
