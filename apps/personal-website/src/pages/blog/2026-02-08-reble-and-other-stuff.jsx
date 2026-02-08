@@ -105,6 +105,7 @@ export default function BlogPost() {
           Some songs wake you up in five seconds. Reble did that to me with "Lokah" and
           "Dhurandhur." One line from her interview stayed with me: she takes rage,
           anger, and stress, then pushes it into music. That is discipline disguised as art.
+          Check out her songs in /music playlist.
         </Typography>
       </Box>
 
@@ -256,7 +257,7 @@ export default function BlogPost() {
           }}
         >
           Bangalore airport decor pushed bamboo back into my line of sight. It looks elegant,
-          works hard, and wastes little. On a trip to Annamalai, I learned about bamboo rice,
+          works hard, and wastes little. On a trip to Anamalai - ஆனமலை, I learned about bamboo rice,
           which I had ignored for years. We keep rediscovering local wisdom after importing
           the same idea with better packaging.
         </Typography>
