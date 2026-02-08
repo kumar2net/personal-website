@@ -1,5 +1,25 @@
 export const blogPosts = [
   {
+    title: "February Musings: Health, Slang, Politics, and Legacy",
+    date: "February 8, 2026",
+    lastModified: "February 8, 2026",
+    excerpt:
+      "From wellness basics for Gen Z and millennials to Gen Alpha slang, election-season noise, and why G.D. Naidu still defines Coimbatore's engineering spirit.",
+    tags: [
+      "Health",
+      "Gen Z",
+      "Gen Alpha",
+      "Slang",
+      "Tamil Nadu",
+      "Politics",
+      "G.D. Naidu",
+      "Engineering",
+      "Invention",
+    ],
+    image: "/generate/2026-02-08-february-musings-health-slang-politics-legacy.png",
+    link: "/blog/2026-02-08-february-musings-health-slang-politics-legacy",
+  },
+  {
     title: "Microplastics, Davos Flights, and Da Vinci: Thoughts on Modern Intrigue",
     date: "February 3, 2026",
     lastModified: "February 3, 2026",

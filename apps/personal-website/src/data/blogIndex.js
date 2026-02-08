@@ -2,6 +2,25 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-08-february-musings-health-slang-politics-legacy": {
+    title: "February Musings: Health, Slang, Politics, and Legacy",
+    description:
+      "A February reflection across practical wellness, Gen Alpha language shifts, Tamil Nadu election-season theatrics, and G.D. Naidu's enduring engineering legacy in Coimbatore.",
+    image: "/generate/2026-02-08-february-musings-health-slang-politics-legacy.png",
+    tags: [
+      "Health",
+      "Gen Z",
+      "Gen Alpha",
+      "Slang",
+      "Tamil Nadu",
+      "Politics",
+      "G.D. Naidu",
+      "Engineering",
+      "Invention",
+    ],
+    datePublished: "2026-02-08",
+    dateModified: "2026-02-08",
+  },
   "2026-02-03-microplastics-davos-da-vinci-intrigue": {
     title: "Microplastics, Davos Flights, and Da Vinci: Thoughts on Modern Intrigue",
     description:
