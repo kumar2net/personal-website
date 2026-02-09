@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-02-09T01:49:00Z",
+  "sourceClips": [
+    "kneecap-dislocation-sora-12s.mp4",
+    "kneecap-dislocation-sora-12s-part2.mp4",
+    "kneecap-dislocation-sora-12s-part3.mp4"
+  ],
+  "stitchMethod": "ffmpeg concat demuxer -c copy",
+  "output": "kneecap-dislocation-sora-master-36s.mp4",
+  "approxDurationSeconds": 36.3
+}

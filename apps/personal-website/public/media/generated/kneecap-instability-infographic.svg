@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Recurrent patellar instability infographic</title>
+  <desc id="desc">Three-panel infographic showing mechanism, recurrence factors, and definitive treatment for recurrent kneecap dislocation.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff" />
+      <stop offset="100%" stop-color="#eef5ff" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f5f9ff" />
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#0e7490" />
+    </marker>
+    <style>
+      .h1 { font: 700 37px "Space Grotesk", "Segoe UI", sans-serif; fill: #0f172a; }
+      .h2 { font: 700 23px "Space Grotesk", "Segoe UI", sans-serif; fill: #0f172a; }
+      .copy { font: 500 19px "IBM Plex Sans", "Segoe UI", sans-serif; fill: #334155; }
+      .small { font: 600 16px "IBM Plex Sans", "Segoe UI", sans-serif; fill: #475569; }
+      .chip { font: 700 14px "IBM Plex Sans", "Segoe UI", sans-serif; letter-spacing: 0.5px; text-transform: uppercase; fill: #0f766e; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#bg)" />
+  <text x="56" y="70" class="h1">Recurrent Kneecap Dislocation: Why It Returns and What Fixes It</text>
+  <text x="56" y="102" class="copy">Most repeated episodes are lateral patellar instability after initial MPFL injury plus underlying anatomic risk.</text>
+
+  <rect x="48" y="134" rx="22" ry="22" width="380" height="530" fill="url(#panel)" stroke="#cbd5e1" />
+  <rect x="450" y="134" rx="22" ry="22" width="380" height="530" fill="url(#panel)" stroke="#cbd5e1" />
+  <rect x="852" y="134" rx="22" ry="22" width="380" height="530" fill="url(#panel)" stroke="#cbd5e1" />
+
+  <text x="78" y="176" class="chip">Panel 1</text>
+  <text x="78" y="206" class="h2">Mechanism in squash</text>
+  <text x="78" y="236" class="copy">Planted foot + valgus + rotation</text>
+
+  <line x1="176" y1="250" x2="176" y2="528" stroke="#64748b" stroke-width="8" stroke-linecap="round" />
+  <rect x="142" y="292" width="68" height="125" rx="28" fill="#e2e8f0" stroke="#94a3b8" />
+  <ellipse cx="176" cy="356" rx="17" ry="20" fill="#f59e0b" />
+  <path d="M195 356 C233 348, 239 386, 203 395" fill="none" stroke="#dc2626" stroke-width="5" marker-end="url(#arrow)" />
+  <text x="76" y="564" class="small">Patella shifts laterally during pivot load.</text>
+  <text x="76" y="588" class="small">First event often stretches/tears MPFL.</text>
+
+  <text x="480" y="176" class="chip">Panel 2</text>
+  <text x="480" y="206" class="h2">Why it keeps happening</text>
+  <rect x="482" y="232" width="316" height="82" rx="14" fill="#ecfeff" stroke="#a5f3fc" />
+  <text x="500" y="262" class="copy">Soft tissue: MPFL insufficiency</text>
+  <text x="500" y="290" class="small">Weak medial restraint in early flexion.</text>
+  <rect x="482" y="328" width="316" height="82" rx="14" fill="#fffbeb" stroke="#fde68a" />
+  <text x="500" y="358" class="copy">Bony setup: shallow trochlea</text>
+  <text x="500" y="386" class="small">Less groove containment for patella.</text>
+  <rect x="482" y="424" width="316" height="82" rx="14" fill="#fffbeb" stroke="#fde68a" />
+  <text x="500" y="454" class="copy">Tracking risk: patella alta / high TT-TG</text>
+  <text x="500" y="482" class="small">Lateral pull increases recurrence risk.</text>
+  <path d="M640 524 C700 542, 700 592, 640 612 C580 592, 580 542, 640 524 Z" fill="#fee2e2" stroke="#fca5a5" />
+  <text x="566" y="574" class="h2" fill="#b91c1c">Recurrence loop</text>
+
+  <text x="882" y="176" class="chip">Panel 3</text>
+  <text x="882" y="206" class="h2">Definitive correction</text>
+  <rect x="884" y="234" width="316" height="88" rx="14" fill="#ecfdf5" stroke="#86efac" />
+  <text x="902" y="266" class="copy">1) MPFL reconstruction</text>
+  <text x="902" y="294" class="small">Base operation for recurrent instability.</text>
+  <rect x="884" y="338" width="316" height="88" rx="14" fill="#ecfdf5" stroke="#86efac" />
+  <text x="902" y="370" class="copy">2) Add tibial tubercle osteotomy</text>
+  <text x="902" y="398" class="small">If TT-TG / patella alta / maltracking is high.</text>
+  <rect x="884" y="442" width="316" height="88" rx="14" fill="#ecfdf5" stroke="#86efac" />
+  <text x="902" y="474" class="copy">3) Trochleoplasty (selected cases)</text>
+  <text x="902" y="502" class="small">For severe trochlear dysplasia.</text>
+  <text x="884" y="572" class="small">Imaging for planning: MRI +/- CT</text>
+  <text x="884" y="596" class="small">Goal: stable tracking + cartilage protection</text>
+
+  <line x1="430" y1="400" x2="448" y2="400" stroke="#0e7490" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="832" y1="400" x2="850" y2="400" stroke="#0e7490" stroke-width="4" marker-end="url(#arrow)" />
+
+  <text x="56" y="686" class="small">Educational infographic. Clinical decisions require orthopedic sports evaluation.</text>
+</svg>

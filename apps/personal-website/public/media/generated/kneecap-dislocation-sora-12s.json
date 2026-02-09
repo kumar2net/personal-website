@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-02-09T01:13:33.108Z",
+  "videoId": "video_69893408f95481909cfe02a6090780e30a657d9497731b5d",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "1280x720",
+  "status": "completed",
+  "prompt": "Create a medically accurate, educational 12-second video about recurrent lateral patellar dislocation in a young squash player. Style: clean 3D knee anatomy, high clarity, white background, no blood, no gore, smooth camera movement, infographic overlays. Shot plan and annotations: 0-3s: Normal patella tracking in trochlear groove during flexion. Labels: Patella, Trochlea, MPFL. 3-6s: Squash pivot mechanism with valgus + rotation causing lateral patellar displacement. Label: \"Mechanism: pivot + valgus + rotation\". 6-9s: Show torn/stretched MPFL and recurrence loop with subtle iconography. Labels: \"MPFL injury\", \"Recurrent instability\". 9-12s: Show stabilized tracking after MPFL reconstruction, with optional tibial tubercle correction cue. Label: \"Definitive fix: MPFL reconstruction +/- alignment correction\". On-screen footer disclaimer in final second: \"Educational only. See sports orthopedics for diagnosis and treatment.\" Color coding: ligaments teal, cartilage light blue, risk factors amber, treatment green. No brand logos, no identifiable real person faces."
+}

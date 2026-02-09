@@ -57,6 +57,9 @@ const ProteinFoldingPage = lazy(
 const BrainVsAiPrimerPage = lazy(() => import("./pages/science/brain-vs-ai"));
 const BackPainPlanPage = lazy(() => import("./pages/science/back-pain"));
 const PaperSizesPage = lazy(() => import("./pages/science/paper-sizes"));
+const PatellarInstabilityPage = lazy(
+  () => import("./pages/science/patellar-instability"),
+);
 
 // Lazy load blog posts
 const PostDynamic = lazy(() => import("./pages/blog/PostDynamic"));
@@ -229,7 +232,6 @@ const App = ({ mode }) => {
   };
   const currentYear = new Date().getFullYear();
   const heroFont = '"Space Grotesk", "Satoshi", "Noto Sans", sans-serif';
-  const serifFont = '"Newsreader", "Iowan Old Style", "Palatino", serif';
 
   useGaPageViews();
 
@@ -530,35 +532,49 @@ const App = ({ mode }) => {
                   element={
                     <Box
                       component={motion.section}
-                      initial={{ opacity: 0, y: 24 }}
+                      initial={{ opacity: 0, y: 18 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6 }}
+                      transition={{ duration: 0.45 }}
                       sx={{
+                        "--home-surface": isDarkMode
+                          ? "rgba(7, 14, 27, 0.82)"
+                          : "rgba(255, 255, 255, 0.92)",
+                        "--home-surface-muted": isDarkMode
+                          ? "rgba(2, 6, 23, 0.76)"
+                          : "rgba(248, 250, 252, 0.94)",
+                        "--home-border": isDarkMode
+                          ? "rgba(148, 163, 184, 0.25)"
+                          : "rgba(15, 23, 42, 0.12)",
+                        "--home-muted-text": isDarkMode
+                          ? "rgba(226, 232, 240, 0.78)"
+                          : "rgba(30, 41, 59, 0.72)",
+                        "--home-shadow": isDarkMode
+                          ? "0 18px 40px rgba(2, 6, 23, 0.45)"
+                          : "0 18px 40px rgba(15, 23, 42, 0.08)",
                         display: "flex",
                         flexDirection: "column",
-                        gap: { xs: 6, md: 8 },
-                        position: "relative",
+                        gap: { xs: 4, md: 5 },
+                        width: "100%",
+                        maxWidth: 980,
+                        mx: "auto",
                       }}
                     >
-                      <Box
+                      <Paper
                         component={motion.div}
-                        initial={{ opacity: 0, y: 18 }}
+                        elevation={0}
+                        initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.05 }}
+                        transition={{ duration: 0.5, delay: 0.05 }}
                         sx={{
                           position: "relative",
                           overflow: "hidden",
                           borderRadius: 5,
-                          px: { xs: 3, md: 6 },
-                          py: { xs: 4, md: 6 },
-                          border: "1px solid",
-                          borderColor: "divider",
+                          p: { xs: 3, md: 5 },
+                          border: "1px solid var(--home-border)",
                           backgroundImage: isDarkMode
-                            ? "radial-gradient(circle at 16% 20%, rgba(14,165,233,0.22), transparent 55%), radial-gradient(circle at 88% 12%, rgba(245,158,11,0.18), transparent 45%), linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.9))"
-                            : "radial-gradient(circle at 16% 20%, rgba(59,130,246,0.18), transparent 55%), radial-gradient(circle at 88% 12%, rgba(245,158,11,0.2), transparent 45%), linear-gradient(135deg, rgba(255,255,255,0.95), rgba(241,245,249,0.9))",
-                          boxShadow: isDarkMode
-                            ? "0 28px 60px rgba(2,6,23,0.65)"
-                            : "0 28px 60px rgba(15,23,42,0.12)",
+                            ? "linear-gradient(135deg, rgba(14, 165, 233, 0.14), transparent 40%), linear-gradient(180deg, rgba(2, 6, 23, 0.92), rgba(15, 23, 42, 0.84))"
+                            : "linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent 42%), linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.95))",
+                          boxShadow: "var(--home-shadow)",
                         }}
                       >
                         <Box
@@ -568,260 +584,139 @@ const App = ({ mode }) => {
                             inset: 0,
                             pointerEvents: "none",
                             backgroundImage:
-                              "linear-gradient(90deg, rgba(148,163,184,0.12) 1px, transparent 1px), linear-gradient(0deg, rgba(148,163,184,0.12) 1px, transparent 1px)",
-                            backgroundSize: "48px 48px",
-                            opacity: isDarkMode ? 0.35 : 0.2,
+                              "linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(0deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)",
+                            backgroundSize: "56px 56px",
+                            opacity: isDarkMode ? 0.22 : 0.14,
                           }}
                         />
-                        <Grid
-                          container
-                          spacing={{ xs: 3, md: 4 }}
-                          sx={{ position: "relative", zIndex: 1 }}
-                          alignItems="center"
-                        >
-                          <Grid size={{ xs: 12, md: 7 }}>
-                            <Stack spacing={{ xs: 2.5, md: 3 }}>
-                              <Stack spacing={1}>
-                                <Typography
-                                  variant="overline"
-                                  sx={{
-                                    letterSpacing: 3,
-                                    fontWeight: 700,
-                                    color: "text.secondary",
-                                  }}
-                                >
-                                  KUMAR2NET / 2026
-                                </Typography>
-                                <Typography
-                                  variant="h2"
-                                  sx={{
-                                    fontFamily: heroFont,
-                                    fontWeight: 700,
-                                    fontSize: { xs: "2.35rem", md: "3.6rem" },
-                                    lineHeight: 1.05,
-                                    letterSpacing: "-0.02em",
-                                    color: "text.primary",
-                                  }}
-                                >
-                                  Human-first AI, practical learning, and calm
-                                  tech notes.
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  sx={{
-                                    fontSize: { xs: "1.05rem", md: "1.2rem" },
-                                    color: "text.secondary",
-                                    maxWidth: 560,
-                                  }}
-                                >
-                                  I build, test, and document AI workflows,
-                                  science notes, and cultural stories. Everything
-                                  here is meant to be reused.
-                                </Typography>
-                              </Stack>
-                              <Stack
-                                direction={{ xs: "column", sm: "row" }}
-                                spacing={2}
-                                sx={{
-                                  alignItems: { xs: "stretch", sm: "center" },
-                                  flexWrap: "wrap",
-                                }}
-                              >
-                                <Button
-                                  variant="contained"
-                                  size="large"
-                                  {...getLinkProps({ to: "/blog" })}
-                                  onClick={() => trackClick("hero_blog_cta")}
-                                  sx={{
-                                    borderRadius: 999,
-                                    px: 3,
-                                    textTransform: "none",
-                                    fontWeight: 700,
-                                    boxShadow: isDarkMode
-                                      ? "0 16px 30px rgba(14,165,233,0.25)"
-                                      : "0 16px 30px rgba(37,99,235,0.25)",
-                                  }}
-                                >
-                                  Read the blog
-                                </Button>
-                                <Button
-                                  variant="outlined"
-                                  size="large"
-                                  {...getLinkProps({ to: "/projects" })}
-                                  onClick={() => trackClick("hero_projects_cta")}
-                                  sx={{
-                                    borderRadius: 999,
-                                    px: 3,
-                                    textTransform: "none",
-                                    fontWeight: 600,
-                                  }}
-                                >
-                                  Explore projects
-                                </Button>
-                                <Button
-                                  variant="text"
-                                  size="large"
-                                  {...getLinkProps({ to: "/contact" })}
-                                  onClick={() => trackClick("hero_contact_cta")}
-                                  sx={{
-                                    borderRadius: 999,
-                                    px: 2,
-                                    textTransform: "none",
-                                    fontWeight: 600,
-                                    color: "text.primary",
-                                  }}
-                                >
-                                  Contact
-                                </Button>
-                              </Stack>
-                              <Stack
-                                direction="row"
-                                spacing={1}
-                                useFlexGap
-                                flexWrap="wrap"
-                              >
-                                {[
-                                  "AI systems",
-                                  "Education",
-                                  "Markets",
-                                  "Culture",
-                                  "Science notes",
-                                ].map((item) => (
-                                  <Box
-                                    key={item}
-                                    sx={{
-                                      px: 1.5,
-                                      py: 0.6,
-                                      borderRadius: 999,
-                                      border: "1px solid",
-                                      borderColor: "divider",
-                                      fontSize: "0.7rem",
-                                      fontWeight: 700,
-                                      letterSpacing: "0.08em",
-                                      textTransform: "uppercase",
-                                      bgcolor: isDarkMode
-                                        ? "rgba(2,6,23,0.6)"
-                                        : "rgba(255,255,255,0.8)",
-                                    }}
-                                  >
-                                    {item}
-                                  </Box>
-                                ))}
-                              </Stack>
-                            </Stack>
-                          </Grid>
-                          <Grid size={{ xs: 12, md: 5 }}>
-                            <Stack spacing={2}>
-                              <Paper
-                                variant="outlined"
-                                sx={{
-                                  p: 3,
-                                  borderRadius: 3,
-                                  backgroundColor: isDarkMode
-                                    ? "rgba(2,6,23,0.65)"
-                                    : "rgba(255,255,255,0.75)",
-                                  backdropFilter: "blur(10px)",
-                                }}
-                              >
-                                <Stack spacing={1.5}>
-                                  <Typography
-                                    variant="overline"
-                                    sx={{
-                                      letterSpacing: 2,
-                                      fontWeight: 700,
-                                      color: "text.secondary",
-                                    }}
-                                  >
-                                    Now
-                                  </Typography>
-                                  <Typography
-                                    variant="h6"
-                                    sx={{
-                                      fontFamily: heroFont,
-                                      fontWeight: 700,
-                                    }}
-                                  >
-                                    2026 focus
-                                  </Typography>
-                                  <Stack spacing={1}>
-                                    <Typography
-                                      variant="body2"
-                                      color="text.secondary"
-                                    >
-                                      AI workflows that stay human-readable.
-                                    </Typography>
-                                    <Typography
-                                      variant="body2"
-                                      color="text.secondary"
-                                    >
-                                      Learning notes you can reuse in class or at
-                                      work.
-                                    </Typography>
-                                    <Typography
-                                      variant="body2"
-                                      color="text.secondary"
-                                    >
-                                      Markets, policy, and culture as lived
-                                      signals.
-                                    </Typography>
-                                  </Stack>
-                                </Stack>
-                              </Paper>
-                              <Paper
-                                variant="outlined"
-                                sx={{
-                                  p: 3,
-                                  borderRadius: 3,
-                                  backgroundColor: isDarkMode
-                                    ? "rgba(2,6,23,0.65)"
-                                    : "rgba(255,255,255,0.8)",
-                                  backdropFilter: "blur(10px)",
-                                }}
-                              >
-                                <Stack spacing={1}>
-                                  <Typography
-                                    variant="overline"
-                                    sx={{
-                                      letterSpacing: 2,
-                                      fontWeight: 700,
-                                      color: "text.secondary",
-                                    }}
-                                  >
-                                    Copyleft
-                                  </Typography>
-                                  <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                  >
-                                    Copy, reuse, and remix anything on this site.
-                                    Credit is appreciated but not required.
-                                  </Typography>
-                                </Stack>
-                              </Paper>
-                            </Stack>
-                          </Grid>
-                        </Grid>
-                      </Box>
-                      <Box>
-                        <Stack spacing={1} sx={{ mb: 2 }}>
+                        <Stack sx={{ position: "relative", zIndex: 1 }} spacing={3}>
                           <Typography
                             variant="overline"
                             sx={{
-                              letterSpacing: 2,
+                              fontFamily: heroFont,
+                              letterSpacing: 2.6,
                               fontWeight: 700,
-                              color: "text.secondary",
+                              color: "var(--home-muted-text)",
                             }}
                           >
-                            Navigate
+                            KUMAR2NET / 2026
+                          </Typography>
+                          <Typography
+                            variant="h2"
+                            sx={{
+                              fontFamily: heroFont,
+                              fontWeight: 650,
+                              fontSize: { xs: "2rem", md: "3rem" },
+                              lineHeight: 1.06,
+                              letterSpacing: "-0.02em",
+                              maxWidth: 760,
+                            }}
+                          >
+                            Minimal, practical, and human-first digital notes.
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "var(--home-muted-text)",
+                              fontSize: { xs: "1rem", md: "1.1rem" },
+                              maxWidth: 680,
+                            }}
+                          >
+                            AI workflows, learning systems, science writeups, and
+                            field observations designed to be reusable.
+                          </Typography>
+                          <Stack
+                            direction={{ xs: "column", sm: "row" }}
+                            spacing={1.5}
+                            sx={{ alignItems: { xs: "stretch", sm: "center" } }}
+                          >
+                            <Button
+                              variant="contained"
+                              size="large"
+                              {...getLinkProps({ to: "/blog" })}
+                              onClick={() => trackClick("hero_blog_cta")}
+                              sx={{
+                                borderRadius: 999,
+                                px: 3,
+                                textTransform: "none",
+                                fontWeight: 700,
+                              }}
+                            >
+                              Read latest posts
+                            </Button>
+                            <Button
+                              variant="outlined"
+                              size="large"
+                              {...getLinkProps({ to: "/projects" })}
+                              onClick={() => trackClick("hero_projects_cta")}
+                              sx={{
+                                borderRadius: 999,
+                                px: 3,
+                                textTransform: "none",
+                                fontWeight: 600,
+                                borderColor: "var(--home-border)",
+                              }}
+                            >
+                              View projects
+                            </Button>
+                            <Button
+                              variant="text"
+                              size="large"
+                              {...getLinkProps({ to: "/contact" })}
+                              onClick={() => trackClick("hero_contact_cta")}
+                              sx={{
+                                borderRadius: 999,
+                                px: 2,
+                                textTransform: "none",
+                                fontWeight: 600,
+                              }}
+                            >
+                              Contact
+                            </Button>
+                          </Stack>
+                          <Divider sx={{ borderColor: "var(--home-border)" }} />
+                          <Stack spacing={0.5}>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontStyle: "italic",
+                                color: "var(--home-muted-text)",
+                                maxWidth: 740,
+                              }}
+                            >
+                              "The higher we soar, the smaller we seem to those
+                              who cannot fly."
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              sx={{ color: "var(--home-muted-text)" }}
+                            >
+                              - Friedrich Nietzsche
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </Paper>
+                      <Box>
+                        <Stack spacing={0.75} sx={{ mb: 2 }}>
+                          <Typography
+                            variant="overline"
+                            sx={{
+                              fontFamily: heroFont,
+                              letterSpacing: 2,
+                              fontWeight: 700,
+                              color: "var(--home-muted-text)",
+                            }}
+                          >
+                            Explore
                           </Typography>
                           <Typography
                             variant="h5"
-                            sx={{ fontWeight: 700, fontFamily: heroFont }}
+                            sx={{ fontFamily: heroFont, fontWeight: 650 }}
                           >
-                            Explore the archive
+                            Clean navigation
                           </Typography>
                         </Stack>
-                        <Grid container spacing={3}>
+                        <Grid container spacing={2}>
                           {heroSections.map((section, index) => (
                             <Grid
                               key={section.label}
@@ -829,27 +724,24 @@ const App = ({ mode }) => {
                             >
                               <Card
                                 component={motion.article}
-                                initial={{ opacity: 0, y: 30 }}
+                                initial={{ opacity: 0, y: 16 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{
-                                  duration: 0.45,
-                                  delay: index * 0.05,
+                                  duration: 0.35,
+                                  delay: index * 0.04,
                                 }}
                                 sx={(theme) => ({
                                   height: "100%",
                                   borderRadius: 3,
-                                  border: "1px solid",
-                                  borderColor: "divider",
-                                  backgroundColor: isDarkMode
-                                    ? "rgba(2,6,23,0.55)"
-                                    : "rgba(255,255,255,0.9)",
-                                  backdropFilter: "blur(10px)",
+                                  border: "1px solid var(--home-border)",
+                                  backgroundColor: "var(--home-surface)",
+                                  boxShadow: "none",
                                   transition:
-                                    "transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease",
+                                    "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
                                   "&:hover": {
-                                    transform: "translateY(-4px)",
+                                    transform: "translateY(-3px)",
                                     borderColor: "primary.main",
-                                    boxShadow: theme.shadows[6],
+                                    boxShadow: theme.shadows[4],
                                   },
                                 })}
                               >
@@ -862,32 +754,31 @@ const App = ({ mode }) => {
                                   }
                                   sx={{ height: "100%" }}
                                 >
-                                  <CardContent
-                                    sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      gap: 1,
-                                    }}
-                                  >
-                                    <Typography
-                                      variant="overline"
-                                      sx={{
-                                        letterSpacing: 2,
-                                        fontWeight: 700,
-                                        color: "text.secondary",
-                                      }}
-                                    >
-                                      {String(index + 1).padStart(2, "0")}
-                                    </Typography>
-                                    <Typography variant="h6">
-                                      {section.label}
-                                    </Typography>
-                                    <Typography
-                                      variant="body2"
-                                      color="text.secondary"
-                                    >
-                                      {section.description}
-                                    </Typography>
+                                  <CardContent>
+                                    <Stack spacing={1}>
+                                      <Typography
+                                        variant="overline"
+                                        sx={{
+                                          letterSpacing: 1.8,
+                                          fontWeight: 700,
+                                          color: "var(--home-muted-text)",
+                                        }}
+                                      >
+                                        {String(index + 1).padStart(2, "0")}
+                                      </Typography>
+                                      <Typography
+                                        variant="h6"
+                                        sx={{ fontFamily: heroFont, fontWeight: 600 }}
+                                      >
+                                        {section.label}
+                                      </Typography>
+                                      <Typography
+                                        variant="body2"
+                                        sx={{ color: "var(--home-muted-text)" }}
+                                      >
+                                        {section.description}
+                                      </Typography>
+                                    </Stack>
                                   </CardContent>
                                 </CardActionArea>
                               </Card>
@@ -895,194 +786,156 @@ const App = ({ mode }) => {
                           ))}
                         </Grid>
                       </Box>
-                      <Grid container spacing={3} alignItems="stretch">
+                      <Grid container spacing={2.5} alignItems="stretch">
                         <Grid size={{ xs: 12, md: 7 }}>
                           <Paper
-                            component={motion.blockquote}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.15 }}
+                            elevation={0}
                             sx={{
                               height: "100%",
-                              p: { xs: 4, md: 5 },
+                              p: { xs: 3, md: 3.5 },
                               borderRadius: 4,
-                              border: "1px solid",
-                              borderColor: "divider",
-                              backgroundColor: isDarkMode
-                                ? "rgba(2,6,23,0.65)"
-                                : "rgba(255,255,255,0.9)",
-                              boxShadow: isDarkMode
-                                ? "0 18px 40px rgba(2,6,23,0.4)"
-                                : "0 18px 40px rgba(15,23,42,0.12)",
+                              border: "1px solid var(--home-border)",
+                              backgroundColor: "var(--home-surface-muted)",
                             }}
                           >
-                            <Typography
-                              variant="h5"
-                              sx={{
-                                fontFamily: serifFont,
-                                fontStyle: "italic",
-                                lineHeight: 1.6,
-                                color: "text.primary",
-                              }}
-                            >
-                              "Courage isn't having the strength to go on - it is
-                              going on when you don't have strength."
-                            </Typography>
-                            <Stack
-                              direction="row"
-                              alignItems="center"
-                              justifyContent="space-between"
-                              sx={{ mt: 3 }}
-                            >
-                              <Box
-                                sx={{
-                                  width: 48,
-                                  height: 4,
-                                  borderRadius: 999,
-                                  bgcolor: "primary.main",
-                                }}
-                              />
+                            <Stack spacing={2}>
                               <Typography
-                                variant="subtitle2"
-                                color="text.secondary"
+                                variant="overline"
+                                sx={{
+                                  fontFamily: heroFont,
+                                  letterSpacing: 2,
+                                  fontWeight: 700,
+                                  color: "var(--home-muted-text)",
+                                }}
                               >
-                                - Napoleon Bonaparte
+                                Now
                               </Typography>
+                              {[
+                                "AI systems that stay readable and maintainable.",
+                                "Learning notes with repeatable structure.",
+                                "Markets, culture, and science through practical writing.",
+                              ].map((item) => (
+                                <Typography
+                                  key={item}
+                                  variant="body2"
+                                  sx={{ color: "var(--home-muted-text)" }}
+                                >
+                                  {item}
+                                </Typography>
+                              ))}
+                              <Divider sx={{ borderColor: "var(--home-border)" }} />
+                              <Stack
+                                direction={{ xs: "column", sm: "row" }}
+                                spacing={1}
+                                sx={{ flexWrap: "wrap" }}
+                              >
+                                {[
+                                  {
+                                    label: "Unit converter",
+                                    to: "/convert",
+                                    analyticsKey: "hero_tool_convert",
+                                  },
+                                  {
+                                    label: "Utilities dashboard",
+                                    to: "/utilities",
+                                    analyticsKey: "hero_tool_utilities",
+                                  },
+                                  {
+                                    label: "Flashcards",
+                                    to: "/learning",
+                                    analyticsKey: "hero_tool_learning",
+                                  },
+                                ].map((tool) => (
+                                  <Button
+                                    key={tool.label}
+                                    size="small"
+                                    variant="text"
+                                    {...getLinkProps(tool)}
+                                    onClick={() => trackClick(tool.analyticsKey)}
+                                    sx={{
+                                      justifyContent: "flex-start",
+                                      textTransform: "none",
+                                      fontWeight: 600,
+                                      px: 1,
+                                      color: "text.primary",
+                                    }}
+                                  >
+                                    {tool.label}
+                                  </Button>
+                                ))}
+                              </Stack>
                             </Stack>
                           </Paper>
                         </Grid>
                         <Grid size={{ xs: 12, md: 5 }}>
                           <Paper
-                            variant="outlined"
+                            elevation={0}
                             sx={{
                               height: "100%",
-                              p: 3,
-                              borderRadius: 3,
+                              p: { xs: 3, md: 3.5 },
+                              borderRadius: 4,
+                              border: "1px solid var(--home-border)",
+                              backgroundColor: "var(--home-surface-muted)",
                               display: "flex",
                               flexDirection: "column",
                               gap: 2,
-                              backgroundColor: isDarkMode
-                                ? "rgba(2,6,23,0.6)"
-                                : "rgba(255,255,255,0.85)",
-                              backdropFilter: "blur(10px)",
                             }}
                           >
                             <Typography
                               variant="overline"
                               sx={{
+                                fontFamily: heroFont,
                                 letterSpacing: 2,
                                 fontWeight: 700,
-                                color: "text.secondary",
+                                color: "var(--home-muted-text)",
                               }}
                             >
-                              Quick tools
+                              Live
                             </Typography>
-                            <Typography
-                              variant="h6"
-                              sx={{ fontFamily: heroFont, fontWeight: 700 }}
-                            >
-                              Jump in fast
-                            </Typography>
-                            <Stack spacing={1}>
+                            {showWorldClock ? (
+                              <WorldClock compact />
+                            ) : (
+                              <Box sx={{ minHeight: 120 }} aria-hidden />
+                            )}
+                            <Stack direction="row" spacing={1.5}>
                               {[
                                 {
-                                  label: "Unit converter",
-                                  to: "/convert",
-                                  analyticsKey: "hero_tool_convert",
+                                  href: "https://kumar2net.wordpress.com/",
+                                  label: "WordPress",
+                                  icon: <FaWordpress />,
+                                  analyticsKey: "social_wordpress",
                                 },
                                 {
-                                  label: "Utilities dashboard",
-                                  to: "/utilities",
-                                  analyticsKey: "hero_tool_utilities",
+                                  href: "https://twitter.com/kumar2net",
+                                  label: "X (Twitter)",
+                                  icon: <FaTwitter />,
+                                  analyticsKey: "social_twitter",
                                 },
-                                {
-                                  label: "Flashcards and learning",
-                                  to: "/learning",
-                                  analyticsKey: "hero_tool_learning",
-                                },
-                              ].map((tool) => (
-                                <Button
-                                  key={tool.label}
-                                  {...getLinkProps(tool)}
-                                  onClick={() => trackClick(tool.analyticsKey)}
-                                  variant="text"
-                                  size="small"
+                              ].map((social) => (
+                                <IconButton
+                                  key={social.label}
+                                  component="a"
+                                  href={social.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label={social.label}
+                                  onClick={() => trackClick(social.analyticsKey)}
                                   sx={{
-                                    justifyContent: "flex-start",
-                                    textTransform: "none",
-                                    fontWeight: 600,
+                                    borderRadius: "50%",
+                                    width: 46,
+                                    height: 46,
+                                    border: "1px solid var(--home-border)",
                                     color: "text.primary",
+                                    backgroundColor: "var(--home-surface)",
                                   }}
                                 >
-                                  {tool.label}
-                                </Button>
+                                  {social.icon}
+                                </IconButton>
                               ))}
                             </Stack>
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                            >
-                              Practical tools, trimmed for speed.
-                            </Typography>
                           </Paper>
                         </Grid>
                       </Grid>
-                      <Stack spacing={2} alignItems="center">
-                        <Typography
-                          variant="overline"
-                          sx={{
-                            letterSpacing: 2,
-                            fontWeight: 700,
-                            color: "text.secondary",
-                          }}
-                        >
-                          Live time
-                        </Typography>
-                        {showWorldClock ? (
-                          <WorldClock compact />
-                        ) : (
-                          <Box sx={{ mt: 2, minHeight: 140 }} aria-hidden />
-                        )}
-                      </Stack>
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        justifyContent="center"
-                        sx={{ flexWrap: "wrap" }}
-                      >
-                        {[
-                          {
-                            href: "https://kumar2net.wordpress.com/",
-                            label: "WordPress",
-                            icon: <FaWordpress />,
-                          },
-                          {
-                            href: "https://twitter.com/kumar2net",
-                            label: "X (Twitter)",
-                            icon: <FaTwitter />,
-                          },
-                        ].map((social) => (
-                          <IconButton
-                            key={social.label}
-                            component="a"
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={social.label}
-                            sx={{
-                              borderRadius: "50%",
-                              width: 56,
-                              height: 56,
-                              border: "1px solid",
-                              borderColor: "divider",
-                              boxShadow: "0 12px 30px rgba(15,23,42,0.15)",
-                              color: "text.primary",
-                            }}
-                          >
-                            {social.icon}
-                          </IconButton>
-                        ))}
-                      </Stack>
                     </Box>
                   }
                 />
@@ -1322,6 +1175,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <ScienceIndex />
+                    </>
+                  }
+                />
+                <Route
+                  path="/science/patellar-instability"
+                  element={
+                    <>
+                      <SEO
+                        title="Recurrent Kneecap Dislocation – Anatomy and Permanent Fix"
+                        description="Stitched multi-part Sora 2 explainer plus infographic on recurrent lateral patellar instability and definitive correction."
+                        canonicalPath="/science/patellar-instability"
+                        type="article"
+                      />
+                      <PatellarInstabilityPage />
                     </>
                   }
                 />

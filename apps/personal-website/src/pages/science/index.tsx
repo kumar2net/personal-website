@@ -48,16 +48,47 @@ export default function ScienceIndex() {
             variant="bodyMedium"
             sx={{ color: alpha(onSurface, 0.82), maxWidth: 640 }}
           >
-            Tap a card to open the interactive WebGPU render. Each scene streams only
-            after you open it to keep the page light.
+            Open a card to explore a focused science explainer. Some are interactive
+            WebGPU renders; some are annotated video + infographic deep dives.
           </Typography>
 
-        <Card sx={cardSx}>
-          <CardActionArea
-            component={RouterLink}
-            to="/science/brain-vs-ai"
-            sx={{ height: "100%" }}
-          >
+          <Card sx={cardSx}>
+            <CardActionArea
+              component={RouterLink}
+              to="/science/patellar-instability"
+              sx={{ height: "100%" }}
+            >
+              <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                <Chip
+                  size="small"
+                  label="Sora 2 + Infographic"
+                  sx={{
+                    width: "fit-content",
+                    backgroundColor: alpha(primaryContainer, 0.14),
+                    color: primaryContainer,
+                    fontWeight: 600,
+                  }}
+                />
+                <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                  Recurrent Kneecap Dislocation
+                </Typography>
+                <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                  Anatomy-first explanation of why patellar dislocation recurs in pivot
+                  sports and what the definitive, anatomy-corrective fixes are.
+                </Typography>
+                <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                  Includes a stitched ~36s Sora 2 flow with thumbnail chapters and a labeled infographic.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+
+          <Card sx={cardSx}>
+            <CardActionArea
+              component={RouterLink}
+              to="/science/brain-vs-ai"
+              sx={{ height: "100%" }}
+            >
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
                 <Chip
                   size="small"
@@ -75,51 +106,51 @@ export default function ScienceIndex() {
                 <Typography variant="bodyLarge" sx={{ color: onSurface }}>
                   WebGPU visualization of neurons, synapses, and how transformer layers
                   borrow those ideas to power LLMs.
-              </Typography>
-              <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
-                Click to stream the neural network render and see how each layer
-                lights up.
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+                </Typography>
+                <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                  Click to stream the neural network render and see how each layer
+                  lights up.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
 
-        <Card sx={cardSx}>
-          <CardActionArea
-            component={RouterLink}
-            to="/science/paper-sizes"
-            sx={{ height: "100%" }}
-          >
-            <CardContent sx={{ display: "grid", gap: 1.25 }}>
-              <Chip
-                size="small"
-                label="Interactive WebGPU"
-                sx={{
-                  width: "fit-content",
-                  backgroundColor: alpha(primaryContainer, 0.14),
-                  color: primaryContainer,
-                  fontWeight: 600,
-                }}
-              />
-              <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
-                A-Series Paper Sizes: A4 to A0
-              </Typography>
-              <Typography variant="bodyLarge" sx={{ color: onSurface }}>
-                WebGPU scene comparing the A-series sqrt(2) stack with golden ratio
-                geometry and a pi circle.
-              </Typography>
-              <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
-                Cut, halve, repeat: the geometry behind every copier setting.
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+          <Card sx={cardSx}>
+            <CardActionArea
+              component={RouterLink}
+              to="/science/paper-sizes"
+              sx={{ height: "100%" }}
+            >
+              <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                <Chip
+                  size="small"
+                  label="Interactive WebGPU"
+                  sx={{
+                    width: "fit-content",
+                    backgroundColor: alpha(primaryContainer, 0.14),
+                    color: primaryContainer,
+                    fontWeight: 600,
+                  }}
+                />
+                <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                  A-Series Paper Sizes: A4 to A0
+                </Typography>
+                <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                  WebGPU scene comparing the A-series sqrt(2) stack with golden ratio
+                  geometry and a pi circle.
+                </Typography>
+                <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                  Cut, halve, repeat: the geometry behind every copier setting.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
 
-        <Card sx={cardSx}>
-          <CardActionArea
-            component={RouterLink}
-            to="/science/protein-folding"
-            sx={{ height: "100%" }}
+          <Card sx={cardSx}>
+            <CardActionArea
+              component={RouterLink}
+              to="/science/protein-folding"
+              sx={{ height: "100%" }}
             >
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
                 <Chip

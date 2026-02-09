@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-02-09T01:31:25.341Z",
+  "videoId": "video_6989383c2134819892eb72cc940693a20df8501b471f352f",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "1280x720",
+  "status": "completed",
+  "prompt": "Create a clean educational 12-second 3D anatomy clip about definitive treatment for recurrent lateral patellar instability. White studio background, no gore, infographic labels. 0-4s show MPFL reconstruction restoring restraint with label core fix. 4-8s show tibial tubercle alignment correction icon with label add bony correction when needed. 8-12s show stable patella tracking and return-to-sport ladder with label stable tracking goal. Final footer: See sports orthopedics.",
+  "attempt": 1
+}

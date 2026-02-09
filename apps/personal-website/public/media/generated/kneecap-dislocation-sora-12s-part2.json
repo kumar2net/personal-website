@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-02-09T01:28:26.840Z",
+  "videoId": "video_698937949888819081f89a51a205d16b0ceeaf90524ce8f7",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "1280x720",
+  "status": "completed",
+  "prompt": "Create a clean educational 12-second 3D anatomy clip about recurrent lateral patellar instability. White studio background, no gore, infographic labels. 0-4s show MPFL stretched after first dislocation with label MPFL insufficiency. 4-8s show risk factors: shallow trochlea, patella alta, high TT-TG with label recurrence risk anatomy. 8-12s show repeated lateral drift loop with label recurrent instability mechanism. Final footer: Educational only.",
+  "attempt": 1
+}
