@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770948431,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698e874f02d881918218f826b78be1ea069e0909f0fa2f47",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts travel-devotional route explainer (India)\nPrimary request: Create a 12-second vertical 9:16 cinematic map-led opener from Haridwar to Rishikesh to Devprayag with clear route labels.\nScene/background: Himalayan foothill roads, Ganga river views, dawn golden light, clean infographic overlays.\nSubject: Stylized route map + temple ghat visuals + sacred river confluence.\nAction: Start with Har Ki Pauri aarti atmosphere, then move to Mansa Devi and Chandi Devi cable-car hill silhouettes, transition to Triveni Ghat and Neelkanth Mahadev near Rishikesh, then zoom to Devprayag sangam.\nCamera: Fast punch-in first 1.5 seconds, then smooth top-down map flyover with 2-3 hard-cut inserts.\nLighting/mood: Devotional, uplifting, serene but energetic.\nColor palette: saffron, deep blue, river teal, stone gray, sunrise gold.\nStyle/format: High-quality cinematic realism mixed with clean route infographics, 9:16 vertical, 720x1280 composition safe area.\nTiming/beats: 0-2s hook, 2-8s Haridwar->Rishikesh, 8-12s Devprayag reveal.\nAudio: Original devotional humming in background chanting \"Om Namah Shivaya\" (non-copyright, no known melody), soft tanpura drone bed, gentle conch shell accent at 0s and at Devprayag reveal.\nText (verbatim): \"Haridwar -> Rishikesh: 25 km | 45-60 min (approx)\"; \"Rishikesh -> Devprayag: ~75 km | 2.5-3.5 h (approx)\"; \"Weather/traffic dependent\"\nConstraints: Keep all text legible and high contrast; no real identifiable people; no brand logos.\nAvoid: Copyrighted songs, chaotic typography, violent imagery, face closeups.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770948624,
+    "created_at": 1770948431,
+    "error": null,
+    "expires_at": 1770952224,
+    "id": "video_698e874f02d881918218f826b78be1ea069e0909f0fa2f47",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts travel-devotional route explainer (India)\nPrimary request: Create a 12-second vertical 9:16 cinematic map-led opener from Haridwar to Rishikesh to Devprayag with clear route labels.\nScene/background: Himalayan foothill roads, Ganga river views, dawn golden light, clean infographic overlays.\nSubject: Stylized route map + temple ghat visuals + sacred river confluence.\nAction: Start with Har Ki Pauri aarti atmosphere, then move to Mansa Devi and Chandi Devi cable-car hill silhouettes, transition to Triveni Ghat and Neelkanth Mahadev near Rishikesh, then zoom to Devprayag sangam.\nCamera: Fast punch-in first 1.5 seconds, then smooth top-down map flyover with 2-3 hard-cut inserts.\nLighting/mood: Devotional, uplifting, serene but energetic.\nColor palette: saffron, deep blue, river teal, stone gray, sunrise gold.\nStyle/format: High-quality cinematic realism mixed with clean route infographics, 9:16 vertical, 720x1280 composition safe area.\nTiming/beats: 0-2s hook, 2-8s Haridwar->Rishikesh, 8-12s Devprayag reveal.\nAudio: Original devotional humming in background chanting \"Om Namah Shivaya\" (non-copyright, no known melody), soft tanpura drone bed, gentle conch shell accent at 0s and at Devprayag reveal.\nText (verbatim): \"Haridwar -> Rishikesh: 25 km | 45-60 min (approx)\"; \"Rishikesh -> Devprayag: ~75 km | 2.5-3.5 h (approx)\"; \"Weather/traffic dependent\"\nConstraints: Keep all text legible and high contrast; no real identifiable people; no brand logos.\nAvoid: Copyrighted songs, chaotic typography, violent imagery, face closeups.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

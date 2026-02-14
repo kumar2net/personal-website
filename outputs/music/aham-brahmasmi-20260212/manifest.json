@@ -1,0 +1,59 @@
+{
+  "createdAt": "2026-02-12T11:31:01.791Z",
+  "files": [
+    {
+      "file": "01-intro-ta.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "sage",
+      "chars": 130
+    },
+    {
+      "file": "02-english.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "alloy",
+      "chars": 164
+    },
+    {
+      "file": "03-sanskrit-1.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "onyx",
+      "chars": 31
+    },
+    {
+      "file": "04-hindi.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "coral",
+      "chars": 99
+    },
+    {
+      "file": "05-sanskrit-2.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "onyx",
+      "chars": 41
+    },
+    {
+      "file": "06-kannada.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "ash",
+      "chars": 118
+    },
+    {
+      "file": "07-spanish.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "verse",
+      "chars": 104
+    },
+    {
+      "file": "08-outro-multilingual.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "ballad",
+      "chars": 106
+    },
+    {
+      "file": "om-bed.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "onyx",
+      "chars": 247
+    }
+  ]
+}

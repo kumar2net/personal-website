@@ -1,0 +1,4 @@
+file '/Users/kumara/personal-website/generate/ytshorts/rice-vs-wheat-glycemic-control/sora2/rice-vs-wheat-sora2-01-hook-myth.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/rice-vs-wheat-glycemic-control/sora2/rice-vs-wheat-sora2-02-context-problem.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/rice-vs-wheat-glycemic-control/sora2/rice-vs-wheat-sora2-03-science-breakdown.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/rice-vs-wheat-glycemic-control/sora2/rice-vs-wheat-sora2-04-payoff-cta.mp4'

@@ -1,0 +1,4 @@
+file '/Users/kumara/personal-website/outputs/sora/aham-brahmasmi-rap-ytshort-v2-20260212/01-hook.mp4'
+file '/Users/kumara/personal-website/outputs/sora/aham-brahmasmi-rap-ytshort-v2-20260212/02-context.mp4'
+file '/Users/kumara/personal-website/outputs/sora/aham-brahmasmi-rap-ytshort-v2-20260212/03-insight.mp4'
+file '/Users/kumara/personal-website/outputs/sora/aham-brahmasmi-rap-ytshort-v2-20260212/04-payoff-cta.mp4'

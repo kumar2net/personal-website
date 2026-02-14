@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-02-12T01:58:35.108Z",
+  "videoId": "video_698d330a688881918d8bc639829eca9c00ebcc69349bc803",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "completed",
+  "progress": 100,
+  "prompt": "Create a vertical 9:16 cinematic educational short. Indian food context, clean natural light, realistic textures, crisp motion. Fast pacing with hard cuts and subtle zoom movement. No brand logos, no channel branding, no watermarks. Do not render any on-screen text captions. 0-12s hook segment. Open with fast split-frame contrast: white rice bowl on one side, chapati stack on the other. Show glucose spike waveform appearing behind both foods with equal intensity. Transition to a South Indian dinner plate with sambar, poriyal, and curd. Tone: myth-busting, energetic, scroll-stopping first 2 seconds.",
+  "output": "rice-vs-wheat-sora2-01-hook-myth.mp4",
+  "thumbnail": "rice-vs-wheat-sora2-01-hook-myth-thumbnail.jpg",
+  "remixedFromVideoId": null,
+  "expiresAt": 1770865109,
+  "completedAt": 1770861509
+}

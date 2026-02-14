@@ -1,0 +1,4 @@
+interface:
+  display_name: "TA Multilingual Music"
+  short_description: "Turn Tamil hints into multilingual philosophical songs"
+  default_prompt: "Use $ta-multilingual-music-generator with this Tamil hint and create a song in English, Hindi, Kannada, and Spanish with Sanskrit interludes and Om in the background."

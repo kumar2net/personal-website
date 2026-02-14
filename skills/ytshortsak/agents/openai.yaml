@@ -1,0 +1,4 @@
+interface:
+  display_name: "YT Shorts AK"
+  short_description: "Plan high-retention 40-60s YouTube Shorts"
+  default_prompt: "Use $ytshortsak to turn my original idea into a 50-second YouTube Short with a hook, timed script, shot list, captions, and CTA."

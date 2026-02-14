@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770900057,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dca59a2788198b31fdc74d803d14e0062e4ea72af6f7a",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Context compression: modern life noise versus inner inquiry.\nScene/background: transition from crowded digital city motion to calm corridor of light\nSubject: abstract notification particles dissolving into question-mark glyph trails\nAction: 0-4s chaotic fast-cut digital overload; 4-8s motion slows and glyphs align; 8-12s pathway opens to clear focal point\nCamera: vertical tracking shot with fast cuts, zoom-ins every 2-3s\nLighting/mood: start harsh cool lights, resolve into warm balanced glow\nColor palette: deep blue, graphite, gold accents, cyan\nStyle/format: contemporary social-first visual language, clean and punchy\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: readable text, logo marks, face distortion, jitter",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770900236,
+    "created_at": 1770900057,
+    "error": null,
+    "expires_at": 1770903836,
+    "id": "video_698dca59a2788198b31fdc74d803d14e0062e4ea72af6f7a",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Context compression: modern life noise versus inner inquiry.\nScene/background: transition from crowded digital city motion to calm corridor of light\nSubject: abstract notification particles dissolving into question-mark glyph trails\nAction: 0-4s chaotic fast-cut digital overload; 4-8s motion slows and glyphs align; 8-12s pathway opens to clear focal point\nCamera: vertical tracking shot with fast cuts, zoom-ins every 2-3s\nLighting/mood: start harsh cool lights, resolve into warm balanced glow\nColor palette: deep blue, graphite, gold accents, cyan\nStyle/format: contemporary social-first visual language, clean and punchy\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: readable text, logo marks, face distortion, jitter",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

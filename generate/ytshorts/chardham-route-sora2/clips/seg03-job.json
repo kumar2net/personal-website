@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770948830,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698e88ddeb5c8190bf81f125552259260ddc50f040d716f2",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts travel-devotional route explainer (India)\nPrimary request: Create a 12-second vertical segment covering Gangotri and Kedarnath route branches with key enroute devotional points.\nScene/background: Uttarkashi mountain valley roads, Gangotri temple area, Guptkashi/Sonprayag-Gaurikund route, Kedarnath trek path.\nSubject: Split-branch route visualization with sacred landmarks.\nAction: Start at Uttarkashi Kashi Vishwanath, move to Gangotri branch; then cut to Rishikesh->Guptkashi->Gaurikund and trek to Kedarnath with dramatic temple reveal.\nCamera: Sharp split-screen map animation, then cinematic push toward Kedarnath temple backdrop.\nLighting/mood: Reverential and intense pilgrimage momentum.\nColor palette: slate mountain gray, glacial blue, saffron temple glow.\nStyle/format: Premium travel docu style with route graphics and concise overlays, 9:16 vertical.\nTiming/beats: 0-4s Gangotri branch, 4-9s Kedarnath road leg, 9-12s Kedarnath trek + temple reveal.\nAudio: Original low-volume \"Om Namah Shivaya\" humming drone, conch shell accent on Gangotri reveal and Kedarnath reveal.\nText (verbatim): \"Rishikesh -> Uttarkashi: 170 km | 6-7 h (approx)\"; \"Uttarkashi -> Gangotri: 100 km | 4-5 h (approx)\"; \"Rishikesh -> Guptkashi: 190 km | 7-8 h (approx)\"; \"Guptkashi -> Gaurikund/Sonprayag: 35 km | 1.5-2 h (approx)\"; \"Gaurikund -> Kedarnath: 16 km trek | 6-8 h (approx)\"; \"Weather/traffic dependent\"\nConstraints: Keep overlays readable; avoid identifiable faces and logos.\nAvoid: Copyrighted music, shaky unreadable text.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770949013,
+    "created_at": 1770948830,
+    "error": null,
+    "expires_at": 1770952613,
+    "id": "video_698e88ddeb5c8190bf81f125552259260ddc50f040d716f2",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts travel-devotional route explainer (India)\nPrimary request: Create a 12-second vertical segment covering Gangotri and Kedarnath route branches with key enroute devotional points.\nScene/background: Uttarkashi mountain valley roads, Gangotri temple area, Guptkashi/Sonprayag-Gaurikund route, Kedarnath trek path.\nSubject: Split-branch route visualization with sacred landmarks.\nAction: Start at Uttarkashi Kashi Vishwanath, move to Gangotri branch; then cut to Rishikesh->Guptkashi->Gaurikund and trek to Kedarnath with dramatic temple reveal.\nCamera: Sharp split-screen map animation, then cinematic push toward Kedarnath temple backdrop.\nLighting/mood: Reverential and intense pilgrimage momentum.\nColor palette: slate mountain gray, glacial blue, saffron temple glow.\nStyle/format: Premium travel docu style with route graphics and concise overlays, 9:16 vertical.\nTiming/beats: 0-4s Gangotri branch, 4-9s Kedarnath road leg, 9-12s Kedarnath trek + temple reveal.\nAudio: Original low-volume \"Om Namah Shivaya\" humming drone, conch shell accent on Gangotri reveal and Kedarnath reveal.\nText (verbatim): \"Rishikesh -> Uttarkashi: 170 km | 6-7 h (approx)\"; \"Uttarkashi -> Gangotri: 100 km | 4-5 h (approx)\"; \"Rishikesh -> Guptkashi: 190 km | 7-8 h (approx)\"; \"Guptkashi -> Gaurikund/Sonprayag: 35 km | 1.5-2 h (approx)\"; \"Gaurikund -> Kedarnath: 16 km trek | 6-8 h (approx)\"; \"Weather/traffic dependent\"\nConstraints: Keep overlays readable; avoid identifiable faces and logos.\nAvoid: Copyrighted music, shaky unreadable text.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

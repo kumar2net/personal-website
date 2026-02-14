@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770901039,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dce2f36908193bd6b08cbfa96771c0f74c11f43b3d774",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Core insight: questions become knowledge, knowledge becomes light.\nScene/background: futuristic archive of floating light-books and waveforms\nSubject: knowledge nodes connecting into a luminous network\nAction: 0-4s node sparks trigger chain reaction; 4-8s network forms across frame; 8-12s central light bloom reveals unity motif\nCamera: vertical dolly-in with kinetic snap transitions and beat-matched cut points\nLighting/mood: deep contrast, bright highlights, cinematic volumetric rays\nColor palette: indigo, warm gold, emerald accents, black\nStyle/format: contemporary educational rap visual with premium motion design\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: text overlays, warped forms, noisy artifacts",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770901216,
+    "created_at": 1770901039,
+    "error": null,
+    "expires_at": 1770904816,
+    "id": "video_698dce2f36908193bd6b08cbfa96771c0f74c11f43b3d774",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Core insight: questions become knowledge, knowledge becomes light.\nScene/background: futuristic archive of floating light-books and waveforms\nSubject: knowledge nodes connecting into a luminous network\nAction: 0-4s node sparks trigger chain reaction; 4-8s network forms across frame; 8-12s central light bloom reveals unity motif\nCamera: vertical dolly-in with kinetic snap transitions and beat-matched cut points\nLighting/mood: deep contrast, bright highlights, cinematic volumetric rays\nColor palette: indigo, warm gold, emerald accents, black\nStyle/format: contemporary educational rap visual with premium motion design\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: text overlays, warped forms, noisy artifacts",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

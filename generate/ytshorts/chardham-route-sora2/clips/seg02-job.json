@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770948642,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698e88227df08198b98442aeed76784d0ca0aa4c48762102",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts travel-devotional route explainer (India)\nPrimary request: Create a 12-second vertical 9:16 segment for the Yamunotri route branch with distance and trek timing overlays.\nScene/background: Mountain roads from Rishikesh to Barkot to Janki Chatti, then Himalayan trekking trail to Yamunotri temple.\nSubject: Route map pins + devotional temple endpoint + trek path elevation feel.\nAction: Show route line drawing from Rishikesh to Barkot, then to Janki Chatti, then trek animation to Yamunotri dham with temple bell visual cue.\nCamera: Dynamic map-to-ground transitions every 2-3 seconds; forward motion on trek path.\nLighting/mood: Crisp daylight, spiritual, determined-pilgrim energy.\nColor palette: sky blue, cedar green, saffron accents, snow white.\nStyle/format: Cinematic realism with infographic overlays, 9:16 vertical, text-safe center zone.\nTiming/beats: 0-3s road leg 1, 3-6s road leg 2, 6-10s trek, 10-12s Yamunotri arrival.\nAudio: Continue original non-copyright \"Om Namah Shivaya\" humming softly, add one short conch shell accent at final Yamunotri reveal, light wind ambience.\nText (verbatim): \"Rishikesh -> Barkot: 170 km | 6-7 h (approx)\"; \"Barkot -> Janki Chatti: 45 km | 2 h (approx)\"; \"Janki Chatti -> Yamunotri: 6 km trek | 2-3 h (approx)\"; \"Weather/traffic dependent\"\nConstraints: Clean readable text, no real person faces, no logos.\nAvoid: Copyrighted music, cluttered overlays.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770948811,
+    "created_at": 1770948642,
+    "error": null,
+    "expires_at": 1770952411,
+    "id": "video_698e88227df08198b98442aeed76784d0ca0aa4c48762102",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts travel-devotional route explainer (India)\nPrimary request: Create a 12-second vertical 9:16 segment for the Yamunotri route branch with distance and trek timing overlays.\nScene/background: Mountain roads from Rishikesh to Barkot to Janki Chatti, then Himalayan trekking trail to Yamunotri temple.\nSubject: Route map pins + devotional temple endpoint + trek path elevation feel.\nAction: Show route line drawing from Rishikesh to Barkot, then to Janki Chatti, then trek animation to Yamunotri dham with temple bell visual cue.\nCamera: Dynamic map-to-ground transitions every 2-3 seconds; forward motion on trek path.\nLighting/mood: Crisp daylight, spiritual, determined-pilgrim energy.\nColor palette: sky blue, cedar green, saffron accents, snow white.\nStyle/format: Cinematic realism with infographic overlays, 9:16 vertical, text-safe center zone.\nTiming/beats: 0-3s road leg 1, 3-6s road leg 2, 6-10s trek, 10-12s Yamunotri arrival.\nAudio: Continue original non-copyright \"Om Namah Shivaya\" humming softly, add one short conch shell accent at final Yamunotri reveal, light wind ambience.\nText (verbatim): \"Rishikesh -> Barkot: 170 km | 6-7 h (approx)\"; \"Barkot -> Janki Chatti: 45 km | 2 h (approx)\"; \"Janki Chatti -> Yamunotri: 6 km trek | 2-3 h (approx)\"; \"Weather/traffic dependent\"\nConstraints: Clean readable text, no real person faces, no logos.\nAvoid: Copyrighted music, cluttered overlays.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

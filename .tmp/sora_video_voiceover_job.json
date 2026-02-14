@@ -1,0 +1,15 @@
+{
+  "id": "video_698db447fc408191899eadfdf5049a920a647b619b6438be",
+  "object": "video",
+  "created_at": 1770894408,
+  "status": "queued",
+  "completed_at": null,
+  "error": null,
+  "expires_at": null,
+  "model": "sora-2",
+  "progress": 0,
+  "prompt": "Use case: social ad\nPrimary request: A premium 12-second investor/influencer-style teaser for an AI-powered personal website platform, with voiceover narration.\nScene/background: Dark cinematic digital studio with floating UI panels and code blocks, no people.\nSubject: Product interface moments: blog cards, multilingual audio controls (EN/HI/TA), semantic search results panel, and a 3D science visualization widget.\nAction: beat 1 (0-4s) portfolio grid transforms into a live product dashboard; beat 2 (4-8s) audio controls and semantic search animate with highlighted results; beat 3 (8-12s) 3D science visual rotates and resolves to an end card.\nCamera: smooth dolly-in with subtle parallax, stable framing.\nLighting/mood: confident, premium, high-contrast tech launch vibe.\nColor palette: graphite, electric blue, cyan, white.\nStyle/format: clean modern product trailer, motion graphics focused.\nTiming/beats: 0-4 reveal, 4-8 proof points, 8-12 CTA hold.\nAudio: subtle cinematic pulse plus clear synthetic voiceover, no copyrighted music.\nText (verbatim): \"Not a portfolio. A content operating system.\", \"OpenAI-powered blog audio\", \"Semantic search\", \"WebGPU visuals\", \"Try it now -> kumar2net.com/blog\"\nDialogue:\n<dialogue>\n- Narrator: \"Cutting-edge AI here means one stack for voice, search, and interactive visuals.\"\n- Narrator: \"It runs multilingual OpenAI audio, semantic search, and live WebGPU science pages.\"\n- Narrator: \"Try it at kumar2net dot com slash blog.\"\n</dialogue>\nConstraints: no real people, no logos, text must stay legible.\nAvoid: flicker, jitter, unreadable text, watermark artifacts.",
+  "remixed_from_video_id": null,
+  "seconds": "12",
+  "size": "1280x720"
+}

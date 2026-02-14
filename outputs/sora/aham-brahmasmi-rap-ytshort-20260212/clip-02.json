@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770896808,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dbda7f31881908883f96efc90a27c07a8ecdcfd692165",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts music visualizer\nPrimary request: Mid-section visual where questions become pathways to insight.\nScene/background: stylized tunnel of mirrors transforming into a library of light particles\nSubject: abstract silhouette figures made of particles, open books morphing to waveforms\nAction: 0-4s figure walks through mirrored uncertainty; 4-8s questions appear as abstract glyph trails; 8-12s trails converge into bright knowledge pulse\nCamera: locked vertical frame with slow dolly and quick snap zooms on beats\nLighting/mood: moody shadows with glowing highlights and volumetric rays\nColor palette: indigo, gold, teal, graphite\nStyle/format: contemporary trap aesthetic fused with spiritual futurism; abstract animation style\nAudio: visual-only clip for external rap soundtrack; no generated dialogue\nConstraints: under-18 suitable, no logos, no text overlays, no real humans, no specific copyrighted characters\nAvoid: flicker, motion jitter, text artifacts, logos, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770896944,
+    "created_at": 1770896808,
+    "error": null,
+    "expires_at": 1770900544,
+    "id": "video_698dbda7f31881908883f96efc90a27c07a8ecdcfd692165",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts music visualizer\nPrimary request: Mid-section visual where questions become pathways to insight.\nScene/background: stylized tunnel of mirrors transforming into a library of light particles\nSubject: abstract silhouette figures made of particles, open books morphing to waveforms\nAction: 0-4s figure walks through mirrored uncertainty; 4-8s questions appear as abstract glyph trails; 8-12s trails converge into bright knowledge pulse\nCamera: locked vertical frame with slow dolly and quick snap zooms on beats\nLighting/mood: moody shadows with glowing highlights and volumetric rays\nColor palette: indigo, gold, teal, graphite\nStyle/format: contemporary trap aesthetic fused with spiritual futurism; abstract animation style\nAudio: visual-only clip for external rap soundtrack; no generated dialogue\nConstraints: under-18 suitable, no logos, no text overlays, no real humans, no specific copyrighted characters\nAvoid: flicker, motion jitter, text artifacts, logos, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

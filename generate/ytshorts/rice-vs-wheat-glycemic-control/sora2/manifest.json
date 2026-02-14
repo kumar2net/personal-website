@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-02-12T01:55:16.962Z",
+  "model": "sora-2",
+  "size": "720x1280",
+  "secondsPerClip": "12",
+  "clips": [
+    {
+      "name": "hook-myth",
+      "videoId": "video_698d330a688881918d8bc639829eca9c00ebcc69349bc803",
+      "file": "rice-vs-wheat-sora2-01-hook-myth.mp4",
+      "thumbnail": "rice-vs-wheat-sora2-01-hook-myth-thumbnail.jpg",
+      "metadata": "rice-vs-wheat-sora2-01-hook-myth.json"
+    },
+    {
+      "name": "context-problem",
+      "videoId": "video_698d33cc1a5481989e1861e89be4fa8a0cb9d5be60027e3a",
+      "file": "rice-vs-wheat-sora2-02-context-problem.mp4",
+      "thumbnail": "rice-vs-wheat-sora2-02-context-problem-thumbnail.jpg",
+      "metadata": "rice-vs-wheat-sora2-02-context-problem.json"
+    },
+    {
+      "name": "science-breakdown",
+      "videoId": "video_698d348fa1548191aaa2e8500264d8a90e4c5abadcd24738",
+      "file": "rice-vs-wheat-sora2-03-science-breakdown.mp4",
+      "thumbnail": "rice-vs-wheat-sora2-03-science-breakdown-thumbnail.jpg",
+      "metadata": "rice-vs-wheat-sora2-03-science-breakdown.json"
+    },
+    {
+      "name": "payoff-cta",
+      "videoId": "video_698d39172a7c819183655d6f4a21a69a0da35b49a17e844e",
+      "file": "rice-vs-wheat-sora2-04-payoff-cta.mp4",
+      "thumbnail": "rice-vs-wheat-sora2-04-payoff-cta-thumbnail.jpg",
+      "metadata": "rice-vs-wheat-sora2-04-payoff-cta.json"
+    }
+  ],
+  "concatList": "concat-list.txt"
+}

@@ -1,0 +1,43 @@
+{
+  "project": "aham-brahmasmi-rap-ytshort-v2",
+  "created_at": "2026-02-12T13:03:52.077556Z",
+  "format": {
+    "aspect_ratio": "9:16",
+    "size": "720x1280",
+    "target_duration_seconds": "45-55"
+  },
+  "clips": [
+    {
+      "name": "hook",
+      "file": "01-hook.mp4",
+      "meta": "01-hook.json"
+    },
+    {
+      "name": "context",
+      "file": "02-context.mp4",
+      "meta": "02-context.json"
+    },
+    {
+      "name": "insight",
+      "file": "03-insight.mp4",
+      "meta": "03-insight.json"
+    },
+    {
+      "name": "payoff_cta",
+      "file": "04-payoff-cta.mp4",
+      "meta": "04-payoff-cta.json"
+    }
+  ],
+  "outputs": {
+    "final_video": "final.mp4",
+    "final_video_no_audio": "final-sora2.mp4",
+    "final_audio": "final-audio.m4a",
+    "captions": "final.srt",
+    "thumbnail": "thumbnail.jpg",
+    "title": "title.txt",
+    "description": "description.txt",
+    "tags": "tags.txt",
+    "pinned_comment": "pinned-comment.txt"
+  },
+  "audio_source": "/Users/kumara/personal-website/outputs/music/aham-brahmasmi-rap-20260212/aham-brahmasmi-rap-trap-v2.mp3"
+}

@@ -82,6 +82,7 @@ const TheLastDropOfWater = lazy(
 const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
+const NetworkDiagnostics = lazy(() => import("./pages/NetworkDiagnostics"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
@@ -101,6 +102,7 @@ const navLinks = [
   { label: "Projects", to: "/projects", analyticsKey: "nav_projects" },
   { label: "Books", to: "/books", analyticsKey: "nav_books" },
   { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
+  { label: "Network", to: "/network", analyticsKey: "nav_network" },
   { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
   { label: "Learning", to: "/learning", analyticsKey: "nav_learning" },
   { label: "Science", to: "/science", analyticsKey: "nav_science" },
@@ -841,6 +843,11 @@ const App = ({ mode }) => {
                                     analyticsKey: "hero_tool_utilities",
                                   },
                                   {
+                                    label: "Network diagnostics",
+                                    to: "/network",
+                                    analyticsKey: "hero_tool_network",
+                                  },
+                                  {
                                     label: "Flashcards",
                                     to: "/learning",
                                     analyticsKey: "hero_tool_learning",
@@ -1161,6 +1168,20 @@ const App = ({ mode }) => {
                       <PasswordGate>
                         <UtilitiesDashboard />
                       </PasswordGate>
+                    </>
+                  }
+                />
+                <Route
+                  path="/network"
+                  element={
+                    <>
+                      <SEO
+                        title="Network Diagnostics"
+                        description="Deep Wi-Fi, DNS, latency, traceroute, and domain dig diagnostics."
+                        canonicalPath="/network"
+                        type="website"
+                      />
+                      <NetworkDiagnostics />
                     </>
                   }
                 />

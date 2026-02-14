@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770898134,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dc2d683fc819099046fee07efa94a054a9ed7c098b538",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Hook myth break: knowledge is the real flex.\nScene/background: neon rooftop with rapid motion graphics pulses, abstract and youth-centric\nSubject: glowing glyphs, waveform rings, abstract silhouette forms\nAction: 0-2s pattern interrupt with hard flash cuts; 2-8s glyph storm converges; 8-12s focus lock on bright center pulse\nCamera: vertical 9:16, aggressive punch-ins every 2-3 seconds, dynamic orbit micro-moves\nLighting/mood: high-contrast neon with warm rim and haze\nColor palette: cyan, amber, matte black, electric magenta\nStyle/format: contemporary trap visual language, cinematic, no text baked in\nAudio: no internal vocals, this will be edited with external rap track\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: flicker artifacts, text artifacts, jitter, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770898284,
+    "created_at": 1770898134,
+    "error": null,
+    "expires_at": 1770901884,
+    "id": "video_698dc2d683fc819099046fee07efa94a054a9ed7c098b538",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Hook myth break: knowledge is the real flex.\nScene/background: neon rooftop with rapid motion graphics pulses, abstract and youth-centric\nSubject: glowing glyphs, waveform rings, abstract silhouette forms\nAction: 0-2s pattern interrupt with hard flash cuts; 2-8s glyph storm converges; 8-12s focus lock on bright center pulse\nCamera: vertical 9:16, aggressive punch-ins every 2-3 seconds, dynamic orbit micro-moves\nLighting/mood: high-contrast neon with warm rim and haze\nColor palette: cyan, amber, matte black, electric magenta\nStyle/format: contemporary trap visual language, cinematic, no text baked in\nAudio: no internal vocals, this will be edited with external rap track\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: flicker artifacts, text artifacts, jitter, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "video_698db2f3215c81909575f796cf29ec270e39133ae76e4350",
+  "object": "video",
+  "created_at": 1770894067,
+  "status": "completed",
+  "completed_at": 1770894219,
+  "error": null,
+  "expires_at": 1770897819,
+  "model": "sora-2",
+  "progress": 100,
+  "prompt": "Use case: social ad\nPrimary request: A premium 12-second investor/influencer-style teaser for an AI-powered personal website platform.\nScene/background: Dark cinematic digital studio with floating UI panels and code blocks, no people.\nSubject: Abstract product interface elements: blog cards, multilingual audio controls (EN/HI/TA), semantic search results panel, and a 3D science visualization widget.\nAction: beat 1 (0-4s) portfolio grid transforms into a live product dashboard; beat 2 (4-8s) audio controls and semantic search animate with highlighted results; beat 3 (8-12s) 3D science visual rotates and resolves to a bold end card.\nCamera: smooth dolly-in with subtle parallax, stable framing.\nLighting/mood: confident, premium, high-contrast tech launch vibe.\nColor palette: graphite, electric blue, cyan, white.\nStyle/format: clean modern product trailer, motion graphics focused.\nText (verbatim): \"Not a portfolio. A content operating system.\", \"OpenAI-powered blog audio\", \"Semantic search\", \"Try it now -> kumar2net.com/blog\"\nAudio: subtle cinematic pulse, no vocals.\nConstraints: no real people, no logos, text must stay legible.\nAvoid: flicker, jitter, unreadable text, watermark artifacts.",
+  "remixed_from_video_id": null,
+  "seconds": "12",
+  "size": "1280x720"
+}

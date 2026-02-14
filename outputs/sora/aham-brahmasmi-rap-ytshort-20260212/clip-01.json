@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770896635,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dbcfb783c81909032905f127006010e8b3e43e972c8d9",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts music visualizer\nPrimary request: High-energy opening for a philosophical rap short about seeking knowledge.\nScene/background: neon city rooftop at blue hour blending into abstract cosmic geometry\nSubject: glowing sound-wave rings and floating geometric symbols\nAction: 0-4s bass-synced light flashes; 4-8s symbols build into lotus-like pattern; 8-12s camera punches into luminous core\nCamera: vertical 9:16, dynamic push-ins, beat-timed cuts every 1-2 seconds\nLighting/mood: high-contrast neon with warm edge light and light haze\nColor palette: cyan, amber, black, magenta accent\nStyle/format: contemporary trap aesthetic fused with spiritual futurism; abstract animation style\nAudio: visual-only clip for external rap soundtrack; no generated dialogue\nConstraints: under-18 suitable, no logos, no text overlays, no real humans, no specific copyrighted characters\nAvoid: flicker, motion jitter, text artifacts, logos, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770896781,
+    "created_at": 1770896635,
+    "error": null,
+    "expires_at": 1770900381,
+    "id": "video_698dbcfb783c81909032905f127006010e8b3e43e972c8d9",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts music visualizer\nPrimary request: High-energy opening for a philosophical rap short about seeking knowledge.\nScene/background: neon city rooftop at blue hour blending into abstract cosmic geometry\nSubject: glowing sound-wave rings and floating geometric symbols\nAction: 0-4s bass-synced light flashes; 4-8s symbols build into lotus-like pattern; 8-12s camera punches into luminous core\nCamera: vertical 9:16, dynamic push-ins, beat-timed cuts every 1-2 seconds\nLighting/mood: high-contrast neon with warm edge light and light haze\nColor palette: cyan, amber, black, magenta accent\nStyle/format: contemporary trap aesthetic fused with spiritual futurism; abstract animation style\nAudio: visual-only clip for external rap soundtrack; no generated dialogue\nConstraints: under-18 suitable, no logos, no text overlays, no real humans, no specific copyrighted characters\nAvoid: flicker, motion jitter, text artifacts, logos, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

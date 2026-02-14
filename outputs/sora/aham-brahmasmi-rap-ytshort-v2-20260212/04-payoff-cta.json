@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770901239,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dcef7c254819192b96cd802bf1b4d0e39e2f8ceb58a67",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Payoff and CTA: seek knowledge, become light, continue the journey.\nScene/background: cosmic sunrise over abstract city skyline with mandala wave patterns\nSubject: rising orb, concentric rings, final uplifting motion\nAction: 0-4s orb rise with beat pulses; 4-8s rings synchronize with rhythm; 8-12s confident wide reveal ending on anticipation\nCamera: vertical crane-up finish with fast cut accents and final hold\nLighting/mood: warm dawn mixed with neon edge highlights\nColor palette: gold, deep blue, cyan, soft white\nStyle/format: contemporary inspirational trap visual, clean and cinematic\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: on-screen text, watermark, blur artifacts",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770901384,
+    "created_at": 1770901239,
+    "error": null,
+    "expires_at": 1770904984,
+    "id": "video_698dcef7c254819192b96cd802bf1b4d0e39e2f8ceb58a67",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts, 40-60s high-retention philosophy rap\nPrimary request: Payoff and CTA: seek knowledge, become light, continue the journey.\nScene/background: cosmic sunrise over abstract city skyline with mandala wave patterns\nSubject: rising orb, concentric rings, final uplifting motion\nAction: 0-4s orb rise with beat pulses; 4-8s rings synchronize with rhythm; 8-12s confident wide reveal ending on anticipation\nCamera: vertical crane-up finish with fast cut accents and final hold\nLighting/mood: warm dawn mixed with neon edge highlights\nColor palette: gold, deep blue, cyan, soft white\nStyle/format: contemporary inspirational trap visual, clean and cinematic\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters\nAvoid: on-screen text, watermark, blur artifacts",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-02-12T02:29:56.686Z",
+  "videoId": "video_698d39172a7c819183655d6f4a21a69a0da35b49a17e844e",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "completed",
+  "progress": 100,
+  "prompt": "Create a vertical 9:16 cinematic educational short. Indian food context, clean natural light, realistic textures, crisp motion. Fast pacing with hard cuts and subtle zoom movement. No brand logos, no channel branding, no watermarks. Do not render any on-screen text captions. 0-12s payoff segment. Show before-and-after style plate progression: refined-heavy plate to balanced plate. Include close shots of red rice, whole wheat, dal, curd, and vegetables. End with confident direct-to-camera framing of a creator in a clean kitchen, inviting a follow-up. Finish with open curiosity energy for Part 2.",
+  "output": "rice-vs-wheat-sora2-04-payoff-cta.mp4",
+  "thumbnail": "rice-vs-wheat-sora2-04-payoff-cta-thumbnail.jpg",
+  "remixedFromVideoId": null,
+  "expiresAt": 1770866655,
+  "completedAt": 1770863055
+}

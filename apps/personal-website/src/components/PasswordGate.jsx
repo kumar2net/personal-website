@@ -23,7 +23,11 @@ const useCredentials = () =>
     [],
   );
 
-const PasswordGate = ({ children }) => {
+const PasswordGate = ({
+  children,
+  title = "Utilities Access",
+  description = "Enter the credentials shared with you to view this dashboard.",
+}) => {
   const [formState, setFormState] = useState({
     username: '',
     password: '',
@@ -93,10 +97,10 @@ const PasswordGate = ({ children }) => {
         <Stack component="form" spacing={3} onSubmit={handleSubmit}>
           <Stack spacing={0.5}>
             <Typography variant="h4" component="h1">
-              Utilities Access
+              {title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Enter the credentials shared with you to view this dashboard.
+              {description}
             </Typography>
           </Stack>
           {error ? (

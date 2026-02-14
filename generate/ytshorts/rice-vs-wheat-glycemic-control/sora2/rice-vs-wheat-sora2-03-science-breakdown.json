@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-02-12T02:21:09.727Z",
+  "videoId": "video_698d348fa1548191aaa2e8500264d8a90e4c5abadcd24738",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "completed",
+  "progress": 100,
+  "prompt": "Create a vertical 9:16 cinematic educational short. Indian food context, clean natural light, realistic textures, crisp motion. Fast pacing with hard cuts and subtle zoom movement. No brand logos, no channel branding, no watermarks. Do not render any on-screen text captions. 0-12s science segment. Show neutral nutrition-lab style setup with two matched meals: rice plate and chapati plate. Display glucose monitor-like line plots rising similarly for both plates (no readable text). Then highlight three visual levers: refined vs whole grain, portion size measuring cup, protein+fiber pairing. Clean infographic aesthetic without text.",
+  "output": "rice-vs-wheat-sora2-03-science-breakdown.mp4",
+  "thumbnail": "rice-vs-wheat-sora2-03-science-breakdown-thumbnail.jpg",
+  "remixedFromVideoId": null,
+  "expiresAt": 1770865496,
+  "completedAt": 1770861896
+}

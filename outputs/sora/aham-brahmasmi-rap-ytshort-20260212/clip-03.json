@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1770896955,
+    "error": null,
+    "expires_at": null,
+    "id": "video_698dbe3ace508191910416479d4b2a5a08d7fa834062484c",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts music visualizer\nPrimary request: Final uplifting closer with unity, Om vibe, and modern youth energy.\nScene/background: cosmic horizon with abstract mandala wave and floating city lights\nSubject: rising orb, concentric rings, flowing light ribbons\nAction: 0-4s rings pulse with rhythm; 4-8s orb rises and radiates; 8-12s wide reveal with calm triumphant glow\nCamera: vertical crane-up move ending in wide reveal, smooth cinematic motion\nLighting/mood: golden dawn glow mixed with neon backlight, inspirational atmosphere\nColor palette: gold, deep blue, violet accents, soft white\nStyle/format: contemporary trap aesthetic fused with spiritual futurism; abstract animation style\nAudio: visual-only clip for external rap soundtrack; no generated dialogue\nConstraints: under-18 suitable, no logos, no text overlays, no real humans, no specific copyrighted characters\nAvoid: flicker, motion jitter, text artifacts, logos, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1770897097,
+    "created_at": 1770896955,
+    "error": null,
+    "expires_at": 1770900697,
+    "id": "video_698dbe3ace508191910416479d4b2a5a08d7fa834062484c",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts music visualizer\nPrimary request: Final uplifting closer with unity, Om vibe, and modern youth energy.\nScene/background: cosmic horizon with abstract mandala wave and floating city lights\nSubject: rising orb, concentric rings, flowing light ribbons\nAction: 0-4s rings pulse with rhythm; 4-8s orb rises and radiates; 8-12s wide reveal with calm triumphant glow\nCamera: vertical crane-up move ending in wide reveal, smooth cinematic motion\nLighting/mood: golden dawn glow mixed with neon backlight, inspirational atmosphere\nColor palette: gold, deep blue, violet accents, soft white\nStyle/format: contemporary trap aesthetic fused with spiritual futurism; abstract animation style\nAudio: visual-only clip for external rap soundtrack; no generated dialogue\nConstraints: under-18 suitable, no logos, no text overlays, no real humans, no specific copyrighted characters\nAvoid: flicker, motion jitter, text artifacts, logos, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

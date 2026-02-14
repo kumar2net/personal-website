@@ -28,6 +28,7 @@ const STATIC_ROUTES = [
   '/books/how-to-stop-caring',
   '/books/the-last-drop-of-water',
   '/utilities',
+  '/network',
   '/science',
   '/science/patellar-instability',
   '/science/brain-vs-ai',
@@ -192,7 +193,18 @@ const main = async () => {
       .sort((a, b) => a.url.localeCompare(b.url));
 
     const mainRoutes = [
-      '/', '/about', '/projects', '/blog', '/learning', '/science', '/music', '/album', '/books', '/contact', '/elsewhere'
+      '/',
+      '/about',
+      '/projects',
+      '/blog',
+      '/learning',
+      '/science',
+      '/music',
+      '/album',
+      '/books',
+      '/contact',
+      '/elsewhere',
+      '/network',
     ];
 
     const sitemapHtml = generateHtmlSitemap({ mainRoutes, blogEntries });

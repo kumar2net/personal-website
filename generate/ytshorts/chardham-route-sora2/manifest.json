@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-02-13T02:23:34.460649+00:00",
+  "model": "sora-2",
+  "size": "720x1280",
+  "secondsPerClip": "12",
+  "finalOutput": "final-sora2.mp4",
+  "clips": [
+    {
+      "segment": 1,
+      "videoId": "video_698e874f02d881918218f826b78be1ea069e0909f0fa2f47",
+      "status": "completed",
+      "model": "sora-2",
+      "size": "720x1280",
+      "seconds": "12",
+      "file": "seg01.mp4",
+      "jobJson": "seg01-job.json",
+      "expiresAt": 1770952224
+    },
+    {
+      "segment": 2,
+      "videoId": "video_698e88227df08198b98442aeed76784d0ca0aa4c48762102",
+      "status": "completed",
+      "model": "sora-2",
+      "size": "720x1280",
+      "seconds": "12",
+      "file": "seg02.mp4",
+      "jobJson": "seg02-job.json",
+      "expiresAt": 1770952411
+    },
+    {
+      "segment": 3,
+      "videoId": "video_698e88ddeb5c8190bf81f125552259260ddc50f040d716f2",
+      "status": "completed",
+      "model": "sora-2",
+      "size": "720x1280",
+      "seconds": "12",
+      "file": "seg03.mp4",
+      "jobJson": "seg03-job.json",
+      "expiresAt": 1770952613
+    },
+    {
+      "segment": 4,
+      "videoId": "video_698e8a541b208190ba4270aebb8c94c207687e434b2dde16",
+      "status": "completed",
+      "model": "sora-2",
+      "size": "720x1280",
+      "seconds": "12",
+      "file": "seg04.mp4",
+      "jobJson": "seg04-job.json",
+      "expiresAt": 1770952965
+    }
+  ]
+}

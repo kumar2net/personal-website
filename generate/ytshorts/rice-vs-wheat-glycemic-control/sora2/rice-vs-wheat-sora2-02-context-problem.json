@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-02-12T02:01:50.552Z",
+  "videoId": "video_698d33cc1a5481989e1861e89be4fa8a0cb9d5be60027e3a",
+  "model": "sora-2",
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "completed",
+  "progress": 100,
+  "prompt": "Create a vertical 9:16 cinematic educational short. Indian food context, clean natural light, realistic textures, crisp motion. Fast pacing with hard cuts and subtle zoom movement. No brand logos, no channel branding, no watermarks. Do not render any on-screen text captions. 0-12s context segment. Show family dinner table in South India where one person switches rice to chapati. Camera tracks plate composition: carb, dal/protein, vegetables, and fats. Visual focus shifts from grain choice to whole meal balance. Keep dynamic cuts every 2-3 seconds.",
+  "output": "rice-vs-wheat-sora2-02-context-problem.mp4",
+  "thumbnail": "rice-vs-wheat-sora2-02-context-problem-thumbnail.jpg",
+  "remixedFromVideoId": null,
+  "expiresAt": 1770865298,
+  "completedAt": 1770861698
+}

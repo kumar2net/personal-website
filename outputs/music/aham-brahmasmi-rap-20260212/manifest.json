@@ -1,0 +1,59 @@
+{
+  "createdAt": "2026-02-12T11:35:37.555Z",
+  "files": [
+    {
+      "file": "01-intro-ta-rap.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "sage",
+      "chars": 155
+    },
+    {
+      "file": "02-english-rap.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "verse",
+      "chars": 331
+    },
+    {
+      "file": "03-sanskrit-hook.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "onyx",
+      "chars": 43
+    },
+    {
+      "file": "04-hindi-rap.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "coral",
+      "chars": 235
+    },
+    {
+      "file": "05-kannada-rap.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "ash",
+      "chars": 226
+    },
+    {
+      "file": "06-spanish-rap.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "ballad",
+      "chars": 278
+    },
+    {
+      "file": "07-outro-mix-rap.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "alloy",
+      "chars": 80
+    },
+    {
+      "file": "om-bed.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "onyx",
+      "chars": 356
+    },
+    {
+      "file": "beat-bed.mp3",
+      "model": "gpt-4o-mini-tts-2025-12-15",
+      "voice": "echo",
+      "chars": 125
+    }
+  ]
+}
