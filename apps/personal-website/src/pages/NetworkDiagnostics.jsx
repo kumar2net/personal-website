@@ -78,6 +78,27 @@ function formatBytes(value) {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MiB`;
 }
 
+function redactIpAddress(value) {
+  if (!value || typeof value !== "string") {
+    return "—";
+  }
+
+  const ipv4Match = value.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (ipv4Match) {
+    return `${ipv4Match[1]}.${ipv4Match[2]}.x.x`;
+  }
+
+  if (value.includes(":")) {
+    const parts = value.split(":").filter(Boolean);
+    if (parts.length >= 2) {
+      return `${parts[0]}:${parts[1]}:****:****`;
+    }
+    return "****:****";
+  }
+
+  return "redacted";
+}
+
 function severityToColor(severity) {
   if (severity === "high") return "error";
   if (severity === "medium") return "warning";
@@ -635,6 +656,7 @@ function sectionPaperStyles() {
 export default function NetworkDiagnostics() {
   const [serverDiagnostics, setServerDiagnostics] = useState(null);
   const [clientSnapshot, setClientSnapshot] = useState(null);
+  const [publishedSnapshot, setPublishedSnapshot] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [lastRunAt, setLastRunAt] = useState(null);
@@ -707,6 +729,26 @@ export default function NetworkDiagnostics() {
     runDiagnostics();
   }, [runDiagnostics]);
 
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/network-capture-published.json", {
+      cache: "no-store",
+      headers: { Accept: "application/json" },
+    })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        if (!cancelled && payload && typeof payload === "object") {
+          setPublishedSnapshot(payload);
+        }
+      })
+      .catch(() => {
+        // Optional published snapshot; ignore fetch failures.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const metrics = useMemo(() => {
     if (!serverDiagnostics) {
       return [];
@@ -769,6 +811,7 @@ export default function NetworkDiagnostics() {
   }, [serverDiagnostics, clientSnapshot]);
 
   const wifi = serverDiagnostics?.wifi;
+  const wifiBandInsights = serverDiagnostics?.wifiBandInsights;
   const latency = serverDiagnostics?.latency;
   const traceroute = serverDiagnostics?.traceroute;
   const neighbors = serverDiagnostics?.neighbors?.entries || [];
@@ -963,7 +1006,7 @@ export default function NetworkDiagnostics() {
                         {[
                           ["Device Class", clientSnapshot.isMobileDevice ? "mobile" : "desktop"],
                           ["Online", clientSnapshot.online ? "yes" : "no"],
-                          ["Public IP", clientSnapshot.publicIp],
+                          ["Public IP (Redacted)", redactIpAddress(clientSnapshot.publicIp)],
                           ["IP Version", clientSnapshot.ipNetworkIntel?.version],
                           ["Carrier / ISP", clientSnapshot.ipNetworkIntel?.org || clientSnapshot.ipNetworkIntel?.isp],
                           ["ASN", clientSnapshot.ipNetworkIntel?.asn],
@@ -1059,6 +1102,128 @@ export default function NetworkDiagnostics() {
                   ) : (
                     <Alert severity="warning">
                       Browser telemetry not captured yet. Re-run diagnostics.
+                    </Alert>
+                  )}
+                </Stack>
+              </Paper>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12 }}>
+              <Paper elevation={0} sx={sectionPaperStyles()}>
+                <Stack spacing={1.5}>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <WifiIcon fontSize="small" />
+                    <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                      AP Band Capability & Device Band Usage
+                    </Typography>
+                  </Stack>
+                  <Divider />
+                  {wifiBandInsights ? (
+                    <>
+                      <Grid container spacing={1}>
+                        {[
+                          [
+                            "Router Bands (Inferred)",
+                            (wifiBandInsights.supportedRouterBands || []).length
+                              ? wifiBandInsights.supportedRouterBands.join(", ")
+                              : "unknown",
+                          ],
+                          ["Router Band Confidence", wifiBandInsights.routerBandSupportConfidence],
+                          ["Local Client Band", wifiBandInsights.localClientBand || "unknown"],
+                          [
+                            "Client Radio Capabilities",
+                            (wifiBandInsights.clientRadioCapabilitiesBands || []).length
+                              ? wifiBandInsights.clientRadioCapabilitiesBands.join(", ")
+                              : "unknown",
+                          ],
+                          ["Connected on 2.4 GHz", wifiBandInsights.connectedDeviceBandCounts?.["2.4 GHz"]],
+                          ["Connected on 5 GHz", wifiBandInsights.connectedDeviceBandCounts?.["5 GHz"]],
+                          ["Connected on 6 GHz", wifiBandInsights.connectedDeviceBandCounts?.["6 GHz"]],
+                          ["Connected Unknown Band", wifiBandInsights.connectedDeviceBandCounts?.unknown],
+                        ].map((row) => (
+                          <Grid key={row[0]} size={{ xs: 6, md: 3 }}>
+                            <Typography variant="caption" color="text.secondary">
+                              {row[0]}
+                            </Typography>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                              {valueOrDash(row[1])}
+                            </Typography>
+                          </Grid>
+                        ))}
+                      </Grid>
+
+                      <Typography variant="subtitle2">Router Band Capability Chips</Typography>
+                      <Stack direction="row" flexWrap="wrap" gap={0.8}>
+                        {(wifiBandInsights.supportedRouterBands || []).length ? (
+                          wifiBandInsights.supportedRouterBands.map((band) => (
+                            <Chip
+                              key={`router-band-${band}`}
+                              label={band}
+                              color="primary"
+                              size="small"
+                              variant="outlined"
+                            />
+                          ))
+                        ) : (
+                          <Chip label="Unknown" size="small" variant="outlined" />
+                        )}
+                      </Stack>
+
+                      <Alert severity="info">
+                        {wifiBandInsights.routerBandSupportMethod}
+                        {" "}
+                        {wifiBandInsights.note}
+                      </Alert>
+
+                      <Typography variant="subtitle2">
+                        Connected Devices Band Map
+                      </Typography>
+                      <TableContainer sx={{ maxHeight: 300 }}>
+                        <Table size="small" stickyHeader>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>IP</TableCell>
+                              <TableCell>MAC</TableCell>
+                              <TableCell>Host</TableCell>
+                              <TableCell>Band</TableCell>
+                              <TableCell>Confidence</TableCell>
+                              <TableCell>Reason</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {(wifiBandInsights.connectedDevices || []).length ? (
+                              wifiBandInsights.connectedDevices.slice(0, 32).map((device, index) => (
+                                <TableRow key={`${device.ip || device.mac || "device"}-${index}`}>
+                                  <TableCell>{valueOrDash(device.ip)}</TableCell>
+                                  <TableCell>{valueOrDash(device.mac)}</TableCell>
+                                  <TableCell>
+                                    {device.isLocalDevice
+                                      ? "local-device"
+                                      : valueOrDash(device.host)}
+                                  </TableCell>
+                                  <TableCell>{valueOrDash(device.band)}</TableCell>
+                                  <TableCell>{valueOrDash(device.confidence)}</TableCell>
+                                  <TableCell>{valueOrDash(device.reason)}</TableCell>
+                                </TableRow>
+                              ))
+                            ) : (
+                              <TableRow>
+                                <TableCell colSpan={6}>
+                                  <Typography variant="body2" color="text.secondary">
+                                    No connected devices were discovered in neighbor tables.
+                                  </Typography>
+                                </TableCell>
+                              </TableRow>
+                            )}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </>
+                  ) : (
+                    <Alert severity="warning">
+                      AP band usage details are unavailable in this diagnostics run.
                     </Alert>
                   )}
                 </Stack>
@@ -1459,6 +1624,71 @@ export default function NetworkDiagnostics() {
               </Stack>
             </Stack>
           </Paper>
+
+          {publishedSnapshot ? (
+            <Paper elevation={0} sx={sectionPaperStyles()}>
+              <Stack spacing={1.2}>
+                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                  Published Capture Snapshot
+                </Typography>
+                <Divider />
+                <Grid container spacing={1}>
+                  {[
+                    ["Generated", formatDateTime(publishedSnapshot.generatedAt)],
+                    ["Packets", publishedSnapshot.capture?.packets],
+                    ["Window", publishedSnapshot.capture?.windowSeconds == null ? "—" : `${publishedSnapshot.capture.windowSeconds}s`],
+                    ["Total Bytes", publishedSnapshot.capture?.totalBytesHuman],
+                  ].map((row) => (
+                    <Grid key={row[0]} size={{ xs: 6, md: 3 }}>
+                      <Typography variant="caption" color="text.secondary">
+                        {row[0]}
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        {valueOrDash(row[1])}
+                      </Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+                <Typography variant="subtitle2">Published Devices</Typography>
+                <TableContainer sx={{ maxHeight: 300 }}>
+                  <Table size="small" stickyHeader>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>IP</TableCell>
+                        <TableCell>MAC</TableCell>
+                        <TableCell>Packets</TableCell>
+                        <TableCell>Bytes</TableCell>
+                        <TableCell>Top Ports</TableCell>
+                        <TableCell>DNS Queries</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {(publishedSnapshot.devices || []).map((device) => (
+                        <TableRow key={`pub-${device.mac}`}>
+                          <TableCell>{valueOrDash(device.ip)}</TableCell>
+                          <TableCell>{valueOrDash(device.mac)}</TableCell>
+                          <TableCell>{valueOrDash(device.packets)}</TableCell>
+                          <TableCell>{valueOrDash(device.bytesHuman)}</TableCell>
+                          <TableCell>
+                            {(device.topPorts || []).length
+                              ? device.topPorts
+                                  .map((port) => `${port.port}/${port.service}(${port.count})`)
+                                  .join(", ")
+                              : "—"}
+                          </TableCell>
+                          <TableCell>
+                            {(device.dnsQueries || []).length
+                              ? device.dnsQueries.join(", ")
+                              : "—"}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Stack>
+            </Paper>
+          ) : null}
 
           <Paper elevation={0} sx={sectionPaperStyles()}>
             <Stack spacing={1.2}>

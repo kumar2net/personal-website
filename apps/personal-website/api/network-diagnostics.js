@@ -212,6 +212,38 @@ function inferBandFromChannel(channelLabel) {
   return null;
 }
 
+function inferBandFromFrequencyMhz(frequencyMhz) {
+  if (frequencyMhz == null || !Number.isFinite(frequencyMhz)) {
+    return null;
+  }
+  if (frequencyMhz < 3000) return "2.4 GHz";
+  if (frequencyMhz < 5900) return "5 GHz";
+  return "6 GHz";
+}
+
+function orderBands(bands) {
+  const order = ["2.4 GHz", "5 GHz", "6 GHz"];
+  const unique = Array.from(new Set((bands || []).filter(Boolean)));
+  return unique.sort((a, b) => {
+    const ia = order.indexOf(a);
+    const ib = order.indexOf(b);
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+}
+
+function extractBandsFromChannelLabels(channelLabels) {
+  if (!Array.isArray(channelLabels)) {
+    return [];
+  }
+  const bands = channelLabels
+    .map((label) => inferBandFromChannel(String(label || "")))
+    .filter(Boolean);
+  return orderBands(bands);
+}
+
 function parseDarwinWifiProfilerOutput(stdout) {
   try {
     const parsed = JSON.parse(stdout);
@@ -267,6 +299,9 @@ function parseDarwinWifiProfilerOutput(stdout) {
       rssiDbm: signalNoise.signalDbm,
       noiseDbm: signalNoise.noiseDbm,
       snrDb,
+      interfaceSupportedBands: extractBandsFromChannelLabels(
+        connected?.spairport_supported_channels || [],
+      ),
       nearbyNetworks,
     };
   } catch {
@@ -310,14 +345,7 @@ function parseLinuxNmcliOutput(stdout) {
   const [inUse, ssid, bssid, channel, frequency, rate, signal, security] =
     splitNmcliFields(active);
   const frequencyMhz = toNumber(frequency);
-  const band =
-    frequencyMhz == null
-      ? null
-      : frequencyMhz < 3000
-        ? "2.4 GHz"
-        : frequencyMhz < 5900
-          ? "5 GHz"
-          : "6 GHz";
+  const band = inferBandFromFrequencyMhz(frequencyMhz);
 
   return {
     source: "nmcli",
@@ -330,6 +358,7 @@ function parseLinuxNmcliOutput(stdout) {
     signalPct: toNumber(signal),
     security: security || null,
     band,
+    interfaceSupportedBands: band ? [band] : [],
   };
 }
 
@@ -530,6 +559,99 @@ async function collectNeighbors() {
     entries: [],
     note:
       "Neighbor table is unavailable in this runtime. Run locally to inspect ARP neighbors.",
+  };
+}
+
+function deriveWifiBandInsights({ wifi, neighbors, networkInterfaces }) {
+  const safeNeighbors = Array.isArray(neighbors?.entries) ? neighbors.entries : [];
+  const safeInterfaces = Array.isArray(networkInterfaces) ? networkInterfaces : [];
+  const localInterfaceName = wifi?.interface || null;
+  const localInterfaceRows = localInterfaceName
+    ? safeInterfaces.filter((entry) => entry.name === localInterfaceName)
+    : [];
+  const localMac =
+    localInterfaceRows.find((entry) => entry.mac && entry.mac !== "00:00:00:00:00:00")?.mac ||
+    null;
+
+  const currentBand = wifi?.band || null;
+  const nearbyNetworks = Array.isArray(wifi?.nearbyNetworks) ? wifi.nearbyNetworks : [];
+  const interfaceSupportedBands = orderBands(wifi?.interfaceSupportedBands || []);
+
+  const candidateBands = new Set();
+  if (currentBand) {
+    candidateBands.add(currentBand);
+  }
+
+  const currentSsid =
+    typeof wifi?.ssid === "string" && !/redacted/i.test(wifi.ssid) ? wifi.ssid : null;
+  if (currentSsid) {
+    nearbyNetworks
+      .filter((entry) => entry?.ssid === currentSsid && entry?.band)
+      .forEach((entry) => candidateBands.add(entry.band));
+  }
+
+  const supportedRouterBands = orderBands(Array.from(candidateBands));
+  let routerBandSupportConfidence = "low";
+  let routerBandSupportMethod =
+    "Derived from current client association only; AP telemetry unavailable.";
+
+  if (currentSsid && supportedRouterBands.length >= 2) {
+    routerBandSupportConfidence = "high";
+    routerBandSupportMethod =
+      "Inferred from multiple observed channels for the same SSID in local scan.";
+  } else if (supportedRouterBands.length === 1 && currentBand) {
+    routerBandSupportConfidence = "medium";
+    routerBandSupportMethod =
+      "Single associated band observed from local client; router may support additional bands.";
+  }
+
+  const connectedDevices = safeNeighbors.slice(0, 256).map((entry) => {
+    const neighborMac = normalizeMac(entry?.mac);
+    const isLocalDevice =
+      neighborMac && localMac ? normalizeMac(localMac) === neighborMac : false;
+    let band = "unknown";
+    let confidence = "none";
+    let reason = "AP station telemetry is required for per-device band visibility.";
+
+    if (isLocalDevice && currentBand) {
+      band = currentBand;
+      confidence = "high";
+      reason = "Band sourced from local Wi-Fi interface telemetry.";
+    }
+
+    return {
+      ip: entry?.ip || null,
+      mac: entry?.mac || null,
+      host: entry?.host || null,
+      interface: entry?.interface || null,
+      band,
+      confidence,
+      reason,
+      isLocalDevice,
+    };
+  });
+
+  const connectedDeviceBandCounts = connectedDevices.reduce(
+    (acc, device) => {
+      const band = device.band || "unknown";
+      acc[band] = (acc[band] || 0) + 1;
+      return acc;
+    },
+    { "2.4 GHz": 0, "5 GHz": 0, "6 GHz": 0, unknown: 0 },
+  );
+
+  return {
+    localClientBand: currentBand,
+    localClientMac: localMac,
+    localInterface: localInterfaceName,
+    clientRadioCapabilitiesBands: interfaceSupportedBands,
+    supportedRouterBands,
+    routerBandSupportConfidence,
+    routerBandSupportMethod,
+    connectedDeviceBandCounts,
+    connectedDevices,
+    note:
+      "Only the local device band is directly measurable from this host. Other clients require AP/controller telemetry.",
   };
 }
 
@@ -1342,6 +1464,7 @@ async function collectDomainDns(domain) {
 
 function evaluateRecommendations({
   wifi,
+  wifiBandInsights,
   latency,
   traceroute,
   domainDns,
@@ -1397,6 +1520,16 @@ function evaluateRecommendations({
       "Client currently on 2.4 GHz",
       "2.4 GHz gives range but lower throughput and more interference in dense environments.",
       "For high-throughput or low-latency workloads, pin the device to 5 GHz/6 GHz SSID.",
+    );
+  }
+
+  const unknownDeviceBands = wifiBandInsights?.connectedDeviceBandCounts?.unknown || 0;
+  if (unknownDeviceBands > 0) {
+    add(
+      "info",
+      "Per-device Wi-Fi band visibility is partial",
+      `${unknownDeviceBands} connected neighbor(s) have unknown band assignment from host-side telemetry.`,
+      "Integrate router/controller APIs (UniFi/OpenWrt/Omada/etc.) to map each station to 2.4/5/6 GHz bands.",
     );
   }
 
@@ -1522,6 +1655,12 @@ export default async function handler(req, res) {
       collectTraceroute(targetHost),
       collectDomainDns(domain),
     ]);
+  const networkInterfaces = collectNetworkInterfaces();
+  const wifiBandInsights = deriveWifiBandInsights({
+    wifi,
+    neighbors,
+    networkInterfaces,
+  });
   const tcpdump = await collectTcpdumpTelemetry({ wifi, neighbors });
 
   const payload = {
@@ -1536,8 +1675,9 @@ export default async function handler(req, res) {
       hostname: os.hostname(),
       uptimeSeconds: Math.floor(os.uptime()),
     },
-    networkInterfaces: collectNetworkInterfaces(),
+    networkInterfaces,
     wifi,
+    wifiBandInsights,
     dnsResolvers,
     neighbors,
     tcpdump,
@@ -1546,6 +1686,7 @@ export default async function handler(req, res) {
     domainDns,
     recommendations: evaluateRecommendations({
       wifi,
+      wifiBandInsights,
       latency,
       traceroute,
       domainDns,
