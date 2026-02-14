@@ -1,0 +1,16 @@
+Clear rule for better home Wi-Fi:
+- Keep 5 GHz-capable devices on 5 GHz
+- Keep legacy/IoT devices on 2.4 GHz
+- Use band steering to automate this split
+
+Why this matters:
+2.4 GHz is usually more congested and has narrower channels, so throughput drops faster with contention.
+Modern devices on 5 GHz reduce airtime pressure on 2.4 GHz and improve overall stability.
+
+Ask your ISP for:
+- Simultaneous dual-band router (2.4/5 GHz)
+- Band steering support
+- Wi-Fi 5 (ac) or Wi-Fi 6 (ax)
+- WPA2/WPA3 + gigabit ports
+
+#shorts #wifi #router #broadband #5ghz #24ghz #bandsteering

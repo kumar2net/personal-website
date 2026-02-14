@@ -1,5 +1,16 @@
 export const blogPosts = [
   {
+    title: "Bhajan Clubbing",
+    date: "February 14, 2026",
+    lastModified: "February 14, 2026",
+    excerpt:
+      "Why bhajan-clubbing resonates with Gen Z and millennials in India: devotional familiarity, modern energy, and social-media-era music behavior.",
+    tags: ["Music", "Bhajan", "India", "Gen Z", "Millennials"],
+    image:
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
+    link: "/blog/2026-02-14-bhajan-clubbing",
+  },
+  {
     title: "Reply: Last Week Tonight #5 (Sanjaay Babu)",
     date: "February 14, 2026",
     lastModified: "February 14, 2026",

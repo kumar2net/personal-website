@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771072215,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69906ad73180819089bc79cff8113a0e00876e6e60914c03",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second context segment explaining band steering and why it matters.\nScene/background: Dual-band router dashboard with automatic client steering animation.\nSubject: Band steering mechanism routing devices to optimal band.\nAction: Show router detecting device capability, then automatically steering capable devices to 5 GHz and leaving legacy/IoT on 2.4 GHz. Include sticky fallback animation for weak-signal zones.\nCamera: Router dashboard close-up then top-down home map flow animation.\nLighting/mood: Clean, confident, educational.\nColor palette: teal, blue, white, gray.\nStyle/format: Premium UI/infographic hybrid, 9:16 vertical.\nTiming/beats: 0-4s detect capability, 4-8s steer to right band, 8-12s stable network result.\nAudio: Original non-copyright ambience with positive click/chime on successful steering.\nText (verbatim): \"Band steering = auto move to best band\"; \"Capable devices -> 5 GHz\"; \"Legacy/IoT -> 2.4 GHz\"\nConstraints: Keep wording simple and non-jargon.\nAvoid: Technical clutter, logos, real people.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771072379,
+    "created_at": 1771072215,
+    "error": null,
+    "expires_at": 1771075979,
+    "id": "video_69906ad73180819089bc79cff8113a0e00876e6e60914c03",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second context segment explaining band steering and why it matters.\nScene/background: Dual-band router dashboard with automatic client steering animation.\nSubject: Band steering mechanism routing devices to optimal band.\nAction: Show router detecting device capability, then automatically steering capable devices to 5 GHz and leaving legacy/IoT on 2.4 GHz. Include sticky fallback animation for weak-signal zones.\nCamera: Router dashboard close-up then top-down home map flow animation.\nLighting/mood: Clean, confident, educational.\nColor palette: teal, blue, white, gray.\nStyle/format: Premium UI/infographic hybrid, 9:16 vertical.\nTiming/beats: 0-4s detect capability, 4-8s steer to right band, 8-12s stable network result.\nAudio: Original non-copyright ambience with positive click/chime on successful steering.\nText (verbatim): \"Band steering = auto move to best band\"; \"Capable devices -> 5 GHz\"; \"Legacy/IoT -> 2.4 GHz\"\nConstraints: Keep wording simple and non-jargon.\nAvoid: Technical clutter, logos, real people.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

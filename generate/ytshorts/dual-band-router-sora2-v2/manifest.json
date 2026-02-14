@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-02-14T12:39:20.656716+00:00",
+  "topic": "5 GHz capable devices vs legacy 2.4 GHz devices, band steering, throughput limits, upgrade rationale",
+  "model": "sora-2",
+  "size": "720x1280",
+  "secondsPerClip": "12",
+  "clips": [
+    {
+      "segment": 1,
+      "videoId": "video_69906a1f516c8191a09a8e984d3a9c680e666f47b06726ff",
+      "status": "completed",
+      "file": "seg01.mp4",
+      "jobJson": "seg01-job.json",
+      "expiresAt": 1771075796
+    },
+    {
+      "segment": 2,
+      "videoId": "video_69906ad73180819089bc79cff8113a0e00876e6e60914c03",
+      "status": "completed",
+      "file": "seg02.mp4",
+      "jobJson": "seg02-job.json",
+      "expiresAt": 1771075979
+    },
+    {
+      "segment": 3,
+      "videoId": "video_69906b8f2a308190af19438a4e31fce90a2a5ea516059a6b",
+      "status": "completed",
+      "file": "seg03.mp4",
+      "jobJson": "seg03-job.json",
+      "expiresAt": 1771076152
+    },
+    {
+      "segment": 4,
+      "videoId": "video_69906c464c008190acfdc6ae0886eb7e0ee94ec398e8e352",
+      "status": "completed",
+      "file": "seg04.mp4",
+      "jobJson": "seg04-job.json",
+      "expiresAt": 1771076342
+    }
+  ]
+}

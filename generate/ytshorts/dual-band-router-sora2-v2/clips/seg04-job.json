@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771072582,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69906c464c008190acfdc6ae0886eb7e0ee94ec398e8e352",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second payoff segment on why upgrading legacy devices improves total home Wi-Fi performance.\nScene/background: Home network health board with old-device upgrade path visuals.\nSubject: Legacy upgrade impact + checklist.\nAction: Show old Wi-Fi 4/2.4-only devices causing bottlenecks, then replace with modern dual-band-capable devices and show improved network stability. End with ISP request + upgrade CTA.\nCamera: Fast checklist reveals with close-up swaps old->new.\nLighting/mood: Action-oriented, empowering.\nColor palette: white, cyan, green, charcoal.\nStyle/format: Text-led infographic, no logos, no real faces, 9:16.\nTiming/beats: 0-7s legacy bottleneck to upgrade transition, 7-12s checklist + CTA.\nAudio: Original non-copyright tech ambience with final confident hit.\nText (verbatim): \"Upgrade legacy 2.4-only devices when possible\"; \"Fewer slow clients = better airtime efficiency\"; \"Ask ISP: dual-band router + band steering\"; \"Check: Wi-Fi 5/6, WPA2/3, gigabit ports\"\nConstraints: Mobile-readable short lines.\nAvoid: Brand names, exaggerated promises.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771072742,
+    "created_at": 1771072582,
+    "error": null,
+    "expires_at": 1771076342,
+    "id": "video_69906c464c008190acfdc6ae0886eb7e0ee94ec398e8e352",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second payoff segment on why upgrading legacy devices improves total home Wi-Fi performance.\nScene/background: Home network health board with old-device upgrade path visuals.\nSubject: Legacy upgrade impact + checklist.\nAction: Show old Wi-Fi 4/2.4-only devices causing bottlenecks, then replace with modern dual-band-capable devices and show improved network stability. End with ISP request + upgrade CTA.\nCamera: Fast checklist reveals with close-up swaps old->new.\nLighting/mood: Action-oriented, empowering.\nColor palette: white, cyan, green, charcoal.\nStyle/format: Text-led infographic, no logos, no real faces, 9:16.\nTiming/beats: 0-7s legacy bottleneck to upgrade transition, 7-12s checklist + CTA.\nAudio: Original non-copyright tech ambience with final confident hit.\nText (verbatim): \"Upgrade legacy 2.4-only devices when possible\"; \"Fewer slow clients = better airtime efficiency\"; \"Ask ISP: dual-band router + band steering\"; \"Check: Wi-Fi 5/6, WPA2/3, gigabit ports\"\nConstraints: Mobile-readable short lines.\nAvoid: Brand names, exaggerated promises.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

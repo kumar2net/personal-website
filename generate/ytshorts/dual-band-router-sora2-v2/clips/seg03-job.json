@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771072399,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69906b8f2a308190af19438a4e31fce90a2a5ea516059a6b",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second breakdown of throughput limitations on 2.4 GHz vs 5 GHz and why congestion hurts performance.\nScene/background: Split dashboard with channel width and throughput meters.\nSubject: Throughput ceiling comparison + contention effects.\nAction: Left panel shows 2.4 GHz with crowded channels and lower real-world throughput range; right panel shows 5 GHz with wider channels and higher practical throughput. Visualize retries and airtime contention on 2.4.\nCamera: Split-screen with one mid-shot zoom; animated charts update every 2 seconds.\nLighting/mood: Analytical, credible.\nColor palette: red/orange for limited band, green/blue for better throughput.\nStyle/format: Data-first infographic in cinematic motion, no real people.\nTiming/beats: 0-4s 2.4 limitation, 4-8s 5 GHz advantage, 8-12s summary.\nAudio: Original non-copyright ambient bed, subtle rising tone on comparison reveal.\nText (verbatim): \"2.4 GHz: crowded, narrower channels\"; \"Higher contention -> lower real throughput\"; \"5 GHz: wider channels, better peak throughput\"\nConstraints: Keep claims realistic and non-absolute.\nAvoid: Guarantee claims like \"always double speed\".",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771072552,
+    "created_at": 1771072399,
+    "error": null,
+    "expires_at": 1771076152,
+    "id": "video_69906b8f2a308190af19438a4e31fce90a2a5ea516059a6b",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second breakdown of throughput limitations on 2.4 GHz vs 5 GHz and why congestion hurts performance.\nScene/background: Split dashboard with channel width and throughput meters.\nSubject: Throughput ceiling comparison + contention effects.\nAction: Left panel shows 2.4 GHz with crowded channels and lower real-world throughput range; right panel shows 5 GHz with wider channels and higher practical throughput. Visualize retries and airtime contention on 2.4.\nCamera: Split-screen with one mid-shot zoom; animated charts update every 2 seconds.\nLighting/mood: Analytical, credible.\nColor palette: red/orange for limited band, green/blue for better throughput.\nStyle/format: Data-first infographic in cinematic motion, no real people.\nTiming/beats: 0-4s 2.4 limitation, 4-8s 5 GHz advantage, 8-12s summary.\nAudio: Original non-copyright ambient bed, subtle rising tone on comparison reveal.\nText (verbatim): \"2.4 GHz: crowded, narrower channels\"; \"Higher contention -> lower real throughput\"; \"5 GHz: wider channels, better peak throughput\"\nConstraints: Keep claims realistic and non-absolute.\nAvoid: Guarantee claims like \"always double speed\".",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

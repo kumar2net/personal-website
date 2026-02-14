@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-14-bhajan-clubbing": {
+    title: "Bhajan Clubbing",
+    description:
+      "Why bhajan-clubbing resonates with Gen Z and millennials in India: devotional familiarity, modern energy, and social-media-era music behavior.",
+    image:
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
+    tags: ["Music", "Bhajan", "India", "Gen Z", "Millennials"],
+    datePublished: "2026-02-14",
+    dateModified: "2026-02-14",
+  },
   "2026-02-14-reply-last-week-tonight-5-sanjaay-babu": {
     title: "Reply: Last Week Tonight #5 (Sanjaay Babu)",
     description:
