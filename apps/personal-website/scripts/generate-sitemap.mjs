@@ -28,7 +28,6 @@ const STATIC_ROUTES = [
   '/books/how-to-stop-caring',
   '/books/the-last-drop-of-water',
   '/utilities',
-  '/network',
   '/science',
   '/science/patellar-instability',
   '/science/brain-vs-ai',
@@ -204,7 +203,6 @@ const main = async () => {
       '/books',
       '/contact',
       '/elsewhere',
-      '/network',
     ];
 
     const sitemapHtml = generateHtmlSitemap({ mainRoutes, blogEntries });
