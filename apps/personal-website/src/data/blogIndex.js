@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-14-reply-last-week-tonight-5-sanjaay-babu": {
+    title: "Reply: Last Week Tonight #5 (Sanjaay Babu)",
+    description:
+      "A short reply on why space data centres are plausible, and the three constraints that still matter most: power, maintenance, and latency.",
+    image:
+      "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=1600&q=80",
+    tags: ["reply", "notes", "tech", "future"],
+    datePublished: "2026-02-14",
+    dateModified: "2026-02-14",
+  },
   "2026-02-08-reble-and-other-stuff": {
     title: "Reble and Other Stuff",
     description:

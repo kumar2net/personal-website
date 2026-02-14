@@ -1,5 +1,16 @@
 export const blogPosts = [
   {
+    title: "Reply: Last Week Tonight #5 (Sanjaay Babu)",
+    date: "February 14, 2026",
+    lastModified: "February 14, 2026",
+    excerpt:
+      "A short reply on why space data centres are plausible, and the three constraints that still matter most: power, maintenance, and latency.",
+    tags: ["reply", "notes", "tech", "future"],
+    image:
+      "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?auto=format&fit=crop&w=1600&q=80",
+    link: "/blog/2026-02-14-reply-last-week-tonight-5-sanjaay-babu",
+  },
+  {
     title: "Reble and Other Stuff",
     date: "February 8, 2026",
     lastModified: "February 8, 2026",

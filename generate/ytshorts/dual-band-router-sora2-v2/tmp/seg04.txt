@@ -1,0 +1,14 @@
+Use case: YouTube Shorts tech explainer for broadband users
+Primary request: Create a 12-second payoff segment on why upgrading legacy devices improves total home Wi-Fi performance.
+Scene/background: Home network health board with old-device upgrade path visuals.
+Subject: Legacy upgrade impact + checklist.
+Action: Show old Wi-Fi 4/2.4-only devices causing bottlenecks, then replace with modern dual-band-capable devices and show improved network stability. End with ISP request + upgrade CTA.
+Camera: Fast checklist reveals with close-up swaps old->new.
+Lighting/mood: Action-oriented, empowering.
+Color palette: white, cyan, green, charcoal.
+Style/format: Text-led infographic, no logos, no real faces, 9:16.
+Timing/beats: 0-7s legacy bottleneck to upgrade transition, 7-12s checklist + CTA.
+Audio: Original non-copyright tech ambience with final confident hit.
+Text (verbatim): "Upgrade legacy 2.4-only devices when possible"; "Fewer slow clients = better airtime efficiency"; "Ask ISP: dual-band router + band steering"; "Check: Wi-Fi 5/6, WPA2/3, gigabit ports"
+Constraints: Mobile-readable short lines.
+Avoid: Brand names, exaggerated promises.

@@ -1,0 +1,14 @@
+Use case: YouTube Shorts tech explainer for home internet users
+Primary request: Create a 12-second payoff and checklist segment showing router specifications users should ask broadband providers for.
+Scene/background: Clean product checklist board with generic router render.
+Subject: Dual-band router buying/request checklist.
+Action: Reveal checklist items one by one with check marks, end with CTA frame asking users to request dual-band from ISP.
+Camera: Fast checklist reveals with mild push-ins every 2 seconds, final locked CTA.
+Lighting/mood: Decisive, empowering, action-oriented.
+Color palette: white, cyan, green, charcoal.
+Style/format: Sharp text-led infographic, no brand logos, no real people, 9:16 vertical.
+Timing/beats: 0-9s checklist reveal, 9-12s CTA.
+Audio: Continue original non-copyright tech ambience with a confident final hit.
+Text (verbatim): "Ask for: Simultaneous dual-band (2.4/5)"; "Wi-Fi 5 (ac) or Wi-Fi 6 (ax)"; "Gigabit WAN/LAN ports"; "WPA2/WPA3 security"; "2x2 MU-MIMO + beamforming"; "Optional: mesh support"; "Tell your ISP: I need a dual-band router"
+Constraints: Keep each line readable on mobile, use short phrases.
+Avoid: Brand names, unrealistic promises.

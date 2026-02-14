@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771071750,
+    "error": null,
+    "expires_at": null,
+    "id": "video_6990690682cc8191bc7396984519d7c00024af0172394dd7",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts tech explainer for home internet users\nPrimary request: Create a 12-second payoff and checklist segment showing router specifications users should ask broadband providers for.\nScene/background: Clean product checklist board with generic router render.\nSubject: Dual-band router buying/request checklist.\nAction: Reveal checklist items one by one with check marks, end with CTA frame asking users to request dual-band from ISP.\nCamera: Fast checklist reveals with mild push-ins every 2 seconds, final locked CTA.\nLighting/mood: Decisive, empowering, action-oriented.\nColor palette: white, cyan, green, charcoal.\nStyle/format: Sharp text-led infographic, no brand logos, no real people, 9:16 vertical.\nTiming/beats: 0-9s checklist reveal, 9-12s CTA.\nAudio: Continue original non-copyright tech ambience with a confident final hit.\nText (verbatim): \"Ask for: Simultaneous dual-band (2.4/5)\"; \"Wi-Fi 5 (ac) or Wi-Fi 6 (ax)\"; \"Gigabit WAN/LAN ports\"; \"WPA2/WPA3 security\"; \"2x2 MU-MIMO + beamforming\"; \"Optional: mesh support\"; \"Tell your ISP: I need a dual-band router\"\nConstraints: Keep each line readable on mobile, use short phrases.\nAvoid: Brand names, unrealistic promises.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771071927,
+    "created_at": 1771071750,
+    "error": null,
+    "expires_at": 1771075527,
+    "id": "video_6990690682cc8191bc7396984519d7c00024af0172394dd7",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts tech explainer for home internet users\nPrimary request: Create a 12-second payoff and checklist segment showing router specifications users should ask broadband providers for.\nScene/background: Clean product checklist board with generic router render.\nSubject: Dual-band router buying/request checklist.\nAction: Reveal checklist items one by one with check marks, end with CTA frame asking users to request dual-band from ISP.\nCamera: Fast checklist reveals with mild push-ins every 2 seconds, final locked CTA.\nLighting/mood: Decisive, empowering, action-oriented.\nColor palette: white, cyan, green, charcoal.\nStyle/format: Sharp text-led infographic, no brand logos, no real people, 9:16 vertical.\nTiming/beats: 0-9s checklist reveal, 9-12s CTA.\nAudio: Continue original non-copyright tech ambience with a confident final hit.\nText (verbatim): \"Ask for: Simultaneous dual-band (2.4/5)\"; \"Wi-Fi 5 (ac) or Wi-Fi 6 (ax)\"; \"Gigabit WAN/LAN ports\"; \"WPA2/WPA3 security\"; \"2x2 MU-MIMO + beamforming\"; \"Optional: mesh support\"; \"Tell your ISP: I need a dual-band router\"\nConstraints: Keep each line readable on mobile, use short phrases.\nAvoid: Brand names, unrealistic promises.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

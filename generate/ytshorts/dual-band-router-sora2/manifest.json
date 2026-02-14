@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-02-14T12:25:52.179169+00:00",
+  "topic": "Why ask ISP for dual-band (2.4/5 GHz) router",
+  "model": "sora-2",
+  "size": "720x1280",
+  "secondsPerClip": "12",
+  "clips": [
+    {
+      "segment": 1,
+      "videoId": "video_699067028e308190857aed17e3ba6644075e73e3f8f624d6",
+      "status": "completed",
+      "file": "seg01.mp4",
+      "jobJson": "seg01-job.json",
+      "expiresAt": 1771074997
+    },
+    {
+      "segment": 2,
+      "videoId": "video_699067b09b3c81918743563d51f80fa902d16ef957da592d",
+      "status": "completed",
+      "file": "seg02.mp4",
+      "jobJson": "seg02-job.json",
+      "expiresAt": 1771075170
+    },
+    {
+      "segment": 3,
+      "videoId": "video_69906867b5108190ae9c9d549657397606986ec2cd2844e3",
+      "status": "completed",
+      "file": "seg03.mp4",
+      "jobJson": "seg03-job.json",
+      "expiresAt": 1771075338
+    },
+    {
+      "segment": 4,
+      "videoId": "video_6990690682cc8191bc7396984519d7c00024af0172394dd7",
+      "status": "completed",
+      "file": "seg04.mp4",
+      "jobJson": "seg04-job.json",
+      "expiresAt": 1771075527
+    }
+  ]
+}

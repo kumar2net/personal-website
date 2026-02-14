@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771072031,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69906a1f516c8191a09a8e984d3a9c680e666f47b06726ff",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second vertical hook that clearly separates 5 GHz-capable devices from legacy 2.4 GHz-only devices.\nScene/background: Apartment home layout with two wireless bands visualized as separate lanes.\nSubject: Device grouping by Wi-Fi capability.\nAction: Open with bold split-screen: left lane \"5 GHz capable devices\" (new phones, laptops, smart TV), right lane \"legacy 2.4 GHz devices\" (older phones, old laptops, basic IoT). Show congestion only on 2.4 lane.\nCamera: Punch-in at 0-1.5s, then fast lane-by-lane pans with hard cuts every 2-3 seconds.\nLighting/mood: High-clarity, urgent, practical.\nColor palette: cool blue for 5 GHz, amber/orange for 2.4 GHz, dark neutral background.\nStyle/format: Cinematic infographic, no logos, no real faces, 9:16 vertical 720x1280.\nTiming/beats: 0-2s hook, 2-8s lane separation, 8-12s congestion contrast.\nAudio: Original non-copyright electronic pulse, subtle warning tone on 2.4 congestion.\nText (verbatim): \"Not all devices should stay on 2.4 GHz\"; \"5 GHz-capable -> move to 5 GHz\"; \"Legacy-only -> keep on 2.4 GHz\"\nConstraints: Keep text large and readable.\nAvoid: Brand names, copyrighted music.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771072196,
+    "created_at": 1771072031,
+    "error": null,
+    "expires_at": 1771075796,
+    "id": "video_69906a1f516c8191a09a8e984d3a9c680e666f47b06726ff",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts tech explainer for broadband users\nPrimary request: Create a 12-second vertical hook that clearly separates 5 GHz-capable devices from legacy 2.4 GHz-only devices.\nScene/background: Apartment home layout with two wireless bands visualized as separate lanes.\nSubject: Device grouping by Wi-Fi capability.\nAction: Open with bold split-screen: left lane \"5 GHz capable devices\" (new phones, laptops, smart TV), right lane \"legacy 2.4 GHz devices\" (older phones, old laptops, basic IoT). Show congestion only on 2.4 lane.\nCamera: Punch-in at 0-1.5s, then fast lane-by-lane pans with hard cuts every 2-3 seconds.\nLighting/mood: High-clarity, urgent, practical.\nColor palette: cool blue for 5 GHz, amber/orange for 2.4 GHz, dark neutral background.\nStyle/format: Cinematic infographic, no logos, no real faces, 9:16 vertical 720x1280.\nTiming/beats: 0-2s hook, 2-8s lane separation, 8-12s congestion contrast.\nAudio: Original non-copyright electronic pulse, subtle warning tone on 2.4 congestion.\nText (verbatim): \"Not all devices should stay on 2.4 GHz\"; \"5 GHz-capable -> move to 5 GHz\"; \"Legacy-only -> keep on 2.4 GHz\"\nConstraints: Keep text large and readable.\nAvoid: Brand names, copyrighted music.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

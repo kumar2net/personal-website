@@ -1,0 +1,14 @@
+Use case: YouTube Shorts tech explainer for home internet users
+Primary request: Create a 12-second core breakdown segment comparing performance before vs after dual-band setup.
+Scene/background: Split-screen home network dashboard.
+Subject: Before-and-after throughput, latency, and streaming stability.
+Action: Left side shows single-band congestion with red warnings; right side shows dual-band setup with smoother data flow and fewer collisions.
+Camera: Split-screen lock with dynamic overlays and one zoom transition at midpoint.
+Lighting/mood: Analytical, practical, trustworthy.
+Color palette: red/orange for before, green/blue for after, neutral dark UI background.
+Style/format: Premium dashboard/infographic aesthetic, 9:16 vertical, no real people.
+Timing/beats: 0-4s before chaos, 4-8s dual-band shift, 8-12s measurable improvement visual.
+Audio: Original non-copyright ambient bed, subtle rising tone on improvement.
+Text (verbatim): "Before: congestion + retries"; "After: split traffic, less contention"; "Better calls, gaming, streaming"
+Constraints: Avoid absolute guarantees; imply typical improvements only.
+Avoid: Marketing hype claims like "always 2x speed".

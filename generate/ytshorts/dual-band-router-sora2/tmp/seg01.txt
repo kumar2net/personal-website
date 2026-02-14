@@ -1,0 +1,14 @@
+Use case: YouTube Shorts tech explainer for home internet users
+Primary request: Create a 12-second vertical 9:16 hook segment showing why users should ask broadband providers for a dual-band 2.4/5 GHz router.
+Scene/background: Apartment building Wi-Fi map with many overlapping signal bubbles and interference lines.
+Subject: Single-band 2.4 GHz congestion problem visualized clearly.
+Action: Start with an urgent hook frame "2.4 GHz is crowded", then show dozens of neighboring routers colliding on channels, buffering icon appears on phone and smart TV.
+Camera: Fast punch-in first 1.5 seconds, then top-down network map with quick hard cuts every 2-3 seconds.
+Lighting/mood: Modern, high-contrast, energetic and practical.
+Color palette: electric blue, amber warning, dark slate, white text.
+Style/format: Clean cinematic infographic style, no real people, no logos, 9:16 vertical (720x1280).
+Timing/beats: 0-2s hook, 2-8s congestion visual, 8-12s pain point payoff.
+Audio: Original non-copyright electronic pulse ambience, subtle glitch whoosh on interference spikes.
+Text (verbatim): "2.4 GHz = crowded"; "More overlap, more interference"; "Result: buffering + lag"
+Constraints: Keep text large and legible; avoid brand names and router logos.
+Avoid: Copyrighted music, real faces, unreadable tiny text.

@@ -1,0 +1,14 @@
+Use case: YouTube Shorts tech explainer for home internet users
+Primary request: Create a 12-second context segment that explains dual-band routing in simple visuals.
+Scene/background: Same apartment map transitions into two distinct Wi-Fi lanes.
+Subject: Split traffic between 2.4 GHz and 5 GHz networks.
+Action: Show IoT devices (camera, smart bulb, doorbell) moving to 2.4 GHz lane; phone, laptop, and smart TV moving to 5 GHz lane.
+Camera: Smooth map pan, then device-level close-ups with hard cuts every 2-3 seconds.
+Lighting/mood: Confident, clear, educational.
+Color palette: teal for 2.4 lane, purple-blue for 5 lane, white labels.
+Style/format: Minimal animated infographic + realistic device renders, 9:16 vertical, no people, no logos.
+Timing/beats: 0-4s lane split, 4-9s device allocation, 9-12s outcome frame.
+Audio: Continue original non-copyright tech ambience, short positive chime when traffic splits successfully.
+Text (verbatim): "Dual-band router = 2.4 + 5 GHz"; "2.4 GHz: range + IoT"; "5 GHz: speed + low latency"
+Constraints: Keep explanations simple and high contrast.
+Avoid: Jargon-heavy text, brand references, copyrighted music.

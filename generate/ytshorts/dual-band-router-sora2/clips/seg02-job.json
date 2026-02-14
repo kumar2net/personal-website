@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771071408,
+    "error": null,
+    "expires_at": null,
+    "id": "video_699067b09b3c81918743563d51f80fa902d16ef957da592d",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts tech explainer for home internet users\nPrimary request: Create a 12-second context segment that explains dual-band routing in simple visuals.\nScene/background: Same apartment map transitions into two distinct Wi-Fi lanes.\nSubject: Split traffic between 2.4 GHz and 5 GHz networks.\nAction: Show IoT devices (camera, smart bulb, doorbell) moving to 2.4 GHz lane; phone, laptop, and smart TV moving to 5 GHz lane.\nCamera: Smooth map pan, then device-level close-ups with hard cuts every 2-3 seconds.\nLighting/mood: Confident, clear, educational.\nColor palette: teal for 2.4 lane, purple-blue for 5 lane, white labels.\nStyle/format: Minimal animated infographic + realistic device renders, 9:16 vertical, no people, no logos.\nTiming/beats: 0-4s lane split, 4-9s device allocation, 9-12s outcome frame.\nAudio: Continue original non-copyright tech ambience, short positive chime when traffic splits successfully.\nText (verbatim): \"Dual-band router = 2.4 + 5 GHz\"; \"2.4 GHz: range + IoT\"; \"5 GHz: speed + low latency\"\nConstraints: Keep explanations simple and high contrast.\nAvoid: Jargon-heavy text, brand references, copyrighted music.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771071570,
+    "created_at": 1771071408,
+    "error": null,
+    "expires_at": 1771075170,
+    "id": "video_699067b09b3c81918743563d51f80fa902d16ef957da592d",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts tech explainer for home internet users\nPrimary request: Create a 12-second context segment that explains dual-band routing in simple visuals.\nScene/background: Same apartment map transitions into two distinct Wi-Fi lanes.\nSubject: Split traffic between 2.4 GHz and 5 GHz networks.\nAction: Show IoT devices (camera, smart bulb, doorbell) moving to 2.4 GHz lane; phone, laptop, and smart TV moving to 5 GHz lane.\nCamera: Smooth map pan, then device-level close-ups with hard cuts every 2-3 seconds.\nLighting/mood: Confident, clear, educational.\nColor palette: teal for 2.4 lane, purple-blue for 5 lane, white labels.\nStyle/format: Minimal animated infographic + realistic device renders, 9:16 vertical, no people, no logos.\nTiming/beats: 0-4s lane split, 4-9s device allocation, 9-12s outcome frame.\nAudio: Continue original non-copyright tech ambience, short positive chime when traffic splits successfully.\nText (verbatim): \"Dual-band router = 2.4 + 5 GHz\"; \"2.4 GHz: range + IoT\"; \"5 GHz: speed + low latency\"\nConstraints: Keep explanations simple and high contrast.\nAvoid: Jargon-heavy text, brand references, copyrighted music.",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

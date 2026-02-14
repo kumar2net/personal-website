@@ -1,0 +1,14 @@
+Use case: YouTube Shorts tech explainer for broadband users
+Primary request: Create a 12-second context segment explaining band steering and why it matters.
+Scene/background: Dual-band router dashboard with automatic client steering animation.
+Subject: Band steering mechanism routing devices to optimal band.
+Action: Show router detecting device capability, then automatically steering capable devices to 5 GHz and leaving legacy/IoT on 2.4 GHz. Include sticky fallback animation for weak-signal zones.
+Camera: Router dashboard close-up then top-down home map flow animation.
+Lighting/mood: Clean, confident, educational.
+Color palette: teal, blue, white, gray.
+Style/format: Premium UI/infographic hybrid, 9:16 vertical.
+Timing/beats: 0-4s detect capability, 4-8s steer to right band, 8-12s stable network result.
+Audio: Original non-copyright ambience with positive click/chime on successful steering.
+Text (verbatim): "Band steering = auto move to best band"; "Capable devices -> 5 GHz"; "Legacy/IoT -> 2.4 GHz"
+Constraints: Keep wording simple and non-jargon.
+Avoid: Technical clutter, logos, real people.

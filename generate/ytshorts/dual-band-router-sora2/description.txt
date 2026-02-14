@@ -1,0 +1,12 @@
+Most homes suffer Wi-Fi lag because too many devices stay crowded on 2.4 GHz.
+This short explains why dual-band routers (2.4/5 GHz) help split traffic and improve day-to-day performance.
+
+Ask your broadband provider for:
+- Simultaneous dual-band (2.4 + 5 GHz)
+- Wi-Fi 5 (ac) or Wi-Fi 6 (ax)
+- Gigabit WAN/LAN ports
+- WPA2/WPA3 security
+- 2x2 MU-MIMO + beamforming
+- Optional mesh support
+
+#shorts #wifi #broadband #router #internet #wifitips #isp
