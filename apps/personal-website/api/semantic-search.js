@@ -296,6 +296,44 @@ function loadIndex() {
   );
 }
 
+function parseQueryPayload(url) {
+  if (typeof url !== "string") {
+    return {};
+  }
+
+  try {
+    const parsed = new URL(url, "http://localhost");
+    return {
+      q: parsed.searchParams.get("q") || "",
+      topK: parsed.searchParams.get("topK") || "",
+    };
+  } catch {
+    return {};
+  }
+}
+
+function resolvePayload(req) {
+  const method = (req.method || "").toUpperCase();
+
+  if (method === "GET") {
+    return parseQueryPayload(req.url);
+  }
+
+  let payload = req.body;
+  if (payload && typeof payload === "object") {
+    return payload;
+  }
+
+  if (typeof payload === "string") {
+    if (!payload.trim()) {
+      return {};
+    }
+    return JSON.parse(payload);
+  }
+
+  return parseQueryPayload(req.url);
+}
+
 function dotProduct(a, b) {
   let sum = 0;
   for (let i = 0; i < a.length; i += 1) {
@@ -384,35 +422,42 @@ export async function searchBlogByQuery(query, options = {}) {
 
 export default async function handler(req, res) {
   const started = Date.now();
+  const method = (req.method || "").toUpperCase();
 
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-  if (req.method === "OPTIONS") {
+  if (method === "OPTIONS") {
     res.status(200).end();
     return;
   }
 
-  if (req.method !== "POST") {
+  if (method !== "POST" && method !== "GET") {
     jsonResponse(res, 405, { error: "Method Not Allowed" });
     return;
   }
 
-  let payload = req.body;
-  if (!payload || typeof payload !== "object") {
-    try {
-      payload = JSON.parse(req.body || "{}");
-    } catch {
-      jsonResponse(res, 400, { error: "Invalid JSON body" });
-      return;
-    }
+  let payload;
+  try {
+    payload = resolvePayload(req);
+  } catch (error) {
+    jsonResponse(res, 400, {
+      error: "Invalid JSON body",
+      detail: error?.message || String(error),
+    });
+    return;
   }
 
   const q = (payload?.q || "").toString().trim();
   const topK = clampTopK(payload?.topK, 5);
   if (!q) {
-    jsonResponse(res, 400, { error: "q is required" });
+    jsonResponse(res, 400, {
+      error: "q is required",
+      methodHint: method === "GET"
+        ? "Pass q and optional topK as query params (e.g., /api/semantic-search?q=india&topK=5)."
+        : "Include q in POST JSON body.",
+    });
     return;
   }
 

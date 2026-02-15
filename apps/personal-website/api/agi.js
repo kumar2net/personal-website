@@ -4,7 +4,7 @@ import { searchBlogByQuery } from "./semantic-search.js";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
@@ -493,6 +493,22 @@ async function readJsonBody(req) {
   return JSON.parse(rawBody);
 }
 
+function readQueryPayload(req) {
+  if (typeof req?.url !== "string") {
+    return {};
+  }
+
+  try {
+    const parsed = new URL(req.url, "http://localhost");
+    return {
+      prompt: parsed.searchParams.get("prompt") || "",
+      mode: parsed.searchParams.get("mode") || "",
+    };
+  } catch {
+    return {};
+  }
+}
+
 function uniqueModels() {
   const normalized = RAW_CANDIDATE_MODELS
     .filter(Boolean)
@@ -784,18 +800,22 @@ export const runtime = "nodejs";
 
 export default async function handler(req, res) {
   applyCors(res);
+  const method = (req.method || "").toUpperCase();
 
-  if (req.method === "OPTIONS") {
+  if (method === "OPTIONS") {
     return res.status(204).end();
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed. Use POST with JSON { prompt, mode }." });
+  if (method !== "POST" && method !== "GET") {
+    return res.status(405).json({
+      error: "Method not allowed.",
+      detail: "Use POST with JSON { prompt, mode } or GET with ?prompt=...&mode=....",
+    });
   }
 
   let payload;
   try {
-    payload = await readJsonBody(req);
+    payload = method === "GET" ? readQueryPayload(req) : await readJsonBody(req);
   } catch (error) {
     console.error("Failed to parse AGI request body", error);
     return res
