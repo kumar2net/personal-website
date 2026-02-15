@@ -101,8 +101,9 @@ function buildRequestFailure(errorText, endpoint, method, status) {
 
 const USAGE_HINTS = [
   "1) Pick a mode: Quick = action-now, Practical = plan, Deep = strategy.",
-  '2) Ask for one specific outcome, e.g., "Help me plan a 30-day side project sprint."',
-  "3) Tap a suggested action to continue instantly.",
+  "2) Ask general questions (plans, summaries, ideas, advice).",
+  '3) Ask about content in this blog semantically: "What did Kumar say about XIRR?"',
+  "4) Tap a suggested action to continue instantly.",
 ];
 
 export default function AGIAssistant() {
