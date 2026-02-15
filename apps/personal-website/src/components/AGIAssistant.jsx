@@ -28,6 +28,8 @@ const MODES = [
 
 const ENDPOINT =
   import.meta.env.VITE_AGI_ENDPOINT?.trim() || "/api/agi";
+const DEFAULT_VERCEL_PORT =
+  import.meta.env.VITE_VERCEL_DEV_PORT || "3000";
 const parseClientInt = (value, fallback) => {
   const parsed = Number.parseInt(value, 10);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
@@ -37,11 +39,65 @@ const MAX_INPUT_CHARS = parseClientInt(
   import.meta.env.VITE_AGI_MAX_CHARS,
   2400,
 );
-const ENDPOINTS = Array.from(
-  new Set(
-    [ENDPOINT, "/api/agi"].filter(Boolean),
-  ),
-);
+const buildEndpoints = () => {
+  const candidates = [];
+  if (typeof window !== "undefined") {
+    const { hostname, port, origin } = window.location;
+    const isLocalHost = hostname === "localhost" || hostname === "127.0.0.1";
+    const isVitePort = port === "5173" || port === "5174";
+
+    if (origin) {
+      candidates.push(`${origin}/api/agi`);
+    }
+
+    if (isLocalHost && isVitePort) {
+      candidates.push(`http://localhost:${DEFAULT_VERCEL_PORT}/api/agi`);
+    }
+  }
+
+  candidates.push(ENDPOINT);
+  candidates.push("/api/agi");
+
+  const customEndpoint = import.meta.env.VITE_AGI_ENDPOINT;
+  if (customEndpoint?.trim()) {
+    candidates.push(customEndpoint.trim());
+  }
+
+  return Array.from(new Set(candidates.filter(Boolean)));
+};
+
+const BASE_AGI_ENDPOINTS = buildEndpoints();
+
+function buildGetEndpoint(baseEndpoint, payload) {
+  try {
+    const url = new URL(
+      baseEndpoint,
+      typeof window === "undefined" ? "http://localhost" : window.location.href,
+    );
+
+    if (payload?.prompt) {
+      url.searchParams.set("prompt", payload.prompt);
+    }
+
+    if (payload?.mode) {
+      url.searchParams.set("mode", payload.mode);
+    }
+
+    return url.toString();
+  } catch {
+    const safePrompt = encodeURIComponent(payload?.prompt || "");
+    const safeMode = encodeURIComponent(payload?.mode || "quick");
+    const separator = baseEndpoint.includes("?") ? "&" : "?";
+    return `${baseEndpoint}${separator}prompt=${safePrompt}&mode=${safeMode}`;
+  }
+}
+
+function buildRequestFailure(errorText, endpoint, method, status) {
+  if (typeof errorText !== "string" || !errorText.trim()) {
+    return `HTTP ${status} from ${method} ${endpoint}`;
+  }
+  return `HTTP ${status} from ${method} ${endpoint} (${errorText})`;
+}
 
 const USAGE_HINTS = [
   "1) Pick a mode: Quick = action-now, Practical = plan, Deep = strategy.",
@@ -84,24 +140,57 @@ export default function AGIAssistant() {
       let lastError = null;
 
       try {
-        for (const endpoint of ENDPOINTS) {
-          try {
-            const candidate = await fetch(endpoint, {
+        for (const endpoint of BASE_AGI_ENDPOINTS) {
+          const endpointMethods = [
+            {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            });
+              url: endpoint,
+              fetchOptions: {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              },
+            },
+            {
+              method: "GET",
+              url: buildGetEndpoint(endpoint, payload),
+              fetchOptions: {
+                method: "GET",
+                headers: { Accept: "application/json" },
+              },
+            },
+          ];
 
-            if (!candidate.ok) {
-              const text = await candidate.text();
-              lastError = new Error(text || `HTTP ${candidate.status}`);
-              continue;
+          for (const attempt of endpointMethods) {
+            try {
+              const candidate = await fetch(attempt.url, attempt.fetchOptions);
+
+              if (!candidate.ok) {
+                const text = await candidate.text();
+                if (candidate.status === 405 && attempt.method === "POST") {
+                  continue;
+                }
+
+                lastError = new Error(
+                  buildRequestFailure(
+                    text,
+                    endpoint,
+                    attempt.method,
+                    candidate.status,
+                  ),
+                );
+                continue;
+              }
+
+              response = await candidate.json();
+              break;
+            } catch (err) {
+              lastError = err;
             }
+          }
 
-            response = await candidate.json();
+          if (response) {
             break;
-          } catch (err) {
-            lastError = err;
           }
         }
 
