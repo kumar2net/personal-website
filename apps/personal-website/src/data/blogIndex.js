@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-15-why-democratic-apathy-threatens-our-future": {
+    title: "Why Democratic Apathy Threatens Our Future",
+    description:
+      "Democratic apathy makes outcomes less representative and weakens accountability. This post breaks down why turnout falls and why that matters for liberty.",
+    image: "/generate/2026-02-15-why-democratic-apathy-threatens-our-future.png",
+    tags: ["Democracy", "Politics", "Voter Turnout", "Civic Engagement", "Political Apathy"],
+    datePublished: "2026-02-15",
+    dateModified: "2026-02-15",
+  },
   "2026-02-14-bhajan-clubbing": {
     title: "Bhajan Clubbing",
     description:

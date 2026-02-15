@@ -20,6 +20,12 @@ const indiaContextPoints = [
   "Collective energy: in college events, friend groups, and festival spaces, this format gives both dance energy and a sense of rootedness.",
 ];
 
+const sivasriNotes = [
+  "When Sivasri Skandaprasad walks onto stage to pick up the சப்பளாக்கட்டை (chapplakattai), the energy in the room changes immediately.",
+  "She locks the rhythm, then sit tight and she will enter into trace mode — it becomes harder to stand still than to move with it.",
+  "Listen for 'Thondi Sariya' in the /music playlist right after this post to stay in that momentum.",
+];
+
 const bodyTextSx = {
   fontSize: "1.125rem",
   lineHeight: 1.8,
@@ -142,6 +148,26 @@ export default function BlogPost() {
         <Typography variant="body1" sx={bodyTextSx}>
           {reflection}
         </Typography>
+      </Box>
+
+      <Box component="section" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Typography
+          variant="h2"
+          sx={{
+            fontSize: { xs: "1.5rem", md: "1.875rem" },
+            fontWeight: 600,
+            color: "var(--mui-palette-text-primary)",
+          }}
+        >
+          Live scene: Sivasri Skandaprasad
+        </Typography>
+        <Box component="ul" sx={{ m: 0, pl: 3, display: "flex", flexDirection: "column", gap: 1.25 }}>
+          {sivasriNotes.map((point) => (
+            <Typography key={point} component="li" variant="body1" sx={bodyTextSx}>
+              {point}
+            </Typography>
+          ))}
+        </Box>
       </Box>
 
       <Box component="section">

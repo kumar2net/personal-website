@@ -1,7 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { embedTextWithGemini } from "../lib/gemini.js";
+import {
+  embedTextWithOpenAI,
+  getOpenAIEmbeddingModelList,
+  getConfiguredEmbeddingDimension,
+} from "../lib/openai-embeddings.js";
 
 function jsonResponse(res, statusCode, body, extraHeaders = {}) {
   res.status(statusCode).setHeader("Content-Type", "application/json");
@@ -11,8 +15,56 @@ function jsonResponse(res, statusCode, body, extraHeaders = {}) {
   res.send(JSON.stringify(body));
 }
 
-const EMBEDDING_DIM = 768;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const EMBEDDING_MODEL_LIST = getOpenAIEmbeddingModelList();
+const EMBEDDING_DIM_FALLBACK = getConfiguredEmbeddingDimension(1536);
+const BLOG_FILE_CANDIDATES = [
+  path.resolve(process.cwd(), "src/pages/blog"),
+  path.resolve(process.cwd(), "apps/personal-website/src/pages/blog"),
+  path.resolve(__dirname, "../src/pages/blog"),
+];
+const FALLBACK_EXCERPT_CHARS = 420;
+const FALLBACK_STOP_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "by",
+  "for",
+  "from",
+  "how",
+  "i",
+  "in",
+  "is",
+  "it",
+  "its",
+  "of",
+  "on",
+  "or",
+  "that",
+  "the",
+  "to",
+  "what",
+  "when",
+  "where",
+  "with",
+  "who",
+  "why",
+  "would",
+  "you",
+  "your",
+  "about",
+  "did",
+  "didn't",
+  "kumar",
+  "say",
+  "he",
+  "she",
+  "they",
+]);
 const INDEX_CANDIDATES = [
   path.resolve(process.cwd(), "src/data/semantic-index.json"),
   path.resolve(process.cwd(), "apps/personal-website/src/data/semantic-index.json"),
@@ -20,8 +72,171 @@ const INDEX_CANDIDATES = [
 ];
 
 let cachedIndex = null;
+let cachedFallbackCorpus = null;
 
-function toFiniteVector(values, expectedLength = EMBEDDING_DIM) {
+function isBlogDirectory(candidate) {
+  try {
+    return fs.statSync(candidate).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function stripJsxToText(source) {
+  let text = source;
+  text = text.replace(/\/\*[\s\S]*?\*\//g, " ");
+  text = text.replace(/\/\/[^\n]*/g, " ");
+  text = text.replace(/^\s*import\s.+$/gm, " ");
+  text = text.replace(/^\s*export\s.+$/gm, " ");
+  text = text.replace(/<[^>]*>/g, " ");
+  text = text.replace(/\{[^{}]*\}/g, " ");
+  text = text.replace(/\s+/g, " ").trim();
+  return text;
+}
+
+function stripMarkdownToText(source) {
+  let text = source;
+  text = text.replace(/^\s*#+\s*/gm, " ");
+  text = text.replace(/`{1,3}[\s\S]*?`{1,3}/g, " ");
+  text = text.replace(/\[[^\]]+\]\([^)]*\)/g, " ");
+  text = text.replace(/!\[[^\]]+\]\([^)]*\)/g, " ");
+  text = text.replace(/[*_~>#]/g, " ");
+  text = text.replace(/\s+/g, " ").trim();
+  return text;
+}
+
+function toTitleFromSlug(slug) {
+  return slug
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+    .trim();
+}
+
+function extractTitleFromFile(content, slug) {
+  const match = content.match(/title:\s*["'`]?([^"'`]+)["'`]/i);
+  if (match?.[1]) {
+    return match[1].trim();
+  }
+  return toTitleFromSlug(slug);
+}
+
+async function loadFallbackCorpus() {
+  if (cachedFallbackCorpus) {
+    return cachedFallbackCorpus;
+  }
+
+  for (const candidate of BLOG_FILE_CANDIDATES) {
+    if (!isBlogDirectory(candidate)) {
+      continue;
+    }
+    const entries = await fs.promises.readdir(candidate, { withFileTypes: true });
+    const files = entries
+      .filter((entry) => entry.isFile())
+      .map((entry) => entry.name)
+      .filter((name) => name.endsWith(".jsx") || name.endsWith(".md"));
+
+    const corpus = [];
+    for (const fileName of files) {
+      const filePath = path.join(candidate, fileName);
+      const slug = path.basename(fileName, path.extname(fileName));
+      const raw = await fs.promises.readFile(filePath, "utf8");
+      const text =
+        fileName.endsWith(".md") ? stripMarkdownToText(raw) : stripJsxToText(raw);
+      const normalizedText = text.toLowerCase();
+      if (!normalizedText) {
+        continue;
+      }
+      corpus.push({
+        id: slug,
+        title: extractTitleFromFile(raw, slug),
+        url: `/blog/${slug}`,
+        excerpt: normalizedText.slice(0, FALLBACK_EXCERPT_CHARS),
+        fullText: normalizedText,
+      });
+    }
+
+    cachedFallbackCorpus = corpus;
+    return corpus;
+  }
+
+  throw new Error("No blog files found for lexical fallback.");
+}
+
+function tokenizeForFallback(text) {
+  if (typeof text !== "string") return [];
+
+  const seen = new Set();
+  const tokens = [];
+
+  for (const token of text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .split(/\s+/)
+    .filter((token) => token.length >= 3)
+    .filter(Boolean)) {
+    if (FALLBACK_STOP_WORDS.has(token) || seen.has(token)) {
+      continue;
+    }
+    seen.add(token);
+    tokens.push(token);
+  }
+
+  return tokens;
+}
+
+function escapeRegexTerm(term) {
+  return term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+async function searchByTextFallback(query, topK) {
+  const docs = await loadFallbackCorpus();
+  const terms = tokenizeForFallback(query);
+  if (!terms.length) return [];
+  const uniqueTerms = [...new Set(terms)];
+  const normalizedQuery = query.toLowerCase();
+  const termBoundaryRegex = (term) =>
+    new RegExp(`\\b${escapeRegexTerm(term)}\\b`, "g");
+
+  const scored = docs.map((doc) => {
+    const haystack = `${doc.title} ${doc.url} ${doc.fullText}`.toLowerCase();
+    let score = 0;
+
+    if (haystack.includes(normalizedQuery)) {
+      score += 2;
+    }
+
+    for (const term of uniqueTerms) {
+      if (haystack.includes(term)) {
+        const matches = haystack.match(termBoundaryRegex(term));
+        score += matches ? Math.min(2.8, matches.length * 1.1) : 0.45;
+      }
+    }
+
+    const bonus = doc.title && terms.some((term) => doc.title.toLowerCase().includes(term))
+      ? 0.9
+      : 0;
+    return {
+      id: doc.id,
+      title: doc.title,
+      url: doc.url,
+      excerpt: doc.excerpt,
+      score: score + bonus,
+    };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.filter((item) => item.score > 0).slice(0, topK);
+}
+
+function clampTopK(value, fallback = 5) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) {
+    return fallback;
+  }
+  return Math.max(1, Math.min(12, parsed));
+}
+
+function toFiniteVector(values, expectedLength = EMBEDDING_DIM_FALLBACK) {
   if (!Array.isArray(values)) {
     throw new Error("Embedding vector missing");
   }
@@ -53,7 +268,7 @@ function loadIndex() {
     if (!Array.isArray(parsed?.items)) {
       throw new Error(`Malformed semantic index at ${candidate}`);
     }
-    const embeddingDim = Number(parsed.embeddingDim) || EMBEDDING_DIM;
+    const embeddingDim = Number(parsed.embeddingDim) || EMBEDDING_DIM_FALLBACK;
     const docs = parsed.items.map((item) => {
       const vector = toFiniteVector(item.vector, embeddingDim);
       const norm =
@@ -89,8 +304,8 @@ function dotProduct(a, b) {
   return sum;
 }
 
-async function searchEmbeddings(vector, topK) {
-  const index = loadIndex();
+async function searchEmbeddings(vector, topK, indexOverride) {
+  const index = indexOverride || loadIndex();
   const query = toFiniteVector(vector, index.embeddingDim);
   const queryNorm = computeNorm(query);
   if (queryNorm === 0) {
@@ -114,16 +329,57 @@ async function searchEmbeddings(vector, topK) {
   return scored.slice(0, topK);
 }
 
-async function embedQuery(text) {
-  const values = await embedTextWithGemini(text, {
-    model: "text-embedding-004",
-  });
-  if (values.length !== EMBEDDING_DIM) {
-    throw new Error(
-      `Embedding dimension mismatch: got ${values.length}, expected ${EMBEDDING_DIM}`,
-    );
+async function embedQuery(text, targetDimension) {
+  let lastError = null;
+  for (const model of EMBEDDING_MODEL_LIST) {
+    try {
+      const values = await embedTextWithOpenAI(text, {
+        model,
+        dimensions: targetDimension,
+      });
+      return values;
+    } catch (error) {
+      lastError = error;
+    }
   }
-  return values;
+
+  throw lastError || new Error("No valid embedding model available");
+}
+
+export async function searchBlogByQuery(query, options = {}) {
+  const topK = clampTopK(options.topK, 5);
+  const normalized = typeof query === "string" ? query.trim() : "";
+  if (!normalized) {
+    return [];
+  }
+
+  const semanticIndex = (() => {
+    try {
+      return loadIndex();
+    } catch {
+      return null;
+    }
+  })();
+
+  try {
+    const embedding = await embedQuery(
+      normalized,
+      semanticIndex?.embeddingDim || EMBEDDING_DIM_FALLBACK,
+    );
+    const semanticResults = await searchEmbeddings(
+      embedding,
+      topK,
+      semanticIndex,
+    );
+    if (semanticResults.length) {
+      return semanticResults;
+    }
+  } catch (err) {
+    console.error("Semantic embedding search failed, using lexical fallback", err);
+  }
+
+  return await searchByTextFallback(normalized, topK);
+ 
 }
 
 export default async function handler(req, res) {
@@ -154,15 +410,14 @@ export default async function handler(req, res) {
   }
 
   const q = (payload?.q || "").toString().trim();
-  const topK = Math.max(1, Math.min(10, Number(payload?.topK || 5)));
+  const topK = clampTopK(payload?.topK, 5);
   if (!q) {
     jsonResponse(res, 400, { error: "q is required" });
     return;
   }
 
   try {
-    const embedding = await embedQuery(q);
-    const results = await searchEmbeddings(embedding, topK);
+    const results = await searchBlogByQuery(q, { topK });
     jsonResponse(res, 200, {
       results,
       tookMs: Date.now() - started,

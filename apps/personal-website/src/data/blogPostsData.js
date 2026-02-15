@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Why Democratic Apathy Threatens Our Future",
+    date: "February 15, 2026",
+    lastModified: "February 15, 2026",
+    excerpt:
+      "Democratic apathy is making democracies weaker. Lower turnout and political disengagement leave room for elites, distort outcomes, and erode accountability. This post maps the causes and cost of the cycle.",
+    tags: ["Democracy", "Politics", "Voter Turnout", "Civic Engagement", "Political Apathy"],
+    image: "/generate/2026-02-15-why-democratic-apathy-threatens-our-future.png",
+    link: "/blog/2026-02-15-why-democratic-apathy-threatens-our-future",
+  },
+  {
     title: "Bhajan Clubbing",
     date: "February 14, 2026",
     lastModified: "February 14, 2026",

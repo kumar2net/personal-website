@@ -32,6 +32,7 @@ import {
 } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import ErrorBoundary from "./components/ErrorBoundary";
+import AGIAssistant from "./components/AGIAssistant";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
@@ -675,27 +676,28 @@ const App = ({ mode }) => {
                             </Button>
                           </Stack>
                           <Divider sx={{ borderColor: "var(--home-border)" }} />
-                          <Stack spacing={0.5}>
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                fontStyle: "italic",
-                                color: "var(--home-muted-text)",
-                                maxWidth: 740,
-                              }}
-                            >
-                              "The higher we soar, the smaller we seem to those
-                              who cannot fly."
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              sx={{ color: "var(--home-muted-text)" }}
-                            >
-                              - Friedrich Nietzsche
-                            </Typography>
-                          </Stack>
+                            <Stack spacing={0.5}>
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  fontStyle: "italic",
+                                  color: "var(--home-muted-text)",
+                                  maxWidth: 740,
+                                }}
+                              >
+                                “He who is not satisfied with a little, is
+                                satisfied with nothing.”
+                              </Typography>
+                              <Typography
+                                variant="caption"
+                                sx={{ color: "var(--home-muted-text)" }}
+                              >
+                                - Epicurus
+                              </Typography>
+                            </Stack>
                         </Stack>
                       </Paper>
+                      <AGIAssistant />
                       <Box>
                         <Stack spacing={0.75} sx={{ mb: 2 }}>
                           <Typography

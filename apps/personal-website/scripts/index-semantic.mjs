@@ -8,7 +8,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { v1 as aiplatform } from "@google-cloud/aiplatform";
 import dotenv from "dotenv";
-import { embedTextWithGemini } from "../lib/gemini.js";
+import {
+  embedTextWithOpenAI,
+  getOpenAIEmbeddingModelList,
+  getConfiguredEmbeddingDimension,
+} from "../lib/openai-embeddings.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -17,21 +21,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // --- Env ---
-const hasGeminiCredentials =
-  Boolean(process.env.GCP_SERVICE_ACCOUNT_JSON) ||
-  Boolean(process.env.GEMINI_API_KEY);
+const hasOpenAIEmbeddingsCredentials = Boolean(process.env.OPENAI_API_KEY);
 const GCP_PROJECT_ID = process.env.GCP_PROJECT_ID;
 const GCP_LOCATION = process.env.GCP_LOCATION || "us-central1";
 const VERTEX_INDEX_ID = process.env.VERTEX_INDEX_ID;
-const VERTEX_EMBED_DIM = Number(process.env.VERTEX_EMBED_DIM || "768");
+const VERTEX_EMBED_DIM = Number(process.env.VERTEX_EMBED_DIM || "1536");
 const SEMANTIC_SKIP_VERTEX = process.env.SEMANTIC_SKIP_VERTEX === "1";
 const GCP_SERVICE_ACCOUNT_JSON = process.env.GCP_SERVICE_ACCOUNT_JSON;
 const SEMANTIC_LEXICAL_ONLY = process.env.SEMANTIC_LEXICAL_ONLY === "1";
+const EMBEDDING_MODELS = getOpenAIEmbeddingModelList();
+const EMBEDDING_MODEL = EMBEDDING_MODELS[0] || "text-embedding-3-small";
+const EMBEDDING_DIM = getConfiguredEmbeddingDimension(1536);
 
-if (!hasGeminiCredentials && !SEMANTIC_LEXICAL_ONLY) {
-  throw new Error(
-    "Missing Gemini credentials. Set GCP_SERVICE_ACCOUNT_JSON or GEMINI_API_KEY",
-  );
+if (!hasOpenAIEmbeddingsCredentials && !SEMANTIC_LEXICAL_ONLY) {
+  throw new Error("Missing OPENAI_API_KEY for semantic embeddings");
 }
 // Only require GCP config if not skipping Vertex AI
 if (!SEMANTIC_LEXICAL_ONLY && !SEMANTIC_SKIP_VERTEX) {
@@ -162,8 +165,9 @@ async function main() {
 
   for (const post of posts) {
     if (!SEMANTIC_LEXICAL_ONLY) {
-      const embedding = await embedTextWithGemini(post.text, {
-        model: "text-embedding-004",
+      const embedding = await embedTextWithOpenAI(post.text, {
+        model: EMBEDDING_MODEL,
+        dimensions: EMBEDDING_DIM,
       });
       if (embedding.length !== VERTEX_EMBED_DIM) {
         throw new Error(

@@ -8,7 +8,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import dotenv from "dotenv";
-import { embedTextWithGemini } from "../lib/gemini.js";
+import {
+  embedTextWithOpenAI,
+  getOpenAIEmbeddingModelList,
+  getConfiguredEmbeddingDimension,
+} from "../lib/openai-embeddings.js";
 
 const envCandidates = [
   path.resolve(process.cwd(), ".env"),
@@ -25,12 +29,10 @@ for (const candidate of envCandidates) {
   }
 }
 
-const hasGeminiCredentials =
-  Boolean(process.env.GCP_SERVICE_ACCOUNT_JSON) ||
-  Boolean(process.env.GEMINI_API_KEY);
-if (!hasGeminiCredentials) {
+const hasOpenAIEmbeddingCredentials = Boolean(process.env.OPENAI_API_KEY);
+if (!hasOpenAIEmbeddingCredentials) {
   console.error(
-    "Gemini credentials are required (set GCP_SERVICE_ACCOUNT_JSON or GEMINI_API_KEY)",
+    "OPENAI_API_KEY is required to run semantic indexing.",
   );
   process.exit(1);
 }
@@ -39,7 +41,9 @@ const BLOG_DIR = path.resolve(process.cwd(), "src/pages/blog");
 const INDEX_PATH = path.resolve(process.cwd(), "src/data/semantic-index.json");
 const MAX_TEXT_CHARS = 16000;
 const MAX_EXCERPT_CHARS = 240;
-const EMBEDDING_DIM = 768;
+const EMBEDDING_DIM = getConfiguredEmbeddingDimension(1536);
+const EMBEDDING_MODEL_LIST = getOpenAIEmbeddingModelList();
+const EMBEDDING_MODEL = EMBEDDING_MODEL_LIST[0] || "text-embedding-3-small";
 
 async function readBlogFiles() {
   const entries = await fs.promises.readdir(BLOG_DIR, { withFileTypes: true });
@@ -130,8 +134,9 @@ async function main() {
         continue;
       }
       const vector = toFiniteVector(
-        await embedTextWithGemini(post.text, {
-          model: "text-embedding-004",
+        await embedTextWithOpenAI(post.text, {
+          model: EMBEDDING_MODEL,
+          dimensions: EMBEDDING_DIM,
         }),
       );
       items.push({
@@ -147,7 +152,7 @@ async function main() {
       );
     }
     const payload = {
-      provider: "gemini-text-embedding-004",
+      provider: `openai-${EMBEDDING_MODEL}`,
       embeddingDim: EMBEDDING_DIM,
       generatedAt: new Date().toISOString(),
       items: items.map((item) => ({
