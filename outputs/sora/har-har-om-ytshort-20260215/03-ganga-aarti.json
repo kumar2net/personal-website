@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771123314,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69913272d54c8190ae13f2657d6019d704bab09d19fdcd4b",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts spiritual rap visual\nPrimary request: Ganga Aarti night energy with devotional lamps and rhythmic motion.\nScene/background: Har Ki Pauri style Ganga Aarti evening ambience at river ghats\nSubject: rows of diyas, ceremonial lamps, smoke trails, river reflections\nAction: 0-4s diya close-ups and sparks; 4-8s synchronized lamp arcs; 8-12s wide glowing river reflection\nCamera: vertical handheld cinematic with smooth motion and fast inserts\nLighting/mood: night scene with warm firelight and deep blue ambience\nColor palette: amber flame, deep blue, black\nStyle/format: contemporary high-energy shorts style, cinematic realism, no text overlays\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no branded text, no identifiable real people, no copyrighted characters\nAvoid: flicker, text artifacts, logos, watermark, deformed faces",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771123483,
+    "created_at": 1771123314,
+    "error": null,
+    "expires_at": 1771127083,
+    "id": "video_69913272d54c8190ae13f2657d6019d704bab09d19fdcd4b",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts spiritual rap visual\nPrimary request: Ganga Aarti night energy with devotional lamps and rhythmic motion.\nScene/background: Har Ki Pauri style Ganga Aarti evening ambience at river ghats\nSubject: rows of diyas, ceremonial lamps, smoke trails, river reflections\nAction: 0-4s diya close-ups and sparks; 4-8s synchronized lamp arcs; 8-12s wide glowing river reflection\nCamera: vertical handheld cinematic with smooth motion and fast inserts\nLighting/mood: night scene with warm firelight and deep blue ambience\nColor palette: amber flame, deep blue, black\nStyle/format: contemporary high-energy shorts style, cinematic realism, no text overlays\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no branded text, no identifiable real people, no copyrighted characters\nAvoid: flicker, text artifacts, logos, watermark, deformed faces",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

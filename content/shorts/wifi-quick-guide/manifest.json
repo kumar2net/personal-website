@@ -1,0 +1,261 @@
+{
+  "version": "sora-manifest.v1",
+  "project": {
+    "id": "wifi-quick-guide-2026-02",
+    "title": "Home Wi-Fi: 2.4/5 GHz Quick Guide",
+    "fps": 30,
+    "resolution": {
+      "w": 1080,
+      "h": 1920
+    },
+    "canvas_bg": "#000000"
+  },
+  "tracks": {
+    "video": [
+      {
+        "id": "v1",
+        "source": "sora://video_69906a1f516c8191a09a8e984d3a9c680e666f47b06726ff",
+        "start": 0,
+        "end": 12,
+        "keyframes": [
+          {
+            "t": 0,
+            "prompt_ref": "p_hook"
+          }
+        ]
+      },
+      {
+        "id": "v2",
+        "source": "sora://video_69906ad73180819089bc79cff8113a0e00876e6e60914c03",
+        "start": 12,
+        "end": 24,
+        "keyframes": [
+          {
+            "t": 12,
+            "prompt_ref": "p_context"
+          }
+        ]
+      },
+      {
+        "id": "v3",
+        "source": "sora://video_69906b8f2a308190af19438a4e31fce90a2a5ea516059a6b",
+        "start": 24,
+        "end": 36,
+        "keyframes": [
+          {
+            "t": 24,
+            "prompt_ref": "p_breakdown"
+          }
+        ]
+      },
+      {
+        "id": "v4",
+        "source": "sora://video_69906c464c008190acfdc6ae0886eb7e0ee94ec398e8e352",
+        "start": 36,
+        "end": 48.41,
+        "keyframes": [
+          {
+            "t": 36,
+            "prompt_ref": "p_payoff"
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "id": "a_en",
+        "lang": "en",
+        "role": "narration",
+        "source": "tts://en-US/voice:alloy?hash=wifi-en-v1",
+        "start": 0,
+        "end": 48.41,
+        "segments": [
+          {
+            "t0": 0.2,
+            "t1": 3.0,
+            "cap_ref": "c1"
+          },
+          {
+            "t0": 3.1,
+            "t1": 7.6,
+            "cap_ref": "c2"
+          },
+          {
+            "t0": 7.8,
+            "t1": 12.0,
+            "cap_ref": "c3"
+          },
+          {
+            "t0": 12.2,
+            "t1": 18.0,
+            "cap_ref": "c4"
+          },
+          {
+            "t0": 18.2,
+            "t1": 24.0,
+            "cap_ref": "c5"
+          },
+          {
+            "t0": 24.2,
+            "t1": 30.5,
+            "cap_ref": "c6"
+          },
+          {
+            "t0": 30.7,
+            "t1": 36.0,
+            "cap_ref": "c7"
+          },
+          {
+            "t0": 36.2,
+            "t1": 43.0,
+            "cap_ref": "c8"
+          },
+          {
+            "t0": 43.2,
+            "t1": 48.2,
+            "cap_ref": "c9"
+          }
+        ]
+      },
+      {
+        "id": "a_ta",
+        "lang": "ta",
+        "role": "narration",
+        "source": "tts://ta-IN/voice:tamil-neutral?hash=wifi-ta-v1",
+        "start": 0,
+        "end": 48.41,
+        "segments": [
+          {
+            "t0": 0.2,
+            "t1": 3.0,
+            "cap_ref": "c1_ta"
+          },
+          {
+            "t0": 3.1,
+            "t1": 7.6,
+            "cap_ref": "c2_ta"
+          },
+          {
+            "t0": 7.8,
+            "t1": 12.0,
+            "cap_ref": "c3_ta"
+          }
+        ]
+      }
+    ],
+    "captions": [
+      {
+        "id": "c1",
+        "lang": "en",
+        "text": "Do not keep all devices on 2.4 GHz."
+      },
+      {
+        "id": "c2",
+        "lang": "en",
+        "text": "Move 5 GHz-capable devices to 5 GHz."
+      },
+      {
+        "id": "c3",
+        "lang": "en",
+        "text": "Keep legacy and IoT devices on 2.4 GHz."
+      },
+      {
+        "id": "c4",
+        "lang": "en",
+        "text": "Band steering auto-selects the better band."
+      },
+      {
+        "id": "c5",
+        "lang": "en",
+        "text": "This reduces contention on crowded 2.4 GHz channels."
+      },
+      {
+        "id": "c6",
+        "lang": "en",
+        "text": "2.4 GHz has narrower channels and more overlap."
+      },
+      {
+        "id": "c7",
+        "lang": "en",
+        "text": "5 GHz often delivers better peak throughput."
+      },
+      {
+        "id": "c8",
+        "lang": "en",
+        "text": "Upgrade legacy 2.4-only devices when possible."
+      },
+      {
+        "id": "c9",
+        "lang": "en",
+        "text": "Ask your ISP for dual-band plus band steering."
+      },
+      {
+        "id": "c1_ta",
+        "lang": "ta",
+        "text": "அனைத்து சாதனங்களையும் 2.4 GHz-ல் வைத்திருக்க வேண்டாம்."
+      },
+      {
+        "id": "c2_ta",
+        "lang": "ta",
+        "text": "5 GHz ஆதரிக்கும் சாதனங்களை 5 GHz-க்கு மாற்றுங்கள்."
+      },
+      {
+        "id": "c3_ta",
+        "lang": "ta",
+        "text": "பழைய/IoT சாதனங்களை 2.4 GHz-ல் வைத்திருக்கவும்."
+      }
+    ]
+  },
+  "prompts": [
+    {
+      "id": "p_hook",
+      "model": "sora-2",
+      "text": "Split lanes for 5 GHz capable vs legacy 2.4 GHz devices"
+    },
+    {
+      "id": "p_context",
+      "model": "sora-2",
+      "text": "Band steering visualization and client assignment"
+    },
+    {
+      "id": "p_breakdown",
+      "model": "sora-2",
+      "text": "2.4 GHz throughput limits vs 5 GHz channels"
+    },
+    {
+      "id": "p_payoff",
+      "model": "sora-2",
+      "text": "Legacy upgrade benefits and ISP checklist"
+    }
+  ],
+  "mix": {
+    "lufs_target": -16,
+    "duck_music_under_voice_db": -12,
+    "safe_margins_sec": {
+      "pre": 0.12,
+      "post": 0.12
+    }
+  },
+  "export": {
+    "cuts": [
+      {
+        "name": "shorts-9.16-en",
+        "range": [
+          0,
+          48.41
+        ],
+        "size": "1080x1920",
+        "audio": "a_en"
+      },
+      {
+        "name": "shorts-9.16-ta",
+        "range": [
+          0,
+          48.41
+        ],
+        "size": "1080x1920",
+        "audio": "a_ta"
+      }
+    ]
+  }
+}

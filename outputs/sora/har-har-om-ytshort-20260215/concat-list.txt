@@ -1,0 +1,4 @@
+file '/Users/kumara/personal-website/outputs/sora/har-har-om-ytshort-20260215/01-haridwar-hook.mp4'
+file '/Users/kumara/personal-website/outputs/sora/har-har-om-ytshort-20260215/02-rishikesh-lakshman-jhula.mp4'
+file '/Users/kumara/personal-website/outputs/sora/har-har-om-ytshort-20260215/03-ganga-aarti.mp4'
+file '/Users/kumara/personal-website/outputs/sora/har-har-om-ytshort-20260215/04-montage-payoff.mp4'

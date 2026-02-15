@@ -24,10 +24,9 @@ const MusicPage = () => {
     : theme.palette.getContrastText(theme.palette.error.main);
   const playlistId = "PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH";
   const playlistShareId = "WfNRuoFY0s0sW-84";
-  const freshSpinUrl = "https://youtu.be/gQme2KrzzLw?si=N1b87h0uqqNNkheB";
-  const freshSpinUrlTwo = "https://youtu.be/ktbZIV22mRk?si=tK4impvvMqCqJtoM";
-  const freshSpinUrlThree = "https://music.youtube.com/search?q=Reble%20Lokah";
-  const freshSpinUrlFour = "https://music.youtube.com/search?q=Reble%20Dhurandhur";
+  const freshSpinUrlAgam = "https://youtu.be/nVx-6ICOEf0?si=2MTyIK3rCCvJu1br";
+  const freshSpinUrlSivasri = "https://music.youtube.com/search?q=Sivasri";
+  const freshSpinUrlThree = "https://youtu.be/ktbZIV22mRk?si=tK4impvvMqCqJtoM";
 
   return (
     <Box
@@ -185,34 +184,30 @@ const MusicPage = () => {
                   Latest spins
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  Added new spins this week: Reble's "Lokah" and "Dhurandhur,"
-                  plus two long-running favorites I still loop.
+                  Latest adds now lead with Agam Agarwal and Sivasri, followed
+                  by one steady repeat for focus mode.
                 </Typography>
 
                 <Stack spacing={2}>
                   {[
                     {
-                      title: "Their Voices BLEND So Perfectly It Gave People CHILLS | Bill Withers",
-                      context: "Harmony-forward and warm, the kind of loop that resets the room fast.",
-                      url: freshSpinUrl,
+                      title:
+                        "Ashutosh Shashank Shekhar | Shiv Stuti at Kashi | Agam Aggarwal",
+                      context:
+                        "Newest devotional-energy add. Strong rhythm with a modern bhajan pulse.",
+                      url: freshSpinUrlAgam,
+                    },
+                    {
+                      title: "Sivasri | Recent playlist add",
+                      context:
+                        "Freshly added voice-led devotional pick that sits well in the same listening lane.",
+                      url: freshSpinUrlSivasri,
                     },
                     {
                       title:
                         "Amaidhi (Tamil) | Sid Sriram | Salim Sulaiman | Karthik Netha | Merchant Records South",
                       context: "A calm Tamil pick with a steady lift for quiet focus hours.",
-                      url: freshSpinUrlTwo,
-                    },
-                    {
-                      title: "Lokah | Reble",
-                      context:
-                        "Sharp edges, high intent, and a clean reminder that emotion can be turned into output.",
                       url: freshSpinUrlThree,
-                    },
-                    {
-                      title: "Dhurandhur | Reble",
-                      context:
-                        "Raw and energetic. Another repeat when I need momentum, not background noise.",
-                      url: freshSpinUrlFour,
                     },
                   ].map((item) => (
                     <Box

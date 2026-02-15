@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771123494,
+    "error": null,
+    "expires_at": null,
+    "id": "video_699133260a388191a6f8589f97a1d0860ce009215a1f5600",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts spiritual rap visual\nPrimary request: Payoff montage uniting Haridwar, Rishikesh Lakshman Jhula, and Ganga Aarti.\nScene/background: montage transitions across Haridwar ghats, Lakshman Jhula bridge, and Ganga Aarti river lights\nSubject: river flow motif connecting all three locations\nAction: 0-4s Haridwar to bridge transition; 4-8s bridge to aarti transition; 8-12s uplifting wide finale over Ganga\nCamera: vertical cinematic crane-up and beat-timed hard cuts\nLighting/mood: dawn-to-night gradient mood\nColor palette: gold, cyan, midnight blue, saffron\nStyle/format: contemporary high-energy shorts style, cinematic realism, no text overlays\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no branded text, no identifiable real people, no copyrighted characters\nAvoid: flicker, text artifacts, logos, watermark, deformed faces",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771123665,
+    "created_at": 1771123494,
+    "error": null,
+    "expires_at": 1771127265,
+    "id": "video_699133260a388191a6f8589f97a1d0860ce009215a1f5600",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts spiritual rap visual\nPrimary request: Payoff montage uniting Haridwar, Rishikesh Lakshman Jhula, and Ganga Aarti.\nScene/background: montage transitions across Haridwar ghats, Lakshman Jhula bridge, and Ganga Aarti river lights\nSubject: river flow motif connecting all three locations\nAction: 0-4s Haridwar to bridge transition; 4-8s bridge to aarti transition; 8-12s uplifting wide finale over Ganga\nCamera: vertical cinematic crane-up and beat-timed hard cuts\nLighting/mood: dawn-to-night gradient mood\nColor palette: gold, cyan, midnight blue, saffron\nStyle/format: contemporary high-energy shorts style, cinematic realism, no text overlays\nAudio: visual-only clip for external rap soundtrack\nConstraints: under-18 suitable, no logos, no branded text, no identifiable real people, no copyrighted characters\nAvoid: flicker, text artifacts, logos, watermark, deformed faces",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

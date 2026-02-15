@@ -5,6 +5,10 @@ const title = "Bhajan Clubbing";
 const publishedDate = "February 14, 2026";
 
 const videoUrl = "https://youtu.be/nVx-6ICOEf0?si=2MTyIK3rCCvJu1br";
+const videoTitle =
+  "Agam - Ashutosh Shashank Shekhar | Shiv Stuti at Kashi - Banaras - Varanasi | Maha Shiv Ratri 2026";
+const singerName = "Agam Aggarwal";
+const singerImageUrl = "https://i.ytimg.com/vi/nVx-6ICOEf0/hqdefault.jpg";
 
 const reflection =
   "It keeps the spiritual center of a bhajan intact, but the sonic framing is modern and kinetic, so I do not just listen, I physically feel pulled into it. The contrast between devotion and pulse makes it hit me in a way that feels both rooted and new at the same time.";
@@ -43,18 +47,85 @@ export default function BlogPost() {
         >
           {publishedDate}
         </Typography>
-        <Typography variant="body1" sx={bodyTextSx}>
-          Reference:{" "}
-          <Box
-            component="a"
-            href={videoUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            sx={{ color: "inherit" }}
-          >
-            {videoUrl}
+        <Box
+          component="a"
+          href={videoUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+          sx={{
+            textDecoration: "none",
+            color: "inherit",
+            borderRadius: 3,
+            overflow: "hidden",
+            border: "1px solid var(--mui-palette-divider)",
+            backgroundColor: "var(--mui-palette-background-paper)",
+            boxShadow: "0 12px 32px rgba(15, 23, 42, 0.12)",
+            transition: "transform 180ms ease, box-shadow 180ms ease",
+            "&:hover": {
+              transform: "translateY(-2px)",
+              boxShadow: "0 16px 40px rgba(15, 23, 42, 0.16)",
+            },
+          }}
+        >
+          <Box sx={{ position: "relative" }}>
+            <Box
+              component="img"
+              src={singerImageUrl}
+              alt={`${singerName} performance visual`}
+              loading="lazy"
+              decoding="async"
+              sx={{
+                width: "100%",
+                aspectRatio: "16 / 9",
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "flex-end",
+                background:
+                  "linear-gradient(to top, rgba(15,23,42,0.75) 0%, rgba(15,23,42,0.2) 45%, rgba(15,23,42,0.05) 100%)",
+                p: 2,
+              }}
+            >
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  color: "#fff",
+                  fontWeight: 700,
+                  letterSpacing: 0.3,
+                }}
+              >
+                ▶ Watch on YouTube
+              </Typography>
+            </Box>
           </Box>
-        </Typography>
+          <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 0.5 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: "var(--mui-palette-text-primary)", fontWeight: 700 }}
+            >
+              {videoTitle}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: "var(--mui-palette-text-secondary)" }}
+            >
+              Singer: {singerName}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{ color: "var(--mui-palette-text-secondary)" }}
+            >
+              Click to open the full video
+            </Typography>
+          </Box>
+        </Box>
+
       </Box>
 
       <Box component="section" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
