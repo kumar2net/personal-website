@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { recordTokenUsage } from "../../../scripts/token-usage.mjs";
 
 let cachedClient = null;
 
@@ -67,7 +68,18 @@ function looksLikeDimensionsError(error) {
 }
 
 async function createEmbedding(options) {
-  return getClient().embeddings.create(options);
+  const response = await getClient().embeddings.create(options);
+  const usage = response?.usage || {};
+  recordTokenUsage({
+    provider: "openai",
+    route: "embeddings",
+    model: response?.model || options?.model,
+    request_id: response?.id,
+    input_tokens: usage.prompt_tokens,
+    output_tokens: usage.completion_tokens,
+    total_tokens: usage.total_tokens,
+  });
+  return response;
 }
 
 export function getOpenAIEmbeddingModelList(

@@ -1,4 +1,5 @@
 import { put } from "@vercel/blob";
+import { resolveIdempotencyKey, withIdempotentExecution } from "../src/lib/idempotency.js";
 
 const DEFAULT_BLOB_BASE =
   "https://jf0xcffb3qoqwhu6.public.blob.vercel-storage.com";
@@ -30,6 +31,45 @@ const sanitizeSlug = (value) => {
     throw new Error("Invalid slug");
   }
   return base;
+};
+
+const getRequestIdentity = (req = {}) => {
+  const headers = req.headers || {};
+  const forwardedFor =
+    typeof headers["x-forwarded-for"] === "string"
+      ? headers["x-forwarded-for"].split(",")[0].trim()
+      : "";
+  const userAgent =
+    typeof headers["user-agent"] === "string" ? headers["user-agent"] : "";
+  const remoteAddress = req?.socket?.remoteAddress || "";
+
+  const source = [forwardedFor, remoteAddress, userAgent]
+    .map((value) => (typeof value === "string" ? value.trim() : ""))
+    .filter(Boolean)
+    .join("|");
+
+  return source || "unknown-client";
+};
+
+const buildIdempotencyPayload = ({
+  type,
+  slug,
+  emoji,
+  entry,
+  requestIdentity,
+}) => {
+  const safeEntry = {
+    answer: typeof entry?.answer === "string" ? entry.answer.trim() : "",
+    anonymousID: entry?.anonymousID ? `${entry.anonymousID}` : "",
+  };
+  return JSON.stringify({
+    type,
+    slug,
+    emoji,
+    requestIdentity,
+    answer: safeEntry.answer,
+    anonymousID: safeEntry.anonymousID,
+  });
 };
 
 const applyCors = (res) => {
@@ -117,24 +157,36 @@ export default async function handler(req, res) {
     if (!REACTIONS.includes(emoji)) {
       return res.status(400).json({ error: "Unsupported reaction" });
     }
-
-    const path = `engagement/${normalizedSlug}/reactions.json`;
-    const existing = (await fetchBlobJSON(path)) || {};
-    const counts = { ...(existing.counts || {}) };
-    counts[emoji] = (counts[emoji] || 0) + 1;
-    const payload = {
-      counts,
-      updatedAt: new Date().toISOString(),
-    };
-
     try {
-      await persistBlobJSON(path, payload);
-      return res.status(200).json(payload);
+      const result = await withIdempotentExecution({
+        key: resolveIdempotencyKey(
+          req,
+          buildIdempotencyPayload({
+            type,
+            slug: normalizedSlug,
+            emoji,
+            requestIdentity: getRequestIdentity(req),
+          }),
+        ),
+        fn: async () => {
+          const path = `engagement/${normalizedSlug}/reactions.json`;
+          const existing = (await fetchBlobJSON(path)) || {};
+          const counts = { ...(existing.counts || {}) };
+          counts[emoji] = (counts[emoji] || 0) + 1;
+          const payload = {
+            counts,
+            updatedAt: new Date().toISOString(),
+          };
+
+          await persistBlobJSON(path, payload);
+          return payload;
+        },
+      });
+
+      return res.status(200).json(result);
     } catch (error) {
-      console.error("[engagement] Failed to persist reactions", error);
-      return res
-        .status(500)
-        .json({ error: "Failed to store reaction. Try again." });
+      console.error("[engagement] Failed to persist reaction", error);
+      return res.status(500).json({ error: "Failed to store reaction. Try again." });
     }
   }
 
@@ -148,30 +200,43 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Please keep replies to ~5-10 words" });
     }
 
-    const path = `engagement/${normalizedSlug}/prompts.json`;
-    const current = (await fetchBlobJSON(path)) || {};
-    const safeEntry = {
-      anonymousID: entry.anonymousID || `anon-${Date.now()}`,
-      timestamp: entry.timestamp || new Date().toISOString(),
-      answer: entry.answer.trim().slice(0, 320),
-    };
-    const nextEntries = [
-      safeEntry,
-      ...(Array.isArray(current.entries) ? current.entries : []),
-    ].slice(0, 30);
-    const payload = {
-      entries: nextEntries,
-      updatedAt: new Date().toISOString(),
-    };
-
     try {
-      await persistBlobJSON(path, payload);
-      return res.status(200).json(payload);
+      const result = await withIdempotentExecution({
+        key: resolveIdempotencyKey(
+          req,
+          buildIdempotencyPayload({
+            type,
+            slug: normalizedSlug,
+            entry,
+            requestIdentity: getRequestIdentity(req),
+          }),
+        ),
+        fn: async () => {
+          const path = `engagement/${normalizedSlug}/prompts.json`;
+          const current = (await fetchBlobJSON(path)) || {};
+          const safeEntry = {
+            anonymousID: entry.anonymousID || `anon-${Date.now()}`,
+            timestamp: entry.timestamp || new Date().toISOString(),
+            answer: entry.answer.trim().slice(0, 320),
+          };
+          const nextEntries = [
+            safeEntry,
+            ...(Array.isArray(current.entries) ? current.entries : []),
+          ].slice(0, 30);
+          const payload = {
+            entries: nextEntries,
+            updatedAt: new Date().toISOString(),
+          };
+
+          await persistBlobJSON(path, payload);
+          return payload;
+        },
+      });
+
+      return res.status(200).json(result);
     } catch (error) {
       console.error("[engagement] Failed to persist prompt reply", error);
-      return res
-        .status(500)
-        .json({ error: "Failed to store prompt reply. Try again." });
+      return res.status(500).json({ error: "Failed to store prompt reply. Try again." });
     }
   }
 

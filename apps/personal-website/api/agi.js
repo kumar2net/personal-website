@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import OpenAI from "openai";
+import { recordTokenUsage } from "../../../scripts/token-usage.mjs";
 import { searchBlogByQuery } from "./semantic-search.js";
 
 const CORS_HEADERS = {
@@ -115,6 +116,48 @@ function normalizeMode(value) {
   if (typeof value !== "string") return "quick";
   const normalized = value.toLowerCase().trim();
   return MODE_OPTIONS[normalized] ? normalized : "quick";
+}
+
+function normalizeTokens(value) {
+  return Number.isFinite(Number(value)) ? Number(value) : 0;
+}
+
+function normalizeUsage(rawUsage = {}) {
+  const inputTokens =
+    normalizeTokens(
+      rawUsage.input_tokens ??
+      rawUsage.prompt_tokens ??
+      rawUsage.inputTokens ??
+      rawUsage.promptTokens,
+    );
+  const outputTokens =
+    normalizeTokens(
+      rawUsage.output_tokens ??
+      rawUsage.completion_tokens ??
+      rawUsage.outputTokens ??
+      rawUsage.completionTokens,
+    );
+  const totalTokens = normalizeTokens(
+    rawUsage.total_tokens ?? rawUsage.totalTokens ?? (inputTokens + outputTokens),
+  );
+
+  return { inputTokens, outputTokens, totalTokens };
+}
+
+function recordOpenAIUsage(route, model, requestId, rawUsage) {
+  const { inputTokens, outputTokens, totalTokens } = normalizeUsage(rawUsage);
+  if (!inputTokens && !outputTokens && !totalTokens) {
+    return;
+  }
+  recordTokenUsage({
+    provider: "openai",
+    route,
+    model,
+    request_id: requestId,
+    input_tokens: inputTokens,
+    output_tokens: outputTokens,
+    total_tokens: totalTokens,
+  });
 }
 
 function shouldUseBlogContext(prompt) {
@@ -672,6 +715,12 @@ async function callResponsesAPI(client, payload, mode, model) {
 
   const response = await client.responses.create(config);
   const outputText = extractTextFromResponsesData(response);
+  recordOpenAIUsage(
+    "agi-responses",
+    response?.model || model,
+    response?.id,
+    response?.usage,
+  );
 
   if (!outputText) {
     throw new Error("Responses API returned no output text");
@@ -709,6 +758,12 @@ async function callChatFallback(client, payload, mode, model) {
   });
 
   const text = extractTextFromChatData(completion);
+  recordOpenAIUsage(
+    "agi-chat",
+    completion?.model || model,
+    completion?.id,
+    completion?.usage,
+  );
   if (!text) {
     throw new Error("Chat fallback returned no output");
   }

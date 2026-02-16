@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import OpenAI from "openai";
+import { recordTokenUsage } from "../../../scripts/token-usage.mjs";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -142,6 +143,16 @@ async function generateWithOpenAI(content, slug) {
   if (!summary) {
     throw new Error("OpenAI returned an empty summary");
   }
+  const usage = completion?.usage || {};
+  recordTokenUsage({
+    provider: "openai",
+    route: "tldr",
+    model: completion.model || DEFAULT_MODEL,
+    request_id: completion.id,
+    input_tokens: usage.prompt_tokens,
+    output_tokens: usage.completion_tokens,
+    total_tokens: usage.total_tokens,
+  });
 
   return {
     summary,

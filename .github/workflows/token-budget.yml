@@ -1,0 +1,19 @@
+name: token-budget
+
+on:
+  pull_request:
+
+jobs:
+  check:
+    name: Token budget check
+    runs-on: ubuntu-latest
+    env:
+      TOKEN_USAGE_REPORT_PATH: reports/token-usage.json
+      TOKEN_BUDGET_TOKENS: "200000"
+      TOKEN_BUDGET_USD: "0.25"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: node scripts/token-budget.mjs

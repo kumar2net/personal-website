@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { recordTokenUsage } from "../../../scripts/token-usage.mjs";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -122,6 +123,16 @@ export default async function handler(req, res) {
     if (!translated) {
       throw new Error("OpenAI returned an empty translation");
     }
+    const usage = completion?.usage || {};
+    recordTokenUsage({
+      provider: "openai",
+      route: "translate",
+      model: completion.model || DEFAULT_MODEL,
+      request_id: completion.id,
+      input_tokens: usage.prompt_tokens,
+      output_tokens: usage.completion_tokens,
+      total_tokens: usage.total_tokens,
+    });
 
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("X-Translate-Model", completion.model || DEFAULT_MODEL);

@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { PassThrough, Readable, Transform } from "stream";
 import OpenAI from "openai";
+import { recordTokenUsage } from "../../../scripts/token-usage.mjs";
 import path from "node:path";
 import fs from "node:fs";
 import dotenv from "dotenv";
@@ -380,6 +381,44 @@ function resolveVoice(requestedVoice) {
   return "alloy";
 }
 
+function normalizeTokens(value) {
+  return Number.isFinite(Number(value)) ? Number(value) : 0;
+}
+
+function normalizeUsage(rawUsage = {}) {
+  const inputTokens = normalizeTokens(
+    rawUsage.input_tokens ?? rawUsage.prompt_tokens ?? 0,
+  );
+  const outputTokens = normalizeTokens(
+    rawUsage.output_tokens ??
+      rawUsage.completion_tokens ??
+      rawUsage.audio_tokens ??
+      0,
+  );
+  const totalTokens = normalizeTokens(
+    rawUsage.total_tokens ??
+      rawUsage.totalTokens ??
+      (inputTokens + outputTokens),
+  );
+  return { inputTokens, outputTokens, totalTokens };
+}
+
+function recordOpenAIUsage(route, model, requestId, rawUsage) {
+  const { inputTokens, outputTokens, totalTokens } = normalizeUsage(rawUsage);
+  if (!inputTokens && !outputTokens && !totalTokens) {
+    return;
+  }
+  recordTokenUsage({
+    provider: "openai",
+    route,
+    model,
+    request_id: requestId,
+    input_tokens: inputTokens,
+    output_tokens: outputTokens,
+    total_tokens: totalTokens,
+  });
+}
+
 function getOpenAIClient() {
   if (cachedClient) {
     return cachedClient;
@@ -410,6 +449,13 @@ async function translateText(client, text, { label }) {
   if (!translated) {
     throw new Error(`Translation to ${label} returned empty result`);
   }
+
+  recordOpenAIUsage(
+    "blog-tts-translation",
+    completion?.model || DEFAULT_TRANSLATION_MODEL,
+    completion?.id,
+    completion?.usage || {},
+  );
   return translated;
 }
 
@@ -449,6 +495,12 @@ async function synthesizeSpeech(
         ...(instructions ? { instructions } : {}),
         signal,
       });
+      recordOpenAIUsage(
+        "blog-tts-audio",
+        speech?.model || model,
+        speech?.id,
+        speech?.usage || {},
+      );
       const buffer = Buffer.from(await speech.arrayBuffer());
       return { buffer, model };
     } catch (error) {
@@ -549,6 +601,12 @@ async function synthesizeSpeechStreamingSingle(
         ...(instructions ? { instructions } : {}),
         signal,
       });
+      recordOpenAIUsage(
+        "blog-tts-audio",
+        response?.model || model,
+        response?.id,
+        response?.usage || {},
+      );
 
       if (!response?.body) {
         throw new Error("Audio response does not expose a body stream");
