@@ -4,10 +4,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 import dotenv from "dotenv";
-import semanticSearchHandler from "./api/semantic-search.js";
-import blogTtsHandler from "./api/blog-tts.js";
-import engagementHandler from "./api/engagement.js";
-import agiHandler from "./api/agi.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,12 +52,40 @@ function enhanceResponse(res) {
   return res;
 }
 
-const LOCAL_API_ROUTES = [
-  { prefix: "/api/semantic-search", handler: semanticSearchHandler },
-  { prefix: "/api/blog-tts", handler: blogTtsHandler },
-  { prefix: "/api/engagement", handler: engagementHandler },
-  { prefix: "/api/agi", handler: agiHandler },
+const LOCAL_API_ROUTE_DEFINITIONS = [
+  { prefix: "/api/semantic-search", modulePath: "./api/semantic-search.js" },
+  { prefix: "/api/blog-tts", modulePath: "./api/blog-tts.js" },
+  { prefix: "/api/engagement", modulePath: "./api/engagement.js" },
+  { prefix: "/api/agi", modulePath: "./api/agi.js" },
 ];
+
+let LOCAL_API_ROUTES = null;
+let localApiRoutesLoading = null;
+
+async function getLocalApiRoutes() {
+  if (LOCAL_API_ROUTES) {
+    return LOCAL_API_ROUTES;
+  }
+
+  if (localApiRoutesLoading) {
+    return localApiRoutesLoading;
+  }
+
+  localApiRoutesLoading = Promise.all(
+    LOCAL_API_ROUTE_DEFINITIONS.map(async ({ prefix, modulePath }) => {
+      const imported = await import(modulePath);
+      return { prefix, handler: imported.default };
+    }),
+  ).then((routes) => {
+    LOCAL_API_ROUTES = routes;
+    return routes;
+  }).catch((error) => {
+    localApiRoutesLoading = null;
+    throw error;
+  });
+
+  return localApiRoutesLoading;
+}
 
 function localApiPlugin() {
   return {
@@ -74,7 +98,7 @@ function localApiPlugin() {
           return;
         }
 
-        const match = LOCAL_API_ROUTES.find(({ prefix }) =>
+        const match = LOCAL_API_ROUTE_DEFINITIONS.find(({ prefix }) =>
           req.url?.startsWith(prefix),
         );
 
@@ -94,7 +118,16 @@ function localApiPlugin() {
         req.on("end", async () => {
           req.body = chunks.length ? Buffer.concat(chunks).toString() : "";
           try {
-            await match.handler(req, enhanceResponse(res));
+            const routes = await getLocalApiRoutes();
+            const handlerMatch = routes.find(({ prefix }) =>
+              req.url?.startsWith(prefix),
+            );
+            if (!handlerMatch) {
+              next();
+              return;
+            }
+
+            await handlerMatch.handler(req, enhanceResponse(res));
           } catch (err) {
             console.error("[dev-api] handler error", err);
             if (!res.headersSent) {
