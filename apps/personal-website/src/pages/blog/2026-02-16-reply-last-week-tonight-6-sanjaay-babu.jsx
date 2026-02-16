@@ -182,6 +182,12 @@ export default function BlogPost() {
         <Typography variant="body1" sx={bodyTextSx}>
           In short: keep mother tongue as the cognitive base, add global languages as the export bridge, and design education to expand both confidence and future mobility.
         </Typography>
+        <Box sx={calloutSx}>
+          <Typography variant="body1" sx={bodyTextSx}>
+            A small language note from this week:
+            I learned “Forza” from Jannik Sinner and “Vamos” from Rafa Nadal.
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
