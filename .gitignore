@@ -51,6 +51,7 @@ Library/
 *.log
 lh_*.json
 *-report.json
+reports/token-usage.json
 transcription_*.json
 transcription_*.txt
 eng.traineddata
