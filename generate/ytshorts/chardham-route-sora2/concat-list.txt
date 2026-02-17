@@ -1,4 +1,0 @@
-file '/Users/kumara/personal-website/generate/ytshorts/chardham-route-sora2/clips/seg01.mp4'
-file '/Users/kumara/personal-website/generate/ytshorts/chardham-route-sora2/clips/seg02.mp4'
-file '/Users/kumara/personal-website/generate/ytshorts/chardham-route-sora2/clips/seg03.mp4'
-file '/Users/kumara/personal-website/generate/ytshorts/chardham-route-sora2/clips/seg04.mp4'
