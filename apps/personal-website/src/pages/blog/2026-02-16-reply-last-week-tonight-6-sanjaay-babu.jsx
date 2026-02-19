@@ -1,5 +1,20 @@
 import { Box, Typography } from "@mui/material";
 
+export const metadata = {
+  slug: "2026-02-16-reply-last-week-tonight-6-sanjaay-babu",
+  title: "Reply: Last Week Tonight #6 (Sanjaay Babu)",
+  description:
+    "A reply to Sanjaay’s latest post, with a practical take on AI-led work transitions, compensation policy, and why mother-tongue education is still the strongest foundation for inclusive learning.",
+  excerpt:
+    "A reply to Sanjaay’s latest post, with a practical take on AI-led work transitions, compensation policy, and why mother-tongue education is still the strongest foundation for inclusive learning.",
+  tags: ["reply", "ai", "future of work", "policy", "language", "india"],
+  datePublished: "2026-02-16",
+  dateModified: "2026-02-16",
+  image:
+    "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1600&q=80",
+  readingTime: "~4 min",
+};
+
 const title = "Reply: Last Week Tonight #6 (Sanjaay Babu)";
 
 const sourceUrl = "https://www.sanjaaybabu.com/writing/last-week-tonight-6";

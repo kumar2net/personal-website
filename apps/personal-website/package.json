@@ -9,6 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
+    "blog:validate": "node scripts/validate-blog-metadata.mjs",
+    "shorts:metrics": "node scripts/generate-shorts-metrics.mjs",
     "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js",
     "semantic:index": "node scripts/build-semantic-index.mjs",
     "sitemap:submit": "node scripts/submit-sitemap.mjs"

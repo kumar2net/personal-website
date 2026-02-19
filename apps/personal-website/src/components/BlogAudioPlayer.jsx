@@ -31,6 +31,14 @@ const OPUS_MIME = "audio/ogg; codecs=opus";
 const MP3_MIME = "audio/mpeg";
 const AUDIO_MIME = MP3_MIME;
 const MAX_CLIENT_CHARS = 25000;
+const DEFAULT_TTS_SPEED = Number(import.meta.env.VITE_BLOG_TTS_SPEED || "1");
+
+function clampSpeed(value) {
+  if (!Number.isFinite(value)) {
+    return 1;
+  }
+  return Math.min(4, Math.max(0.25, Number(value)));
+}
 
 function resolveAudioMime(contentTypeHeader) {
   if (!contentTypeHeader) return AUDIO_MIME;
@@ -65,6 +73,69 @@ function resolvePreferredAudioFormat() {
     return { format: "opus", mime: OPUS_MIME };
   }
   return { format: "mp3", mime: MP3_MIME };
+}
+
+function createAudioCacheEntry(response, mimeType, url) {
+  return {
+    url,
+    fetchedAt: Date.now(),
+    translated: response.headers.get("x-blogtts-translated") === "1",
+    translationFailed: response.headers.get("x-blogtts-translation-failed") === "1",
+    truncated: response.headers.get("x-blogtts-truncated") === "1",
+    model: response.headers.get("x-blogtts-model") || "",
+    mimeType,
+    speed: response.headers.get("x-blogtts-speed") || "",
+    streamFormat: response.headers.get("x-blogtts-stream-format") || "",
+    responseFormat: response.headers.get("x-blogtts-response-format") || "",
+  };
+}
+
+function waitForSourceBufferIdle(sourceBuffer) {
+  if (!sourceBuffer?.updating) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve, reject) => {
+    const onUpdateEnd = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = () => {
+      cleanup();
+      reject(new Error("Failed while waiting for audio stream buffer."));
+    };
+    const cleanup = () => {
+      sourceBuffer.removeEventListener("updateend", onUpdateEnd);
+      sourceBuffer.removeEventListener("error", onError);
+    };
+    sourceBuffer.addEventListener("updateend", onUpdateEnd);
+    sourceBuffer.addEventListener("error", onError);
+  });
+}
+
+async function appendToSourceBuffer(sourceBuffer, chunk) {
+  await waitForSourceBufferIdle(sourceBuffer);
+  return new Promise((resolve, reject) => {
+    const onUpdateEnd = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = () => {
+      cleanup();
+      reject(new Error("Failed to append streaming audio chunk."));
+    };
+    const cleanup = () => {
+      sourceBuffer.removeEventListener("updateend", onUpdateEnd);
+      sourceBuffer.removeEventListener("error", onError);
+    };
+    sourceBuffer.addEventListener("updateend", onUpdateEnd);
+    sourceBuffer.addEventListener("error", onError);
+    try {
+      sourceBuffer.appendBuffer(chunk);
+    } catch (error) {
+      cleanup();
+      reject(error);
+    }
+  });
 }
 
 function normalizeText(text) {
@@ -222,11 +293,14 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     abortControllerRef.current = new AbortController();
 
     const { format: preferredFormat } = resolvePreferredAudioFormat();
+    const speed = clampSpeed(DEFAULT_TTS_SPEED);
     const body = {
       slug,
       language: targetLanguage,
       text: excerpt,
+      stream_format: "audio",
       response_format: preferredFormat,
+      speed,
     };
     const payload = JSON.stringify(body);
     const createPostRequest = () => ({
@@ -296,11 +370,20 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       }
 
       const resolvedMime = resolveAudioMime(contentType);
-      await fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
+      if (response.body && canUseMse(resolvedMime)) {
+        await fetchAudioAsMediaSourceStream(
+          response,
+          resolvedMime,
+          targetLanguage,
+        );
+      } else {
+        await fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
+      }
     } catch (err) {
       if (err?.name === "AbortError") {
         return;
       }
+      cleanupCurrentStream(targetLanguage);
       setError(err?.message || "Failed to generate audio");
     } finally {
       setLoadingLanguage("");
@@ -323,16 +406,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       const url = URL.createObjectURL(blob);
       setAudioCache((prev) => ({
         ...prev,
-        [language]: {
-          url,
-          fetchedAt: Date.now(),
-          translated: response.headers.get("x-blogtts-translated") === "1",
-          translationFailed:
-            response.headers.get("x-blogtts-translation-failed") === "1",
-          truncated: response.headers.get("x-blogtts-truncated") === "1",
-          model: response.headers.get("x-blogtts-model") || "",
-          mimeType,
-        },
+        [language]: createAudioCacheEntry(response, mimeType, url),
       }));
       setAutoPlayNonce((prev) => prev + 1);
       setUserInitiated(true);
@@ -340,6 +414,83 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     } catch (blobErr) {
       console.error("[blog-tts] Blob fallback failed:", blobErr);
       setError("Audio playback is not supported in this browser.");
+    }
+  }
+
+  async function fetchAudioAsMediaSourceStream(
+    response,
+    mimeType = AUDIO_MIME,
+    language = selectedLanguage,
+  ) {
+    if (!response.body) {
+      throw new Error("Streaming response body is unavailable.");
+    }
+    if (typeof window === "undefined" || !window.MediaSource) {
+      throw new Error("MediaSource streaming is not supported in this browser.");
+    }
+
+    const mediaSource = new window.MediaSource();
+    const streamUrl = URL.createObjectURL(mediaSource);
+    const reader = response.body.getReader();
+
+    setAudioCache((prev) => ({
+      ...prev,
+      [language]: createAudioCacheEntry(response, mimeType, streamUrl),
+    }));
+    setAutoPlayNonce((prev) => prev + 1);
+    setUserInitiated(true);
+    tryPlayAudio(true);
+
+    try {
+      await new Promise((resolve, reject) => {
+        const onOpen = () => {
+          cleanup();
+          resolve();
+        };
+        const onError = () => {
+          cleanup();
+          reject(new Error("Failed to open MediaSource stream."));
+        };
+        const cleanup = () => {
+          mediaSource.removeEventListener("sourceopen", onOpen);
+          mediaSource.removeEventListener("error", onError);
+        };
+        mediaSource.addEventListener("sourceopen", onOpen);
+        mediaSource.addEventListener("error", onError);
+      });
+
+      const sourceBuffer = mediaSource.addSourceBuffer(mimeType);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+        if (!value || !value.byteLength) {
+          continue;
+        }
+        await appendToSourceBuffer(sourceBuffer, value);
+      }
+
+      await waitForSourceBufferIdle(sourceBuffer);
+      if (mediaSource.readyState === "open") {
+        mediaSource.endOfStream();
+      }
+    } catch (streamError) {
+      if (mediaSource.readyState === "open") {
+        try {
+          mediaSource.endOfStream("network");
+        } catch {
+          // no-op
+        }
+      }
+      throw streamError;
+    } finally {
+      try {
+        reader.releaseLock();
+      } catch {
+        // no-op
+      }
     }
   }
 

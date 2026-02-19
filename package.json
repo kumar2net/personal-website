@@ -20,6 +20,8 @@
     "shorts:validate": "node scripts/shorts-manifest/validate-manifest.mjs",
     "shorts:plan": "node scripts/shorts-manifest/build-render-plan.mjs",
     "shorts:subs": "node scripts/shorts-manifest/export-subs.mjs",
+    "shorts:metrics": "npm run --workspace apps/personal-website shorts:metrics",
+    "blog:validate": "npm run --workspace apps/personal-website blog:validate",
     "semantic:index": "npm run --workspace apps/personal-website semantic:index",
     "bookhints:process": "node apps/personal-website/scripts/bookhint-agentic.mjs",
     "bookhints:watch": "node apps/personal-website/scripts/bookhint-agentic.mjs --watch",

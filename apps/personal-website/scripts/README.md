@@ -146,16 +146,9 @@ import { Box, Typography } from "@mui/material";
 
 ### Manual Steps After Generation
 
-1. **Update Blog Data**: Add entry to `src/data/blogPostsData.js`
-   ```javascript
-   {
-     title: "Your Title",
-     date: "Month DD, YYYY",
-     excerpt: "Description",
-     tags: ["Tag1", "Tag2"],
-     image: "/media/generated/YYYY-MM-DD-slug.png", // ⚠️ LOCAL PATH
-     link: "/blog/YYYY-MM-DD-slug",
-   }
+1. **Validate metadata and slugs**:
+   ```bash
+   npm run blog:validate
    ```
 
 2. **Test in Browser**:

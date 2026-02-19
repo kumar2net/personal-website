@@ -1,0 +1,75 @@
+{
+  "videos": [
+    {
+      "videoId": "mock-short-001",
+      "title": "Why Your 2.4GHz Wi-Fi Feels Slow",
+      "description": "Quick explainer on why single-band routers struggle in crowded apartments.",
+      "publishedAt": "2026-02-18T15:05:00Z",
+      "durationSeconds": 52,
+      "tags": ["wifi", "dualband", "internet", "shorts"],
+      "channelId": "mock-channel"
+    },
+    {
+      "videoId": "mock-short-002",
+      "title": "White Rice vs Wheat: The Real Glycemic Context",
+      "description": "One insight short about meal context, not food absolutism.",
+      "publishedAt": "2026-02-17T10:40:00Z",
+      "durationSeconds": 48,
+      "tags": ["nutrition", "glycemic", "foodscience", "shorts"],
+      "channelId": "mock-channel"
+    },
+    {
+      "videoId": "mock-short-003",
+      "title": "Will AI Replace Your Job First?",
+      "description": "Contrarian 50-second short about human + AI leverage.",
+      "publishedAt": "2026-02-16T09:00:00Z",
+      "durationSeconds": 50,
+      "tags": ["ai", "futureofwork", "automation", "shorts"],
+      "channelId": "mock-channel"
+    }
+  ],
+  "metrics": {
+    "mock-short-001": {
+      "impressions": 4200,
+      "impressionClickThroughRate": 3.1,
+      "views": 130,
+      "averageViewDuration": 17.8,
+      "averageViewPercentage": 42.3,
+      "first3sRetentionProxy": 56.4,
+      "window": {
+        "mode": "last_7_days",
+        "startDate": "2026-02-12",
+        "endDate": "2026-02-19",
+        "note": "Fixture fallback window."
+      }
+    },
+    "mock-short-002": {
+      "impressions": 6800,
+      "impressionClickThroughRate": 4.8,
+      "views": 326,
+      "averageViewDuration": 28.2,
+      "averageViewPercentage": 63.0,
+      "first3sRetentionProxy": 69.8,
+      "window": {
+        "mode": "last_7_days",
+        "startDate": "2026-02-12",
+        "endDate": "2026-02-19",
+        "note": "Fixture fallback window."
+      }
+    },
+    "mock-short-003": {
+      "impressions": 3900,
+      "impressionClickThroughRate": 2.9,
+      "views": 111,
+      "averageViewDuration": 18.5,
+      "averageViewPercentage": 51.5,
+      "first3sRetentionProxy": 58.2,
+      "window": {
+        "mode": "last_7_days",
+        "startDate": "2026-02-12",
+        "endDate": "2026-02-19",
+        "note": "Fixture fallback window."
+      }
+    }
+  }
+}

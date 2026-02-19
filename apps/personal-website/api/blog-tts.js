@@ -103,6 +103,10 @@ const TTS_MODEL_CANDIDATES = EXPLICIT_TTS_MODELS.length
     );
 
 const DEFAULT_AUDIO_FORMAT = "mp3";
+const DEFAULT_STREAM_FORMAT = "audio";
+const DEFAULT_AUDIO_SPEED = 1;
+const MIN_AUDIO_SPEED = 0.25;
+const MAX_AUDIO_SPEED = 4;
 const AUDIO_MIME_MAP = {
   opus: "audio/ogg; codecs=opus",
   mp3: "audio/mpeg",
@@ -369,6 +373,25 @@ function resolveFormat(requestedFormat) {
   return { format: "mp3", mime: AUDIO_MIME_MAP.mp3 };
 }
 
+function resolveStreamFormat(requestedStreamFormat) {
+  const normalized = String(requestedStreamFormat || DEFAULT_STREAM_FORMAT)
+    .trim()
+    .toLowerCase();
+  return normalized === "sse" ? "sse" : "audio";
+}
+
+function resolveSpeed(requestedSpeed) {
+  if (requestedSpeed === undefined || requestedSpeed === null || requestedSpeed === "") {
+    return DEFAULT_AUDIO_SPEED;
+  }
+  const parsed = Number(requestedSpeed);
+  if (!Number.isFinite(parsed)) {
+    return DEFAULT_AUDIO_SPEED;
+  }
+  const clamped = Math.min(MAX_AUDIO_SPEED, Math.max(MIN_AUDIO_SPEED, parsed));
+  return Number(clamped.toFixed(2));
+}
+
 function resolveVoice(requestedVoice) {
   if (requestedVoice && ALLOWED_VOICES.has(requestedVoice)) {
     return requestedVoice;
@@ -474,6 +497,8 @@ async function synthesizeSpeech(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
+    streamFormat = DEFAULT_STREAM_FORMAT,
+    speed = DEFAULT_AUDIO_SPEED,
     instructions,
     signal,
   },
@@ -491,7 +516,9 @@ async function synthesizeSpeech(
         model,
         voice,
         input: text,
+        stream_format: streamFormat,
         response_format: format,
+        speed,
         ...(instructions ? { instructions } : {}),
         signal,
       });
@@ -533,6 +560,8 @@ async function synthesizeSpeechBuffered(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
+    streamFormat = DEFAULT_STREAM_FORMAT,
+    speed = DEFAULT_AUDIO_SPEED,
     maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
     firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
     instructions,
@@ -549,6 +578,9 @@ async function synthesizeSpeechBuffered(
       voice,
       text,
       format,
+      streamFormat,
+      speed,
+      instructions,
       signal,
     });
   }
@@ -562,6 +594,8 @@ async function synthesizeSpeechBuffered(
       voice,
       text: chunk,
       format,
+      streamFormat,
+      speed,
       instructions,
       signal,
     });
@@ -582,6 +616,8 @@ async function synthesizeSpeechStreamingSingle(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
+    streamFormat = DEFAULT_STREAM_FORMAT,
+    speed = DEFAULT_AUDIO_SPEED,
     instructions,
     signal,
   },
@@ -597,7 +633,9 @@ async function synthesizeSpeechStreamingSingle(
         model,
         voice,
         input: text,
+        stream_format: streamFormat,
         response_format: format,
+        speed,
         ...(instructions ? { instructions } : {}),
         signal,
       });
@@ -676,6 +714,8 @@ async function synthesizeSpeechStreaming(
     voice,
     text,
     format = DEFAULT_AUDIO_FORMAT,
+    streamFormat = DEFAULT_STREAM_FORMAT,
+    speed = DEFAULT_AUDIO_SPEED,
     maxChunkChars = DEFAULT_MAX_CHUNK_CHARS,
     firstChunkChars = DEFAULT_FIRST_CHUNK_CHARS,
     instructions,
@@ -692,6 +732,9 @@ async function synthesizeSpeechStreaming(
       voice,
       text,
       format,
+      streamFormat,
+      speed,
+      instructions,
       signal,
     });
   }
@@ -728,6 +771,8 @@ async function synthesizeSpeechStreaming(
           voice,
           text: chunk,
           format,
+          streamFormat,
+          speed,
           instructions,
           signal,
         });
@@ -746,6 +791,8 @@ async function synthesizeSpeechStreaming(
             voice,
             text: chunks[i + 1],
             format,
+            streamFormat,
+            speed,
             instructions,
             signal,
           });
@@ -822,8 +869,17 @@ export default async function handler(req, res) {
   const { format: initialFormat, mime: initialMime } = resolveFormat(
     payload?.response_format || payload?.format,
   );
+  const streamFormat = resolveStreamFormat(payload?.stream_format);
   let responseFormat = initialFormat;
   let responseMime = initialMime;
+  if (streamFormat !== "audio") {
+    return res.status(400).json({
+      error:
+        'Unsupported "stream_format". `/api/blog-tts` currently supports only "audio".',
+      supported: ["audio"],
+    });
+  }
+  const speed = resolveSpeed(payload?.speed);
   const instructionsRaw =
     typeof payload?.instructions === "string" ? payload.instructions.trim() : "";
   const instructions = instructionsRaw ? instructionsRaw.slice(0, 400) : "";
@@ -902,7 +958,7 @@ export default async function handler(req, res) {
     }
 
     const speechHash = createHash(
-      `${languageCode}:${languageConfig.voice}:${slug}:${responseFormat}:${instructions}:${contentForSpeech}`,
+      `${languageCode}:${languageConfig.voice}:${slug}:${responseFormat}:${streamFormat}:${speed}:${instructions}:${contentForSpeech}`,
     );
     const cachedAudio = getCacheEntry(audioCache, speechHash);
 
@@ -917,6 +973,9 @@ export default async function handler(req, res) {
       res.setHeader("X-Blogtts-Translated", cachedAudio.translationUsed ? "1" : "0");
       res.setHeader("X-Blogtts-Translation-Failed", cachedAudio.translationFailed ? "1" : "0");
       res.setHeader("X-Blogtts-Truncated", cachedAudio.truncated ? "1" : "0");
+      res.setHeader("X-Blogtts-Speed", String(cachedAudio.speed ?? speed));
+      res.setHeader("X-Blogtts-Stream-Format", cachedAudio.streamFormat || streamFormat);
+      res.setHeader("X-Blogtts-Response-Format", cachedAudio.format || responseFormat);
       if (cachedAudio.model) {
         res.setHeader("X-Blogtts-Model", cachedAudio.model);
       }
@@ -930,6 +989,8 @@ export default async function handler(req, res) {
           voice: languageConfig.voice,
           text: contentForSpeech,
           format: responseFormat,
+          streamFormat,
+          speed,
           firstChunkChars: STREAMING_FIRST_CHUNK_CHARS,
           maxChunkChars: STREAMING_MAX_CHUNK_CHARS,
           instructions,
@@ -956,6 +1017,9 @@ export default async function handler(req, res) {
       res.setHeader("X-Blogtts-Translated", translationUsed ? "1" : "0");
       res.setHeader("X-Blogtts-Translation-Failed", translationFailed ? "1" : "0");
       res.setHeader("X-Blogtts-Truncated", truncated ? "1" : "0");
+      res.setHeader("X-Blogtts-Speed", String(speed));
+      res.setHeader("X-Blogtts-Stream-Format", streamFormat);
+      res.setHeader("X-Blogtts-Response-Format", responseFormat);
       if (streamed.model) {
         res.setHeader("X-Blogtts-Model", streamed.model);
       }
@@ -980,6 +1044,8 @@ export default async function handler(req, res) {
             translationFailed,
             translationUsed,
             truncated,
+            speed,
+            streamFormat,
             format: responseFormat,
             mime: responseMime,
           });
@@ -997,6 +1063,8 @@ export default async function handler(req, res) {
       voice: languageConfig.voice,
       text: contentForSpeech,
       format: responseFormat,
+      streamFormat,
+      speed,
       maxChunkChars: DEFAULT_MAX_CHUNK_CHARS,
       firstChunkChars: DEFAULT_FIRST_CHUNK_CHARS,
       instructions,
@@ -1008,6 +1076,8 @@ export default async function handler(req, res) {
       translationFailed,
       translationUsed,
       truncated,
+      speed,
+      streamFormat,
       format: responseFormat,
       mime: responseMime,
     };
@@ -1022,6 +1092,9 @@ export default async function handler(req, res) {
     res.setHeader("X-Blogtts-Translated", translationUsed ? "1" : "0");
     res.setHeader("X-Blogtts-Translation-Failed", translationFailed ? "1" : "0");
     res.setHeader("X-Blogtts-Truncated", truncated ? "1" : "0");
+    res.setHeader("X-Blogtts-Speed", String(speed));
+    res.setHeader("X-Blogtts-Stream-Format", streamFormat);
+    res.setHeader("X-Blogtts-Response-Format", responseFormat);
     if (resolvedModel) {
       res.setHeader("X-Blogtts-Model", resolvedModel);
     }

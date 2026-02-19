@@ -146,6 +146,7 @@ The global "Catch up" pill highlights blog posts published since you last marked
 - `docs/ARCHITECTURE_AND_TECH_STACK.md` – System architecture, data flows, and service inventory.
 - `docs/DEPLOYMENT_STATUS.md` – Deployment health, QA checklist, and monitoring pointers.
 - `docs/CHANGELOG.md` – Time-stamped record of code/content updates.
+- `api/BLOG_TTS_CONTRACT.md` – `/api/blog-tts` request/response contract, headers, and performance guidance.
 
 For questions or follow-ups, open an issue or contact Kumar directly. Happy shipping!
 

@@ -66,6 +66,18 @@ function formatIsoDate(date = new Date()) {
     return date.toISOString().split('T')[0];
 }
 
+function estimateReadingTime(...contentParts) {
+    const words = contentParts
+        .flat()
+        .filter(Boolean)
+        .join(' ')
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean).length;
+    const minutes = Math.max(1, Math.ceil(words / 220));
+    return `~${minutes} min`;
+}
+
 function parseResponseJSON(response) {
     const chunks = response?.output || response?.choices || [];
     for (const chunk of chunks) {
@@ -228,7 +240,26 @@ async function agenticBlog(content, fileName) {
 function buildBlogJSX(meta, sections, imageUrl) {
     const date = formatIsoDate();
     const slug = meta.slug || slugify(meta.title);
+    const title = meta.title?.trim() || 'Untitled Post';
+    const description = meta.description?.trim() || '';
     const tags = Array.isArray(meta.tags) ? meta.tags.filter(Boolean) : [];
+    const readingTime = estimateReadingTime(
+        title,
+        description,
+        sections.map((section) => `${section?.heading || ''} ${section?.content || ''}`)
+    );
+    const metadata = {
+        slug,
+        title,
+        description,
+        excerpt: description,
+        tags,
+        datePublished: date,
+        dateModified: date,
+        image: imageUrl || '',
+        readingTime,
+    };
+    const metadataLiteral = JSON.stringify(metadata, null, 2);
 
     let sectionsJSX = '';
     sections.forEach((section, index) => {
@@ -344,6 +375,8 @@ function buildBlogJSX(meta, sections, imageUrl) {
     }
 
     return `import { Box, Typography } from "@mui/material";
+
+export const metadata = ${metadataLiteral};
 
 export default function BlogPost() {
   return (

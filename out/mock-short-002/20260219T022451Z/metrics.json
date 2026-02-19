@@ -1,0 +1,19 @@
+{
+  "videoId": "mock-short-002",
+  "impressions": 6800,
+  "impressionClickThroughRate": 4.8,
+  "views": 326,
+  "averageViewDuration": 28.2,
+  "averageViewPercentage": 63,
+  "first3sRetentionProxy": 69.8,
+  "durationSeconds": 48,
+  "window": {
+    "mode": "last_7_days",
+    "startDate": "2026-02-12",
+    "endDate": "2026-02-19",
+    "note": "Fixture fallback window."
+  },
+  "raw": {
+    "source": "fixture"
+  }
+}

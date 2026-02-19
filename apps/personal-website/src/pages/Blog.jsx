@@ -18,12 +18,12 @@ import { Link as RouterLink } from "react-router-dom";
 import ContentBadge from "../components/ContentBadge";
 import SEO from "../components/SEO";
 import SemanticSearch from "../components/SemanticSearch";
-import blogPosts from "../data/blogPostsData";
+import { getAllBlogPosts } from "../data/blogRegistry";
 import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const Blog = () => {
   const processedPosts = useMemo(
-    () => blogPosts.map(addLastModifiedIfMissing),
+    () => getAllBlogPosts().map(addLastModifiedIfMissing),
     [],
   );
 
@@ -106,7 +106,14 @@ const Blog = () => {
                       component="img"
                       loading="lazy"
                       decoding="async"
-                      src={post.image}
+                      src={post.heroImage || post.image}
+                      onError={(event) => {
+                        if (event.currentTarget.dataset.fallbackApplied === "1") {
+                          return;
+                        }
+                        event.currentTarget.dataset.fallbackApplied = "1";
+                        event.currentTarget.src = post.image || "/media/blogwordcloud.png";
+                      }}
                       alt={post.title}
                       sx={{
                         width: "100%",

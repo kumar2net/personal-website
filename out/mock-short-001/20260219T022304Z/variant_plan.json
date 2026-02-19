@@ -1,0 +1,230 @@
+{
+  "version": "shorts-optimizer.variant.v1",
+  "videoId": "mock-short-001",
+  "generatedAt": "2026-02-19T02:23:04.405Z",
+  "sourceVideoTitle": "Why Your 2.4GHz Wi-Fi Feels Slow",
+  "primaryFix": "Repackage the opening (first frame + first subtitle + title) to raise CTR.",
+  "hookLine": "Stop scrolling: Why Your 2.4GHz Wi-Fi Feels Slow is not what most people think.",
+  "firstFrame": {
+    "visual": "Immediate motion close-up tied to the core claim.",
+    "subtitleLine": "Stop scrolling: Why Your 2.4GHz Wi-Fi Feels Slow is not what most people think.",
+    "motionCue": "Hard punch-in within first 0.5s"
+  },
+  "script": "[0-2s] Stop scrolling: Why Your 2.4GHz Wi-Fi Feels Slow is not what most people think.\n[3-12s] Context: one sentence setup, why this problem matters now.\n[13-35s] Core insight: one idea, one contrast, one proof point.\n[36-50s] Payoff: reframe mistake and state practical fix clearly.\n[50-55s] CTA: ask a focused follow-up question to trigger comments.",
+  "timeline": {
+    "totalDurationSec": 55,
+    "scenes": [
+      {
+        "id": "scene-01-hook",
+        "startSec": 0,
+        "endSec": 2,
+        "segment": "hook",
+        "objective": "Pattern interrupt in first frame to improve CTR.",
+        "visuals": [
+          "Begin mid-thought with immediate motion and tight crop.",
+          "Use high-contrast object/action tied to the core claim."
+        ],
+        "overlays": [
+          "Stop scrolling: Why Your 2.4GHz Wi-Fi Feels Slow is not what most people think."
+        ],
+        "audioCues": [
+          "Short hit + whoosh at 0.2s"
+        ],
+        "editNotes": [
+          "No greeting or branding card before the hook."
+        ]
+      },
+      {
+        "id": "scene-02-context",
+        "startSec": 3,
+        "endSec": 12,
+        "segment": "context compression",
+        "objective": "Set context fast with one-sentence chunks.",
+        "visuals": [
+          "Switch framing every 2-3s.",
+          "Use one concrete visual anchor for the problem."
+        ],
+        "overlays": [
+          "Why this matters right now"
+        ],
+        "audioCues": [
+          "Beat continues, no dead air"
+        ],
+        "editNotes": [
+          "Subtitle timing locked to spoken pauses."
+        ]
+      },
+      {
+        "id": "scene-03-breakdown",
+        "startSec": 13,
+        "endSec": 35,
+        "segment": "core insight",
+        "objective": "Deliver one insight with contrast and number.",
+        "visuals": [
+          "Before vs after visual progression.",
+          "Add micro-zoom every 3-5s."
+        ],
+        "overlays": [
+          "One idea only"
+        ],
+        "audioCues": [
+          "Subtle emphasis on the key numeric point"
+        ],
+        "editNotes": [
+          "Cut filler phrases to keep pacing dense."
+        ]
+      },
+      {
+        "id": "scene-04-payoff",
+        "startSec": 36,
+        "endSec": 50,
+        "segment": "payoff",
+        "objective": "Clarify mistake vs real fix.",
+        "visuals": [
+          "Summarize with a clean, high-contrast frame."
+        ],
+        "overlays": [
+          "The real issue is X -> Y"
+        ],
+        "audioCues": [
+          "Resolve tone; slight downbeat pause before CTA"
+        ],
+        "editNotes": [
+          "Move payoff earlier if completion is weak."
+        ]
+      },
+      {
+        "id": "scene-05-cta-loop",
+        "startSec": 50,
+        "endSec": 55,
+        "segment": "curiosity CTA",
+        "objective": "Create comment-triggering open loop.",
+        "visuals": [
+          "Mirror opening shot with unresolved next-step question."
+        ],
+        "overlays": [
+          "Should I test this next?"
+        ],
+        "audioCues": [
+          "Hold last beat for loop-ready cut"
+        ],
+        "editNotes": [
+          "Avoid generic 'like & subscribe'."
+        ]
+      }
+    ],
+    "captions": [
+      {
+        "startSec": 0,
+        "endSec": 2,
+        "text": "Stop scrolling: Why Your 2.4GHz Wi-Fi Feels Slow is not what most people think.",
+        "styleHint": "bold-high-contrast"
+      },
+      {
+        "startSec": 3,
+        "endSec": 8,
+        "text": "Most people miss this one detail.",
+        "styleHint": "standard"
+      },
+      {
+        "startSec": 8,
+        "endSec": 12,
+        "text": "Here is the context in one sentence.",
+        "styleHint": "standard"
+      },
+      {
+        "startSec": 13,
+        "endSec": 25,
+        "text": "Core insight with contrast and proof.",
+        "styleHint": "emphasis"
+      },
+      {
+        "startSec": 25,
+        "endSec": 35,
+        "text": "This is where most viewers drop if pacing slows.",
+        "styleHint": "standard"
+      },
+      {
+        "startSec": 36,
+        "endSec": 50,
+        "text": "So the real issue is not X, it is Y.",
+        "styleHint": "emphasis"
+      },
+      {
+        "startSec": 50,
+        "endSec": 55,
+        "text": "Want part 2 on this? Comment your take.",
+        "styleHint": "cta"
+      }
+    ],
+    "loop": {
+      "handoffSec": 54,
+      "bridgeLine": "But the next test changes everything.",
+      "visualCue": "Last frame mirrors first frame for seamless loop"
+    }
+  },
+  "metadata": {
+    "title": "Why Your 2.4GHz Wi-Fi Feels Slow (The Real Fix in 50s)",
+    "hashtags": [
+      "#wifi",
+      "#dualband",
+      "#internet",
+      "#shorts",
+      "#youtubeshorts",
+      "#highretention"
+    ],
+    "tags": [
+      "wifi",
+      "dualband",
+      "internet",
+      "shorts",
+      "youtubeshorts",
+      "highretention"
+    ],
+    "pinnedComment": "What should I test next: hook, pacing, or payoff?"
+  },
+  "editDecisionList": [
+    {
+      "metric": "impressionClickThroughRate",
+      "signal": "CTR 3.10% is below 4.00%",
+      "change": "Replace first frame with high-motion pattern interrupt visual.",
+      "why": "Low CTR indicates the packaging is not stopping scrolls quickly."
+    },
+    {
+      "metric": "impressionClickThroughRate",
+      "signal": "CTR 3.10% is below 4.00%",
+      "change": "Rewrite first subtitle line as a contrarian 0-2s hook.",
+      "why": "The opening line must increase curiosity before swipe-away."
+    },
+    {
+      "metric": "impressionClickThroughRate",
+      "signal": "CTR 3.10% is below 4.00%",
+      "change": "Retitle using tension + specificity format.",
+      "why": "Title relevance and tension directly affect impression conversion."
+    },
+    {
+      "metric": "averageViewPercentage",
+      "signal": "Average view % 42.30 is below 60.00",
+      "change": "Insert a pattern interrupt at 2-3s with a visual or tonal shift.",
+      "why": "Early pacing refresh reduces drop-off after the opening hook."
+    },
+    {
+      "metric": "averageViewPercentage",
+      "signal": "Average view % 42.30 is below 60.00",
+      "change": "Tighten pacing by removing low-signal filler lines.",
+      "why": "Dense progression keeps one-idea narrative retention high."
+    },
+    {
+      "metric": "averageViewDuration",
+      "signal": "Average view duration 17.80s is below 20s for a 40-60s short",
+      "change": "Cut intro setup and start mid-thought in the first line.",
+      "why": "The current opening delays value delivery."
+    },
+    {
+      "metric": "averageViewDuration",
+      "signal": "Average view duration 17.80s is below 20s for a 40-60s short",
+      "change": "Move payoff statement earlier into the 30-40s segment.",
+      "why": "Earlier payoff increases completion likelihood."
+    }
+  ]
+}
