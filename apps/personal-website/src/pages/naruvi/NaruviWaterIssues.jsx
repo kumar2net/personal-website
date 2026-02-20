@@ -71,23 +71,25 @@ const NaruviWaterIssues = () => {
             Update date: February 19, 2026
           </p>
           <p className="text-green-700 mt-2">
-            Today, Naruvi Owners Welfare Association (NOWA) handed over the
-            official intimation to Tamil Nadu Power Distribution Corporation
-            Limited (TNPDCL), formerly Tamil Nadu Generation and Distribution
-            Corporation (TANGEDCO), to shift sanctioned loads from LM51 to
-            LA1D.
-            An online application has also been submitted to reduce the LM51
-            sanctioned load from 15 kilowatts (kW) to 2 kW to reduce fixed
-            charges.
-            The benefit is expected to reflect in the next electricity bill.
-          </p>
-          <p className="text-green-700">
-            Borewell 1 is being revived and can now augment our water supply.
-            Kudos to the Executive Team for moving this forward.
+            Primary implemented action: Naruvi Owners Welfare Association
+            (NOWA) has initiated solar power evacuation alignment with Tamil
+            Nadu Power Distribution Corporation Limited (TNPDCL), formerly
+            Tamil Nadu Generation and Distribution Corporation (TANGEDCO).
           </p>
           <p className="text-green-700 mt-2">
-            This is a meaningful shift from only relying on RO for all use cases to using
-            borewell water for appropriate non-potable needs.
+            NOWA has handed over official intimation to shift sanctioned loads
+            from LM51 to LA1D, and an online application has been submitted to
+            reduce the LM51 sanctioned load from 15 kilowatts (kW) to 2 kW.
+          </p>
+          <p className="text-green-700 mt-2">
+            Expected impact: lower fixed electricity charges should start
+            reflecting from the next bill cycle.
+          </p>
+          <p className="text-green-700 mt-2">
+            Status clarification: the dual-water recommendation using Reverse
+            Osmosis (RO) water for potable needs and borewell water for
+            non-potable needs is not yet implemented, and remains a pending
+            phase.
           </p>
         </div>
 
@@ -99,39 +101,41 @@ const NaruviWaterIssues = () => {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <h3 className="font-semibold text-emerald-800 mb-2">
-                Supply Stability
+                Solar Evacuation Milestone
               </h3>
               <p className="text-sm text-gray-700">
-                Additional borewell support should reduce pressure on the RO plant,
-                improving day-to-day availability of clean water for households.
+                The association has started with solar-power evacuation and
+                grid-side alignment, which is the first executed step in the
+                current cost-optimization roadmap.
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <h3 className="font-semibold text-emerald-800 mb-2">
-                Lower Operating Stress
+                Lower Fixed Charges
               </h3>
               <p className="text-sm text-gray-700">
-                Sharing non-potable demand with borewell/reject-water streams can
-                lower overall RO demand, which should reduce waste and energy intensity.
+                Reducing LM51 sanctioned load from 15 kW to 2 kW should reduce
+                fixed-demand billing burden once the request is processed.
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <h3 className="font-semibold text-emerald-800 mb-2">
-                Power Bill Impact
+                Next Bill Impact
               </h3>
               <p className="text-sm text-gray-700">
-                Moving load from LM51 to LA1D and lowering LM51 from 15 kW to 2 kW
-                should reduce fixed demand charges and improve operating cost
-                predictability. The first full benefit is expected in the next bill cycle.
+                Moving load from LM51 to LA1D and lowering LM51 sanctioned load
+                should improve billing predictability, with first benefits
+                expected in the next bill cycle.
               </p>
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <h3 className="font-semibold text-emerald-800 mb-2">
-                Financial Breathing Room
+                Water Plan Still Pending
               </h3>
               <p className="text-sm text-gray-700">
-                Better resource balancing can lower recurring costs over time,
-                creating room for faster implementation of control, monitoring, and safety upgrades.
+                The dual-water implementation is still pending. Water-side
+                operational savings and full system ROI will follow only after
+                that phase is executed.
               </p>
             </div>
           </div>
@@ -141,11 +145,12 @@ const NaruviWaterIssues = () => {
           {/* Executive Summary */}
           <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
             <h2 className="text-xl font-semibold text-blue-800 mb-3">
-              🚨 Pressing Issue: High Reverse Osmosis (RO) Water Consumption
+              Current Priority: Solar Power Integration with TNPDCL
             </h2>
             <p className="text-blue-700">
-              Current daily consumption: <strong>29,000 litres</strong> across
-              35 occupied villas
+              Execution has started with solar evacuation and sanctioned-load
+              optimization. Water-management improvements remain in
+              recommendation stage and are not yet implemented.
             </p>
           </div>
 
@@ -422,12 +427,15 @@ const NaruviWaterIssues = () => {
             {/* ROI Extrapolation Cost */}
             <div className="mt-6 bg-indigo-50 border-l-4 border-indigo-400 p-6 rounded-lg not-prose">
               <h3 className="text-xl font-semibold mb-3" style={{ color: '#1e1b4b' }}>
-                Return on Investment (ROI) Extrapolation Cost (Expected Break-even)
+                Projected Return on Investment (ROI) for Pending Water Phase
               </h3>
               <p style={{ color: '#0f172a' }}>
-                Baseline monthly TNPDCL cost: <strong>₹49,757</strong>. LM51 fixed-charge reduction estimate
-                after load change from 15 kW to 2 kW: <strong>~₹1,391/month</strong>. Bars show projected
-                break-even window from lower capex (₹5,75,000) to upper capex (₹6,75,000).
+                Baseline monthly TNPDCL cost: <strong>₹49,757</strong>. LM51
+                fixed-charge reduction estimate after load change from 15 kW to
+                2 kW: <strong>~₹1,391/month</strong>. The association has
+                implemented the solar-grid phase; these bars represent
+                projected break-even windows for the pending water-system phase
+                (capex range ₹5,75,000 to ₹6,75,000).
               </p>
 
               <div className="space-y-4 mt-4">
@@ -484,7 +492,7 @@ const NaruviWaterIssues = () => {
             {/* Implementation Cost */}
             <div className="mt-6 bg-blue-50 border-l-4 border-blue-400 p-6">
               <h3 className="text-xl font-semibold text-blue-800 mb-3">
-                Implementation Cost (One-time)
+                Water-Phase Implementation Cost (One-time, Pending)
               </h3>
               <p className="text-2xl font-bold text-blue-700 mb-2">
                 ₹5,75,000 to ₹6,75,000
