@@ -2,6 +2,24 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-20-ai-on-upi-aadhaar-ground-truth": {
+    title: "AI on UPI & Aadhaar: From Vision to Ground-Level Reality",
+    description:
+      "What 'AI stack on top of UPI' and 'AI stack on top of Aadhaar' should mean in practice - MSME intelligence, secure adaptive authentication, and measurable public KPIs (no hype).",
+    image: "/media/blogwordcloud.png",
+    tags: ["IndiaAI", "UPI", "Aadhaar", "DPI", "Policy", "MSME", "Cybersecurity"],
+    datePublished: "2026-02-20",
+    dateModified: "2026-02-20",
+  },
+  "2026-02-20-tinglish-gen-z-terms-sivaangi": {
+    title: "Tinglish Slang Decoder: Gen Z Terms from Sivaangi's Short",
+    description:
+      "A quick decode of Tamil-English internet slang from Sivaangi's Gen Z terms short, with plain meanings, Tamil sense, and example usage.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Gen Z", "Gen Alpha", "Tamil", "Tinglish", "Slang", "Language"],
+    datePublished: "2026-02-20",
+    dateModified: "2026-02-20",
+  },
   "2026-02-15-why-democratic-apathy-threatens-our-future": {
     title: "Why Democratic Apathy Threatens Our Future",
     description:
