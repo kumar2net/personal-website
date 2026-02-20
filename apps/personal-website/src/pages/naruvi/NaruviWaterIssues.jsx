@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const MONTHLY_TNPDCL_COST = 49757;
@@ -49,7 +49,56 @@ const ROI_AXIS_TICKS = Array.from(
   (_, index) => index * 12
 );
 
+const parseInputNumber = (value) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
 const NaruviWaterIssues = () => {
+  const [solarIntegrationCost, setSolarIntegrationCost] = useState(1800000);
+  const [monthlySolarOffsetSavings, setMonthlySolarOffsetSavings] =
+    useState(30000);
+  const [monthlySolarExportCredit, setMonthlySolarExportCredit] =
+    useState(5000);
+  const [monthlySolarMaintenanceCost, setMonthlySolarMaintenanceCost] =
+    useState(1500);
+  const [calculatorCurrentLoadKw, setCalculatorCurrentLoadKw] = useState(
+    LM51_PREVIOUS_LOAD_KW
+  );
+  const [calculatorRevisedLoadKw, setCalculatorRevisedLoadKw] = useState(
+    LM51_REVISED_LOAD_KW
+  );
+  const [calculatorFixedChargeRate, setCalculatorFixedChargeRate] = useState(
+    TNPDCL_FIXED_CHARGE_PER_KW_PER_2_MONTHS
+  );
+
+  const calculatorFixedChargeSavings = Math.max(
+    0,
+    ((Math.max(0, calculatorCurrentLoadKw - calculatorRevisedLoadKw) *
+      calculatorFixedChargeRate) /
+      2)
+  );
+
+  const solarNetMonthlySavings =
+    monthlySolarOffsetSavings +
+    monthlySolarExportCredit +
+    calculatorFixedChargeSavings -
+    monthlySolarMaintenanceCost;
+
+  const solarPaybackMonths =
+    solarNetMonthlySavings > 0
+      ? Math.ceil(solarIntegrationCost / solarNetMonthlySavings)
+      : null;
+
+  const solarPaybackYears = solarPaybackMonths
+    ? (solarPaybackMonths / 12).toFixed(1)
+    : null;
+
+  const solarAnnualRoiPercent =
+    solarIntegrationCost > 0
+      ? ((solarNetMonthlySavings * 12 * 100) / solarIntegrationCost).toFixed(1)
+      : '0.0';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -92,6 +141,148 @@ const NaruviWaterIssues = () => {
             phase.
           </p>
         </div>
+
+        {/* Solar ROI Calculator */}
+        <section className="bg-amber-50 border-l-4 border-amber-400 p-6 mb-8 not-prose">
+          <h2 className="text-xl font-semibold mb-3" style={{ color: '#78350f' }}>
+            Solar Power Integration with TNPDCL: ROI Calculator
+          </h2>
+          <p style={{ color: '#92400e' }}>
+            Editable assumptions for payback from solar consumption-offset
+            savings, export credit, and sanctioned-load fixed-charge reduction.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-4 mt-4">
+            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+              One-time solar integration cost (₹)
+              <input
+                type="number"
+                min="0"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={solarIntegrationCost}
+                onChange={(event) =>
+                  setSolarIntegrationCost(parseInputNumber(event.target.value))
+                }
+              />
+            </label>
+            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+              Monthly solar consumption-offset savings (₹)
+              <input
+                type="number"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={monthlySolarOffsetSavings}
+                onChange={(event) =>
+                  setMonthlySolarOffsetSavings(
+                    parseInputNumber(event.target.value)
+                  )
+                }
+              />
+            </label>
+            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+              Monthly solar evacuation/export credit (₹)
+              <input
+                type="number"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={monthlySolarExportCredit}
+                onChange={(event) =>
+                  setMonthlySolarExportCredit(
+                    parseInputNumber(event.target.value)
+                  )
+                }
+              />
+            </label>
+            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+              Monthly operation and maintenance cost (₹)
+              <input
+                type="number"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={monthlySolarMaintenanceCost}
+                onChange={(event) =>
+                  setMonthlySolarMaintenanceCost(
+                    parseInputNumber(event.target.value)
+                  )
+                }
+              />
+            </label>
+            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+              LM51 current sanctioned load (kW)
+              <input
+                type="number"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={calculatorCurrentLoadKw}
+                onChange={(event) =>
+                  setCalculatorCurrentLoadKw(parseInputNumber(event.target.value))
+                }
+              />
+            </label>
+            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+              LM51 revised sanctioned load (kW)
+              <input
+                type="number"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={calculatorRevisedLoadKw}
+                onChange={(event) =>
+                  setCalculatorRevisedLoadKw(parseInputNumber(event.target.value))
+                }
+              />
+            </label>
+            <label className="text-sm font-medium md:col-span-2" style={{ color: '#78350f' }}>
+              TNPDCL fixed charge (₹ per kW per 2 months)
+              <input
+                type="number"
+                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                value={calculatorFixedChargeRate}
+                onChange={(event) =>
+                  setCalculatorFixedChargeRate(
+                    parseInputNumber(event.target.value)
+                  )
+                }
+              />
+            </label>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-4 mt-5">
+            <div className="bg-white border border-amber-200 rounded p-4">
+              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
+                Fixed-charge savings
+              </p>
+              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
+                ₹{Math.round(calculatorFixedChargeSavings).toLocaleString('en-IN')}/month
+              </p>
+            </div>
+            <div className="bg-white border border-amber-200 rounded p-4">
+              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
+                Net monthly savings
+              </p>
+              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
+                ₹{Math.round(solarNetMonthlySavings).toLocaleString('en-IN')}
+              </p>
+            </div>
+            <div className="bg-white border border-amber-200 rounded p-4">
+              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
+                Estimated payback
+              </p>
+              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
+                {solarPaybackMonths
+                  ? `${solarPaybackMonths} months (${solarPaybackYears} years)`
+                  : 'No payback (savings <= 0)'}
+              </p>
+            </div>
+            <div className="bg-white border border-amber-200 rounded p-4">
+              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
+                Annual ROI
+              </p>
+              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
+                {solarAnnualRoiPercent}%
+              </p>
+            </div>
+          </div>
+
+          <p className="text-xs mt-3" style={{ color: '#78350f' }}>
+            Net monthly savings = solar consumption-offset savings + export
+            credit + LM51 fixed-charge savings - operation and maintenance cost.
+          </p>
+        </section>
 
         {/* Community Impact of Update */}
         <section className="bg-emerald-50 border-l-4 border-emerald-400 p-6 mb-8">
