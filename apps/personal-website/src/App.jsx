@@ -114,14 +114,14 @@ const navLinks = [
 ];
 
 const heroSections = [
-  { label: "About", description: "Backstory & mission.", to: "/about" },
-  { label: "Projects", description: "Selected experiments.", to: "/projects" },
-  { label: "Books", description: "Reading list & notes.", to: "/books" },
-  { label: "Blog", description: "Long-form writing.", to: "/blog" },
-  { label: "Learning", description: "Study notes & flashcards.", to: "/learning" },
-  { label: "Science", description: "Biology, metabolism, cardiology notes.", to: "/science" },
-  { label: "Music", description: "Playlists on repeat.", to: "/music" },
-  { label: "Album", description: "Photo essays & trips.", to: "/album" },
+  { label: "About", description: "Identity, principles, and posture.", to: "/about" },
+  { label: "Projects", description: "Systems I build and test.", to: "/projects" },
+  { label: "Books", description: "Books that shaped my thinking.", to: "/books" },
+  { label: "Blog", description: "Clear writing with one sharp point.", to: "/blog" },
+  { label: "Learning", description: "Repeatable study notes and flashcards.", to: "/learning" },
+  { label: "Science", description: "Metabolism, biology, and practical health notes.", to: "/science" },
+  { label: "Music", description: "Tamil-first listening rituals.", to: "/music" },
+  { label: "Album", description: "Trips, field notes, and memory frames.", to: "/album" },
 ];
 
 const ExternalNewsRedirect = () => {
@@ -603,7 +603,7 @@ const App = ({ mode }) => {
                               color: "var(--home-muted-text)",
                             }}
                           >
-                            KUMAR2NET / 2026
+                            KUMAR2NET / SYSTEMS + WRITING
                           </Typography>
                           <Typography
                             variant="h2"
@@ -616,7 +616,7 @@ const App = ({ mode }) => {
                               maxWidth: 760,
                             }}
                           >
-                            Minimal, practical, and human-first digital notes.
+                            Build clear systems and honest writing that help people decide, act, and stay human.
                           </Typography>
                           <Typography
                             variant="body1"
@@ -626,8 +626,9 @@ const App = ({ mode }) => {
                               maxWidth: 680,
                             }}
                           >
-                            AI workflows, learning systems, science writeups, and
-                            field observations designed to be reusable.
+                            Engineer, teacher, writer, and systems thinker.
+                            Practical notes on AI, networks, learning, science,
+                            and resilient digital life.
                           </Typography>
                           <Stack
                             direction={{ xs: "column", sm: "row" }}
@@ -637,8 +638,8 @@ const App = ({ mode }) => {
                             <Button
                               variant="contained"
                               size="large"
-                              {...getLinkProps({ to: "/blog" })}
-                              onClick={() => trackClick("hero_blog_cta")}
+                              {...getLinkProps({ to: "/about" })}
+                              onClick={() => trackClick("hero_about_cta")}
                               sx={{
                                 borderRadius: 999,
                                 px: 3,
@@ -646,13 +647,13 @@ const App = ({ mode }) => {
                                 fontWeight: 700,
                               }}
                             >
-                              Read latest posts
+                              Start with About
                             </Button>
                             <Button
                               variant="outlined"
                               size="large"
-                              {...getLinkProps({ to: "/projects" })}
-                              onClick={() => trackClick("hero_projects_cta")}
+                              {...getLinkProps({ to: "/blog" })}
+                              onClick={() => trackClick("hero_blog_cta")}
                               sx={{
                                 borderRadius: 999,
                                 px: 3,
@@ -661,13 +662,13 @@ const App = ({ mode }) => {
                                 borderColor: "var(--home-border)",
                               }}
                             >
-                              View projects
+                              Read latest posts
                             </Button>
                             <Button
                               variant="text"
                               size="large"
-                              {...getLinkProps({ to: "/contact" })}
-                              onClick={() => trackClick("hero_contact_cta")}
+                              {...getLinkProps({ to: "/projects" })}
+                              onClick={() => trackClick("hero_projects_cta")}
                               sx={{
                                 borderRadius: 999,
                                 px: 2,
@@ -675,7 +676,7 @@ const App = ({ mode }) => {
                                 fontWeight: 600,
                               }}
                             >
-                              Contact
+                              See projects
                             </Button>
                           </Stack>
                           <Divider sx={{ borderColor: "var(--home-border)" }} />
@@ -688,14 +689,13 @@ const App = ({ mode }) => {
                                   maxWidth: 740,
                                 }}
                               >
-                                “He who is not satisfied with a little, is
-                                satisfied with nothing.”
+                                Truth before style. Utility before performance.
                               </Typography>
                               <Typography
                                 variant="caption"
                                 sx={{ color: "var(--home-muted-text)" }}
                               >
-                                - Epicurus
+                                Operating line from SOUL.md
                               </Typography>
                             </Stack>
                         </Stack>
@@ -712,13 +712,13 @@ const App = ({ mode }) => {
                               color: "var(--home-muted-text)",
                             }}
                           >
-                            Explore
+                            Map
                           </Typography>
                           <Typography
                             variant="h5"
                             sx={{ fontFamily: heroFont, fontWeight: 650 }}
                           >
-                            Clean navigation
+                            Start points
                           </Typography>
                         </Stack>
                         <Grid container spacing={2}>
@@ -816,9 +816,10 @@ const App = ({ mode }) => {
                                 Now
                               </Typography>
                               {[
-                                "AI systems that stay readable and maintainable.",
-                                "Learning notes with repeatable structure.",
-                                "Markets, culture, and science through practical writing.",
+                                "Human-speed AI workflows with explicit fallbacks.",
+                                "Copy-paste practical notes that are testable and reversible.",
+                                "User agency and privacy by default.",
+                                "Agent model in production: website, api, and workflows.",
                               ].map((item) => (
                                 <Typography
                                   key={item}
@@ -829,6 +830,16 @@ const App = ({ mode }) => {
                                 </Typography>
                               ))}
                               <Divider sx={{ borderColor: "var(--home-border)" }} />
+                              <Typography
+                                variant="overline"
+                                sx={{
+                                  letterSpacing: 1.6,
+                                  fontWeight: 700,
+                                  color: "var(--home-muted-text)",
+                                }}
+                              >
+                                Quick tools
+                              </Typography>
                               <Stack
                                 direction={{ xs: "column", sm: "row" }}
                                 spacing={1}
@@ -836,24 +847,29 @@ const App = ({ mode }) => {
                               >
                                 {[
                                   {
-                                    label: "Unit converter",
+                                    label: "About",
+                                    to: "/about",
+                                    analyticsKey: "hero_tool_about",
+                                  },
+                                  {
+                                    label: "Convert",
                                     to: "/convert",
                                     analyticsKey: "hero_tool_convert",
                                   },
                                   {
-                                    label: "Utilities dashboard",
+                                    label: "Utilities",
                                     to: "/utilities",
                                     analyticsKey: "hero_tool_utilities",
                                   },
                                   {
-                                    label: "Shorts metrics",
-                                    to: "/shorts-metrics",
-                                    analyticsKey: "hero_tool_shorts_metrics",
-                                  },
-                                  {
-                                    label: "Flashcards",
+                                    label: "Learning",
                                     to: "/learning",
                                     analyticsKey: "hero_tool_learning",
+                                  },
+                                  {
+                                    label: "Science",
+                                    to: "/science",
+                                    analyticsKey: "hero_tool_science",
                                   },
                                 ].map((tool) => (
                                   <Button
@@ -900,13 +916,29 @@ const App = ({ mode }) => {
                                 color: "var(--home-muted-text)",
                               }}
                             >
-                              Live
+                              Live signals
                             </Typography>
                             {showWorldClock ? (
                               <WorldClock compact />
                             ) : (
                               <Box sx={{ minHeight: 120 }} aria-hidden />
                             )}
+                            <Stack spacing={0.35}>
+                              {[
+                                "Writing rule: one clear point per post.",
+                                "Keep sentences short and direct.",
+                                "End with a line that lands.",
+                              ].map((item) => (
+                                <Typography
+                                  key={item}
+                                  variant="body2"
+                                  sx={{ color: "var(--home-muted-text)" }}
+                                >
+                                  {item}
+                                </Typography>
+                              ))}
+                            </Stack>
+                            <Divider sx={{ borderColor: "var(--home-border)" }} />
                             <Stack direction="row" spacing={1.5}>
                               {[
                                 {
