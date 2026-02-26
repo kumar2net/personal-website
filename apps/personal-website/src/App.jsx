@@ -32,7 +32,6 @@ import {
 } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import ErrorBoundary from "./components/ErrorBoundary";
-import AGIAssistant from "./components/AGIAssistant";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
@@ -86,9 +85,6 @@ const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const ShortsOptimizerDashboard = lazy(
   () => import("./pages/ShortsOptimizerDashboard"),
 );
-const YouTubeAnalyticsDashboard = lazy(
-  () => import("./pages/YouTubeAnalyticsDashboard"),
-);
 const ConvertPage = lazy(() => import("./pages/Convert"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
@@ -113,7 +109,6 @@ const navLinks = [
   { label: "Science", to: "/science", analyticsKey: "nav_science" },
   { label: "Music", to: "/music", analyticsKey: "nav_music" },
   { label: "Album", to: "/album", analyticsKey: "nav_album" },
-  { label: "YouTube Analytics", to: "/youtube-analytics", analyticsKey: "nav_youtube_analytics" },
   { label: "Contact", to: "/contact", analyticsKey: "nav_contact" },
 ];
 
@@ -704,7 +699,6 @@ const App = ({ mode }) => {
                             </Stack>
                         </Stack>
                       </Paper>
-                      <AGIAssistant />
                       <Box>
                         <Stack spacing={0.75} sx={{ mb: 2 }}>
                           <Typography
@@ -854,11 +848,6 @@ const App = ({ mode }) => {
                                 label: "About",
                                 to: "/about",
                                 analyticsKey: "hero_tool_about",
-                              },
-                              {
-                                label: "YouTube Analytics",
-                                to: "/youtube-analytics",
-                                analyticsKey: "hero_tool_youtube_analytics",
                               },
                               {
                                 label: "Convert",
@@ -1212,20 +1201,6 @@ const App = ({ mode }) => {
                       <PasswordGate>
                         <UtilitiesDashboard />
                       </PasswordGate>
-                    </>
-                  }
-                />
-                <Route
-                  path="/youtube-analytics"
-                  element={
-                    <>
-                      <SEO
-                        title="YouTube Analytics"
-                        description="Track YouTube Shorts CTR and retention trends for better publishing decisions."
-                        canonicalPath="/youtube-analytics"
-                        type="website"
-                      />
-                      <YouTubeAnalyticsDashboard />
                     </>
                   }
                 />
