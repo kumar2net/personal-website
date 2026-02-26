@@ -111,7 +111,17 @@ const YouTubeAnalyticsDashboard = () => {
         throw new Error(text || `Request failed (${response.status}).`);
       }
 
-      const json = await response.json();
+      const rawText = await response.text();
+      const contentType = response.headers.get("content-type") ?? "";
+      if (!contentType.includes("application/json")) {
+        const preview = rawText.slice(0, 180);
+        const suffix = rawText.length > 180 ? "…" : "";
+        throw new Error(
+          `Unexpected API response (${response.status}). Content-Type: ${contentType || "none"}. Preview: ${preview}${suffix}`,
+        );
+      }
+
+      const json = JSON.parse(rawText);
       setPayload(json);
     } catch (fetchError) {
       setError(fetchError instanceof Error ? fetchError.message : String(fetchError));

@@ -8,6 +8,7 @@
     }
   },
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     {
       "source": "/",
       "has": [{ "type": "host", "value": "news.kumar2net.com" }],
@@ -18,7 +19,6 @@
       "has": [{ "type": "host", "value": "news.kumar2net.com" }],
       "destination": "/news/$1"
     },
-    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

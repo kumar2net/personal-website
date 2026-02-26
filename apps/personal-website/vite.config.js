@@ -57,6 +57,7 @@ const LOCAL_API_ROUTE_DEFINITIONS = [
   { prefix: "/api/blog-tts", modulePath: "./api/blog-tts.js" },
   { prefix: "/api/engagement", modulePath: "./api/engagement.js" },
   { prefix: "/api/agi", modulePath: "./api/agi.js" },
+  { prefix: "/api/youtube-analytics", modulePath: "./api/youtube-analytics.js" },
 ];
 
 let LOCAL_API_ROUTES = null;
