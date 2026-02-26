@@ -2,6 +2,21 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-02-26-tn-assembly-elections-2026-pulse": {
+    title: "TN Assembly Election 2026: 3-Way Fight, Vote Math, and the SOP War",
+    description:
+      "Deep dive into Tamil Nadu 2026 Assembly math: alliance equations, belt-level popularity, seat projections, and a breakdown of AIADMK’s welfare promises as the campaign enters full swing.",
+    image: "/media/blogwordcloud.png",
+    tags: [
+      "Politics",
+      "Tamil Nadu",
+      "Elections",
+      "Psephology",
+      "Assembly 2026",
+    ],
+    datePublished: "2026-02-26",
+    dateModified: "2026-02-26",
+  },
   "2026-02-20-ai-on-upi-aadhaar-ground-truth": {
     title: "AI on UPI & Aadhaar: From Vision to Ground-Level Reality",
     description:
