@@ -27,6 +27,24 @@ const MusicPage = () => {
   const freshSpinUrlAgam = "https://youtu.be/nVx-6ICOEf0?si=2MTyIK3rCCvJu1br";
   const freshSpinUrlSivasri = "https://music.youtube.com/search?q=Sivasri";
   const freshSpinUrlThree = "https://youtu.be/ktbZIV22mRk?si=tK4impvvMqCqJtoM";
+  const nazronStanzas = [
+    {
+      line: "Aapki nazron ne samjha, pyaar ke qaabil mujhe",
+      gloss: "Your gaze made me feel worthy — pure green-flag energy.",
+    },
+    {
+      line: "Dil ki dhadkan thehar ja, mil gayi manzil mujhe",
+      gloss: "Telling my heart to chill; I just found my purpose.",
+    },
+    {
+      line: "Aapki manzil hoon main, meri manzil aap hain",
+      gloss: "We are each other's endgame; no side quests.",
+    },
+    {
+      line: "Kyon main toofan se daroon, mera sahil aap hain",
+      gloss: "With you as my safe harbor, chaos cannot scare me.",
+    },
+  ];
 
   return (
     <Box
@@ -131,6 +149,36 @@ const MusicPage = () => {
                     devotional warmth. Designed for deep work, family evenings,
                     and long drives.
                   </Typography>
+                  <Box
+                    sx={{
+                      mt: 1,
+                      p: 2,
+                      borderRadius: 3,
+                      border: `1px solid ${alpha(theme.palette.error.main, 0.25)}`,
+                      bgcolor: alpha(theme.palette.error.light, isDark ? 0.18 : 0.12),
+                    }}
+                  >
+                    <Typography variant="subtitle2" fontWeight={700} gutterBottom>
+                      In the playlist now: "Aapki Nazron Ne Samjha" (1962)
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" paragraph>
+                      Old-school Bollywood ghazal energy: a slow, grateful love letter
+                      about being truly seen and feeling safe — easy on non-Hindi
+                      ears and Gen Z friendly.
+                    </Typography>
+                    <Stack spacing={1.25}>
+                      {nazronStanzas.map((item) => (
+                        <Box key={item.line}>
+                          <Typography variant="body2" fontWeight={600}>
+                            {item.line}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {item.gloss}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Stack>
+                  </Box>
                   <Button
                     variant="contained"
                     color="error"

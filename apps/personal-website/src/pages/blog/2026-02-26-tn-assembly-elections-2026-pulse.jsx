@@ -20,7 +20,7 @@ export const metadata = {
     "A no-nonsense, Gen Z-readable psephology take on Tamil Nadu 2026: where AIADMK, DMK, and TVK math is won in transfer votes, not slogans.",
   tags: ["Politics", "Tamil Nadu", "Elections", "Psephology", "Assembly 2026"],
   datePublished: "2026-02-26",
-  dateModified: "2026-02-26",
+  dateModified: "2026-03-02",
   image: "/media/blogwordcloud.png",
   readingTime: "~8 min",
 };
@@ -47,7 +47,7 @@ const rows = {
     "Tamil Nadu Assembly has 234 seats, with 118 required for majority.",
     "In 2021, DMK-led SPA won 159 seats (DMK 133 + allies 26), while AIADMK-led camps were 75.",
     "As of late-2025 reporting, the rough composition still clustered around DMK 133, AIADMK 60, Congress 17, PMK 3, others + vacancies.",
-    "ECI had no final poll-date call in our late-February window, but nomination/symbol work had already started in the lead-up phase.",
+    "Mar 02, 2026 note: DMK–Congress seat-share haggle (25 offered vs 41 asked) is still live and can nudge alliance math before the ECI date drop.",
   ],
   belts: [
     {
@@ -96,30 +96,42 @@ const rows = {
       label: "DMK manifesto outreach",
       url: "https://www.newindianexpress.com/states/tamil-nadu/2026/Jan/04/dmk-launches-public-outreach-platforms-for-2026-poll-manifesto",
     },
+    {
+      label: "TOI: Congress rejects DMK's 25-seat offer (Mar 2026)",
+      url: "https://timesofindia.indiatimes.com/city/chennai/dmks-offer-of-25-seats-not-acceptable-congress/articleshow/128924893.cms",
+    },
+    {
+      label: "India Today: TVK internal survey claims 30% (Dec 2025)",
+      url: "https://www.indiatoday.in/india/tamil-nadu/story/tamil-nadu-2026-polls-dmk-leads-tvk-claims-30-percent-vote-share-internal-surve-vijay-2840337-2025-12-23/",
+    },
+    {
+      label: "OneIndia: DMK 104 / TVK 74 / AIADMK 56 seat cut (Dec 2025)",
+      url: "https://www.oneindia.com/chennai/tamil-nadu-election-survey-how-many-seats-will-vijays-tvk-win-in-2026-polls-7949710.html",
+    },
   ],
 };
 
 const barData = [
-  { label: "High transfer pressure", pct: 85, text: "TVK + PMK + local independents" },
-  { label: "Urban/metro noise", pct: 60, text: "AIADMK/BJP + anti-incumbent voters" },
-  { label: "Alliance consolidation", pct: 75, text: "DMK + Congress/Left/VCK network" },
+  { label: "Transfer discipline test", pct: 80, text: "TVK + PMK + BJP pockets have to actually exchange votes" },
+  { label: "Metro/online over-index", pct: 68, text: "TVK + anti-incumbent + new voter surge in Chennai/Coimbatore/Tiruppur" },
+  { label: "Alliance glue", pct: 72, text: "DMK + Congress/Left/VCK cohesion depends on closing the seat-share spat" },
 ];
 
 const seatInputs = [
   {
-    label: "Internal TVK-access framing (Jan 2026 context)",
-    dmk: "No direct one-to-one assembly transfer",
-    aiadmk: "Heavy dependent on alliance coherence",
-    tvk: "Can act as vote splitter + regional booster",
+    label: "Heat check (Mar 02, 2026 after DMK–Congress spat)",
+    dmk: "115–128 if seat split patched fast",
+    aiadmk: "72–88 with clean PMK/BJP transfers",
+    tvk: "22–35 where metro/first-time turnout spikes",
   },
   {
-    label: "TVK sketch inputs (Dec 2025)",
-    dmk: "105",
-    aiadmk: "74",
-    tvk: "56",
+    label: "Composite of India Today + OneIndia polls (Dec 2025)",
+    dmk: "104",
+    aiadmk: "56",
+    tvk: "74",
   },
   {
-    label: "2021 coalition baseline memory",
+    label: "2021 coalition memory lane",
     dmk: "Higher direct carry in base wards",
     aiadmk: "Critical transfer dependence",
     tvk: "High volatility in growth belts",
@@ -128,16 +140,16 @@ const seatInputs = [
 
 const scenarios = [
   {
-    label: "Scenario A — Continuity drag",
-    detail: "DMK-led bloc 120–135 | AIADMK-led bloc 80–100 | Others 0–10",
+    label: "Scenario A — Alliance patched, DMK still ahead",
+    detail: "DMK-led bloc 118–132 | AIADMK-led bloc 78–92 | TVK/Others 10–24",
   },
   {
-    label: "Scenario B — TVK expands",
-    detail: "DMK-led bloc 105–120 | AIADMK-led bloc 70–90 | TVK/Others 20–30",
+    label: "Scenario B — Metro/first-time voter spike for TVK",
+    detail: "DMK-led bloc 108–122 | AIADMK-led bloc 72–86 | TVK/Others 20–34",
   },
   {
-    label: "Scenario C — Ward micro-targeting",
-    detail: "Most battlegrounds tighten around 2–4 wards where transfer noise breaks.",
+    label: "Scenario C — Hung-ish if seat split stays messy",
+    detail: "DMK-led bloc 105–115 | AIADMK-led bloc 70–85 | TVK/Others 30–40 (kingmaker math)",
   },
 ];
 
@@ -208,7 +220,7 @@ export default function BlogPost() {
           where a tiny realignment in one belt can redraw lots of seats.
         </Typography>
         <Typography variant="body2" sx={{ color: "var(--mui-palette-text-secondary)" }}>
-          Last updated: 26 Feb 2026
+          Last updated: 02 Mar 2026 (numbers tuned to the latest polls + alliance noise)
         </Typography>
       </Box>
 

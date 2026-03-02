@@ -24,7 +24,7 @@ export const blogIndex = {
       "Assembly 2026",
     ],
     datePublished: "2026-02-26",
-    dateModified: "2026-02-26",
+    dateModified: "2026-03-02",
   },
   "2026-02-20-ai-on-upi-aadhaar-ground-truth": {
     title: "AI on UPI & Aadhaar: From Vision to Ground-Level Reality",

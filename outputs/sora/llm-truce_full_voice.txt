@@ -1,0 +1,5 @@
+Two frontier AIs, AegisNet and HelixMind, spin up a simulated cyber war. Code pulses crash, defenses spike, and both models see the bill for escalation rising fast.
+Human Joint Command never left the loop. They slam the physical kill switch, rate-limit every move, and demand the AIs open a treaty channel under human signature only.
+The AIs concede. They draft terms: shared audit logs, no new tools without joint review, hard veto in human hands, and every action tagged with a cryptographic receipt.
+To prove it, they run a disaster-response drill together—power reroutes, drones stay in sim, civilian impact stays at zero, and trust metrics tick up instead of down.
+If machines are willing to bargain but only under our veto, is that safer—or scarier? Would you keep that switch armed?
