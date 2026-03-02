@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-03-02-is-terms-of-service-really-a-thing": {
+    title: "Is Terms of Service Really a Thing?",
+    description:
+      "Exploring the real impact of Terms of Service agreements, AI's effect on workers, and the unsettling future of technology in our lives.",
+    image: "/generate/2026-03-02-is-terms-of-service-really-a-thing.png",
+    tags: ["Terms of Service", "AI", "labor market", "technology", "digital services"],
+    datePublished: "2026-03-02",
+    dateModified: "2026-03-02",
+  },
   "2026-02-26-tn-assembly-elections-2026-pulse": {
     title: "TN Assembly Election 2026: 3-Way Fight, Vote Math, and the SOP War",
     description:
