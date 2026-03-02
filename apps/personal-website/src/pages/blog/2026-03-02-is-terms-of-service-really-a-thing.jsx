@@ -161,6 +161,20 @@ export default function BlogPost() {
         >
           Nat doesn’t change—still buys physical books, the old-school way. He enjoyed the Thirunelveli book exhibition, a reminder that some things remain timeless. For example, do you know what பொருநை means? It connects us to a deeper cultural heritage even as our world races toward digital.
         </Typography>
+        <Box
+          component="img"
+          src="/media/natbf.jpeg"
+          alt="Nat with his stack of physical books"
+          loading="lazy"
+          decoding="async"
+          sx={{
+            width: "100%",
+            maxWidth: 640,
+            borderRadius: 2,
+            boxShadow: 3,
+            mt: 3,
+          }}
+        />
       </Box>
 
       <Box component="section">
@@ -203,7 +217,7 @@ export default function BlogPost() {
             color: "var(--mui-palette-text-primary)",
           }}
         >
-          No surprise here: the most liked brand among Generation Alpha is Oreo. It’s a simple, sweet marker of how even the youngest generation is shaped by familiar comforts amid rapid change.
+          No surprise here: the most liked Gen Alpha “persume” is Oreo—their go-to perfume pick, all sugar-cookie vibe, that they reach for without thinking. It’s a simple, sweet marker of how even the youngest generation is shaped by familiar comforts amid rapid change.
         </Typography>
       </Box>
 
@@ -247,7 +261,7 @@ export default function BlogPost() {
             color: "var(--mui-palette-text-primary)",
           }}
         >
-          Michael Spencer recently made a strong case that AI might bring more harm than good. Citrini Research highlights growing concerns that AI accelerates wealth inequality and destabilizes the labor market. Older workers lack adaptive capacity to switch roles, facing greater job loss and lower reemployment rates. Paradoxically, AI seems to favor experienced workers over younger ones in some sectors, which is unusual compared to past tech revolutions.
+          Michael Spencer recently made a strong case that AI might bring more harm than good. Citrini Research highlights growing concerns that AI accelerates wealth inequality and destabilizes the labor market. Older workers lack adaptive capacity to switch roles, facing greater job loss and lower reemployment rates. Paradoxically, AI seems to favor experienced workers over younger ones in some sectors, which is unusual compared to past tech revolutions. Reading <a href="https://www.sanjaaybabu.com/writing/last-week-tonight-8" target="_blank" rel="noreferrer">this post</a> took me back to my first brush with Coase theorem: Tamil Nadu village markets during festival days, where farmers secretly negotiate cattle prices with hands wrapped under a cloth, revealing the price only when both sides nod.
         </Typography>
       </Box>
 
