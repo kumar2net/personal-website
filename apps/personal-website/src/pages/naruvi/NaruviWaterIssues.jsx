@@ -5,49 +5,11 @@ const MONTHLY_TNPDCL_COST = 49757;
 const LM51_PREVIOUS_LOAD_KW = 15;
 const LM51_REVISED_LOAD_KW = 2;
 const TNPDCL_FIXED_CHARGE_PER_KW_PER_2_MONTHS = 214;
-const INVESTMENT_LOW = 575000;
-const INVESTMENT_HIGH = 675000;
 
 const MONTHLY_FIXED_CHARGE_SAVINGS =
   ((LM51_PREVIOUS_LOAD_KW - LM51_REVISED_LOAD_KW) *
     TNPDCL_FIXED_CHARGE_PER_KW_PER_2_MONTHS) /
   2;
-
-const ROI_SCENARIOS = [
-  { name: 'Conservative', operationalReduction: 0.2, color: '#ca8a04' },
-  { name: 'Balanced', operationalReduction: 0.3, color: '#2563eb' },
-  { name: 'Accelerated', operationalReduction: 0.4, color: '#059669' },
-].map((scenario) => {
-  const variableSavings = MONTHLY_TNPDCL_COST * scenario.operationalReduction;
-  const totalMonthlySavings = variableSavings + MONTHLY_FIXED_CHARGE_SAVINGS;
-  const lowMonths = Math.ceil(INVESTMENT_LOW / totalMonthlySavings);
-  const highMonths = Math.ceil(INVESTMENT_HIGH / totalMonthlySavings);
-
-  return {
-    ...scenario,
-    variableSavings: Math.round(variableSavings),
-    totalMonthlySavings: Math.round(totalMonthlySavings),
-    lowMonths,
-    highMonths,
-    lowYears: (lowMonths / 12).toFixed(1),
-    highYears: (highMonths / 12).toFixed(1),
-  };
-});
-
-const ROI_CHART_MAX_MONTHS = Math.max(
-  ...ROI_SCENARIOS.map((scenario) => scenario.highMonths),
-  24
-);
-const ROI_FASTEST_MONTHS = Math.min(
-  ...ROI_SCENARIOS.map((scenario) => scenario.lowMonths)
-);
-const ROI_SLOWEST_MONTHS = Math.max(
-  ...ROI_SCENARIOS.map((scenario) => scenario.highMonths)
-);
-const ROI_AXIS_TICKS = Array.from(
-  { length: Math.floor(ROI_CHART_MAX_MONTHS / 12) + 1 },
-  (_, index) => index * 12
-);
 
 const parseInputNumber = (value) => {
   const parsed = Number(value);
@@ -55,9 +17,9 @@ const parseInputNumber = (value) => {
 };
 
 const NaruviWaterIssues = () => {
-  const [solarIntegrationCost, setSolarIntegrationCost] = useState(1800000);
+  const [solarIntegrationCost, setSolarIntegrationCost] = useState(890000);
   const [monthlySolarOffsetSavings, setMonthlySolarOffsetSavings] =
-    useState(30000);
+    useState(31500);
   const [monthlySolarExportCredit, setMonthlySolarExportCredit] =
     useState(5000);
   const [monthlySolarMaintenanceCost, setMonthlySolarMaintenanceCost] =
@@ -117,13 +79,19 @@ const NaruviWaterIssues = () => {
             ✅ Good News Update
           </h2>
           <p className="text-green-700 font-medium">
-            Update date: February 19, 2026
+            Update date: March 6, 2026
           </p>
           <p className="text-green-700 mt-2">
             Primary implemented action: Naruvi Owners Welfare Association
             (NOWA) has initiated solar power evacuation alignment with Tamil
             Nadu Power Distribution Corporation Limited (TNPDCL), formerly
             Tamil Nadu Generation and Distribution Corporation (TANGEDCO).
+          </p>
+          <p className="text-green-700 mt-2">
+            Revised solar economics: the total solar cost after subsidy is now
+            expected to remain below ₹9,00,000. With the current assumptions on
+            this page, that brings estimated payback down to about 25 months,
+            or just over 2 years.
           </p>
           <p className="text-green-700 mt-2">
             NOWA has handed over official intimation to shift sanctioned loads
@@ -135,10 +103,16 @@ const NaruviWaterIssues = () => {
             reflecting from the next bill cycle.
           </p>
           <p className="text-green-700 mt-2">
-            Status clarification: the dual-water recommendation using Reverse
-            Osmosis (RO) water for potable needs and borewell water for
-            non-potable needs is not yet implemented, and remains a pending
-            phase.
+            Water-phase refinement: based on owner feedback and the single-line
+            underground plumbing constraint, NOWA is now pursuing a separate
+            pressurized utility-water line for outdoor uses while retaining the
+            existing RO line inside villas.
+          </p>
+          <p className="text-green-700 mt-2">
+            Execution status: NOWA wanted to complete the parallel line before
+            March 2026, but work is delayed because vendors experienced in
+            pressurized supply systems are not yet readily available. Follow-up
+            is in progress.
           </p>
         </div>
 
@@ -150,11 +124,13 @@ const NaruviWaterIssues = () => {
           <p style={{ color: '#92400e' }}>
             Editable assumptions for payback from solar consumption-offset
             savings, export credit, and sanctioned-load fixed-charge reduction.
+            The default values reflect the latest update: post-subsidy capex
+            below ₹9 lakh and payback of roughly 25 months.
           </p>
 
           <div className="grid md:grid-cols-2 gap-4 mt-4">
             <label className="text-sm font-medium" style={{ color: '#78350f' }}>
-              One-time solar integration cost (₹)
+              One-time solar integration cost after subsidy (₹)
               <input
                 type="number"
                 min="0"
@@ -321,12 +297,32 @@ const NaruviWaterIssues = () => {
             </div>
             <div className="bg-white rounded-lg p-4 shadow-sm">
               <h3 className="font-semibold text-emerald-800 mb-2">
-                Water Plan Still Pending
+                Faster Solar Payback
               </h3>
               <p className="text-sm text-gray-700">
-                The dual-water implementation is still pending. Water-side
-                operational savings and full system ROI will follow only after
-                that phase is executed.
+                With the revised post-subsidy cost below ₹9,00,000, the solar
+                phase now appears to break even in about 25 months under the
+                current savings assumptions.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-sm">
+              <h3 className="font-semibold text-emerald-800 mb-2">
+                Revised Water Proposal
+              </h3>
+              <p className="text-sm text-gray-700">
+                The current direction is to retain RO water inside villas,
+                increase TDS to around 70, and add one separate outdoor utility
+                outlet per villa using a pressurized parallel line.
+              </p>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-sm">
+              <h3 className="font-semibold text-emerald-800 mb-2">
+                Execution Delay
+              </h3>
+              <p className="text-sm text-gray-700">
+                NOWA wanted the parallel line completed before March 2026, but
+                the work is currently delayed by contractor availability for
+                pressurized water-supply systems.
               </p>
             </div>
           </div>
@@ -336,12 +332,14 @@ const NaruviWaterIssues = () => {
           {/* Executive Summary */}
           <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
             <h2 className="text-xl font-semibold text-blue-800 mb-3">
-              Current Priority: Solar Power Integration with TNPDCL
+              Current Position: Solar Economics Improved, Water Plan Refined
             </h2>
             <p className="text-blue-700">
-              Execution has started with solar evacuation and sanctioned-load
-              optimization. Water-management improvements remain in
-              recommendation stage and are not yet implemented.
+              Solar integration is under execution and the revised post-subsidy
+              payback is now about 25 months. On water, the emerging direction
+              is not to rework internal villa plumbing, but to retain RO supply
+              inside villas, raise TDS to about 70, and add a separate
+              pressurized utility-water outlet for each villa.
             </p>
           </div>
 
@@ -415,21 +413,106 @@ const NaruviWaterIssues = () => {
             </div>
           </section>
 
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Latest Inputs from Owners and NOWA
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-sky-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-sky-800 mb-2">
+                  Strong Support for Retaining RO
+                </h3>
+                <p className="text-sm text-sky-700">
+                  A number of owners, including some previous office bearers,
+                  do not want the present concept of 100% RO usage inside the
+                  villas to be disturbed because it protects appliances,
+                  sanitary fittings, and internal plumbing.
+                </p>
+              </div>
+              <div className="bg-rose-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-rose-800 mb-2">
+                  Counterarguments Raised by Other Owners
+                </h3>
+                <p className="text-sm text-rose-700">
+                  The main concerns are that very low-TDS RO water around 20 may
+                  not be ideal for health and plants, the RO system may reject
+                  around 65% of water to the drain, and the plant adds avoidable
+                  electricity cost.
+                </p>
+              </div>
+              <div className="bg-amber-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-amber-800 mb-2">
+                  Physical Constraint
+                </h3>
+                <p className="text-sm text-amber-700">
+                  Internal villa plumbing is largely underground and designed as
+                  a single-source supply network, which significantly limits the
+                  freedom to alter the existing water circuit.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Solution */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Proposed Solution: Dual Water System
+              Updated Proposal: Retain RO Supply + Add Parallel Utility Line
             </h2>
-            
-            {/* Technical Context */}
+
+            <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-6">
+              <h3 className="text-lg font-semibold text-blue-800 mb-3">
+                Current NOWA Direction
+              </h3>
+              <div className="space-y-2 text-blue-700">
+                <p>
+                  • <strong>Retain the existing RO line</strong> as the main
+                  supply inside villas.
+                </p>
+                <p>
+                  • <strong>Increase supplied TDS to about 70</strong> so the
+                  water carries some electrolytes while remaining soft enough
+                  for domestic use.
+                </p>
+                <p>
+                  • <strong>Add one independent pressurized parallel line</strong>{' '}
+                  carrying borewell plus corporation water directly to the
+                  villas.
+                </p>
+                <p>
+                  • <strong>Provide one outlet per villa</strong> on the inside
+                  compound wall facing the road, with pressure similar to the
+                  present RO line.
+                </p>
+                <p>
+                  • <strong>Use the new outlet primarily for</strong> vehicle
+                  washing, floor washing, garden watering, and related outdoor
+                  cleaning needs.
+                </p>
+              </div>
+            </div>
+
             <div className="bg-orange-50 border-l-4 border-orange-400 p-6 mb-6">
               <h3 className="text-lg font-semibold text-orange-800 mb-3">
-                Technical Context
+                Why This Revision Makes Sense
               </h3>
               <div className="space-y-2 text-orange-700">
-                <p>• <strong>RO Efficiency:</strong> RO systems typically have 50% efficiency - permeate (clean water) is 50% of input, reject water is 50%</p>
-                <p>• <strong>Borewell Depth:</strong> Borewells are typically sunk to 300-500 feet depth to access groundwater</p>
-                <p>• <strong>Current Issue:</strong> System uses 100% RO water, resulting in significant waste of reject water</p>
+                <p>
+                  • <strong>It preserves appliance protection</strong> by not
+                  disturbing the RO-fed internal villa network.
+                </p>
+                <p>
+                  • <strong>It avoids major internal plumbing changes</strong>{' '}
+                  in villas that were originally built for a single-source
+                  underground supply.
+                </p>
+                <p>
+                  • <strong>It still reduces RO dependency</strong> because
+                  outdoor and gardening uses can shift away from RO water.
+                </p>
+                <p>
+                  • <strong>It lowers waste and energy use</strong> by reducing
+                  both raw-water pumping and RO plant operating time.
+                </p>
               </div>
             </div>
 
@@ -490,7 +573,8 @@ const NaruviWaterIssues = () => {
                     <li>• Fixed Charge: ₹214/kW per 2 months</li>
                     <li>• Fixed cost TNPDCL: ₹4,280</li>
                     <li>• Total estimate TNPDCL cost: ₹49,757</li>
-                    <li>• RO Plant Daily Output: 29,000 litres permeate (58,000 litres input)</li>
+                    <li>• RO Plant Daily Supply: about 29,000 litres to villas</li>
+                    <li>• Owner feedback indicates reject water may be around 65%</li>
                     <li>• Pump Runtime: 10 hours actual</li>
                     <li>• Lighting Runtime: 10 hours</li>
                   </ul>
@@ -498,10 +582,16 @@ const NaruviWaterIssues = () => {
                 <div className="bg-white p-4 rounded-lg border">
                   <h4 className="font-semibold text-purple-800 mb-2">RO Efficiency Calculation</h4>
                   <p className="text-sm text-purple-700 mb-2">
-                    With 50% efficiency, we need <strong>58,000 litres</strong> of input water to get <strong>29,000 litres</strong> of permeate per day.
+                    At 50% recovery, producing <strong>29,000 litres</strong> of
+                    RO water requires about <strong>58,000 litres</strong> of
+                    input water per day. If reject water is closer to 65%, the
+                    input requirement can rise to about{' '}
+                    <strong>82,900 litres</strong>.
                   </p>
                   <p className="text-sm text-purple-700">
-                    <strong>Cost Impact:</strong> Electricity cost for RO Water represents <strong>67%</strong> of total energy consumption.
+                    <strong>Operational implication:</strong> shifting outdoor
+                    demand to the parallel line cuts borewell pumping, RO
+                    runtime, reject-water generation, and electricity use.
                   </p>
                 </div>
               </div>
@@ -510,45 +600,55 @@ const NaruviWaterIssues = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-blue-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-blue-700 mb-2">
-                  Potable Uses (RO Water)
+                  Existing RO Supply Inside Villas
                 </h3>
                 <ul className="space-y-1 text-blue-600">
                   <li>• Cooking</li>
                   <li>• Bathing</li>
-                  <li>• Washing</li>
+                  <li>• General washing and fixture protection</li>
                   <li>• Drinking</li>
                 </ul>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-green-700 mb-2">
-                  Non-Potable Uses (Borewell hardwater)
+                  New Parallel Utility Outlet
                 </h3>
                 <ul className="space-y-1 text-green-600">
-                  <li>• Plant watering</li>
-                  <li>• Car washing</li>
-                  <li>• Outdoor area cleaning</li>
-                  <li>• Toilet flushing</li>
+                  <li>• Vehicle washing</li>
+                  <li>• Floor washing</li>
+                  <li>• Garden watering</li>
+                  <li>• Outdoor cleaning and related utility use</li>
                 </ul>
               </div>
             </div>
 
-            {/* Solution Diagram */}
-            <div className="mt-8 text-center">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Solution Diagram
-              </h3>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <img
-                  loading="lazy"
-                  decoding="async"
-                  src="/media/naruviSolution1.png"
-                  alt="Naruvi Water Solution Diagram"
-                  className="max-w-full h-auto mx-auto rounded-lg shadow-md"
-                  style={{ maxHeight: '500px' }}
-                />
-                <p className="text-sm text-gray-600 mt-3">
-                  Proposed dual water system implementation for Naruvi Gated
-                  Community
+            <div className="mt-8 grid md:grid-cols-3 gap-4 not-prose">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  1. Source
+                </h3>
+                <p className="text-sm text-gray-700">
+                  Borewell and corporation water continue to be available for a
+                  separate utility service without replacing the internal RO
+                  distribution line.
+                </p>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  2. Delivery
+                </h3>
+                <p className="text-sm text-gray-700">
+                  A pressurized parallel line runs independently and provides one
+                  outlet per villa on the inside compound wall facing the road.
+                </p>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  3. Benefit
+                </h3>
+                <p className="text-sm text-gray-700">
+                  RO demand reduces without disturbing existing villa plumbing,
+                  lowering water wastage and energy consumption in the process.
                 </p>
               </div>
             </div>
@@ -561,29 +661,39 @@ const NaruviWaterIssues = () => {
             </h2>
             <div className="bg-gray-50 p-6 rounded-lg">
               <h3 className="font-semibold text-gray-700 mb-3">
-                Using Existing Single Plumbing Line (With Valves and Controls)
+                Independent Parallel Line Without Altering Internal Villa Plumbing
               </h3>
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium text-gray-700 mb-2">
-                    Reject Water Integration:
+                    Engineering Approach:
                   </h4>
                   <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    <li>Introduce bore water into existing plumbing line</li>
-                    <li>Route only to dedicated non-potable points</li>
-                    <li>Use manual or automatic mixing valves at each point</li>
-                    <li>Install check valves and backflow preventers</li>
+                    <li>Keep the existing RO network inside villas unchanged</li>
+                    <li>Lay a separate pressurized line along the common utility route</li>
+                    <li>Provide one outdoor outlet per villa at the compound wall</li>
+                    <li>Match outlet pressure broadly with the current RO supply pressure</li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="font-medium text-gray-700 mb-2">
-                    Safety Measures:
+                    Operating Logic:
                   </h4>
                   <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    <li>Install isolating valves for control</li>
-                    <li>Clear labeling inside homes</li>
-                    <li>User education and periodic supervision</li>
-                    <li>Prevent cross-contamination</li>
+                    <li>Use RO water inside villas as the protected domestic supply</li>
+                    <li>Use the new utility outlet for outdoor and heavy washing needs</li>
+                    <li>Raise TDS to around 70 and monitor it as part of routine plant operations</li>
+                    <li>Label the new outlet clearly so use-cases remain unambiguous</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-700 mb-2">
+                    Execution Status:
+                  </h4>
+                  <ul className="list-disc list-inside text-gray-600 space-y-1">
+                    <li>NOWA intended to complete this phase before March 2026</li>
+                    <li>The work is delayed due to the availability of pressurized-supply specialists</li>
+                    <li>Association follow-up is continuing to implement it as early as possible</li>
                   </ul>
                 </div>
               </div>
@@ -593,7 +703,7 @@ const NaruviWaterIssues = () => {
           {/* Cost Analysis */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Cost Analysis
+              Operational and Cost Impact
             </h2>
             
             {/* TNPDCL Energy Cost */}
@@ -615,243 +725,57 @@ const NaruviWaterIssues = () => {
               </div>
             </div>
 
-            {/* ROI Extrapolation Cost */}
-            <div className="mt-6 bg-indigo-50 border-l-4 border-indigo-400 p-6 rounded-lg not-prose">
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1e1b4b' }}>
-                Projected Return on Investment (ROI) for Pending Water Phase
+            <div className="mt-6 bg-amber-50 border-l-4 border-amber-400 p-6 not-prose">
+              <h3 className="text-xl font-semibold mb-3" style={{ color: '#78350f' }}>
+                Revised Solar Economics
               </h3>
               <p style={{ color: '#0f172a' }}>
-                Baseline monthly TNPDCL cost: <strong>₹49,757</strong>. LM51
-                fixed-charge reduction estimate after load change from 15 kW to
-                2 kW: <strong>~₹1,391/month</strong>. The association has
-                implemented the solar-grid phase; these bars represent
-                projected break-even windows for the pending water-system phase
-                (capex range ₹5,75,000 to ₹6,75,000).
-              </p>
-
-              <div className="space-y-4 mt-4">
-                {ROI_SCENARIOS.map((scenario) => (
-                  <div key={scenario.name}>
-                    <div className="flex items-center justify-between text-sm" style={{ color: '#0f172a' }}>
-                      <span className="font-semibold">
-                        {scenario.name} ({Math.round(scenario.operationalReduction * 100)}% operational savings)
-                      </span>
-                      <span>
-                        {scenario.lowMonths}-{scenario.highMonths} months ({scenario.lowYears}-{scenario.highYears} years)
-                      </span>
-                    </div>
-                    <div className="relative h-4 bg-white border border-slate-300 rounded mt-2 overflow-hidden">
-                      <div
-                        className="h-full"
-                        style={{
-                          width: `${(scenario.highMonths / ROI_CHART_MAX_MONTHS) * 100}%`,
-                          backgroundColor: scenario.color,
-                          opacity: 0.35,
-                        }}
-                      />
-                      <div
-                        className="absolute top-0 h-full w-1 bg-slate-900"
-                        style={{
-                          left: `calc(${(scenario.lowMonths / ROI_CHART_MAX_MONTHS) * 100}% - 2px)`,
-                        }}
-                      />
-                    </div>
-                    <p className="text-xs mt-1" style={{ color: '#334155' }}>
-                      Monthly savings used: ~₹{scenario.totalMonthlySavings.toLocaleString()} (energy + fixed-charge reduction)
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex justify-between text-xs mt-3" style={{ color: '#475569' }}>
-                {ROI_AXIS_TICKS.map((tick) => (
-                  <span key={tick}>{tick}m</span>
-                ))}
-              </div>
-
-              <p className="mt-4" style={{ color: '#0f172a' }}>
-                Extrapolated ROI window: <strong>{ROI_FASTEST_MONTHS}-{ROI_SLOWEST_MONTHS} months</strong>{' '}
-                ({(ROI_FASTEST_MONTHS / 12).toFixed(1)}-{(ROI_SLOWEST_MONTHS / 12).toFixed(1)} years).
-                Practical expectation is around the Balanced case, approximately{' '}
-                <strong>
-                  {ROI_SCENARIOS[1].lowMonths}-{ROI_SCENARIOS[1].highMonths} months
-                </strong>
-                .
+                Using the latest assumption of post-subsidy solar cost below
+                <strong> ₹9,00,000</strong>, the current calculator defaults
+                produce an estimated payback of <strong>about {solarPaybackMonths} months</strong>{' '}
+                ({solarPaybackYears} years). This is materially better than the
+                earlier estimate and strengthens the case for the solar phase
+                already under execution.
               </p>
             </div>
 
-            {/* Implementation Cost */}
+            <div className="mt-6 bg-indigo-50 border-l-4 border-indigo-400 p-6 rounded-lg not-prose">
+              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1e1b4b' }}>
+                Expected Benefit of the Parallel Water Line
+              </h3>
+              <div className="space-y-2" style={{ color: '#0f172a' }}>
+                <p>
+                  • The new line should substantially reduce the volume of water
+                  that has to pass through the RO plant for outdoor and utility
+                  uses.
+                </p>
+                <p>
+                  • NOWA&apos;s current working assumption is that for the volume
+                  supplied through the parallel line, roughly twice that volume
+                  can be saved from being pumped out of the borewells because it
+                  no longer enters the RO cycle.
+                </p>
+                <p>
+                  • Lower RO demand should reduce both borewell pumping time and
+                  RO plant running time, which in turn lowers electricity cost.
+                </p>
+                <p>
+                  • Final capex for the revised parallel-line design should be
+                  confirmed after quotes from vendors who handle pressurized
+                  water-supply systems.
+                </p>
+              </div>
+            </div>
+
             <div className="mt-6 bg-blue-50 border-l-4 border-blue-400 p-6">
               <h3 className="text-xl font-semibold text-blue-800 mb-3">
-                Water-Phase Implementation Cost (One-time, Pending)
+                Scope to Be Finalized Through Vendor Quotes
               </h3>
-              <p className="text-2xl font-bold text-blue-700 mb-2">
-                ₹5,75,000 to ₹6,75,000
-              </p>
               <div className="text-sm text-blue-600 space-y-1">
-                <p>
-                  • Equipment, materials, installation, and control systems
-                </p>
-                <p>• Includes plumbing retrofit inside homes</p>
-                <p>
-                  • ROI depends on realized savings. See extrapolation chart above.
-                </p>
-              </div>
-            </div>
-
-            {/* Detailed Cost Breakdown */}
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Detailed Cost Breakdown
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-300 rounded-lg">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
-                        Component
-                      </th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
-                        Details/Specs
-                      </th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
-                        Estimated Cost (Indian Rupees, INR)
-                      </th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 border-b">
-                        Notes
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        RO Reject Water Storage Tank
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        ~12,000 liters capacity, food grade plastic
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹1,20,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Includes level sensors and fittings
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Centrifugal/Submersible Pump
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        1-2 horsepower (HP), 2-4 bar pressure
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹30,000 - ₹50,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Suitable for reject water pumping
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Piping and Fittings
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Chlorinated Polyvinyl Chloride (CPVC) pipes (1 inch),
-                        valves, backflow preventers
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹1,50,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Includes installation cost for community piping
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Mixing & Control Valves
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Motorized/manual valves, backflow preventers
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹50,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        For switching between potable and reject water
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Water Quality Monitoring System
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Basic sensors, test kits
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹25,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        For periodic quality assurance
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Electrical Controls & Panel
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Automation panels, switches, wiring
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹50,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Controls pumps and valves remotely or automatically
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Plumbing Retrofit in Homes
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Valves, check valves, piping for taps
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹1,50,000 - ₹2,00,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Includes labor and material for ~39 houses
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">
-                        Community Awareness & Signage
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        Sign boards, user manuals
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-green-600">
-                        ₹10,000
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        For labeling and educating residents
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50 bg-yellow-50">
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">
-                        Contingency
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
-                        10% of total
-                      </td>
-                      <td className="px-4 py-3 text-sm font-semibold text-yellow-600">
-                        ₹40,000
-                      </td>
-                      <td className="px-3 text-sm text-gray-600">
-                        For unexpected expenses
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <p>• Parallel pressurized line routing across the community</p>
+                <p>• One standardized outdoor outlet per villa</p>
+                <p>• Pressure balancing, isolation valves, and controls</p>
+                <p>• TDS-setting and monitoring protocol for the retained RO supply</p>
               </div>
             </div>
 
@@ -876,9 +800,9 @@ const NaruviWaterIssues = () => {
                   Immediate Actions
                 </h3>
                 <ul className="list-disc list-inside text-blue-600 space-y-1">
-                  <li>Get multiple local quotes for competitive pricing</li>
-                  <li>Verify vendor support and warranty terms</li>
-                  <li>Plan user education program</li>
+                  <li>Close quotes from vendors experienced in pressurized supply systems</li>
+                  <li>Freeze the standard location and hardware specification for one outlet per villa</li>
+                  <li>Publish the operating note for RO line versus utility line usage</li>
                 </ul>
               </div>
               <div className="bg-yellow-50 p-4 rounded-lg">
@@ -886,11 +810,19 @@ const NaruviWaterIssues = () => {
                   Implementation Considerations
                 </h3>
                 <ul className="list-disc list-inside text-yellow-600 space-y-1">
-                  <li>Less costly and disruptive than dual plumbing</li>
-                  <li>
-                    Suitable for communities with moderate modification scope
-                  </li>
-                  <li>Requires clear signage and user education</li>
+                  <li>Do not tamper with internal villa plumbing unless a later expert study supports it</li>
+                  <li>Raise TDS only with a defined monitoring band and periodic reporting</li>
+                  <li>Track pre/post metrics: RO runtime, borewell pumping hours, and electricity bills</li>
+                </ul>
+              </div>
+              <div className="bg-emerald-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-emerald-700 mb-2">
+                  Communication to Owners
+                </h3>
+                <ul className="list-disc list-inside text-emerald-600 space-y-1">
+                  <li>Explain that the RO-protection objective inside villas is being retained</li>
+                  <li>Show that outdoor uses are the first target for reducing RO dependence</li>
+                  <li>Share timeline updates transparently because vendor availability is the current bottleneck</li>
                 </ul>
               </div>
             </div>
@@ -902,14 +834,16 @@ const NaruviWaterIssues = () => {
               Summary
             </h2>
             <p className="text-gray-700 mb-4">
-              For retrofit in existing homes, using the single plumbing line
-              with valves and backflow preventers for controlled borewater usage
-              is feasible and cost-effective.
+              The revised owner-facing recommendation is to keep the present RO
+              supply inside villas, modestly raise TDS to about 70, and add one
+              separate pressurized borewell plus corporation-water outlet per
+              villa for outdoor uses.
             </p>
             <p className="text-gray-700">
-              <strong>Critical Success Factors:</strong> Clear signage, user
-              education, and periodic supervision to avoid misuse or
-              contamination.
+              <strong>Why this is the better fit now:</strong> it respects the
+              underground single-source plumbing constraint, retains protection
+              for appliances and fittings, and still reduces RO loading,
+              groundwater extraction, reject-water loss, and electricity use.
             </p>
           </section>
 
@@ -919,12 +853,11 @@ const NaruviWaterIssues = () => {
               Postscript (PS):
             </h2>
             <p style={{ color: '#0f172a' }}>
-              We can even use the reject water with some dilution for
-              non-potable uses in common areas—watering park plants, etc.
-              Sinking one or two more borewells in close proximity to existing
-              defunct borewells will not help as the issue is availability of
-              water. Probably we need to explore and implement rain water
-              harvesting also. Thank you.
+              Reject-water reuse in selected common-area applications and rain
+              water harvesting still deserve parallel study. But the most
+              practical next step, based on the current owner feedback and site
+              constraints, is the separate utility-water line rather than
+              internal villa plumbing changes. Thank you.
             </p>
           </section>
 
@@ -955,9 +888,9 @@ const NaruviWaterIssues = () => {
                     during our time living in Chennai.
                   </p>
                   <p style={{ color: '#0f172a' }}>
-                    <strong>Artificial Intelligence (AI) Assistance:</strong> The cost estimate table was
-                    generated with the help of AI tools to provide structured
-                    data.
+                    <strong>Artificial Intelligence (AI) Assistance:</strong>{' '}
+                    Some structured estimates and summaries were prepared with
+                    the help of AI tools.
                   </p>
                   <p style={{ color: '#0f172a' }}>
                     <strong>Expertise Level:</strong> I have limited knowledge
