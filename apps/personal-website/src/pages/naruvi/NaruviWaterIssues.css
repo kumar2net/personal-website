@@ -1,0 +1,46 @@
+.naruvi-report .naruvi-light-surface {
+  color: #0f172a;
+}
+
+.naruvi-report .naruvi-light-card {
+  background-color: #ffffff;
+}
+
+:root[data-mui-color-scheme='dark'] .naruvi-report .naruvi-light-surface,
+.dark .naruvi-report .naruvi-light-surface {
+  color: #0f172a !important;
+}
+
+:root[data-mui-color-scheme='dark'] .naruvi-report .naruvi-light-card,
+.dark .naruvi-report .naruvi-light-card {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.35) !important;
+}
+
+:root[data-mui-color-scheme='dark'] .naruvi-report .naruvi-light-surface :is(
+    .text-gray-500,
+    .text-gray-600,
+    .text-gray-700,
+    .text-gray-800,
+    .text-gray-900,
+    .text-slate-500,
+    .text-slate-600,
+    .text-slate-700,
+    .text-slate-800,
+    .text-slate-900
+  ),
+.dark .naruvi-report .naruvi-light-surface :is(
+    .text-gray-500,
+    .text-gray-600,
+    .text-gray-700,
+    .text-gray-800,
+    .text-gray-900,
+    .text-slate-500,
+    .text-slate-600,
+    .text-slate-700,
+    .text-slate-800,
+    .text-slate-900
+  ) {
+  color: #0f172a !important;
+}

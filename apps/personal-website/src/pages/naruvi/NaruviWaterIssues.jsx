@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import './NaruviWaterIssues.css';
 
 const MONTHLY_TNPDCL_COST = 49757;
 const LM51_PREVIOUS_LOAD_KW = 15;
@@ -66,7 +67,7 @@ const NaruviWaterIssues = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto"
+      className="naruvi-report max-w-4xl mx-auto"
     >
       <div className="bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
@@ -74,7 +75,7 @@ const NaruviWaterIssues = () => {
         </h1>
 
         {/* Positive Update */}
-        <div className="bg-green-50 border-l-4 border-green-400 p-6 mb-8">
+        <div className="naruvi-light-surface bg-green-50 border-l-4 border-green-400 p-6 mb-8">
           <h2 className="text-xl font-semibold text-green-800 mb-3">
             ✅ Good News Update
           </h2>
@@ -218,7 +219,7 @@ const NaruviWaterIssues = () => {
           </div>
 
           <div className="grid md:grid-cols-4 gap-4 mt-5">
-            <div className="bg-white border border-amber-200 rounded p-4">
+            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
               <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
                 Fixed-charge savings
               </p>
@@ -226,7 +227,7 @@ const NaruviWaterIssues = () => {
                 ₹{Math.round(calculatorFixedChargeSavings).toLocaleString('en-IN')}/month
               </p>
             </div>
-            <div className="bg-white border border-amber-200 rounded p-4">
+            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
               <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
                 Net monthly savings
               </p>
@@ -234,7 +235,7 @@ const NaruviWaterIssues = () => {
                 ₹{Math.round(solarNetMonthlySavings).toLocaleString('en-IN')}
               </p>
             </div>
-            <div className="bg-white border border-amber-200 rounded p-4">
+            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
               <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
                 Estimated payback
               </p>
@@ -244,7 +245,7 @@ const NaruviWaterIssues = () => {
                   : 'No payback (savings <= 0)'}
               </p>
             </div>
-            <div className="bg-white border border-amber-200 rounded p-4">
+            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
               <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
                 Annual ROI
               </p>
@@ -330,7 +331,7 @@ const NaruviWaterIssues = () => {
 
         <div className="prose prose-lg max-w-none">
           {/* Executive Summary */}
-          <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
+          <div className="naruvi-light-surface bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
             <h2 className="text-xl font-semibold text-blue-800 mb-3">
               Current Position: Solar Economics Improved, Water Plan Refined
             </h2>
@@ -418,7 +419,7 @@ const NaruviWaterIssues = () => {
               Latest Inputs from Owners and NOWA
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-sky-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-sky-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-sky-800 mb-2">
                   Strong Support for Retaining RO
                 </h3>
@@ -429,7 +430,7 @@ const NaruviWaterIssues = () => {
                   sanitary fittings, and internal plumbing.
                 </p>
               </div>
-              <div className="bg-rose-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-rose-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-rose-800 mb-2">
                   Counterarguments Raised by Other Owners
                 </h3>
@@ -440,7 +441,7 @@ const NaruviWaterIssues = () => {
                   electricity cost.
                 </p>
               </div>
-              <div className="bg-amber-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-amber-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-amber-800 mb-2">
                   Physical Constraint
                 </h3>
@@ -459,7 +460,7 @@ const NaruviWaterIssues = () => {
               Updated Proposal: Retain RO Supply + Add Parallel Utility Line
             </h2>
 
-            <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-6">
+            <div className="naruvi-light-surface bg-blue-50 border-l-4 border-blue-400 p-6 mb-6">
               <h3 className="text-lg font-semibold text-blue-800 mb-3">
                 Current NOWA Direction
               </h3>
@@ -491,7 +492,7 @@ const NaruviWaterIssues = () => {
               </div>
             </div>
 
-            <div className="bg-orange-50 border-l-4 border-orange-400 p-6 mb-6">
+            <div className="naruvi-light-surface bg-orange-50 border-l-4 border-orange-400 p-6 mb-6">
               <h3 className="text-lg font-semibold text-orange-800 mb-3">
                 Why This Revision Makes Sense
               </h3>
@@ -522,7 +523,7 @@ const NaruviWaterIssues = () => {
                 Energy Consumption Analysis
               </h3>
               <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-300 rounded-lg">
+                <table className="naruvi-light-surface naruvi-light-card min-w-full bg-white border border-gray-300 rounded-lg">
                   <thead className="bg-purple-100">
                     <tr>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Component</th>
@@ -554,7 +555,7 @@ const NaruviWaterIssues = () => {
                       <td className="px-4 py-3 text-sm text-gray-600">40</td>
                       <td className="px-4 py-3 text-sm font-medium text-purple-800">10,260</td>
                     </tr>
-                    <tr className="hover:bg-gray-50 bg-purple-50">
+                    <tr className="naruvi-light-surface hover:bg-gray-50 bg-purple-50">
                       <td className="px-4 py-3 text-sm font-semibold text-gray-900">Total</td>
                       <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
                       <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
@@ -566,7 +567,7 @@ const NaruviWaterIssues = () => {
               </div>
               
               <div className="mt-4 grid md:grid-cols-2 gap-4">
-                <div className="bg-white p-4 rounded-lg border">
+                <div className="naruvi-light-surface naruvi-light-card bg-white p-4 rounded-lg border">
                   <h4 className="font-semibold text-purple-800 mb-2">Key Parameters</h4>
                   <ul className="space-y-1 text-sm text-purple-900">
                     <li>• Electricity Tariff: ₹9/kWh (TNPDCL)</li>
@@ -579,7 +580,7 @@ const NaruviWaterIssues = () => {
                     <li>• Lighting Runtime: 10 hours</li>
                   </ul>
                 </div>
-                <div className="bg-white p-4 rounded-lg border">
+                <div className="naruvi-light-surface naruvi-light-card bg-white p-4 rounded-lg border">
                   <h4 className="font-semibold text-purple-800 mb-2">RO Efficiency Calculation</h4>
                   <p className="text-sm text-purple-900 mb-2">
                     At 50% recovery, producing <strong>29,000 litres</strong> of
@@ -598,7 +599,7 @@ const NaruviWaterIssues = () => {
             </div>
             
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-blue-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-blue-900 mb-2">
                   Existing RO Supply Inside Villas
                 </h3>
@@ -795,7 +796,7 @@ const NaruviWaterIssues = () => {
               Recommendations
             </h2>
             <div className="space-y-4">
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-blue-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-blue-900 mb-2">
                   Immediate Actions
                 </h3>
@@ -805,7 +806,7 @@ const NaruviWaterIssues = () => {
                   <li>Publish the operating note for RO line versus utility line usage</li>
                 </ul>
               </div>
-              <div className="bg-yellow-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-yellow-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-amber-900 mb-2">
                   Implementation Considerations
                 </h3>
@@ -815,7 +816,7 @@ const NaruviWaterIssues = () => {
                   <li>Track pre/post metrics: RO runtime, borewell pumping hours, and electricity bills</li>
                 </ul>
               </div>
-              <div className="bg-emerald-50 p-4 rounded-lg">
+              <div className="naruvi-light-surface bg-emerald-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-emerald-900 mb-2">
                   Communication to Owners
                 </h3>

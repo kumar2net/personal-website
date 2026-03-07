@@ -25,6 +25,41 @@ const albums = [
   },
 ];
 
+const channelHighlights = [
+  {
+    eyebrow: "Macro",
+    title: "Hormuz shock, explained fast",
+    description:
+      "A compact look at how India handles fuel, shipping, and supply-chain stress if the Strait of Hormuz is disrupted.",
+    url: "https://www.youtube.com/shorts/iknbqWNboD8",
+    accent: "warning",
+  },
+  {
+    eyebrow: "Payments + AI",
+    title: "AI on UPI and Aadhaar",
+    description:
+      "A practical ground-truth check on where AI fits, where it breaks, and what matters for India Stack systems.",
+    url: "https://www.youtube.com/shorts/zgZPlnHZ2l8",
+    accent: "primary",
+  },
+  {
+    eyebrow: "Home Tech",
+    title: "Ask for dual-band Wi-Fi",
+    description:
+      "A quick explainer on why 2.4 GHz and 5 GHz matter, and what to ask your ISP before the next router swap.",
+    url: "https://www.youtube.com/shorts/iJh93nC8ElQ",
+    accent: "success",
+  },
+  {
+    eyebrow: "Food Science",
+    title: "Rice vs wheat for sugar control",
+    description:
+      "Short, evidence-based guidance on why glycemic response depends more on portion, refinement, and pairing than a simple grain swap.",
+    url: "https://www.youtube.com/shorts/j97mdG7-ufk",
+    accent: "secondary",
+  },
+];
+
 const Album = () => {
   const theme = useTheme();
   const [isMobile] = useState(() => {
@@ -112,34 +147,127 @@ const Album = () => {
           </Box>
 
           <Grid container spacing={3} justifyContent="center">
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={10}>
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
-                  borderRadius: 3,
+                  p: { xs: 3, md: 4 },
+                  borderRadius: 4,
                   border: `1px solid ${theme.palette.divider}`,
                   bgcolor: alpha(theme.palette.secondary.main, 0.08),
                 }}
               >
-                <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-                  AIKumar Sothapalgal - சொதப்பல்கள் 
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Follow the latest AIKumar drops and behind-the-scenes snippets.
-                  New short: "Peanut Pains" offers a funny take.
-                </Typography>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  href="https://www.youtube.com/@kumar2net"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  endIcon={<FaExternalLinkAlt style={{ opacity: 0.7, fontSize: "0.8em" }} />}
-                  sx={{ textTransform: "none" }}
-                >
-                  Visit YouTube channel
-                </Button>
+                <Stack spacing={3}>
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+                      AIKumar Useful Stuff
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 720 }}>
+                      Short, practical explainers from the channel on broadband,
+                      payments, AI systems, and everyday decision-making. Start with
+                      a few useful picks here, then jump into the full Shorts feed.
+                    </Typography>
+                  </Box>
+
+                  <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      href="https://www.youtube.com/@kumar2net/shorts"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      endIcon={<FaExternalLinkAlt style={{ opacity: 0.7, fontSize: "0.8em" }} />}
+                      sx={{
+                        alignSelf: "flex-start",
+                        textTransform: "none",
+                        boxShadow: "none",
+                      }}
+                    >
+                      Browse all shorts
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      href="https://www.youtube.com/@kumar2net"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      endIcon={<FaExternalLinkAlt style={{ opacity: 0.7, fontSize: "0.8em" }} />}
+                      sx={{ alignSelf: "flex-start", textTransform: "none" }}
+                    >
+                      Visit YouTube channel
+                    </Button>
+                  </Stack>
+
+                  <Grid container spacing={2}>
+                    {channelHighlights.map((short) => {
+                      const accentColor =
+                        theme.palette[short.accent]?.main || theme.palette.primary.main;
+
+                      return (
+                        <Grid item xs={12} sm={6} key={short.title}>
+                          <Paper
+                            elevation={0}
+                            sx={{
+                              height: "100%",
+                              p: 2.25,
+                              borderRadius: 3,
+                              border: `1px solid ${alpha(accentColor, 0.22)}`,
+                              background: `linear-gradient(180deg, ${alpha(
+                                accentColor,
+                                0.12,
+                              )} 0%, ${alpha(theme.palette.background.paper, 0.98)} 100%)`,
+                            }}
+                          >
+                            <Stack spacing={1.5} sx={{ height: "100%" }}>
+                              <Box>
+                                <Typography
+                                  variant="overline"
+                                  sx={{
+                                    letterSpacing: "0.16em",
+                                    color: alpha(accentColor, 0.92),
+                                    fontWeight: 700,
+                                  }}
+                                >
+                                  {short.eyebrow}
+                                </Typography>
+                                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                  {short.title}
+                                </Typography>
+                              </Box>
+
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                sx={{ flexGrow: 1 }}
+                              >
+                                {short.description}
+                              </Typography>
+
+                              <Button
+                                variant="text"
+                                size="small"
+                                href={short.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                endIcon={
+                                  <FaExternalLinkAlt style={{ opacity: 0.7, fontSize: "0.8em" }} />
+                                }
+                                sx={{
+                                  alignSelf: "flex-start",
+                                  px: 0,
+                                  textTransform: "none",
+                                  color: accentColor,
+                                }}
+                              >
+                                Watch short
+                              </Button>
+                            </Stack>
+                          </Paper>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Stack>
               </Paper>
             </Grid>
           </Grid>

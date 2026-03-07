@@ -5,7 +5,6 @@ import {
   Button,
   Container,
   Grid,
-  Link,
   Paper,
   Stack,
   Typography,
@@ -13,6 +12,7 @@ import {
   alpha,
 } from "@mui/material";
 import { useColorMode } from "../providers/ColorModeProvider";
+import musicPlaylistSnapshot from "../data/musicPlaylistSnapshot.json";
 
 const MusicPage = () => {
   const theme = useTheme();
@@ -22,29 +22,8 @@ const MusicPage = () => {
   const playlistTextColor = isDark
     ? theme.palette.common.white
     : theme.palette.getContrastText(theme.palette.error.main);
-  const playlistId = "PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH";
-  const playlistShareId = "WfNRuoFY0s0sW-84";
-  const freshSpinUrlAgam = "https://youtu.be/nVx-6ICOEf0?si=2MTyIK3rCCvJu1br";
-  const freshSpinUrlSivasri = "https://music.youtube.com/search?q=Sivasri";
-  const freshSpinUrlThree = "https://youtu.be/ktbZIV22mRk?si=tK4impvvMqCqJtoM";
-  const nazronStanzas = [
-    {
-      line: "Aapki nazron ne samjha, pyaar ke qaabil mujhe",
-      gloss: "Your gaze made me feel worthy — pure green-flag energy.",
-    },
-    {
-      line: "Dil ki dhadkan thehar ja, mil gayi manzil mujhe",
-      gloss: "Telling my heart to chill; I just found my purpose.",
-    },
-    {
-      line: "Aapki manzil hoon main, meri manzil aap hain",
-      gloss: "We are each other's endgame; no side quests.",
-    },
-    {
-      line: "Kyon main toofan se daroon, mera sahil aap hain",
-      gloss: "With you as my safe harbor, chaos cannot scare me.",
-    },
-  ];
+  const { playlistId, playlistShareId } = musicPlaylistSnapshot;
+  const latestSpins = musicPlaylistSnapshot.tracks.slice(-3);
 
   return (
     <Box
@@ -159,25 +138,14 @@ const MusicPage = () => {
                     }}
                   >
                     <Typography variant="subtitle2" fontWeight={700} gutterBottom>
-                      In the playlist now: "Aapki Nazron Ne Samjha" (1962)
+                      Current lane
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" paragraph>
-                      Old-school Bollywood ghazal energy: a slow, grateful love letter
-                      about being truly seen and feeling safe — easy on non-Hindi
-                      ears and Gen Z friendly.
+                    <Typography variant="body2" color="text.secondary">
+                      The playlist still cuts across devotional, retro Hindi,
+                      Tamil-pop, and newer crossover tracks without trying to stay
+                      in one lane. It is built for deep work, family evenings, and
+                      long drives.
                     </Typography>
-                    <Stack spacing={1.25}>
-                      {nazronStanzas.map((item) => (
-                        <Box key={item.line}>
-                          <Typography variant="body2" fontWeight={600}>
-                            {item.line}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {item.gloss}
-                          </Typography>
-                        </Box>
-                      ))}
-                    </Stack>
                   </Box>
                   <Button
                     variant="contained"
@@ -232,34 +200,15 @@ const MusicPage = () => {
                   Latest spins
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  Latest adds now lead with Agam Agarwal and Sivasri, followed
-                  by one steady repeat for focus mode.
+                  Latest spins auto-sync from the final three songs in the
+                  playlist tail, so this section always matches the newest
+                  additions at the bottom.
                 </Typography>
 
                 <Stack spacing={2}>
-                  {[
-                    {
-                      title:
-                        "Ashutosh Shashank Shekhar | Shiv Stuti at Kashi | Agam Aggarwal",
-                      context:
-                        "Newest devotional-energy add. Strong rhythm with a modern bhajan pulse.",
-                      url: freshSpinUrlAgam,
-                    },
-                    {
-                      title: "Sivasri | Recent playlist add",
-                      context:
-                        "Freshly added voice-led devotional pick that sits well in the same listening lane.",
-                      url: freshSpinUrlSivasri,
-                    },
-                    {
-                      title:
-                        "Amaidhi (Tamil) | Sid Sriram | Salim Sulaiman | Karthik Netha | Merchant Records South",
-                      context: "A calm Tamil pick with a steady lift for quiet focus hours.",
-                      url: freshSpinUrlThree,
-                    },
-                  ].map((item) => (
+                  {latestSpins.map((item, index) => (
                     <Box
-                      key={item.title}
+                      key={item.videoId}
                       sx={{
                         p: 2.5,
                         borderRadius: 3,
@@ -280,7 +229,12 @@ const MusicPage = () => {
                         {item.title}
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-                        {item.context}
+                        {item.artists.split(" · ")[0]}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1.5 }}>
+                        {index === latestSpins.length - 1
+                          ? "Newest add at the bottom of the playlist."
+                          : "One of the latest additions from the playlist tail."}
                       </Typography>
                       <Button
                         variant="outlined"

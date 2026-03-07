@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-sitemap.mjs",
+    "prebuild": "node scripts/generate-sitemap.mjs && node scripts/fetch-music-playlist.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
     "blog:validate": "node scripts/validate-blog-metadata.mjs",
+    "music:refresh": "node scripts/fetch-music-playlist.mjs",
     "shorts:metrics": "node scripts/generate-shorts-metrics.mjs",
     "ai-debug": "node ../../ai-tools/auto-debug-aggressive.js",
     "semantic:index": "node scripts/build-semantic-index.mjs",
