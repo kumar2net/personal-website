@@ -1,0 +1,13 @@
+Use case: YouTube Short payoff section
+Primary request: emphasize that one standardized workflow can scale to many outputs
+Scene/background: three finished vertical video cards floating above a clean dark grid
+Subject: three completed short-form variants rendered from one master pipeline
+Action: completed videos lock into a neat triptych while a central pulse radiates outward to suggest scale
+Camera: slow rise with confident forward drift
+Lighting/mood: satisfying, resolved, premium
+Color palette: black, cyan, white, gold
+Style/format: premium tech explainer finish, vertical cinematic realism
+Timing/beats: show single source origin, then complete three-variant reveal, then hold the resolution
+Audio: no dialogue, subtle success tone and soft pulse
+Constraints: no logos, no readable text, no people
+Avoid: busy backgrounds, shaky motion, cluttered triptych layout

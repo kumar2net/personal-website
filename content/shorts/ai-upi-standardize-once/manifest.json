@@ -1,0 +1,363 @@
+{
+  "version": "sora-manifest.v1",
+  "project": {
+    "id": "ai-upi-standardize-once",
+    "title": "UPI x AI: Standardize Once",
+    "fps": 30,
+    "resolution": {
+      "w": 1080,
+      "h": 1920
+    },
+    "canvas_bg": "#0B0B0F"
+  },
+  "template": {
+    "id": "canonical-9x16-v1",
+    "captionStyle": {
+      "maxLines": 2,
+      "boxOpacity": 0.9,
+      "radiusPx": 6,
+      "paddingPx": 8,
+      "bottomSafeOffsetPx": 120,
+      "fontFamily": [
+        "Inter",
+        "Noto Sans Tamil",
+        "Noto Sans Devanagari",
+        "sans-serif"
+      ]
+    },
+    "frameMap": [
+      {
+        "id": "F0",
+        "label": "Hook",
+        "range": [
+          0,
+          3
+        ],
+        "slot": "hook_text"
+      },
+      {
+        "id": "F1",
+        "label": "Main",
+        "range": [
+          3,
+          45
+        ],
+        "slot": "lower_third"
+      },
+      {
+        "id": "F2",
+        "label": "Payoff",
+        "range": [
+          45,
+          55
+        ],
+        "slot": "payoff_text"
+      },
+      {
+        "id": "F3",
+        "label": "CTA",
+        "range": [
+          55,
+          60
+        ],
+        "slot": "cta"
+      }
+    ],
+    "overlays": [
+      {
+        "id": "hook-progress-0",
+        "type": "svg",
+        "slot": "hook_progress",
+        "source": "overlays/hook/progress_0.svg"
+      },
+      {
+        "id": "hook-progress-15",
+        "type": "svg",
+        "slot": "hook_progress",
+        "source": "overlays/hook/progress_15.svg"
+      },
+      {
+        "id": "hook-progress-30",
+        "type": "svg",
+        "slot": "hook_progress",
+        "source": "overlays/hook/progress_30.svg"
+      },
+      {
+        "id": "hook-progress-45",
+        "type": "svg",
+        "slot": "hook_progress",
+        "source": "overlays/hook/progress_45.svg"
+      },
+      {
+        "id": "hook-progress-60",
+        "type": "svg",
+        "slot": "hook_progress",
+        "source": "overlays/hook/progress_60.svg"
+      },
+      {
+        "id": "lower-third-topic",
+        "type": "svg",
+        "slot": "lower_third",
+        "source": "overlays/l3/topic-template.svg"
+      },
+      {
+        "id": "sticker-bolt",
+        "type": "svg",
+        "slot": "stickers",
+        "source": "overlays/sticker/bolt.svg"
+      },
+      {
+        "id": "sticker-signal",
+        "type": "svg",
+        "slot": "stickers",
+        "source": "overlays/sticker/signal.svg"
+      },
+      {
+        "id": "sticker-ai",
+        "type": "svg",
+        "slot": "stickers",
+        "source": "overlays/sticker/ai.svg"
+      },
+      {
+        "id": "cta-card",
+        "type": "svg",
+        "slot": "cta",
+        "source": "overlays/cta/subscribe_site_playlist.svg"
+      }
+    ],
+    "companionFiles": {
+      "tokens": "tokens.json",
+      "slots": "slots.json",
+      "metadata": "metadata.json",
+      "prompt": "shorts_multilang_captioner.yaml",
+      "soraPrompt": "sora_prompt.txt"
+    }
+  },
+  "tracks": {
+    "video": [
+      {
+        "id": "v_hook",
+        "source": "clips/01-hook.mp4",
+        "start": 0,
+        "end": 12,
+        "keyframes": [
+          {
+            "t": 0,
+            "prompt_ref": "p_hook"
+          }
+        ]
+      },
+      {
+        "id": "v_main_a",
+        "source": "clips/02-template.mp4",
+        "start": 12,
+        "end": 24,
+        "keyframes": [
+          {
+            "t": 12,
+            "prompt_ref": "p_main_a"
+          }
+        ]
+      },
+      {
+        "id": "v_main_b",
+        "source": "clips/03-multilang.mp4",
+        "start": 24,
+        "end": 36,
+        "keyframes": [
+          {
+            "t": 24,
+            "prompt_ref": "p_main_b"
+          }
+        ]
+      },
+      {
+        "id": "v_payoff",
+        "source": "clips/04-payoff.mp4",
+        "start": 36,
+        "end": 48,
+        "keyframes": [
+          {
+            "t": 36,
+            "prompt_ref": "p_payoff"
+          }
+        ]
+      },
+      {
+        "id": "v_cta",
+        "source": "clips/05-cta.mp4",
+        "start": 48,
+        "end": 60,
+        "keyframes": [
+          {
+            "t": 48,
+            "prompt_ref": "p_cta"
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "id": "a_en",
+        "lang": "en",
+        "role": "narration",
+        "source": "audio/en.mp3",
+        "start": 0,
+        "end": 60,
+        "segments": [
+          { "t0": 0.2, "t1": 3.0, "cap_ref": "c1_en" },
+          { "t0": 3.1, "t1": 7.4, "cap_ref": "c2_en" },
+          { "t0": 7.5, "t1": 12.0, "cap_ref": "c3_en" },
+          { "t0": 12.1, "t1": 17.0, "cap_ref": "c4_en" },
+          { "t0": 17.1, "t1": 22.3, "cap_ref": "c5_en" },
+          { "t0": 22.4, "t1": 27.5, "cap_ref": "c6_en" },
+          { "t0": 27.6, "t1": 33.0, "cap_ref": "c7_en" },
+          { "t0": 33.1, "t1": 39.0, "cap_ref": "c8_en" },
+          { "t0": 39.1, "t1": 45.0, "cap_ref": "c9_en" },
+          { "t0": 45.1, "t1": 51.6, "cap_ref": "c10_en" },
+          { "t0": 51.7, "t1": 56.4, "cap_ref": "c11_en" },
+          { "t0": 56.5, "t1": 59.8, "cap_ref": "c12_en" }
+        ]
+      },
+      {
+        "id": "a_ta",
+        "lang": "ta",
+        "role": "narration",
+        "source": "audio/ta.mp3",
+        "start": 0,
+        "end": 60,
+        "segments": [
+          { "t0": 0.2, "t1": 3.0, "cap_ref": "c1_ta" },
+          { "t0": 3.1, "t1": 7.4, "cap_ref": "c2_ta" },
+          { "t0": 7.5, "t1": 12.0, "cap_ref": "c3_ta" },
+          { "t0": 12.1, "t1": 17.0, "cap_ref": "c4_ta" },
+          { "t0": 17.1, "t1": 22.3, "cap_ref": "c5_ta" },
+          { "t0": 22.4, "t1": 27.5, "cap_ref": "c6_ta" },
+          { "t0": 27.6, "t1": 33.0, "cap_ref": "c7_ta" },
+          { "t0": 33.1, "t1": 39.0, "cap_ref": "c8_ta" },
+          { "t0": 39.1, "t1": 45.0, "cap_ref": "c9_ta" },
+          { "t0": 45.1, "t1": 51.6, "cap_ref": "c10_ta" },
+          { "t0": 51.7, "t1": 56.4, "cap_ref": "c11_ta" },
+          { "t0": 56.5, "t1": 59.8, "cap_ref": "c12_ta" }
+        ]
+      },
+      {
+        "id": "a_hi",
+        "lang": "hi",
+        "role": "narration",
+        "source": "audio/hi.mp3",
+        "start": 0,
+        "end": 60,
+        "segments": [
+          { "t0": 0.2, "t1": 3.0, "cap_ref": "c1_hi" },
+          { "t0": 3.1, "t1": 7.4, "cap_ref": "c2_hi" },
+          { "t0": 7.5, "t1": 12.0, "cap_ref": "c3_hi" },
+          { "t0": 12.1, "t1": 17.0, "cap_ref": "c4_hi" },
+          { "t0": 17.1, "t1": 22.3, "cap_ref": "c5_hi" },
+          { "t0": 22.4, "t1": 27.5, "cap_ref": "c6_hi" },
+          { "t0": 27.6, "t1": 33.0, "cap_ref": "c7_hi" },
+          { "t0": 33.1, "t1": 39.0, "cap_ref": "c8_hi" },
+          { "t0": 39.1, "t1": 45.0, "cap_ref": "c9_hi" },
+          { "t0": 45.1, "t1": 51.6, "cap_ref": "c10_hi" },
+          { "t0": 51.7, "t1": 56.4, "cap_ref": "c11_hi" },
+          { "t0": 56.5, "t1": 59.8, "cap_ref": "c12_hi" }
+        ]
+      }
+    ],
+    "captions": [
+      { "id": "c1_en", "lang": "en", "text": "Wait, UPI can do this?" },
+      { "id": "c2_en", "lang": "en", "text": "Build one vertical template, not ten timelines." },
+      { "id": "c3_en", "lang": "en", "text": "Lock 1080 by 1920 once and keep the safe zones fixed." },
+      { "id": "c4_en", "lang": "en", "text": "Hooks, lower-thirds, stickers, and CTA stay swappable." },
+      { "id": "c5_en", "lang": "en", "text": "That means faster edits and fewer layout mistakes." },
+      { "id": "c6_en", "lang": "en", "text": "Write one English master script with tight caption timing." },
+      { "id": "c7_en", "lang": "en", "text": "Translate the SRT, not the whole edit, into Tamil and Hindi." },
+      { "id": "c8_en", "lang": "en", "text": "Generate matching TTS for each language at 48 kHz." },
+      { "id": "c9_en", "lang": "en", "text": "Then render three localized MP4s from the same picture-lock." },
+      { "id": "c10_en", "lang": "en", "text": "The payoff is simple: standardize once and scale daily." },
+      { "id": "c11_en", "lang": "en", "text": "Tamil, English, and Hindi all ship from one job." },
+      { "id": "c12_en", "lang": "en", "text": "More at kumar2net.com. Playlist: Wireless Explained." },
+      { "id": "c1_ta", "lang": "ta", "text": "ஒரு நிமிடம், UPI இதையும் செய்யுமா?" },
+      { "id": "c2_ta", "lang": "ta", "text": "பத்து timelines வேண்டாம், ஒரு vertical template போதும்." },
+      { "id": "c3_ta", "lang": "ta", "text": "1080 x 1920 layout-ஐ ஒருமுறை fix செய்து safe zone-ஐ பூட்டுங்கள்." },
+      { "id": "c4_ta", "lang": "ta", "text": "Hook, lower-third, stickers, CTA மட்டும் மாற்றினால் போதும்." },
+      { "id": "c5_ta", "lang": "ta", "text": "அதனால் edit வேகம் கூடும், layout தவறுகள் குறையும்." },
+      { "id": "c6_ta", "lang": "ta", "text": "முதலில் tight timing உடன் English master SRT எழுதுங்கள்." },
+      { "id": "c7_ta", "lang": "ta", "text": "பிறகு edit-ஐ அல்ல, SRT-ஐ Tamil, Hindi-க்கு மாற்றுங்கள்." },
+      { "id": "c8_ta", "lang": "ta", "text": "ஒவ்வொரு மொழிக்கும் pace match ஆகும் TTS audio உருவாக்குங்கள்." },
+      { "id": "c9_ta", "lang": "ta", "text": "அதே picture-lock-ல் இருந்து மூன்று localized MP4-கள் render ஆகட்டும்." },
+      { "id": "c10_ta", "lang": "ta", "text": "முக்கிய பலன்: ஒருமுறை standardize செய்தால் தினமும் scale செய்யலாம்." },
+      { "id": "c11_ta", "lang": "ta", "text": "Tamil, English, Hindi எல்லாமே ஒரே job-ல் ship ஆகும்." },
+      { "id": "c12_ta", "lang": "ta", "text": "மேலும் kumar2net.com. Playlist: Wireless Explained." },
+      { "id": "c1_hi", "lang": "hi", "text": "रुको, UPI यह भी कर सकता है?" },
+      { "id": "c2_hi", "lang": "hi", "text": "दस timelines मत बनाओ, एक vertical template बनाओ." },
+      { "id": "c3_hi", "lang": "hi", "text": "1080 x 1920 layout को एक बार lock करो और safe zones तय रखो." },
+      { "id": "c4_hi", "lang": "hi", "text": "Hook, lower-third, stickers और CTA बस swap होने चाहिए." },
+      { "id": "c5_hi", "lang": "hi", "text": "इससे edit तेज होगा और layout गलतियां कम होंगी." },
+      { "id": "c6_hi", "lang": "hi", "text": "पहले tight timing वाला English master SRT बनाओ." },
+      { "id": "c7_hi", "lang": "hi", "text": "फिर पूरे edit को नहीं, SRT को Tamil और Hindi में बदलो." },
+      { "id": "c8_hi", "lang": "hi", "text": "हर भाषा के लिए pace-matched TTS audio बनाओ." },
+      { "id": "c9_hi", "lang": "hi", "text": "उसी picture-lock से तीन localized MP4 render करो." },
+      { "id": "c10_hi", "lang": "hi", "text": "फायदा साफ है: एक बार standardize करो, रोज scale करो." },
+      { "id": "c11_hi", "lang": "hi", "text": "Tamil, English और Hindi एक ही job से निकलते हैं." },
+      { "id": "c12_hi", "lang": "hi", "text": "और देखने के लिए kumar2net.com. Playlist: Wireless Explained." }
+    ]
+  },
+  "prompts": [
+    {
+      "id": "p_hook",
+      "model": "sora-2",
+      "text": "Explosive 9:16 hook frame for AI x UPI with bold headline energy and progress bar reveal"
+    },
+    {
+      "id": "p_main_a",
+      "model": "sora-2",
+      "text": "Speaker-led explainer sequence for AI x UPI with lower-third room, sticker motion, and clean safe zones"
+    },
+    {
+      "id": "p_main_b",
+      "model": "sora-2",
+      "text": "Mid-story contrast sequence for AI x UPI with diagram overlays and strong vertical composition"
+    },
+    {
+      "id": "p_payoff",
+      "model": "sora-2",
+      "text": "Big takeaway overlay moment for AI x UPI with high-clarity text placement and visual resolve"
+    },
+    {
+      "id": "p_cta",
+      "model": "sora-2",
+      "text": "Clean CTA frame for kumar2net.com and Wireless Explained with subscribe prompt and brand badge"
+    }
+  ],
+  "mix": {
+    "lufs_target": -16,
+    "duck_music_under_voice_db": -12,
+    "safe_margins_sec": {
+      "pre": 0.12,
+      "post": 0.12
+    }
+  },
+  "export": {
+    "cuts": [
+      {
+        "name": "shorts-9.16-en",
+        "range": [0, 60],
+        "size": "1080x1920",
+        "audio": "a_en"
+      },
+      {
+        "name": "shorts-9.16-ta",
+        "range": [0, 60],
+        "size": "1080x1920",
+        "audio": "a_ta"
+      },
+      {
+        "name": "shorts-9.16-hi",
+        "range": [0, 60],
+        "size": "1080x1920",
+        "audio": "a_hi"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+Use case: YouTube Short multilingual pipeline segment
+Primary request: visualize one source branching into three synchronized language lanes
+Scene/background: dark cinematic data workspace with floating caption cards and audio waveforms
+Subject: one master transcript stream branching into three clean parallel lanes with synchronized voice tracks
+Action: one source line splits cleanly into three flowing lanes, each with matching waveform motion
+Camera: measured lateral glide across the branching pipeline
+Lighting/mood: confident, elegant, highly legible
+Color palette: deep navy, cyan, white, saffron
+Style/format: cinematic infographic realism, vertical 9:16
+Timing/beats: begin with one source, reveal branching by beat 4, end with three complete lanes
+Audio: no dialogue, subtle rhythmic pulses
+Constraints: no readable long text, no people, maintain visual clarity for the lanes
+Avoid: chaos, over-detailed UI, flicker, crowded composition

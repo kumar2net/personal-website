@@ -1,6 +1,4 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { FaTwitter, FaWordpress } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import {
   Link as RouterLink,
@@ -12,15 +10,11 @@ import {
   AppBar,
   Box,
   Button,
-  Card,
-  CardActionArea,
-  CardContent,
   CircularProgress,
   Container,
   Divider,
   Drawer,
   IconButton,
-  Grid,
   List,
   ListItem,
   ListItemButton,
@@ -35,8 +29,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
-import WorldClock from "./components/WorldClock";
 import PasswordGate from "./components/PasswordGate";
+import Home from "./pages/Home";
 
 // Eagerly load critical components
 import About from "./pages/About";
@@ -110,17 +104,6 @@ const navLinks = [
   { label: "Music", to: "/music", analyticsKey: "nav_music" },
   { label: "Album", to: "/album", analyticsKey: "nav_album" },
   { label: "Contact", to: "/contact", analyticsKey: "nav_contact" },
-];
-
-const heroSections = [
-  { label: "About", description: "Identity, principles, and posture.", to: "/about" },
-  { label: "Projects", description: "Systems I build and test.", to: "/projects" },
-  { label: "Books", description: "Books that shaped my thinking.", to: "/books" },
-  { label: "Blog", description: "Clear writing with one sharp point.", to: "/blog" },
-  { label: "Learning", description: "Repeatable study notes and flashcards.", to: "/learning" },
-  { label: "Science", description: "Metabolism, biology, and practical health notes.", to: "/science" },
-  { label: "Music", description: "Tamil-first listening rituals.", to: "/music" },
-  { label: "Album", description: "Trips, field notes, and memory frames.", to: "/album" },
 ];
 
 const ExternalNewsRedirect = () => {
@@ -234,7 +217,6 @@ const App = ({ mode }) => {
     }
   };
   const currentYear = new Date().getFullYear();
-  const heroFont = '"Space Grotesk", "Satoshi", "Noto Sans", sans-serif';
 
   useGaPageViews();
 
@@ -354,7 +336,7 @@ const App = ({ mode }) => {
       >
         <SEO
           title="My Stories"
-          description="AI enthusiast. Projects, blog, books, music, learning resources, and more."
+          description="Dispatches on shipping chokepoints, democratic strain, AI power, practical tools, books, music, and resilient digital life."
           canonicalPath="/"
           image="/vite.svg"
           type="website"
@@ -533,450 +515,11 @@ const App = ({ mode }) => {
                 <Route
                   path="/"
                   element={
-                    <Box
-                      component={motion.section}
-                      initial={{ opacity: 0, y: 18 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.45 }}
-                      sx={{
-                        "--home-surface": isDarkMode
-                          ? "rgba(7, 14, 27, 0.82)"
-                          : "rgba(255, 255, 255, 0.92)",
-                        "--home-surface-muted": isDarkMode
-                          ? "rgba(2, 6, 23, 0.76)"
-                          : "rgba(248, 250, 252, 0.94)",
-                        "--home-border": isDarkMode
-                          ? "rgba(148, 163, 184, 0.25)"
-                          : "rgba(15, 23, 42, 0.12)",
-                        "--home-muted-text": isDarkMode
-                          ? "rgba(226, 232, 240, 0.78)"
-                          : "rgba(30, 41, 59, 0.72)",
-                        "--home-shadow": isDarkMode
-                          ? "0 18px 40px rgba(2, 6, 23, 0.45)"
-                          : "0 18px 40px rgba(15, 23, 42, 0.08)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: { xs: 4, md: 5 },
-                        width: "100%",
-                        maxWidth: 980,
-                        mx: "auto",
-                      }}
-                    >
-                      <Paper
-                        component={motion.div}
-                        elevation={0}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.05 }}
-                        sx={{
-                          position: "relative",
-                          overflow: "hidden",
-                          borderRadius: 5,
-                          p: { xs: 3, md: 5 },
-                          border: "1px solid var(--home-border)",
-                          backgroundImage: isDarkMode
-                            ? "linear-gradient(135deg, rgba(14, 165, 233, 0.14), transparent 40%), linear-gradient(180deg, rgba(2, 6, 23, 0.92), rgba(15, 23, 42, 0.84))"
-                            : "linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent 42%), linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.95))",
-                          boxShadow: "var(--home-shadow)",
-                        }}
-                      >
-                        <Box
-                          aria-hidden
-                          sx={{
-                            position: "absolute",
-                            inset: 0,
-                            pointerEvents: "none",
-                            backgroundImage:
-                              "linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(0deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)",
-                            backgroundSize: "56px 56px",
-                            opacity: isDarkMode ? 0.22 : 0.14,
-                          }}
-                        />
-                        <Stack sx={{ position: "relative", zIndex: 1 }} spacing={3}>
-                          <Typography
-                            variant="overline"
-                            sx={{
-                              fontFamily: heroFont,
-                              letterSpacing: 2.6,
-                              fontWeight: 700,
-                              color: "var(--home-muted-text)",
-                            }}
-                          >
-                            KUMAR2NET / SYSTEMS + WRITING
-                          </Typography>
-                          <Typography
-                            variant="h2"
-                            sx={{
-                              fontFamily: heroFont,
-                              fontWeight: 650,
-                              fontSize: { xs: "2rem", md: "3rem" },
-                              lineHeight: 1.06,
-                              letterSpacing: "-0.02em",
-                              maxWidth: 760,
-                            }}
-                          >
-                            Build clear systems and honest writing that help people decide, act, and stay human.
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{
-                              color: "var(--home-muted-text)",
-                              fontSize: { xs: "1rem", md: "1.1rem" },
-                              maxWidth: 680,
-                            }}
-                          >
-                            Engineer, teacher, writer, and systems thinker.
-                            Practical notes on AI, networks, learning, science,
-                            and resilient digital life.
-                          </Typography>
-                          <Stack
-                            direction={{ xs: "column", sm: "row" }}
-                            spacing={1.5}
-                            sx={{ alignItems: { xs: "stretch", sm: "center" } }}
-                          >
-                            <Button
-                              variant="contained"
-                              size="large"
-                              {...getLinkProps({ to: "/about" })}
-                              onClick={() => trackClick("hero_about_cta")}
-                              sx={{
-                                borderRadius: 999,
-                                px: 3,
-                                textTransform: "none",
-                                fontWeight: 700,
-                              }}
-                            >
-                              Start with About
-                            </Button>
-                            <Button
-                              variant="outlined"
-                              size="large"
-                              {...getLinkProps({ to: "/blog" })}
-                              onClick={() => trackClick("hero_blog_cta")}
-                              sx={{
-                                borderRadius: 999,
-                                px: 3,
-                                textTransform: "none",
-                                fontWeight: 600,
-                                borderColor: "var(--home-border)",
-                              }}
-                            >
-                              Read latest posts
-                            </Button>
-                            <Button
-                              variant="text"
-                              size="large"
-                              {...getLinkProps({ to: "/projects" })}
-                              onClick={() => trackClick("hero_projects_cta")}
-                              sx={{
-                                borderRadius: 999,
-                                px: 2,
-                                textTransform: "none",
-                                fontWeight: 600,
-                              }}
-                            >
-                              See projects
-                            </Button>
-                          </Stack>
-                          <Divider sx={{ borderColor: "var(--home-border)" }} />
-                            <Stack spacing={0.5}>
-                              <Typography
-                                variant="body2"
-                                sx={{
-                                  fontStyle: "italic",
-                                  color: "var(--home-muted-text)",
-                                  maxWidth: 740,
-                                }}
-                              >
-                                Truth before style. Utility before performance.
-                              </Typography>
-                              <Typography
-                                variant="caption"
-                                sx={{ color: "var(--home-muted-text)" }}
-                              >
-                                Operating line from SOUL.md
-                              </Typography>
-                            </Stack>
-                        </Stack>
-                      </Paper>
-                      <Box>
-                        <Stack spacing={0.75} sx={{ mb: 2 }}>
-                          <Typography
-                            variant="overline"
-                            sx={{
-                              fontFamily: heroFont,
-                              letterSpacing: 2,
-                              fontWeight: 700,
-                              color: "var(--home-muted-text)",
-                            }}
-                          >
-                            Map
-                          </Typography>
-                          <Typography
-                            variant="h5"
-                            sx={{ fontFamily: heroFont, fontWeight: 650 }}
-                          >
-                            Start points
-                          </Typography>
-                        </Stack>
-                        <Grid container spacing={2}>
-                          {heroSections.map((section, index) => (
-                            <Grid
-                              key={section.label}
-                              size={{ xs: 12, sm: 6, md: 4 }}
-                            >
-                              <Card
-                                component={motion.article}
-                                initial={{ opacity: 0, y: 16 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{
-                                  duration: 0.35,
-                                  delay: index * 0.04,
-                                }}
-                                sx={(theme) => ({
-                                  height: "100%",
-                                  borderRadius: 3,
-                                  border: "1px solid var(--home-border)",
-                                  backgroundColor: "var(--home-surface)",
-                                  boxShadow: "none",
-                                  transition:
-                                    "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
-                                  "&:hover": {
-                                    transform: "translateY(-3px)",
-                                    borderColor: "primary.main",
-                                    boxShadow: theme.shadows[4],
-                                  },
-                                })}
-                              >
-                                <CardActionArea
-                                  {...getLinkProps(section)}
-                                  onClick={() =>
-                                    trackClick(
-                                      `hero_${section.label.toLowerCase()}_card`,
-                                    )
-                                  }
-                                  sx={{ height: "100%" }}
-                                >
-                                  <CardContent>
-                                    <Stack spacing={1}>
-                                      <Typography
-                                        variant="overline"
-                                        sx={{
-                                          letterSpacing: 1.8,
-                                          fontWeight: 700,
-                                          color: "var(--home-muted-text)",
-                                        }}
-                                      >
-                                        {String(index + 1).padStart(2, "0")}
-                                      </Typography>
-                                      <Typography
-                                        variant="h6"
-                                        sx={{ fontFamily: heroFont, fontWeight: 600 }}
-                                      >
-                                        {section.label}
-                                      </Typography>
-                                      <Typography
-                                        variant="body2"
-                                        sx={{ color: "var(--home-muted-text)" }}
-                                      >
-                                        {section.description}
-                                      </Typography>
-                                    </Stack>
-                                  </CardContent>
-                                </CardActionArea>
-                              </Card>
-                            </Grid>
-                          ))}
-                        </Grid>
-                      </Box>
-                      <Grid container spacing={2.5} alignItems="stretch">
-                        <Grid size={{ xs: 12, md: 7 }}>
-                          <Paper
-                            elevation={0}
-                            sx={{
-                              height: "100%",
-                              p: { xs: 3, md: 3.5 },
-                              borderRadius: 4,
-                              border: "1px solid var(--home-border)",
-                              backgroundColor: "var(--home-surface-muted)",
-                            }}
-                          >
-                            <Stack spacing={2}>
-                              <Typography
-                                variant="overline"
-                                sx={{
-                                  fontFamily: heroFont,
-                                  letterSpacing: 2,
-                                  fontWeight: 700,
-                                  color: "var(--home-muted-text)",
-                                }}
-                              >
-                                Now
-                              </Typography>
-                              {[
-                                "Human-speed AI workflows with explicit fallbacks.",
-                                "Copy-paste practical notes that are testable and reversible.",
-                                "User agency and privacy by default.",
-                                "Agent model in production: website, api, and workflows.",
-                              ].map((item) => (
-                                <Typography
-                                  key={item}
-                                  variant="body2"
-                                  sx={{ color: "var(--home-muted-text)" }}
-                                >
-                                  {item}
-                                </Typography>
-                              ))}
-                              <Divider sx={{ borderColor: "var(--home-border)" }} />
-                              <Typography
-                                variant="overline"
-                                sx={{
-                                  letterSpacing: 1.6,
-                                  fontWeight: 700,
-                                  color: "var(--home-muted-text)",
-                                }}
-                              >
-                                Quick tools
-                              </Typography>
-                              <Stack
-                                direction={{ xs: "column", sm: "row" }}
-                                spacing={1}
-                                sx={{ flexWrap: "wrap" }}
-                              >
-                            {[
-                              {
-                                label: "About",
-                                to: "/about",
-                                analyticsKey: "hero_tool_about",
-                              },
-                              {
-                                label: "Convert",
-                                to: "/convert",
-                                analyticsKey: "hero_tool_convert",
-                              },
-                                  {
-                                    label: "Utilities",
-                                    to: "/utilities",
-                                    analyticsKey: "hero_tool_utilities",
-                                  },
-                                  {
-                                    label: "Learning",
-                                    to: "/learning",
-                                    analyticsKey: "hero_tool_learning",
-                                  },
-                                  {
-                                    label: "Science",
-                                    to: "/science",
-                                    analyticsKey: "hero_tool_science",
-                                  },
-                                ].map((tool) => (
-                                  <Button
-                                    key={tool.label}
-                                    size="small"
-                                    variant="text"
-                                    {...getLinkProps(tool)}
-                                    onClick={() => trackClick(tool.analyticsKey)}
-                                    sx={{
-                                      justifyContent: "flex-start",
-                                      textTransform: "none",
-                                      fontWeight: 600,
-                                      px: 1,
-                                      color: "text.primary",
-                                    }}
-                                  >
-                                    {tool.label}
-                                  </Button>
-                                ))}
-                              </Stack>
-                            </Stack>
-                          </Paper>
-                        </Grid>
-                        <Grid size={{ xs: 12, md: 5 }}>
-                          <Paper
-                            elevation={0}
-                            sx={{
-                              height: "100%",
-                              p: { xs: 3, md: 3.5 },
-                              borderRadius: 4,
-                              border: "1px solid var(--home-border)",
-                              backgroundColor: "var(--home-surface-muted)",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: 2,
-                            }}
-                          >
-                            <Typography
-                              variant="overline"
-                              sx={{
-                                fontFamily: heroFont,
-                                letterSpacing: 2,
-                                fontWeight: 700,
-                                color: "var(--home-muted-text)",
-                              }}
-                            >
-                              Live signals
-                            </Typography>
-                            {showWorldClock ? (
-                              <WorldClock compact />
-                            ) : (
-                              <Box sx={{ minHeight: 120 }} aria-hidden />
-                            )}
-                            <Stack spacing={0.35}>
-                              {[
-                                "Writing rule: one clear point per post.",
-                                "Keep sentences short and direct.",
-                                "End with a line that lands.",
-                              ].map((item) => (
-                                <Typography
-                                  key={item}
-                                  variant="body2"
-                                  sx={{ color: "var(--home-muted-text)" }}
-                                >
-                                  {item}
-                                </Typography>
-                              ))}
-                            </Stack>
-                            <Divider sx={{ borderColor: "var(--home-border)" }} />
-                            <Stack direction="row" spacing={1.5}>
-                              {[
-                                {
-                                  href: "https://kumar2net.wordpress.com/",
-                                  label: "WordPress",
-                                  icon: <FaWordpress />,
-                                  analyticsKey: "social_wordpress",
-                                },
-                                {
-                                  href: "https://twitter.com/kumar2net",
-                                  label: "X (Twitter)",
-                                  icon: <FaTwitter />,
-                                  analyticsKey: "social_twitter",
-                                },
-                              ].map((social) => (
-                                <IconButton
-                                  key={social.label}
-                                  component="a"
-                                  href={social.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label={social.label}
-                                  onClick={() => trackClick(social.analyticsKey)}
-                                  sx={{
-                                    borderRadius: "50%",
-                                    width: 46,
-                                    height: 46,
-                                    border: "1px solid var(--home-border)",
-                                    color: "text.primary",
-                                    backgroundColor: "var(--home-surface)",
-                                  }}
-                                >
-                                  {social.icon}
-                                </IconButton>
-                              ))}
-                            </Stack>
-                          </Paper>
-                        </Grid>
-                      </Grid>
-                    </Box>
+                    <Home
+                      isDarkMode={isDarkMode}
+                      showWorldClock={showWorldClock}
+                      trackClick={trackClick}
+                    />
                   }
                 />
                 <Route

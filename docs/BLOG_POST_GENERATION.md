@@ -10,6 +10,7 @@ This guide documents the automated blog post generation workflow, including rece
 
 1. Create a blog hint file in `docs/bloghints/[TopicName].md`
 2. Review `skills/writing-skill.md` (these rules are injected into the prompt)
+   - Expand acronyms at first mention in the generated copy, then use the acronym alone afterward.
 3. Run the generation script:
    ```bash
    node apps/personal-website/scripts/generate-blog-post.mjs

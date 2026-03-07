@@ -1,0 +1,13 @@
+Use case: YouTube Short ending CTA
+Primary request: a clean end card for a technology explainer short
+Scene/background: polished dark vertical stage with subtle motion and glowing edge accents
+Subject: abstract subscribe card, website badge area, playlist badge area
+Action: interface card settles into place with a confident pulse and room for a call to action
+Camera: gentle push-in, minimal movement
+Lighting/mood: calm, premium, conclusive
+Color palette: black, cyan, white, yellow
+Style/format: refined vertical end card, realistic motion graphics
+Timing/beats: first half settle-in, second half hold for CTA
+Audio: no dialogue, minimal ambient swell
+Constraints: no readable text, no logos, no people, clear negative space in the center
+Avoid: visual noise, complex patterns, flicker, illegible UI

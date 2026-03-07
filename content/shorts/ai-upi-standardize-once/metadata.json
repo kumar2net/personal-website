@@ -1,0 +1,26 @@
+{
+  "descriptionTemplate": "What you saw:\n• {payoff_text}\nResources & deeper dives: https://kumar2net.com\nPlaylist: Wireless Explained\nCaptions: EN | தமிழ் | हिंदी",
+  "locales": {
+    "en": {
+      "title": "UPI x AI: What No One Shows You (60s)",
+      "description": "What you saw:\n• Standardize once, scale every day.\nResources & deeper dives: https://kumar2net.com\nPlaylist: Wireless Explained\nCaptions: EN | தமிழ் | हिंदी",
+      "hashtags": ["#UPI", "#Aadhaar", "#WiFi", "#Sora2", "#AIShorts"],
+      "tags": ["UPI", "Aadhaar", "Wi-Fi", "5G", "Sora", "Shorts", "IndiaAI", "Tamil", "Hindi", "Networking", "Telecom"],
+      "output": "renders/en.mp4"
+    },
+    "ta": {
+      "title": "UPI x AI: இந்த 60s template ஏன் வேலை செய்கிறது",
+      "description": "நீங்கள் பார்த்தது:\n• ஒருமுறை standardize செய்தால் தினமும் scale செய்யலாம்.\nResources: https://kumar2net.com\nPlaylist: Wireless Explained\nCaptions: EN | தமிழ் | हिंदी",
+      "hashtags": ["#UPI", "#Tamil", "#Sora2", "#AIShorts", "#IndiaTech"],
+      "tags": ["UPI", "Tamil", "Hindi", "Sora", "AI", "Shorts", "Networking", "Telecom"],
+      "output": "renders/ta.mp4"
+    },
+    "hi": {
+      "title": "UPI x AI: यह 60s template इतना असरदार क्यों है",
+      "description": "आपने क्या देखा:\n• एक बार standardize करो, रोज scale करो.\nResources: https://kumar2net.com\nPlaylist: Wireless Explained\nCaptions: EN | தமிழ் | हिंदी",
+      "hashtags": ["#UPI", "#Hindi", "#Sora2", "#AIShorts", "#IndiaTech"],
+      "tags": ["UPI", "Hindi", "Tamil", "Sora", "AI", "Shorts", "Networking", "Telecom"],
+      "output": "renders/hi.mp4"
+    }
+  }
+}

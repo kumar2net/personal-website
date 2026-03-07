@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1772845391,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69ab794f146c8190b2f7442889e3dc9904fb2a1355572d2b",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts, 40-second geopolitical explainer\nPrimary request: Show the data fix: more cable landings, more east-west redundancy, and domestic coastal links so one cut does not slow the whole country.\nScene/background: dark ocean map around India with glowing cable landing points on west coast, south coast, and east coast; some routes flash damaged in the Red Sea while traffic reroutes through alternate paths\nSubject: fiber-optic pulses, cable landing station hubs, network traffic ribbons, resilient rerouting paths\nAction: 0-3 seconds one western cable path sparks and drops; 3-5 seconds traffic instantly reroutes to alternate landings and eastbound links; 5-8 seconds India glows with a mesh of resilient network pathways\nCamera: vertical 9:16, fast macro-to-map transitions, energetic tilt moves, tight focus on cable nodes\nLighting/mood: sharp, digital, high-trust\nColor palette: cyan, electric blue, emerald, dark slate, safety orange\nStyle/format: sleek data infrastructure animation, cinematic network map, no text baked in\nAudio: crisp digital pulses and subtle swells, no narration\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters, no readable text\nAvoid: unreadable symbols, glitch spam, flicker, messy overlays",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1772845498,
+    "created_at": 1772845391,
+    "error": null,
+    "expires_at": 1773018298,
+    "id": "video_69ab794f146c8190b2f7442889e3dc9904fb2a1355572d2b",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts, 40-second geopolitical explainer\nPrimary request: Show the data fix: more cable landings, more east-west redundancy, and domestic coastal links so one cut does not slow the whole country.\nScene/background: dark ocean map around India with glowing cable landing points on west coast, south coast, and east coast; some routes flash damaged in the Red Sea while traffic reroutes through alternate paths\nSubject: fiber-optic pulses, cable landing station hubs, network traffic ribbons, resilient rerouting paths\nAction: 0-3 seconds one western cable path sparks and drops; 3-5 seconds traffic instantly reroutes to alternate landings and eastbound links; 5-8 seconds India glows with a mesh of resilient network pathways\nCamera: vertical 9:16, fast macro-to-map transitions, energetic tilt moves, tight focus on cable nodes\nLighting/mood: sharp, digital, high-trust\nColor palette: cyan, electric blue, emerald, dark slate, safety orange\nStyle/format: sleek data infrastructure animation, cinematic network map, no text baked in\nAudio: crisp digital pulses and subtle swells, no narration\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters, no readable text\nAvoid: unreadable symbols, glitch spam, flicker, messy overlays",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

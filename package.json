@@ -18,6 +18,7 @@
     "token:budget": "node scripts/token-budget.mjs",
     "sitemap": "node apps/personal-website/scripts/generate-sitemap.mjs",
     "shorts:scaffold": "node scripts/shorts-manifest/scaffold-template.mjs",
+    "shorts:render": "node scripts/shorts-manifest/render-locale.mjs",
     "shorts:validate": "node scripts/shorts-manifest/validate-manifest.mjs",
     "shorts:plan": "node scripts/shorts-manifest/build-render-plan.mjs",
     "shorts:subs": "node scripts/shorts-manifest/export-subs.mjs",

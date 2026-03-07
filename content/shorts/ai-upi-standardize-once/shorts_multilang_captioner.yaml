@@ -1,0 +1,17 @@
+name: shorts_multilang_captioner
+inputs:
+  - text_markdown
+  - srt_en
+steps:
+  - id: align_or_generate_srt
+    action: "If srt_en is missing, generate English SRT with 1 to 2 second lines and at most 42 characters per line."
+  - id: translate_srt
+    action: "Translate the SRT to Tamil and Hindi, preserving timecodes. Keep common tech terms in English when that reads more naturally."
+  - id: tts_en_ta_hi
+    action: "Synthesize mp3 narration for en, ta, and hi, pace-matched to the SRT and exported at 48 kHz."
+  - id: render_variants
+    action: "Produce en.mp4, ta.mp4, and hi.mp4 using the canonical 9:16 template, caption safe zone, and locale-specific metadata."
+outputs:
+  - renders/en.mp4
+  - renders/ta.mp4
+  - renders/hi.mp4

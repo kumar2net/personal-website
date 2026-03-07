@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1772845195,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69ab788b8dd881989fdcbb63fba0801b03b83009a1ab30f7",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: YouTube Shorts, 40-second geopolitical explainer\nPrimary request: Hook myth break: India's real risk is not one oil price spike, it is too many chokepoints across energy, data, and cargo at once.\nScene/background: stylized 3D map from the Arabian Sea to the Indian coastline, with glowing chokepoints near Hormuz, Bab el-Mandeb, and the Suez path; cargo ships, tankers, and fiber pulses moving across dark water\nSubject: abstract map geometry, tanker silhouettes, cargo silhouettes, glowing undersea cable lines, oil droplet icons\nAction: 0-2 seconds rapid punch-in to red chokepoints; 2-6 seconds routes jam and flash red; 6-12 seconds India lights up while blocked routes flicker and alternate routes begin to appear\nCamera: vertical 9:16, aggressive zooms, map parallax, fast reframing every 2-3 seconds\nLighting/mood: urgent, analytical, premium newsroom energy\nColor palette: deep navy, saffron, steel gray, teal, warning red\nStyle/format: cinematic motion graphics, polished macro map visuals, no text baked in\nAudio: tense low percussion, subtle electronic pulses, no narration\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters, no readable text\nAvoid: jitter, clutter, flicker, distorted coastlines, caption artifacts, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1772845368,
+    "created_at": 1772845195,
+    "error": null,
+    "expires_at": 1773018168,
+    "id": "video_69ab788b8dd881989fdcbb63fba0801b03b83009a1ab30f7",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: YouTube Shorts, 40-second geopolitical explainer\nPrimary request: Hook myth break: India's real risk is not one oil price spike, it is too many chokepoints across energy, data, and cargo at once.\nScene/background: stylized 3D map from the Arabian Sea to the Indian coastline, with glowing chokepoints near Hormuz, Bab el-Mandeb, and the Suez path; cargo ships, tankers, and fiber pulses moving across dark water\nSubject: abstract map geometry, tanker silhouettes, cargo silhouettes, glowing undersea cable lines, oil droplet icons\nAction: 0-2 seconds rapid punch-in to red chokepoints; 2-6 seconds routes jam and flash red; 6-12 seconds India lights up while blocked routes flicker and alternate routes begin to appear\nCamera: vertical 9:16, aggressive zooms, map parallax, fast reframing every 2-3 seconds\nLighting/mood: urgent, analytical, premium newsroom energy\nColor palette: deep navy, saffron, steel gray, teal, warning red\nStyle/format: cinematic motion graphics, polished macro map visuals, no text baked in\nAudio: tense low percussion, subtle electronic pulses, no narration\nConstraints: under-18 suitable, no logos, no real people, no copyrighted characters, no readable text\nAvoid: jitter, clutter, flicker, distorted coastlines, caption artifacts, watermarks",
+    "remixed_from_video_id": null,
+    "seconds": "12",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

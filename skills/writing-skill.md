@@ -12,3 +12,4 @@ Rules:
 7. Avoid cliches and corporate language.
 8. End without a summary. Last line should surprise but feel right.
 9. Read aloud pass: ensure rhythm and clarity.
+10. Expand acronyms at first mention, then use the short form afterward. Example: "United Nations Conference on Trade and Development (UNCTAD)".
