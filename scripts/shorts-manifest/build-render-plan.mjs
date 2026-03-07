@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import path from 'node:path';
-import { readFile, writeFile } from 'node:fs/promises';
-import { validateManifest } from './schema.mjs';
+import { writeFile } from 'node:fs/promises';
+import { loadManifest } from './schema.mjs';
 import { buildRenderPlan } from './plan.mjs';
 
 function parseArgs(args) {
@@ -63,13 +63,7 @@ async function main() {
   }
 
   const manifestPath = path.resolve(options.manifest);
-  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
-  const validation = validateManifest(manifest);
-  if (!validation.ok) {
-    console.error(`Manifest validation failed: ${manifestPath}`);
-    validation.errors.forEach((entry, index) => console.error(`${index + 1}. ${entry}`));
-    process.exit(1);
-  }
+  const manifest = await loadManifest(manifestPath);
 
   const renderPlan = buildRenderPlan(manifest, {
     cutName: options.cut || undefined,

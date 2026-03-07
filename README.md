@@ -25,6 +25,11 @@ Vite + React 19 + MUI 7 monorepo (Turborepo workspaces). Primary app lives in `a
 - Local dev: use `vercel dev` (port 3000 by default). If running Vite separately on 5173, the widget auto-calls `http://localhost:${VITE_VERCEL_DEV_PORT||3000}`. You can override with `VITE_API_BASE_URL`.
 
 ## Notes
+- Shorts starter pack:
+  - Create a new short from the canonical 9:16 pack with `npm run shorts:scaffold -- --slug ai-on-upi --title "AI on UPI"`.
+  - Validate the generated manifest with `npm run shorts:validate -- --manifest content/shorts/ai-on-upi/manifest.json`.
+  - Build a locale-specific render plan with `npm run shorts:plan -- --manifest content/shorts/ai-on-upi/manifest.json --cut shorts-9.16-en --lang en`.
+  - Export subtitles with `npm run shorts:subs -- --manifest content/shorts/ai-on-upi/manifest.json --lang ta`.
 - Sitemaps: `npm run sitemap` (root) or `npm run --workspace apps/personal-website sitemap:submit`.
 - Theming: import from `@kumar2net/ui-theme` (named exports only).
 - Keep 2-space indentation and functional React components.

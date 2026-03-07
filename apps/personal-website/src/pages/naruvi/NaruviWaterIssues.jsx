@@ -78,37 +78,37 @@ const NaruviWaterIssues = () => {
           <h2 className="text-xl font-semibold text-green-800 mb-3">
             ✅ Good News Update
           </h2>
-          <p className="text-green-700 font-medium">
+          <p className="text-emerald-950 font-medium">
             Update date: March 6, 2026
           </p>
-          <p className="text-green-700 mt-2">
+          <p className="text-slate-800 mt-2">
             Primary implemented action: Naruvi Owners Welfare Association
             (NOWA) has initiated solar power evacuation alignment with Tamil
             Nadu Power Distribution Corporation Limited (TNPDCL), formerly
             Tamil Nadu Generation and Distribution Corporation (TANGEDCO).
           </p>
-          <p className="text-green-700 mt-2">
+          <p className="text-slate-800 mt-2">
             Revised solar economics: the total solar cost after subsidy is now
             expected to remain below ₹9,00,000. With the current assumptions on
             this page, that brings estimated payback down to about 25 months,
             or just over 2 years.
           </p>
-          <p className="text-green-700 mt-2">
+          <p className="text-slate-800 mt-2">
             NOWA has handed over official intimation to shift sanctioned loads
             from LM51 to LA1D, and an online application has been submitted to
             reduce the LM51 sanctioned load from 15 kilowatts (kW) to 2 kW.
           </p>
-          <p className="text-green-700 mt-2">
+          <p className="text-slate-800 mt-2">
             Expected impact: lower fixed electricity charges should start
             reflecting from the next bill cycle.
           </p>
-          <p className="text-green-700 mt-2">
+          <p className="text-slate-800 mt-2">
             Water-phase refinement: based on owner feedback and the single-line
             underground plumbing constraint, NOWA is now pursuing a separate
             pressurized utility-water line for outdoor uses while retaining the
             existing RO line inside villas.
           </p>
-          <p className="text-green-700 mt-2">
+          <p className="text-slate-800 mt-2">
             Execution status: NOWA wanted to complete the parallel line before
             March 2026, but work is delayed because vendors experienced in
             pressurized supply systems are not yet readily available. Follow-up
@@ -334,7 +334,7 @@ const NaruviWaterIssues = () => {
             <h2 className="text-xl font-semibold text-blue-800 mb-3">
               Current Position: Solar Economics Improved, Water Plan Refined
             </h2>
-            <p className="text-blue-700">
+            <p className="text-slate-800">
               Solar integration is under execution and the revised post-subsidy
               payback is now about 25 months. On water, the emerging direction
               is not to rework internal villa plumbing, but to retain RO supply
@@ -364,7 +364,7 @@ const NaruviWaterIssues = () => {
                 <h3 className="font-semibold text-green-700 mb-2">
                   World Health Organization (WHO) Recommendations
                 </h3>
-                <ul className="space-y-2 text-green-600">
+                <ul className="space-y-2 text-green-900">
                   <li>• Absolute minimum: 5.3 L/person/day</li>
                   <li>• Basic domestic needs: 20 L/person/day</li>
                   <li>• Full hygiene needs: 50 L/person/day</li>
@@ -422,7 +422,7 @@ const NaruviWaterIssues = () => {
                 <h3 className="font-semibold text-sky-800 mb-2">
                   Strong Support for Retaining RO
                 </h3>
-                <p className="text-sm text-sky-700">
+                <p className="text-sm text-slate-800">
                   A number of owners, including some previous office bearers,
                   do not want the present concept of 100% RO usage inside the
                   villas to be disturbed because it protects appliances,
@@ -433,7 +433,7 @@ const NaruviWaterIssues = () => {
                 <h3 className="font-semibold text-rose-800 mb-2">
                   Counterarguments Raised by Other Owners
                 </h3>
-                <p className="text-sm text-rose-700">
+                <p className="text-sm text-slate-800">
                   The main concerns are that very low-TDS RO water around 20 may
                   not be ideal for health and plants, the RO system may reject
                   around 65% of water to the drain, and the plant adds avoidable
@@ -444,7 +444,7 @@ const NaruviWaterIssues = () => {
                 <h3 className="font-semibold text-amber-800 mb-2">
                   Physical Constraint
                 </h3>
-                <p className="text-sm text-amber-700">
+                <p className="text-sm text-slate-800">
                   Internal villa plumbing is largely underground and designed as
                   a single-source supply network, which significantly limits the
                   freedom to alter the existing water circuit.
@@ -463,7 +463,7 @@ const NaruviWaterIssues = () => {
               <h3 className="text-lg font-semibold text-blue-800 mb-3">
                 Current NOWA Direction
               </h3>
-              <div className="space-y-2 text-blue-700">
+              <div className="space-y-2 text-slate-800">
                 <p>
                   • <strong>Retain the existing RO line</strong> as the main
                   supply inside villas.
@@ -495,7 +495,7 @@ const NaruviWaterIssues = () => {
               <h3 className="text-lg font-semibold text-orange-800 mb-3">
                 Why This Revision Makes Sense
               </h3>
-              <div className="space-y-2 text-orange-700">
+              <div className="space-y-2 text-slate-800">
                 <p>
                   • <strong>It preserves appliance protection</strong> by not
                   disturbing the RO-fed internal villa network.
@@ -538,28 +538,28 @@ const NaruviWaterIssues = () => {
                       <td className="px-4 py-3 text-sm text-gray-600">4</td>
                       <td className="px-4 py-3 text-sm text-gray-600">10</td>
                       <td className="px-4 py-3 text-sm text-gray-600">37.3</td>
-                      <td className="px-4 py-3 text-sm font-medium text-purple-600">9,567</td>
+                      <td className="px-4 py-3 text-sm font-medium text-purple-800">9,567</td>
                     </tr>
                     <tr className="hover:bg-gray-50">
                       <td className="px-4 py-3 text-sm text-gray-900">RO High-Pressure Pump</td>
                       <td className="px-4 py-3 text-sm text-gray-600">10</td>
                       <td className="px-4 py-3 text-sm text-gray-600">10</td>
                       <td className="px-4 py-3 text-sm text-gray-600">100</td>
-                      <td className="px-4 py-3 text-sm font-medium text-purple-600">25,650</td>
+                      <td className="px-4 py-3 text-sm font-medium text-purple-800">25,650</td>
                     </tr>
                     <tr className="hover:bg-gray-50">
                       <td className="px-4 py-3 text-sm text-gray-900">Common Area Lighting</td>
                       <td className="px-4 py-3 text-sm text-gray-600">4</td>
                       <td className="px-4 py-3 text-sm text-gray-600">10</td>
                       <td className="px-4 py-3 text-sm text-gray-600">40</td>
-                      <td className="px-4 py-3 text-sm font-medium text-purple-600">10,260</td>
+                      <td className="px-4 py-3 text-sm font-medium text-purple-800">10,260</td>
                     </tr>
                     <tr className="hover:bg-gray-50 bg-purple-50">
                       <td className="px-4 py-3 text-sm font-semibold text-gray-900">Total</td>
                       <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
                       <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-purple-700">177.3</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-purple-700">45,477</td>
+                      <td className="px-4 py-3 text-sm font-semibold text-purple-900">177.3</td>
+                      <td className="px-4 py-3 text-sm font-semibold text-purple-900">45,477</td>
                     </tr>
                   </tbody>
                 </table>
@@ -568,7 +568,7 @@ const NaruviWaterIssues = () => {
               <div className="mt-4 grid md:grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-lg border">
                   <h4 className="font-semibold text-purple-800 mb-2">Key Parameters</h4>
-                  <ul className="space-y-1 text-sm text-purple-700">
+                  <ul className="space-y-1 text-sm text-purple-900">
                     <li>• Electricity Tariff: ₹9/kWh (TNPDCL)</li>
                     <li>• Fixed Charge: ₹214/kW per 2 months</li>
                     <li>• Fixed cost TNPDCL: ₹4,280</li>
@@ -581,14 +581,14 @@ const NaruviWaterIssues = () => {
                 </div>
                 <div className="bg-white p-4 rounded-lg border">
                   <h4 className="font-semibold text-purple-800 mb-2">RO Efficiency Calculation</h4>
-                  <p className="text-sm text-purple-700 mb-2">
+                  <p className="text-sm text-purple-900 mb-2">
                     At 50% recovery, producing <strong>29,000 litres</strong> of
                     RO water requires about <strong>58,000 litres</strong> of
                     input water per day. If reject water is closer to 65%, the
                     input requirement can rise to about{' '}
                     <strong>82,900 litres</strong>.
                   </p>
-                  <p className="text-sm text-purple-700">
+                  <p className="text-sm text-purple-900">
                     <strong>Operational implication:</strong> shifting outdoor
                     demand to the parallel line cuts borewell pumping, RO
                     runtime, reject-water generation, and electricity use.
@@ -599,10 +599,10 @@ const NaruviWaterIssues = () => {
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-blue-700 mb-2">
+                <h3 className="font-semibold text-blue-900 mb-2">
                   Existing RO Supply Inside Villas
                 </h3>
-                <ul className="space-y-1 text-blue-600">
+                <ul className="space-y-1 text-blue-900">
                   <li>• Cooking</li>
                   <li>• Bathing</li>
                   <li>• General washing and fixture protection</li>
@@ -610,10 +610,10 @@ const NaruviWaterIssues = () => {
                 </ul>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-green-700 mb-2">
+                <h3 className="font-semibold text-green-900 mb-2">
                   New Parallel Utility Outlet
                 </h3>
-                <ul className="space-y-1 text-green-600">
+                <ul className="space-y-1 text-green-900">
                   <li>• Vehicle washing</li>
                   <li>• Floor washing</li>
                   <li>• Garden watering</li>
@@ -714,7 +714,7 @@ const NaruviWaterIssues = () => {
               <p className="text-2xl font-bold text-green-700 mb-2">
                 ₹49,757
               </p>
-              <div className="text-sm text-green-600 space-y-1">
+              <div className="text-sm text-green-900 space-y-1">
                 <p>
                   • Based on energy consumption analysis from NaruviWatercalc.csv
                 </p>
@@ -771,7 +771,7 @@ const NaruviWaterIssues = () => {
               <h3 className="text-xl font-semibold text-blue-800 mb-3">
                 Scope to Be Finalized Through Vendor Quotes
               </h3>
-              <div className="text-sm text-blue-600 space-y-1">
+              <div className="text-sm text-blue-900 space-y-1">
                 <p>• Parallel pressurized line routing across the community</p>
                 <p>• One standardized outdoor outlet per villa</p>
                 <p>• Pressure balancing, isolation valves, and controls</p>
@@ -796,30 +796,30 @@ const NaruviWaterIssues = () => {
             </h2>
             <div className="space-y-4">
               <div className="bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-blue-700 mb-2">
+                <h3 className="font-semibold text-blue-900 mb-2">
                   Immediate Actions
                 </h3>
-                <ul className="list-disc list-inside text-blue-600 space-y-1">
+                <ul className="list-disc list-inside text-slate-800 space-y-1">
                   <li>Close quotes from vendors experienced in pressurized supply systems</li>
                   <li>Freeze the standard location and hardware specification for one outlet per villa</li>
                   <li>Publish the operating note for RO line versus utility line usage</li>
                 </ul>
               </div>
               <div className="bg-yellow-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-yellow-700 mb-2">
+                <h3 className="font-semibold text-amber-900 mb-2">
                   Implementation Considerations
                 </h3>
-                <ul className="list-disc list-inside text-yellow-600 space-y-1">
+                <ul className="list-disc list-inside text-slate-800 space-y-1">
                   <li>Do not tamper with internal villa plumbing unless a later expert study supports it</li>
                   <li>Raise TDS only with a defined monitoring band and periodic reporting</li>
                   <li>Track pre/post metrics: RO runtime, borewell pumping hours, and electricity bills</li>
                 </ul>
               </div>
               <div className="bg-emerald-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-emerald-700 mb-2">
+                <h3 className="font-semibold text-emerald-900 mb-2">
                   Communication to Owners
                 </h3>
-                <ul className="list-disc list-inside text-emerald-600 space-y-1">
+                <ul className="list-disc list-inside text-slate-800 space-y-1">
                   <li>Explain that the RO-protection objective inside villas is being retained</li>
                   <li>Show that outdoor uses are the first target for reducing RO dependence</li>
                   <li>Share timeline updates transparently because vendor availability is the current bottleneck</li>

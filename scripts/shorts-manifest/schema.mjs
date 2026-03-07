@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { readFile } from 'node:fs/promises';
 
 export const SUPPORTED_MANIFEST_VERSION = 'sora-manifest.v1';
@@ -12,6 +13,18 @@ function isFiniteNumber(value) {
 
 function pushError(errors, message) {
   errors.push(message);
+}
+
+function validateRange(range, label, errors) {
+  if (!Array.isArray(range) || range.length !== 2) {
+    pushError(errors, `${label} must be [start, end]`);
+    return;
+  }
+
+  const [start, end] = range;
+  if (!isFiniteNumber(start) || !isFiniteNumber(end) || end <= start) {
+    pushError(errors, `${label} must have numeric end > start`);
+  }
 }
 
 function validateProject(project, errors) {
@@ -184,6 +197,142 @@ function validateExports(exportConfig, project, errors) {
   });
 }
 
+function validateTemplate(template, errors) {
+  if (template == null) {
+    return;
+  }
+  if (!isObject(template)) {
+    pushError(errors, 'template must be an object');
+    return;
+  }
+
+  if (template.id != null && (typeof template.id !== 'string' || !template.id.trim())) {
+    pushError(errors, 'template.id must be a non-empty string when provided');
+  }
+
+  if (template.tokens != null && !isObject(template.tokens)) {
+    pushError(errors, 'template.tokens must be an object when provided');
+  }
+
+  if (template.captionStyle != null && !isObject(template.captionStyle)) {
+    pushError(errors, 'template.captionStyle must be an object when provided');
+  }
+
+  if (template.companionFiles != null) {
+    if (!isObject(template.companionFiles)) {
+      pushError(errors, 'template.companionFiles must be an object when provided');
+    } else {
+      for (const [key, value] of Object.entries(template.companionFiles)) {
+        if (typeof value !== 'string' || !value.trim()) {
+          pushError(errors, `template.companionFiles.${key} must be a non-empty string`);
+        }
+      }
+    }
+  }
+
+  if (template.frameMap != null) {
+    if (!Array.isArray(template.frameMap)) {
+      pushError(errors, 'template.frameMap must be an array when provided');
+    } else {
+      template.frameMap.forEach((frame, index) => {
+        const prefix = `template.frameMap[${index}]`;
+        if (!isObject(frame)) {
+          pushError(errors, `${prefix} must be an object`);
+          return;
+        }
+        if (typeof frame.id !== 'string' || !frame.id.trim()) {
+          pushError(errors, `${prefix}.id must be a non-empty string`);
+        }
+        if (typeof frame.label !== 'string' || !frame.label.trim()) {
+          pushError(errors, `${prefix}.label must be a non-empty string`);
+        }
+        if (frame.range != null) {
+          validateRange(frame.range, `${prefix}.range`, errors);
+        }
+      });
+    }
+  }
+
+  if (template.overlays != null) {
+    if (!Array.isArray(template.overlays)) {
+      pushError(errors, 'template.overlays must be an array when provided');
+    } else {
+      template.overlays.forEach((overlay, index) => {
+        const prefix = `template.overlays[${index}]`;
+        if (!isObject(overlay)) {
+          pushError(errors, `${prefix} must be an object`);
+          return;
+        }
+        if (typeof overlay.id !== 'string' || !overlay.id.trim()) {
+          pushError(errors, `${prefix}.id must be a non-empty string`);
+        }
+        if (typeof overlay.source !== 'string' || !overlay.source.trim()) {
+          pushError(errors, `${prefix}.source must be a non-empty string`);
+        }
+      });
+    }
+  }
+}
+
+function validateSlots(slots, errors) {
+  if (slots == null) {
+    return;
+  }
+  if (!isObject(slots)) {
+    pushError(errors, 'slots must be an object when provided');
+    return;
+  }
+}
+
+function validateMetadata(metadata, errors) {
+  if (metadata == null) {
+    return;
+  }
+  if (!isObject(metadata)) {
+    pushError(errors, 'metadata must be an object when provided');
+    return;
+  }
+
+  if (metadata.descriptionTemplate != null && typeof metadata.descriptionTemplate !== 'string') {
+    pushError(errors, 'metadata.descriptionTemplate must be a string when provided');
+  }
+
+  if (metadata.locales == null) {
+    return;
+  }
+  if (!isObject(metadata.locales)) {
+    pushError(errors, 'metadata.locales must be an object when provided');
+    return;
+  }
+
+  for (const [locale, value] of Object.entries(metadata.locales)) {
+    const prefix = `metadata.locales.${locale}`;
+    if (!isObject(value)) {
+      pushError(errors, `${prefix} must be an object`);
+      continue;
+    }
+    if (typeof value.title !== 'string' || !value.title.trim()) {
+      pushError(errors, `${prefix}.title must be a non-empty string`);
+    }
+    if (value.description != null && typeof value.description !== 'string') {
+      pushError(errors, `${prefix}.description must be a string when provided`);
+    }
+    if (value.output != null && (typeof value.output !== 'string' || !value.output.trim())) {
+      pushError(errors, `${prefix}.output must be a non-empty string when provided`);
+    }
+    if (value.hashtags != null) {
+      if (!Array.isArray(value.hashtags) || value.hashtags.some((entry) => typeof entry !== 'string' || !entry.trim())) {
+        pushError(errors, `${prefix}.hashtags must be an array of non-empty strings`);
+      }
+    }
+    if (value.tags != null) {
+      if (!Array.isArray(value.tags) || value.tags.some((entry) => typeof entry !== 'string' || !entry.trim())) {
+        pushError(errors, `${prefix}.tags must be an array of non-empty strings`);
+      }
+    }
+  }
+}
+
 export function validateManifest(manifest) {
   const errors = [];
 
@@ -206,6 +355,9 @@ export function validateManifest(manifest) {
   const captionIds = validateCaptions(manifest.tracks.captions, errors);
   validateAudioTracks(manifest.tracks.audio, captionIds, errors);
   validateExports(manifest.export, manifest.project, errors);
+  validateTemplate(manifest.template, errors);
+  validateSlots(manifest.slots, errors);
+  validateMetadata(manifest.metadata, errors);
 
   return { ok: errors.length === 0, errors };
 }
@@ -219,8 +371,43 @@ export function assertValidManifest(manifest) {
 }
 
 export async function loadManifest(manifestPath) {
-  const raw = await readFile(manifestPath, 'utf8');
+  const resolvedManifestPath = path.resolve(manifestPath);
+  const raw = await readFile(resolvedManifestPath, 'utf8');
   const manifest = JSON.parse(raw);
+  const manifestDir = path.dirname(resolvedManifestPath);
+
+  const companionFiles = manifest.template?.companionFiles;
+  if (isObject(companionFiles)) {
+    const companionTargets = [
+      ['tokens', ['template', 'tokens']],
+      ['slots', ['slots']],
+      ['metadata', ['metadata']],
+    ];
+
+    for (const [key, targetPath] of companionTargets) {
+      const relativePath = companionFiles[key];
+      if (typeof relativePath !== 'string' || !relativePath.trim()) {
+        continue;
+      }
+
+      const resolvedCompanionPath = path.resolve(manifestDir, relativePath);
+      let parsedValue;
+      try {
+        parsedValue = JSON.parse(await readFile(resolvedCompanionPath, 'utf8'));
+      } catch (error) {
+        throw new Error(`Failed to load ${key} companion file: ${resolvedCompanionPath}\n${error.message}`);
+      }
+
+      let current = manifest;
+      for (let index = 0; index < targetPath.length - 1; index += 1) {
+        const segment = targetPath[index];
+        current[segment] ||= {};
+        current = current[segment];
+      }
+      current[targetPath[targetPath.length - 1]] = parsedValue;
+    }
+  }
+
   assertValidManifest(manifest);
   return manifest;
 }

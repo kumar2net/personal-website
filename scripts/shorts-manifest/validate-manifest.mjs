@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import path from 'node:path';
-import { readFile } from 'node:fs/promises';
-import { validateManifest } from './schema.mjs';
+import { loadManifest } from './schema.mjs';
 
 function parseArgs(args) {
   const parsed = { manifest: '' };
@@ -31,21 +30,11 @@ async function main() {
   }
 
   const resolved = path.resolve(manifest);
-  let payload;
   try {
-    payload = JSON.parse(await readFile(resolved, 'utf8'));
+    await loadManifest(resolved);
   } catch (error) {
-    console.error(`Failed to read or parse JSON: ${resolved}`);
-    console.error(error.message);
-    process.exit(1);
-  }
-
-  const result = validateManifest(payload);
-  if (!result.ok) {
     console.error(`Invalid manifest: ${resolved}`);
-    result.errors.forEach((entry, index) => {
-      console.error(`${index + 1}. ${entry}`);
-    });
+    console.error(error.message);
     process.exit(1);
   }
 
