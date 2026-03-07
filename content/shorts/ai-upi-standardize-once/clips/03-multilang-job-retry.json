@@ -1,0 +1,15 @@
+{
+  "completed_at": null,
+  "created_at": 1772848160,
+  "error": null,
+  "expires_at": null,
+  "id": "video_69ab842040e48190a6fe7726f28e996107cc6fb568f533ac",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 0,
+  "prompt": "Use case: YouTube Short branching systems segment\nPrimary request: visualize one source splitting into three elegant synchronized branches\nScene/background: dark cinematic data chamber with glowing lines and minimal interface geometry\nSubject: one bright source beam dividing into three clean luminous branches\nAction: a single central stream separates into three parallel flowing paths, each pulsing with synchronized motion\nCamera: measured lateral glide across the branching structure\nLighting/mood: confident, elegant, highly legible\nColor palette: deep navy, cyan, white, saffron\nStyle/format: cinematic infographic realism, vertical 9:16\nTiming/beats: begin with one source, reveal branching by beat 4, end with three complete branches\nAudio: no dialogue, subtle rhythmic pulses\nConstraints: no readable text, no people, no logos, keep the geometry clean\nAvoid: chaos, over-detailed UI, flicker, crowded composition",
+  "remixed_from_video_id": null,
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "queued"
+}

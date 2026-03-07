@@ -1,0 +1,15 @@
+{
+  "completed_at": null,
+  "created_at": 1772847947,
+  "error": null,
+  "expires_at": null,
+  "id": "video_69ab834b017881909c611557f54d3af80f3577989626d48d",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 0,
+  "prompt": "Use case: YouTube Short ending CTA\nPrimary request: a clean end card for a technology explainer short\nScene/background: polished dark vertical stage with subtle motion and glowing edge accents\nSubject: abstract subscribe card, website badge area, playlist badge area\nAction: interface card settles into place with a confident pulse and room for a call to action\nCamera: gentle push-in, minimal movement\nLighting/mood: calm, premium, conclusive\nColor palette: black, cyan, white, yellow\nStyle/format: refined vertical end card, realistic motion graphics\nTiming/beats: first half settle-in, second half hold for CTA\nAudio: no dialogue, minimal ambient swell\nConstraints: no readable text, no logos, no people, clear negative space in the center\nAvoid: visual noise, complex patterns, flicker, illegible UI",
+  "remixed_from_video_id": null,
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "queued"
+}

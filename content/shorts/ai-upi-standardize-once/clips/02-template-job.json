@@ -1,0 +1,15 @@
+{
+  "completed_at": null,
+  "created_at": 1772847947,
+  "error": null,
+  "expires_at": null,
+  "id": "video_69ab834b53008198afd6ff799538c68a06c4ccb29ce16aca",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 0,
+  "prompt": "Use case: YouTube Short explainer middle section\nPrimary request: show one reusable vertical template replacing many editing timelines\nScene/background: sleek abstract editing workspace with stacked vertical panels and overlay modules\nSubject: modular short-form video template zones with safe areas and content blocks\nAction: multiple floating layouts collapse into one elegant canonical template while modules snap into place\nCamera: slow dolly with crisp parallax across layered panels\nLighting/mood: controlled, modern, problem-solving\nColor palette: charcoal, cyan, soft white, warm yellow\nStyle/format: polished product-demo realism, clean vertical composition\nTiming/beats: first half shows clutter, second half resolves into one elegant template\nAudio: no dialogue, restrained electronic ambience\nConstraints: no real people, no brand logos, no readable UI text\nAvoid: messy perspective, unreadable text, jitter, distorted interfaces",
+  "remixed_from_video_id": null,
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "queued"
+}

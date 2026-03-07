@@ -1,0 +1,15 @@
+{
+  "completed_at": null,
+  "created_at": 1772847947,
+  "error": null,
+  "expires_at": null,
+  "id": "video_69ab834b280c8190b0de08a7f175f33c01c1704f3f627db0",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 0,
+  "prompt": "Use case: YouTube Short multilingual pipeline segment\nPrimary request: visualize one source branching into three synchronized language lanes\nScene/background: dark cinematic data workspace with floating caption cards and audio waveforms\nSubject: one master transcript stream branching into three clean parallel lanes with synchronized voice tracks\nAction: one source line splits cleanly into three flowing lanes, each with matching waveform motion\nCamera: measured lateral glide across the branching pipeline\nLighting/mood: confident, elegant, highly legible\nColor palette: deep navy, cyan, white, saffron\nStyle/format: cinematic infographic realism, vertical 9:16\nTiming/beats: begin with one source, reveal branching by beat 4, end with three complete lanes\nAudio: no dialogue, subtle rhythmic pulses\nConstraints: no readable long text, no people, maintain visual clarity for the lanes\nAvoid: chaos, over-detailed UI, flicker, crowded composition",
+  "remixed_from_video_id": null,
+  "seconds": "12",
+  "size": "720x1280",
+  "status": "queued"
+}
