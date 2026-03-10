@@ -114,6 +114,7 @@ export const getTheme = (scheme: Scheme) =>
   extendTheme({
     // Provide both color schemes so `CssVarsProvider` can switch modes
     // without needing to rebuild the theme object.
+    colorSchemeSelector: "data-mui-color-scheme",
     colorSchemes: {
       light: buildScheme("light"),
       dark: buildScheme("dark"),

@@ -452,6 +452,8 @@ const App = ({ mode }) => {
               display: "flex",
               flexDirection: "column",
               gap: 2,
+              bgcolor: "background.paper",
+              color: "text.primary",
             },
           }}
         >
@@ -463,7 +465,7 @@ const App = ({ mode }) => {
             <Typography
               variant="subtitle1"
               fontWeight={600}
-              sx={{ color: isDarkMode ? "#f8fafc" : "#0f172a" }}
+              sx={{ color: "text.primary" }}
             >
               Navigate
             </Typography>
@@ -475,13 +477,17 @@ const App = ({ mode }) => {
                 <ListItemButton
                   {...getLinkProps(item)}
                   onClick={() => handleNavClick(item, true)}
+                  sx={{
+                    borderRadius: 2,
+                    color: "text.primary",
+                  }}
                 >
                   <ListItemText
                     primary={item.label}
                     primaryTypographyProps={{
                       sx: {
                         fontWeight: 600,
-                        color: isDarkMode ? "#f8fafc" : "#0f172a",
+                        color: "inherit",
                       },
                     }}
                   />
