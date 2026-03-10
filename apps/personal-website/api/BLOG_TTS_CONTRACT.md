@@ -15,8 +15,10 @@ This endpoint generates spoken audio for blog content using OpenAI Audio Speech.
   "content": "string",
   "slug": "string",
   "language": "en|hi|ta",
+  "model": "gpt-4o-mini-tts|tts-1|tts-1-hd|custom-snapshot",
+  "voice": "alloy|ash|ballad|cedar|coral|echo|fable|marin|nova|onyx|sage|shimmer|verse",
   "response_format": "mp3|opus|aac|flac|wav|pcm",
-  "stream_format": "audio",
+  "stream_format": "audio|sse",
   "speed": 1.0,
   "instructions": "optional style guidance"
 }
@@ -27,25 +29,30 @@ This endpoint generates spoken audio for blog content using OpenAI Audio Speech.
 - `text` or `content`: required text source (`text` is preferred).
 - `slug`: optional; defaults to `blog-post`.
 - `language`: optional; defaults to `en`.
+- `model`: optional; if omitted, the route tries its configured model order starting with the official aliases.
+- `voice`: optional; if omitted, the route uses the default voice configured for the resolved language.
 - `response_format`: optional; defaults to `mp3`.
-- `stream_format`: optional; only `"audio"` is supported by this endpoint.
+- `stream_format`: optional; supports `"audio"` and `"sse"`.
 - `speed`: optional; clamped to `0.25..4.0`, default `1.0`.
-- `instructions`: optional; trimmed to 400 chars.
+- `instructions`: optional; trimmed to 400 chars and only sent to models that support speech instructions (`gpt-4o-mini-tts` today).
 
 ## Successful Response
 
 - Status: `200`
-- Body: binary audio stream or buffered binary audio (`Content-Type` matches selected format).
+- `stream_format: "audio"` returns binary audio (`Content-Type` matches the selected audio format).
+- `stream_format: "sse"` returns `text/event-stream` and proxies the upstream OpenAI event stream.
 
 ### Response Headers
 
 - `X-Blogtts-Cache`: `hit|miss`
 - `X-Blogtts-Language`: resolved language code
 - `X-Blogtts-Slug`: resolved slug
+- `X-Blogtts-Voice`: resolved voice
 - `X-Blogtts-Translated`: `1|0`
 - `X-Blogtts-Translation-Failed`: `1|0`
 - `X-Blogtts-Truncated`: `1|0`
 - `X-Blogtts-Model`: OpenAI model used (when available)
+- `X-Blogtts-Upstream-Request-Ids`: comma-separated OpenAI request ids for the synthesis calls
 - `X-Blogtts-Speed`: effective speed value
 - `X-Blogtts-Stream-Format`: effective stream format
 - `X-Blogtts-Response-Format`: effective response format
@@ -53,18 +60,18 @@ This endpoint generates spoken audio for blog content using OpenAI Audio Speech.
 ## Error Responses
 
 - `400`: invalid JSON, unsupported language, empty text, unsupported `stream_format`.
+- `400`: invalid `model + stream_format` or `model + instructions` combination.
+- `400`: long-form `stream_format: "audio"` with a non-`mp3` format. Response includes `retry_with_response_format: "mp3"`.
 - `405`: non-POST method.
 - `503`: missing API key or no available TTS model.
 - `500`: unexpected generation or stream failure.
 
 ## Performance Notes
 
-- For browser playback latency, binary audio streaming (`stream_format: "audio"`) is the fast path.
-- The web player now uses progressive `MediaSource` playback when supported, then falls back to blob playback.
-- `stream_format: "sse"` is intentionally not served by this endpoint:
-  - SSE audio parts are base64-encoded, which increases payload size and decoding work.
-  - Browsers cannot feed SSE directly into `<audio>` without client-side decode/reassembly.
-  - For this site, binary audio streaming yields better first-audio latency and lower CPU overhead.
+- For browser playback latency, binary audio streaming (`stream_format: "audio"`) is the fast path used by the site player.
+- The web player uses progressive `MediaSource` playback when supported, then falls back to blob playback.
+- Long-form binary audio on this route is intentionally constrained to `mp3` because concatenating multi-request raw `opus`/`aac`/`flac` payloads is not container-safe. Callers that want long-form non-`mp3` output should use `stream_format: "sse"` or keep input within a single Speech API request.
+- `tts-1` and `tts-1-hd` do not support `stream_format: "sse"` or speech `instructions`; the route filters or rejects those combinations accordingly.
 
 ## cURL Example
 
@@ -75,10 +82,11 @@ curl -X POST http://localhost:3000/api/blog-tts \
     "text": "Hello from blog TTS.",
     "slug": "demo-post",
     "language": "en",
-    "response_format": "opus",
+    "model": "gpt-4o-mini-tts",
+    "voice": "alloy",
+    "response_format": "mp3",
     "stream_format": "audio",
     "speed": 1.0
   }' \
-  --output out.ogg
+  --output out.mp3
 ```
-

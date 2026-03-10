@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Languages, Volume2 } from "lucide-react";
 
@@ -26,12 +26,29 @@ const DEFAULT_VERCEL_PORT =
   import.meta.env.VITE_VERCEL_DEV_PORT || "3000";
 const MODEL_LABEL =
   import.meta.env.VITE_TTS_MODEL_LABEL || "auto-select";
+const VOICE_OPTIONS = [
+  { value: "", label: "Default voice" },
+  { value: "alloy", label: "Alloy" },
+  { value: "ash", label: "Ash" },
+  { value: "ballad", label: "Ballad" },
+  { value: "cedar", label: "Cedar" },
+  { value: "coral", label: "Coral" },
+  { value: "echo", label: "Echo" },
+  { value: "fable", label: "Fable" },
+  { value: "marin", label: "Marin" },
+  { value: "nova", label: "Nova" },
+  { value: "onyx", label: "Onyx" },
+  { value: "sage", label: "Sage" },
+  { value: "shimmer", label: "Shimmer" },
+  { value: "verse", label: "Verse" },
+];
 
 const OPUS_MIME = "audio/ogg; codecs=opus";
 const MP3_MIME = "audio/mpeg";
 const AUDIO_MIME = MP3_MIME;
 const MAX_CLIENT_CHARS = 25000;
 const DEFAULT_TTS_SPEED = Number(import.meta.env.VITE_BLOG_TTS_SPEED || "1");
+const OPUS_PREFERRED_TEXT_LIMIT = 3000;
 
 function clampSpeed(value) {
   if (!Number.isFinite(value)) {
@@ -67,9 +84,13 @@ function canPlayAudioType(mimeType) {
   return audio?.canPlayType?.(mimeType) || "";
 }
 
-function resolvePreferredAudioFormat() {
+function resolvePreferredAudioFormat(text = "") {
   const opusPlayable = canPlayAudioType(OPUS_MIME);
-  if (opusPlayable && canUseMse(OPUS_MIME)) {
+  if (
+    text.length <= OPUS_PREFERRED_TEXT_LIMIT &&
+    opusPlayable &&
+    canUseMse(OPUS_MIME)
+  ) {
     return { format: "opus", mime: OPUS_MIME };
   }
   return { format: "mp3", mime: MP3_MIME };
@@ -83,11 +104,16 @@ function createAudioCacheEntry(response, mimeType, url) {
     translationFailed: response.headers.get("x-blogtts-translation-failed") === "1",
     truncated: response.headers.get("x-blogtts-truncated") === "1",
     model: response.headers.get("x-blogtts-model") || "",
+    voice: response.headers.get("x-blogtts-voice") || "",
     mimeType,
     speed: response.headers.get("x-blogtts-speed") || "",
     streamFormat: response.headers.get("x-blogtts-stream-format") || "",
     responseFormat: response.headers.get("x-blogtts-response-format") || "",
   };
+}
+
+function getAudioCacheKey(language, voice = "") {
+  return `${language}:${voice || "default"}`;
 }
 
 function waitForSourceBufferIdle(sourceBuffer) {
@@ -162,7 +188,8 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-  const [loadingLanguage, setLoadingLanguage] = useState("");
+  const [selectedVoice, setSelectedVoice] = useState("");
+  const [loadingKey, setLoadingKey] = useState("");
   const [error, setError] = useState("");
   const [audioCache, setAudioCache] = useState({});
   const [autoPlayNonce, setAutoPlayNonce] = useState(0);
@@ -216,11 +243,18 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     return Array.from(new Set(candidateEndpoints.filter(Boolean)));
   }, []);
 
-  const activeEntry = audioCache[selectedLanguage];
+  const activeCacheKey = useMemo(
+    () => getAudioCacheKey(selectedLanguage, selectedVoice),
+    [selectedLanguage, selectedVoice],
+  );
+  const activeEntry = audioCache[activeCacheKey];
   const hasAudio = Boolean(activeEntry?.url);
+  const selectedVoiceLabel =
+    VOICE_OPTIONS.find((voice) => voice.value === selectedVoice)?.label ||
+    "Default voice";
 
   const metaNotice = useMemo(() => {
-    const cacheEntry = audioCache[selectedLanguage];
+    const cacheEntry = activeEntry;
     if (!cacheEntry) {
       return "";
     }
@@ -237,11 +271,11 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       return "Generated from a shortened excerpt.";
     }
     return "";
-  }, [audioCache, selectedLanguage]);
+  }, [activeEntry]);
 
   const buttonLabel = hasAudio ? "Play audio" : "Generate audio";
-  const disableActions = loadingLanguage === selectedLanguage;
-  const currentAudioUrl = audioCache[selectedLanguage]?.url || "";
+  const disableActions = loadingKey === activeCacheKey;
+  const currentAudioUrl = activeEntry?.url || "";
   const primaryButtonBg = isDark
     ? theme.palette.primary.main
     : theme.palette.grey[900];
@@ -262,24 +296,26 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     }
   }
 
-  function cleanupCurrentStream(language = selectedLanguage) {
+  function cleanupCurrentStream(cacheKey = activeCacheKey) {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
-    const entry = cacheRef.current?.[language];
+    const entry = cacheRef.current?.[cacheKey];
     if (entry?.url) {
       URL.revokeObjectURL(entry.url);
       setAudioCache((prev) => {
         const next = { ...prev };
-        delete next[language];
+        delete next[cacheKey];
         return next;
       });
     }
   }
 
-  async function fetchAudio({ language } = {}) {
+  async function fetchAudio({ language, voice = selectedVoice } = {}) {
     const targetLanguage = language || selectedLanguage;
+    const targetVoice = voice || "";
+    const targetCacheKey = getAudioCacheKey(targetLanguage, targetVoice);
     const text = collectArticleText(articleRef);
     if (!text) return;
 
@@ -288,71 +324,100 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       : text;
 
     setError("");
-    setLoadingLanguage(targetLanguage);
-    cleanupCurrentStream(targetLanguage);
+    setLoadingKey(targetCacheKey);
+    cleanupCurrentStream(targetCacheKey);
     abortControllerRef.current = new AbortController();
 
-    const { format: preferredFormat } = resolvePreferredAudioFormat();
+    const { format: preferredFormat } = resolvePreferredAudioFormat(excerpt);
     const speed = clampSpeed(DEFAULT_TTS_SPEED);
-    const body = {
+    let requestBody = {
       slug,
       language: targetLanguage,
       text: excerpt,
       stream_format: "audio",
       response_format: preferredFormat,
       speed,
+      ...(targetVoice ? { voice: targetVoice } : {}),
     };
-    const payload = JSON.stringify(body);
-    const createPostRequest = () => ({
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: payload,
-      signal: abortControllerRef.current?.signal,
-    });
 
     try {
       let response = null;
-      let lastError = null;
+      let hasRetriedWithFallbackFormat = false;
 
-      for (const endpoint of endpoints) {
-        try {
-          response = await fetch(endpoint, createPostRequest());
+      while (!response) {
+        let lastError = null;
+        let retryWithFallbackFormat = false;
+        const payload = JSON.stringify(requestBody);
+        const createPostRequest = () => ({
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+          signal: abortControllerRef.current?.signal,
+        });
 
-          if (!response.ok) {
-            let message = `Request failed with ${response.status}`;
-            const contentType = response.headers.get("content-type") || "";
-            try {
-              if (contentType.includes("application/json")) {
-                const payload = await response.json();
-                if (payload?.error) {
-                  message = payload.error;
+        for (const endpoint of endpoints) {
+          try {
+            const nextResponse = await fetch(endpoint, createPostRequest());
+
+            if (!nextResponse.ok) {
+              let message = `Request failed with ${nextResponse.status}`;
+              let nextRetryFormat = "";
+              const contentType = nextResponse.headers.get("content-type") || "";
+              try {
+                if (contentType.includes("application/json")) {
+                  const payload = await nextResponse.json();
+                  if (payload?.error) {
+                    message = payload.error;
+                  }
+                  if (payload?.retry_with_response_format) {
+                    nextRetryFormat = payload.retry_with_response_format;
+                  }
+                } else {
+                  const responseText = await nextResponse.text();
+                  if (responseText) {
+                    message = responseText;
+                  }
                 }
-              } else {
-                const text = await response.text();
-                if (text) {
-                  message = text;
-                }
+              } catch {
+                // Ignore JSON parse errors and fall back to default message
               }
-            } catch {
-              // Ignore JSON parse errors and fall back to default message
+
+              if (
+                nextRetryFormat &&
+                !hasRetriedWithFallbackFormat &&
+                requestBody.response_format !== nextRetryFormat
+              ) {
+                requestBody = {
+                  ...requestBody,
+                  response_format: nextRetryFormat,
+                };
+                hasRetriedWithFallbackFormat = true;
+                retryWithFallbackFormat = true;
+                lastError = null;
+                break;
+              }
+
+              lastError = new Error(message);
+              if (nextResponse.status === 401 || nextResponse.status === 403) {
+                throw lastError;
+              }
+              continue;
             }
-            lastError = new Error(message);
-            if (response.status === 401 || response.status === 403) {
-              throw lastError;
-            }
-            response = null;
-            continue;
+
+            response = nextResponse;
+            break;
+          } catch (err) {
+            lastError = err;
           }
-
-          break;
-        } catch (err) {
-          lastError = err;
-          response = null;
         }
-      }
 
-      if (!response) {
-        throw lastError || new Error("Unable to generate audio");
+        if (retryWithFallbackFormat) {
+          continue;
+        }
+
+        if (!response) {
+          throw lastError || new Error("Unable to generate audio");
+        }
       }
 
       const contentType = response.headers.get("content-type") || "";
@@ -374,39 +439,39 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         await fetchAudioAsMediaSourceStream(
           response,
           resolvedMime,
-          targetLanguage,
+          targetCacheKey,
         );
       } else {
-        await fetchAudioAsBlobFallback(response, resolvedMime, targetLanguage);
+        await fetchAudioAsBlobFallback(response, resolvedMime, targetCacheKey);
       }
     } catch (err) {
       if (err?.name === "AbortError") {
         return;
       }
-      cleanupCurrentStream(targetLanguage);
+      cleanupCurrentStream(targetCacheKey);
       setError(err?.message || "Failed to generate audio");
     } finally {
-      setLoadingLanguage("");
+      setLoadingKey("");
     }
   }
 
   useEffect(() => {
-    if (currentAudioUrl && !loadingLanguage) {
+    if (currentAudioUrl && !loadingKey) {
       tryPlayAudio();
     }
-  }, [currentAudioUrl, autoPlayNonce, loadingLanguage]);
+  }, [currentAudioUrl, autoPlayNonce, loadingKey]);
 
   async function fetchAudioAsBlobFallback(
     response,
     mimeType = AUDIO_MIME,
-    language = selectedLanguage,
+    cacheKey = activeCacheKey,
   ) {
     try {
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       setAudioCache((prev) => ({
         ...prev,
-        [language]: createAudioCacheEntry(response, mimeType, url),
+        [cacheKey]: createAudioCacheEntry(response, mimeType, url),
       }));
       setAutoPlayNonce((prev) => prev + 1);
       setUserInitiated(true);
@@ -420,7 +485,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   async function fetchAudioAsMediaSourceStream(
     response,
     mimeType = AUDIO_MIME,
-    language = selectedLanguage,
+    cacheKey = activeCacheKey,
   ) {
     if (!response.body) {
       throw new Error("Streaming response body is unavailable.");
@@ -435,7 +500,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
 
     setAudioCache((prev) => ({
       ...prev,
-      [language]: createAudioCacheEntry(response, mimeType, streamUrl),
+      [cacheKey]: createAudioCacheEntry(response, mimeType, streamUrl),
     }));
     setAutoPlayNonce((prev) => prev + 1);
     setUserInitiated(true);
@@ -536,6 +601,23 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           );
         })}
       </div>
+      <div className="mt-3 max-w-xs">
+        <TextField
+          select
+          fullWidth
+          size="small"
+          label="Voice"
+          value={selectedVoice}
+          onChange={(event) => setSelectedVoice(event.target.value)}
+          helperText="Default voice follows the server preset for the selected language."
+        >
+          {VOICE_OPTIONS.map((voice) => (
+            <MenuItem key={voice.value || "default"} value={voice.value}>
+              {voice.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <Button
           type="button"
@@ -567,14 +649,14 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         >
           {buttonLabel} ({LANGUAGES.find((l) => l.code === selectedLanguage)?.label})
         </Button>
-          {currentAudioUrl && (
+        {currentAudioUrl && (
           <div className="text-xs text-slate-500 dark:text-slate-400">
-            Ready — press play below.
+            Ready with {activeEntry?.voice || selectedVoiceLabel}.
           </div>
         )}
       </div>
 
-      {loadingLanguage === selectedLanguage && (
+      {loadingKey === activeCacheKey && (
         <div className="mt-3 w-full">
           <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
             Generating audio…
@@ -594,7 +676,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       {currentAudioUrl && (
         <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-center dark:border-slate-700 dark:bg-slate-900/40">
           <audio
-            key={`${selectedLanguage}-${autoPlayNonce}`}
+            key={`${activeCacheKey}-${autoPlayNonce}`}
             className="w-full"
             controls
             preload="auto"
@@ -608,6 +690,12 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
                 <>
                   {metaNotice ? " " : ""}
                   Using <span className="font-medium">{activeEntry.model}</span>.
+                </>
+              )}
+              {activeEntry?.voice && (
+                <>
+                  {metaNotice || activeEntry?.model ? " " : ""}
+                  Voice <span className="font-medium">{activeEntry.voice}</span>.
                 </>
               )}
             </p>
