@@ -1,28 +1,16 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
-import ReactMarkdown from "react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
-import remarkGfm from "remark-gfm";
 import BlogPostLayout from "../../components/BlogPostLayout";
-import MarkdownSurface from "../../components/MarkdownSurface";
 import { getBlogPostSeo } from "../../data/blogRegistry";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
-const mdModules = import.meta.glob("/src/pages/blog/*.md", {
-  query: "?raw",
-  import: "default",
-});
 
 const pathToSlug = (filePath) => {
-  const match = filePath.match(/\/([^/]+)\.(jsx|md)$/);
+  const match = filePath.match(/\/([^/]+)\.jsx$/);
   return match ? match[1] : null;
 };
 
-const availableSlugs = [
-  ...Object.keys(jsxModules),
-  ...Object.keys(mdModules),
-]
-  .map(pathToSlug)
-  .filter(Boolean);
+const availableSlugs = Object.keys(jsxModules).map(pathToSlug).filter(Boolean);
 
 const datedSlugMap = availableSlugs.reduce((acc, slug) => {
   const match = slug.match(/^\d{4}-\d{2}-\d{2}-(.+)$/);
@@ -37,7 +25,6 @@ export default function PostDynamic() {
   const { slug: rawSlug } = useParams();
   const slug = datedSlugMap[rawSlug] || rawSlug;
   const shouldRedirect = slug !== rawSlug;
-  const [markdown, setMarkdown] = useState("");
   const [postSeo, setPostSeo] = useState(() => getBlogPostSeo(slug));
 
   useEffect(() => {
@@ -45,10 +32,6 @@ export default function PostDynamic() {
       navigate(`/blog/${slug}`, { replace: true });
     }
   }, [shouldRedirect, slug, navigate]);
-
-  useEffect(() => {
-    setMarkdown("");
-  }, [slug]);
 
   useEffect(() => {
     let cancelled = false;
@@ -106,15 +89,6 @@ export default function PostDynamic() {
     return null;
   }, [slug]);
 
-  useEffect(() => {
-    const path = `/src/pages/blog/${slug}.md`;
-    if (mdModules[path]) {
-      mdModules[path]().then((raw) => setMarkdown(raw || ""));
-    } else {
-      setMarkdown("");
-    }
-  }, [slug]);
-
   if (shouldRedirect) {
     return null;
   }
@@ -125,16 +99,6 @@ export default function PostDynamic() {
         <Suspense fallback={<div>Loading…</div>}>
           <LazyComponent />
         </Suspense>
-      </BlogPostLayout>
-    );
-  }
-
-  if (markdown) {
-    return (
-      <BlogPostLayout slug={slug} post={postSeo}>
-        <MarkdownSurface>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
-        </MarkdownSurface>
       </BlogPostLayout>
     );
   }

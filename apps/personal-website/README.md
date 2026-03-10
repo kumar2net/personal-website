@@ -37,7 +37,7 @@ See `docs/CHANGELOG.md` for a detailed history.
 
 ## Feature Snapshot
 
-- **Blog & Knowledge Library** – Rich MD/JSX posts with badges, tables, embeds, and a semantic-search powered landing page.
+- **Blog & Knowledge Library** – JSX blog posts with badges, tables, embeds, and a semantic-search powered landing page, plus Markdown-based book and note content elsewhere in the repo.
 - **Projects Hub** – Narrative write-ups paired with motion-enhanced visuals, plus deep dives like the AI recommender code viewer.
 - **AI & Analytics Utilities** – Serverless functions for topic recommendations, semantic search backed by OpenAI embeddings, tech-trend aggregation, and CMS helpers.
 - **Dashboards** – Utilities spending dashboard, status page, dossier timelines, and other data-first explorations.

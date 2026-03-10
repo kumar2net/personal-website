@@ -86,9 +86,7 @@ function stripJsxToText(source) {
 async function readAllBlogFiles() {
   const entries = await fs.promises.readdir(BLOG_DIR, { withFileTypes: true });
   const files = entries
-    .filter(
-      (e) => e.isFile() && (e.name.endsWith(".jsx") || e.name.endsWith(".md")),
-    )
+    .filter((e) => e.isFile() && e.name.endsWith(".jsx"))
     .map((e) => path.join(BLOG_DIR, e.name));
   return files;
 }
@@ -96,25 +94,10 @@ async function readAllBlogFiles() {
 async function readPost(filePath) {
   const raw = await fs.promises.readFile(filePath, "utf8");
   const base = path.basename(filePath);
-  const ext = path.extname(base);
-  const slug = base.replace(ext, "");
+  const slug = base.replace(/\.jsx$/, "");
   const title = toTitleFromSlug(slug);
   const url = `/blog/${slug}`;
-  let text;
-  if (ext === ".md") {
-    // strip simple markdown artifacts
-    text = raw
-      .replace(/`{3}[\s\S]*?`{3}/g, " ") // code blocks
-      .replace(/`[^`]*`/g, " ") // inline code
-      .replace(/#+\s*/g, "") // headings markers
-      .replace(/\*\*|__/g, "") // bold markers
-      .replace(/\*|_/g, "") // italic markers
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // links
-      .replace(/\s+/g, " ")
-      .trim();
-  } else {
-    text = stripJsxToText(raw);
-  }
+  const text = stripJsxToText(raw);
   const excerpt = text.slice(0, 240);
   const limited = text.slice(0, MAX_TEXT_CHARS);
   return { id: slug, title, url, text: limited, excerpt };

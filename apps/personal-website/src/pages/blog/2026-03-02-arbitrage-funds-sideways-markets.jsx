@@ -54,13 +54,19 @@ const compareRows = [
 ];
 
 export const metadata = {
-  slug: "arbitrage-funds-sideways-markets",
+  slug: "2026-03-02-arbitrage-funds-sideways-markets",
   title: "Arbitrage Funds Explained for Sideways Markets (Feynman Style)",
   description:
     "A plain-language tour of how arbitrage funds quietly earn carry when markets drift sideways, with a lemonade-stand example and two napkin charts.",
   excerpt:
     "A plain-language tour of how arbitrage funds quietly earn carry when markets drift sideways, with a lemonade-stand example and two napkin charts.",
-  tags: badges,
+  tags: [
+    "Arbitrage",
+    "Mutual Funds",
+    "Low Volatility",
+    "Sideways Markets",
+    "Feynman Explainer",
+  ],
   datePublished: "2026-03-02",
   dateModified: "2026-03-02",
   image: "/generate/2026-03-02-arbitrage-funds-sideways-markets.png",

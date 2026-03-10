@@ -14,7 +14,7 @@ const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const metadataRegex = /export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*;/m;
 
 function getSlug(fileName) {
-  return fileName.replace(/\.(jsx|md)$/i, "");
+  return fileName.replace(/\.jsx$/i, "");
 }
 
 function isNonEmptyString(value) {
@@ -95,25 +95,19 @@ async function main() {
     .filter((fileName) => !ignoredFiles.has(fileName))
     .sort();
 
+  const markdownFiles = files.filter((fileName) => fileName.endsWith(".md"));
   const jsxFiles = files.filter((fileName) => fileName.endsWith(".jsx"));
   const warnings = [];
   const failures = [];
   const missingMetadataFiles = [];
 
   const jsxBySlug = new Map();
-  const allBySlug = new Map();
 
-  files.forEach((fileName) => {
+  jsxFiles.forEach((fileName) => {
     const slug = getSlug(fileName);
-    const allEntries = allBySlug.get(slug) || [];
-    allEntries.push(fileName);
-    allBySlug.set(slug, allEntries);
-
-    if (fileName.endsWith(".jsx")) {
-      const jsxEntries = jsxBySlug.get(slug) || [];
-      jsxEntries.push(fileName);
-      jsxBySlug.set(slug, jsxEntries);
-    }
+    const jsxEntries = jsxBySlug.get(slug) || [];
+    jsxEntries.push(fileName);
+    jsxBySlug.set(slug, jsxEntries);
   });
 
   for (const [slug, entries] of jsxBySlug.entries()) {
@@ -122,15 +116,11 @@ async function main() {
     }
   }
 
-  for (const [slug, entries] of allBySlug.entries()) {
-    const hasJsx = entries.some((fileName) => fileName.endsWith(".jsx"));
-    const hasMd = entries.some((fileName) => fileName.endsWith(".md"));
-    if (hasJsx && hasMd) {
-      warnings.push(
-        `Slug "${slug}" exists as both .jsx and .md (${entries.join(", ")}). JSX wins at runtime.`,
-      );
-    }
-  }
+  markdownFiles.forEach((fileName) => {
+    failures.push(
+      `${path.join(blogDir, fileName)}: blog posts must be JSX. Move support markdown outside src/pages/blog.`,
+    );
+  });
 
   for (const fileName of jsxFiles) {
     const slug = getSlug(fileName);

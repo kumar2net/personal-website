@@ -2,6 +2,15 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-03-10-indian-it-ai-reality-check": {
+    title: "Indian IT's AI Reality Check: No Extinction, Plenty of Pain",
+    description:
+      "A blunt response to a March 9, 2026 Smallcase article: Indian IT is not facing instant extinction from AI, but the old manpower-led model is heading into pricing pressure, thinner fresher hiring, and harsher margin discipline.",
+    image: "/media/blogwordcloud.png",
+    tags: ["AI", "Indian IT", "Enterprise Software", "IT Services", "Automation", "Labor Market"],
+    datePublished: "2026-03-10",
+    dateModified: "2026-03-10",
+  },
   "2026-03-07-reply-happiness-politics-sanjaay-babu": {
     title: "Reply: Happiness, Politics, and the Indian State (Sanjaay Babu)",
     description:
@@ -374,14 +383,6 @@ export const blogIndex = {
     ],
     datePublished: "2025-10-22",
     dateModified: "2025-10-22",
-  },
-  "preview-story-last-drop-check-e764": {
-    title: "Is this the Last Drop? Oh No",
-    description: "Temporary preview post for content verification.",
-    image: "/vite.svg",
-    tags: ["Preview"],
-    datePublished: "2025-10-19",
-    dateModified: "2025-10-19",
   },
   "2025-09-27-fortnight-that-went-by-september-2025": {
     title: "Fortnight That Went By - September 2025",

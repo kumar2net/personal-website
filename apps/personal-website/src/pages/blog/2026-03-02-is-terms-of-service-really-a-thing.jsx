@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
 export const metadata = {
-  "slug": "is-terms-of-service-really-a-thing",
+  "slug": "2026-03-02-is-terms-of-service-really-a-thing",
   "title": "Is Terms of Service Really a Thing?",
   "description": "Exploring the real impact of Terms of Service agreements, AI's effect on workers, and the unsettling future of technology in our lives.",
   "excerpt": "Exploring the real impact of Terms of Service agreements, AI's effect on workers, and the unsettling future of technology in our lives.",

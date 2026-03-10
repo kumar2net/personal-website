@@ -2,15 +2,11 @@ import { blogIndex } from "../data/blogIndex";
 import { unsplashHeroPool } from "./unsplashHeroPool";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
-const mdModules = import.meta.glob("/src/pages/blog/*.md", {
-  query: "?raw",
-  import: "default",
-});
 
 let cachedRegistry = null;
 
 function pathToSlug(filePath) {
-  const match = filePath.match(/\/src\/pages\/blog\/([^/]+)\.(jsx|md)$/);
+  const match = filePath.match(/\/src\/pages\/blog\/([^/]+)\.jsx$/);
   return match ? match[1] : null;
 }
 
@@ -119,22 +115,6 @@ function buildRegistry() {
     });
   });
 
-  Object.keys(mdModules).forEach((modulePath) => {
-    const slug = pathToSlug(modulePath);
-    if (!slug) return;
-
-    if (sourcesBySlug.has(slug)) {
-      sourcesBySlug.get(slug).hasMd = true;
-      return;
-    }
-
-    sourcesBySlug.set(slug, {
-      slug,
-      hasJsx: false,
-      hasMd: true,
-    });
-  });
-
   const posts = Array.from(sourcesBySlug.values()).map((entry) => {
     const legacyMetadata = normalizeMetadata(blogIndex?.[entry.slug]);
     const mergedTags = dedupeStrings([...(legacyMetadata.tags ?? [])]);
@@ -176,7 +156,7 @@ function buildRegistry() {
       lastModified: formatDisplayDate(dateModified),
       link: `/blog/${entry.slug}`,
       hasJsx: entry.hasJsx,
-      hasMd: entry.hasMd,
+      hasMd: false,
     };
   });
 

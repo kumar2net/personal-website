@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import { Link as RouterLink } from "react-router-dom";
 import remarkGfm from "remark-gfm";
-import markdownContent from "./compare.md?raw";
+import markdownContent from "../../content/blog/price-parity.md?raw";
 
 const lines = markdownContent.split("\n");
 const title = lines[0].replace(/^#\s*/, "");

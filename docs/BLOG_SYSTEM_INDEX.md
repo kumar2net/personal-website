@@ -12,6 +12,8 @@
 node apps/personal-website/scripts/generate-blog-post.mjs
 ```
 
+**Publishing rule:** blog pages under `apps/personal-website/src/pages/blog` are JSX-only.
+
 **Check the checklist:**
 - [BLOG_POST_CHECKLIST.md](./BLOG_POST_CHECKLIST.md)
 

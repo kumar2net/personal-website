@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-sitemap.mjs && node scripts/fetch-music-playlist.mjs",
+    "prebuild": "npm run blog:validate && node scripts/generate-sitemap.mjs && node scripts/fetch-music-playlist.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",

@@ -94,17 +94,6 @@ function stripJsxToText(source) {
   return text;
 }
 
-function stripMarkdownToText(source) {
-  let text = source;
-  text = text.replace(/^\s*#+\s*/gm, " ");
-  text = text.replace(/`{1,3}[\s\S]*?`{1,3}/g, " ");
-  text = text.replace(/\[[^\]]+\]\([^)]*\)/g, " ");
-  text = text.replace(/!\[[^\]]+\]\([^)]*\)/g, " ");
-  text = text.replace(/[*_~>#]/g, " ");
-  text = text.replace(/\s+/g, " ").trim();
-  return text;
-}
-
 function toTitleFromSlug(slug) {
   return slug
     .replace(/[-_]+/g, " ")
@@ -133,15 +122,14 @@ async function loadFallbackCorpus() {
     const files = entries
       .filter((entry) => entry.isFile())
       .map((entry) => entry.name)
-      .filter((name) => name.endsWith(".jsx") || name.endsWith(".md"));
+      .filter((name) => name.endsWith(".jsx"));
 
     const corpus = [];
     for (const fileName of files) {
       const filePath = path.join(candidate, fileName);
       const slug = path.basename(fileName, path.extname(fileName));
       const raw = await fs.promises.readFile(filePath, "utf8");
-      const text =
-        fileName.endsWith(".md") ? stripMarkdownToText(raw) : stripJsxToText(raw);
+      const text = stripJsxToText(raw);
       const normalizedText = text.toLowerCase();
       if (!normalizedText) {
         continue;

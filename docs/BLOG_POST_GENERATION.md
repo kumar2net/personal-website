@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide documents the automated blog post generation workflow, including recent fixes to ensure proper dark mode support and permanent image storage.
+This guide documents the automated blog post generation workflow, including recent fixes to ensure proper dark mode support, permanent image storage, and JSX-only blog publishing.
 
 ## Quick Start
 
@@ -21,8 +21,15 @@ This guide documents the automated blog post generation workflow, including rece
    - Save the generated image to `/generate/` and copy it to `apps/personal-website/public/generate/` for serving
    - Create a properly formatted JSX file with dark mode support
    - Render tags as shields.io badges at the top of the post
+   - Publish the post as a `.jsx` file only; `src/pages/blog` must not contain standalone `.md` posts
 5. Manually update `apps/personal-website/src/data/blogPostsData.js` with the new post metadata
 6. Start the dev server (`npm run dev -- --filter=personal-website`) and visually review the new blog page and image before staging/committing
+
+## Publishing Rule
+
+- `apps/personal-website/src/pages/blog` is JSX-only.
+- If you need raw Markdown as a content source for a JSX page, keep it outside the routable blog directory, for example under `apps/personal-website/src/content/blog/`.
+- `npm run blog:validate` and `npm run build` will fail if a `.md` file is added under `src/pages/blog`.
 
 ## Blog Hint File Format
 

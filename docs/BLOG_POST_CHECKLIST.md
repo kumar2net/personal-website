@@ -11,6 +11,7 @@
 
 - [ ] Run: `node apps/personal-website/scripts/generate-blog-post.mjs`
 - [ ] Verify no errors in console output
+- [ ] Confirm the published post is `src/pages/blog/[date]-[slug].jsx` and that no `.md` file was added under `src/pages/blog`
 - [ ] Generate a cover image with OpenAI Image API and save to `/generate/` (e.g. `generate/2025-11-21-my-slug.png`)
 - [ ] Copy/move the saved image to `apps/personal-website/public/generate/` (served at `/generate/filename.png`)
 - [ ] Start dev server (`npm run dev -- --filter=personal-website`) and review the generated page and image manually before staging/committing
@@ -19,6 +20,7 @@
 ## Post-Generation
 
 - [ ] Open generated JSX file in `src/pages/blog/[date]-[slug].jsx`
+- [ ] Keep any supporting Markdown outside `src/pages/blog` (for example `src/content/blog/`)
 - [ ] Verify MUI imports are present: `import { Box, Typography } from "@mui/material";`
 - [ ] Verify MUI components are used (not HTML elements):
   - [ ] `<Box>` instead of `<div>` or `<section>`
@@ -52,6 +54,7 @@
 - [ ] Navigate to `http://localhost:5173/blog`
 - [ ] Verify blog post appears in listing with image
 - [ ] Click on blog post to view full content
+- [ ] Run `npm run blog:validate` and confirm it passes
 - [ ] Test in **light mode**:
   - [ ] All text is readable
   - [ ] Image displays correctly
