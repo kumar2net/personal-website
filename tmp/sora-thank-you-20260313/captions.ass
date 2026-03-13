@@ -1,0 +1,26 @@
+[Script Info]
+Title: Sora Thank You Captions
+ScriptType: v4.00+
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+PlayResX: 720
+PlayResY: 1280
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Avenir Next Demi Bold,48,&H00F6F6F6,&H00F6F6F6,&H00303030,&H66000000,-1,0,0,0,100,100,0,0,3,1.5,0,2,72,72,112,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:04.00,Default,,0,0,0,,Same medium. Same love.
+Dialogue: 0,0:00:04.00,0:00:08.00,Default,,0,0,0,,For the ones who made time.
+Dialogue: 0,0:00:08.00,0:00:12.00,Default,,0,0,0,,Chennai still feels like home.
+Dialogue: 0,0:00:12.00,0:00:16.00,Default,,0,0,0,,Sweater, laughter, small things that stay.
+Dialogue: 0,0:00:16.00,0:00:20.00,Default,,0,0,0,,Singapore said think bigger.
+Dialogue: 0,0:00:20.00,0:00:24.00,Default,,0,0,0,,Plan boldly. Live fully.
+Dialogue: 0,0:00:24.00,0:00:28.00,Default,,0,0,0,,Orlando kept the thread alive.
+Dialogue: 0,0:00:28.00,0:00:32.00,Default,,0,0,0,,Even from far away, still close.
+Dialogue: 0,0:00:32.00,0:00:36.00,Default,,0,0,0,,Trust like this changes everything.
+Dialogue: 0,0:00:36.00,0:00:40.00,Default,,0,0,0,,Be bold. Live a full life.
+Dialogue: 0,0:00:40.00,0:00:44.00,Default,,0,0,0,,This one is for all of you.
+Dialogue: 0,0:00:44.00,0:00:48.00,Default,,0,0,0,,Thank you for making it together. Ciao.

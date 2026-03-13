@@ -336,7 +336,7 @@ const App = ({ mode }) => {
       >
         <SEO
           title="My Stories"
-          description="Dispatches on shipping chokepoints, democratic strain, AI power, practical tools, books, music, and resilient digital life."
+          description="Personal website with projects, blog, books, music, learning resources, and practical notes."
           canonicalPath="/"
           image="/vite.svg"
           type="website"

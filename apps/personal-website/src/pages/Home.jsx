@@ -15,145 +15,129 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
-import HowToVoteRoundedIcon from "@mui/icons-material/HowToVoteRounded";
-import LocalShippingRoundedIcon from "@mui/icons-material/LocalShippingRounded";
-import MemoryRoundedIcon from "@mui/icons-material/MemoryRounded";
-import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
+import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
+import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
+import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
+import PhotoLibraryRoundedIcon from "@mui/icons-material/PhotoLibraryRounded";
+import WaterRoundedIcon from "@mui/icons-material/WaterRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
 import WorldClock from "../components/WorldClock";
 import { getAllBlogPosts } from "../data/blogRegistry";
 
-const signalReadings = [
+const piscesPalette = [
   {
-    label: "War lanes",
-    state: "volatile",
-    meter: 92,
-    accent: "#fb7185",
-    context:
-      "Ukraine, Gaza, and Red Sea spillover keep freight, insurance, and diplomacy on edge.",
+    name: "Sea Glass",
+    hex: "#8fded1",
+    meaning: "calm, renewal, and a gentler pace",
   },
   {
-    label: "Tariff walls",
-    state: "rising",
-    meter: 81,
-    accent: "#f59e0b",
-    context:
-      "Industrial policy, port fees, and strategic trade controls are back in daily conversation.",
+    name: "Lagoon Blue",
+    hex: "#7fb9ff",
+    meaning: "clarity, drift, and open sky thinking",
   },
   {
-    label: "Democratic trust",
-    state: "fragile",
-    meter: 74,
-    accent: "#38bdf8",
-    context:
-      "Low patience, low trust, and high noise make every election feel heavier than before.",
+    name: "Moon Silver",
+    hex: "#d9dfeb",
+    meaning: "intuition, pause, and softer edges",
   },
   {
-    label: "AI work rules",
-    state: "rewritten",
-    meter: 86,
-    accent: "#34d399",
-    context:
-      "Platform terms, bargaining power, and automation anxiety are now workplace conditions.",
+    name: "Misty Lilac",
+    hex: "#cabfff",
+    meaning: "imagination, music, and dream logic",
   },
 ];
 
-const pressurePoints = [
+const currents = [
   {
-    kicker: "Maritime risk",
-    title: "Shipping chokepoints are the new front page",
+    kicker: "Writing",
+    title: "Reflective notes with clear edges",
     summary:
-      "Hormuz, Bab el-Mandeb, and Suez turn distant conflict into direct household pricing and delivery risk.",
-    to: "/blog/2026-03-07-impact-of-straits-for-trade-commerce",
-    analyticsKey: "home_pressure_shipping",
-    accent: "#f97316",
-    icon: LocalShippingRoundedIcon,
-    cta: "Read the straits essay",
-  },
-  {
-    kicker: "Civic strain",
-    title: "Democratic fatigue changes the system beneath us",
-    summary:
-      "Turnout erosion and political exhaustion weaken legitimacy long before formal institutions break.",
-    to: "/blog/2026-02-15-why-democratic-apathy-threatens-our-future",
-    analyticsKey: "home_pressure_democracy",
-    accent: "#38bdf8",
-    icon: HowToVoteRoundedIcon,
-    cta: "Read the democracy note",
-  },
-  {
-    kicker: "Platform power",
-    title: "AI leverage is now a terms-of-work question",
-    summary:
-      "The argument is no longer whether AI matters, but who gets to write the conditions under which it does.",
-    to: "/blog/2026-03-02-is-terms-of-service-really-a-thing",
-    analyticsKey: "home_pressure_ai",
-    accent: "#34d399",
-    icon: MemoryRoundedIcon,
-    cta: "Read the ToS piece",
-  },
-  {
-    kicker: "State capacity",
-    title: "Public rails are becoming strategic infrastructure",
-    summary:
-      "Identity, payment, and verification stacks decide how resilient a country feels when private platforms wobble.",
-    to: "/blog/2026-02-20-ai-on-upi-aadhaar-ground-truth",
-    analyticsKey: "home_pressure_public_rails",
-    accent: "#fbbf24",
-    icon: AccountTreeRoundedIcon,
-    cta: "Read the UPI/Aadhaar note",
-  },
-];
-
-const responseLanes = [
-  {
-    label: "Decode",
-    title: "Blog",
-    description:
-      "Long-form dispatches on shipping risk, democracy, AI power, and public systems.",
+      "Essays and observations that stay personal without losing structure or precision.",
     to: "/blog",
-    analyticsKey: "home_lane_blog",
+    analyticsKey: "home_current_blog",
+    accent: "#8fded1",
+    icon: CreateRoundedIcon,
+    cta: "Read the blog",
   },
   {
-    label: "Build",
-    title: "Projects",
-    description:
-      "Utilities and experiments shaped by the edge cases that unstable periods expose.",
+    kicker: "Building",
+    title: "Projects that make curiosity concrete",
+    summary:
+      "Small systems, experiments, and utilities built with calm hands and repeatable logic.",
     to: "/projects",
-    analyticsKey: "home_lane_projects",
+    analyticsKey: "home_current_projects",
+    accent: "#7fb9ff",
+    icon: AutoFixHighRoundedIcon,
+    cta: "See projects",
   },
   {
-    label: "Stabilize",
-    title: "Learning",
-    description:
-      "Flashcards, notes, and repeatable study systems to slow the panic cycle and sharpen judgment.",
-    to: "/learning",
-    analyticsKey: "home_lane_learning",
-  },
-  {
-    label: "Remember",
-    title: "Music",
-    description:
-      "A cultural counterweight so the homepage does not turn into a bunker.",
+    kicker: "Listening",
+    title: "Music for drift, devotion, and reset",
+    summary:
+      "Tamil-first listening, bhajans, and playlists that keep the whole site human.",
     to: "/music",
-    analyticsKey: "home_lane_music",
+    analyticsKey: "home_current_music",
+    accent: "#cabfff",
+    icon: MusicNoteRoundedIcon,
+    cta: "Open music",
+  },
+  {
+    kicker: "Memory",
+    title: "Albums and field notes for the softer archive",
+    summary:
+      "Trips, frames, and remembered details for the moments when words should not do all the work.",
+    to: "/album",
+    analyticsKey: "home_current_album",
+    accent: "#f3c5d6",
+    icon: PhotoLibraryRoundedIcon,
+    cta: "Wander the album",
+  },
+];
+
+const birthdayRituals = [
+  {
+    label: "01",
+    title: "About",
+    description: "Meet the person behind the notes, systems, and obsessions.",
+    to: "/about",
+    analyticsKey: "home_ritual_about",
+  },
+  {
+    label: "02",
+    title: "Blog",
+    description: "Start with fresh reflections, essays, and practical writing.",
+    to: "/blog",
+    analyticsKey: "home_ritual_blog",
+  },
+  {
+    label: "03",
+    title: "Books",
+    description: "A slower shelf of ideas worth keeping close.",
+    to: "/books",
+    analyticsKey: "home_ritual_books",
+  },
+  {
+    label: "04",
+    title: "Music",
+    description: "Playlist rituals, devotional drift, and comfort tracks.",
+    to: "/music",
+    analyticsKey: "home_ritual_music",
   },
 ];
 
 const quickLinks = [
-  { label: "About", to: "/about", analyticsKey: "home_quick_about" },
-  { label: "Books", to: "/books", analyticsKey: "home_quick_books" },
-  { label: "Convert", to: "/convert", analyticsKey: "home_quick_convert" },
+  { label: "Projects", to: "/projects", analyticsKey: "home_quick_projects" },
+  { label: "Learning", to: "/learning", analyticsKey: "home_quick_learning" },
+  { label: "Album", to: "/album", analyticsKey: "home_quick_album" },
   { label: "Science", to: "/science", analyticsKey: "home_quick_science" },
 ];
 
 const featuredSlugs = [
-  "2026-03-07-impact-of-straits-for-trade-commerce",
-  "2026-02-15-why-democratic-apathy-threatens-our-future",
-  "2026-03-02-is-terms-of-service-really-a-thing",
+  "2026-01-16-next-sentence-is-the-product",
+  "2026-02-14-bhajan-clubbing",
+  "2026-02-08-february-musings-health-slang-politics-legacy",
 ];
 
 const socialLinks = [
@@ -191,21 +175,21 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       transition={{ duration: 0.45 }}
       sx={{
         "--home-surface": isDarkMode
-          ? "rgba(7, 13, 23, 0.9)"
-          : "rgba(255, 255, 255, 0.95)",
+          ? "rgba(10, 24, 42, 0.88)"
+          : "rgba(255, 255, 255, 0.92)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(10, 18, 32, 0.94)"
-          : "rgba(248, 250, 252, 0.96)",
+          ? "rgba(12, 29, 50, 0.94)"
+          : "rgba(248, 251, 255, 0.96)",
         "--home-border": isDarkMode
-          ? "rgba(148, 163, 184, 0.22)"
-          : "rgba(15, 23, 42, 0.12)",
+          ? "rgba(180, 196, 224, 0.22)"
+          : "rgba(111, 135, 181, 0.16)",
         "--home-muted-text": isDarkMode
-          ? "rgba(226, 232, 240, 0.74)"
-          : "rgba(30, 41, 59, 0.72)",
-        "--home-ink": isDarkMode ? "#f8fafc" : "#0f172a",
+          ? "rgba(223, 232, 246, 0.78)"
+          : "rgba(46, 68, 98, 0.72)",
+        "--home-ink": isDarkMode ? "#f5f7fb" : "#10233d",
         "--home-shadow": isDarkMode
-          ? "0 28px 60px rgba(2, 6, 23, 0.48)"
-          : "0 28px 60px rgba(15, 23, 42, 0.1)",
+          ? "0 26px 64px rgba(4, 12, 25, 0.45)"
+          : "0 26px 64px rgba(79, 110, 158, 0.14)",
         display: "flex",
         flexDirection: "column",
         gap: { xs: 3, md: 4 },
@@ -216,11 +200,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="My Stories"
-        description="A pressure-map homepage covering shipping chokepoints, democratic strain, AI power, and the practical tools, notes, books, and music that keep judgment intact."
+        description="Birthday-week homepage in Piscean colors: sea-glass aqua, moon silver, misty lilac, and a softer entry into writing, music, projects, books, and memory."
         canonicalPath="/"
-        image="/generate/2026-03-07-impact-of-straits-for-trade-commerce-hero.png"
+        image="/media/blogwordcloud.png"
         type="website"
       />
+
       <Grid container spacing={2.5} alignItems="stretch">
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper
@@ -236,8 +221,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "linear-gradient(140deg, rgba(244, 63, 94, 0.16), transparent 34%), linear-gradient(120deg, rgba(245, 158, 11, 0.12), transparent 55%), linear-gradient(180deg, rgba(2, 6, 23, 0.96), rgba(15, 23, 42, 0.88))"
-                : "linear-gradient(140deg, rgba(244, 63, 94, 0.11), transparent 34%), linear-gradient(120deg, rgba(245, 158, 11, 0.11), transparent 56%), linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96))",
+                ? "radial-gradient(circle at 18% 18%, rgba(143, 222, 209, 0.18), transparent 24%), radial-gradient(circle at 82% 16%, rgba(202, 191, 255, 0.16), transparent 28%), radial-gradient(circle at 54% 82%, rgba(127, 185, 255, 0.16), transparent 28%), linear-gradient(180deg, rgba(6, 18, 34, 0.98), rgba(14, 31, 56, 0.92))"
+                : "radial-gradient(circle at 18% 18%, rgba(143, 222, 209, 0.22), transparent 24%), radial-gradient(circle at 82% 16%, rgba(202, 191, 255, 0.18), transparent 28%), radial-gradient(circle at 54% 82%, rgba(127, 185, 255, 0.18), transparent 28%), linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 255, 0.97))",
               boxShadow: "var(--home-shadow)",
             }}
           >
@@ -247,24 +232,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 position: "absolute",
                 inset: 0,
                 pointerEvents: "none",
-                opacity: isDarkMode ? 0.3 : 0.18,
+                opacity: isDarkMode ? 0.16 : 0.1,
                 backgroundImage:
-                  "linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(0deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)",
-                backgroundSize: "48px 48px",
-              }}
-            />
-            <Box
-              aria-hidden
-              sx={{
-                position: "absolute",
-                right: -40,
-                top: -30,
-                width: 220,
-                height: 220,
-                borderRadius: "50%",
-                background:
-                  "radial-gradient(circle, rgba(248, 113, 113, 0.28) 0%, rgba(248, 113, 113, 0) 72%)",
-                filter: "blur(6px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 24%), linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(0deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)",
+                backgroundSize: "100% 100%, 56px 56px, 56px 56px",
               }}
             />
             <Stack sx={{ position: "relative", zIndex: 1 }} spacing={3}>
@@ -275,16 +246,17 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 justifyContent="space-between"
               >
                 <Chip
-                  icon={<PublicRoundedIcon fontSize="small" />}
-                  label="March 2026 fault lines"
+                  icon={<WaterRoundedIcon fontSize="small" />}
+                  label="Birthday week / Pisces season"
                   sx={{
                     borderRadius: 999,
                     fontWeight: 700,
-                    letterSpacing: 0.4,
+                    letterSpacing: 0.35,
                     color: "var(--home-ink)",
                     backgroundColor: isDarkMode
-                      ? "rgba(248, 250, 252, 0.1)"
-                      : "rgba(15, 23, 42, 0.06)",
+                      ? "rgba(245, 247, 251, 0.08)"
+                      : "rgba(255, 255, 255, 0.68)",
+                    backdropFilter: "blur(12px)",
                   }}
                 />
                 <Typography
@@ -295,23 +267,24 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Editorial frame refreshed {todayLabel}
+                  March 13, 2026 • refreshed {todayLabel}
                 </Typography>
               </Stack>
+
               <Stack spacing={2}>
                 <Typography
                   variant="h1"
                   sx={{
                     fontFamily: heroFont,
                     fontWeight: 700,
-                    fontSize: { xs: "2.35rem", md: "4rem" },
+                    fontSize: { xs: "2.4rem", md: "4rem" },
                     lineHeight: 0.98,
                     letterSpacing: "-0.04em",
                     maxWidth: 760,
                     color: "var(--home-ink)",
                   }}
                 >
-                  A homepage built for a world running hot.
+                  Birthday week. Piscean colors. A softer front page.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -321,13 +294,13 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     maxWidth: 720,
                   }}
                 >
-                  Shipping lanes, tariff walls, electoral fatigue, and AI
-                  bargaining power now leak into everyday life. This front page
-                  starts with those tensions and then routes into the essays,
-                  tools, notes, music, and books that help me make sense of
-                  them.
+                  This week the homepage leans into sea-glass aqua, moon
+                  silver, misty lilac, music, memory, and reflective writing.
+                  Still practical. Still mine. Just more fluid, more personal,
+                  and more Piscean in mood.
                 </Typography>
               </Stack>
+
               <Stack
                 direction="row"
                 spacing={1}
@@ -335,10 +308,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 flexWrap="wrap"
               >
                 {[
-                  "Red Sea + Hormuz",
-                  "Tariffs + port fees",
-                  "Democratic fatigue",
-                  "AI terms + labor",
+                  "Sea-glass aqua",
+                  "Lagoon blue",
+                  "Moon silver",
+                  "Misty lilac",
                 ].map((label) => (
                   <Chip
                     key={label}
@@ -349,12 +322,13 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       borderColor: "var(--home-border)",
                       color: "var(--home-ink)",
                       backgroundColor: isDarkMode
-                        ? "rgba(15, 23, 42, 0.45)"
-                        : "rgba(255, 255, 255, 0.64)",
+                        ? "rgba(13, 29, 52, 0.54)"
+                        : "rgba(255, 255, 255, 0.72)",
                     }}
                   />
                 ))}
               </Stack>
+
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={1.5}
@@ -362,25 +336,28 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-03-07-impact-of-straits-for-trade-commerce"
+                  to="/about"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_straits_cta")}
+                  onClick={() => trackClick("home_hero_about_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
                     textTransform: "none",
                     fontWeight: 700,
                     boxShadow: "none",
-                    backgroundColor: "#f97316",
+                    color: "#10233d",
+                    background:
+                      "linear-gradient(135deg, #8fded1 0%, #d9dfeb 58%, #cabfff 100%)",
                     "&:hover": {
-                      backgroundColor: "#ea580c",
                       boxShadow: "none",
+                      background:
+                        "linear-gradient(135deg, #82d7ca 0%, #cfd7e6 58%, #bfaeff 100%)",
                     },
                   }}
                 >
-                  Read the straits essay
+                  Start with About
                 </Button>
                 <Button
                   component={RouterLink}
@@ -397,14 +374,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Open the blog
+                  Read recent notes
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/projects"
+                  to="/music"
                   variant="text"
                   size="large"
-                  onClick={() => trackClick("home_hero_projects_cta")}
+                  onClick={() => trackClick("home_hero_music_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 2,
@@ -413,18 +390,20 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  See projects
+                  Open music
                 </Button>
               </Stack>
+
               <Divider sx={{ borderColor: "var(--home-border)" }} />
+
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, md: 6 }}>
                   <Typography
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)" }}
                   >
-                    This landing page now starts with pressure, not polish. The
-                    mood is deliberate: more newsroom map than personal brochure.
+                    Piscean mode for the week: reflective, musical, intuitive,
+                    and a little dream-lit.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -432,15 +411,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)" }}
                   >
-                    The point is not doom. The point is orientation: where power
-                    is tightening, where systems are fraying, and what deserves
-                    calm attention next.
+                    Site mode remains the same: clear writing, useful systems,
+                    and enough softness to make them feel lived-in.
                   </Typography>
                 </Grid>
               </Grid>
             </Stack>
           </Paper>
         </Grid>
+
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper
             elevation={0}
@@ -453,7 +432,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               boxShadow: "var(--home-shadow)",
             }}
           >
-            <Stack spacing={2.5}>
+            <Stack spacing={2.25}>
               <Box>
                 <Typography
                   variant="overline"
@@ -464,7 +443,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Pressure Board
+                  Pisces Palette
                 </Typography>
                 <Typography
                   variant="h5"
@@ -474,67 +453,62 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Four signals shaping the mood
+                  The colors setting the tone
                 </Typography>
               </Box>
-              {signalReadings.map((signal) => (
-                <Stack key={signal.label} spacing={0.9}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
+
+              {piscesPalette.map((swatch) => (
+                <Stack
+                  key={swatch.name}
+                  direction="row"
+                  spacing={1.4}
+                  alignItems="flex-start"
+                >
+                  <Box
+                    sx={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: 2.5,
+                      flexShrink: 0,
+                      border: "1px solid rgba(255, 255, 255, 0.35)",
+                      backgroundColor: swatch.hex,
+                      boxShadow: `0 0 0 1px ${alpha("#10233d", 0.05)}`,
+                    }}
+                  />
+                  <Stack spacing={0.2}>
                     <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: "var(--home-ink)" }}
+                      variant="subtitle2"
+                      sx={{ fontWeight: 700, color: "var(--home-ink)" }}
                     >
-                      {signal.label}
+                      {swatch.name}
                     </Typography>
                     <Typography
                       variant="caption"
-                      sx={{
-                        color: signal.accent,
-                        letterSpacing: 1.1,
-                        textTransform: "uppercase",
-                        fontWeight: 700,
-                      }}
+                      sx={{ color: "var(--home-muted-text)", lineHeight: 1.5 }}
                     >
-                      {signal.state}
+                      {swatch.meaning}
                     </Typography>
                   </Stack>
-                  <Box
-                    sx={{
-                      height: 8,
-                      borderRadius: 999,
-                      overflow: "hidden",
-                      backgroundColor: isDarkMode
-                        ? "rgba(51, 65, 85, 0.55)"
-                        : "rgba(226, 232, 240, 0.9)",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        height: "100%",
-                        width: `${signal.meter}%`,
-                        borderRadius: 999,
-                        background: `linear-gradient(90deg, ${signal.accent}, ${alpha(signal.accent, 0.45)})`,
-                      }}
-                    />
-                  </Box>
-                  <Typography
-                    variant="caption"
-                    sx={{ color: "var(--home-muted-text)", lineHeight: 1.5 }}
-                  >
-                    {signal.context}
-                  </Typography>
                 </Stack>
               ))}
+
               <Divider sx={{ borderColor: "var(--home-border)" }} />
+
+              <Typography
+                variant="body2"
+                sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
+              >
+                Watery palette, clear head. This is a birthday-week homepage,
+                not a costume change.
+              </Typography>
+
+              <Divider sx={{ borderColor: "var(--home-border)" }} />
+
               <Typography
                 variant="caption"
                 sx={{ color: "var(--home-muted-text)" }}
               >
-                Editorial signals, not live market data.
+                Still floating across time zones.
               </Typography>
               {showWorldClock ? (
                 <WorldClock compact />
@@ -569,7 +543,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Fault Lines
+                  Currents
                 </Typography>
                 <Typography
                   variant="h4"
@@ -579,11 +553,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Where this site is leaning in
+                  The four directions I want this week to move in
                 </Typography>
               </Box>
+
               <Grid container spacing={2}>
-                {pressurePoints.map((item, index) => {
+                {currents.map((item, index) => {
                   const ItemIcon = item.icon;
 
                   return (
@@ -634,7 +609,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                                     justifyContent: "center",
                                     backgroundColor: alpha(
                                       item.accent,
-                                      isDarkMode ? 0.16 : 0.1,
+                                      isDarkMode ? 0.17 : 0.13,
                                     ),
                                   }}
                                 >
@@ -723,7 +698,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Response Map
+                  Birthday Week Rituals
                 </Typography>
                 <Typography
                   variant="h5"
@@ -733,16 +708,17 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  What I do with the tension
+                  The softer route through the site
                 </Typography>
               </Box>
+
               <Stack spacing={1.25}>
-                {responseLanes.map((lane) => (
+                {birthdayRituals.map((ritual) => (
                   <Box
-                    key={lane.title}
+                    key={ritual.title}
                     component={RouterLink}
-                    to={lane.to}
-                    onClick={() => trackClick(lane.analyticsKey)}
+                    to={ritual.to}
+                    onClick={() => trackClick(ritual.analyticsKey)}
                     sx={{
                       p: 2,
                       borderRadius: 3,
@@ -750,16 +726,16 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       textDecoration: "none",
                       color: "inherit",
                       backgroundColor: isDarkMode
-                        ? "rgba(15, 23, 42, 0.38)"
-                        : "rgba(255, 255, 255, 0.65)",
+                        ? "rgba(14, 31, 56, 0.42)"
+                        : "rgba(255, 255, 255, 0.72)",
                       transition:
                         "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
                       "&:hover": {
                         transform: "translateX(4px)",
-                        borderColor: alpha("#f97316", 0.8),
+                        borderColor: alpha("#8fded1", 0.85),
                         backgroundColor: isDarkMode
-                          ? "rgba(15, 23, 42, 0.62)"
-                          : "rgba(255, 255, 255, 0.88)",
+                          ? "rgba(14, 31, 56, 0.62)"
+                          : "rgba(255, 255, 255, 0.92)",
                       },
                     }}
                   >
@@ -767,33 +743,35 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       <Typography
                         variant="overline"
                         sx={{
-                          minWidth: 56,
-                          color: "#f97316",
+                          minWidth: 30,
+                          color: "#8fded1",
                           letterSpacing: 1.3,
                           fontWeight: 700,
                         }}
                       >
-                        {lane.label}
+                        {ritual.label}
                       </Typography>
                       <Stack spacing={0.4}>
                         <Typography
                           variant="subtitle1"
                           sx={{ fontWeight: 700, color: "var(--home-ink)" }}
                         >
-                          {lane.title}
+                          {ritual.title}
                         </Typography>
                         <Typography
                           variant="body2"
                           sx={{ color: "var(--home-muted-text)" }}
                         >
-                          {lane.description}
+                          {ritual.description}
                         </Typography>
                       </Stack>
                     </Stack>
                   </Box>
                 ))}
               </Stack>
+
               <Divider sx={{ borderColor: "var(--home-border)" }} />
+
               <Typography
                 variant="overline"
                 sx={{
@@ -802,7 +780,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-muted-text)",
                 }}
               >
-                Fast Access
+                Quick Drift
               </Typography>
               <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
                 {quickLinks.map((link) => (
@@ -825,7 +803,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   </Button>
                 ))}
               </Stack>
+
               <Divider sx={{ borderColor: "var(--home-border)" }} />
+
               <Stack direction="row" spacing={1.5}>
                 {socialLinks.map((social) => (
                   <IconButton
@@ -865,7 +845,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            Dispatches
+            Birthday Week Picks
           </Typography>
           <Typography
             variant="h4"
@@ -875,9 +855,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Start with the pressure-tested writing
+            Three notes to begin with
           </Typography>
         </Stack>
+
         <Grid container spacing={2}>
           {featuredPosts.map((post, index) => (
             <Grid
@@ -945,7 +926,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                         position: "absolute",
                         inset: 0,
                         background:
-                          "linear-gradient(180deg, rgba(15, 23, 42, 0.06) 0%, rgba(15, 23, 42, 0.82) 72%, rgba(2, 6, 23, 0.96) 100%)",
+                          "linear-gradient(180deg, rgba(16, 35, 61, 0.08) 0%, rgba(16, 35, 61, 0.76) 70%, rgba(7, 18, 34, 0.94) 100%)",
                       }}
                     />
                     <Stack
@@ -972,7 +953,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             sx={{
                               borderRadius: 999,
                               color: "#f8fafc",
-                              backgroundColor: "rgba(15, 23, 42, 0.58)",
+                              backgroundColor: "rgba(16, 35, 61, 0.56)",
                             }}
                           />
                         ))}
@@ -991,7 +972,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       <Typography
                         variant="body2"
                         sx={{
-                          color: "rgba(226, 232, 240, 0.86)",
+                          color: "rgba(232, 238, 247, 0.88)",
                           maxWidth: index === 0 ? 520 : 320,
                         }}
                       >
@@ -1005,7 +986,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                         <Typography
                           variant="caption"
                           sx={{
-                            color: "rgba(226, 232, 240, 0.86)",
+                            color: "rgba(232, 238, 247, 0.86)",
                             letterSpacing: 0.3,
                           }}
                         >

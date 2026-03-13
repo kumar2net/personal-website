@@ -1,0 +1,36 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1773399808,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": null,
+    "extended_from_video_id": null,
+    "id": "video_69b3ef0055e481918845fdc39faf3c9f0c826b2593a1ebcc",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: thank-you vertical short for family, social-media style montage\nPrimary request: a Singapore segment showing growth, practicality, and ambition with youthful warmth\nScene/background: modern Singapore housing estate walkway, clean architecture, tropical plants, rain-washed pavement, evening city lights in the distance\nSubject: two fictional South Asian young adults in their 20s, one holding a compact smart speaker box, the other in a sporty red training shirt\nAction: they exchange the gift box, then look out over the city as translucent savings and future-plan graphics briefly animate around them in a tasteful non-textual way\nCamera: vertical 9:16, gimbal glide into close-up, subtle tilt-up to skyline, crisp quick cuts\nLighting/mood: fresh post-rain reflections, aspirational, modern, affectionate\nColor palette: jade, crimson, silver, rain gray, warm skin tones\nStyle/format: premium social ad realism, dynamic but intimate, no baked-in subtitles\nTiming/beats: beat 1 speaker gift reveal, beat 2 city look-out, beat 3 future graphics pulse\nAudio: clean synth pad with light percussion and rain ambience\nConstraints: fictional people only, family-friendly, no logos, no text, no copyrighted landmarks\nAvoid: corporate stiffness, heavy VFX, tourist postcard framing",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1773399919,
+    "created_at": 1773399808,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": 1773572719,
+    "extended_from_video_id": null,
+    "id": "video_69b3ef0055e481918845fdc39faf3c9f0c826b2593a1ebcc",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: thank-you vertical short for family, social-media style montage\nPrimary request: a Singapore segment showing growth, practicality, and ambition with youthful warmth\nScene/background: modern Singapore housing estate walkway, clean architecture, tropical plants, rain-washed pavement, evening city lights in the distance\nSubject: two fictional South Asian young adults in their 20s, one holding a compact smart speaker box, the other in a sporty red training shirt\nAction: they exchange the gift box, then look out over the city as translucent savings and future-plan graphics briefly animate around them in a tasteful non-textual way\nCamera: vertical 9:16, gimbal glide into close-up, subtle tilt-up to skyline, crisp quick cuts\nLighting/mood: fresh post-rain reflections, aspirational, modern, affectionate\nColor palette: jade, crimson, silver, rain gray, warm skin tones\nStyle/format: premium social ad realism, dynamic but intimate, no baked-in subtitles\nTiming/beats: beat 1 speaker gift reveal, beat 2 city look-out, beat 3 future graphics pulse\nAudio: clean synth pad with light percussion and rain ambience\nConstraints: fictional people only, family-friendly, no logos, no text, no copyrighted landmarks\nAvoid: corporate stiffness, heavy VFX, tourist postcard framing",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

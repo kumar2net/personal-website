@@ -1,0 +1,36 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1773399936,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": null,
+    "extended_from_video_id": null,
+    "id": "video_69b3ef801bc08193ba582eeec6e409b401d82944c456faa6",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: thank-you vertical short for family, social-media style montage\nPrimary request: a closing scene showing the final thank-you video completed across three cities\nScene/background: clean modern interface-inspired space with subtle references to Chennai warmth, Singapore rain reflections, and Orlando sunlight merging into one visual world\nSubject: three fictional South Asian young adults in their 20s gathered in a split-screen style composition, looking satisfied after finishing the collaborative video\nAction: they watch the finished clip, share a quiet smile, and the frame resolves into an elegant minimal end-card space for post-added caption text\nCamera: vertical 9:16, slow settle-in, steady composition, polished social-short finish\nLighting/mood: calm, grateful, contemporary, heartfelt\nColor palette: soft black, warm white, coral, teal, gold\nStyle/format: sleek editorial realism, no baked-in subtitles, room for post titles\nTiming/beats: beat 1 final playback glance, beat 2 smile exchange, beat 3 hold for end caption\nAudio: gentle synth resolve, subtle ambient tail\nConstraints: fictional people only, family-safe, no logos, no text artifacts, preserve negative space for post captions\nAvoid: cheesy heart graphics, generic corporate end-card, overacting",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1773400042,
+    "created_at": 1773399936,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": 1773572842,
+    "extended_from_video_id": null,
+    "id": "video_69b3ef801bc08193ba582eeec6e409b401d82944c456faa6",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: thank-you vertical short for family, social-media style montage\nPrimary request: a closing scene showing the final thank-you video completed across three cities\nScene/background: clean modern interface-inspired space with subtle references to Chennai warmth, Singapore rain reflections, and Orlando sunlight merging into one visual world\nSubject: three fictional South Asian young adults in their 20s gathered in a split-screen style composition, looking satisfied after finishing the collaborative video\nAction: they watch the finished clip, share a quiet smile, and the frame resolves into an elegant minimal end-card space for post-added caption text\nCamera: vertical 9:16, slow settle-in, steady composition, polished social-short finish\nLighting/mood: calm, grateful, contemporary, heartfelt\nColor palette: soft black, warm white, coral, teal, gold\nStyle/format: sleek editorial realism, no baked-in subtitles, room for post titles\nTiming/beats: beat 1 final playback glance, beat 2 smile exchange, beat 3 hold for end caption\nAudio: gentle synth resolve, subtle ambient tail\nConstraints: fictional people only, family-safe, no logos, no text artifacts, preserve negative space for post captions\nAvoid: cheesy heart graphics, generic corporate end-card, overacting",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

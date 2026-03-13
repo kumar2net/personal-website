@@ -1,0 +1,36 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1773401342,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": null,
+    "extended_from_video_id": null,
+    "id": "video_69b3f4fe368881988ae697e3076e8b6c07e6fbb2d8519dd7",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: first-person 60th birthday thank-you short for social media\nPrimary request: a Seattle beat showing a thoughtful birthday wish sent with warmth and distance\nScene/background: rain-glossed Seattle street, waterfront lights, evergreen mood, modern indoor window seat overlooking the city\nSubject: two fictional South Asian adults in their 20s and 30s, calm, stylish, and affectionate\nAction: they finish recording a birthday message, watch it back on the phone, and nod with satisfaction before sending it\nCamera: vertical 9:16, intimate close-ups, reflective window shot, smooth handheld movement, quick social-video pacing\nLighting/mood: cool rain reflections with warm indoor glow, sincere, thoughtful, contemporary\nColor palette: deep blue, rain silver, evergreen, amber, charcoal\nStyle/format: sleek editorial realism for social media, no baked-in text\nTiming/beats: beat 1 rainy texture and phone screen, beat 2 message playback, beat 3 send moment and quiet smile\nAudio: soft atmospheric pulse with rain ambience, no spoken dialogue\nConstraints: fictional people only, family-safe, no logos, no copyrighted landmarks, no text\nAvoid: coffee-brand cues, heavy melancholy, postcard skyline shots",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1773401450,
+    "created_at": 1773401342,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": 1773574250,
+    "extended_from_video_id": null,
+    "id": "video_69b3f4fe368881988ae697e3076e8b6c07e6fbb2d8519dd7",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: first-person 60th birthday thank-you short for social media\nPrimary request: a Seattle beat showing a thoughtful birthday wish sent with warmth and distance\nScene/background: rain-glossed Seattle street, waterfront lights, evergreen mood, modern indoor window seat overlooking the city\nSubject: two fictional South Asian adults in their 20s and 30s, calm, stylish, and affectionate\nAction: they finish recording a birthday message, watch it back on the phone, and nod with satisfaction before sending it\nCamera: vertical 9:16, intimate close-ups, reflective window shot, smooth handheld movement, quick social-video pacing\nLighting/mood: cool rain reflections with warm indoor glow, sincere, thoughtful, contemporary\nColor palette: deep blue, rain silver, evergreen, amber, charcoal\nStyle/format: sleek editorial realism for social media, no baked-in text\nTiming/beats: beat 1 rainy texture and phone screen, beat 2 message playback, beat 3 send moment and quiet smile\nAudio: soft atmospheric pulse with rain ambience, no spoken dialogue\nConstraints: fictional people only, family-safe, no logos, no copyrighted landmarks, no text\nAvoid: coffee-brand cues, heavy melancholy, postcard skyline shots",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

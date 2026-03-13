@@ -1,0 +1,36 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1773399809,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": null,
+    "extended_from_video_id": null,
+    "id": "video_69b3ef01def88191aa5b174ae3cbf7840333080467e37c8f",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: thank-you vertical short for family, social-media style montage\nPrimary request: a Chennai memory segment that feels stylish, affectionate, and contemporary for Gen Z and millennials\nScene/background: early evening Chennai rooftop and neighborhood street mix, breeze, scooters passing below, textile textures and city glow\nSubject: a fictional South Asian young woman and young man in their 20s, sibling-cousin energy, one wearing a thick cream knit jumper, one carrying a folded full-sleeve sweater\nAction: they laugh, trade the sweater, and walk along the rooftop edge as floating memory objects briefly appear like a red sports tee and wrapped gift box\nCamera: vertical 9:16, alternating close-up and medium shots, smooth orbit then punch-in, quick editorial cuts every 2 to 3 seconds\nLighting/mood: humid golden-hour light turning into soft night blue, nostalgic but lively\nColor palette: terracotta, cream, electric blue, sunset orange, black\nStyle/format: contemporary lifestyle film, elevated but authentic, no baked-in subtitles\nTiming/beats: beat 1 sweater handoff, beat 2 rooftop walk, beat 3 memory objects flash and smile\nAudio: gentle electronic groove with rooftop wind\nConstraints: fictional people only, Chennai atmosphere without branded landmarks, family-safe, no text, no logos\nAvoid: melodrama, vintage costumes, cluttered frame, stiff posing",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1773399932,
+    "created_at": 1773399809,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": 1773572732,
+    "extended_from_video_id": null,
+    "id": "video_69b3ef01def88191aa5b174ae3cbf7840333080467e37c8f",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: thank-you vertical short for family, social-media style montage\nPrimary request: a Chennai memory segment that feels stylish, affectionate, and contemporary for Gen Z and millennials\nScene/background: early evening Chennai rooftop and neighborhood street mix, breeze, scooters passing below, textile textures and city glow\nSubject: a fictional South Asian young woman and young man in their 20s, sibling-cousin energy, one wearing a thick cream knit jumper, one carrying a folded full-sleeve sweater\nAction: they laugh, trade the sweater, and walk along the rooftop edge as floating memory objects briefly appear like a red sports tee and wrapped gift box\nCamera: vertical 9:16, alternating close-up and medium shots, smooth orbit then punch-in, quick editorial cuts every 2 to 3 seconds\nLighting/mood: humid golden-hour light turning into soft night blue, nostalgic but lively\nColor palette: terracotta, cream, electric blue, sunset orange, black\nStyle/format: contemporary lifestyle film, elevated but authentic, no baked-in subtitles\nTiming/beats: beat 1 sweater handoff, beat 2 rooftop walk, beat 3 memory objects flash and smile\nAudio: gentle electronic groove with rooftop wind\nConstraints: fictional people only, Chennai atmosphere without branded landmarks, family-safe, no text, no logos\nAvoid: melodrama, vintage costumes, cluttered frame, stiff posing",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}

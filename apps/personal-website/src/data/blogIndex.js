@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-03-13-pisces-birthday-chorus-at-sixty": {
+    title: "A Pisces Birthday Chorus at Sixty",
+    description:
+      "On March 13, 2026, I turned 60 and received a birthday video full of affection, memory, mentorship, and one line I will keep for a long time: we look forward to your blog posts and your Cut the Crap wisdom.",
+    image: "/generate/2026-03-13-pisces-birthday-chorus-at-sixty-hero.svg",
+    tags: ["Birthday", "Family", "Reflection", "Pisces", "Gratitude"],
+    datePublished: "2026-03-13",
+    dateModified: "2026-03-13",
+    readingTime: "~4 min",
+  },
   "2026-03-10-indian-it-ai-reality-check": {
     title: "Indian IT's AI Reality Check: No Extinction, Plenty of Pain",
     description:

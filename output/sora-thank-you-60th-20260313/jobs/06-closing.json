@@ -1,0 +1,36 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1773401570,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": null,
+    "extended_from_video_id": null,
+    "id": "video_69b3f5e2062c8193a80d49e69e419015020edba4eea423d5",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: first-person 60th birthday thank-you short for social media\nPrimary request: a closing beat showing a quiet moment of gratitude after watching a family video montage\nScene/background: elegant home interior with warm lamp light, a phone or tablet on a table playing a compiled family video, modern and intimate setting\nSubject: a fictional South Asian adult seated at home, calm, thoughtful, and warmly dressed\nAction: the person watches the finished video, smiles softly, looks back at the screen, and sits with a quiet grateful expression\nCamera: vertical 9:16, gentle push-in, intimate close-up, calm polished ending\nLighting/mood: warm, sincere, grateful, contemporary\nColor palette: warm ivory, amber, deep brown, charcoal, soft gold\nStyle/format: premium cinematic realism, no baked-in text, leave room for post caption\nTiming/beats: beat 1 screen glow, beat 2 soft smile, beat 3 quiet stillness\nAudio: soft ambient resolve, no spoken dialogue\nConstraints: fictional people only, family-safe, no logos, no text artifacts\nAvoid: overacting, sentimental cliches, generic corporate ending",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1773401664,
+    "created_at": 1773401570,
+    "edited_from_video_id": null,
+    "error": null,
+    "expires_at": 1773574464,
+    "extended_from_video_id": null,
+    "id": "video_69b3f5e2062c8193a80d49e69e419015020edba4eea423d5",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: first-person 60th birthday thank-you short for social media\nPrimary request: a closing beat showing a quiet moment of gratitude after watching a family video montage\nScene/background: elegant home interior with warm lamp light, a phone or tablet on a table playing a compiled family video, modern and intimate setting\nSubject: a fictional South Asian adult seated at home, calm, thoughtful, and warmly dressed\nAction: the person watches the finished video, smiles softly, looks back at the screen, and sits with a quiet grateful expression\nCamera: vertical 9:16, gentle push-in, intimate close-up, calm polished ending\nLighting/mood: warm, sincere, grateful, contemporary\nColor palette: warm ivory, amber, deep brown, charcoal, soft gold\nStyle/format: premium cinematic realism, no baked-in text, leave room for post caption\nTiming/beats: beat 1 screen glow, beat 2 soft smile, beat 3 quiet stillness\nAudio: soft ambient resolve, no spoken dialogue\nConstraints: fictional people only, family-safe, no logos, no text artifacts\nAvoid: overacting, sentimental cliches, generic corporate ending",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "720x1280",
+    "status": "completed"
+  }
+}
