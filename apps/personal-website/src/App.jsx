@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import {
   Link as RouterLink,
+  Navigate,
   Route,
   Routes,
   useLocation,
@@ -97,7 +98,7 @@ const navLinks = [
   { label: "About", to: "/about", analyticsKey: "nav_about" },
   { label: "Elsewhere", to: "/elsewhere", analyticsKey: "nav_elsewhere" },
   { label: "Projects", to: "/projects", analyticsKey: "nav_projects" },
-  { label: "Heatmap", to: "/heatmap", analyticsKey: "nav_heatmap" },
+  { label: "Key Data", to: "/keydata", analyticsKey: "nav_keydata" },
   { label: "Books", to: "/books", analyticsKey: "nav_books" },
   { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
   { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
@@ -559,18 +560,22 @@ const App = ({ mode }) => {
                   }
                 />
                 <Route
-                  path="/heatmap"
+                  path="/keydata"
                   element={
                     <>
                       <SEO
-                        title="Heatmap"
-                        description="Daily market heatmap across U.S. and India indices, crude, renewables, and AI infrastructure."
-                        canonicalPath="/heatmap"
+                        title="Key Data"
+                        description="Daily market key data across U.S. and India indices, crude, renewables, AI infrastructure, and generated insights."
+                        canonicalPath="/keydata"
                         type="website"
                       />
                       <HeatmapPage />
                     </>
                   }
+                />
+                <Route
+                  path="/heatmap"
+                  element={<Navigate to="/keydata" replace />}
                 />
                 <Route
                   path="/projects/ai-recommender-code"

@@ -1,0 +1,6 @@
+file '/Users/kumara/personal-website/generate/ytshorts/crude-oil-lpg-india-sora2/segments/01-hook.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/crude-oil-lpg-india-sora2/segments/02-breakdown.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/crude-oil-lpg-india-sora2/segments/03-lpg.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/crude-oil-lpg-india-sora2/segments/04-uses.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/crude-oil-lpg-india-sora2/segments/05-system.mp4'
+file '/Users/kumara/personal-website/generate/ytshorts/crude-oil-lpg-india-sora2/segments/06-endcard.mp4'

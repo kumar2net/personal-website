@@ -14,7 +14,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://kumar2net.com/heatmap</loc>
+    <loc>https://kumar2net.com/keydata</loc>
     <lastmod>2026-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -429,6 +429,12 @@
   </url>
   <url>
     <loc>https://kumar2net.com/blog/2026-03-13-pisces-birthday-chorus-at-sixty</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kumar2net.com/blog/2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india</loc>
     <lastmod>2026-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

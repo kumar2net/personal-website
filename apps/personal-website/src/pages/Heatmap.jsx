@@ -59,17 +59,7 @@ const METRIC_GLOSSARY = [
   },
 ];
 
-function appendRefreshParam(endpoint, forceRefresh) {
-  if (!forceRefresh) {
-    return endpoint;
-  }
-
-  return endpoint.includes("?")
-    ? `${endpoint}&refresh=1`
-    : `${endpoint}?refresh=1`;
-}
-
-function getEndpointCandidates(forceRefresh) {
+function getEndpointCandidates() {
   const configuredEndpoint =
     import.meta.env.VITE_HEATMAP_ENDPOINT || DEFAULT_ENDPOINT;
   const candidates = [];
@@ -80,24 +70,22 @@ function getEndpointCandidates(forceRefresh) {
     typeof window !== "undefined" &&
     window.location.port !== "3000"
   ) {
-    candidates.push(
-      appendRefreshParam("http://localhost:3000/api/heatmap", forceRefresh),
-    );
+    candidates.push("http://localhost:3000/api/heatmap");
   }
 
-  candidates.push(appendRefreshParam(configuredEndpoint, forceRefresh));
+  candidates.push(configuredEndpoint);
 
   return candidates;
 }
 
-async function fetchHeatmapPayload(signal, forceRefresh) {
-  const candidates = getEndpointCandidates(forceRefresh);
+async function fetchHeatmapPayload(signal, bypassBrowserCache) {
+  const candidates = getEndpointCandidates();
   let lastError;
 
   for (const endpoint of candidates) {
     try {
       const response = await fetch(endpoint, {
-        cache: forceRefresh ? "no-store" : "default",
+        cache: bypassBrowserCache ? "no-store" : "default",
         signal,
       });
 
@@ -303,6 +291,129 @@ function SummaryCard({ eyebrow, value, detail }) {
       <Typography variant="body2" color="text.secondary" sx={{ mt: 0.75 }}>
         {detail}
       </Typography>
+    </Paper>
+  );
+}
+
+function InsightCard({ insight }) {
+  const theme = useTheme();
+  const paletteKey =
+    insight.tone === "positive"
+      ? "success"
+      : insight.tone === "negative"
+        ? "error"
+        : "info";
+  const accent = theme.palette[paletteKey].main;
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        p: 2.25,
+        borderRadius: 4,
+        border: "1px solid",
+        borderColor: alpha(accent, 0.22),
+        backgroundColor: alpha(accent, 0.06),
+      }}
+    >
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={1}
+        justifyContent="space-between"
+        alignItems={{ xs: "flex-start", sm: "center" }}
+      >
+        <Typography
+          variant="overline"
+          sx={{ color: accent, letterSpacing: 1.1, fontWeight: 700 }}
+        >
+          Generated insight
+        </Typography>
+        <Chip
+          size="small"
+          label={
+            insight.tone === "positive"
+              ? "Constructive"
+              : insight.tone === "negative"
+                ? "Defensive"
+                : "Mixed"
+          }
+          sx={{
+            borderColor: alpha(accent, 0.32),
+            color: accent,
+          }}
+          variant="outlined"
+        />
+      </Stack>
+
+      <Typography variant="h6" sx={{ mt: 1, lineHeight: 1.25 }}>
+        {insight.title}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+        {insight.summary}
+      </Typography>
+
+      <Stack spacing={0.8} sx={{ mt: 1.75 }}>
+        {insight.evidence?.map((entry) => (
+          <Typography key={entry} variant="body2" color="text.secondary">
+            {`\u2022 ${entry}`}
+          </Typography>
+        ))}
+      </Stack>
+    </Paper>
+  );
+}
+
+function InsightsSection({ insights, snapshot }) {
+  if (!insights?.length) {
+    return null;
+  }
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        p: { xs: 2.5, md: 3 },
+        borderRadius: 5,
+        border: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={1.5}
+        justifyContent="space-between"
+        alignItems={{ xs: "flex-start", md: "center" }}
+      >
+        <Box sx={{ maxWidth: 760 }}>
+          <Typography variant="h5">Daily generated insights</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.9 }}>
+            {snapshot?.cadenceLabel ||
+              "This page refreshes on a daily snapshot cadence."}
+          </Typography>
+        </Box>
+        <Chip
+          label={
+            snapshot?.key ? `Snapshot ${formatAsOf(snapshot.key)}` : "Daily snapshot"
+          }
+          variant="outlined"
+        />
+      </Stack>
+
+      <Box
+        sx={{
+          mt: 2.5,
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: {
+            xs: "1fr",
+            xl: "repeat(2, minmax(0, 1fr))",
+          },
+        }}
+      >
+        {insights.map((insight) => (
+          <InsightCard key={insight.id} insight={insight} />
+        ))}
+      </Box>
     </Paper>
   );
 }
@@ -581,7 +692,7 @@ export default function Heatmap() {
         });
       } catch (loadError) {
         if (!controller.signal.aborted) {
-          setError(loadError?.message || "Unable to load heatmap data.");
+          setError(loadError?.message || "Unable to load key data.");
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -605,7 +716,7 @@ export default function Heatmap() {
         setError("");
       });
     } catch (refreshError) {
-      setError(refreshError?.message || "Unable to refresh heatmap data.");
+      setError(refreshError?.message || "Unable to reload key data.");
     } finally {
       setIsRefreshing(false);
       controller.abort();
@@ -625,7 +736,7 @@ export default function Heatmap() {
         <Stack spacing={2} alignItems="center">
           <CircularProgress />
           <Typography variant="body2" color="text.secondary">
-            Loading the daily market heatmap...
+            Loading the daily key data...
           </Typography>
         </Stack>
       </Box>
@@ -635,13 +746,17 @@ export default function Heatmap() {
   if (!payload) {
     return (
       <Alert severity="error" sx={{ borderRadius: 3 }}>
-        {error || "Unable to load the market heatmap."}
+        {error || "Unable to load the market key data."}
       </Alert>
     );
   }
 
-  const generatedAt = payload.generatedAt
-    ? TIMESTAMP_FORMATTER.format(new Date(payload.generatedAt))
+  const generatedAt = payload.snapshot?.generatedAt || payload.generatedAt;
+  const generatedAtLabel = generatedAt
+    ? TIMESTAMP_FORMATTER.format(new Date(generatedAt))
+    : "Unknown time";
+  const nextRefreshLabel = payload.snapshot?.nextRefreshAt
+    ? TIMESTAMP_FORMATTER.format(new Date(payload.snapshot.nextRefreshAt))
     : "Unknown time";
   const breadth = payload.highlights?.breadth;
   const leader = payload.highlights?.leaders?.[0];
@@ -677,7 +792,7 @@ export default function Heatmap() {
               variant="overline"
               sx={{ color: "primary.main", letterSpacing: 1.4 }}
             >
-              Daily Conviction Heatmap
+              Daily Key Data
             </Typography>
             <Typography
               variant="h2"
@@ -687,16 +802,17 @@ export default function Heatmap() {
                 lineHeight: 1.02,
               }}
             >
-              Your live pulse across U.S., India, crude, renewables, and AI hardware.
+              Your daily pulse across U.S., India, crude, renewables, and AI hardware.
             </Typography>
             <Typography
               variant="body1"
               color="text.secondary"
               sx={{ mt: 1.5, maxWidth: 680 }}
             >
-              This page tracks the themes that keep showing up in your writing
-              and investing curiosity: benchmark indices, energy stress, the
-              transition stack, and the AI build-out.
+              This daily snapshot tracks the themes that keep showing up in
+              your writing and investing curiosity: benchmark indices, energy
+              stress, the transition stack, the AI build-out, and a generated
+              read on what the numbers imply.
             </Typography>
 
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 2.25 }}>
@@ -721,10 +837,16 @@ export default function Heatmap() {
                 )
               }
             >
-              {isRefreshing ? "Refreshing..." : "Refresh"}
+              {isRefreshing ? "Reloading..." : "Reload snapshot"}
             </Button>
             <Typography variant="body2" color="text.secondary">
-              Updated {generatedAt}
+              Snapshot {payload.snapshot?.key ? formatAsOf(payload.snapshot.key) : "Unknown date"}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Built {generatedAtLabel}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Next refresh after {nextRefreshLabel}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Data is end-of-day and source timestamps can differ by market.
@@ -797,6 +919,8 @@ export default function Heatmap() {
           }
         />
       </Box>
+
+      <InsightsSection insights={payload.insights} snapshot={payload.snapshot} />
 
       {payload.categories.map((group) => (
         <HeatmapSection key={group.id} group={group} />

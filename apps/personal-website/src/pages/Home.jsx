@@ -129,7 +129,7 @@ const birthdayRituals = [
 ];
 
 const quickLinks = [
-  { label: "Heatmap", to: "/heatmap", analyticsKey: "home_quick_heatmap" },
+  { label: "Key Data", to: "/keydata", analyticsKey: "home_quick_keydata" },
   { label: "Projects", to: "/projects", analyticsKey: "home_quick_projects" },
   { label: "Learning", to: "/learning", analyticsKey: "home_quick_learning" },
   { label: "Album", to: "/album", analyticsKey: "home_quick_album" },
@@ -370,10 +370,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/heatmap"
+                  to="/keydata"
                   variant="outlined"
                   size="large"
-                  onClick={() => trackClick("home_hero_heatmap_cta")}
+                  onClick={() => trackClick("home_hero_keydata_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
@@ -383,7 +383,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Open heatmap
+                  Open key data
                 </Button>
                 <Button
                   component={RouterLink}
@@ -582,7 +582,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Daily market heatmap
+                  Daily market key data
                 </Typography>
               </Box>
             </Stack>
@@ -593,10 +593,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 maxWidth: 700,
               }}
             >
-              A live dashboard for the themes you keep circling back to:
+              A daily snapshot for the themes you keep circling back to:
               U.S. benchmarks, India indices, crude, VIX, renewables, AI
-              infrastructure, and now a dedicated Magnificent 7 share-price
-              table at the bottom.
+              infrastructure, generated insights, and a dedicated Magnificent
+              7 share-price table at the bottom.
             </Typography>
             <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
               {heatmapSignals.map((signal) => (
@@ -620,10 +620,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           <Stack spacing={1.2} alignItems={{ xs: "stretch", lg: "flex-end" }}>
             <Button
               component={RouterLink}
-              to="/heatmap"
+              to="/keydata"
               variant="contained"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_spotlight_heatmap_cta")}
+              onClick={() => trackClick("home_spotlight_keydata_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -632,13 +632,13 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 boxShadow: "none",
               }}
             >
-              Open /heatmap
+              Open /keydata
             </Button>
             <Typography
               variant="caption"
               sx={{ color: "var(--home-muted-text)" }}
             >
-              Daily closes, trend context, and plain-language metric explainers.
+              Daily closes, generated insights, and plain-language metric explainers.
             </Typography>
           </Stack>
         </Stack>
