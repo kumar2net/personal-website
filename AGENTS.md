@@ -87,5 +87,23 @@ repository_guidelines: |
 
   ## Context7 Snapshot
   <!--CTX7:BEGIN-->
-  Context7 has not been pulled yet. Run `node scripts/pull-context7.mjs`.
+  Last updated: 2026-03-14T11:15:16.075Z
+  
+  Context7 snapshot fallback
+  
+  Remote Context7 content was not available during this run, so this section was generated from repository configuration instead of aborting the task.
+  
+  - AGENTS file: AGENTS.md
+  - Configured source URL: https://mcp.context7.com/mcp
+  - Cache snapshot: .codex/cache/context7-latest/index.json
+  - API key present: yes
+  
+  Behavior:
+  - The script now loads `.env.local` and `.env` automatically.
+  - If `CONTEXT7_URL` is unset, it falls back to the `context7-latest` URL declared in `AGENTS.md`.
+  - If remote fetch fails, it uses the cached snapshot when available.
+  - If neither remote content nor cache is available, it injects this fallback note and exits successfully.
   <!--CTX7:END-->
+
+
+
