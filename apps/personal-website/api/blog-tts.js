@@ -498,6 +498,56 @@ function createInvalidSpeechRequestError(message, extra = {}) {
   return error;
 }
 
+function normalizeTtsError(error) {
+  const status = error?.status || error?.response?.status || 500;
+  const upstreamError = error?.error || error?.response?.data?.error || {};
+  const code =
+    upstreamError?.code ||
+    error?.code ||
+    error?.type ||
+    error?.response?.data?.code ||
+    "";
+  const rawMessage =
+    upstreamError?.message ||
+    error?.response?.data?.message ||
+    error?.message ||
+    String(error);
+
+  if (code === "insufficient_quota") {
+    return {
+      status: 429,
+      error: "OpenAI TTS quota exceeded. Add billing or increase quota for OPENAI_API_KEY.",
+      details: rawMessage,
+      code: code || "insufficient_quota",
+    };
+  }
+
+  if (status === 429 || code === "rate_limit_exceeded") {
+    return {
+      status: 429,
+      error: "OpenAI TTS rate limit reached. Retry in a moment.",
+      details: rawMessage,
+      code: code || "rate_limit_exceeded",
+    };
+  }
+
+  if (status >= 500) {
+    return {
+      status,
+      error: "Failed to generate audio",
+      details: rawMessage,
+      code,
+    };
+  }
+
+  return {
+    status,
+    error: rawMessage || "Failed to generate audio",
+    details: rawMessage,
+    code,
+  };
+}
+
 function getOpenAIClient() {
   if (cachedClient) {
     return cachedClient;
@@ -812,6 +862,7 @@ async function synthesizeSpeechStreaming(
 
   if (chunks.length <= 1) {
     return synthesizeSpeechStreamingSingle(client, {
+      modelCandidates,
       voice,
       text,
       format,
@@ -848,21 +899,21 @@ async function synthesizeSpeechStreaming(
         const chunk = chunks[i];
         let streamed;
 
-      if (nextChunkPromise) {
-        streamed = await nextChunkPromise;
-        nextChunkPromise = null;
-      } else {
-        streamed = await synthesizeSpeechStreamingSingle(client, {
-          modelCandidates,
-          voice,
-          text: chunk,
-          format,
-          streamFormat,
-          speed,
-          instructions,
-          signal,
-        });
-      }
+        if (nextChunkPromise) {
+          streamed = await nextChunkPromise;
+          nextChunkPromise = null;
+        } else {
+          streamed = await synthesizeSpeechStreamingSingle(client, {
+            modelCandidates,
+            voice,
+            text: chunk,
+            format,
+            streamFormat,
+            speed,
+            instructions,
+            signal,
+          });
+        }
 
         if (!streamed) {
           throw new Error("Streaming not available");
@@ -1174,7 +1225,12 @@ export default async function handler(req, res) {
       streamed.stream.on("error", (streamErr) => {
         console.error("[blog-tts] Stream to client failed:", streamErr);
         if (!res.headersSent) {
-          res.status(500).json({ error: "Failed to stream audio" });
+          const normalizedError = normalizeTtsError(streamErr);
+          res.status(normalizedError.status).json({
+            error: normalizedError.error,
+            details: normalizedError.details,
+            ...(normalizedError.code ? { code: normalizedError.code } : {}),
+          });
         } else {
           res.destroy(streamErr);
         }
@@ -1273,16 +1329,11 @@ export default async function handler(req, res) {
     return res.status(200).send(buffer);
   } catch (error) {
     console.error("[blog-tts] Handler failed:", error);
-    const status = error?.status || error?.response?.status || 500;
-    const details =
-      error?.details ||
-      error?.response?.data?.error ||
-      error?.response?.data ||
-      error?.message ||
-      String(error);
-    return res.status(status).json({
-      error: "Failed to generate audio",
-      details,
+    const normalizedError = normalizeTtsError(error);
+    return res.status(normalizedError.status).json({
+      error: normalizedError.error,
+      details: normalizedError.details,
+      ...(normalizedError.code ? { code: normalizedError.code } : {}),
     });
   }
 }

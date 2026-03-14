@@ -1,18 +1,33 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import fs from "node:fs";
 import dotenv from "dotenv";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const APP_ROOT_CANDIDATES = [
+  process.cwd(),
+  __dirname,
+  path.resolve(__dirname, "../.."),
+];
+const APP_ROOT = APP_ROOT_CANDIDATES.find((candidate) => {
+  if (!candidate) {
+    return false;
+  }
+  return (
+    fs.existsSync(path.resolve(candidate, "package.json")) &&
+    fs.existsSync(path.resolve(candidate, "src")) &&
+    fs.existsSync(path.resolve(candidate, "api"))
+  );
+}) || process.cwd();
 
 const envCandidates = [
-  path.resolve(__dirname, "../../.env.local"),
-  path.resolve(__dirname, "../../.env"),
-  path.resolve(__dirname, ".env.local"),
-  path.resolve(__dirname, ".env"),
+  path.resolve(APP_ROOT, "../../.env.local"),
+  path.resolve(APP_ROOT, "../../.env"),
+  path.resolve(APP_ROOT, ".env.local"),
+  path.resolve(APP_ROOT, ".env"),
 ];
 for (const candidate of envCandidates) {
   if (fs.existsSync(candidate)) {
@@ -53,16 +68,36 @@ function enhanceResponse(res) {
 }
 
 const LOCAL_API_ROUTE_DEFINITIONS = [
-  { prefix: "/api/semantic-search", modulePath: "./api/semantic-search.js" },
-  { prefix: "/api/blog-tts", modulePath: "./api/blog-tts.js" },
-  { prefix: "/api/engagement", modulePath: "./api/engagement.js" },
+  { prefix: "/api/semantic-search", filePath: "api/semantic-search.js" },
+  { prefix: "/api/blog-tts", filePath: "api/blog-tts.js" },
+  { prefix: "/api/engagement", filePath: "api/engagement.js" },
 ];
 
 let LOCAL_API_ROUTES = null;
 let localApiRoutesLoading = null;
+let LOCAL_API_ROUTES_SIGNATURE = "";
+
+function getLocalApiModuleUrl(filePath) {
+  const absoluteFilePath = path.resolve(APP_ROOT, filePath);
+  const stats = fs.statSync(absoluteFilePath);
+  const moduleUrl = pathToFileURL(absoluteFilePath).href;
+  return {
+    absoluteFilePath,
+    moduleUrl: `${moduleUrl}?v=${stats.mtimeMs}`,
+    signaturePart: `${absoluteFilePath}:${stats.mtimeMs}`,
+  };
+}
 
 async function getLocalApiRoutes() {
-  if (LOCAL_API_ROUTES) {
+  const resolvedModules = LOCAL_API_ROUTE_DEFINITIONS.map(({ prefix, filePath }) => ({
+    prefix,
+    ...getLocalApiModuleUrl(filePath),
+  }));
+  const signature = resolvedModules
+    .map(({ prefix, signaturePart }) => `${prefix}:${signaturePart}`)
+    .join("|");
+
+  if (LOCAL_API_ROUTES && LOCAL_API_ROUTES_SIGNATURE === signature) {
     return LOCAL_API_ROUTES;
   }
 
@@ -71,12 +106,17 @@ async function getLocalApiRoutes() {
   }
 
   localApiRoutesLoading = Promise.all(
-    LOCAL_API_ROUTE_DEFINITIONS.map(async ({ prefix, modulePath }) => {
-      const imported = await import(modulePath);
+    resolvedModules.map(async ({ prefix, moduleUrl, absoluteFilePath }) => {
+      const imported = await import(moduleUrl);
+      if (typeof imported.default !== "function") {
+        throw new Error(`Local API route "${absoluteFilePath}" does not export a default handler`);
+      }
       return { prefix, handler: imported.default };
     }),
   ).then((routes) => {
     LOCAL_API_ROUTES = routes;
+    LOCAL_API_ROUTES_SIGNATURE = signature;
+    localApiRoutesLoading = null;
     return routes;
   }).catch((error) => {
     localApiRoutesLoading = null;
@@ -150,7 +190,7 @@ export default defineConfig({
   plugins: [react(), localApiPlugin()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(APP_ROOT, "src"),
     },
   },
   build: {
