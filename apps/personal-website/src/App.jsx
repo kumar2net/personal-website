@@ -75,6 +75,7 @@ const TheLastDropOfWater = lazy(
 // Lazy load other pages
 const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
+const HeatmapPage = lazy(() => import("./pages/Heatmap"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const ShortsOptimizerDashboard = lazy(
   () => import("./pages/ShortsOptimizerDashboard"),
@@ -96,6 +97,7 @@ const navLinks = [
   { label: "About", to: "/about", analyticsKey: "nav_about" },
   { label: "Elsewhere", to: "/elsewhere", analyticsKey: "nav_elsewhere" },
   { label: "Projects", to: "/projects", analyticsKey: "nav_projects" },
+  { label: "Heatmap", to: "/heatmap", analyticsKey: "nav_heatmap" },
   { label: "Books", to: "/books", analyticsKey: "nav_books" },
   { label: "Convert", to: "/convert", analyticsKey: "nav_convert" },
   { label: "Blog", to: "/blog", analyticsKey: "nav_blog" },
@@ -553,6 +555,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <Projects />
+                    </>
+                  }
+                />
+                <Route
+                  path="/heatmap"
+                  element={
+                    <>
+                      <SEO
+                        title="Heatmap"
+                        description="Daily market heatmap across U.S. and India indices, crude, renewables, and AI infrastructure."
+                        canonicalPath="/heatmap"
+                        type="website"
+                      />
+                      <HeatmapPage />
                     </>
                   }
                 />

@@ -20,6 +20,7 @@ import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
 import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
 import PhotoLibraryRoundedIcon from "@mui/icons-material/PhotoLibraryRounded";
+import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import WaterRoundedIcon from "@mui/icons-material/WaterRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
@@ -128,10 +129,18 @@ const birthdayRituals = [
 ];
 
 const quickLinks = [
+  { label: "Heatmap", to: "/heatmap", analyticsKey: "home_quick_heatmap" },
   { label: "Projects", to: "/projects", analyticsKey: "home_quick_projects" },
   { label: "Learning", to: "/learning", analyticsKey: "home_quick_learning" },
   { label: "Album", to: "/album", analyticsKey: "home_quick_album" },
   { label: "Science", to: "/science", analyticsKey: "home_quick_science" },
+];
+
+const heatmapSignals = [
+  "Magnificent 7 share prices",
+  "Nifty 50 and Sensex",
+  "WTI, Brent, and VIX",
+  "Renewables and AI infra",
 ];
 
 const featuredSlugs = [
@@ -361,10 +370,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/blog"
+                  to="/heatmap"
                   variant="outlined"
                   size="large"
-                  onClick={() => trackClick("home_hero_blog_cta")}
+                  onClick={() => trackClick("home_hero_heatmap_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
@@ -374,14 +383,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Read recent notes
+                  Open heatmap
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/music"
+                  to="/blog"
                   variant="text"
                   size="large"
-                  onClick={() => trackClick("home_hero_music_cta")}
+                  onClick={() => trackClick("home_hero_blog_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 2,
@@ -390,7 +399,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Open music
+                  Read recent notes
                 </Button>
               </Stack>
 
@@ -519,6 +528,121 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           </Paper>
         </Grid>
       </Grid>
+
+      <Paper
+        elevation={0}
+        sx={{
+          p: { xs: 3, md: 3.5 },
+          borderRadius: 4,
+          border: "1px solid var(--home-border)",
+          background: isDarkMode
+            ? "linear-gradient(135deg, rgba(14, 31, 56, 0.94), rgba(10, 24, 42, 0.98))"
+            : "linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 247, 255, 0.98))",
+          boxShadow: "var(--home-shadow)",
+        }}
+      >
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          spacing={2.5}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", lg: "center" }}
+        >
+          <Stack spacing={1.4} sx={{ maxWidth: 760 }}>
+            <Stack direction="row" spacing={1.25} alignItems="center">
+              <Box
+                sx={{
+                  width: 46,
+                  height: 46,
+                  borderRadius: 2.5,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: alpha("#7fb9ff", isDarkMode ? 0.18 : 0.14),
+                  color: "#7fb9ff",
+                }}
+              >
+                <QueryStatsRoundedIcon />
+              </Box>
+              <Box>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    letterSpacing: 1.8,
+                    fontWeight: 700,
+                    color: "var(--home-muted-text)",
+                  }}
+                >
+                  Featured Tool
+                </Typography>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontFamily: heroFont,
+                    fontWeight: 650,
+                    color: "var(--home-ink)",
+                  }}
+                >
+                  Daily market heatmap
+                </Typography>
+              </Box>
+            </Stack>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "var(--home-muted-text)",
+                maxWidth: 700,
+              }}
+            >
+              A live dashboard for the themes you keep circling back to:
+              U.S. benchmarks, India indices, crude, VIX, renewables, AI
+              infrastructure, and now a dedicated Magnificent 7 share-price
+              table at the bottom.
+            </Typography>
+            <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
+              {heatmapSignals.map((signal) => (
+                <Chip
+                  key={signal}
+                  label={signal}
+                  variant="outlined"
+                  sx={{
+                    borderRadius: 999,
+                    borderColor: "var(--home-border)",
+                    color: "var(--home-ink)",
+                    backgroundColor: isDarkMode
+                      ? "rgba(14, 31, 56, 0.52)"
+                      : "rgba(255, 255, 255, 0.74)",
+                  }}
+                />
+              ))}
+            </Stack>
+          </Stack>
+
+          <Stack spacing={1.2} alignItems={{ xs: "stretch", lg: "flex-end" }}>
+            <Button
+              component={RouterLink}
+              to="/heatmap"
+              variant="contained"
+              endIcon={<ArrowOutwardRoundedIcon />}
+              onClick={() => trackClick("home_spotlight_heatmap_cta")}
+              sx={{
+                borderRadius: 999,
+                px: 3,
+                textTransform: "none",
+                fontWeight: 700,
+                boxShadow: "none",
+              }}
+            >
+              Open /heatmap
+            </Button>
+            <Typography
+              variant="caption"
+              sx={{ color: "var(--home-muted-text)" }}
+            >
+              Daily closes, trend context, and plain-language metric explainers.
+            </Typography>
+          </Stack>
+        </Stack>
+      </Paper>
 
       <Grid container spacing={2.5} alignItems="stretch">
         <Grid size={{ xs: 12, md: 8 }}>

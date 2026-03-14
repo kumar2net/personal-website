@@ -13,6 +13,7 @@ const XML_STYLESHEET_PATH = '/sitemap.xsl';
 const STATIC_ROUTES = [
   '/',
   '/about',
+  '/heatmap',
   '/projects',
   '/projects/ai-recommender-code',
   '/blog',
@@ -194,6 +195,7 @@ const main = async () => {
     const mainRoutes = [
       '/',
       '/about',
+      '/heatmap',
       '/projects',
       '/blog',
       '/learning',

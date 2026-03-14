@@ -1,0 +1,272 @@
+export const HEATMAP_GROUPS = [
+  {
+    id: "us-market-pulse",
+    label: "U.S. Market Pulse",
+    description:
+      "Broad U.S. index leadership and the tone of large-cap risk appetite.",
+    items: [
+      {
+        id: "sp500",
+        label: "S&P 500",
+        ticker: "SPX",
+        source: "stooq",
+        symbol: "^spx",
+      },
+      {
+        id: "nasdaq-composite",
+        label: "Nasdaq Composite",
+        ticker: "IXIC",
+        source: "stooq",
+        symbol: "^ndq",
+      },
+      {
+        id: "dow-jones",
+        label: "Dow Jones",
+        ticker: "DJI",
+        source: "stooq",
+        symbol: "^dji",
+      },
+    ],
+  },
+  {
+    id: "india-market-pulse",
+    label: "India Market Pulse",
+    description:
+      "The India tape through the benchmark, banking, IT, and large-cap breadth lens.",
+    items: [
+      {
+        id: "sensex",
+        label: "BSE Sensex",
+        ticker: "SENSEX",
+        source: "stooq",
+        symbol: "^snx",
+      },
+      {
+        id: "nifty-50",
+        label: "Nifty 50",
+        ticker: "NIFTY50",
+        source: "nse",
+        index: "NIFTY 50",
+      },
+      {
+        id: "nifty-bank",
+        label: "Nifty Bank",
+        ticker: "BANKNIFTY",
+        source: "nse",
+        index: "NIFTY BANK",
+      },
+      {
+        id: "nifty-it",
+        label: "Nifty IT",
+        ticker: "NIFTYIT",
+        source: "nse",
+        index: "NIFTY IT",
+      },
+    ],
+  },
+  {
+    id: "macro-temperature",
+    label: "Macro Temperature",
+    description:
+      "Inflation-sensitive energy benchmarks plus volatility stress in the background.",
+    items: [
+      {
+        id: "wti",
+        label: "WTI Crude",
+        ticker: "WTI",
+        source: "fred",
+        seriesId: "DCOILWTICO",
+        unitLabel: "USD/bbl",
+      },
+      {
+        id: "brent",
+        label: "Brent Crude",
+        ticker: "BRENT",
+        source: "fred",
+        seriesId: "DCOILBRENTEU",
+        unitLabel: "USD/bbl",
+      },
+      {
+        id: "henry-hub",
+        label: "Henry Hub Gas",
+        ticker: "HHGAS",
+        source: "fred",
+        seriesId: "DHHNGSP",
+        unitLabel: "USD/MMBtu",
+      },
+      {
+        id: "vix",
+        label: "VIX",
+        ticker: "VIX",
+        source: "fred",
+        seriesId: "VIXCLS",
+        unitLabel: "index",
+      },
+    ],
+  },
+  {
+    id: "renewables-transition",
+    label: "Renewables Transition",
+    description:
+      "Clean-energy ETFs plus bottleneck names tied to solar, batteries, and the grid transition.",
+    items: [
+      {
+        id: "icln",
+        label: "iShares Global Clean Energy",
+        ticker: "ICLN",
+        source: "stooq",
+        symbol: "icln.us",
+      },
+      {
+        id: "tan",
+        label: "Invesco Solar ETF",
+        ticker: "TAN",
+        source: "stooq",
+        symbol: "tan.us",
+      },
+      {
+        id: "lit",
+        label: "Global X Lithium & Battery Tech",
+        ticker: "LIT",
+        source: "stooq",
+        symbol: "lit.us",
+      },
+      {
+        id: "fslr",
+        label: "First Solar",
+        ticker: "FSLR",
+        source: "stooq",
+        symbol: "fslr.us",
+      },
+      {
+        id: "enph",
+        label: "Enphase Energy",
+        ticker: "ENPH",
+        source: "stooq",
+        symbol: "enph.us",
+      },
+    ],
+  },
+  {
+    id: "ai-infrastructure",
+    label: "AI Infrastructure",
+    description:
+      "The hardware stack that matters for AI build-outs: accelerators, networking, foundry capacity, and tooling.",
+    items: [
+      {
+        id: "smh",
+        label: "VanEck Semiconductor ETF",
+        ticker: "SMH",
+        source: "stooq",
+        symbol: "smh.us",
+      },
+      {
+        id: "nvda",
+        label: "NVIDIA",
+        ticker: "NVDA",
+        source: "stooq",
+        symbol: "nvda.us",
+      },
+      {
+        id: "amd",
+        label: "AMD",
+        ticker: "AMD",
+        source: "stooq",
+        symbol: "amd.us",
+      },
+      {
+        id: "avgo",
+        label: "Broadcom",
+        ticker: "AVGO",
+        source: "stooq",
+        symbol: "avgo.us",
+      },
+      {
+        id: "tsm",
+        label: "TSMC",
+        ticker: "TSM",
+        source: "stooq",
+        symbol: "tsm.us",
+      },
+      {
+        id: "asml",
+        label: "ASML",
+        ticker: "ASML",
+        source: "stooq",
+        symbol: "asml.us",
+      },
+      {
+        id: "arm",
+        label: "Arm",
+        ticker: "ARM",
+        source: "stooq",
+        symbol: "arm.us",
+      },
+    ],
+  },
+];
+
+export const MAGNIFICENT_SEVEN = [
+  {
+    id: "aapl",
+    label: "Apple",
+    ticker: "AAPL",
+    source: "stooq",
+    symbol: "aapl.us",
+    unitLabel: "USD/share",
+  },
+  {
+    id: "msft",
+    label: "Microsoft",
+    ticker: "MSFT",
+    source: "stooq",
+    symbol: "msft.us",
+    unitLabel: "USD/share",
+  },
+  {
+    id: "amzn",
+    label: "Amazon",
+    ticker: "AMZN",
+    source: "stooq",
+    symbol: "amzn.us",
+    unitLabel: "USD/share",
+  },
+  {
+    id: "googl",
+    label: "Alphabet",
+    ticker: "GOOGL",
+    source: "stooq",
+    symbol: "googl.us",
+    unitLabel: "USD/share",
+  },
+  {
+    id: "meta",
+    label: "Meta",
+    ticker: "META",
+    source: "stooq",
+    symbol: "meta.us",
+    unitLabel: "USD/share",
+  },
+  {
+    id: "nvda",
+    label: "NVIDIA",
+    ticker: "NVDA",
+    source: "stooq",
+    symbol: "nvda.us",
+    unitLabel: "USD/share",
+  },
+  {
+    id: "tsla",
+    label: "Tesla",
+    ticker: "TSLA",
+    source: "stooq",
+    symbol: "tsla.us",
+    unitLabel: "USD/share",
+  },
+];
+
+export const HEATMAP_SOURCE_LABELS = {
+  stooq: "Stooq",
+  nse: "NSE India",
+  fred: "FRED",
+};
