@@ -6,7 +6,7 @@ export const blogIndex = {
     title: "From One Barrel to Your Kitchen: What Refining Really Costs in India",
     description:
       "An India-first explainer framed by the March 2026 Iran-linked LPG supply squeeze: what part of LPG, petrol, and diesel prices comes from refining, what part does not, and why the kitchen flame sits on top of a much larger energy system.",
-    image: "/media/blogwordcloud.png",
+    image: "/media/generated/dosa-cone-roast-chutney-sambar.svg",
     tags: ["Energy", "India", "LPG", "Petrol", "Diesel", "Refining", "Oil", "Policy"],
     datePublished: "2026-03-14",
     dateModified: "2026-03-14",

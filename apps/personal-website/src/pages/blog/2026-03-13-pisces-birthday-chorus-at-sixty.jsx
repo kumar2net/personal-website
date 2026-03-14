@@ -9,9 +9,9 @@ export const metadata = {
     "A March 13, 2026 birthday reflection on turning 60, hearing family voices, and feeling gratitude arrive in waves.",
   tags: ["Birthday", "Family", "Reflection", "Pisces", "Gratitude"],
   datePublished: "2026-03-13",
-  dateModified: "2026-03-13",
+  dateModified: "2026-03-14",
   image: "/generate/2026-03-13-pisces-birthday-chorus-at-sixty-hero.svg",
-  readingTime: "~4 min",
+  readingTime: "~5 min",
 };
 
 const heroImage = "/generate/2026-03-13-pisces-birthday-chorus-at-sixty-hero.svg";
@@ -139,6 +139,33 @@ const transcriptSections = [
   {
     speaker: "Group sign-off",
     text: "Happy birthday.",
+  },
+];
+
+const birthdaySongVerses = [
+  {
+    verse: "1",
+    devanagari: "जन्मदिनमिदम् अयि प्रिय सखे ।\nशं तनोतु ते सर्वदा मुदम् ॥ १ ॥",
+    transliteration:
+      "Janmadinamidaṃ ayi priya sakhē |\nśaṃ tanōtu tē sarvadā mudam || 1 ||",
+    translation:
+      "O dear friend, may this birthday bring you auspiciousness and joy forever.",
+  },
+  {
+    verse: "2",
+    devanagari: "प्रार्थयामहे भव शतायुषी ।\nईश्वरः सदा त्वाम् च रक्षतु ॥ २ ॥",
+    transliteration:
+      "Prārthayāmahē bhava śatāyuṣī |\nīśvaraḥ sadā tvām ca rakṣatu || 2 ||",
+    translation:
+      "We pray that you live a hundred years; may the Lord always protect you.",
+  },
+  {
+    verse: "3",
+    devanagari: "पुण्यकर्मणा कीर्तिमर्जय ।\nजीवनं तव भवतु सार्थकम् ॥ ३ ॥",
+    transliteration:
+      "Puṇyakarmanā kīrtimarjaya |\njīvanaṃ tava bhavatu sārthakam || 3 ||",
+    translation:
+      "By noble deeds, may you attain fame and may your life be fulfilled.",
   },
 ];
 
@@ -576,9 +603,218 @@ export default function BlogPost() {
               mb: 0,
             }}
           >
-            That feels like the right Pisces ending to March 13, 2026: gratitude
-            that does not sit still, but keeps moving. ≈
+            That still feels like the right Pisces answer to March 13, 2026:
+            gratitude that does not sit still, but keeps moving. ≈
           </Typography>
+        </Box>
+
+        <Box
+          component="section"
+          className="pisces-surface"
+          sx={{
+            position: "relative",
+            overflow: "hidden",
+            p: { xs: 3, md: 4 },
+            borderRadius: 4,
+            border: `1px solid ${alpha(colors.coral, 0.28)}`,
+            background: `linear-gradient(135deg, ${alpha(
+              colors.coral,
+              0.2,
+            )} 0%, ${alpha(colors.pearl, 0.98)} 45%, ${alpha(
+              colors.seafoam,
+              0.28,
+            )} 100%)`,
+            boxShadow: "0 24px 60px rgba(16, 53, 74, 0.12)",
+          }}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              inset: 0,
+              background: `radial-gradient(circle at 92% 14%, ${alpha(
+                colors.coral,
+                0.18,
+              )} 0%, transparent 24%), radial-gradient(circle at 12% 85%, ${alpha(
+                colors.tide,
+                0.1,
+              )} 0%, transparent 20%)`,
+            }}
+          />
+          <Box sx={{ position: "relative", display: "flex", flexDirection: "column", gap: 2.5 }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              <Chip
+                label="Chinmaya Mission"
+                sx={{
+                  bgcolor: alpha(colors.abyss, 0.08),
+                  color: colors.ink,
+                  fontWeight: 700,
+                }}
+              />
+              <Chip
+                label="Late in the chorus"
+                sx={{
+                  bgcolor: alpha(colors.pearl, 0.8),
+                  color: colors.tide,
+                  border: `1px solid ${alpha(colors.tide, 0.18)}`,
+                  fontWeight: 600,
+                }}
+              />
+            </Box>
+
+            <Box>
+              <Typography
+                variant="overline"
+                sx={{
+                  display: "block",
+                  letterSpacing: 1.2,
+                  color: colors.tide,
+                }}
+              >
+                A song I was hearing for the first time
+              </Typography>
+              <Typography variant="h2" sx={{ mt: 0.5, mb: 1, color: colors.ink }}>
+                The Chinmaya Mission birthday blessing sung by our budding dentist
+              </Typography>
+              <Typography variant="body1" sx={bodyTextSx}>
+                Near the end came a gift inside the gift: a Sanskrit birthday
+                song from the Chinmaya Mission tradition, sung by our budding
+                dentist. I was hearing it for the first time, and it changed
+                the mood of the video for me. The spoken wishes had already
+                carried love. This added benediction.
+              </Typography>
+              <Typography variant="body1" sx={{ ...bodyTextSx, mb: 0 }}>
+                Its meaning is simple and beautiful: may this day bring joy,
+                may life be long and protected, and may one&apos;s years become
+                worthy through good deeds.
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", lg: "1.05fr 1fr" },
+                gap: 2.5,
+              }}
+            >
+              <Box
+                sx={{
+                  ...cardSx,
+                  background: `linear-gradient(180deg, ${alpha(
+                    colors.pearl,
+                    0.98,
+                  )} 0%, ${alpha(colors.coral, 0.14)} 100%)`,
+                }}
+              >
+                <Typography variant="h3" sx={{ mt: 0, mb: 2, color: colors.ink }}>
+                  Lyrics (Devanagari)
+                </Typography>
+                <Box sx={{ display: "grid", gap: 2 }}>
+                  {birthdaySongVerses.map((verse) => (
+                    <Box key={`devanagari-${verse.verse}`}>
+                      <Typography
+                        variant="overline"
+                        sx={{
+                          display: "block",
+                          mb: 0.75,
+                          letterSpacing: 1.1,
+                          color: colors.tide,
+                        }}
+                      >
+                        Verse {verse.verse}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "1.08rem", md: "1.18rem" },
+                          lineHeight: 2,
+                          whiteSpace: "pre-line",
+                          color: colors.ink,
+                        }}
+                      >
+                        {verse.devanagari}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+
+              <Box sx={{ display: "grid", gap: 2.5 }}>
+                <Box
+                  sx={{
+                    ...cardSx,
+                    background: `linear-gradient(180deg, ${alpha(
+                      colors.pearl,
+                      0.98,
+                    )} 0%, ${alpha(colors.moon, 0.88)} 100%)`,
+                  }}
+                >
+                  <Typography variant="h3" sx={{ mt: 0, mb: 2, color: colors.ink }}>
+                    Transliteration (IAST)
+                  </Typography>
+                  <Box sx={{ display: "grid", gap: 2 }}>
+                    {birthdaySongVerses.map((verse) => (
+                      <Box key={`iast-${verse.verse}`}>
+                        <Typography
+                          variant="overline"
+                          sx={{
+                            display: "block",
+                            mb: 0.75,
+                            letterSpacing: 1.1,
+                            color: colors.tide,
+                          }}
+                        >
+                          Verse {verse.verse}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: "1rem",
+                            lineHeight: 1.9,
+                            whiteSpace: "pre-line",
+                            color: colors.ink,
+                          }}
+                        >
+                          {verse.transliteration}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+
+                <Box
+                  sx={{
+                    ...cardSx,
+                    background: `linear-gradient(180deg, ${alpha(
+                      colors.seafoam,
+                      0.22,
+                    )} 0%, ${alpha(colors.pearl, 0.98)} 100%)`,
+                  }}
+                >
+                  <Typography variant="h3" sx={{ mt: 0, mb: 2, color: colors.ink }}>
+                    Translation and meaning
+                  </Typography>
+                  <Box sx={{ display: "grid", gap: 2 }}>
+                    {birthdaySongVerses.map((verse) => (
+                      <Box key={`translation-${verse.verse}`}>
+                        <Typography
+                          variant="overline"
+                          sx={{
+                            display: "block",
+                            mb: 0.75,
+                            letterSpacing: 1.1,
+                            color: colors.tide,
+                          }}
+                        >
+                          Verse {verse.verse}
+                        </Typography>
+                        <Typography variant="body1" sx={{ ...bodyTextSx, mb: 0 }}>
+                          {verse.translation}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
 
         <Box

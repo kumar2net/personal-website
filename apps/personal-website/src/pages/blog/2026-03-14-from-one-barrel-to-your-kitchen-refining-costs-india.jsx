@@ -131,7 +131,7 @@ export const metadata = {
   ],
   datePublished: "2026-03-14",
   dateModified: "2026-03-14",
-  image: "/media/blogwordcloud.png",
+  image: "/media/generated/dosa-cone-roast-chutney-sambar.svg",
   readingTime: "~6 min",
 };
 
@@ -315,6 +315,25 @@ export default function BlogPost() {
         </Typography>
         <Typography variant="body2" sx={{ color: "var(--mui-palette-text-secondary)", m: 0 }}>
           In other words: when the flame becomes uncertain, geopolitics suddenly enters the kitchen.
+        </Typography>
+      </Box>
+
+      <Box sx={{ my: 4, display: "grid", gap: 1.25 }}>
+        <Box
+          component="img"
+          src="/media/generated/dosa-cone-roast-chutney-sambar.svg"
+          alt="Cone-shaped paper roast dosa served with coconut chutney, tomato chutney, and sambar"
+          loading="lazy"
+          decoding="async"
+          sx={{
+            width: "100%",
+            borderRadius: 3,
+            boxShadow: 2,
+            bgcolor: "#fff8ec",
+          }}
+        />
+        <Typography variant="caption" sx={{ color: "var(--mui-palette-text-secondary)" }}>
+          A cone roast dosa is a visible kitchen object. The post&apos;s argument is that the invisible system beneath that object is much larger: crude, refineries, shipping routes, taxes, and policy.
         </Typography>
       </Box>
 
