@@ -32,6 +32,22 @@ function parseCsvEnv(value) {
     .filter(Boolean);
 }
 
+function resolveBooleanFlag(...values) {
+  for (const value of values) {
+    if (value === undefined || value === null || value === "") {
+      continue;
+    }
+    const normalized = String(value).trim().toLowerCase();
+    if (["1", "true", "yes", "on"].includes(normalized)) {
+      return true;
+    }
+    if (["0", "false", "no", "off"].includes(normalized)) {
+      return false;
+    }
+  }
+  return false;
+}
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -146,6 +162,12 @@ const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000)
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
 const USE_STREAMING =
   process.env.BLOG_TTS_STREAMING === "false" ? false : true;
+const BLOG_TTS_ENABLED = resolveBooleanFlag(
+  process.env.BLOG_TTS_ENABLED,
+  ENV_SNAPSHOT.BLOG_TTS_ENABLED,
+  process.env.VITE_BLOG_TTS_ENABLED,
+  ENV_SNAPSHOT.VITE_BLOG_TTS_ENABLED,
+);
 
 let cachedClient;
 const translationCache = new Map();
@@ -990,6 +1012,13 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed. Send POST with JSON { text, slug, language }.",
+    });
+  }
+
+  if (!BLOG_TTS_ENABLED) {
+    return res.status(503).json({
+      error:
+        "Text-to-speech is temporarily disabled while quota resets. Set BLOG_TTS_ENABLED=true and VITE_BLOG_TTS_ENABLED=true to re-enable it.",
     });
   }
 

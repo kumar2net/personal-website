@@ -3,6 +3,10 @@ import { Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Languages, Volume2 } from "lucide-react";
 
+const BLOG_TTS_ENABLED =
+  String(import.meta.env.VITE_BLOG_TTS_ENABLED || "")
+    .trim()
+    .toLowerCase() === "true";
 const DEFAULT_TTS_VOICE =
   import.meta.env.VITE_BLOG_TTS_VOICE || "alloy";
 const LANGUAGES = [
@@ -174,6 +178,10 @@ function collectArticleText(articleRef) {
 }
 
 export default function BlogAudioPlayer({ slug, articleRef }) {
+  if (!BLOG_TTS_ENABLED) {
+    return null;
+  }
+
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const [selectedLanguage, setSelectedLanguage] = useState("en");
