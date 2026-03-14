@@ -38,20 +38,25 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
+const DEFAULT_TTS_VOICE = process.env.BLOG_TTS_VOICE || "alloy";
+const LANGUAGE_ALIASES = {
+  tn: "ta",
+};
+
 const LANGUAGE_CONFIG = {
   en: {
     label: "English",
-    defaultVoice: process.env.BLOG_TTS_EN_VOICE || "alloy",
+    defaultVoice: process.env.BLOG_TTS_EN_VOICE || DEFAULT_TTS_VOICE,
     requiresTranslation: false,
   },
   hi: {
     label: "Hindi",
-    defaultVoice: process.env.BLOG_TTS_HI_VOICE || "alloy",
+    defaultVoice: process.env.BLOG_TTS_HI_VOICE || DEFAULT_TTS_VOICE,
     requiresTranslation: true,
   },
   ta: {
     label: "Tamil",
-    defaultVoice: process.env.BLOG_TTS_TA_VOICE || "alloy",
+    defaultVoice: process.env.BLOG_TTS_TA_VOICE || DEFAULT_TTS_VOICE,
     requiresTranslation: true,
   },
 };
@@ -408,6 +413,13 @@ function resolveVoice(requestedVoice) {
     return normalizedRequestedVoice;
   }
   return "";
+}
+
+function resolveLanguageCode(requestedLanguage) {
+  const normalizedRequestedLanguage = String(requestedLanguage || "en")
+    .trim()
+    .toLowerCase();
+  return LANGUAGE_ALIASES[normalizedRequestedLanguage] || normalizedRequestedLanguage;
 }
 
 function normalizeTokens(value) {
@@ -947,8 +959,7 @@ export default async function handler(req, res) {
 
   const rawText =
     typeof payload?.text === "string" ? payload.text : payload?.content;
-  const languageCode =
-    typeof payload?.language === "string" ? payload.language.trim().toLowerCase() : "en";
+  const languageCode = resolveLanguageCode(payload?.language);
   const slug =
     typeof payload?.slug === "string" && payload.slug.trim()
       ? payload.slug.trim()
@@ -987,7 +998,15 @@ export default async function handler(req, res) {
 
   const { text: limitedText, truncated } = clampText(normalizedText);
   const requestedVoice = resolveVoice(payload?.voice);
-  const resolvedVoice = requestedVoice || languageConfig.defaultVoice;
+  const resolvedVoice = languageConfig.defaultVoice;
+
+  if (requestedVoice && requestedVoice !== resolvedVoice) {
+    return res.status(400).json({
+      error: `Voice "${requestedVoice}" is not supported for "${languageCode}".`,
+      supported_voices: [resolvedVoice],
+      default_voice: resolvedVoice,
+    });
+  }
 
   if (requestedModel && streamFormat === "sse" && !supportsSse(requestedModel)) {
     return res.status(400).json({

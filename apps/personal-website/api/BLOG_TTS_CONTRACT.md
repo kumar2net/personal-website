@@ -14,9 +14,9 @@ This endpoint generates spoken audio for blog content using OpenAI Audio Speech.
   "text": "string",
   "content": "string",
   "slug": "string",
-  "language": "en|hi|ta",
+  "language": "en|hi|ta|tn",
   "model": "gpt-4o-mini-tts|tts-1|tts-1-hd|custom-snapshot",
-  "voice": "alloy|ash|ballad|cedar|coral|echo|fable|marin|nova|onyx|sage|shimmer|verse",
+  "voice": "alloy",
   "response_format": "mp3|opus|aac|flac|wav|pcm",
   "stream_format": "audio|sse",
   "speed": 1.0,
@@ -28,9 +28,9 @@ This endpoint generates spoken audio for blog content using OpenAI Audio Speech.
 
 - `text` or `content`: required text source (`text` is preferred).
 - `slug`: optional; defaults to `blog-post`.
-- `language`: optional; defaults to `en`.
+- `language`: optional; defaults to `en`. `tn` is accepted as an alias for Tamil and is normalized to `ta`.
 - `model`: optional; if omitted, the route tries its configured model order starting with the official aliases.
-- `voice`: optional; if omitted, the route uses the default voice configured for the resolved language.
+- `voice`: optional; this app build pins one preset voice per language and rejects other voice overrides. By default that preset is `alloy` for `en`, `hi`, and `ta` unless a server env override changes it.
 - `response_format`: optional; defaults to `mp3`.
 - `stream_format`: optional; supports `"audio"` and `"sse"`.
 - `speed`: optional; clamped to `0.25..4.0`, default `1.0`.
@@ -61,6 +61,7 @@ This endpoint generates spoken audio for blog content using OpenAI Audio Speech.
 
 - `400`: invalid JSON, unsupported language, empty text, unsupported `stream_format`.
 - `400`: invalid `model + stream_format` or `model + instructions` combination.
+- `400`: unsupported `voice` for the selected language. Response includes `supported_voices` and `default_voice`.
 - `400`: long-form `stream_format: "audio"` with a non-`mp3` format. Response includes `retry_with_response_format: "mp3"`.
 - `405`: non-POST method.
 - `503`: missing API key or no available TTS model.

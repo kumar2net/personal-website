@@ -1,23 +1,28 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Button, MenuItem, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Languages, Volume2 } from "lucide-react";
 
+const DEFAULT_TTS_VOICE =
+  import.meta.env.VITE_BLOG_TTS_VOICE || "alloy";
 const LANGUAGES = [
   {
     code: "en",
     label: "English",
     helper: "Original voice",
+    voice: import.meta.env.VITE_BLOG_TTS_EN_VOICE || DEFAULT_TTS_VOICE,
   },
   {
     code: "hi",
     label: "Hindi",
     helper: "भारतीय पाठक",
+    voice: import.meta.env.VITE_BLOG_TTS_HI_VOICE || DEFAULT_TTS_VOICE,
   },
   {
     code: "ta",
     label: "Tamil",
     helper: "தமிழ் வாசகர்",
+    voice: import.meta.env.VITE_BLOG_TTS_TA_VOICE || DEFAULT_TTS_VOICE,
   },
 ];
 
@@ -26,22 +31,6 @@ const DEFAULT_VERCEL_PORT =
   import.meta.env.VITE_VERCEL_DEV_PORT || "3000";
 const MODEL_LABEL =
   import.meta.env.VITE_TTS_MODEL_LABEL || "auto-select";
-const VOICE_OPTIONS = [
-  { value: "", label: "Default voice" },
-  { value: "alloy", label: "Alloy" },
-  { value: "ash", label: "Ash" },
-  { value: "ballad", label: "Ballad" },
-  { value: "cedar", label: "Cedar" },
-  { value: "coral", label: "Coral" },
-  { value: "echo", label: "Echo" },
-  { value: "fable", label: "Fable" },
-  { value: "marin", label: "Marin" },
-  { value: "nova", label: "Nova" },
-  { value: "onyx", label: "Onyx" },
-  { value: "sage", label: "Sage" },
-  { value: "shimmer", label: "Shimmer" },
-  { value: "verse", label: "Verse" },
-];
 
 const OPUS_MIME = "audio/ogg; codecs=opus";
 const MP3_MIME = "audio/mpeg";
@@ -188,7 +177,6 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-  const [selectedVoice, setSelectedVoice] = useState("");
   const [loadingKey, setLoadingKey] = useState("");
   const [error, setError] = useState("");
   const [audioCache, setAudioCache] = useState({});
@@ -243,15 +231,20 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     return Array.from(new Set(candidateEndpoints.filter(Boolean)));
   }, []);
 
+  const activeLanguage = useMemo(
+    () => LANGUAGES.find((language) => language.code === selectedLanguage) || LANGUAGES[0],
+    [selectedLanguage],
+  );
+  const activeVoicePreset = activeLanguage?.voice || DEFAULT_TTS_VOICE;
+  const activeVoiceLabel = activeVoicePreset
+    ? activeVoicePreset.charAt(0).toUpperCase() + activeVoicePreset.slice(1)
+    : "Alloy";
   const activeCacheKey = useMemo(
-    () => getAudioCacheKey(selectedLanguage, selectedVoice),
-    [selectedLanguage, selectedVoice],
+    () => getAudioCacheKey(selectedLanguage, activeVoicePreset),
+    [selectedLanguage, activeVoicePreset],
   );
   const activeEntry = audioCache[activeCacheKey];
   const hasAudio = Boolean(activeEntry?.url);
-  const selectedVoiceLabel =
-    VOICE_OPTIONS.find((voice) => voice.value === selectedVoice)?.label ||
-    "Default voice";
 
   const metaNotice = useMemo(() => {
     const cacheEntry = activeEntry;
@@ -312,9 +305,11 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     }
   }
 
-  async function fetchAudio({ language, voice = selectedVoice } = {}) {
+  async function fetchAudio({ language } = {}) {
     const targetLanguage = language || selectedLanguage;
-    const targetVoice = voice || "";
+    const targetLanguageConfig =
+      LANGUAGES.find((entry) => entry.code === targetLanguage) || LANGUAGES[0];
+    const targetVoice = targetLanguageConfig?.voice || DEFAULT_TTS_VOICE;
     const targetCacheKey = getAudioCacheKey(targetLanguage, targetVoice);
     const text = collectArticleText(articleRef);
     if (!text) return;
@@ -337,7 +332,7 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
       stream_format: "audio",
       response_format: preferredFormat,
       speed,
-      ...(targetVoice ? { voice: targetVoice } : {}),
+      voice: targetVoice,
     };
 
     try {
@@ -456,10 +451,22 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
   }
 
   useEffect(() => {
-    if (currentAudioUrl && !loadingKey) {
-      tryPlayAudio();
+    if (!currentAudioUrl || loadingKey || !userInitiated) {
+      return;
     }
-  }, [currentAudioUrl, autoPlayNonce, loadingKey]);
+
+    async function playCurrentAudio() {
+      try {
+        if (audioRef.current) {
+          await audioRef.current.play();
+        }
+      } catch (err) {
+        console.warn("[blog-tts] Autoplay blocked:", err);
+      }
+    }
+
+    playCurrentAudio();
+  }, [currentAudioUrl, autoPlayNonce, loadingKey, userInitiated]);
 
   async function fetchAudioAsBlobFallback(
     response,
@@ -601,22 +608,8 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
           );
         })}
       </div>
-      <div className="mt-3 max-w-xs">
-        <TextField
-          select
-          fullWidth
-          size="small"
-          label="Voice"
-          value={selectedVoice}
-          onChange={(event) => setSelectedVoice(event.target.value)}
-          helperText="Default voice follows the server preset for the selected language."
-        >
-          {VOICE_OPTIONS.map((voice) => (
-            <MenuItem key={voice.value || "default"} value={voice.value}>
-              {voice.label}
-            </MenuItem>
-          ))}
-        </TextField>
+      <div className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+        Voice preset: <span className="font-medium">{activeVoiceLabel}</span>.
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <Button
@@ -647,11 +640,11 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
             },
           }}
         >
-          {buttonLabel} ({LANGUAGES.find((l) => l.code === selectedLanguage)?.label})
+          {buttonLabel} ({activeLanguage?.label})
         </Button>
         {currentAudioUrl && (
           <div className="text-xs text-slate-500 dark:text-slate-400">
-            Ready with {activeEntry?.voice || selectedVoiceLabel}.
+            Ready with {activeEntry?.voice || activeVoiceLabel}.
           </div>
         )}
       </div>
