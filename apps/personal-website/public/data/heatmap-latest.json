@@ -1,0 +1,1295 @@
+{
+  "generatedAt": "2026-03-14T11:32:48.467Z",
+  "status": "ok",
+  "snapshot": {
+    "key": "2026-03-14",
+    "generatedAt": "2026-03-14T11:32:48.467Z",
+    "refreshAt": "2026-03-14T02:00:00.000Z",
+    "nextRefreshAt": "2026-03-15T02:00:00.000Z",
+    "cadenceLabel": "Refreshes once daily after 07:30 IST (02:00 UTC).",
+    "servedStale": false
+  },
+  "highlights": {
+    "breadth": {
+      "positive": 7,
+      "negative": 16,
+      "flat": 0,
+      "total": 23
+    },
+    "leaders": [
+      {
+        "label": "VIX",
+        "ticker": "VIX",
+        "changePct": 12.63
+      },
+      {
+        "label": "Henry Hub Gas",
+        "ticker": "HHGAS",
+        "changePct": 4.84
+      },
+      {
+        "label": "WTI Crude",
+        "ticker": "WTI",
+        "changePct": 4.27
+      }
+    ],
+    "laggards": [
+      {
+        "label": "Broadcom",
+        "ticker": "AVGO",
+        "changePct": -4.11
+      },
+      {
+        "label": "Nifty Bank",
+        "ticker": "BANKNIFTY",
+        "changePct": -2.44
+      },
+      {
+        "label": "AMD",
+        "ticker": "AMD",
+        "changePct": -2.2
+      }
+    ],
+    "strongestMonth": [
+      {
+        "label": "VIX",
+        "ticker": "VIX",
+        "changePct": 53.4
+      },
+      {
+        "label": "WTI Crude",
+        "ticker": "WTI",
+        "changePct": 48.42
+      },
+      {
+        "label": "Brent Crude",
+        "ticker": "BRENT",
+        "changePct": 33.92
+      }
+    ]
+  },
+  "insights": [
+    {
+      "id": "risk-tone",
+      "title": "Risk tone is cautious",
+      "summary": "Only 7/23 tracked instruments are positive, and VIX is 27.29, which points to a more defensive tone.",
+      "tone": "negative",
+      "evidence": [
+        "Breadth: 7 up, 16 down, 0 flat",
+        "VIX: 27.29 (stressed)"
+      ]
+    },
+    {
+      "id": "cross-market",
+      "title": "U.S. indices are leading the day",
+      "summary": "The U.S. basket is averaging -0.60% versus -2.04% in India, with DJI setting the stronger pace.",
+      "tone": "negative",
+      "evidence": [
+        "U.S. average 1D: -0.60%",
+        "India average 1D: -2.04%",
+        "DJI lead: -0.26% | NIFTYIT lead: -1.72%"
+      ]
+    },
+    {
+      "id": "ai-infrastructure",
+      "title": "AI infrastructure has lost short-term momentum",
+      "summary": "The group is averaging -1.07% on the day and -7.24% over one month, which suggests the AI complex is under distribution rather than extending.",
+      "tone": "negative",
+      "evidence": [
+        "AI average 1D: -1.07%",
+        "AI average 1M: -7.24%",
+        "Leader: ARM +0.55% | Laggard: AVGO -4.11%"
+      ]
+    },
+    {
+      "id": "energy-transition",
+      "title": "Energy and transition signals are mixed",
+      "summary": "Oil is moving +1.41% on average for the day while the renewables basket is at +0.55%, so macro energy and transition equities are not telling the same story cleanly.",
+      "tone": "neutral",
+      "evidence": [
+        "WTI: $94.65 | Brent: $94.35",
+        "Henry Hub: $3.25 | Renewables average 1D: +0.55%",
+        "Renewables average 1M: -7.14%"
+      ]
+    },
+    {
+      "id": "magnificent-seven",
+      "title": "Mega-cap growth breadth is narrow",
+      "summary": "Only 0/7 Magnificent 7 names are positive, and the basket is averaging -1.64%, so index support from mega-cap tech looks thin.",
+      "tone": "negative",
+      "evidence": [
+        "Positive names: 0/7",
+        "Leader: GOOGL -0.42%",
+        "Laggard: META -3.83%"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "us-market-pulse",
+      "label": "U.S. Market Pulse",
+      "description": "Broad U.S. index leadership and the tone of large-cap risk appetite.",
+      "items": [
+        {
+          "id": "sp500",
+          "label": "S&P 500",
+          "ticker": "SPX",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=%5Espx",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 6632.19,
+          "previousClose": 6672.62,
+          "changes": {
+            "dayPct": -0.61,
+            "weekPct": -1.6,
+            "monthPct": -4.46
+          },
+          "sparkline": [
+            6836.17,
+            6843.22,
+            6881.31,
+            6861.89,
+            6909.51,
+            6837.75,
+            6890.07,
+            6946.13,
+            6908.86,
+            6878.88,
+            6881.62,
+            6816.63,
+            6869.5,
+            6830.71,
+            6740.02,
+            6795.99,
+            6781.48,
+            6775.8,
+            6672.62,
+            6632.19
+          ]
+        },
+        {
+          "id": "nasdaq-composite",
+          "label": "Nasdaq Composite",
+          "ticker": "IXIC",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=%5Endq",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 22105.36,
+          "previousClose": 22311.98,
+          "changes": {
+            "dayPct": -0.93,
+            "weekPct": -1.26,
+            "monthPct": -4.17
+          },
+          "sparkline": [
+            22546.67,
+            22578.38,
+            22753.63,
+            22682.73,
+            22886.07,
+            22627.27,
+            22863.68,
+            23152.08,
+            22878.38,
+            22668.21,
+            22748.86,
+            22516.69,
+            22807.48,
+            22748.99,
+            22387.68,
+            22695.95,
+            22697.1,
+            22716.13,
+            22311.98,
+            22105.36
+          ]
+        },
+        {
+          "id": "dow-jones",
+          "label": "Dow Jones",
+          "ticker": "DJI",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=%5Edji",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 46558.47,
+          "previousClose": 46677.85,
+          "changes": {
+            "dayPct": -0.26,
+            "weekPct": -1.99,
+            "monthPct": -7.11
+          },
+          "sparkline": [
+            49500.93,
+            49533.19,
+            49662.66,
+            49395.16,
+            49625.97,
+            48804.06,
+            49174.5,
+            49482.15,
+            49499.2,
+            48977.92,
+            48904.78,
+            48501.27,
+            48739.41,
+            47954.74,
+            47501.55,
+            47740.8,
+            47706.51,
+            47417.27,
+            46677.85,
+            46558.47
+          ]
+        }
+      ]
+    },
+    {
+      "id": "india-market-pulse",
+      "label": "India Market Pulse",
+      "description": "The India tape through the benchmark, banking, IT, and large-cap breadth lens.",
+      "items": [
+        {
+          "id": "sensex",
+          "label": "BSE Sensex",
+          "ticker": "SENSEX",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=%5Esnx",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 74563.92,
+          "previousClose": 76034.42,
+          "changes": {
+            "dayPct": -1.93,
+            "weekPct": -5.52,
+            "monthPct": -11.48
+          },
+          "sparkline": [
+            82626.76,
+            83277.15,
+            83450.96,
+            83734.25,
+            82498.14,
+            82814.71,
+            83294.66,
+            82225.92,
+            82276.07,
+            82248.61,
+            81287.19,
+            80238.85,
+            79116.19,
+            80015.9,
+            78918.9,
+            77566.16,
+            78205.98,
+            76863.71,
+            76034.42,
+            74563.92
+          ]
+        },
+        {
+          "id": "nifty-50",
+          "label": "Nifty 50",
+          "ticker": "NIFTY50",
+          "source": "nse",
+          "sourceLabel": "NSE India",
+          "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 23151.1,
+          "previousClose": 23639.15,
+          "changes": {
+            "dayPct": -2.06,
+            "weekPct": -5.31,
+            "monthPct": -10.73
+          },
+          "sparkline": [
+            25935.15,
+            24450.45,
+            23639.15,
+            23151.1
+          ]
+        },
+        {
+          "id": "nifty-bank",
+          "label": "Nifty Bank",
+          "ticker": "BANKNIFTY",
+          "source": "nse",
+          "sourceLabel": "NSE India",
+          "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 53757.85,
+          "previousClose": 55100.95,
+          "changes": {
+            "dayPct": -2.44,
+            "weekPct": -6.97,
+            "monthPct": -11.33
+          },
+          "sparkline": [
+            60626.4,
+            57783.25,
+            55100.95,
+            53757.85
+          ]
+        },
+        {
+          "id": "nifty-it",
+          "label": "Nifty IT",
+          "ticker": "NIFTYIT",
+          "source": "nse",
+          "sourceLabel": "NSE India",
+          "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 29071.25,
+          "previousClose": 29579.45,
+          "changes": {
+            "dayPct": -1.72,
+            "weekPct": -3.54,
+            "monthPct": -18.62
+          },
+          "sparkline": [
+            35722.2,
+            30138.4,
+            29579.45,
+            29071.25
+          ]
+        }
+      ]
+    },
+    {
+      "id": "macro-temperature",
+      "label": "Macro Temperature",
+      "description": "Inflation-sensitive energy benchmarks plus volatility stress in the background.",
+      "items": [
+        {
+          "id": "wti",
+          "label": "WTI Crude",
+          "ticker": "WTI",
+          "source": "fred",
+          "sourceLabel": "FRED",
+          "sourceUrl": "https://fred.stlouisfed.org/series/DCOILWTICO",
+          "unitLabel": "USD/bbl",
+          "asOf": "2026-03-09",
+          "latestValue": 94.65,
+          "previousClose": 90.77,
+          "changes": {
+            "dayPct": 4.27,
+            "weekPct": 33.07,
+            "monthPct": 48.42
+          },
+          "sparkline": [
+            64.2,
+            64.8,
+            63.08,
+            63.05,
+            0,
+            62.53,
+            65.33,
+            66.66,
+            66.69,
+            66.36,
+            65.62,
+            65.3,
+            65.1,
+            66.96,
+            71.13,
+            74.48,
+            74.58,
+            80.88,
+            90.77,
+            94.65
+          ]
+        },
+        {
+          "id": "brent",
+          "label": "Brent Crude",
+          "ticker": "BRENT",
+          "source": "fred",
+          "sourceLabel": "FRED",
+          "sourceUrl": "https://fred.stlouisfed.org/series/DCOILBRENTEU",
+          "unitLabel": "USD/bbl",
+          "asOf": "2026-03-09",
+          "latestValue": 94.35,
+          "previousClose": 95.74,
+          "changes": {
+            "dayPct": -1.45,
+            "weekPct": 22.15,
+            "monthPct": 33.92
+          },
+          "sparkline": [
+            71.01,
+            71.52,
+            69.8,
+            69.96,
+            70.81,
+            69.77,
+            71.78,
+            73.17,
+            72.75,
+            71.9,
+            71.21,
+            70.69,
+            71.66,
+            71.32,
+            77.24,
+            83.28,
+            81.56,
+            88.59,
+            95.74,
+            94.35
+          ]
+        },
+        {
+          "id": "henry-hub",
+          "label": "Henry Hub Gas",
+          "ticker": "HHGAS",
+          "source": "fred",
+          "sourceLabel": "FRED",
+          "sourceUrl": "https://fred.stlouisfed.org/series/DHHNGSP",
+          "unitLabel": "USD/MMBtu",
+          "asOf": "2026-03-09",
+          "latestValue": 3.25,
+          "previousClose": 3.1,
+          "changes": {
+            "dayPct": 4.84,
+            "weekPct": 8.7,
+            "monthPct": -25.63
+          },
+          "sparkline": [
+            3.18,
+            3.25,
+            3.43,
+            3.24,
+            0,
+            3.13,
+            2.98,
+            3.09,
+            3.15,
+            3.13,
+            2.99,
+            3.02,
+            2.94,
+            2.99,
+            2.99,
+            3.1,
+            2.87,
+            2.9,
+            3.1,
+            3.25
+          ]
+        },
+        {
+          "id": "vix",
+          "label": "VIX",
+          "ticker": "VIX",
+          "source": "fred",
+          "sourceLabel": "FRED",
+          "sourceUrl": "https://fred.stlouisfed.org/series/VIXCLS",
+          "unitLabel": "index",
+          "asOf": "2026-03-12",
+          "latestValue": 27.29,
+          "previousClose": 24.23,
+          "changes": {
+            "dayPct": 12.63,
+            "weekPct": 14.91,
+            "monthPct": 53.4
+          },
+          "sparkline": [
+            20.6,
+            21.2,
+            20.29,
+            19.62,
+            20.23,
+            19.09,
+            21.01,
+            19.55,
+            17.93,
+            18.63,
+            19.86,
+            21.44,
+            23.57,
+            21.15,
+            23.75,
+            29.49,
+            25.5,
+            24.93,
+            24.23,
+            27.29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "renewables-transition",
+      "label": "Renewables Transition",
+      "description": "Clean-energy ETFs plus bottleneck names tied to solar, batteries, and the grid transition.",
+      "items": [
+        {
+          "id": "icln",
+          "label": "iShares Global Clean Energy",
+          "ticker": "ICLN",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=icln.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 18.38,
+          "previousClose": 18.39,
+          "changes": {
+            "dayPct": -0.05,
+            "weekPct": 5.51,
+            "monthPct": -3.47
+          },
+          "sparkline": [
+            18.42,
+            18.73,
+            19.03,
+            18.81,
+            18.91,
+            18.98,
+            19.19,
+            19.09,
+            18.67,
+            18.22,
+            18.33,
+            17.71,
+            18.09,
+            17.79,
+            17.42,
+            17.97,
+            18.25,
+            18.51,
+            18.39,
+            18.38
+          ]
+        },
+        {
+          "id": "tan",
+          "label": "Invesco Solar ETF",
+          "ticker": "TAN",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=tan.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 55.38,
+          "previousClose": 54.75,
+          "changes": {
+            "dayPct": 1.15,
+            "weekPct": 3.94,
+            "monthPct": -5.14
+          },
+          "sparkline": [
+            57.92,
+            59.87,
+            60.43,
+            58.52,
+            59.77,
+            60.09,
+            60.53,
+            59.31,
+            57.58,
+            55,
+            56.36,
+            54.47,
+            54.87,
+            54.09,
+            53.28,
+            54.1,
+            54.9,
+            55.73,
+            54.75,
+            55.38
+          ]
+        },
+        {
+          "id": "lit",
+          "label": "Global X Lithium & Battery Tech",
+          "ticker": "LIT",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=lit.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 70.4,
+          "previousClose": 71.15,
+          "changes": {
+            "dayPct": -1.05,
+            "weekPct": 2.07,
+            "monthPct": -4.54
+          },
+          "sparkline": [
+            72.7,
+            72.47,
+            73.84,
+            73.13,
+            73.12,
+            73.78,
+            75.59,
+            77.09,
+            75.77,
+            75.4,
+            75.22,
+            70.35,
+            71.14,
+            69.14,
+            68.97,
+            71.43,
+            72.02,
+            72.99,
+            71.15,
+            70.4
+          ]
+        },
+        {
+          "id": "fslr",
+          "label": "First Solar",
+          "ticker": "FSLR",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=fslr.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 196.07,
+          "previousClose": 197.56,
+          "changes": {
+            "dayPct": -0.75,
+            "weekPct": 3.68,
+            "monthPct": -13.91
+          },
+          "sparkline": [
+            225.65,
+            226.05,
+            238.57,
+            233.3,
+            241.88,
+            242.15,
+            243.21,
+            210.12,
+            200.1,
+            197.2,
+            199.86,
+            197.53,
+            197.23,
+            191.72,
+            189.11,
+            195.37,
+            197.8,
+            200.25,
+            197.56,
+            196.07
+          ]
+        },
+        {
+          "id": "enph",
+          "label": "Enphase Energy",
+          "ticker": "ENPH",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=enph.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 44.07,
+          "previousClose": 42.6,
+          "changes": {
+            "dayPct": 3.45,
+            "weekPct": 9.55,
+            "monthPct": -8.63
+          },
+          "sparkline": [
+            43.49,
+            45.64,
+            46.04,
+            44.25,
+            46.56,
+            47.4,
+            49.74,
+            48.49,
+            45.77,
+            42.27,
+            44.71,
+            43.2,
+            42.66,
+            41.14,
+            40.23,
+            40.86,
+            43.62,
+            43.34,
+            42.6,
+            44.07
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai-infrastructure",
+      "label": "AI Infrastructure",
+      "description": "The hardware stack that matters for AI build-outs: accelerators, networking, foundry capacity, and tooling.",
+      "items": [
+        {
+          "id": "smh",
+          "label": "VanEck Semiconductor ETF",
+          "ticker": "SMH",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=smh.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 387.33,
+          "previousClose": 388.13,
+          "changes": {
+            "dayPct": -0.21,
+            "weekPct": 1.78,
+            "monthPct": -6.62
+          },
+          "sparkline": [
+            407.72,
+            407.51,
+            412.55,
+            410.2,
+            415.03,
+            412.88,
+            419.16,
+            426.16,
+            412.01,
+            406.37,
+            406.39,
+            391.07,
+            399.1,
+            395.47,
+            380.54,
+            394.37,
+            397.35,
+            401.03,
+            388.13,
+            387.33
+          ]
+        },
+        {
+          "id": "nvda",
+          "label": "NVIDIA",
+          "ticker": "NVDA",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=nvda.us",
+          "unitLabel": "USD/share",
+          "asOf": "2026-03-13",
+          "latestValue": 180.25,
+          "previousClose": 183.14,
+          "changes": {
+            "dayPct": -1.58,
+            "weekPct": 1.44,
+            "monthPct": -5.16
+          },
+          "sparkline": [
+            182.81,
+            184.97,
+            187.98,
+            187.9,
+            189.82,
+            191.55,
+            192.85,
+            195.56,
+            184.89,
+            177.19,
+            182.48,
+            180.05,
+            183.04,
+            183.33,
+            177.69,
+            182.64,
+            184.76,
+            186.03,
+            183.14,
+            180.25
+          ]
+        },
+        {
+          "id": "amd",
+          "label": "AMD",
+          "ticker": "AMD",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=amd.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 193.39,
+          "previousClose": 197.74,
+          "changes": {
+            "dayPct": -2.2,
+            "weekPct": 0.49,
+            "monthPct": -9.45
+          },
+          "sparkline": [
+            207.32,
+            203.08,
+            200.12,
+            203.37,
+            200.15,
+            196.6,
+            213.84,
+            210.86,
+            203.68,
+            200.21,
+            198.62,
+            190.99,
+            202.03,
+            199.45,
+            192.44,
+            202.73,
+            203.24,
+            204.83,
+            197.74,
+            193.39
+          ]
+        },
+        {
+          "id": "avgo",
+          "label": "Broadcom",
+          "ticker": "AVGO",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=avgo.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 322.16,
+          "previousClose": 335.97,
+          "changes": {
+            "dayPct": -4.11,
+            "weekPct": -2.51,
+            "monthPct": -6.01
+          },
+          "sparkline": [
+            325.17,
+            332.54,
+            333.51,
+            333.99,
+            332.65,
+            330.34,
+            325.49,
+            332.31,
+            321.7,
+            319.55,
+            318.82,
+            313.84,
+            316.96,
+            332.74,
+            330.45,
+            345.75,
+            342.52,
+            341.57,
+            335.97,
+            322.16
+          ]
+        },
+        {
+          "id": "tsm",
+          "label": "TSMC",
+          "ticker": "TSM",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=tsm.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 338.31,
+          "previousClose": 336.71,
+          "changes": {
+            "dayPct": 0.48,
+            "weekPct": -0.17,
+            "monthPct": -9.56
+          },
+          "sparkline": [
+            366.36,
+            364.2,
+            362.26,
+            360.39,
+            370.54,
+            370.04,
+            385.75,
+            387.73,
+            376.81,
+            374.58,
+            369.11,
+            353.13,
+            357.44,
+            353.86,
+            338.89,
+            348.7,
+            347.09,
+            354.56,
+            336.71,
+            338.31
+          ]
+        },
+        {
+          "id": "asml",
+          "label": "ASML",
+          "ticker": "ASML",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=asml.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 1345.69,
+          "previousClose": 1351.58,
+          "changes": {
+            "dayPct": -0.44,
+            "weekPct": 4.09,
+            "monthPct": -6.26
+          },
+          "sparkline": [
+            1406.61,
+            1419.78,
+            1468.72,
+            1458.93,
+            1469.59,
+            1485.99,
+            1497.8,
+            1526.51,
+            1463.8,
+            1450.56,
+            1423.54,
+            1360.94,
+            1399.49,
+            1368.36,
+            1292.8,
+            1357.42,
+            1383.87,
+            1386.68,
+            1351.58,
+            1345.69
+          ]
+        },
+        {
+          "id": "arm",
+          "label": "Arm",
+          "ticker": "ARM",
+          "source": "stooq",
+          "sourceLabel": "Stooq",
+          "sourceUrl": "https://stooq.com/q/?s=arm.us",
+          "unitLabel": "price",
+          "asOf": "2026-03-13",
+          "latestValue": 115.75,
+          "previousClose": 115.12,
+          "changes": {
+            "dayPct": 0.55,
+            "weekPct": 1.15,
+            "monthPct": -7.61
+          },
+          "sparkline": [
+            125.28,
+            126.89,
+            127.24,
+            126.93,
+            125.58,
+            123.78,
+            128.14,
+            131.74,
+            129.26,
+            127.45,
+            124.37,
+            121.72,
+            124.1,
+            120.68,
+            114.43,
+            117.63,
+            120.59,
+            120.1,
+            115.12,
+            115.75
+          ]
+        }
+      ]
+    }
+  ],
+  "magnificentSeven": [
+    {
+      "id": "aapl",
+      "label": "Apple",
+      "ticker": "AAPL",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=aapl.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 250.12,
+      "previousClose": 255.76,
+      "changes": {
+        "dayPct": -2.21,
+        "weekPct": -2.85,
+        "monthPct": -9.21
+      },
+      "sparkline": [
+        255.78,
+        263.88,
+        264.35,
+        260.58,
+        264.58,
+        266.18,
+        272.14,
+        274.23,
+        272.95,
+        264.18,
+        264.72,
+        263.69,
+        262.45,
+        260.25,
+        257.46,
+        259.89,
+        260.72,
+        260.81,
+        255.76,
+        250.12
+      ]
+    },
+    {
+      "id": "msft",
+      "label": "Microsoft",
+      "ticker": "MSFT",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=msft.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 395.55,
+      "previousClose": 401.86,
+      "changes": {
+        "dayPct": -1.57,
+        "weekPct": -3.2,
+        "monthPct": -2.18
+      },
+      "sparkline": [
+        401.32,
+        396.86,
+        399.6,
+        398.46,
+        397.23,
+        384.47,
+        389,
+        400.6,
+        401.72,
+        392.74,
+        398.55,
+        403.79,
+        405,
+        410.68,
+        408.63,
+        409.35,
+        405.76,
+        404.88,
+        401.86,
+        395.55
+      ]
+    },
+    {
+      "id": "amzn",
+      "label": "Amazon",
+      "ticker": "AMZN",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=amzn.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 207.67,
+      "previousClose": 209.53,
+      "changes": {
+        "dayPct": -0.89,
+        "weekPct": -2.56,
+        "monthPct": 1.76
+      },
+      "sparkline": [
+        198.79,
+        201.15,
+        204.79,
+        204.86,
+        210.11,
+        205.27,
+        208.56,
+        210.64,
+        207.92,
+        210,
+        208.39,
+        208.63,
+        216.82,
+        218.86,
+        213.12,
+        213.42,
+        214.34,
+        212.65,
+        209.53,
+        207.67
+      ]
+    },
+    {
+      "id": "googl",
+      "label": "Alphabet",
+      "ticker": "GOOGL",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=googl.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 302.28,
+      "previousClose": 303.55,
+      "changes": {
+        "dayPct": -0.42,
+        "weekPct": 1.27,
+        "monthPct": -2.79
+      },
+      "sparkline": [
+        305.72,
+        302.02,
+        303.33,
+        302.85,
+        314.98,
+        311.49,
+        310.9,
+        312.9,
+        307.38,
+        311.76,
+        306.52,
+        303.53,
+        303.03,
+        300.845,
+        298.48,
+        306.34,
+        307.04,
+        308.7,
+        303.55,
+        302.28
+      ]
+    },
+    {
+      "id": "meta",
+      "label": "Meta",
+      "ticker": "META",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=meta.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 613.71,
+      "previousClose": 638.18,
+      "changes": {
+        "dayPct": -3.83,
+        "weekPct": -4.83,
+        "monthPct": -8.22
+      },
+      "sparkline": [
+        639.77,
+        639.29,
+        643.22,
+        644.78,
+        655.66,
+        637.25,
+        639.3,
+        653.69,
+        657.01,
+        648.18,
+        653.56,
+        654.991,
+        667.52,
+        660.205,
+        644.86,
+        647.34,
+        653.91,
+        654.86,
+        638.18,
+        613.71
+      ]
+    },
+    {
+      "id": "nvda",
+      "label": "NVIDIA",
+      "ticker": "NVDA",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=nvda.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 180.25,
+      "previousClose": 183.14,
+      "changes": {
+        "dayPct": -1.58,
+        "weekPct": 1.44,
+        "monthPct": -5.16
+      },
+      "sparkline": [
+        182.81,
+        184.97,
+        187.98,
+        187.9,
+        189.82,
+        191.55,
+        192.85,
+        195.56,
+        184.89,
+        177.19,
+        182.48,
+        180.05,
+        183.04,
+        183.33,
+        177.69,
+        182.64,
+        184.76,
+        186.03,
+        183.14,
+        180.25
+      ]
+    },
+    {
+      "id": "tsla",
+      "label": "Tesla",
+      "ticker": "TSLA",
+      "source": "stooq",
+      "sourceLabel": "Stooq",
+      "sourceUrl": "https://stooq.com/q/?s=tsla.us",
+      "unitLabel": "USD/share",
+      "asOf": "2026-03-13",
+      "latestValue": 391.2,
+      "previousClose": 395.01,
+      "changes": {
+        "dayPct": -0.96,
+        "weekPct": -1.39,
+        "monthPct": -8.66
+      },
+      "sparkline": [
+        417.44,
+        410.63,
+        411.32,
+        411.71,
+        411.82,
+        399.83,
+        409.38,
+        417.4,
+        408.58,
+        402.51,
+        403.32,
+        392.355,
+        405.94,
+        405.4013,
+        396.73,
+        398.6,
+        399.25,
+        407.82,
+        395.01,
+        391.2
+      ]
+    }
+  ],
+  "warnings": [],
+  "notes": [
+    "This snapshot refreshes once daily after 07:30 IST (02:00 UTC) so the latest U.S. close and the prior India close land in the same daily read.",
+    "U.S. equities and ETFs are derived from delayed daily history served by Stooq.",
+    "India indices use NSE India's public market snapshot endpoint.",
+    "Macro commodities and VIX come from FRED and can lag the freshest equity close by a session or more."
+  ]
+}

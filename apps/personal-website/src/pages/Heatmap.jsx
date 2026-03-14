@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import {
   Alert,
@@ -19,7 +19,10 @@ import {
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 
-const DEFAULT_ENDPOINT = "/api/heatmap";
+const STATIC_SNAPSHOT_ENDPOINT = "/data/heatmap-latest.json";
+const DEFAULT_DYNAMIC_ENDPOINT = "/api/heatmap";
+const LOCAL_PAYLOAD_CACHE_KEY = "kumar2net:heatmap-payload:v1";
+const LOCAL_PAYLOAD_CACHE_MAX_AGE_MS = 36 * 60 * 60 * 1000;
 
 const DAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -59,10 +62,11 @@ const METRIC_GLOSSARY = [
   },
 ];
 
-function getEndpointCandidates() {
+function getEndpointCandidates(preferStatic) {
   const configuredEndpoint =
-    import.meta.env.VITE_HEATMAP_ENDPOINT || DEFAULT_ENDPOINT;
-  const candidates = [];
+    import.meta.env.VITE_HEATMAP_ENDPOINT || DEFAULT_DYNAMIC_ENDPOINT;
+  const dynamicCandidates = [];
+  const candidates = preferStatic ? [STATIC_SNAPSHOT_ENDPOINT] : [];
 
   if (
     import.meta.env.DEV &&
@@ -70,16 +74,84 @@ function getEndpointCandidates() {
     typeof window !== "undefined" &&
     window.location.port !== "3000"
   ) {
-    candidates.push("http://localhost:3000/api/heatmap");
+    dynamicCandidates.push("http://localhost:3000/api/heatmap");
   }
 
-  candidates.push(configuredEndpoint);
+  dynamicCandidates.push(configuredEndpoint);
+
+  if (preferStatic) {
+    candidates.push(...dynamicCandidates);
+  } else {
+    candidates.push(...dynamicCandidates, STATIC_SNAPSHOT_ENDPOINT);
+  }
 
   return candidates;
 }
 
-async function fetchHeatmapPayload(signal, bypassBrowserCache) {
-  const candidates = getEndpointCandidates();
+function readCachedHeatmapPayload() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(LOCAL_PAYLOAD_CACHE_KEY);
+    if (!raw) {
+      return null;
+    }
+
+    const cachedEntry = JSON.parse(raw);
+    const savedAt = Number(cachedEntry?.savedAt);
+    const payload = cachedEntry?.payload;
+    const isExpired =
+      Number.isFinite(savedAt) &&
+      Date.now() - savedAt > LOCAL_PAYLOAD_CACHE_MAX_AGE_MS;
+
+    if (
+      isExpired ||
+      !payload ||
+      !Array.isArray(payload.categories) ||
+      payload.categories.length === 0
+    ) {
+      window.localStorage.removeItem(LOCAL_PAYLOAD_CACHE_KEY);
+      return null;
+    }
+
+    return payload;
+  } catch {
+    window.localStorage.removeItem(LOCAL_PAYLOAD_CACHE_KEY);
+    return null;
+  }
+}
+
+function writeCachedHeatmapPayload(payload) {
+  if (
+    typeof window === "undefined" ||
+    !payload ||
+    !Array.isArray(payload.categories) ||
+    payload.categories.length === 0
+  ) {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(
+      LOCAL_PAYLOAD_CACHE_KEY,
+      JSON.stringify({
+        savedAt: Date.now(),
+        payload,
+      }),
+    );
+  } catch {
+    // Ignore storage quota and serialization failures.
+  }
+}
+
+async function fetchHeatmapPayload({
+  signal,
+  bypassBrowserCache = false,
+  preferStatic = false,
+} = {}) {
+  const candidates = getEndpointCandidates(preferStatic);
   let lastError;
 
   for (const endpoint of candidates) {
@@ -675,17 +747,33 @@ function HeatmapSection({ group }) {
 
 export default function Heatmap() {
   const theme = useTheme();
-  const [payload, setPayload] = useState(null);
+  const initialPayloadRef = useRef();
+
+  if (initialPayloadRef.current === undefined) {
+    initialPayloadRef.current = readCachedHeatmapPayload();
+  }
+
+  const [payload, setPayload] = useState(initialPayloadRef.current || null);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!initialPayloadRef.current);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
+    const hasCachedPayload = Boolean(initialPayloadRef.current);
 
     async function loadInitialData() {
+      if (hasCachedPayload) {
+        setIsRefreshing(true);
+      }
+
       try {
-        const nextPayload = await fetchHeatmapPayload(controller.signal, false);
+        const nextPayload = await fetchHeatmapPayload({
+          signal: controller.signal,
+          bypassBrowserCache: false,
+          preferStatic: true,
+        });
+        writeCachedHeatmapPayload(nextPayload);
         startTransition(() => {
           setPayload(nextPayload);
           setError("");
@@ -697,6 +785,7 @@ export default function Heatmap() {
       } finally {
         if (!controller.signal.aborted) {
           setIsLoading(false);
+          setIsRefreshing(false);
         }
       }
     }
@@ -710,7 +799,12 @@ export default function Heatmap() {
     setIsRefreshing(true);
 
     try {
-      const nextPayload = await fetchHeatmapPayload(controller.signal, true);
+      const nextPayload = await fetchHeatmapPayload({
+        signal: controller.signal,
+        bypassBrowserCache: true,
+        preferStatic: false,
+      });
+      writeCachedHeatmapPayload(nextPayload);
       startTransition(() => {
         setPayload(nextPayload);
         setError("");

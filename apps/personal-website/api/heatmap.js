@@ -59,7 +59,7 @@ function toCompactDate(date) {
   return date.replaceAll("-", "");
 }
 
-function getSnapshotWindow(now = new Date()) {
+export function getSnapshotWindow(now = new Date()) {
   const refreshToday = new Date(
     Date.UTC(
       now.getUTCFullYear(),
@@ -830,7 +830,7 @@ function uniqueDefinitions(definitions) {
   return idsInOrder.map((id) => byId.get(id));
 }
 
-async function buildPayload(snapshotWindow) {
+export async function buildPayload(snapshotWindow) {
   const warnings = [];
   const nseDefinitions = HEATMAP_GROUPS.flatMap((group) =>
     group.items.filter((item) => item.source === "nse"),
