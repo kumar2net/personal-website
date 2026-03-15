@@ -1,8 +1,8 @@
 import {
-  HEATMAP_GROUPS,
-  HEATMAP_SOURCE_LABELS,
+  KEYDATA_GROUPS,
+  KEYDATA_SOURCE_LABELS,
   MAGNIFICENT_SEVEN,
-} from "../lib/heatmapConfig.js";
+} from "../lib/keydataConfig.js";
 
 const COMMON_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -279,7 +279,7 @@ function normalizeItem(definition, summary) {
     label: definition.label,
     ticker: definition.ticker,
     source: definition.source,
-    sourceLabel: HEATMAP_SOURCE_LABELS[definition.source] || definition.source,
+    sourceLabel: KEYDATA_SOURCE_LABELS[definition.source] || definition.source,
     sourceUrl: formatSourceUrl(definition),
     unitLabel: definition.unitLabel || "price",
     asOf: summary.asOf,
@@ -832,16 +832,16 @@ function uniqueDefinitions(definitions) {
 
 export async function buildPayload(snapshotWindow) {
   const warnings = [];
-  const nseDefinitions = HEATMAP_GROUPS.flatMap((group) =>
+  const nseDefinitions = KEYDATA_GROUPS.flatMap((group) =>
     group.items.filter((item) => item.source === "nse"),
   );
   const stooqDefinitions = uniqueDefinitions([
-    ...HEATMAP_GROUPS.flatMap((group) =>
+    ...KEYDATA_GROUPS.flatMap((group) =>
       group.items.filter((item) => item.source === "stooq"),
     ),
     ...MAGNIFICENT_SEVEN,
   ]);
-  const fredDefinitions = HEATMAP_GROUPS.flatMap((group) =>
+  const fredDefinitions = KEYDATA_GROUPS.flatMap((group) =>
     group.items.filter((item) => item.source === "fred"),
   );
 
@@ -914,7 +914,7 @@ export async function buildPayload(snapshotWindow) {
     );
   });
 
-  const categories = HEATMAP_GROUPS.map((group) => {
+  const categories = KEYDATA_GROUPS.map((group) => {
     const items = group.items
       .map((definition) => itemMap.get(definition.id))
       .filter(Boolean);
@@ -1046,7 +1046,7 @@ export default async function handler(req, res) {
     res.setHeader("content-type", "application/json");
     res.setHeader("cache-control", "no-cache");
     return res.status(500).json({
-      error: "Unable to build heatmap",
+      error: "Unable to build key data",
       details: String(error?.message || error),
     });
   }

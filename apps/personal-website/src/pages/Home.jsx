@@ -136,7 +136,7 @@ const quickLinks = [
   { label: "Science", to: "/science", analyticsKey: "home_quick_science" },
 ];
 
-const heatmapSignals = [
+const keydataSignals = [
   "Magnificent 7 share prices",
   "Nifty 50 and Sensex",
   "WTI, Brent, and VIX",
@@ -599,7 +599,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               7 share-price table at the bottom.
             </Typography>
             <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
-              {heatmapSignals.map((signal) => (
+              {keydataSignals.map((signal) => (
                 <Chip
                   key={signal}
                   label={signal}

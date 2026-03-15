@@ -19,9 +19,9 @@ import {
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
 
-const STATIC_SNAPSHOT_ENDPOINT = "/data/heatmap-latest.json";
-const DEFAULT_DYNAMIC_ENDPOINT = "/api/heatmap";
-const LOCAL_PAYLOAD_CACHE_KEY = "kumar2net:heatmap-payload:v1";
+const STATIC_SNAPSHOT_ENDPOINT = "/data/keydata-latest.json";
+const DEFAULT_DYNAMIC_ENDPOINT = "/api/keydata";
+const LOCAL_PAYLOAD_CACHE_KEY = "kumar2net:keydata-payload:v1";
 const LOCAL_PAYLOAD_CACHE_MAX_AGE_MS = 36 * 60 * 60 * 1000;
 
 const DAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
@@ -64,17 +64,17 @@ const METRIC_GLOSSARY = [
 
 function getEndpointCandidates(preferStatic) {
   const configuredEndpoint =
-    import.meta.env.VITE_HEATMAP_ENDPOINT || DEFAULT_DYNAMIC_ENDPOINT;
+    import.meta.env.VITE_KEYDATA_ENDPOINT || DEFAULT_DYNAMIC_ENDPOINT;
   const dynamicCandidates = [];
   const candidates = preferStatic ? [STATIC_SNAPSHOT_ENDPOINT] : [];
 
   if (
     import.meta.env.DEV &&
-    !import.meta.env.VITE_HEATMAP_ENDPOINT &&
+    !import.meta.env.VITE_KEYDATA_ENDPOINT &&
     typeof window !== "undefined" &&
     window.location.port !== "3000"
   ) {
-    dynamicCandidates.push("http://localhost:3000/api/heatmap");
+    dynamicCandidates.push("http://localhost:3000/api/keydata");
   }
 
   dynamicCandidates.push(configuredEndpoint);
@@ -88,7 +88,7 @@ function getEndpointCandidates(preferStatic) {
   return candidates;
 }
 
-function readCachedHeatmapPayload() {
+function readCachedKeyDataPayload() {
   if (typeof window === "undefined") {
     return null;
   }
@@ -123,7 +123,7 @@ function readCachedHeatmapPayload() {
   }
 }
 
-function writeCachedHeatmapPayload(payload) {
+function writeCachedKeyDataPayload(payload) {
   if (
     typeof window === "undefined" ||
     !payload ||
@@ -146,7 +146,7 @@ function writeCachedHeatmapPayload(payload) {
   }
 }
 
-async function fetchHeatmapPayload({
+async function fetchKeyDataPayload({
   signal,
   bypassBrowserCache = false,
   preferStatic = false,
@@ -164,14 +164,14 @@ async function fetchHeatmapPayload({
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
         throw new Error(
-          payload?.error || `Heatmap request failed (${response.status})`,
+          payload?.error || `Key data request failed (${response.status})`,
         );
       }
 
       const contentType = response.headers.get("content-type") || "";
       if (!contentType.toLowerCase().includes("application/json")) {
         throw new Error(
-          `Heatmap endpoint did not return JSON (${contentType || "unknown content type"})`,
+          `Key data endpoint did not return JSON (${contentType || "unknown content type"})`,
         );
       }
 
@@ -184,7 +184,7 @@ async function fetchHeatmapPayload({
     }
   }
 
-  throw lastError || new Error("Heatmap request failed");
+  throw lastError || new Error("Key data request failed");
 }
 
 function formatPercent(value) {
@@ -689,7 +689,7 @@ function MarketTile({ item }) {
   );
 }
 
-function HeatmapSection({ group }) {
+function KeyDataSection({ group }) {
   const positiveCount = group.items.filter(
     (item) => (item.changes.dayPct || 0) > 0,
   ).length;
@@ -745,12 +745,12 @@ function HeatmapSection({ group }) {
   );
 }
 
-export default function Heatmap() {
+export default function KeyData() {
   const theme = useTheme();
   const initialPayloadRef = useRef();
 
   if (initialPayloadRef.current === undefined) {
-    initialPayloadRef.current = readCachedHeatmapPayload();
+    initialPayloadRef.current = readCachedKeyDataPayload();
   }
 
   const [payload, setPayload] = useState(initialPayloadRef.current || null);
@@ -768,12 +768,12 @@ export default function Heatmap() {
       }
 
       try {
-        const nextPayload = await fetchHeatmapPayload({
+        const nextPayload = await fetchKeyDataPayload({
           signal: controller.signal,
           bypassBrowserCache: false,
           preferStatic: true,
         });
-        writeCachedHeatmapPayload(nextPayload);
+        writeCachedKeyDataPayload(nextPayload);
         startTransition(() => {
           setPayload(nextPayload);
           setError("");
@@ -799,12 +799,12 @@ export default function Heatmap() {
     setIsRefreshing(true);
 
     try {
-      const nextPayload = await fetchHeatmapPayload({
+      const nextPayload = await fetchKeyDataPayload({
         signal: controller.signal,
         bypassBrowserCache: true,
         preferStatic: false,
       });
-      writeCachedHeatmapPayload(nextPayload);
+      writeCachedKeyDataPayload(nextPayload);
       startTransition(() => {
         setPayload(nextPayload);
         setError("");
@@ -1017,7 +1017,7 @@ export default function Heatmap() {
       <InsightsSection insights={payload.insights} snapshot={payload.snapshot} />
 
       {payload.categories.map((group) => (
-        <HeatmapSection key={group.id} group={group} />
+        <KeyDataSection key={group.id} group={group} />
       ))}
 
       <MagnificentSevenTable items={payload.magnificentSeven} />

@@ -1,4 +1,4 @@
-export const HEATMAP_GROUPS = [
+export const KEYDATA_GROUPS = [
   {
     id: "us-market-pulse",
     label: "U.S. Market Pulse",
@@ -265,7 +265,7 @@ export const MAGNIFICENT_SEVEN = [
   },
 ];
 
-export const HEATMAP_SOURCE_LABELS = {
+export const KEYDATA_SOURCE_LABELS = {
   stooq: "Stooq",
   nse: "NSE India",
   fred: "FRED",

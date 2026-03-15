@@ -2,7 +2,6 @@ import React, { Suspense, lazy, useEffect, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import {
   Link as RouterLink,
-  Navigate,
   Route,
   Routes,
   useLocation,
@@ -74,7 +73,7 @@ const TheLastDropOfWater = lazy(
 // Lazy load other pages
 const FlashcardSetPage = lazy(() => import("./pages/FlashcardSetPage"));
 const Shortcuts = lazy(() => import("./pages/Shortcuts"));
-const HeatmapPage = lazy(() => import("./pages/Heatmap"));
+const KeyDataPage = lazy(() => import("./pages/KeyData"));
 const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const ShortsOptimizerDashboard = lazy(
   () => import("./pages/ShortsOptimizerDashboard"),
@@ -567,13 +566,9 @@ const App = ({ mode }) => {
                         canonicalPath="/keydata"
                         type="website"
                       />
-                      <HeatmapPage />
+                      <KeyDataPage />
                     </>
                   }
-                />
-                <Route
-                  path="/heatmap"
-                  element={<Navigate to="/keydata" replace />}
                 />
                 <Route
                   path="/projects/ai-recommender-code"

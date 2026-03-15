@@ -1,14 +1,14 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildPayload, getSnapshotWindow } from "../api/heatmap.js";
+import { buildPayload, getSnapshotWindow } from "../api/keydata.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const OUTPUT_PATH = path.resolve(
   __dirname,
-  "../public/data/heatmap-latest.json",
+  "../public/data/keydata-latest.json",
 );
 
 function isUsableSnapshot(value) {
@@ -36,12 +36,12 @@ async function writeSnapshot(snapshot) {
   const current = await readFile(OUTPUT_PATH, "utf8").catch(() => null);
 
   if (current === next) {
-    console.log("🗂️ Heatmap snapshot already up to date.");
+    console.log("🗂️ Key data snapshot already up to date.");
     return;
   }
 
   await writeFile(OUTPUT_PATH, next, "utf8");
-  console.log("🗂️ Heatmap snapshot refreshed.");
+  console.log("🗂️ Key data snapshot refreshed.");
 }
 
 async function main() {
@@ -53,7 +53,7 @@ async function main() {
     existingSnapshot.snapshot.key === snapshotWindow.key
   ) {
     console.log(
-      `🗂️ Heatmap snapshot already covers ${snapshotWindow.key}; skipping refresh.`,
+      `🗂️ Key data snapshot already covers ${snapshotWindow.key}; skipping refresh.`,
     );
     return;
   }
@@ -62,17 +62,17 @@ async function main() {
     const snapshot = await buildPayload(snapshotWindow);
     await writeSnapshot(snapshot);
     console.log(
-      `📈 Heatmap snapshot ready for ${snapshot.snapshot?.key || snapshotWindow.key}.`,
+      `📈 Key data snapshot ready for ${snapshot.snapshot?.key || snapshotWindow.key}.`,
     );
   } catch (error) {
     if (isUsableSnapshot(existingSnapshot)) {
       console.warn(
-        `⚠️ Heatmap snapshot refresh failed, keeping existing snapshot: ${error.message}`,
+        `⚠️ Key data snapshot refresh failed, keeping existing snapshot: ${error.message}`,
       );
       return;
     }
 
-    console.error(`❌ Heatmap snapshot refresh failed: ${error.message}`);
+    console.error(`❌ Key data snapshot refresh failed: ${error.message}`);
     process.exitCode = 1;
   }
 }
