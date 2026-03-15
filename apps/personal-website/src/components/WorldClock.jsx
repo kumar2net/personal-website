@@ -4,7 +4,9 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useColorMode } from "../providers/ColorModeProvider";
 
-const Clock = ({ timeZone, label, city, isDarkMode }) => {
+const WEATHER_ENDPOINT = "/api/current-weather?preset=world-clock";
+
+const Clock = ({ timeZone, label, city, isDarkMode, temperatureLabel }) => {
   const formatTime = useMemo(
     () => (zone) => {
       const now = new Date();
@@ -34,8 +36,8 @@ const Clock = ({ timeZone, label, city, isDarkMode }) => {
       sx={{
         px: 2.5,
         py: 1.5,
-        minHeight: 108,
-        minWidth: 86,
+        minHeight: 124,
+        minWidth: 106,
         textAlign: "center",
         borderRadius: 3,
         borderColor: "divider",
@@ -65,6 +67,19 @@ const Clock = ({ timeZone, label, city, isDarkMode }) => {
       <Typography
         variant="caption"
         sx={{
+          display: "block",
+          mt: 0.5,
+          fontWeight: 700,
+          color: isDarkMode ? "rgba(248,250,252,0.88)" : "#1e293b",
+        }}
+      >
+        {temperatureLabel}
+      </Typography>
+      <Typography
+        variant="caption"
+        sx={{
+          display: "block",
+          mt: 0.35,
           fontWeight: 500,
           textTransform: "uppercase",
           color: isDarkMode ? "rgba(248,250,252,0.7)" : "#475569",
@@ -76,16 +91,67 @@ const Clock = ({ timeZone, label, city, isDarkMode }) => {
   );
 };
 
+function formatTemperaturePair(weather) {
+  const celsius = weather?.temperature?.celsius;
+  const fahrenheit = weather?.temperature?.fahrenheit;
+
+  if (!Number.isFinite(celsius) || !Number.isFinite(fahrenheit)) {
+    return "";
+  }
+
+  return `${Math.round(celsius)}°C / ${Math.round(fahrenheit)}°F`;
+}
+
 const WorldClock = ({ compact = false }) => {
   const { mode } = useColorMode();
   const isDarkMode = mode === "dark";
+  const [weatherByKey, setWeatherByKey] = useState({});
+  const [weatherError, setWeatherError] = useState("");
   const timeZones = [
-    { label: "SGT", timeZone: "Asia/Singapore", city: "SIN" },
-    { label: "IST", timeZone: "Asia/Kolkata", city: "MAA" },
-    { label: "UTC", timeZone: "Etc/UTC", city: "LON" },
-    { label: "EDT", timeZone: "America/New_York", city: "MCO" },
-    { label: "PDT", timeZone: "America/Los_Angeles", city: "SFO" },
+    { label: "SGT", timeZone: "Asia/Singapore", city: "SIN", weatherKey: "SIN" },
+    { label: "IST", timeZone: "Asia/Kolkata", city: "MAA", weatherKey: "MAA" },
+    { label: "UTC", timeZone: "Etc/UTC", city: "LON", weatherKey: "LON" },
+    { label: "EDT", timeZone: "America/New_York", city: "MCO", weatherKey: "MCO" },
+    { label: "PDT", timeZone: "America/Los_Angeles", city: "SFO", weatherKey: "SFO" },
   ];
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadWeather() {
+      try {
+        setWeatherError("");
+        const response = await fetch(WEATHER_ENDPOINT);
+
+        if (!response.ok) {
+          throw new Error(`Weather request failed (${response.status})`);
+        }
+
+        const payload = await response.json();
+        const nextWeatherByKey = Object.fromEntries(
+          (payload?.items || []).map((item) => [item.key, item]),
+        );
+        if (!active) {
+          return;
+        }
+
+        setWeatherByKey(nextWeatherByKey);
+      } catch (error) {
+        console.error("Failed to load current weather", error);
+        if (active) {
+          setWeatherError(error?.message || "Weather unavailable");
+        }
+      }
+    }
+
+    loadWeather();
+    const refreshId = window.setInterval(loadWeather, 10 * 60 * 1000);
+
+    return () => {
+      active = false;
+      window.clearInterval(refreshId);
+    };
+  }, []);
 
   return (
     <Stack
@@ -97,16 +163,20 @@ const WorldClock = ({ compact = false }) => {
         mt: compact ? 2 : 8,
         flexWrap: "wrap",
         contentVisibility: "auto",
-        containIntrinsicSize: "120px",
+        containIntrinsicSize: "132px",
       }}
     >
-      {timeZones.map(({ label, timeZone, city }) => (
+      {timeZones.map(({ label, timeZone, city, weatherKey }) => (
         <Clock
           key={label}
           label={label}
           timeZone={timeZone}
           city={city}
           isDarkMode={isDarkMode}
+          temperatureLabel={
+            formatTemperaturePair(weatherByKey[weatherKey]) ||
+            (weatherError ? "Temp unavailable" : "Loading temp...")
+          }
         />
       ))}
     </Stack>

@@ -72,6 +72,7 @@ const LOCAL_API_ROUTE_DEFINITIONS = [
   { prefix: "/api/blog-tts", filePath: "api/blog-tts.js" },
   { prefix: "/api/engagement", filePath: "api/engagement.js" },
   { prefix: "/api/heatmap", filePath: "api/heatmap.js" },
+  { prefix: "/api/current-weather", filePath: "api/current-weather.js" },
 ];
 
 let LOCAL_API_ROUTES = null;

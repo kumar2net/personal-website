@@ -27,11 +27,11 @@ const albums = [
 
 const channelHighlights = [
   {
-    eyebrow: "Macro",
-    title: "Hormuz shock, explained fast",
+    eyebrow: "Energy + India",
+    title: "From crude oil to your kitchen",
     description:
-      "A compact look at how India handles fuel, shipping, and supply-chain stress if the Strait of Hormuz is disrupted.",
-    url: "https://www.youtube.com/shorts/iknbqWNboD8",
+      "A quick explainer on why Iran-linked supply shocks reach Indian kitchens fast, how LPG moves through Hormuz, and why one kitchen flame sits on top of a much larger energy system.",
+    url: "https://www.youtube.com/shorts/rfdkOWr-gQ4",
     accent: "warning",
   },
   {
@@ -163,9 +163,10 @@ const Album = () => {
                       AIKumar Useful Stuff
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 720 }}>
-                      Short, practical explainers from the channel on broadband,
-                      payments, AI systems, and everyday decision-making. Start with
-                      a few useful picks here, then jump into the full Shorts feed.
+                      Short, practical explainers from the channel on energy,
+                      broadband, payments, AI systems, and everyday decision-making.
+                      Start with a few useful picks here, then jump into the full
+                      Shorts feed.
                     </Typography>
                   </Box>
 

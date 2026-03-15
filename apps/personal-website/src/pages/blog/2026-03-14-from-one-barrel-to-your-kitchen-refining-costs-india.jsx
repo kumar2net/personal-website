@@ -293,6 +293,24 @@ export default function BlogPost() {
         That nuance matters. The official line is not “India ran out of household LPG.” The official line is: the conflict created a serious enough supply squeeze that the state had to actively protect the cooking-gas chain, while commercial and non-domestic users absorbed more of the pain.
       </p>
 
+      <Box sx={{ my: 4, display: "grid", gap: 1.25, maxWidth: 720, mx: "auto" }}>
+        <Box
+          component="img"
+          src="/media/Crude2LPG.png"
+          alt="Infographic showing how one barrel of crude oil becomes LPG, petrol, diesel, and other fuels, with LPG ending up in Indian household kitchens"
+          loading="lazy"
+          decoding="async"
+          sx={{
+            width: "100%",
+            borderRadius: 3,
+            boxShadow: 2,
+          }}
+        />
+        <Typography variant="caption" sx={{ color: "var(--mui-palette-text-secondary)" }}>
+          A useful barrel-to-kitchen visual. The litre ranges in this graphic are illustrative generic yields; the India-specific PPAC product-share figures used in the analysis appear later in the post.
+        </Typography>
+      </Box>
+
       <Box
         sx={{
           my: 4,
