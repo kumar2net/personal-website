@@ -97,7 +97,6 @@ const SpineImplantDashboardPost = () => {
             <li>Interactive line charts</li>
             <li>Stacked bar charts</li>
             <li>Pie charts for market share</li>
-            <li>Heatmaps for regional analysis</li>
           </ul>
 
           <h3>Healthcare Provider Analytics</h3>

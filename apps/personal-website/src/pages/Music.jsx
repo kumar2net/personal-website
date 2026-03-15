@@ -24,6 +24,11 @@ const MusicPage = () => {
     : theme.palette.getContrastText(theme.palette.error.main);
   const { playlistId, playlistShareId } = musicPlaylistSnapshot;
   const latestSpins = musicPlaylistSnapshot.tracks.slice(-3);
+  const latestTwoSpins = musicPlaylistSnapshot.tracks.slice(-2);
+  const latestTwoTitles =
+    latestTwoSpins.length === 2
+      ? `"${latestTwoSpins[0].title}" and "${latestTwoSpins[1].title}"`
+      : "the latest two additions";
 
   return (
     <Box
@@ -200,9 +205,9 @@ const MusicPage = () => {
                   Latest spins
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  Latest spins auto-sync from the final three songs in the
-                  playlist tail, so this section always matches the newest
-                  additions at the bottom.
+                  The newest two additions right now are {latestTwoTitles},
+                  pulled straight from the playlist tail so this card always
+                  matches what I added most recently.
                 </Typography>
 
                 <Stack spacing={2}>
