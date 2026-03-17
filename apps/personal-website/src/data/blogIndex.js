@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-03-17-reply-cortisol-ashwagandha-sanjaay-babu": {
+    title: "Reply: Cortisol, Ashwagandha, and a More Careful Frame (Sanjaay Babu)",
+    description:
+      "A calm reply to Sanjaay Babu's cortisol essay: ashwagandha is not well described as pure quack, but it also should not be presented as a routine cortisol tool given small heterogeneous trials and a real liver-injury signal.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Reply", "Health", "Cortisol", "Ashwagandha", "Evidence", "Liver Safety"],
+    datePublished: "2026-03-17",
+    dateModified: "2026-03-17",
+    readingTime: "~4 min",
+  },
   "2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india": {
     title: "From One Barrel to Your Kitchen: What Refining Really Costs in India",
     description:
