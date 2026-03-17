@@ -88,6 +88,30 @@ function getEndpointCandidates(preferStatic) {
   return candidates;
 }
 
+function hasUsablePayloadShape(payload) {
+  return Boolean(
+    payload &&
+      typeof payload === "object" &&
+      Array.isArray(payload.categories) &&
+      payload.categories.length > 0,
+  );
+}
+
+function getNextRefreshTimestamp(payload) {
+  const nextRefreshAt = payload?.snapshot?.nextRefreshAt;
+  if (!nextRefreshAt) {
+    return null;
+  }
+
+  const timestamp = Date.parse(nextRefreshAt);
+  return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function isPastRefreshBoundary(payload, now = Date.now()) {
+  const nextRefreshTimestamp = getNextRefreshTimestamp(payload);
+  return nextRefreshTimestamp != null && now >= nextRefreshTimestamp;
+}
+
 function readCachedKeyDataPayload() {
   if (typeof window === "undefined") {
     return null;
@@ -106,12 +130,7 @@ function readCachedKeyDataPayload() {
       Number.isFinite(savedAt) &&
       Date.now() - savedAt > LOCAL_PAYLOAD_CACHE_MAX_AGE_MS;
 
-    if (
-      isExpired ||
-      !payload ||
-      !Array.isArray(payload.categories) ||
-      payload.categories.length === 0
-    ) {
+    if (isExpired || !hasUsablePayloadShape(payload)) {
       window.localStorage.removeItem(LOCAL_PAYLOAD_CACHE_KEY);
       return null;
     }
@@ -124,12 +143,7 @@ function readCachedKeyDataPayload() {
 }
 
 function writeCachedKeyDataPayload(payload) {
-  if (
-    typeof window === "undefined" ||
-    !payload ||
-    !Array.isArray(payload.categories) ||
-    payload.categories.length === 0
-  ) {
+  if (typeof window === "undefined" || !hasUsablePayloadShape(payload)) {
     return;
   }
 
@@ -153,6 +167,7 @@ async function fetchKeyDataPayload({
 } = {}) {
   const candidates = getEndpointCandidates(preferStatic);
   let lastError;
+  let staleFallback = null;
 
   for (const endpoint of candidates) {
     try {
@@ -175,13 +190,31 @@ async function fetchKeyDataPayload({
         );
       }
 
-      return await response.json();
+      const payload = await response.json();
+
+      if (!hasUsablePayloadShape(payload)) {
+        throw new Error("Key data payload is missing market categories");
+      }
+
+      if (
+        endpoint === STATIC_SNAPSHOT_ENDPOINT &&
+        isPastRefreshBoundary(payload)
+      ) {
+        staleFallback = payload;
+        continue;
+      }
+
+      return payload;
     } catch (error) {
       lastError = error;
       if (signal?.aborted) {
         throw error;
       }
     }
+  }
+
+  if (staleFallback) {
+    return staleFallback;
   }
 
   throw lastError || new Error("Key data request failed");
@@ -760,7 +793,9 @@ export default function KeyData() {
 
   useEffect(() => {
     const controller = new AbortController();
-    const hasCachedPayload = Boolean(initialPayloadRef.current);
+    const cachedPayload = initialPayloadRef.current;
+    const hasCachedPayload = Boolean(cachedPayload);
+    const shouldBypassBrowserCache = isPastRefreshBoundary(cachedPayload);
 
     async function loadInitialData() {
       if (hasCachedPayload) {
@@ -770,7 +805,7 @@ export default function KeyData() {
       try {
         const nextPayload = await fetchKeyDataPayload({
           signal: controller.signal,
-          bypassBrowserCache: false,
+          bypassBrowserCache: shouldBypassBrowserCache,
           preferStatic: true,
         });
         writeCachedKeyDataPayload(nextPayload);
