@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import dotenv from "dotenv";
 import { loadRuntimeConfig } from "./config/env.js";
 import { diagnoseShort } from "./optimizer/diagnose.js";
+import { loadExperimentContext, planShortExperiments } from "./optimizer/experiment.js";
 import { rewriteShortVariant } from "./optimizer/rewrite.js";
 import { writeOptimizerOutput } from "./storage/output.js";
 import { YouTubeAnalyticsClient } from "./youtube/analytics.js";
@@ -13,6 +14,7 @@ interface CliOptions {
   command: string | null;
   last: number;
   videoId: string | null;
+  contextFile: string | null;
   channelMine: boolean;
   mock: boolean;
   help: boolean;
@@ -26,7 +28,7 @@ interface SummaryRow {
 }
 
 function printUsage(): void {
-  console.log(`Shorts CTR Optimizer\n\nUsage:\n  node dist/index.js optimize --last 10\n  node dist/index.js optimize --videoId <id>\n  node dist/index.js optimize --last 1 --mock\n\nOptions:\n  --last <n>       Optimize last N shorts (default: 3)\n  --videoId <id>   Optimize a specific video\n  --channelMine    Explicitly use authenticated channel\n  --mock           Use fixture mode\n  --help           Show usage\n`);
+  console.log(`Shorts CTR Optimizer\n\nUsage:\n  node dist/index.js optimize --last 10\n  node dist/index.js optimize --videoId <id>\n  node dist/index.js optimize --last 1 --mock\n  node dist/index.js optimize --videoId <id> --context planner-context.json\n\nOptions:\n  --last <n>         Optimize last N shorts (default: 3)\n  --videoId <id>     Optimize a specific video\n  --context <path>   Optional planner context JSON for experiment planning\n  --channelMine      Explicitly use authenticated channel\n  --mock             Use fixture mode\n  --help             Show usage\n`);
 }
 
 function parseArgs(argv: string[]): CliOptions {
@@ -34,6 +36,7 @@ function parseArgs(argv: string[]): CliOptions {
     command: argv[0] ?? null,
     last: 3,
     videoId: null,
+    contextFile: null,
     channelMine: false,
     mock: false,
     help: false,
@@ -75,6 +78,17 @@ function parseArgs(argv: string[]): CliOptions {
 
     if (token === "--videoId" && argv[index + 1]) {
       parsed.videoId = argv[index + 1];
+      index += 1;
+      continue;
+    }
+
+    if (token.startsWith("--context=")) {
+      parsed.contextFile = token.slice("--context=".length);
+      continue;
+    }
+
+    if (token === "--context" && argv[index + 1]) {
+      parsed.contextFile = argv[index + 1];
       index += 1;
       continue;
     }
@@ -142,12 +156,15 @@ async function main(): Promise<void> {
     repoRoot,
     forceMock: options.mock,
   });
+  const experimentContext = await loadExperimentContext(options.contextFile);
 
   if (runtime.mockMode && runtime.mockReason) {
     console.log(`[shorts-optimizer] ${runtime.mockReason}`);
   }
   if (!runtime.openAiApiKey) {
     console.log("[shorts-optimizer] OPENAI_API_KEY missing. Using deterministic rewrite fallback only.");
+  } else if (options.contextFile) {
+    console.log(`[shorts-optimizer] Loaded planner context from ${options.contextFile}`);
   }
 
   const skillRules = await loadSkillRules(repoRoot);
@@ -185,12 +202,24 @@ async function main(): Promise<void> {
       generatedAt: generatedAt.toISOString(),
     });
 
+    const experimentPlan = await planShortExperiments({
+      config: runtime,
+      outDir: runtime.outDir,
+      video,
+      metrics,
+      diagnosis,
+      variantPlan,
+      generatedAt: generatedAt.toISOString(),
+      context: experimentContext,
+    });
+
     const written = await writeOptimizerOutput({
       outDir: runtime.outDir,
       video,
       metrics,
       diagnosis,
       variantPlan,
+      experimentPlan,
       generatedAt,
     });
 

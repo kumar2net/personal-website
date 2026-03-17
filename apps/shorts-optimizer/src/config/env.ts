@@ -5,6 +5,7 @@ const envSchema = z
   .object({
     OPENAI_API_KEY: z.string().optional(),
     OPENAI_MODEL: z.string().default("gpt-4.1-mini"),
+    OPENAI_PLANNER_MODEL: z.string().default("gpt-5.4"),
     YT_CLIENT_ID: z.string().optional(),
     YT_CLIENT_SECRET: z.string().optional(),
     YT_REFRESH_TOKEN: z.string().optional(),
@@ -26,6 +27,7 @@ export interface RuntimeConfig {
   mockReason: string | null;
   openAiApiKey: string | null;
   openAiModel: string;
+  openAiPlannerModel: string;
   youTubeAuthMode: YouTubeAuthMode;
   ytClientId: string | null;
   ytClientSecret: string | null;
@@ -109,6 +111,7 @@ export function loadRuntimeConfig(params: {
     mockReason,
     openAiApiKey: parsed.OPENAI_API_KEY?.trim() || null,
     openAiModel: parsed.OPENAI_MODEL,
+    openAiPlannerModel: parsed.OPENAI_PLANNER_MODEL,
     youTubeAuthMode,
     ytClientId: parsed.YT_CLIENT_ID?.trim() || null,
     ytClientSecret: parsed.YT_CLIENT_SECRET?.trim() || null,

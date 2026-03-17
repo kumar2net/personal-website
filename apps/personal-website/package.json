@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
     "blog:validate": "node scripts/validate-blog-metadata.mjs",
+    "qa:browser": "node scripts/browser-qa-runner.mjs",
     "keydata:refresh": "node scripts/generate-keydata-snapshot.mjs",
     "music:refresh": "node scripts/fetch-music-playlist.mjs",
     "shorts:metrics": "node scripts/generate-shorts-metrics.mjs",

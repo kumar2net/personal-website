@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Agentic workflow that watches docs/FrontierLabs.md and turns it into a blog post.
- * Uses OpenAI's Agentic Toolkit (Responses API + JSON schema) to normalize metadata,
- * render markdown that matches /blog styling.
+ * Agentic workflow that turns blog hint files into a blog post.
+ * Uses the OpenAI Responses API with structured JSON output to normalize metadata
+ * and render content that matches the /blog route styling.
  */
 
 import fs from 'node:fs';
@@ -31,7 +31,8 @@ const writingSkillPath = path.join(repoRoot, 'skills', 'writing-skill.md');
 
 const defaultModel =
     process.env.BLOGHINT_AGENT_MODEL ||
-    'gpt-4.1-mini';
+    process.env.OPENAI_MODEL ||
+    'gpt-5.4';
 const openaiApiKey = process.env.OPENAI_API_KEY;
 const client = openaiApiKey ? new OpenAI({ apiKey: openaiApiKey }) : null;
 
@@ -79,6 +80,14 @@ function estimateReadingTime(...contentParts) {
 }
 
 function parseResponseJSON(response) {
+    if (typeof response?.output_text === 'string' && response.output_text.trim()) {
+        try {
+            return JSON.parse(response.output_text);
+        } catch (error) {
+            // Fall through to the chunked parsers below.
+        }
+    }
+
     const chunks = response?.output || response?.choices || [];
     for (const chunk of chunks) {
         const content = chunk?.content || chunk?.message?.content;
@@ -211,23 +220,31 @@ async function agenticBlog(content, fileName) {
         },
     };
 
-    const response = await client.chat.completions.create({
+    const response = await client.responses.create({
         model: defaultModel,
-        temperature: 0.7,
-        messages: [
+        max_output_tokens: 1800,
+        text: {
+            format: {
+                type: 'json_schema',
+                name: schema.name,
+                schema: schema.schema,
+            },
+        },
+        input: [
             {
                 role: 'system',
-                content: instructions,
+                content: [{ type: 'input_text', text: instructions }],
             },
             {
                 role: 'user',
-                content: `Filename: ${fileName}\n\nContent:\n${content}`,
+                content: [
+                    {
+                        type: 'input_text',
+                        text: `Filename: ${fileName}\n\nContent:\n${content}`,
+                    },
+                ],
             },
         ],
-        response_format: {
-            type: 'json_schema',
-            json_schema: schema,
-        },
     });
 
     const parsed = parseResponseJSON(response);

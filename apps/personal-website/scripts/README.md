@@ -6,8 +6,8 @@ Automated blog post generation script that converts markdown hints into fully-fo
 
 ### Features
 
-✅ **OpenAI Integration**: Uses GPT-4.1-mini for content generation and DALL-E 3 for images  
-✅ **Local Image Storage**: Downloads and saves images permanently to `/public/media/generated/`  
+✅ **OpenAI Integration**: Uses the Responses API with `BLOGHINT_AGENT_MODEL`, then `OPENAI_MODEL`, then `gpt-5.4` as the default content model, plus DALL-E 3 for images  
+✅ **Local Image Storage**: Downloads and saves images permanently to `/public/generate/`  
 ✅ **Dark Mode Support**: Uses MUI CSS variables so content stays readable in light/dark  
 ✅ **Structured Output**: Generates clean JSX with numbered sections and proper styling  
 
@@ -16,12 +16,15 @@ Automated blog post generation script that converts markdown hints into fully-fo
 ```bash
 # From repository root
 node apps/personal-website/scripts/generate-blog-post.mjs
+
+# Or pass a specific hint file
+node apps/personal-website/scripts/generate-blog-post.mjs docs/bloghints/my-topic.md
 ```
 
 ### Requirements
 
 1. **Environment Variable**: `OPENAI_API_KEY` must be set in `.env`
-2. **Input File**: `docs/bloghints/FrontierLabs.md` must exist
+2. **Input File**: pass a hint file as the first CLI arg, or let the script use its built-in sample hint path
 3. **Node.js**: Version 18+ with ES modules support
 
 ### Output Files
@@ -29,7 +32,7 @@ node apps/personal-website/scripts/generate-blog-post.mjs
 | File | Description |
 |------|-------------|
 | `src/pages/blog/[date]-[slug].jsx` | Generated blog post component |
-| `public/media/generated/[date]-[slug].png` | AI-generated illustration (if requested) |
+| `public/generate/[date]-[slug].png` | AI-generated illustration (if requested) |
 
 ### Generated JSX Structure
 
@@ -68,13 +71,13 @@ color: "var(--mui-palette-text-secondary)"  // Secondary text color
 #### Image Handling
 ```jsx
 // Uses local path, never temporary URLs
-<Box component="img" src="/media/generated/2025-11-19-slug.png" />
+<Box component="img" src="/generate/2025-11-19-slug.png" />
 ```
 
 ### How It Works
 
-1. **Read Input**: Loads markdown from `docs/bloghints/FrontierLabs.md`
-2. **Generate Content**: Calls OpenAI API with structured JSON schema
+1. **Read Input**: Loads markdown from the provided hint file, or from the script's fallback sample file
+2. **Generate Content**: Calls the OpenAI Responses API with structured JSON schema
 3. **Generate Image**: Creates DALL-E 3 image if `imagePrompt` is present
 4. **Download Image**: Fetches image from temporary URL and saves locally
 5. **Build JSX**: Constructs React component with proper styling
@@ -82,13 +85,14 @@ color: "var(--mui-palette-text-secondary)"  // Secondary text color
 
 ### Configuration
 
-Edit these constants in the script:
+Control behavior with these script settings:
 
 ```javascript
-const defaultModel = 'gpt-4.1-mini'  // OpenAI model
-const inputFile = 'docs/bloghints/FrontierLabs.md'  // Input file
-const blogDir = 'apps/personal-website/src/pages/blog/'  // Output directory
-const mediaDir = 'apps/personal-website/public/media/generated/'  // Image storage
+BLOGHINT_AGENT_MODEL=gpt-5.4        // Preferred blog-generation model
+OPENAI_MODEL=gpt-5-mini             // Optional repo-wide fallback model
+inputFile='docs/bloghints/example.md' // Optional CLI arg
+blogDir='apps/personal-website/src/pages/blog/' // Output directory
+publicImageDir='apps/personal-website/public/generate/' // Image storage
 ```
 
 ### Recent Updates (2025-11-19)
@@ -99,7 +103,7 @@ const mediaDir = 'apps/personal-website/public/media/generated/'  // Image stora
 
 #### Fixed: Image Persistence
 - Added `downloadImage()` function to save images locally
-- Images now stored in `/public/media/generated/` with permanent paths
+- Images now stored in `/public/generate/` with permanent paths
 - No more expired Azure blob URLs
 
 #### Fixed: Automated Best Practices
@@ -131,12 +135,12 @@ import { Box, Typography } from "@mui/material";
 - Verify key is valid at https://platform.openai.com/account/api-keys
 
 #### "Input file missing"
-- Ensure `docs/bloghints/FrontierLabs.md` exists
-- Check file path is correct
+- Ensure the hint file exists
+- Check the CLI file path is correct
 
 #### "Image download failed"
 - Check internet connection
-- Verify `/public/media/generated/` directory exists
+- Verify `/public/generate/` directory exists
 - Check disk space
 
 #### Text Not Visible in Dark Mode
@@ -167,7 +171,7 @@ import { Box, Typography } from "@mui/material";
 ### Best Practices
 
 ✅ **DO**:
-- Use local image paths (`/media/generated/...`)
+- Use local image paths (`/generate/...`)
 - Test in both light and dark modes
 - Keep blog hints for documentation
 - Use descriptive slugs

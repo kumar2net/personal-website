@@ -20,6 +20,7 @@ For each optimized video:
   metrics.json
   diagnosis.md
   variant_plan.json
+  experiment_plan.json
   script.txt
   title_and_hashtags.txt
   pinned_comment.txt
@@ -40,6 +41,7 @@ npm run --workspace apps/shorts-optimizer build
 
 - `OPENAI_API_KEY` (optional, enables LLM diagnosis/rewrite refinement)
 - `OPENAI_MODEL` (optional, default: `gpt-4.1-mini`)
+- `OPENAI_PLANNER_MODEL` (optional, default: `gpt-5.4`; used for experiment planning)
 - YouTube auth (choose one):
   - OAuth refresh token flow:
     - `YT_CLIENT_ID`
@@ -60,6 +62,7 @@ From `apps/shorts-optimizer`:
 node dist/index.js optimize --last 10
 node dist/index.js optimize --videoId dQw4w9WgXcQ
 node dist/index.js optimize --last 1 --channelMine
+node dist/index.js optimize --videoId dQw4w9WgXcQ --context planner-context.json
 ```
 
 Mock mode (works without API creds):
@@ -73,6 +76,31 @@ The summary table prints:
 - CTR
 - suggested primary fix
 - output folder
+
+## Optional planner context
+
+Pass `--context <file.json>` to enrich experiment planning with extra inputs.
+
+Example:
+
+```json
+{
+  "creatorGoals": ["Raise comments", "Improve retention"],
+  "audience": "Busy mobile viewers interested in practical tech fixes",
+  "transcript": "Most people blame the router, but the bottleneck is interference...",
+  "notes": "Push harder on the myth-busting angle.",
+  "competitors": [
+    {
+      "title": "Wi-Fi myth breakdown",
+      "hook": "You were told this wrong",
+      "angle": "Name the myth before explaining the fix",
+      "whyItWorked": "Immediate tension and a concrete claim"
+    }
+  ]
+}
+```
+
+The optimizer also reads recent runs from `/out/{videoId}/...` so the experiment plan can avoid repeating the same angle blindly.
 
 ## Notes
 

@@ -16,6 +16,7 @@
     "agent:lint": "node scripts/agent-lint.mjs",
     "canary:health": "node scripts/canary-health.mjs",
     "token:budget": "node scripts/token-budget.mjs",
+    "qa:browser": "node apps/personal-website/scripts/browser-qa-runner.mjs",
     "sitemap": "node apps/personal-website/scripts/generate-sitemap.mjs",
     "shorts:scaffold": "node scripts/shorts-manifest/scaffold-template.mjs",
     "shorts:render": "node scripts/shorts-manifest/render-locale.mjs",

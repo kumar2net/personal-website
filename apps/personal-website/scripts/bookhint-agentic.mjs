@@ -47,7 +47,8 @@ const gradients = [
 const defaultModel =
   process.env.BOOKHINT_AGENT_MODEL ||
   process.env.BLOGHINT_AGENT_MODEL ||
-  'gpt-4.1-mini';
+  process.env.OPENAI_MODEL ||
+  'gpt-5.4';
 const openaiApiKey = process.env.OPENAI_API_KEY;
 const client = openaiApiKey ? new OpenAI({ apiKey: openaiApiKey }) : null;
 
@@ -255,6 +256,14 @@ function buildMarkdown(meta, sections) {
 }
 
 function parseResponseJSON(response) {
+  if (typeof response?.output_text === 'string' && response.output_text.trim()) {
+    try {
+      return JSON.parse(response.output_text);
+    } catch (error) {
+      // Fall through to the chunked parsers below.
+    }
+  }
+
   const chunks = response?.output || response?.choices || [];
   for (const chunk of chunks) {
     const content = chunk?.content || chunk?.message?.content;
@@ -358,9 +367,9 @@ async function agenticSummarize(content, fileName) {
 
   const response = await client.responses.create({
     model: defaultModel,
-    temperature: 0.35,
     max_output_tokens: 1600,
     text: {
+      verbosity: 'medium',
       format: {
         type: 'json_schema',
         name: schema.name,

@@ -111,6 +111,9 @@ npm run dev:netlify
 # Lint entire project
 npm run lint
 
+# Browser QA against a running dev/preview server
+npm run qa:browser -- --baseUrl=http://127.0.0.1:5173
+
 # Biome static analysis
 npm run biome:check
 

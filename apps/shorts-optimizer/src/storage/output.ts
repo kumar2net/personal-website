@@ -1,6 +1,7 @@
 import path from "node:path";
 import { mkdir, writeFile } from "node:fs/promises";
 import type { DiagnosisResult } from "../optimizer/diagnose.js";
+import { experimentPlanSchema, type ExperimentPlan } from "../optimizer/experiment.js";
 import { variantPlanSchema, type VariantPlan } from "../optimizer/rewrite.js";
 import type { ShortMetrics, ShortVideo } from "../youtube/data.js";
 import { toTimestampId } from "../utils/paths.js";
@@ -67,12 +68,17 @@ export function validateVariantPlan(input: unknown): VariantPlan {
   return variantPlanSchema.parse(input);
 }
 
+export function validateExperimentPlan(input: unknown): ExperimentPlan {
+  return experimentPlanSchema.parse(input);
+}
+
 export async function writeOptimizerOutput(params: {
   outDir: string;
   video: ShortVideo;
   metrics: ShortMetrics;
   diagnosis: DiagnosisResult;
   variantPlan: VariantPlan;
+  experimentPlan: ExperimentPlan;
   generatedAt: Date;
 }): Promise<{ outputDir: string; timestamp: string }> {
   const timestamp = toTimestampId(params.generatedAt);
@@ -81,6 +87,7 @@ export async function writeOptimizerOutput(params: {
   await mkdir(outputDir, { recursive: true });
 
   const validatedPlan = validateVariantPlan(params.variantPlan);
+  const validatedExperimentPlan = validateExperimentPlan(params.experimentPlan);
   const generatedAtIso = params.generatedAt.toISOString();
 
   await writeFile(
@@ -103,6 +110,12 @@ export async function writeOptimizerOutput(params: {
   await writeFile(
     path.join(outputDir, "variant_plan.json"),
     `${JSON.stringify(validatedPlan, null, 2)}\n`,
+    "utf8",
+  );
+
+  await writeFile(
+    path.join(outputDir, "experiment_plan.json"),
+    `${JSON.stringify(validatedExperimentPlan, null, 2)}\n`,
     "utf8",
   );
 
