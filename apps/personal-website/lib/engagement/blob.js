@@ -127,3 +127,40 @@ export const savePrompt = async (slug, answer) => {
   });
   return payload;
 };
+
+export const saveListingReport = async (
+  slug,
+  {
+    listingId,
+    listingName,
+    categoryId,
+    reportType,
+    message = "",
+  } = {},
+) => {
+  if (!listingId || !reportType) {
+    throw new Error("Listing report is missing required fields");
+  }
+
+  const normalizedMessage = typeof message === "string" ? message.trim() : "";
+
+  if (reportType === "update" && normalizedMessage.length < 5) {
+    throw new Error("Please add a short note describing the update");
+  }
+
+  const entry = {
+    anonymousID: generateAnonymousId(),
+    timestamp: new Date().toISOString(),
+    listingId: `${listingId}`.trim(),
+    listingName: typeof listingName === "string" ? listingName.trim() : "",
+    categoryId: typeof categoryId === "string" ? categoryId.trim() : "",
+    reportType,
+    message: normalizedMessage,
+  };
+
+  return postEngagement({
+    type: "listing_report",
+    slug: safeSlug(slug),
+    entry,
+  });
+};

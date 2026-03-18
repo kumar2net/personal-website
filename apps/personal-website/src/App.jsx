@@ -42,6 +42,7 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Learning = lazy(() => import("./pages/Learning"));
 const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
+const AnanyasLocalGuide = lazy(() => import("./pages/AnanyasLocalGuide"));
 const ScienceIndex = lazy(() => import("./pages/science"));
 const ProteinFoldingPage = lazy(
   () => import("./pages/science/protein-folding"),
@@ -94,6 +95,11 @@ const AiRecommenderCode = lazy(
 const navLinks = [
   { label: "About", to: "/about", analyticsKey: "nav_about" },
   { label: "Elsewhere", to: "/elsewhere", analyticsKey: "nav_elsewhere" },
+  {
+    label: "Local Guide",
+    to: "/local/ananyas-nearby",
+    analyticsKey: "nav_local_guide",
+  },
   { label: "Projects", to: "/projects", analyticsKey: "nav_projects" },
   { label: "Key Data", to: "/keydata", analyticsKey: "nav_keydata" },
   { label: "Books", to: "/books", analyticsKey: "nav_books" },
@@ -669,6 +675,7 @@ const App = ({ mode }) => {
                     </>
                   }
                 />
+                <Route path="/local/ananyas-nearby" element={<AnanyasLocalGuide />} />
                 <Route
                   path="/books"
                   element={

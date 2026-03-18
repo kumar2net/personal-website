@@ -4,6 +4,7 @@ import { resolveIdempotencyKey, withIdempotentExecution } from "../src/lib/idemp
 const DEFAULT_BLOB_BASE =
   "https://jf0xcffb3qoqwhu6.public.blob.vercel-storage.com";
 const REACTIONS = ["❤️", "😂", "🤔", "👍", "😮", "🙏"];
+const LISTING_REPORT_TYPES = ["stale", "update"];
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -61,6 +62,11 @@ const buildIdempotencyPayload = ({
   const safeEntry = {
     answer: typeof entry?.answer === "string" ? entry.answer.trim() : "",
     anonymousID: entry?.anonymousID ? `${entry.anonymousID}` : "",
+    listingId: typeof entry?.listingId === "string" ? entry.listingId.trim() : "",
+    listingName: typeof entry?.listingName === "string" ? entry.listingName.trim() : "",
+    categoryId: typeof entry?.categoryId === "string" ? entry.categoryId.trim() : "",
+    reportType: typeof entry?.reportType === "string" ? entry.reportType.trim() : "",
+    message: typeof entry?.message === "string" ? entry.message.trim() : "",
   };
   return JSON.stringify({
     type,
@@ -69,8 +75,30 @@ const buildIdempotencyPayload = ({
     requestIdentity,
     answer: safeEntry.answer,
     anonymousID: safeEntry.anonymousID,
+    listingId: safeEntry.listingId,
+    listingName: safeEntry.listingName,
+    categoryId: safeEntry.categoryId,
+    reportType: safeEntry.reportType,
+    message: safeEntry.message,
   });
 };
+
+const sanitizeListingReportEntry = (entry = {}) => ({
+  anonymousID: entry?.anonymousID || `anon-${Date.now()}`,
+  timestamp: entry?.timestamp || new Date().toISOString(),
+  listingId:
+    typeof entry?.listingId === "string" ? entry.listingId.trim().slice(0, 160) : "",
+  listingName:
+    typeof entry?.listingName === "string"
+      ? entry.listingName.trim().slice(0, 160)
+      : "",
+  categoryId:
+    typeof entry?.categoryId === "string" ? entry.categoryId.trim().slice(0, 120) : "",
+  reportType:
+    typeof entry?.reportType === "string" ? entry.reportType.trim().slice(0, 24) : "",
+  message:
+    typeof entry?.message === "string" ? entry.message.trim().slice(0, 500) : "",
+});
 
 const applyCors = (res) => {
   Object.entries(CORS_HEADERS).forEach(([key, value]) => {
@@ -237,6 +265,60 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error("[engagement] Failed to persist prompt reply", error);
       return res.status(500).json({ error: "Failed to store prompt reply. Try again." });
+    }
+  }
+
+  if (type === "listing_report") {
+    const safeEntry = sanitizeListingReportEntry(entry);
+
+    if (!safeEntry.listingId) {
+      return res.status(400).json({ error: "Listing identifier is required" });
+    }
+
+    if (!LISTING_REPORT_TYPES.includes(safeEntry.reportType)) {
+      return res.status(400).json({ error: "Unsupported listing report type" });
+    }
+
+    if (safeEntry.reportType === "update" && safeEntry.message.length < 5) {
+      return res
+        .status(400)
+        .json({ error: "Please add a short note describing the update" });
+    }
+
+    try {
+      const result = await withIdempotentExecution({
+        key: resolveIdempotencyKey(
+          req,
+          buildIdempotencyPayload({
+            type,
+            slug: normalizedSlug,
+            entry: safeEntry,
+            requestIdentity: getRequestIdentity(req),
+          }),
+        ),
+        fn: async () => {
+          const path = `engagement/${normalizedSlug}/listing-reports.json`;
+          const current = (await fetchBlobJSON(path)) || {};
+          const nextEntries = [
+            safeEntry,
+            ...(Array.isArray(current.entries) ? current.entries : []),
+          ].slice(0, 200);
+          const payload = {
+            entries: nextEntries,
+            updatedAt: new Date().toISOString(),
+          };
+
+          await persistBlobJSON(path, payload);
+          return payload;
+        },
+      });
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error("[engagement] Failed to persist listing report", error);
+      return res
+        .status(500)
+        .json({ error: "Failed to store listing report. Try again." });
     }
   }
 
