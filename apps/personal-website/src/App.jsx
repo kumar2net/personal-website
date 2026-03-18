@@ -79,6 +79,7 @@ const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const ShortsOptimizerDashboard = lazy(
   () => import("./pages/ShortsOptimizerDashboard"),
 );
+const LocalGuideReview = lazy(() => import("./pages/LocalGuideReview"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
@@ -789,6 +790,25 @@ const App = ({ mode }) => {
                         description="Enter the utilities credentials to view private Shorts performance data."
                       >
                         <ShortsOptimizerDashboard />
+                      </PasswordGate>
+                    </>
+                  }
+                />
+                <Route
+                  path="/utilities/local-guide-review"
+                  element={
+                    <>
+                      <SEO
+                        title="Local Guide Review"
+                        description="Private review queue for Ananyas local guide listing reports."
+                        canonicalPath="/utilities/local-guide-review"
+                        type="website"
+                      />
+                      <PasswordGate
+                        title="Local Guide Review Access"
+                        description="Enter the utilities credentials to review listing reports and approve updates."
+                      >
+                        <LocalGuideReview />
                       </PasswordGate>
                     </>
                   }

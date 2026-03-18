@@ -5,6 +5,7 @@ const DEFAULT_BLOB_BASE =
   "https://jf0xcffb3qoqwhu6.public.blob.vercel-storage.com";
 const REACTIONS = ["❤️", "😂", "🤔", "👍", "😮", "🙏"];
 const LISTING_REPORT_TYPES = ["stale", "update"];
+const LISTING_REVIEW_STATUSES = ["approved", "dismissed"];
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -16,6 +17,8 @@ const BLOB_PUBLIC_BASE =
   process.env.BLOB_PUBLIC_BASE ||
   process.env.VITE_BLOB_PUBLIC_BASE ||
   DEFAULT_BLOB_BASE;
+const BLOB_WRITE_TOKEN =
+  process.env.BLOB_STORE_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN || "";
 
 const normalizePath = (value = "") => value.replace(/^\/+/, "");
 
@@ -67,6 +70,9 @@ const buildIdempotencyPayload = ({
     categoryId: typeof entry?.categoryId === "string" ? entry.categoryId.trim() : "",
     reportType: typeof entry?.reportType === "string" ? entry.reportType.trim() : "",
     message: typeof entry?.message === "string" ? entry.message.trim() : "",
+    reportId: typeof entry?.reportId === "string" ? entry.reportId.trim() : "",
+    status: typeof entry?.status === "string" ? entry.status.trim() : "",
+    note: typeof entry?.note === "string" ? entry.note.trim() : "",
   };
   return JSON.stringify({
     type,
@@ -80,6 +86,9 @@ const buildIdempotencyPayload = ({
     categoryId: safeEntry.categoryId,
     reportType: safeEntry.reportType,
     message: safeEntry.message,
+    reportId: safeEntry.reportId,
+    status: safeEntry.status,
+    note: safeEntry.note,
   });
 };
 
@@ -98,6 +107,17 @@ const sanitizeListingReportEntry = (entry = {}) => ({
     typeof entry?.reportType === "string" ? entry.reportType.trim().slice(0, 24) : "",
   message:
     typeof entry?.message === "string" ? entry.message.trim().slice(0, 500) : "",
+});
+
+const sanitizeListingReviewEntry = (entry = {}) => ({
+  anonymousID: entry?.anonymousID || `anon-${Date.now()}`,
+  timestamp: entry?.timestamp || new Date().toISOString(),
+  reportId:
+    typeof entry?.reportId === "string" ? entry.reportId.trim().slice(0, 240) : "",
+  status:
+    typeof entry?.status === "string" ? entry.status.trim().slice(0, 24) : "",
+  note:
+    typeof entry?.note === "string" ? entry.note.trim().slice(0, 320) : "",
 });
 
 const applyCors = (res) => {
@@ -144,10 +164,15 @@ const fetchBlobJSON = async (path) => {
 };
 
 const persistBlobJSON = async (path, data) => {
+  if (!BLOB_WRITE_TOKEN) {
+    throw new Error(
+      "Blob write token is missing. Set BLOB_STORE_WRITE_TOKEN or BLOB_READ_WRITE_TOKEN.",
+    );
+  }
+
   await put(normalizePath(path), JSON.stringify(data, null, 2), {
-    access: "public",
+    token: BLOB_WRITE_TOKEN,
     contentType: "application/json",
-    addRandomSuffix: false,
   });
 };
 
@@ -319,6 +344,54 @@ export default async function handler(req, res) {
       return res
         .status(500)
         .json({ error: "Failed to store listing report. Try again." });
+    }
+  }
+
+  if (type === "listing_report_review") {
+    const safeEntry = sanitizeListingReviewEntry(entry);
+
+    if (!safeEntry.reportId) {
+      return res.status(400).json({ error: "Report identifier is required" });
+    }
+
+    if (!LISTING_REVIEW_STATUSES.includes(safeEntry.status)) {
+      return res.status(400).json({ error: "Unsupported listing review status" });
+    }
+
+    try {
+      const result = await withIdempotentExecution({
+        key: resolveIdempotencyKey(
+          req,
+          buildIdempotencyPayload({
+            type,
+            slug: normalizedSlug,
+            entry: safeEntry,
+            requestIdentity: getRequestIdentity(req),
+          }),
+        ),
+        fn: async () => {
+          const path = `engagement/${normalizedSlug}/listing-report-reviews.json`;
+          const current = (await fetchBlobJSON(path)) || {};
+          const nextEntries = [
+            safeEntry,
+            ...(Array.isArray(current.entries) ? current.entries : []),
+          ].slice(0, 400);
+          const payload = {
+            entries: nextEntries,
+            updatedAt: new Date().toISOString(),
+          };
+
+          await persistBlobJSON(path, payload);
+          return payload;
+        },
+      });
+
+      return res.status(200).json(result);
+    } catch (error) {
+      console.error("[engagement] Failed to persist listing review", error);
+      return res
+        .status(500)
+        .json({ error: "Failed to store listing review. Try again." });
     }
   }
 

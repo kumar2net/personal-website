@@ -6,6 +6,7 @@ import ShoppingBasketRoundedIcon from "@mui/icons-material/ShoppingBasketRounded
 import HandymanRoundedIcon from "@mui/icons-material/HandymanRounded";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import {
   Alert,
   Box,
@@ -22,6 +23,7 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+import { Link as RouterLink } from "react-router-dom";
 import SEO from "../components/SEO";
 import { ananyasLocalGuide } from "../data/ananyasLocalGuide";
 import { saveListingReport } from "../../lib/engagement/blob";
@@ -399,7 +401,7 @@ export default function AnanyasLocalGuide() {
     setReportFeedback(null);
 
     try {
-      await saveListingReport(ananyasLocalGuide.slug, {
+      const result = await saveListingReport(ananyasLocalGuide.slug, {
         listingId: target.reportId,
         listingName: target.name,
         categoryId: target.categoryId,
@@ -408,9 +410,12 @@ export default function AnanyasLocalGuide() {
       });
 
       setReportFeedback({
-        severity: "success",
-        message:
-          reportType === "stale"
+        severity: result?.localFallback ? "warning" : "success",
+        message: result?.localFallback
+          ? reportType === "stale"
+            ? `${target.name} was saved locally on this device for recheck. Configure blob writes to collect reports centrally.`
+            : `Your update for ${target.name} was saved locally on this device. Configure blob writes to collect reports centrally.`
+          : reportType === "stale"
             ? `${target.name} was marked for recheck.`
             : `Update suggestion sent for ${target.name}.`,
       });
@@ -526,6 +531,15 @@ export default function AnanyasLocalGuide() {
                 sx={{ borderRadius: 999 }}
               >
                 Open campus area map
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/utilities/local-guide-review"
+                variant="outlined"
+                startIcon={<LockRoundedIcon />}
+                sx={{ borderRadius: 999 }}
+              >
+                Review reports
               </Button>
             </Stack>
           </Stack>

@@ -26,6 +26,9 @@ const safeSlug = (slug) => {
   return trimmed ? trimmed : "global";
 };
 
+const LOCAL_LISTING_REPORT_PREFIX = "listing-reports:";
+const LOCAL_LISTING_REVIEW_PREFIX = "listing-report-reviews:";
+
 const fetchJSON = async (path) => {
   try {
     const response = await fetch(`${BLOB_PUBLIC_BASE}/${encodePath(path)}`, {
@@ -41,6 +44,22 @@ const fetchJSON = async (path) => {
     }
     return null;
   }
+};
+
+export const getListingReportId = (entry = {}) => {
+  const anonymousID =
+    typeof entry?.anonymousID === "string" && entry.anonymousID.trim()
+      ? entry.anonymousID.trim()
+      : "anon";
+  const timestamp =
+    typeof entry?.timestamp === "string" && entry.timestamp.trim()
+      ? entry.timestamp.trim()
+      : "unknown-time";
+  const listingId =
+    typeof entry?.listingId === "string" && entry.listingId.trim()
+      ? entry.listingId.trim()
+      : "unknown-listing";
+  return `${listingId}::${timestamp}::${anonymousID}`;
 };
 
 const postEngagement = async (payload) => {
@@ -102,6 +121,50 @@ export const getPrompts = async (slug) => {
   return [];
 };
 
+export const getListingReports = async (slug) => {
+  const remote = await fetchJSON(`engagement/${safeSlug(slug)}/listing-reports.json`);
+  return Array.isArray(remote?.entries) ? remote.entries : [];
+};
+
+export const getLocalListingReports = (slug) => {
+  if (typeof window === "undefined" || !window.localStorage) {
+    return [];
+  }
+
+  try {
+    const raw = window.localStorage.getItem(
+      `${LOCAL_LISTING_REPORT_PREFIX}${safeSlug(slug)}`,
+    );
+    const parsed = raw ? JSON.parse(raw) : null;
+    return Array.isArray(parsed?.entries) ? parsed.entries : [];
+  } catch {
+    return [];
+  }
+};
+
+export const getListingReportReviews = async (slug) => {
+  const remote = await fetchJSON(
+    `engagement/${safeSlug(slug)}/listing-report-reviews.json`,
+  );
+  return Array.isArray(remote?.entries) ? remote.entries : [];
+};
+
+export const getLocalListingReportReviews = (slug) => {
+  if (typeof window === "undefined" || !window.localStorage) {
+    return [];
+  }
+
+  try {
+    const raw = window.localStorage.getItem(
+      `${LOCAL_LISTING_REVIEW_PREFIX}${safeSlug(slug)}`,
+    );
+    const parsed = raw ? JSON.parse(raw) : null;
+    return Array.isArray(parsed?.entries) ? parsed.entries : [];
+  } catch {
+    return [];
+  }
+};
+
 const generateAnonymousId = () => {
   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
     return crypto.randomUUID();
@@ -158,9 +221,86 @@ export const saveListingReport = async (
     message: normalizedMessage,
   };
 
-  return postEngagement({
-    type: "listing_report",
-    slug: safeSlug(slug),
-    entry,
-  });
+  try {
+    return await postEngagement({
+      type: "listing_report",
+      slug: safeSlug(slug),
+      entry,
+    });
+  } catch (error) {
+    if (typeof window === "undefined" || !window.localStorage) {
+      throw error;
+    }
+
+    try {
+      const storageKey = `${LOCAL_LISTING_REPORT_PREFIX}${safeSlug(slug)}`;
+      const existingRaw = window.localStorage.getItem(storageKey);
+      const existing = existingRaw ? JSON.parse(existingRaw) : {};
+      const nextEntries = [
+        entry,
+        ...(Array.isArray(existing?.entries) ? existing.entries : []),
+      ].slice(0, 200);
+      const payload = {
+        entries: nextEntries,
+        updatedAt: new Date().toISOString(),
+        localFallback: true,
+      };
+      window.localStorage.setItem(storageKey, JSON.stringify(payload));
+      return payload;
+    } catch {
+      throw error;
+    }
+  }
+};
+
+export const saveListingReportReview = async (
+  slug,
+  {
+    reportId,
+    status,
+    note = "",
+  } = {},
+) => {
+  if (!reportId || !status) {
+    throw new Error("Listing review is missing required fields");
+  }
+
+  const entry = {
+    anonymousID: generateAnonymousId(),
+    timestamp: new Date().toISOString(),
+    reportId: `${reportId}`.trim(),
+    status: `${status}`.trim(),
+    note: typeof note === "string" ? note.trim() : "",
+  };
+
+  try {
+    return await postEngagement({
+      type: "listing_report_review",
+      slug: safeSlug(slug),
+      entry,
+    });
+  } catch (error) {
+    if (typeof window === "undefined" || !window.localStorage) {
+      throw error;
+    }
+
+    try {
+      const storageKey = `${LOCAL_LISTING_REVIEW_PREFIX}${safeSlug(slug)}`;
+      const existingRaw = window.localStorage.getItem(storageKey);
+      const existing = existingRaw ? JSON.parse(existingRaw) : {};
+      const nextEntries = [
+        entry,
+        ...(Array.isArray(existing?.entries) ? existing.entries : []),
+      ].slice(0, 200);
+      const payload = {
+        entries: nextEntries,
+        updatedAt: new Date().toISOString(),
+        localFallback: true,
+      };
+      window.localStorage.setItem(storageKey, JSON.stringify(payload));
+      return payload;
+    } catch {
+      throw error;
+    }
+  }
 };
