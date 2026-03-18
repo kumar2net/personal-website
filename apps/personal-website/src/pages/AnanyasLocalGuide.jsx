@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
+import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
 import LocalPharmacyRoundedIcon from "@mui/icons-material/LocalPharmacyRounded";
 import ShoppingBasketRoundedIcon from "@mui/icons-material/ShoppingBasketRounded";
@@ -30,6 +31,7 @@ import { saveListingReport } from "../../lib/engagement/blob";
 
 const categoryIcons = {
   fruits: ShoppingBasketRoundedIcon,
+  flowers: LocalFloristRoundedIcon,
   medicines: LocalPharmacyRoundedIcon,
   groceries: LocalGroceryStoreRoundedIcon,
   services: HandymanRoundedIcon,

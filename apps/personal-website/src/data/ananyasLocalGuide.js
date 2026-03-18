@@ -176,6 +176,63 @@ export const ananyasLocalGuide = {
       ],
     },
     {
+      id: "flowers",
+      title: "Flowers and garlands",
+      description:
+        "Flower buying splits into two needs here: a nearby option for pooja flowers and garlands, and a few delivery florists for bouquet or celebration orders into campus.",
+      items: [
+        {
+          ...publicDirectoryVerification,
+          staleAfterDays: 21,
+          name: "Eswari Flower Shop",
+          area: "Vadavalli-Thondamuthur Road",
+          address:
+            "Opp. Day To Day Fruits And Vegetables, Vadavalli-Thondamuthur Road, Coimbatore 641041",
+          hours: "Check same-day availability before depending on it",
+          note:
+            "The closest public-web florist lead I found on the Vadavalli side. Best first try for pooja flowers, loose flowers, and small garlands.",
+          sourceLabel: "Chotu / WhatsApp listing",
+          sourceUrl:
+            "https://chotu.com/local/florist-in-coimbatore-tamil-nadu-india/ct-1659568/",
+          mapUrl: createMapsSearchUrl(
+            "Eswari Flower Shop, Opp Day To Day Fruits And Vegetables, Vadavalli-Thondamuthur Road, Coimbatore 641041",
+          ),
+        },
+        {
+          ...publicDirectoryVerification,
+          staleAfterDays: 21,
+          name: "Sgc Flowers",
+          area: "Maruthalai Road, Vadavalli",
+          address: "Maruthalai Road, Vadavalli, Coimbatore",
+          hours: "Justdial notes same-day delivery; confirm live timing by phone",
+          note:
+            "Useful local backup because the current Vadavalli Justdial shortlist explicitly mentions same-day delivery and WhatsApp support.",
+          sourceLabel: "Justdial shortlist",
+          sourceUrl:
+            "https://www.justdial.com/Coimbatore/Flower-Shops-in-Vadavalli/nct-10212874",
+          mapUrl: createMapsSearchUrl(
+            "Sgc Flowers, Maruthalai Road, Vadavalli, Coimbatore",
+          ),
+        },
+        {
+          ...officialSiteVerification,
+          staleAfterDays: 30,
+          name: "Hope's Florist",
+          area: "Hope College, delivery across Coimbatore",
+          address:
+            "No. 2, Kannan Towers, Hope College, Coimbatore 641004",
+          hours: "Same-day delivery is available for selected bouquets",
+          note:
+            "Stronger bouquet and gifting backup when children or family want a cleaner online order flow instead of a roadside flower run.",
+          sourceLabel: "Official site",
+          sourceUrl: "https://hopesflorist.com/",
+          mapUrl: createMapsSearchUrl(
+            "Hope's Florist, No 2 Kannan Towers, Hope College, Coimbatore 641004",
+          ),
+        },
+      ],
+    },
+    {
       id: "medicines",
       title: "Medicines and pharmacy",
       description:
