@@ -1,19 +1,19 @@
 1
-00:00:00,000 --> 00:00:06,000
-The cortisol framework is not the problem. The supplement shortcut is.
+00:00:00,000 --> 00:00:07,000
+Short version: the cortisol framework is useful, but the supplement framing needs more caution.
 
 2
-00:00:06,000 --> 00:00:18,000
-Morning light, hydration, exercise timing, dim evenings, and slower breathing all make sense.
+00:00:07,000 --> 00:00:18,000
+The strongest parts are the low-risk basics: light, exercise timing, food timing, and breathing.
 
 3
 00:00:18,000 --> 00:00:30,000
-The weak point is treating ashwagandha like a casual evening cortisol hack.
+My disagreement is narrow. Ashwagandha should not be normalized as a routine evening cortisol tool.
 
 4
 00:00:30,000 --> 00:00:42,000
-The evidence is mixed, not zero, and liver-safety warnings make casual framing reckless.
+The evidence is not zero, but it is small, mixed, and paired with a real liver-safety warning.
 
 5
 00:00:42,000 --> 00:00:48,000
-Keep the routine. Make the supplement a footnote. Want the sources?
+So keep the framework, and treat ashwagandha as an optional footnote, not a default protocol.

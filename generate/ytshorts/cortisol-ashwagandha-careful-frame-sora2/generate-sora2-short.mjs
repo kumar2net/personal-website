@@ -15,6 +15,9 @@ const MODEL = process.env.SORA_MODEL || "sora-2";
 const SIZE = "720x1280";
 const TTS_MODEL = process.env.BLOG_TTS_MODEL || "gpt-4o-mini-tts";
 const TTS_VOICE = process.env.BLOG_TTS_VOICE || "alloy";
+const REUSE_EXISTING_CLIPS = ["1", "true", "yes", "on"].includes(
+  String(process.env.REUSE_EXISTING_CLIPS || "").trim().toLowerCase(),
+);
 const POLL_INTERVAL_MS = 10_000;
 const POLL_TIMEOUT_MS = 30 * 60_000;
 const TOPIC =
@@ -57,28 +60,28 @@ const PINNED_COMMENT =
 const NARRATION_SEGMENTS = [
   {
     t0: 0,
-    t1: 6,
-    text: "The cortisol framework is not the problem. The supplement shortcut is.",
+    t1: 7,
+    text: "Short version: the cortisol framework is useful, but the supplement framing needs more caution.",
   },
   {
-    t0: 6,
+    t0: 7,
     t1: 18,
-    text: "Morning light, hydration, exercise timing, dim evenings, and slower breathing all make sense.",
+    text: "The strongest parts are the low-risk basics: light, exercise timing, food timing, and breathing.",
   },
   {
     t0: 18,
     t1: 30,
-    text: "The weak point is treating ashwagandha like a casual evening cortisol hack.",
+    text: "My disagreement is narrow. Ashwagandha should not be normalized as a routine evening cortisol tool.",
   },
   {
     t0: 30,
     t1: 42,
-    text: "The evidence is mixed, not zero, and liver-safety warnings make casual framing reckless.",
+    text: "The evidence is not zero, but it is small, mixed, and paired with a real liver-safety warning.",
   },
   {
     t0: 42,
     t1: 48,
-    text: "Keep the routine. Make the supplement a footnote. Want the sources?",
+    text: "So keep the framework, and treat ashwagandha as an optional footnote, not a default protocol.",
   },
 ];
 
@@ -204,6 +207,15 @@ function buildSrt(segments) {
 
 async function ensureDir(dir) {
   await fs.mkdir(dir, { recursive: true });
+}
+
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function writeText(filePath, data) {
@@ -433,6 +445,17 @@ async function renderFinalVideo(masterVideoPath, narrationPath, outputPath) {
   );
 }
 
+function makeClipRecord(segment) {
+  const clipNum = String(segment.index).padStart(2, "0");
+  const prefix = `${PROJECT}-${clipNum}-${segment.name}`;
+  return {
+    segment,
+    filePath: path.join(WORK_DIR, `${prefix}.mp4`),
+    thumbnailPath: path.join(WORK_DIR, `${prefix}-thumbnail.jpg`),
+    metadataPath: path.join(WORK_DIR, `${prefix}.json`),
+  };
+}
+
 async function writePackageFiles(clips, finalVideoPath, masterVideoPath, narrationPath) {
   const concatListPath = path.join(WORK_DIR, "concat-list.txt");
   const concatList = clips
@@ -517,81 +540,95 @@ async function run() {
     clips: [],
   };
 
-  const clips = [];
-
-  for (const segment of SEGMENTS) {
-    const clipNum = String(segment.index).padStart(2, "0");
-    const prefix = `${PROJECT}-${clipNum}-${segment.name}`;
-    const prompt = `${BASE_STYLE}\n${segment.prompt}`;
-    const promptPath = path.join(WORK_DIR, `${prefix}.prompt.txt`);
-    const videoPath = path.join(WORK_DIR, `${prefix}.mp4`);
-    const thumbnailPath = path.join(WORK_DIR, `${prefix}-thumbnail.jpg`);
-    const metadataPath = path.join(WORK_DIR, `${prefix}.json`);
-
-    await writeText(promptPath, prompt);
-    console.log(`[${nowIso()}] Creating clip ${clipNum}: ${segment.name} (${segment.seconds}s)`);
-
-    const created = await client.videos.create({
-      model: MODEL,
-      size: SIZE,
-      seconds: segment.seconds,
-      prompt,
-    });
-
-    console.log(`[${nowIso()}] Created ${created.id} (status=${created.status})`);
-    const completed = await pollUntilFinished(client, created.id);
-
-    const videoRes = await client.videos.downloadContent(completed.id, { variant: "video" });
-    await downloadBinary(videoRes, videoPath);
-
-    const thumbRes = await client.videos.downloadContent(completed.id, {
-      variant: "thumbnail",
-    });
-    await downloadBinary(thumbRes, thumbnailPath);
-
-    const clipMeta = {
-      generatedAt: nowIso(),
-      videoId: completed.id,
-      model: completed.model,
-      size: completed.size,
-      seconds: completed.seconds,
-      status: completed.status,
-      progress: completed.progress,
-      promptFile: path.basename(promptPath),
-      output: path.basename(videoPath),
-      thumbnail: path.basename(thumbnailPath),
-      summary: segment.summary,
-      overlaySuggestion: segment.overlay,
-      expiresAt: completed.expires_at,
-      completedAt: completed.completed_at,
-    };
-    await writeJson(metadataPath, clipMeta);
-
-    const clipRecord = {
-      segment,
-      videoId: completed.id,
-      filePath: videoPath,
-      thumbnailPath,
-      metadataPath,
-    };
-
-    clips.push(clipRecord);
-    manifest.clips.push({
-      name: segment.name,
-      seconds: segment.seconds,
-      videoId: completed.id,
-      file: path.basename(videoPath),
-      thumbnail: path.basename(thumbnailPath),
-      metadata: path.basename(metadataPath),
-    });
-  }
-
+  const clips = SEGMENTS.map((segment) => makeClipRecord(segment));
   const masterVideoPath = path.join(WORK_DIR, "sora2-master-48s.mp4");
   const narrationPath = path.join(WORK_DIR, "voiceover.wav");
   const finalVideoPath = path.join(WORK_DIR, "final-sora2.mp4");
 
-  console.log(`[${nowIso()}] Stitching ${clips.length} clips into native-audio master MP4`);
-  await renderMasterVideo(clips, masterVideoPath);
+  if (!REUSE_EXISTING_CLIPS) {
+    for (const segment of SEGMENTS) {
+      const clipNum = String(segment.index).padStart(2, "0");
+      const prefix = `${PROJECT}-${clipNum}-${segment.name}`;
+      const prompt = `${BASE_STYLE}\n${segment.prompt}`;
+      const promptPath = path.join(WORK_DIR, `${prefix}.prompt.txt`);
+      const videoPath = path.join(WORK_DIR, `${prefix}.mp4`);
+      const thumbnailPath = path.join(WORK_DIR, `${prefix}-thumbnail.jpg`);
+      const metadataPath = path.join(WORK_DIR, `${prefix}.json`);
+
+      await writeText(promptPath, prompt);
+      console.log(`[${nowIso()}] Creating clip ${clipNum}: ${segment.name} (${segment.seconds}s)`);
+
+      const created = await client.videos.create({
+        model: MODEL,
+        size: SIZE,
+        seconds: segment.seconds,
+        prompt,
+      });
+
+      console.log(`[${nowIso()}] Created ${created.id} (status=${created.status})`);
+      const completed = await pollUntilFinished(client, created.id);
+
+      const videoRes = await client.videos.downloadContent(completed.id, { variant: "video" });
+      await downloadBinary(videoRes, videoPath);
+
+      const thumbRes = await client.videos.downloadContent(completed.id, {
+        variant: "thumbnail",
+      });
+      await downloadBinary(thumbRes, thumbnailPath);
+
+      const clipMeta = {
+        generatedAt: nowIso(),
+        videoId: completed.id,
+        model: completed.model,
+        size: completed.size,
+        seconds: completed.seconds,
+        status: completed.status,
+        progress: completed.progress,
+        promptFile: path.basename(promptPath),
+        output: path.basename(videoPath),
+        thumbnail: path.basename(thumbnailPath),
+        summary: segment.summary,
+        overlaySuggestion: segment.overlay,
+        expiresAt: completed.expires_at,
+        completedAt: completed.completed_at,
+      };
+      await writeJson(metadataPath, clipMeta);
+
+      manifest.clips.push({
+        name: segment.name,
+        seconds: segment.seconds,
+        videoId: completed.id,
+        file: path.basename(videoPath),
+        thumbnail: path.basename(thumbnailPath),
+        metadata: path.basename(metadataPath),
+      });
+    }
+
+    console.log(`[${nowIso()}] Stitching ${clips.length} clips into native-audio master MP4`);
+    await renderMasterVideo(clips, masterVideoPath);
+  } else {
+    for (const clip of clips) {
+      if (!(await fileExists(clip.filePath))) {
+        throw new Error(`Cannot reuse clips because this file is missing: ${clip.filePath}`);
+      }
+    }
+    if (!(await fileExists(masterVideoPath))) {
+      console.log(`[${nowIso()}] Master video missing, rebuilding from existing clips`);
+      await renderMasterVideo(clips, masterVideoPath);
+    } else {
+      console.log(`[${nowIso()}] Reusing existing clip MP4s and master video`);
+    }
+    manifest.clips.push(
+      ...clips.map((clip) => ({
+        name: clip.segment.name,
+        seconds: clip.segment.seconds,
+        file: path.basename(clip.filePath),
+        thumbnail: path.basename(clip.thumbnailPath),
+        metadata: path.basename(clip.metadataPath),
+      })),
+    );
+  }
+
   console.log(`[${nowIso()}] Synthesizing narration with ${TTS_MODEL}/${TTS_VOICE}`);
   await buildNarration(client, narrationPath);
   console.log(`[${nowIso()}] Mixing narration with native clip audio`);

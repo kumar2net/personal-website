@@ -44,22 +44,44 @@ const measurementSnapshots = [
   {
     host: "nixi.in",
     badge: "ICMP blocked here",
+    detailFormat: "mono",
     pingSummary: "10 probes, 512-byte payload, 100% packet loss",
     latencySummary: "No ICMP echo reply from this network",
     tracerouteSummary:
       "Traceroute reached 103.249.97.70 at hop 8 in 27.4 ms, then the remaining hops stopped replying.",
-    route:
+    detail:
       "192.168.0.1 (2.9 ms) → 10.202.0.1 (4.2 ms) → broadband.actcorp.in (5.0 ms) → VSNL Chennai (4.7 ms) → VSNL Mumbai (22.9 ms) → 103.249.97.70 (27.4 ms) → hops 9-16: *",
   },
   {
-    host: "cloudfare.com",
-    badge: "Exact hostname used",
+    host: "cloudflare.com",
+    badge: "Corrected hostname",
+    detailFormat: "mono",
     pingSummary: "10 probes, 512-byte payload, 0% packet loss",
-    latencySummary: "min 20.914 ms, avg 22.891 ms, max 25.917 ms, stddev 2.080 ms",
+    latencySummary: "min 20.728 ms, avg 23.346 ms, max 25.162 ms, stddev 1.942 ms",
     tracerouteSummary:
-      "Traceroute resolved the first advertised address, 172.67.211.231, and completed in 7 hops.",
-    route:
-      "192.168.0.1 (6.3 ms) → 10.202.0.1 (5.1 ms) → broadband.actcorp.in (5.0 ms) → ACT edge (23.8 ms) → 103.16.203.73 (24.6 ms) → 162.158.52.39 (30.1 ms) → 172.67.211.231 (21.1 ms)",
+      "Traceroute resolved the first advertised address, 104.16.132.229, and completed in 7 hops.",
+    detail:
+      "192.168.0.1 (2.8 ms) → 10.202.0.1 (4.3 ms) → broadband.actcorp.in (5.1 ms) → ACT edge (23.2 ms) → 103.16.203.73 (21.7 ms) → 162.158.52.19 (25.3 ms) → 104.16.132.229 (20.9 ms)",
+  },
+  {
+    host: "nyc.speedtest.clouvider.net",
+    badge: "USA east coast",
+    detailFormat: "plain",
+    pingSummary: "10 probes, 512-byte payload, 0% packet loss",
+    latencySummary: "min 221.348 ms, avg 262.894 ms, max 332.397 ms, stddev 43.128 ms",
+    tracerouteSummary:
+      "Representative New York City endpoint used as an east-coast baseline from this network.",
+    detail: "Resolved to 194.33.45.192.",
+  },
+  {
+    host: "la.speedtest.clouvider.net",
+    badge: "USA west coast",
+    detailFormat: "plain",
+    pingSummary: "10 probes, 512-byte payload, 0% packet loss",
+    latencySummary: "min 249.632 ms, avg 272.867 ms, max 328.493 ms, stddev 29.816 ms",
+    tracerouteSummary:
+      "Representative Los Angeles endpoint used as a west-coast baseline from this network.",
+    detail: "Resolved to 77.247.126.223.",
   },
 ];
 
@@ -191,11 +213,14 @@ export default function NetworkingPage() {
                     variant="bodySmall"
                     sx={{
                       color: alpha(onSurface, 0.72),
-                      fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                      fontFamily:
+                        snapshot.detailFormat === "mono"
+                          ? "ui-monospace, SFMono-Regular, Menlo, monospace"
+                          : "inherit",
                       lineHeight: 1.65,
                     }}
                   >
-                    {snapshot.route}
+                    {snapshot.detail}
                   </Typography>
                 </CardContent>
               </Card>
