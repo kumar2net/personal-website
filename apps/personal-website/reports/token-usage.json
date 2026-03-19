@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-03-19T02:55:33.916Z",
+  "totalInputTokens": 2769,
+  "totalOutputTokens": 4815,
+  "totalTokens": 7584,
+  "entries": [
+    {
+      "provider": "openai",
+      "route": "blog-tts-translation",
+      "model": "gpt-4o-mini-2024-07-18",
+      "input_tokens": 923,
+      "output_tokens": 1603,
+      "total_tokens": 2526,
+      "request_id": "chatcmpl-DKxpDTauySuYUkugtygTLQTG4MNIk",
+      "meta": {
+        "timestamp": "2026-03-19T02:55:27.826Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "blog-tts-translation",
+      "model": "gpt-4o-mini-2024-07-18",
+      "input_tokens": 923,
+      "output_tokens": 1586,
+      "total_tokens": 2509,
+      "request_id": "chatcmpl-DKxpHZo1FqttvD65GNTUTzPFEwGKn",
+      "meta": {
+        "timestamp": "2026-03-19T02:55:33.758Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "blog-tts-translation",
+      "model": "gpt-4o-mini-2024-07-18",
+      "input_tokens": 923,
+      "output_tokens": 1626,
+      "total_tokens": 2549,
+      "request_id": "chatcmpl-DKxpG3NR2bY1HzydSZ3jrBzkMx8kW",
+      "meta": {
+        "timestamp": "2026-03-19T02:55:33.916Z"
+      }
+    }
+  ]
+}

@@ -149,6 +149,37 @@ export default function ScienceIndex() {
           <Card sx={cardSx}>
             <CardActionArea
               component={RouterLink}
+              to="/science/networking"
+              sx={{ height: "100%" }}
+            >
+              <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                <Chip
+                  size="small"
+                  label="Interactive WebGPU"
+                  sx={{
+                    width: "fit-content",
+                    backgroundColor: alpha(primaryContainer, 0.14),
+                    color: primaryContainer,
+                    fontWeight: 600,
+                  }}
+                />
+                <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                  Networking Packet Flow
+                </Typography>
+                <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                  Packet-flow visualizer for the path from client to Wi-Fi AP, router,
+                  DNS, and the wider internet.
+                </Typography>
+                <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
+                  Turn packet rate, loss, and jitter into motion you can see.
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+
+          <Card sx={cardSx}>
+            <CardActionArea
+              component={RouterLink}
               to="/science/protein-folding"
               sx={{ height: "100%" }}
             >

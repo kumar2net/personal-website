@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-03-19T03:52:14.305Z",
+  "videoId": "video_69bb70de229c8190934ea3d2b4e96f3200eb1520f53f3aad",
+  "model": "sora-2",
+  "size": "720x1280",
+  "seconds": "12",
+  "status": "completed",
+  "progress": 100,
+  "promptFile": "cortisol-ashwagandha-careful-frame-sora2-04-payoff-cta.prompt.txt",
+  "output": "cortisol-ashwagandha-careful-frame-sora2-04-payoff-cta.mp4",
+  "thumbnail": "cortisol-ashwagandha-careful-frame-sora2-04-payoff-cta-thumbnail.jpg",
+  "summary": "Resolve the thesis: keep the routine in the center, move the supplement to the margin, end with an open curiosity loop.",
+  "overlaySuggestion": "FOOTNOTE, NOT DEFAULT",
+  "expiresAt": 1774065084,
+  "completedAt": 1773892284
+}

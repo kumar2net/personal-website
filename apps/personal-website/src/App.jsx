@@ -50,6 +50,7 @@ const ProteinFoldingPage = lazy(
 const BrainVsAiPrimerPage = lazy(() => import("./pages/science/brain-vs-ai"));
 const BackPainPlanPage = lazy(() => import("./pages/science/back-pain"));
 const PaperSizesPage = lazy(() => import("./pages/science/paper-sizes"));
+const NetworkingPage = lazy(() => import("./pages/science/networking"));
 const PatellarInstabilityPage = lazy(
   () => import("./pages/science/patellar-instability"),
 );
@@ -866,6 +867,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <BrainVsAiPrimerPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/science/networking"
+                  element={
+                    <>
+                      <SEO
+                        title="Networking Packet Flow – Client to Internet"
+                        description="Interactive WebGPU packet-flow demo with WebGL2 fallback showing client, Wi-Fi AP, router, DNS, and internet hops."
+                        canonicalPath="/science/networking"
+                        type="website"
+                      />
+                      <NetworkingPage />
                     </>
                   }
                 />

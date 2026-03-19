@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-03-19T03:34:19.303Z",
+  "topic": "Keep the useful cortisol-rhythm framework, but treat ashwagandha as a cautious footnote instead of a default evening hack.",
+  "model": "sora-2",
+  "size": "720x1280",
+  "clips": [
+    {
+      "name": "hook-myth-break",
+      "seconds": "12",
+      "videoId": "video_69bb6ebc841c8193a9f00cfceaf7f59402fa5cd3b0cc5dbd",
+      "file": "cortisol-ashwagandha-careful-frame-sora2-01-hook-myth-break.mp4",
+      "thumbnail": "cortisol-ashwagandha-careful-frame-sora2-01-hook-myth-break-thumbnail.jpg",
+      "metadata": "cortisol-ashwagandha-careful-frame-sora2-01-hook-myth-break.json"
+    },
+    {
+      "name": "context-compression",
+      "seconds": "12",
+      "videoId": "video_69bb6f781300819388bbf0dd53b510d50fc78a9b331a0451",
+      "file": "cortisol-ashwagandha-careful-frame-sora2-02-context-compression.mp4",
+      "thumbnail": "cortisol-ashwagandha-careful-frame-sora2-02-context-compression-thumbnail.jpg",
+      "metadata": "cortisol-ashwagandha-careful-frame-sora2-02-context-compression.json"
+    },
+    {
+      "name": "evidence-breakdown",
+      "seconds": "12",
+      "videoId": "video_69bb702cc9bc8191b9ca3d91c448d55e014bd2771679954a",
+      "file": "cortisol-ashwagandha-careful-frame-sora2-03-evidence-breakdown.mp4",
+      "thumbnail": "cortisol-ashwagandha-careful-frame-sora2-03-evidence-breakdown-thumbnail.jpg",
+      "metadata": "cortisol-ashwagandha-careful-frame-sora2-03-evidence-breakdown.json"
+    },
+    {
+      "name": "payoff-cta",
+      "seconds": "12",
+      "videoId": "video_69bb70de229c8190934ea3d2b4e96f3200eb1520f53f3aad",
+      "file": "cortisol-ashwagandha-careful-frame-sora2-04-payoff-cta.mp4",
+      "thumbnail": "cortisol-ashwagandha-careful-frame-sora2-04-payoff-cta-thumbnail.jpg",
+      "metadata": "cortisol-ashwagandha-careful-frame-sora2-04-payoff-cta.json"
+    }
+  ],
+  "outputs": {
+    "masterVideo": "sora2-master-48s.mp4",
+    "narrationAudio": "voiceover.wav",
+    "finalVideo": "final-sora2.mp4"
+  }
+}

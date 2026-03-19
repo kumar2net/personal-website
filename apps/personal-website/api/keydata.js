@@ -1,8 +1,11 @@
+import { createRequire } from "node:module";
 import {
   KEYDATA_GROUPS,
   KEYDATA_SOURCE_LABELS,
   MAGNIFICENT_SEVEN,
 } from "../lib/keydataConfig.js";
+
+const require = createRequire(import.meta.url);
 
 const COMMON_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -15,12 +18,21 @@ const SNAPSHOT_REFRESH_UTC_HOUR = 2;
 const SNAPSHOT_REFRESH_UTC_MINUTE = 0;
 const BROWSER_CACHE_MAX_AGE_SECONDS = 5 * 60;
 const CDN_STALE_SECONDS = 12 * 60 * 60;
-const REQUEST_TIMEOUT_MS = 12_000;
-const MAX_FETCH_ATTEMPTS = 3;
+const REQUEST_TIMEOUT_MS = 4_000;
+const MAX_FETCH_ATTEMPTS = 1;
+const STOOQ_CONCURRENCY = 12;
+const FRED_CONCURRENCY = 4;
 const STOOQ_LOOKBACK_DAYS = 120;
 const FRED_LOOKBACK_DAYS = 180;
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
+const BUNDLED_SNAPSHOT = (() => {
+  try {
+    return require("../public/data/keydata-latest.json");
+  } catch {
+    return null;
+  }
+})();
 
 const NSE_HEADERS = {
   Accept: "application/json,text/plain,*/*",
@@ -44,6 +56,20 @@ function applyCors(res) {
   Object.entries(COMMON_HEADERS).forEach(([key, value]) => {
     res.setHeader(key, value);
   });
+}
+
+function isUsableSnapshot(value) {
+  return Boolean(
+    value &&
+      typeof value === "object" &&
+      Array.isArray(value.categories) &&
+      value.categories.length > 0 &&
+      value.snapshot?.key,
+  );
+}
+
+function getBundledSnapshot() {
+  return isUsableSnapshot(BUNDLED_SNAPSHOT) ? BUNDLED_SNAPSHOT : null;
 }
 
 function numberOrNull(value) {
@@ -865,12 +891,12 @@ export async function buildPayload(snapshotWindow) {
     settleWithConcurrency(
       stooqDefinitions,
       (definition) => loadStooqItem(definition),
-      4,
+      STOOQ_CONCURRENCY,
     ),
     settleWithConcurrency(
       fredDefinitions,
       (definition) => loadFredItem(definition),
-      2,
+      FRED_CONCURRENCY,
     ),
   ]);
 
@@ -985,6 +1011,7 @@ function buildStalePayload(payload, error, snapshotWindow) {
 
 async function getPayload() {
   const snapshotWindow = getSnapshotWindow();
+  const bundledSnapshot = getBundledSnapshot();
 
   if (
     memoryCache.payload &&
@@ -993,6 +1020,23 @@ async function getPayload() {
   ) {
     return {
       payload: memoryCache.payload,
+      cacheSeconds: snapshotWindow.cacheSeconds,
+    };
+  }
+
+  if (
+    bundledSnapshot &&
+    bundledSnapshot.snapshot.key === snapshotWindow.key &&
+    !memoryCache.payload
+  ) {
+    memoryCache = {
+      key: bundledSnapshot.snapshot.key,
+      payload: bundledSnapshot,
+      nextRefreshAt: snapshotWindow.nextRefreshAt.valueOf(),
+    };
+
+    return {
+      payload: bundledSnapshot,
       cacheSeconds: snapshotWindow.cacheSeconds,
     };
   }
@@ -1010,9 +1054,11 @@ async function getPayload() {
       cacheSeconds: snapshotWindow.cacheSeconds,
     };
   } catch (error) {
-    if (memoryCache.payload) {
+    const fallbackPayload = memoryCache.payload || bundledSnapshot;
+
+    if (fallbackPayload) {
       return {
-        payload: buildStalePayload(memoryCache.payload, error, snapshotWindow),
+        payload: buildStalePayload(fallbackPayload, error, snapshotWindow),
         cacheSeconds: Math.min(snapshotWindow.cacheSeconds, 15 * 60),
       };
     }

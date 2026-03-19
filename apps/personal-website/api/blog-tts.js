@@ -48,6 +48,16 @@ function resolveBooleanFlag(...values) {
   return false;
 }
 
+function resolveFeatureEnabled(...values) {
+  for (const value of values) {
+    if (value === undefined || value === null || value === "") {
+      continue;
+    }
+    return resolveBooleanFlag(value);
+  }
+  return true;
+}
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -162,7 +172,7 @@ const CACHE_TTL_MS = Number(process.env.BLOG_TTS_CACHE_TTL_MS || 30 * 60 * 1000)
 const CACHE_LIMIT = Number(process.env.BLOG_TTS_CACHE_LIMIT || 24);
 const USE_STREAMING =
   process.env.BLOG_TTS_STREAMING === "false" ? false : true;
-const BLOG_TTS_ENABLED = resolveBooleanFlag(
+const BLOG_TTS_ENABLED = resolveFeatureEnabled(
   process.env.BLOG_TTS_ENABLED,
   ENV_SNAPSHOT.BLOG_TTS_ENABLED,
   process.env.VITE_BLOG_TTS_ENABLED,
@@ -1018,7 +1028,7 @@ export default async function handler(req, res) {
   if (!BLOG_TTS_ENABLED) {
     return res.status(503).json({
       error:
-        "Text-to-speech is temporarily disabled while quota resets. Set BLOG_TTS_ENABLED=true and VITE_BLOG_TTS_ENABLED=true to re-enable it.",
+        "Text-to-speech is disabled. Set BLOG_TTS_ENABLED=true (and VITE_BLOG_TTS_ENABLED=true if you also want to hide/show the client control explicitly) to re-enable it.",
     });
   }
 

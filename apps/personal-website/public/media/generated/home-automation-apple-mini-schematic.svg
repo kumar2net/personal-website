@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Apple mini home automation schematic</title>
+  <desc id="desc">Electrical and control schematic for a home automation system with a Mac mini, OpenAI voice APIs, UPS-backed network, lighting relays, BLDC fan controllers, AC control bridges, and manual wall-switch fallback.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#17312c" />
+    </marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#2f63c5" />
+    </marker>
+    <style>
+      .bg { fill: #f7f5ef; }
+      .frame { fill: #fffdf8; stroke: #17312c; stroke-width: 3; rx: 24; ry: 24; }
+      .power { fill: #fff1db; stroke: #b96c18; stroke-width: 3; rx: 18; ry: 18; }
+      .control { fill: #e9fbf4; stroke: #0d6b53; stroke-width: 3; rx: 18; ry: 18; }
+      .apple { fill: #eef5ff; stroke: #2f63c5; stroke-width: 3; rx: 18; ry: 18; }
+      .device { fill: #ffffff; stroke: #17312c; stroke-width: 2.5; rx: 18; ry: 18; }
+      .note { fill: #fffefb; stroke: #17312c; stroke-width: 2; stroke-dasharray: 8 8; rx: 14; ry: 14; }
+      .title { font: 800 38px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
+      .subtitle { font: 500 21px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #36554c; }
+      .section { font: 800 25px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
+      .label { font: 700 22px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
+      .small { font: 500 18px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #24433b; }
+      .tiny { font: 500 16px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #24433b; }
+      .mains { fill: none; stroke: #17312c; stroke-width: 5; marker-end: url(#arrow); }
+      .controlLine { fill: none; stroke: #2f63c5; stroke-width: 4; stroke-dasharray: 10 10; marker-end: url(#arrowBlue); }
+      .bus { fill: none; stroke: #b96c18; stroke-width: 4; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="1100" />
+  <text class="title" x="60" y="62">Apple Mini Home Automation Schematic</text>
+  <text class="subtitle" x="60" y="96">Example branch layout for lights, BLDC fans, AC, sensors, OpenAI voice control, and UPS-backed control gear.</text>
+
+  <rect class="power" x="40" y="140" width="300" height="880" />
+  <text class="section" x="66" y="180">Distribution Side</text>
+
+  <rect class="device" x="70" y="220" width="240" height="90" />
+  <text class="label" x="95" y="260">Utility mains</text>
+  <text class="small" x="95" y="288">230 V AC single phase</text>
+
+  <rect class="device" x="70" y="350" width="240" height="90" />
+  <text class="label" x="95" y="390">RCCB / SPD</text>
+  <text class="small" x="95" y="418">Protection and isolation</text>
+
+  <rect class="device" x="70" y="495" width="240" height="75" />
+  <text class="label" x="95" y="540">MCB-L1 Lighting</text>
+
+  <rect class="device" x="70" y="620" width="240" height="75" />
+  <text class="label" x="95" y="665">MCB-F1 Fan</text>
+
+  <rect class="device" x="70" y="745" width="240" height="75" />
+  <text class="label" x="95" y="790">MCB-AC1 AC</text>
+
+  <rect class="device" x="70" y="870" width="240" height="100" />
+  <text class="label" x="95" y="912">Neutral + earth bars</text>
+  <text class="small" x="95" y="940">Return paths and grounding</text>
+
+  <rect class="control" x="390" y="140" width="1160" height="220" />
+  <text class="section" x="418" y="180">Low-Voltage Control Plane</text>
+
+  <rect class="device" x="430" y="215" width="230" height="95" />
+  <text class="label" x="455" y="255">UPS</text>
+  <text class="small" x="455" y="283">Backs up router and Mac mini</text>
+
+  <rect class="control" x="700" y="215" width="250" height="95" />
+  <text class="label" x="726" y="255">Mac mini</text>
+  <text class="small" x="726" y="283">OpenClaw + Home Assistant</text>
+
+  <rect class="apple" x="990" y="215" width="240" height="95" />
+  <text class="label" x="1016" y="255">OpenAI voice APIs</text>
+  <text class="small" x="1016" y="283">gpt-realtime / transcribe / TTS</text>
+
+  <rect class="device" x="1270" y="215" width="240" height="95" />
+  <text class="label" x="1296" y="255">Router / WAN / Zigbee</text>
+  <text class="small" x="1296" y="283">Internet for OpenAI + local device radios</text>
+
+  <rect class="frame" x="390" y="405" width="1160" height="175" />
+  <text class="section" x="418" y="442">Lighting Branch</text>
+
+  <rect class="device" x="420" y="460" width="95" height="75" />
+  <text class="label" x="437" y="505">S1</text>
+
+  <rect class="power" x="560" y="445" width="260" height="105" />
+  <text class="label" x="586" y="485">Smart relay / dimmer</text>
+  <text class="small" x="586" y="513">Behind switch plate or DB</text>
+
+  <rect class="device" x="890" y="445" width="250" height="105" />
+  <text class="label" x="916" y="485">Light point / room circuit</text>
+  <text class="small" x="916" y="513">Manual override stays available</text>
+
+  <rect class="frame" x="390" y="610" width="1160" height="175" />
+  <text class="section" x="418" y="647">BLDC Fan Branch</text>
+
+  <rect class="device" x="420" y="665" width="95" height="75" />
+  <text class="label" x="437" y="710">S2</text>
+
+  <rect class="power" x="560" y="650" width="260" height="105" />
+  <text class="label" x="586" y="690">Fan-rated controller</text>
+  <text class="small" x="586" y="718">No phase dimmer or capacitor regulator</text>
+
+  <rect class="device" x="890" y="650" width="250" height="105" />
+  <text class="label" x="916" y="690">BLDC ceiling fan</text>
+  <text class="small" x="916" y="718">Speed by protocol-aware controller only</text>
+
+  <rect class="frame" x="390" y="815" width="1160" height="175" />
+  <text class="section" x="418" y="852">AC Branch</text>
+
+  <rect class="power" x="560" y="855" width="260" height="105" />
+  <text class="label" x="586" y="895">Local isolator / breaker</text>
+  <text class="small" x="586" y="923">Dedicated AC power feed</text>
+
+  <rect class="device" x="890" y="855" width="250" height="105" />
+  <text class="label" x="916" y="895">Split AC indoor and outdoor</text>
+  <text class="small" x="916" y="923">Keep compressor power path standard</text>
+
+  <rect class="device" x="1190" y="855" width="300" height="105" />
+  <text class="label" x="1216" y="895">IR bridge or dry contact</text>
+  <text class="small" x="1216" y="923">Use dry contact only if vendor supports it</text>
+
+  <path class="mains" d="M190 310 L190 350" />
+  <path class="mains" d="M190 440 L190 495" />
+  <path class="mains" d="M190 440 L190 620" />
+  <path class="mains" d="M190 440 L190 745" />
+
+  <path class="mains" d="M310 532 L560 532" />
+  <path class="mains" d="M820 498 L890 498" />
+
+  <path class="mains" d="M310 657 L560 703" />
+  <path class="mains" d="M820 703 L890 703" />
+
+  <path class="mains" d="M310 782 L560 907" />
+  <path class="mains" d="M820 907 L890 907" />
+
+  <path class="bus" d="M310 920 L1490 920" />
+  <text class="tiny" x="1180" y="944">Neutral and earth distribution</text>
+
+  <path class="controlLine" d="M1270 265 C1170 265 1180 498 1140 498" />
+  <path class="controlLine" d="M1270 265 C1170 265 1180 703 1140 703" />
+  <path class="controlLine" d="M1270 265 C1170 265 1280 907 1190 907" />
+  <path class="controlLine" d="M950 265 C905 265 905 703 820 703" />
+
+  <rect class="note" x="1170" y="445" width="320" height="300" />
+  <text class="label" x="1196" y="486">Control notes</text>
+  <text class="tiny" x="1196" y="522">1. Keep all smart modules accessible.</text>
+  <text class="tiny" x="1196" y="550">2. Use fan-specific BLDC hardware.</text>
+  <text class="tiny" x="1196" y="578">3. For AC, prefer IR or vendor dry contact.</text>
+  <text class="tiny" x="1196" y="606">4. Keep wall-switch fallback.</text>
+  <text class="tiny" x="1196" y="634">5. UPS only needs control gear, not heavy loads.</text>
+  <text class="tiny" x="1196" y="662">6. Final mains work should be electrician-installed.</text>
+</svg>

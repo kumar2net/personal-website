@@ -18,6 +18,11 @@ Vite + React 19 + MUI 7 monorepo (Turborepo workspaces). Primary app lives in `a
 - Local (Vercel): run `vercel dev` so `/api/blog-tts` is on port `3000` (or set `VITE_VERCEL_DEV_PORT`). Vite dev stays on 5173. You can override the endpoint with `VITE_BLOG_TTS_ENDPOINT` if needed.
 - Voices: English/Hindi/Tamil each have a server default voice, overrideable via env or request `voice`. The site player exposes the supported OpenAI voice list directly.
 
+## Repo Pulse
+- Run `npm run pulse:check` to compare the current external baseline against `docs/_facts/pulse-state.json`.
+- Add `-- --write-state` after reviewing a real change to refresh both `docs/_facts/pulse-state.json` and `docs/_facts/pulse-report.md`.
+- The check is intentionally narrow: OpenAI audio/TTS docs signals, MDN WebGPU availability guidance, and Context7 freshness from `AGENTS.md`.
+
 ## Translations (Hindi/Tamil via OpenAI)
 - Backend: `apps/personal-website/api/translate.js` (also exported at root `api/translate.js`).
 - Frontend: `TranslateBlock` inside `BlogPostLayout` adds Hindi/Tamil toggle per post; only one translation shown at a time with preserved paragraph breaks.

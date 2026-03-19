@@ -34,6 +34,7 @@ const STATIC_ROUTES = [
   '/science/brain-vs-ai',
   '/science/paper-sizes',
   '/science/protein-folding',
+  '/science/networking',
   '/science/back-pain',
   '/naruvi',
   '/contact',

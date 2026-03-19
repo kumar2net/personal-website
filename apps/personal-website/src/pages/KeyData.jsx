@@ -188,6 +188,27 @@ function readCachedKeyDataPayload() {
   }
 }
 
+function markPayloadAsStaleFallback(payload) {
+  if (!hasUsablePayloadShape(payload)) {
+    return payload;
+  }
+
+  const snapshotKey = payload.snapshot?.key;
+  const fallbackWarning = snapshotKey
+    ? `Fresh snapshot for ${snapshotKey} is unavailable right now; showing the most recent successful snapshot instead.`
+    : "Fresh snapshot is unavailable right now; showing the most recent successful snapshot instead.";
+
+  return {
+    ...payload,
+    status: "stale",
+    snapshot: {
+      ...(payload.snapshot || {}),
+      servedStale: true,
+    },
+    warnings: [fallbackWarning, ...(payload.warnings || [])],
+  };
+}
+
 function writeCachedKeyDataPayload(payload) {
   if (typeof window === "undefined" || !hasUsablePayloadShape(payload)) {
     return;
@@ -260,7 +281,7 @@ async function fetchKeyDataPayload({
   }
 
   if (staleFallback) {
-    return staleFallback;
+    return markPayloadAsStaleFallback(staleFallback);
   }
 
   throw lastError || new Error("Key data request failed");

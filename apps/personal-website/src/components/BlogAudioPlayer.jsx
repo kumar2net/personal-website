@@ -4,9 +4,9 @@ import { useTheme } from "@mui/material/styles";
 import { Languages, Volume2 } from "lucide-react";
 
 const BLOG_TTS_ENABLED =
-  String(import.meta.env.VITE_BLOG_TTS_ENABLED || "")
+  String(import.meta.env.VITE_BLOG_TTS_ENABLED || "true")
     .trim()
-    .toLowerCase() === "true";
+    .toLowerCase() !== "false";
 const DEFAULT_TTS_VOICE =
   import.meta.env.VITE_BLOG_TTS_VOICE || "alloy";
 const LANGUAGES = [
@@ -178,10 +178,6 @@ function collectArticleText(articleRef) {
 }
 
 export default function BlogAudioPlayer({ slug, articleRef }) {
-  if (!BLOG_TTS_ENABLED) {
-    return null;
-  }
-
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const [selectedLanguage, setSelectedLanguage] = useState("en");
@@ -582,6 +578,10 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
     }
     fetchAudio();
   };
+
+  if (!BLOG_TTS_ENABLED) {
+    return null;
+  }
 
   return (
     <section className="not-prose mb-8 rounded-2xl border border-slate-200/80 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/60">

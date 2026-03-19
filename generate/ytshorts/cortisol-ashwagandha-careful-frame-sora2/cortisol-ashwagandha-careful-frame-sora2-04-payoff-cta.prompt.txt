@@ -1,0 +1,13 @@
+Use case: YouTube Short.
+Primary request: create a vertical editorial explainer that contrasts solid daily routine advice with one questionable shortcut.
+Style/format: premium editorial explainer, cinematic but factual, mobile-first composition, no presenter talking to camera.
+Lighting/mood: grounded, clear, evidence-first, slight urgency without fearmongering.
+Color palette: sunrise gold, evening blue, clinical white, muted amber warning accents.
+Constraints: vertical 9:16, no readable on-screen text, no logos, no watermarks, no public figures, no faces, fictional scenes only, under-18 safe, no graphic medical imagery.
+Avoid: celebrity likenesses, warped hands, gibberish labels, clutter, body horror, dramatic hospital scenes, advertising aesthetics, pills, capsules, syringes, medical packaging, and product-shot framing.
+Scene/background: calm evening routine tableau in a modern bedroom-living space with warm low light and uncluttered surfaces.
+Subject: warm lamp, book, breathing posture, balanced dinner plate, sleep mask, and a small neutral amber token moved off to the side like an optional footnote.
+Action: beat 1 (0-4s) lifestyle routine elements take center frame in a clean sequence; beat 2 (4-8s) the amber token is placed gently at the edge of the composition instead of the center; beat 3 (8-12s) final resolved composition suggests the routine is primary and the shortcut is secondary, ending with open-question energy.
+Camera: smooth vertical crane and close detail cuts, premium calm finish, no faces, no text.
+Audio: lamp click, page turn, plate set-down, calm room tone, and a soft resolving swell at the end; no speech.
+Dialogue: none.

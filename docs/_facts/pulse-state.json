@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-03-19T02:47:26.756Z",
+  "sources": [
+    {
+      "id": "openai-audio-rss",
+      "label": "OpenAI audio RSS",
+      "category": "openai",
+      "url": "https://developers.openai.com/rss.xml",
+      "status": "ok",
+      "summary": "Transcribing User Audio with a Separate Realtime Request (2025-11-20)",
+      "materialKey": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
+      "warnings": [],
+      "meta": {
+        "lastModified": "Thu, 19 Mar 2026 02:24:15 GMT",
+        "latest": {
+          "title": "Transcribing User Audio with a Separate Realtime Request",
+          "link": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
+          "guid": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
+          "description": "Cookbook to transcribe user audio using out-of-band Realtime sessions.",
+          "pubDate": "Thu, 20 Nov 2025 00:00:00 GMT"
+        },
+        "matchingItems": [
+          {
+            "title": "Transcribing User Audio with a Separate Realtime Request",
+            "link": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
+            "guid": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
+            "description": "Cookbook to transcribe user audio using out-of-band Realtime sessions.",
+            "pubDate": "Thu, 20 Nov 2025 00:00:00 GMT"
+          },
+          {
+            "title": "DevDay — realtime breakout",
+            "link": "https://www.youtube.com/watch?v=mM8KhTxwPgs",
+            "guid": "https://www.youtube.com/watch?v=mM8KhTxwPgs",
+            "description": "Covers realtime features and demos shared at DevDay. — voice, streaming, low latency, devday",
+            "pubDate": "Fri, 18 Jul 2025 00:00:00 GMT"
+          },
+          {
+            "title": "New audio models intro",
+            "link": "https://www.youtube.com/watch?v=lXb0L16ISAc",
+            "guid": "https://www.youtube.com/watch?v=lXb0L16ISAc",
+            "description": "Introduces capabilities of the latest OpenAI audio models. — speech, transcription, speech-to-text (STT)",
+            "pubDate": "Fri, 18 Jul 2025 00:00:00 GMT"
+          },
+          {
+            "title": "openai.fm",
+            "link": "https://github.com/openai/openai-fm",
+            "guid": "https://github.com/openai/openai-fm",
+            "description": "Reference implementation for speech-related applications. — audio",
+            "pubDate": "Fri, 18 Jul 2025 00:00:00 GMT"
+          },
+          {
+            "title": "Realtime console",
+            "link": "https://github.com/openai/openai-realtime-console",
+            "guid": "https://github.com/openai/openai-realtime-console",
+            "description": "Basic console for interacting with realtime agent APIs. — voice, streaming, low latency",
+            "pubDate": "Fri, 18 Jul 2025 00:00:00 GMT"
+          }
+        ]
+      }
+    },
+    {
+      "id": "openai-tts-model-pages",
+      "label": "OpenAI TTS model pages",
+      "category": "openai",
+      "url": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts",
+      "status": "ok",
+      "summary": "Latest pinned gpt-4o-mini-tts snapshot: gpt-4o-mini-tts-2025-12-15",
+      "materialKey": "0bcfd09ac425fc1bb4315686073b4fb565f811b8a8e56ff8dd37edba8622ea2e",
+      "warnings": [],
+      "meta": {
+        "latestSnapshot": "gpt-4o-mini-tts-2025-12-15",
+        "pages": [
+          {
+            "modelId": "gpt-4o-mini-tts",
+            "url": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts",
+            "title": "GPT-4o mini TTS Model | OpenAI API",
+            "canonical": "https://developers.openai.com/api/docs/models/gpt-4o-mini-tts",
+            "lastModified": null,
+            "hasSpeechEndpoint": true,
+            "snapshots": [
+              "gpt-4o-mini-tts-2025-03-20",
+              "gpt-4o-mini-tts-2025-12-15"
+            ],
+            "available": true
+          },
+          {
+            "modelId": "tts-1",
+            "url": "https://developers.openai.com/api/docs/models/tts-1",
+            "title": "TTS-1 Model | OpenAI API",
+            "canonical": "https://developers.openai.com/api/docs/models/tts-1",
+            "lastModified": null,
+            "hasSpeechEndpoint": true,
+            "snapshots": [],
+            "available": true
+          },
+          {
+            "modelId": "tts-1-hd",
+            "url": "https://developers.openai.com/api/docs/models/tts-1-hd",
+            "title": "TTS-1 HD Model | OpenAI API",
+            "canonical": "https://developers.openai.com/api/docs/models/tts-1-hd",
+            "lastModified": null,
+            "hasSpeechEndpoint": true,
+            "snapshots": [],
+            "available": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "mdn-webgpu",
+      "label": "MDN WebGPU API",
+      "category": "webgpu",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API",
+      "status": "ok",
+      "summary": "This feature is not Baseline because it does not work in some of the most widely-used browsers.",
+      "materialKey": "c3f4fba811b822a1fa01a5cc478bc35011e99890a7cb31d3fba19519c3e5541a",
+      "warnings": [],
+      "meta": {
+        "title": "WebGPU API - Web APIs | MDN",
+        "canonical": "https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API",
+        "lastModified": "Thu, 19 Mar 2026 01:12:46 GMT",
+        "availability": "",
+        "baselineDetail": "This feature is not Baseline because it does not work in some of the most widely-used browsers.",
+        "secureContext": "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers .",
+        "description": "The WebGPU API enables web developers to use the underlying system's GPU (Graphics Processing Unit) to carry out high-performance computations and draw complex images that can be rendered in the browser."
+      }
+    },
+    {
+      "id": "context7-freshness",
+      "label": "Context7 freshness",
+      "category": "docs",
+      "url": "https://docs.context7.dev/latest/index.json",
+      "status": "warning",
+      "summary": "Context7 snapshot age: 4.6d (remote unavailable)",
+      "materialKey": "1e214de4fe7f00fbc09e04c559d69ebadfcf4258aaaf6ee3766343d9b8516f02",
+      "warnings": [
+        "Remote snapshot unavailable: fetch failed"
+      ],
+      "meta": {
+        "configuredUrl": "https://docs.context7.dev/latest/index.json",
+        "lastUpdated": "2026-03-14T11:15:16.075Z",
+        "ageDays": 4.6,
+        "remoteReachable": false,
+        "staleDays": 14
+      }
+    }
+  ],
+  "lastMaterialChangeAt": null,
+  "materialChanges": []
+}

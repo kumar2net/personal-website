@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
+import remarkGfm from "remark-gfm";
 import BlogSentimentSummary from "../components/BlogSentimentSummary";
+import homeAutomationDesignRaw from "../../../../docs/HOME_AUTOMATION_APPLE_MINI_OPENCLAW.md?raw";
 
 const projects = [
   {
@@ -335,6 +338,65 @@ cluster_labels = kmeans.fit_predict(self.content_vectors)`}
   },
 ];
 
+const homeAutomationDesignMarkdown = homeAutomationDesignRaw
+  .split("\n")
+  .filter((line) => {
+    const trimmed = line.trim();
+    if (trimmed === "# Apple Mini Home Automation Design") {
+      return false;
+    }
+    if (trimmed === "## Network Diagram" || trimmed === "## Schematic Diagram") {
+      return false;
+    }
+    if (trimmed.startsWith("![Apple mini home automation")) {
+      return false;
+    }
+    return true;
+  })
+  .join("\n")
+  .replace(/\n{3,}/g, "\n\n")
+  .trim();
+
+const futureProjects = [
+  {
+    title: "Apple Mini Home Automation Control Plane",
+    summary:
+      "A planned whole-home automation system built around a Mac mini running OpenClaw and Home Assistant, with OpenAI voice APIs handling speech input, tool calling, and spoken confirmations for lights, BLDC fans, AC units, sensors, and room-level scenes.",
+    goals: [
+      "Voice-first control using OpenAI Realtime/audio APIs rather than Siri or vendor voice assistants.",
+      "Local orchestration on the Mac mini for routines, schedules, and natural-language control.",
+      "Safe support for BLDC fan control, split AC automation, and manual wall-switch fallback.",
+      "Matter/Thread first, Zigbee second, and Wi-Fi or IR only where legacy devices require it.",
+    ],
+    stack: [
+      "Mac mini",
+      "OpenClaw",
+      "Home Assistant",
+      "OpenAI Realtime API",
+      "gpt-realtime",
+      "gpt-4o-transcribe",
+      "gpt-4o-mini-tts",
+      "Matter/Thread",
+      "Zigbee",
+      "IR bridge",
+      "UPS",
+    ],
+    diagrams: [
+      {
+        title: "Network and control topology",
+        src: "/media/generated/home-automation-apple-mini-network.svg",
+        alt: "Network diagram for a Mac mini home automation system with OpenAI voice APIs, OpenClaw, Home Assistant, and smart home device protocols.",
+      },
+      {
+        title: "Power and wiring schematic",
+        src: "/media/generated/home-automation-apple-mini-schematic.svg",
+        alt: "Schematic diagram for home automation wiring with lighting relays, BLDC fan controller, AC control, UPS, and safety protection devices.",
+      },
+    ],
+    notesMarkdown: homeAutomationDesignMarkdown,
+  },
+];
+
 const Projects = () => {
   return (
     <motion.div
@@ -543,6 +605,134 @@ const Projects = () => {
             </div>
           </motion.div>
         ))}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: (projects.length + 0.5) * 0.2,
+          }}
+          className="space-y-6"
+        >
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-700">
+                Future Projects
+              </p>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Planned systems I want to build next
+              </h2>
+            </div>
+          </div>
+
+          {futureProjects.map((project) => (
+            <div
+              key={project.title}
+              className="overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-amber-50 shadow-lg dark:border-emerald-900/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"
+            >
+              <div className="p-8">
+                <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="max-w-3xl">
+                    <h3 className="text-2xl font-bold text-slate-900">
+                      {project.title}
+                    </h3>
+                    <p className="mt-3 text-base leading-7 text-slate-700">
+                      {project.summary}
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-emerald-200 bg-white/80 px-4 py-3 text-sm text-slate-700 shadow-sm dark:border-emerald-800/60 dark:bg-slate-900/85">
+                    Concept stage
+                    <div className="mt-1 font-semibold text-emerald-700">
+                      Architecture and wiring plan complete
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-8 grid gap-4">
+                  {project.diagrams.map((diagram) => (
+                    <figure
+                      key={diagram.src}
+                      className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                    >
+                      <div className="border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+                        <figcaption className="text-sm font-semibold text-slate-700">
+                          {diagram.title}
+                        </figcaption>
+                      </div>
+                      <img
+                        src={diagram.src}
+                        alt={diagram.alt}
+                        loading="lazy"
+                        className="h-full w-full bg-[#f7f5ef] object-contain dark:bg-slate-950"
+                      />
+                    </figure>
+                  ))}
+                </div>
+
+                <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold text-slate-900">
+                      What this system is meant to do
+                    </h4>
+                    <ul className="space-y-3">
+                      {project.goals.map((goal) => (
+                        <li key={goal} className="flex items-start">
+                          <svg
+                            className="mt-1 mr-3 h-4 w-4 shrink-0 text-emerald-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          <span className="text-slate-700">{goal}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold text-slate-900">
+                      Planned stack
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.map((item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-sm font-medium text-emerald-800 dark:border-emerald-800/60 dark:bg-slate-900 dark:text-emerald-300"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-slate-600">
+                      The design keeps manual overrides, isolates mains switching
+                      from low-voltage control, routes speech through OpenAI
+                      APIs on the Mac mini backend, and avoids unsafe generic
+                      relay control for BLDC fans and split AC compressor paths.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 rounded-2xl border border-slate-200 bg-white/80 p-6 dark:border-slate-700 dark:bg-slate-900/85">
+                  <h4 className="mb-4 text-lg font-semibold text-slate-900">
+                    Design note
+                  </h4>
+                  <div className="text-sm leading-7 text-slate-700 [&_h1]:mt-6 [&_h1]:mb-3 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-slate-900 [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-slate-900 [&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-slate-900 [&_p]:mb-3 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mb-2 [&_strong]:font-semibold [&_a]:font-semibold [&_a]:text-emerald-700 [&_a:hover]:text-emerald-800 [&_code]:rounded [&_code]:bg-slate-100 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.95em] dark:[&_a]:text-emerald-300 dark:[&_a:hover]:text-emerald-200 dark:[&_code]:bg-slate-800">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {project.notesMarkdown}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </motion.section>
         {/* Blog Sentiment Analysis ML Use Case */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
