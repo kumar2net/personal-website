@@ -130,8 +130,23 @@ function printSummary(rows: SummaryRow[]): void {
 }
 
 async function loadSkillRules(repoRoot: string): Promise<string> {
-  const skillPath = path.resolve(repoRoot, "skills/ytshortsak.md");
-  return readFile(skillPath, "utf8");
+  const skillPaths = [
+    path.resolve(repoRoot, "skills/ytshortsak/SKILL.md"),
+    path.resolve(repoRoot, "skills/ytshortsak.md"),
+  ];
+
+  for (const skillPath of skillPaths) {
+    try {
+      const content = await readFile(skillPath, "utf8");
+      return content.replace(/^---\n[\s\S]*?\n---\n/, "").trimStart();
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+        throw error;
+      }
+    }
+  }
+
+  throw new Error("Unable to locate ytshortsak skill rules.");
 }
 
 async function main(): Promise<void> {

@@ -461,7 +461,7 @@ export class YouTubeAnalyticsClient {
     url.searchParams.set("dimensions", "video");
     url.searchParams.set(
       "metrics",
-      "impressions,impressionClickThroughRate,views,averageViewDuration,averageViewPercentage",
+      "videoThumbnailImpressions,videoThumbnailImpressionsClickRate,views,averageViewDuration,averageViewPercentage",
     );
     url.searchParams.set("filters", `video==${video.videoId}`);
 
@@ -470,12 +470,14 @@ export class YouTubeAnalyticsClient {
     const headers = response.columnHeaders?.map((entry) => entry.name ?? "") ?? [];
     const row = response.rows?.[0] ?? [];
 
-    const getMetric = (name: string): number | null => {
-      const index = headers.indexOf(name);
-      if (index < 0) {
-        return null;
+    const getMetric = (...names: string[]): number | null => {
+      for (const name of names) {
+        const index = headers.indexOf(name);
+        if (index >= 0) {
+          return toNumber(row[index]);
+        }
       }
-      return toNumber(row[index]);
+      return null;
     };
 
     const first3sRetentionProxy = await this.fetchFirst3sRetentionProxy(
@@ -486,8 +488,10 @@ export class YouTubeAnalyticsClient {
 
     return shortMetricsSchema.parse({
       videoId: video.videoId,
-      impressions: round2(getMetric("impressions")),
-      impressionClickThroughRate: round2(getMetric("impressionClickThroughRate")),
+      impressions: round2(getMetric("videoThumbnailImpressions", "impressions")),
+      impressionClickThroughRate: round2(
+        getMetric("videoThumbnailImpressionsClickRate", "impressionClickThroughRate"),
+      ),
       views: round2(getMetric("views")),
       averageViewDuration: round2(getMetric("averageViewDuration")),
       averageViewPercentage: round2(getMetric("averageViewPercentage")),

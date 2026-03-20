@@ -2,9 +2,9 @@
 
 A deterministic CLI agent that audits recent YouTube Shorts, diagnoses low CTR/retention, and produces upload-ready variant assets under `/out`.
 
-## `#ytshortsak.md` constraints summary
+## `ytshortsak` constraints summary
 
-The optimizer enforces these canonical rules from `skills/ytshortsak.md`:
+The optimizer enforces these canonical rules from `skills/ytshortsak/SKILL.md` (with a fallback to the legacy `skills/ytshortsak.md` mirror):
 - hook in <2s, no greeting/branding intro
 - one idea only, 45-55s target, curiosity-loop ending
 - hard-cut pacing, visual changes every 2-3s, captions always on

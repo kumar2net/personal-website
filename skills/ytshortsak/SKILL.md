@@ -1,6 +1,6 @@
 ---
 name: ytshortsak
-description: Create and optimize 40-60 second YouTube Shorts from one original idea using hook-first scripting, time-boxed structure, visual pacing, caption rhythm, and retention-focused iteration. Use when planning, scripting, titling, or refining vertical 9:16 Shorts for food science, health, AI/future, or philosophy topics.
+description: Create and optimize 40-60 second YouTube Shorts from one original idea using hook-first scripting, Sora/TTS production planning, caption timing, packaging, and retention-plus-CTR-focused iteration. Use when planning, scripting, titling, producing, or refining vertical 9:16 Shorts for food science, health, AI/future, or philosophy topics.
 ---
 
 # YouTube Shorts Skill Framework (40-60 Seconds)
@@ -156,18 +156,33 @@ Topic: {insert topic}.
 Target audience: Gen Z + millennials."
 
 ## Latest Tweaks (Sora 2 Production)
-- Use OpenAI `sora-2` for generation.
-- Respect clip limits: generate in `12s` chunks and stitch for 45-55s outputs.
-- Use vertical size `720x1280` for generation; keep final export vertical 9:16.
-- Use four-segment flow for Sora clip plan:
+- Default to `sora-2` for drafts and volume. Use `sora-2-pro` for hero shots or final renders when motion/texture fidelity is worth the extra cost.
+- Keep the repo pattern: generate in `8-12s` chunks and stitch into `40-60s` outputs.
+- Start with portrait `720x1280`; only move to higher-cost sizes when the thumbnail/readability payoff is clear.
+- Use four-segment flow for the clip plan:
   1) Hook myth break
   2) Context compression
   3) Science breakdown
   4) Payoff + curiosity CTA
 - Keep prompts visual-first and text-light.
-- Avoid baked-in subtitles in generated clips; add captions in post so wording stays editable.
+- Avoid baked-in subtitles or readable on-screen text in generated clips; add captions in post so wording stays editable.
+- Treat native Sora audio as ambience/foley. For scripted explainers, prefer a separate narration track so wording, pacing, and captions stay deterministic.
 - Keep camera and composition dynamic every 2-3 seconds.
 - Keep one insight only across all segments.
+
+## Production Pipeline (Sora + TTS + Captions)
+1. Lock the hook, payoff, and CTA before rendering. One idea, one promise, one emotional takeaway.
+2. Render visual segments with `/v1/videos` using `sora-2` or `sora-2-pro`. Persist prompts, job ids, sizes, and per-segment outputs.
+3. Generate narration with `/v1/audio/speech`. Default to `gpt-4o-mini-tts`; use `tts-1` or `tts-1-hd` only when you need older compatibility or a simpler voice set.
+4. If you need word-level caption timing, transcribe the final narration audio with `whisper-1`, `response_format: "verbose_json"`, and `timestamp_granularities: ["word"]`. Current OpenAI docs only document word timestamps for `whisper-1`, not `gpt-4o-transcribe`.
+5. Emit `final.vtt` and/or `final.srt` from the transcript JSON. Keep captions editable and add them in post.
+6. Expect local post-processing when stitching multiple Sora clips or mixing narration. Do not promise an API-only workflow if the actual pipeline still needs `ffmpeg` or equivalent.
+
+## Cost + Latency Guardrails
+- Official 720p portrait pricing is `sora-2` at `$0.10/sec` and `sora-2-pro` at `$0.30/sec`.
+- Batch pricing is materially cheaper for queue-based runs, so use it for bulk variant exploration instead of serial one-off renders.
+- Quick math: a `15s` Short is roughly `$1.50` on `sora-2` or `$4.50` on `sora-2-pro`; a `48s` Short is roughly `$4.80` or `$14.40` before TTS/transcription.
+- Treat Sora render time as async minutes, not realtime seconds. Queue variants in parallel instead of blocking on one clip at a time.
 
 ## Science Grounding Rules (Food/Health Shorts)
 - State evidence strength honestly: "linked with", "associated with", not absolute cure/prevention language.
@@ -180,7 +195,7 @@ Target audience: Gen Z + millennials."
 
 ## Upload Package Checklist
 - `final.mp4` (or `final-sora2.mp4`)
-- `final.srt`
+- `final.srt` and/or `final.vtt`
 - `title.txt`
 - `description.txt`
 - `tags.txt`
@@ -206,17 +221,33 @@ Not five.
 
 ## Success Metrics
 A good Short targets:
+- `videoThumbnailImpressionsClickRate` above your recent baseline, not a random universal CTR target
 - 70%+ retention at 30 sec
-- 100%+ watch time ratio
+- 100%+ watch time ratio or strong `averageViewPercentage`
+- rising `engagedViews` and comments per view
 - 3-8% comment rate
 - Shares greater than likes
 
 Interpretation:
+- Low CTR + decent AVD -> packaging problem (first frame, title, first subtitle line)
+- Strong CTR + weak AVD -> hook sold the click, but the body/pacing failed
 - Drop at 5 sec -> hook weak
 - Drop at 20 sec -> pacing too slow
 - Drop at 40 sec -> payoff unclear
 
+## Early-Hour Analytics Decisioning
+- Use official YouTube targeted-query metrics when available: `videoThumbnailImpressions`, `videoThumbnailImpressionsClickRate`, `views`, `engagedViews`, `averageViewDuration`, and `averageViewPercentage`.
+- Do not claim documented 5-minute CTR rollups for these metrics. In this repo, early-hour readouts are same-day partial/day-level proxies, not minute-precise truth.
+- Read CTR together with context. YouTube explicitly notes that early CTR can be inflated by loyal-audience traffic before wider distribution kicks in.
+- If CTR and AVD both beat the 7-day baseline in the first review window, keep packaging and treat the variant as a winner candidate.
+- If CTR is weak but AVD is solid, change first frame, title, and first subtitle line before rewriting the whole script.
+- If CTR is acceptable but AVD or average view % is weak, tighten pacing, move payoff earlier, and add a pattern interrupt by 2-3 seconds.
+- Repo-friendly thresholds:
+  1) CTR < `4%` -> repackage opener
+  2) Avg view % < `60%` -> tighten pacing
+  3) Avg view duration < `20s` on a 40-60s Short -> cut intro and move payoff earlier
+
 ## Experimentation Loop
-Post -> analyze retention graph -> rewrite hook -> repost variation.
+Post -> analyze thumbnail CTR, AVD, and retention graph -> rewrite opener or pacing -> rerun variation.
 
 Iteration beats perfection.
