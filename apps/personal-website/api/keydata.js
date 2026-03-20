@@ -18,12 +18,15 @@ const SNAPSHOT_REFRESH_UTC_HOUR = 2;
 const SNAPSHOT_REFRESH_UTC_MINUTE = 0;
 const BROWSER_CACHE_MAX_AGE_SECONDS = 5 * 60;
 const CDN_STALE_SECONDS = 12 * 60 * 60;
-const REQUEST_TIMEOUT_MS = 4_000;
-const MAX_FETCH_ATTEMPTS = 1;
-const STOOQ_CONCURRENCY = 12;
+const REQUEST_TIMEOUT_MS = 12_000;
+const MAX_FETCH_ATTEMPTS = 4;
+const STOOQ_CONCURRENCY = 3;
 const FRED_CONCURRENCY = 4;
 const STOOQ_LOOKBACK_DAYS = 120;
 const FRED_LOOKBACK_DAYS = 180;
+const RETRY_BACKOFF_BASE_MS = 350;
+const PARTIAL_CACHE_MAX_AGE_SECONDS = 15 * 60;
+const RETRYABLE_HTTP_STATUSES = new Set([408, 425, 429, 500, 502, 503, 504]);
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
 const BUNDLED_SNAPSHOT = (() => {
@@ -70,6 +73,15 @@ function isUsableSnapshot(value) {
 
 function getBundledSnapshot() {
   return isUsableSnapshot(BUNDLED_SNAPSHOT) ? BUNDLED_SNAPSHOT : null;
+}
+
+function isHealthyPayload(payload) {
+  return Boolean(
+    isUsableSnapshot(payload) &&
+      payload.status === "ok" &&
+      !payload.snapshot?.servedStale &&
+      !(payload.warnings?.length),
+  );
 }
 
 function numberOrNull(value) {
@@ -326,6 +338,35 @@ function sleep(ms) {
   });
 }
 
+function isRetryableFetchError(error) {
+  if (!error) {
+    return false;
+  }
+
+  if (error.name === "AbortError" || error.message === "fetch failed") {
+    return true;
+  }
+
+  return RETRYABLE_HTTP_STATUSES.has(Number(error.status));
+}
+
+function describeFetchError(error) {
+  if (!error) {
+    return "Unknown error";
+  }
+
+  if (error.name === "AbortError") {
+    return `Timed out after ${REQUEST_TIMEOUT_MS}ms`;
+  }
+
+  const causeMessage = String(error.cause?.message || "").trim();
+  if (causeMessage.startsWith("connect ECONNREFUSED")) {
+    return "Upstream source refused the connection";
+  }
+
+  return causeMessage || error.message || "Unknown error";
+}
+
 async function fetchText(url, headers = {}) {
   let lastError;
 
@@ -350,8 +391,10 @@ async function fetchText(url, headers = {}) {
       return await response.text();
     } catch (error) {
       lastError = error;
-      if (attempt < MAX_FETCH_ATTEMPTS) {
-        await sleep(200 * attempt);
+      if (attempt < MAX_FETCH_ATTEMPTS && isRetryableFetchError(error)) {
+        await sleep(
+          RETRY_BACKOFF_BASE_MS * attempt + Math.floor(Math.random() * 150),
+        );
         continue;
       }
     } finally {
@@ -856,8 +899,116 @@ function uniqueDefinitions(definitions) {
   return idsInOrder.map((id) => byId.get(id));
 }
 
-export async function buildPayload(snapshotWindow) {
+function buildItemMapFromSnapshot(payload) {
+  const itemMap = new Map();
+
+  if (!isUsableSnapshot(payload)) {
+    return itemMap;
+  }
+
+  payload.categories.forEach((group) => {
+    group.items?.forEach((item) => {
+      if (item?.id) {
+        itemMap.set(item.id, item);
+      }
+    });
+  });
+
+  payload.magnificentSeven?.forEach((item) => {
+    if (item?.id) {
+      itemMap.set(item.id, item);
+    }
+  });
+
+  return itemMap;
+}
+
+function cloneFallbackItem(definition, fallbackItem, fallbackPayload) {
+  return {
+    ...fallbackItem,
+    id: definition.id,
+    label: definition.label,
+    ticker: definition.ticker,
+    source: definition.source,
+    sourceLabel: KEYDATA_SOURCE_LABELS[definition.source] || definition.source,
+    sourceUrl: formatSourceUrl(definition),
+    fallback: {
+      snapshotKey: fallbackPayload?.snapshot?.key || null,
+      snapshotGeneratedAt: fallbackPayload?.snapshot?.generatedAt || null,
+    },
+  };
+}
+
+function recoverFromFallback({
+  definitions,
+  itemMap,
+  fallbackItemMap,
+  fallbackPayload,
+}) {
+  const recovered = [];
+  const missing = [];
+
+  definitions.forEach((definition) => {
+    if (itemMap.has(definition.id)) {
+      return;
+    }
+
+    const fallbackItem = fallbackItemMap.get(definition.id);
+    if (fallbackItem) {
+      itemMap.set(
+        definition.id,
+        cloneFallbackItem(definition, fallbackItem, fallbackPayload),
+      );
+      recovered.push(definition);
+      return;
+    }
+
+    missing.push(definition);
+  });
+
+  return { recovered, missing };
+}
+
+function summarizeUnavailableDefinitions(sourceLabel, definitions) {
+  if (!definitions.length) {
+    return null;
+  }
+
+  const labels = definitions
+    .slice(0, 5)
+    .map((definition) => definition.ticker || definition.label);
+  const remainder = definitions.length - labels.length;
+  const suffix = remainder > 0 ? `, and ${remainder} more` : "";
+
+  return `${sourceLabel} is still unavailable for ${labels.join(", ")}${suffix}.`;
+}
+
+function summarizeRecoveredDefinitions(sourceLabel, recovered, fallbackSnapshotKey) {
+  if (!recovered.length || !fallbackSnapshotKey) {
+    return null;
+  }
+
+  return `Used the most recent successful ${sourceLabel} snapshot (${fallbackSnapshotKey}) for ${recovered.length} instrument${recovered.length === 1 ? "" : "s"} while the live source retried unsuccessfully.`;
+}
+
+function getPayloadCacheSeconds(payload, snapshotWindow) {
+  const isDegraded =
+    payload?.status !== "ok" ||
+    payload?.snapshot?.servedStale ||
+    payload?.warnings?.length;
+
+  return isDegraded
+    ? Math.min(snapshotWindow.cacheSeconds, PARTIAL_CACHE_MAX_AGE_SECONDS)
+    : snapshotWindow.cacheSeconds;
+}
+
+export async function buildPayload(snapshotWindow, options = {}) {
   const warnings = [];
+  const fallbackPayload = isUsableSnapshot(options.fallbackPayload)
+    ? options.fallbackPayload
+    : null;
+  const fallbackItemMap = buildItemMapFromSnapshot(fallbackPayload);
+  const fallbackSnapshotKey = fallbackPayload?.snapshot?.key || null;
   const nseDefinitions = KEYDATA_GROUPS.flatMap((group) =>
     group.items.filter((item) => item.source === "nse"),
   );
@@ -900,10 +1051,6 @@ export async function buildPayload(snapshotWindow) {
     ),
   ]);
 
-  if (nseResult.status === "rejected") {
-    warnings.push(`NSE India feed unavailable: ${nseResult.reason?.message || "Unknown error"}`);
-  }
-
   const itemMap = new Map();
 
   if (nseResult.status === "fulfilled") {
@@ -912,6 +1059,10 @@ export async function buildPayload(snapshotWindow) {
     });
   }
 
+  const failedNseDefinitions =
+    nseResult.status === "rejected" ? nseDefinitions : [];
+
+  const failedStooqDefinitions = [];
   stooqResults.forEach((result, index) => {
     const definition = stooqDefinitions[index];
     if (result.status === "fulfilled") {
@@ -919,13 +1070,10 @@ export async function buildPayload(snapshotWindow) {
       return;
     }
 
-    warnings.push(
-      `${definition.label} unavailable from Stooq: ${
-        result.reason?.message || "Unknown error"
-      }`,
-    );
+    failedStooqDefinitions.push(definition);
   });
 
+  const failedFredDefinitions = [];
   fredResults.forEach((result, index) => {
     const definition = fredDefinitions[index];
     if (result.status === "fulfilled") {
@@ -933,12 +1081,95 @@ export async function buildPayload(snapshotWindow) {
       return;
     }
 
-    warnings.push(
-      `${definition.label} unavailable from FRED: ${
-        result.reason?.message || "Unknown error"
-      }`,
-    );
+    failedFredDefinitions.push(definition);
   });
+
+  const stooqRecovery = recoverFromFallback({
+    definitions: failedStooqDefinitions,
+    itemMap,
+    fallbackItemMap,
+    fallbackPayload,
+  });
+  const nseRecovery = recoverFromFallback({
+    definitions: failedNseDefinitions,
+    itemMap,
+    fallbackItemMap,
+    fallbackPayload,
+  });
+  const fredRecovery = recoverFromFallback({
+    definitions: failedFredDefinitions,
+    itemMap,
+    fallbackItemMap,
+    fallbackPayload,
+  });
+
+  const recoveredItemCount =
+    nseRecovery.recovered.length +
+    stooqRecovery.recovered.length +
+    fredRecovery.recovered.length;
+  const recoveredFromPreviousSnapshot =
+    recoveredItemCount > 0 &&
+    Boolean(fallbackSnapshotKey) &&
+    fallbackSnapshotKey !== snapshotWindow.key;
+
+  if (recoveredFromPreviousSnapshot) {
+    const nseRecoveryWarning = summarizeRecoveredDefinitions(
+      KEYDATA_SOURCE_LABELS.nse,
+      nseRecovery.recovered,
+      fallbackSnapshotKey,
+    );
+    if (nseRecoveryWarning) {
+      warnings.push(nseRecoveryWarning);
+    }
+
+    const stooqRecoveryWarning = summarizeRecoveredDefinitions(
+      KEYDATA_SOURCE_LABELS.stooq,
+      stooqRecovery.recovered,
+      fallbackSnapshotKey,
+    );
+    if (stooqRecoveryWarning) {
+      warnings.push(stooqRecoveryWarning);
+    }
+
+    const fredRecoveryWarning = summarizeRecoveredDefinitions(
+      KEYDATA_SOURCE_LABELS.fred,
+      fredRecovery.recovered,
+      fallbackSnapshotKey,
+    );
+    if (fredRecoveryWarning) {
+      warnings.push(fredRecoveryWarning);
+    }
+  }
+
+  if (nseResult.status === "rejected" && !nseRecovery.recovered.length) {
+    warnings.push(
+      `NSE India feed unavailable: ${describeFetchError(nseResult.reason)}`,
+    );
+  }
+
+  const missingNseWarning = summarizeUnavailableDefinitions(
+    KEYDATA_SOURCE_LABELS.nse,
+    nseRecovery.missing,
+  );
+  if (missingNseWarning) {
+    warnings.push(missingNseWarning);
+  }
+
+  const missingStooqWarning = summarizeUnavailableDefinitions(
+    KEYDATA_SOURCE_LABELS.stooq,
+    stooqRecovery.missing,
+  );
+  if (missingStooqWarning) {
+    warnings.push(missingStooqWarning);
+  }
+
+  const missingFredWarning = summarizeUnavailableDefinitions(
+    KEYDATA_SOURCE_LABELS.fred,
+    fredRecovery.missing,
+  );
+  if (missingFredWarning) {
+    warnings.push(missingFredWarning);
+  }
 
   const categories = KEYDATA_GROUPS.map((group) => {
     const items = group.items
@@ -966,14 +1197,22 @@ export async function buildPayload(snapshotWindow) {
 
   return {
     generatedAt,
-    status: warnings.length ? "partial" : "ok",
+    status:
+      nseRecovery.missing.length ||
+      stooqRecovery.missing.length ||
+      fredRecovery.missing.length
+        ? "partial"
+        : recoveredFromPreviousSnapshot
+          ? "stale"
+          : "ok",
     snapshot: {
       key: snapshotWindow.key,
       generatedAt,
       refreshAt: snapshotWindow.activeRefreshAt.toISOString(),
       nextRefreshAt: snapshotWindow.nextRefreshAt.toISOString(),
       cadenceLabel: snapshotWindow.cadenceLabel,
-      servedStale: false,
+      servedStale: recoveredFromPreviousSnapshot,
+      staleItemCount: recoveredItemCount,
     },
     highlights,
     insights,
@@ -1012,22 +1251,23 @@ function buildStalePayload(payload, error, snapshotWindow) {
 async function getPayload() {
   const snapshotWindow = getSnapshotWindow();
   const bundledSnapshot = getBundledSnapshot();
-
-  if (
+  const memoryCacheIsFresh =
     memoryCache.payload &&
     memoryCache.key === snapshotWindow.key &&
-    memoryCache.nextRefreshAt > Date.now()
-  ) {
+    memoryCache.nextRefreshAt > Date.now();
+
+  if (memoryCacheIsFresh && isHealthyPayload(memoryCache.payload)) {
     return {
       payload: memoryCache.payload,
-      cacheSeconds: snapshotWindow.cacheSeconds,
+      cacheSeconds: getPayloadCacheSeconds(memoryCache.payload, snapshotWindow),
     };
   }
 
   if (
     bundledSnapshot &&
     bundledSnapshot.snapshot.key === snapshotWindow.key &&
-    !memoryCache.payload
+    !memoryCache.payload &&
+    isHealthyPayload(bundledSnapshot)
   ) {
     memoryCache = {
       key: bundledSnapshot.snapshot.key,
@@ -1042,16 +1282,21 @@ async function getPayload() {
   }
 
   try {
-    const payload = await buildPayload(snapshotWindow);
+    const fallbackPayload = memoryCacheIsFresh
+      ? memoryCache.payload
+      : bundledSnapshot;
+    const payload = await buildPayload(snapshotWindow, { fallbackPayload });
+    const cacheSeconds = getPayloadCacheSeconds(payload, snapshotWindow);
     memoryCache = {
       key: snapshotWindow.key,
       payload,
-      nextRefreshAt: snapshotWindow.nextRefreshAt.valueOf(),
+      nextRefreshAt:
+        Date.now() + cacheSeconds * 1000,
     };
 
     return {
       payload,
-      cacheSeconds: snapshotWindow.cacheSeconds,
+      cacheSeconds,
     };
   } catch (error) {
     const fallbackPayload = memoryCache.payload || bundledSnapshot;

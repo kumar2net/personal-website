@@ -47,11 +47,14 @@ async function writeSnapshot(snapshot) {
 async function main() {
   const snapshotWindow = getSnapshotWindow();
   const existingSnapshot = await readExistingSnapshot();
-
-  if (
+  const existingSnapshotIsHealthy =
     isUsableSnapshot(existingSnapshot) &&
-    existingSnapshot.snapshot.key === snapshotWindow.key
-  ) {
+    existingSnapshot.snapshot.key === snapshotWindow.key &&
+    existingSnapshot.status === "ok" &&
+    !existingSnapshot.snapshot?.servedStale &&
+    !(existingSnapshot.warnings?.length);
+
+  if (existingSnapshotIsHealthy) {
     console.log(
       `🗂️ Key data snapshot already covers ${snapshotWindow.key}; skipping refresh.`,
     );
@@ -59,7 +62,9 @@ async function main() {
   }
 
   try {
-    const snapshot = await buildPayload(snapshotWindow);
+    const snapshot = await buildPayload(snapshotWindow, {
+      fallbackPayload: existingSnapshot,
+    });
     await writeSnapshot(snapshot);
     console.log(
       `📈 Key data snapshot ready for ${snapshot.snapshot?.key || snapshotWindow.key}.`,

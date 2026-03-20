@@ -21,7 +21,7 @@ import { alpha, useTheme } from "@mui/material/styles";
 
 const STATIC_SNAPSHOT_ENDPOINT = "/data/keydata-latest.json";
 const DEFAULT_DYNAMIC_ENDPOINT = "/api/keydata";
-const LOCAL_PAYLOAD_CACHE_KEY = "kumar2net:keydata-payload:v1";
+const LOCAL_PAYLOAD_CACHE_KEY = "kumar2net:keydata-payload:v2";
 const LOCAL_PAYLOAD_CACHE_MAX_AGE_MS = 36 * 60 * 60 * 1000;
 
 const DAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
