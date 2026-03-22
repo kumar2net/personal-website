@@ -6,6 +6,7 @@ A deterministic CLI agent that audits recent YouTube Shorts, diagnoses low CTR/r
 
 The optimizer enforces these canonical rules from `skills/ytshortsak/SKILL.md` (with a fallback to the legacy `skills/ytshortsak.md` mirror):
 - hook in <2s, no greeting/branding intro
+- first 3s should combine open loop + motion cue + value cue
 - one idea only, 45-55s target, curiosity-loop ending
 - hard-cut pacing, visual changes every 2-3s, captions always on
 - retention-first edits: first frame motion, pattern interrupts, fast payoff
@@ -27,6 +28,7 @@ For each optimized video:
 ```
 
 No `ffmpeg` is required. `variant_plan.json` is renderer-agnostic (timeline + edit-decision list).
+The rewrite output now includes multiple hook bundles for first-3-second testing, and the experiment plan includes a staggered recut cadence test.
 
 ## Setup
 
@@ -105,6 +107,7 @@ The optimizer also reads recent runs from `/out/{videoId}/...` so the experiment
 ## Notes
 
 - First 2-hour granularity is used as a proxy only when possible; YouTube Analytics is day-granular for these metrics. Otherwise, the optimizer uses a 7-day window fallback.
+- Treat CTR here as a thumbnail/impression metric. Pair it with retention and first-3s opening-hold signals before changing the whole concept.
 - Required baseline rules are always applied before LLM refinement:
   - CTR < 4% -> change first frame + first subtitle line + title
   - Avg view % < 60% -> add 2-3s pattern interrupt + tighten pacing

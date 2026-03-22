@@ -24,6 +24,16 @@ const sceneSchema = z.object({
   editNotes: z.array(z.string()).min(1),
 });
 
+const hookVariantSchema = z.object({
+  id: z.string().min(1),
+  openLoop: z.string().min(1),
+  motionCue: z.string().min(1),
+  valueCue: z.string().min(1),
+  subtitleLine: z.string().min(1),
+  firstFrameVisual: z.string().min(1),
+  testFocus: z.string().min(1),
+});
+
 export const variantPlanSchema = z.object({
   version: z.literal("shorts-optimizer.variant.v1"),
   videoId: z.string().min(1),
@@ -31,6 +41,7 @@ export const variantPlanSchema = z.object({
   sourceVideoTitle: z.string().min(1),
   primaryFix: z.string().min(1),
   hookLine: z.string().min(1),
+  hookVariants: z.array(hookVariantSchema).min(2).max(4),
   firstFrame: z.object({
     visual: z.string().min(1),
     subtitleLine: z.string().min(1),
@@ -123,6 +134,36 @@ function buildFallbackPlan(params: {
   ];
 
   const script = scriptLines.join("\n");
+
+  const hookVariants: VariantPlan["hookVariants"] = [
+    {
+      id: "hook-open-loop",
+      openLoop: `${coreIdea} is not the real problem.`,
+      motionCue: "Hard punch-in on the failure state inside the first 0.5 seconds.",
+      valueCue: "Promise the real fix before the first 10 seconds end.",
+      subtitleLine: `Stop scrolling: ${coreIdea} is not the real problem.`,
+      firstFrameVisual: "Immediate close-up on the pain point with motion already in frame.",
+      testFocus: "Contrarian myth break to raise scroll-stop strength.",
+    },
+    {
+      id: "hook-proof",
+      openLoop: `Before you blame the obvious fix, watch this.`,
+      motionCue: "Show a measurable before/after change on frame one.",
+      valueCue: "Signal one concrete proof point instead of broad explanation.",
+      subtitleLine: "Before you blame the obvious fix, watch this.",
+      firstFrameVisual: "Fast split-screen contrast with a visible proof cue landing immediately.",
+      testFocus: "Proof-led opener for viewers who respond to evidence faster than rhetoric.",
+    },
+    {
+      id: "hook-value-cue",
+      openLoop: `This one detail changes how ${coreIdea.toLowerCase()} works.`,
+      motionCue: "Mid-thought start with a quick reframing cut at 0.7 seconds.",
+      valueCue: "Tell viewers they will leave with one practical fix in under a minute.",
+      subtitleLine: `This one detail changes how ${coreIdea.toLowerCase()} works.`,
+      firstFrameVisual: "Tight crop on the key object with a rapid framing change by second one.",
+      testFocus: "Benefit-first opener that emphasizes usable payoff fast.",
+    },
+  ];
 
   const scenes: VariantPlan["timeline"]["scenes"] = [
     {
@@ -245,6 +286,7 @@ function buildFallbackPlan(params: {
     sourceVideoTitle: params.video.title,
     primaryFix: params.diagnosis.primaryFix,
     hookLine,
+    hookVariants,
     firstFrame: {
       visual: "Immediate motion close-up tied to the core claim.",
       subtitleLine: hookLine,
@@ -361,6 +403,7 @@ async function runLlmRewrite(params: {
             "sourceVideoTitle",
             "primaryFix",
             "hookLine",
+            "hookVariants",
             "firstFrame",
             "script",
             "timeline",
@@ -374,6 +417,33 @@ async function runLlmRewrite(params: {
             sourceVideoTitle: { type: "string" },
             primaryFix: { type: "string" },
             hookLine: { type: "string" },
+            hookVariants: {
+              type: "array",
+              minItems: 2,
+              maxItems: 4,
+              items: {
+                type: "object",
+                additionalProperties: false,
+                required: [
+                  "id",
+                  "openLoop",
+                  "motionCue",
+                  "valueCue",
+                  "subtitleLine",
+                  "firstFrameVisual",
+                  "testFocus",
+                ],
+                properties: {
+                  id: { type: "string" },
+                  openLoop: { type: "string" },
+                  motionCue: { type: "string" },
+                  valueCue: { type: "string" },
+                  subtitleLine: { type: "string" },
+                  firstFrameVisual: { type: "string" },
+                  testFocus: { type: "string" },
+                },
+              },
+            },
             firstFrame: {
               type: "object",
               additionalProperties: false,
@@ -484,6 +554,7 @@ async function runLlmRewrite(params: {
             text: [
               "You are a Shorts rewrite planner.",
               "Use ytshortsak rules exactly: hook under 2s, one idea only, 45-55s target, captions always on, dynamic visual changes every 2-3s.",
+              "Prepare 2-4 first-3-second hook variants that each combine an open loop, motion cue, and value cue.",
               "Do not output ffmpeg steps. Output edit decisions + timeline JSON only.",
               "Always keep baseline metric-linked decisions in editDecisionList.",
               "Canonical rules:",

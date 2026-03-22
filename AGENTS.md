@@ -1,8 +1,8 @@
 schema_version: 1
 knowledge_sources:
   - name: context7-latest
-    type: http-json
-    url: https://docs.context7.dev/latest/index.json
+    type: http-text
+    url: https://context7.com/api/v2/context?libraryId=/upstash/context7&query=overview%20authentication%20api%20keys%20mcp%20search
     follow_redirects: true
     refresh: always
     fetch:
@@ -10,7 +10,7 @@ knowledge_sources:
       retries: 2
       backoff_seconds: 2
       headers:
-        accept: application/json
+        accept: text/plain, application/json
     cache:
       strategy: etag
       revalidate: true
@@ -87,22 +87,124 @@ repository_guidelines: |
 
   ## Context7 Snapshot
   <!--CTX7:BEGIN-->
-  Last updated: 2026-03-14T11:15:16.075Z
+  Last updated: 2026-03-21T01:29:42.327Z
   
-  Context7 snapshot fallback
+  ### GET /api/v2/context - Query Documentation
   
-  Remote Context7 content was not available during this run, so this section was generated from repository configuration instead of aborting the task.
+  Source: https://github.com/upstash/context7/blob/master/docs/howto/api-keys.mdx
   
-  - AGENTS file: AGENTS.md
-  - Configured source URL: https://mcp.context7.com/mcp
-  - Cache snapshot: .codex/cache/context7-latest/index.json
-  - API key present: yes
+  Query Context7's documentation services using an API key for authentication. This endpoint retrieves context information from a specified library based on your search query.
   
-  Behavior:
-  - The script now loads `.env.local` and `.env` automatically.
-  - If `CONTEXT7_URL` is unset, it falls back to the `context7-latest` URL declared in `AGENTS.md`.
-  - If remote fetch fails, it uses the cached snapshot when available.
-  - If neither remote content nor cache is available, it injects this fallback note and exits successfully.
+  ```APIDOC
+  ## GET /api/v2/context
+  
+  ### Description
+  Query Context7's documentation services to retrieve context information from a specified library based on a search query.
+  
+  ### Method
+  GET
+  
+  ### Endpoint
+  `https://context7.com/api/v2/context`
+  
+  ### Parameters
+  #### Query Parameters
+  - **libraryId** (string) - Required - The library identifier in format `/owner/repository` (e.g., `/vercel/next.js`)
+  - **query** (string) - Required - The search query to find relevant documentation
+  
+  ### Authentication
+  - **Authorization** (string) - Required - Bearer token format: `Bearer YOUR_API_KEY`
+  - API key format: `ctx7sk-**********************`
+  
+  ### Request Example
+  ```bash
+  curl "https://context7.com/api/v2/context?libraryId=/vercel/next.js&query=routing" \
+    -H "Authorization: Bearer ctx7sk-YOUR_API_KEY_HERE"
+  ```
+  
+  ### Response
+  #### Success Response (200)
+  - **data** (object) - Context information matching the query
+  - **libraryId** (string) - The queried library identifier
+  - **query** (string) - The search query used
+  
+  #### Error Response (401)
+  - **error** (string) - "Unauthorized" - Invalid or missing API key
+  
+  #### Error Response (404)
+  - **error** (string) - "Library not found" - Invalid libraryId
+  
+  ### Security Notes
+  - API keys are shown only once during creation
+  - Store API keys securely in environment variables
+  - Revoked keys will immediately fail all requests
+  - Use descriptive key names to track usage across applications
+  ```
+  
+  --------------------------------
+  
+  ### Authentication Options for Setup
+  
+  Source: https://github.com/upstash/context7/blob/master/skills/context7-cli/references/setup.md
+  
+  Authenticate using an existing API key or trigger an OAuth flow. Note that --oauth is exclusive to MCP mode where the IDE handles the flow.
+  
+  ```bash
+  ctx7 setup --api-key YOUR_KEY  # Use an existing API key (both MCP and CLI + Skills mode)
+  ctx7 setup --oauth             # OAuth endpoint — MCP mode only (IDE handles the auth flow)
+  ```
+  
+  --------------------------------
+  
+  ### Configure API Key for Context7 MCP to Prevent Rate Limiting (HTTP Transport)
+  
+  Source: https://github.com/upstash/context7/blob/master/docs/resources/troubleshooting.mdx
+  
+  This configuration shows how to add your API key to the Context7 MCP client when using HTTP transport to prevent rate limiting. The API key is included in the `CONTEXT7_API_KEY` header.
+  
+  ```json
+  {
+    "mcpServers": {
+      "context7": {
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "CONTEXT7_API_KEY": "YOUR_API_KEY"
+        }
+      }
+    }
+  }
+  ```
+  
+  --------------------------------
+  
+  ### Configure API Key for Context7 MCP to Prevent Authentication Errors (HTTP Headers)
+  
+  Source: https://github.com/upstash/context7/blob/master/docs/resources/troubleshooting.mdx
+  
+  This snippet illustrates the correct format for including the `CONTEXT7_API_KEY` in HTTP headers to resolve `401 Unauthorized` errors. Ensure your API key is valid and correctly formatted.
+  
+  ```json
+  {
+    "headers": {
+      "CONTEXT7_API_KEY": "YOUR_API_KEY"
+    }
+  }
+  ```
+  
+  --------------------------------
+  
+  ### Run Context7 MCP Server with HTTP Transport and Authentication
+  
+  Source: https://context7.com/upstash/context7/llms.txt
+  
+  These commands demonstrate how to start the Context7 Multi-Client Protocol (MCP) server, specifying HTTP as the transport for remote connections and setting the listening port. It also shows how to authenticate the server using an environment variable for the API key.
+  
+  ```bash
+  npx @upstash/context7-mcp --transport http --port 3000
+  
+  export CONTEXT7_API_KEY=ctx7sk-your-key
+  npx @upstash/context7-mcp
+  ```
   <!--CTX7:END-->
 
 

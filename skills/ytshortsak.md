@@ -154,6 +154,7 @@ Target audience: Gen Z + millennials."
 - Default to `sora-2` for drafts and volume. Use `sora-2-pro` for hero shots or final renders when motion/texture fidelity is worth the extra cost.
 - Keep the repo pattern: generate in `8-12s` chunks and stitch into `40-60s` outputs.
 - Start with portrait `720x1280`; only move to higher-cost sizes when the thumbnail/readability payoff is clear.
+- Build the first `0-3s` around a simple formula: `open loop + motion cue + value cue`.
 - Use four-segment flow for the clip plan:
   1) Hook myth break
   2) Context compression
@@ -164,6 +165,7 @@ Target audience: Gen Z + millennials."
 - Treat native Sora audio as ambience/foley. For scripted explainers, prefer a separate narration track so wording, pacing, and captions stay deterministic.
 - Keep camera and composition dynamic every 2-3 seconds.
 - Keep one insight only across all segments.
+- Publish the shortest atomic version first, then test a proof-heavier or longer recut `24-48h` later with intentionally different metadata.
 
 ## Production Pipeline (Sora + TTS + Captions)
 1. Lock the hook, payoff, and CTA before rendering. One idea, one promise, one emotional takeaway.
@@ -196,6 +198,7 @@ Target audience: Gen Z + millennials."
 - `tags.txt`
 - `pinned-comment.txt`
 - `thumbnail.jpg`
+- `spritesheet.jpg` when Sora supporting assets are available
 - `upload-manifest.json`
 
 ## Personal Edge
@@ -232,6 +235,7 @@ Interpretation:
 
 ## Early-Hour Analytics Decisioning
 - Use official YouTube targeted-query metrics when available: `videoThumbnailImpressions`, `videoThumbnailImpressionsClickRate`, `views`, `engagedViews`, `averageViewDuration`, and `averageViewPercentage`.
+- Treat thumbnail CTR as a packaging signal for surfaces where YouTube shows a thumbnail. For Shorts-feed opening quality, pair it with `Stayed to watch` or this repo's first-3s retention proxy.
 - Do not claim documented 5-minute CTR rollups for these metrics. In this repo, early-hour readouts are same-day partial/day-level proxies, not minute-precise truth.
 - Read CTR together with context. YouTube explicitly notes that early CTR can be inflated by loyal-audience traffic before wider distribution kicks in.
 - If CTR and AVD both beat the 7-day baseline in the first review window, keep packaging and treat the variant as a winner candidate.

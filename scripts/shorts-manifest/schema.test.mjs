@@ -12,6 +12,8 @@ test('loadManifest resolves shorts companion files', async () => {
   assert.equal(manifest.template.tokens.brand.safe_margin, 72);
   assert.equal(manifest.slots.lower_third.handle, '__SHORT_HANDLE__');
   assert.equal(manifest.metadata.locales.en.output, 'renders/en.mp4');
+  assert.equal(manifest.strategy.hook.windowSeconds, 3);
+  assert.equal(manifest.strategy.upload.container, 'mp4');
 });
 
 test('buildRenderPlan includes template slots and locale metadata', async () => {
@@ -27,4 +29,5 @@ test('buildRenderPlan includes template slots and locale metadata', async () => 
   assert.equal(renderPlan.audio.lang, 'hi');
   assert.equal(renderPlan.slots.cta.site, '__SHORT_SITE__');
   assert.equal(renderPlan.template.id, 'canonical-9x16-v1');
+  assert.equal(renderPlan.strategy.cadence.followUpDelayHours, 36);
 });

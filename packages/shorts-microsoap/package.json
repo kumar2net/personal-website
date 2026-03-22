@@ -1,0 +1,11 @@
+{
+  "name": "@kumar2net/shorts-microsoap",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-episode.mjs",
+    "tts": "node tts.mjs",
+    "render": "node render.mjs"
+  }
+}

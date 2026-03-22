@@ -72,6 +72,35 @@ const variantPlan: VariantPlan = {
   sourceVideoTitle: "Why Your 2.4GHz Wi-Fi Feels Slow",
   primaryFix: "Repackage opening",
   hookLine: "Stop scrolling: this is the real problem.",
+  hookVariants: [
+    {
+      id: "hook-open-loop",
+      openLoop: "This is not the real problem.",
+      motionCue: "Punch-in on the failure state.",
+      valueCue: "Reveal the real fix fast.",
+      subtitleLine: "Stop scrolling: this is not the real problem.",
+      firstFrameVisual: "Fast close-up motion on the failure state.",
+      testFocus: "Contrarian opener.",
+    },
+    {
+      id: "hook-proof",
+      openLoop: "Watch this before you blame the router.",
+      motionCue: "Before/after smash cut.",
+      valueCue: "Show one concrete proof cue in the opener.",
+      subtitleLine: "Watch this before you blame the router.",
+      firstFrameVisual: "Split-screen comparison.",
+      testFocus: "Proof-led opener.",
+    },
+    {
+      id: "hook-value-cue",
+      openLoop: "This one detail changes everything.",
+      motionCue: "Rapid framing shift by second one.",
+      valueCue: "Promise one practical fix in under a minute.",
+      subtitleLine: "This one detail changes everything.",
+      firstFrameVisual: "Tight crop on the key object.",
+      testFocus: "Benefit-first opener.",
+    },
+  ],
   firstFrame: {
     visual: "Fast close-up motion",
     subtitleLine: "This is what nobody tells you.",
@@ -201,7 +230,8 @@ test("deterministic experiment plan produces a valid multi-experiment plan", () 
 
   const parsed = experimentPlanSchema.parse(plan);
   assert.equal(parsed.videoId, "mock-short-001");
-  assert.equal(parsed.experiments.length, 3);
+  assert.equal(parsed.experiments.length, 4);
   assert.ok(parsed.inputsUsed.includes("transcript"));
   assert.ok(parsed.experiments.some((entry) => entry.id === "exp-packaging-reset"));
+  assert.ok(parsed.experiments.some((entry) => entry.id === "exp-cadence-recut"));
 });

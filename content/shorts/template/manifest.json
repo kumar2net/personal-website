@@ -129,6 +129,7 @@
       "tokens": "tokens.json",
       "slots": "slots.json",
       "metadata": "metadata.json",
+      "strategy": "strategy.json",
       "prompt": "shorts_multilang_captioner.yaml",
       "soraPrompt": "sora_prompt.txt"
     }

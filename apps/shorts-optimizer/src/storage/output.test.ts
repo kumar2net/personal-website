@@ -9,6 +9,26 @@ const validVariant = {
   sourceVideoTitle: "Why Your 2.4GHz Wi-Fi Feels Slow",
   primaryFix: "Repackage opening",
   hookLine: "Stop scrolling: this is the real problem.",
+  hookVariants: [
+    {
+      id: "hook-open-loop",
+      openLoop: "This is not the real problem.",
+      motionCue: "Punch-in on the failing state.",
+      valueCue: "Reveal the real fix in under 10 seconds.",
+      subtitleLine: "Stop scrolling: this is not the real problem.",
+      firstFrameVisual: "Fast close-up motion on the failure state.",
+      testFocus: "Contrarian opener.",
+    },
+    {
+      id: "hook-proof",
+      openLoop: "Watch this before you blame the router.",
+      motionCue: "Before/after smash cut.",
+      valueCue: "Show one concrete proof cue early.",
+      subtitleLine: "Watch this before you blame the router.",
+      firstFrameVisual: "Split-screen comparison.",
+      testFocus: "Proof-led opener.",
+    },
+  ],
   firstFrame: {
     visual: "Fast close-up motion",
     subtitleLine: "This is what nobody tells you.",

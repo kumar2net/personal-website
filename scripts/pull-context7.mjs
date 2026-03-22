@@ -1,7 +1,13 @@
 #!/usr/bin/env node
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
+
+import { fetchTextWithCache } from "./lib/fetch-text-with-cache.mjs";
+
+const LEGACY_CONTEXT7_SNAPSHOT_URL = "https://docs.context7.dev/latest/index.json";
+const DEFAULT_CONTEXT7_SNAPSHOT_URL =
+  "https://context7.com/api/v2/context?libraryId=/upstash/context7&query=overview%20authentication%20api%20keys%20mcp%20search";
 
 const args = parseArgs(process.argv.slice(2));
 const cwd = process.cwd();
@@ -34,7 +40,8 @@ if (snapshotUrl) {
       apiKey,
       contextPath,
       cachePath,
-      etagPath
+      etagPath,
+      fetchConfig: config.fetch,
     });
     contextText = fetched.contextText;
     sourceLabel = fetched.sourceLabel;
@@ -139,7 +146,12 @@ function parseAgentsConfig(agentsContent) {
       preferredSourceMatch?.[1] || anySourceMatch?.[1] || ""
     ),
     snapshotFile: cleanYamlScalar(snapshotFileMatch?.[1] || ""),
-    etagFile: cleanYamlScalar(etagFileMatch?.[1] || "")
+    etagFile: cleanYamlScalar(etagFileMatch?.[1] || ""),
+    fetch: {
+      timeoutSeconds: matchNumber(agentsContent, /^\s*timeout_seconds:\s*([^\n]+)/m),
+      retries: matchNumber(agentsContent, /^\s*retries:\s*([^\n]+)/m),
+      backoffSeconds: matchNumber(agentsContent, /^\s*backoff_seconds:\s*([^\n]+)/m),
+    },
   };
 }
 
@@ -147,20 +159,29 @@ function cleanYamlScalar(value) {
   return value.trim().replace(/^['"]|['"]$/g, "");
 }
 
+function matchNumber(content, pattern) {
+  const rawValue = cleanYamlScalar(content.match(pattern)?.[1] || "");
+  if (!rawValue) {
+    return null;
+  }
+  const parsed = Number(rawValue);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 function resolveSnapshotUrl({ snapshotUrl, mcpUrl, configUrl }) {
   if (snapshotUrl) {
-    return snapshotUrl;
+    return normalizeSnapshotUrl(snapshotUrl);
   }
 
   if (configUrl) {
-    return configUrl;
+    return normalizeSnapshotUrl(configUrl);
   }
 
   if (mcpUrl && !isMcpEndpoint(mcpUrl)) {
-    return mcpUrl;
+    return normalizeSnapshotUrl(mcpUrl);
   }
 
-  return "";
+  return DEFAULT_CONTEXT7_SNAPSHOT_URL;
 }
 
 function isMcpEndpoint(url) {
@@ -172,9 +193,22 @@ function isMcpEndpoint(url) {
   }
 }
 
+function normalizeSnapshotUrl(url) {
+  const normalized = String(url || "").trim();
+  if (!normalized) {
+    return DEFAULT_CONTEXT7_SNAPSHOT_URL;
+  }
+  return normalized === LEGACY_CONTEXT7_SNAPSHOT_URL
+    ? DEFAULT_CONTEXT7_SNAPSHOT_URL
+    : normalized;
+}
+
 function buildContextUrl(base, contextPathValue) {
   const trimmedBase = base.replace(/\/$/, "");
   if (trimmedBase.endsWith(".json")) {
+    return trimmedBase;
+  }
+  if (/\/api\/v\d+\/context(?:\?|$)/i.test(trimmedBase)) {
     return trimmedBase;
   }
   if (trimmedBase.endsWith("/context")) {
@@ -184,77 +218,70 @@ function buildContextUrl(base, contextPathValue) {
   return `${trimmedBase}/${cleanPath}`;
 }
 
-async function fetchContext({ baseUrl, apiKey, contextPath, cachePath, etagPath }) {
+async function fetchContext({
+  baseUrl,
+  apiKey,
+  contextPath,
+  cachePath,
+  etagPath,
+  fetchConfig = {},
+}) {
   const contextUrl = buildContextUrl(baseUrl, contextPath);
   const headers = {
     Accept: "application/json, text/plain, text/markdown"
   };
 
-  if (apiKey) {
+  if (apiKey && !isPublicContext7ApiUrl(contextUrl)) {
     headers.Authorization = `Bearer ${apiKey}`;
   }
 
-  if (etagPath && existsSync(etagPath)) {
-    const etag = (await readFile(etagPath, "utf8")).trim();
-    if (etag) {
-      headers["If-None-Match"] = etag;
-    }
-  }
-
-  const response = await fetch(contextUrl, {
+  const response = await fetchTextWithCache({
+    url: contextUrl,
     method: "GET",
-    headers
+    headers,
+    timeoutMs: Math.max(
+      1_000,
+      Math.round((fetchConfig.timeoutSeconds || 20) * 1000),
+    ),
+    maxRetries: Math.max(0, Math.trunc(fetchConfig.retries ?? 2)),
+    baseDelayMs: Math.max(
+      250,
+      Math.round((fetchConfig.backoffSeconds || 2) * 1000),
+    ),
+    maxDelayMs: 60_000,
+    useRetryAfter: true,
+    cachePath,
+    etagPath,
+    readCacheOnError: true,
   });
 
-  if (response.status === 304 && cachePath && existsSync(cachePath)) {
-    const cachedText = await readFile(cachePath, "utf8");
-    return {
-      contextText: normalizeContextFromText(cachedText),
-      sourceLabel: "cache (etag)"
-    };
-  }
-
-  if (!response.ok) {
-    const body = await safeText(response);
-    throw new Error(`HTTP ${response.status}${body ? `: ${body}` : ""}`);
-  }
-
-  const rawText = await response.text();
-  const contextText = normalizeContextFromText(rawText);
+  const contextText = normalizeContextFromText(response.text);
   if (!contextText.trim()) {
     throw new Error("response was empty");
   }
 
-  await writeCacheFiles({
-    cachePath,
-    etagPath,
-    rawText,
-    etag: response.headers.get("etag") || ""
-  });
-
   return {
     contextText,
-    sourceLabel: apiKey ? "remote" : "remote (public)"
+    sourceLabel:
+      response.cacheState === "cache-etag"
+        ? "cache (etag)"
+        : response.cacheState === "cache-fallback"
+          ? "cache (stale fallback)"
+          : apiKey
+            ? "remote"
+            : "remote (public)"
   };
 }
 
-async function writeCacheFiles({ cachePath, etagPath, rawText, etag }) {
-  if (cachePath) {
-    await mkdir(path.dirname(cachePath), { recursive: true });
-    await writeFile(cachePath, rawText, "utf8");
-  }
-
-  if (etagPath && etag) {
-    await mkdir(path.dirname(etagPath), { recursive: true });
-    await writeFile(etagPath, etag, "utf8");
-  }
-}
-
-async function safeText(response) {
+function isPublicContext7ApiUrl(url) {
   try {
-    return await response.text();
+    const parsed = new URL(url);
+    return (
+      parsed.hostname === "context7.com" &&
+      /^\/api\/v\d+\/context$/i.test(parsed.pathname)
+    );
   } catch {
-    return "";
+    return false;
   }
 }
 
@@ -420,6 +447,7 @@ function buildFallbackContext({ snapshotUrl, mcpUrl, cachePath, agentsPath, hasA
     "- `CONTEXT7_URL` is treated as the MCP endpoint, not the snapshot feed.",
     "- `CONTEXT7_SNAPSHOT_URL` can override the snapshot feed when needed.",
     "- If no snapshot override is set, the script falls back to the `context7-latest` URL declared in `AGENTS.md`.",
+    "- Remote snapshot fetches use conditional ETag revalidation plus retryable backoff when the source returns transient failures.",
     "- If remote fetch fails, it uses the cached snapshot when available.",
     "- If neither remote content nor cache is available, it injects this fallback note and exits successfully."
   ].join("\n");

@@ -80,6 +80,7 @@ const UtilitiesDashboard = lazy(() => import("./pages/UtilitiesDashboard"));
 const ShortsOptimizerDashboard = lazy(
   () => import("./pages/ShortsOptimizerDashboard"),
 );
+const MicroSoapStudio = lazy(() => import("./pages/MicroSoapStudio"));
 const LocalGuideReview = lazy(() => import("./pages/LocalGuideReview"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
 
@@ -792,6 +793,20 @@ const App = ({ mode }) => {
                       >
                         <ShortsOptimizerDashboard />
                       </PasswordGate>
+                    </>
+                  }
+                />
+                <Route
+                  path="/microsoap"
+                  element={
+                    <>
+                      <SEO
+                        title="Microsoap Studio"
+                        description="Bilingual Tamil-English micro-soap Shorts scaffold with A/B sequel voting and OpenAI generation hooks."
+                        canonicalPath="/microsoap"
+                        type="website"
+                      />
+                      <MicroSoapStudio />
                     </>
                   }
                 />

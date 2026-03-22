@@ -1,0 +1,64 @@
+{
+  "version": "microsoap.state.v1",
+  "seriesSlug": "rajiv-street",
+  "seriesTitle": "Rajiv Street Files",
+  "description": "Tiny bilingual Tamil-English micro-soaps designed for Shorts and same-day sequel loops.",
+  "localePair": [
+    "ta",
+    "en"
+  ],
+  "targetDurationSec": 24,
+  "nextEpisodeNumber": 4,
+  "characters": [
+    {
+      "id": "ananya",
+      "name": "Ananya",
+      "notes": "Sharp, suspicious, notices small inconsistencies first."
+    },
+    {
+      "id": "karthik",
+      "name": "Karthik",
+      "notes": "Protective, nervous, usually speaks Tamil when stressed."
+    }
+  ],
+  "locations": [
+    "Rajiv Street terrace",
+    "Flat 3B hallway"
+  ],
+  "continuityTokens": [
+    "midnight rain",
+    "power cut",
+    "hidden letter",
+    "neighbour drone"
+  ],
+  "recentOutcomes": [
+    {
+      "episodeId": "rajiv-street-001",
+      "winningChoice": "A",
+      "summary": "Ananya found a hidden letter on the terrace."
+    },
+    {
+      "episodeId": "rajiv-street-002",
+      "winningChoice": "B",
+      "summary": "The neighbour's drone captured someone climbing the water tank."
+    }
+  ],
+  "voiceMap": {
+    "en": "alloy",
+    "ta": "alloy"
+  },
+  "lastGeneratedAt": "2026-03-21T01:33:12.236Z",
+  "recentEpisodes": [
+    {
+      "episodeId": "rajiv-street-003",
+      "title": "Rain on Rajiv Street terrace",
+      "generatedAt": "2026-03-21T01:33:12.236Z",
+      "continuityTokens": [
+        "Ananya",
+        "Karthik",
+        "Rajiv Street terrace",
+        "Ananya found a hidden letter on the terrace."
+      ]
+    }
+  ]
+}

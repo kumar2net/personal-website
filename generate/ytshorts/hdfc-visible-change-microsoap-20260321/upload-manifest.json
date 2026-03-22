@@ -1,0 +1,25 @@
+{
+  "project": "hdfc-visible-change-microsoap-20260321",
+  "created_at": "2026-03-22T01:12:14.180Z",
+  "format": {
+    "aspect_ratio": "9:16",
+    "size": "1080x1920",
+    "duration_seconds": 54.5,
+    "fps": 30
+  },
+  "outputs": {
+    "final_video": "final.mp4",
+    "captions": "final.srt",
+    "voiceover_audio": "voiceover.wav",
+    "title": "title.txt",
+    "description": "description.txt",
+    "tags": "tags.txt",
+    "pinned_comment": "pinned-comment.txt"
+  },
+  "notes": {
+    "format": "bilingual English + Tamil microsoap",
+    "positioning": "satire rooted in personal customer experience",
+    "voice": "sage",
+    "model": "gpt-4o-mini-tts"
+  }
+}

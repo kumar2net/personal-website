@@ -152,6 +152,10 @@ function summarizeContext(
     nextCaptureRequests.push("Add 2-3 competitor examples with hooks or angles for stronger packaging experiments.");
   }
 
+  nextCaptureRequests.push(
+    "Capture first-hour Reach screenshots, including Shorts-specific opening-hold metrics like Stayed to watch when available, so packaging tests separate thumbnail CTR from in-feed retention.",
+  );
+
   if (recentHistory.length) {
     inputsUsed.push("recent optimizer history");
     const latest = recentHistory[0];
@@ -267,6 +271,7 @@ export function buildDeterministicExperimentPlan(params: {
   const competitorHook = params.context?.competitors.find((entry) => entry.hook)?.hook || "";
   const competitorAngle = params.context?.competitors.find((entry) => entry.angle)?.angle || "";
   const contextBits = summarizeContext(params.context, params.recentHistory);
+  const hookVariantBundles = params.variantPlan.hookVariants.slice(0, 3);
 
   const experiments: ExperimentPlan["experiments"] = [
     {
@@ -279,7 +284,14 @@ export function buildDeterministicExperimentPlan(params: {
         : "Even with acceptable CTR, a sharper opening package should create a measurable lift without changing the core topic.",
       priority: hasLowCtr ? "high" : "medium",
       changes: [
-        `Test a first frame built around: ${params.variantPlan.firstFrame.visual}`,
+        hookVariantBundles.length
+          ? `Test ${hookVariantBundles.length} first-3-second bundles that each pair an open loop, motion cue, and value cue: ${hookVariantBundles
+              .map(
+                (entry) =>
+                  `${entry.id} -> "${entry.subtitleLine}" / ${entry.motionCue} / ${entry.valueCue}`,
+              )
+              .join(" | ")}`
+          : `Test a first frame built around: ${params.variantPlan.firstFrame.visual}`,
         `A/B the subtitle line against the current hook: "${params.variantPlan.firstFrame.subtitleLine}"`,
         competitorHook
           ? `Borrow the competitor hook pattern "${competitorHook}" while keeping the topic specific to this video.`
@@ -303,6 +315,9 @@ export function buildDeterministicExperimentPlan(params: {
         params.diagnosis.primaryFix,
         `Current hook line: ${params.variantPlan.hookLine}`,
         `Current suggested title: ${params.variantPlan.metadata.title}`,
+        hookVariantBundles.length
+          ? `Prepared hook bundle IDs: ${hookVariantBundles.map((entry) => entry.id).join(", ")}`
+          : "No alternate hook bundles available.",
       ],
     },
     {
@@ -376,6 +391,36 @@ export function buildDeterministicExperimentPlan(params: {
         params.recentHistory[0]
           ? `Latest prior run title: ${params.recentHistory[0].title}`
           : "No prior run history available.",
+      ],
+    },
+    {
+      id: "exp-cadence-recut",
+      title: "Staggered recut cadence with distinct metadata",
+      hypothesis:
+        "Publishing the strongest atomic short first, then a proof-heavier recut 24-48 hours later with intentionally different metadata, should separate packaging learnings from concept-quality learnings.",
+      priority: hasLowCtr || hasLowRetention ? "medium" : "low",
+      changes: [
+        "Ship the shortest high-clarity version first using the strongest hook bundle, not the proof-heaviest cut.",
+        "Queue a follow-up recut 24-48 hours later that adds proof or context without reusing the exact title and opening package.",
+        "Change the follow-up title and first-frame packaging materially so the comparison is readable across discovery surfaces.",
+      ],
+      successMetrics: [
+        {
+          metric: "variant-sequence lift",
+          target:
+            "Identify which release in the sequence wins on packaging (CTR) versus content hold (average view % and watched seconds).",
+          why: "A staggered sequence prevents one upload from hiding whether packaging or structure was the real issue.",
+        },
+      ],
+      guardrails: [
+        "Do not republish the same file with only punctuation-level metadata tweaks.",
+        "Keep the second release meaningfully distinct in packaging or proof density.",
+      ],
+      basedOn: [
+        `Current primary title: ${params.variantPlan.metadata.title}`,
+        params.recentHistory[0]
+          ? `Latest prior hook line: ${params.recentHistory[0].hookLine}`
+          : "No prior hook history available.",
       ],
     },
   ];
@@ -511,6 +556,8 @@ async function runLlmExperimentPlanner(params: {
               "You are a YouTube Shorts experiment planner.",
               "Turn the current video metrics, the generated variant, optional context inputs, and recent run history into 3-4 concrete experiments.",
               "Each experiment must be distinct, measurable, and production-ready.",
+              "Separate thumbnail/impression packaging tests from in-feed opening-hold or retention tests.",
+              "Include staggered recut cadence experiments when they help isolate packaging vs concept learnings.",
               "Prefer changes that can be tested independently without changing the entire concept at once.",
               "Return strict JSON only.",
             ].join(" "),
@@ -530,6 +577,7 @@ async function runLlmExperimentPlanner(params: {
                 variantPlan: {
                   primaryFix: params.variantPlan.primaryFix,
                   hookLine: params.variantPlan.hookLine,
+                  hookVariants: params.variantPlan.hookVariants,
                   firstFrame: params.variantPlan.firstFrame,
                   title: params.variantPlan.metadata.title,
                   pinnedComment: params.variantPlan.metadata.pinnedComment,

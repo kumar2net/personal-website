@@ -1,0 +1,150 @@
+{
+  "version": "microsoap.catalog.v1",
+  "generatedAt": "2026-03-21T01:33:12.236Z",
+  "series": {
+    "title": "Rajiv Street Files",
+    "description": "Tiny bilingual Tamil-English micro-soaps designed for Shorts and same-day sequel loops."
+  },
+  "episodes": [
+    {
+      "id": "rajiv-street-003",
+      "title": "Rain on Rajiv Street terrace",
+      "durationSec": 24,
+      "generatedAt": "2026-03-21T01:33:12.236Z",
+      "continuityTokens": [
+        "Ananya",
+        "Karthik",
+        "Rajiv Street terrace",
+        "Ananya found a hidden letter on the terrace."
+      ],
+      "beats": [
+        {
+          "beat": "hook",
+          "speaker": "Ananya",
+          "lang": "en",
+          "line": "The lights are back. So who left this letter here?"
+        },
+        {
+          "beat": "pivot",
+          "speaker": "Karthik",
+          "lang": "ta",
+          "line": "இது நம்ம வீட்டு எழுத்தே இல்ல... ஆனா பெயர் உன்னோடே இருக்கு.",
+          "pronunciation": "idhu namma veettu ezhuthe illa... aana peyar unnode irukku."
+        },
+        {
+          "beat": "cliffhanger",
+          "speaker": "Ananya",
+          "lang": "en",
+          "line": "If my name is on it, why is tonight’s date from next week?"
+        }
+      ],
+      "audiencePrompt": {
+        "text": "Pick the next twist.",
+        "choices": [
+          {
+            "id": "A",
+            "label": "The letter predicts tomorrow’s blackout"
+          },
+          {
+            "id": "B",
+            "label": "The neighbour forged the note to hide a drone video"
+          }
+        ]
+      },
+      "assets": {}
+    },
+    {
+      "id": "rajiv-street-002",
+      "title": "The Date on the Letter",
+      "durationSec": 24,
+      "generatedAt": "2026-03-21T09:30:00.000Z",
+      "continuityTokens": [
+        "Ananya",
+        "Karthik",
+        "hidden letter",
+        "Rajiv Street terrace"
+      ],
+      "beats": [
+        {
+          "beat": "hook",
+          "speaker": "Ananya",
+          "lang": "en",
+          "line": "The lights are back. So who left this letter here?"
+        },
+        {
+          "beat": "pivot",
+          "speaker": "Karthik",
+          "lang": "ta",
+          "line": "இது நம்ம வீட்டு எழுத்தே இல்ல... ஆனா பெயர் உன்னோடே இருக்கு.",
+          "pronunciation": "idhu namma veettu ezhuthe illa... aana peyar unnode irukku."
+        },
+        {
+          "beat": "cliffhanger",
+          "speaker": "Ananya",
+          "lang": "en",
+          "line": "If my name is on it, why is tonight’s date from next week?"
+        }
+      ],
+      "audiencePrompt": {
+        "text": "Pick the next twist.",
+        "choices": [
+          {
+            "id": "A",
+            "label": "The letter predicts tomorrow’s blackout"
+          },
+          {
+            "id": "B",
+            "label": "The neighbour forged it to hide a drone video"
+          }
+        ]
+      },
+      "assets": {}
+    },
+    {
+      "id": "rajiv-street-001",
+      "title": "Rain on Rajiv Street",
+      "durationSec": 22,
+      "generatedAt": "2026-03-20T14:00:00.000Z",
+      "continuityTokens": [
+        "power cut",
+        "terrace footsteps",
+        "midnight rain"
+      ],
+      "beats": [
+        {
+          "beat": "hook",
+          "speaker": "Ananya",
+          "lang": "en",
+          "line": "The power just cut. Did you text him?"
+        },
+        {
+          "beat": "pivot",
+          "speaker": "Karthik",
+          "lang": "ta",
+          "line": "அவன் மெசேஜ் அனுப்பல... ஆனா மேல சத்தம் கேட்டேன்.",
+          "pronunciation": "avan message anuppala... aana mela satham ketten."
+        },
+        {
+          "beat": "cliffhanger",
+          "speaker": "Ananya",
+          "lang": "en",
+          "line": "Wait. Whose footsteps are on the terrace?"
+        }
+      ],
+      "audiencePrompt": {
+        "text": "Which sequel lands harder?",
+        "choices": [
+          {
+            "id": "A",
+            "label": "Hidden letter on the terrace"
+          },
+          {
+            "id": "B",
+            "label": "The neighbour’s drone reveals a secret"
+          }
+        ]
+      },
+      "assets": {}
+    }
+  ]
+}

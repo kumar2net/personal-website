@@ -79,6 +79,7 @@ export function buildRenderPlan(manifest, options = {}) {
     template: manifest.template || null,
     slots: manifest.slots || null,
     metadata: manifest.metadata || null,
+    strategy: manifest.strategy || null,
     localeMetadata: manifest.metadata?.locales?.[lang] || null,
     prompts: Array.isArray(manifest.prompts) ? manifest.prompts : [],
     videoSources: manifest.tracks.video.map((track) => ({

@@ -1,0 +1,29 @@
+Generate a 22-28 second bilingual Tamil-English micro-soap for a vertical 9:16 short.
+
+Rules:
+- Exactly 3 beats in order: hook, pivot, cliffhanger.
+- Use only 2 characters.
+- Mix Tamil and English naturally across the 3 beats.
+- Each line must be short enough to speak in under 8 seconds.
+- If a beat is in Tamil, include a brief Latin-script pronunciation string.
+- End with one audience prompt and exactly 2 continuation choices labelled A and B.
+- Keep the tone emotional, intimate, and cliffhanger-friendly rather than expository.
+
+Return strict JSON only:
+{
+  "title": "string",
+  "durationSec": 24,
+  "continuityTokens": ["string"],
+  "beats": [
+    {"beat":"hook","speaker":"string","lang":"en|ta","line":"string","pronunciation":"string?"},
+    {"beat":"pivot","speaker":"string","lang":"en|ta","line":"string","pronunciation":"string?"},
+    {"beat":"cliffhanger","speaker":"string","lang":"en|ta","line":"string","pronunciation":"string?"}
+  ],
+  "audiencePrompt": {
+    "text": "string",
+    "choices": [
+      {"id":"A","label":"string"},
+      {"id":"B","label":"string"}
+    ]
+  }
+}

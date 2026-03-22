@@ -333,6 +333,117 @@ function validateMetadata(metadata, errors) {
   }
 }
 
+function validateStringList(value, prefix, errors) {
+  if (!Array.isArray(value) || value.some((entry) => typeof entry !== 'string' || !entry.trim())) {
+    pushError(errors, `${prefix} must be an array of non-empty strings`);
+  }
+}
+
+function validateStrategy(strategy, errors) {
+  if (strategy == null) {
+    return;
+  }
+  if (!isObject(strategy)) {
+    pushError(errors, 'strategy must be an object when provided');
+    return;
+  }
+
+  if (strategy.goalSignals != null) {
+    if (!isObject(strategy.goalSignals)) {
+      pushError(errors, 'strategy.goalSignals must be an object when provided');
+    } else {
+      for (const [key, signal] of Object.entries(strategy.goalSignals)) {
+        const prefix = `strategy.goalSignals.${key}`;
+        if (!isObject(signal)) {
+          pushError(errors, `${prefix} must be an object`);
+          continue;
+        }
+        if (typeof signal.metric !== 'string' || !signal.metric.trim()) {
+          pushError(errors, `${prefix}.metric must be a non-empty string`);
+        }
+        if (typeof signal.interpretation !== 'string' || !signal.interpretation.trim()) {
+          pushError(errors, `${prefix}.interpretation must be a non-empty string`);
+        }
+      }
+    }
+  }
+
+  if (strategy.hook != null) {
+    if (!isObject(strategy.hook)) {
+      pushError(errors, 'strategy.hook must be an object when provided');
+    } else {
+      if (!isFiniteNumber(strategy.hook.windowSeconds) || strategy.hook.windowSeconds <= 0) {
+        pushError(errors, 'strategy.hook.windowSeconds must be a positive number');
+      }
+      if (!Number.isInteger(strategy.hook.variantsToPrepare) || strategy.hook.variantsToPrepare < 2) {
+        pushError(errors, 'strategy.hook.variantsToPrepare must be an integer >= 2');
+      }
+      validateStringList(strategy.hook.formula, 'strategy.hook.formula', errors);
+      validateStringList(strategy.hook.requirements, 'strategy.hook.requirements', errors);
+    }
+  }
+
+  if (strategy.cadence != null) {
+    if (!isObject(strategy.cadence)) {
+      pushError(errors, 'strategy.cadence must be an object when provided');
+    } else {
+      if (typeof strategy.cadence.primaryAsset !== 'string' || !strategy.cadence.primaryAsset.trim()) {
+        pushError(errors, 'strategy.cadence.primaryAsset must be a non-empty string');
+      }
+      if (!isFiniteNumber(strategy.cadence.followUpDelayHours) || strategy.cadence.followUpDelayHours <= 0) {
+        pushError(errors, 'strategy.cadence.followUpDelayHours must be a positive number');
+      }
+      if (typeof strategy.cadence.followUpAsset !== 'string' || !strategy.cadence.followUpAsset.trim()) {
+        pushError(errors, 'strategy.cadence.followUpAsset must be a non-empty string');
+      }
+      if (typeof strategy.cadence.metadataPolicy !== 'string' || !strategy.cadence.metadataPolicy.trim()) {
+        pushError(errors, 'strategy.cadence.metadataPolicy must be a non-empty string');
+      }
+      validateStringList(strategy.cadence.notes, 'strategy.cadence.notes', errors);
+    }
+  }
+
+  if (strategy.upload != null) {
+    if (!isObject(strategy.upload)) {
+      pushError(errors, 'strategy.upload must be an object when provided');
+    } else {
+      if (typeof strategy.upload.container !== 'string' || !strategy.upload.container.trim()) {
+        pushError(errors, 'strategy.upload.container must be a non-empty string');
+      }
+      if (typeof strategy.upload.videoCodec !== 'string' || !strategy.upload.videoCodec.trim()) {
+        pushError(errors, 'strategy.upload.videoCodec must be a non-empty string');
+      }
+      if (typeof strategy.upload.audioCodec !== 'string' || !strategy.upload.audioCodec.trim()) {
+        pushError(errors, 'strategy.upload.audioCodec must be a non-empty string');
+      }
+      if (typeof strategy.upload.resolution !== 'string' || !/^\d+x\d+$/u.test(strategy.upload.resolution)) {
+        pushError(errors, 'strategy.upload.resolution must be a string like "1080x1920"');
+      }
+      if (!isFiniteNumber(strategy.upload.fps) || strategy.upload.fps <= 0) {
+        pushError(errors, 'strategy.upload.fps must be a positive number');
+      }
+      if (typeof strategy.upload.videoBitrateMbps !== 'string' || !strategy.upload.videoBitrateMbps.trim()) {
+        pushError(errors, 'strategy.upload.videoBitrateMbps must be a non-empty string');
+      }
+      if (!Number.isInteger(strategy.upload.audioBitrateKbps) || strategy.upload.audioBitrateKbps <= 0) {
+        pushError(errors, 'strategy.upload.audioBitrateKbps must be a positive integer');
+      }
+      if (!isObject(strategy.upload.captions)) {
+        pushError(errors, 'strategy.upload.captions must be an object');
+      } else {
+        validateStringList(strategy.upload.captions.externalFormats, 'strategy.upload.captions.externalFormats', errors);
+        if (typeof strategy.upload.captions.burnedIn !== 'string' || !strategy.upload.captions.burnedIn.trim()) {
+          pushError(errors, 'strategy.upload.captions.burnedIn must be a non-empty string');
+        }
+        if (typeof strategy.upload.captions.keepSafeZonesClear !== 'boolean') {
+          pushError(errors, 'strategy.upload.captions.keepSafeZonesClear must be a boolean');
+        }
+      }
+      validateStringList(strategy.upload.supportingAssets, 'strategy.upload.supportingAssets', errors);
+    }
+  }
+}
+
 export function validateManifest(manifest) {
   const errors = [];
 
@@ -358,6 +469,7 @@ export function validateManifest(manifest) {
   validateTemplate(manifest.template, errors);
   validateSlots(manifest.slots, errors);
   validateMetadata(manifest.metadata, errors);
+  validateStrategy(manifest.strategy, errors);
 
   return { ok: errors.length === 0, errors };
 }
@@ -382,6 +494,7 @@ export async function loadManifest(manifestPath) {
       ['tokens', ['template', 'tokens']],
       ['slots', ['slots']],
       ['metadata', ['metadata']],
+      ['strategy', ['strategy']],
     ];
 
     for (const [key, targetPath] of companionTargets) {

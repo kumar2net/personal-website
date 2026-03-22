@@ -4,6 +4,8 @@ import { appendFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
+import { fetchTextWithCache } from "./lib/fetch-text-with-cache.mjs";
+
 const args = parseArgs(process.argv.slice(2));
 const cwd = process.cwd();
 const now = new Date().toISOString();
@@ -11,6 +13,16 @@ const statePath = path.resolve(cwd, args.state || "docs/_facts/pulse-state.json"
 const reportPath = path.resolve(cwd, args.report || "docs/_facts/pulse-report.md");
 const staleDays = toPositiveNumber(process.env.PULSE_CONTEXT7_STALE_DAYS, 14);
 const timeoutMs = toPositiveNumber(process.env.PULSE_SOURCE_TIMEOUT_MS, 15000);
+const pulseFetchRetries = toNonNegativeInteger(process.env.PULSE_FETCH_RETRIES, 2);
+const pulseFetchBaseDelayMs = toPositiveNumber(
+  process.env.PULSE_FETCH_BASE_DELAY_MS,
+  500,
+);
+const pulseFetchMaxDelayMs = toPositiveNumber(
+  process.env.PULSE_FETCH_MAX_DELAY_MS,
+  10_000,
+);
+const pulseCacheDir = path.resolve(cwd, ".codex/cache/repo-pulse");
 const writeState = args.writeState;
 const strict = args.strict;
 
@@ -73,7 +85,11 @@ async function collectState({ now: checkedAt, timeoutMs: requestTimeoutMs, stale
 async function collectOpenAiAudioRss({ timeoutMs: requestTimeoutMs }) {
   const url = "https://developers.openai.com/rss.xml";
   try {
-    const { text, headers } = await fetchText(url, { timeoutMs: requestTimeoutMs });
+    const result = await fetchText(url, {
+      cacheId: "openai-audio-rss",
+      timeoutMs: requestTimeoutMs,
+    });
+    const { text, headers } = result;
     const items = parseRssItems(text);
     const relevantItems = items.filter((item) =>
       /\b(audio|speech|tts|voice|transcrib)\b/i.test(
@@ -81,18 +97,24 @@ async function collectOpenAiAudioRss({ timeoutMs: requestTimeoutMs }) {
       ),
     );
     const latest = relevantItems[0] || null;
+    const warnings = [
+      ...getCacheWarnings(result, "OpenAI developers RSS"),
+      ...(latest
+        ? []
+        : ["OpenAI developers RSS did not return an audio-related entry."]),
+    ];
 
     return {
       id: "openai-audio-rss",
       label: "OpenAI audio RSS",
       category: "openai",
       url,
-      status: latest ? "ok" : "warning",
+      status: warnings.length ? "warning" : "ok",
       summary: latest
         ? `${latest.title} (${formatDate(latest.pubDate)})`
         : "No audio-related entries found in the official OpenAI developers RSS feed.",
       materialKey: latest ? latest.guid || latest.link || latest.title : "missing",
-      warnings: latest ? [] : ["OpenAI developers RSS did not return an audio-related entry."],
+      warnings,
       meta: {
         lastModified: headers.get("last-modified") || null,
         latest,
@@ -118,7 +140,11 @@ async function collectOpenAiTtsModels({ timeoutMs: requestTimeoutMs }) {
     models.map(async (modelId) => {
       const url = `https://developers.openai.com/api/docs/models/${modelId}`;
       try {
-        const { text, headers } = await fetchText(url, { timeoutMs: requestTimeoutMs });
+        const result = await fetchText(url, {
+          cacheId: `openai-tts-model-${modelId}`,
+          timeoutMs: requestTimeoutMs,
+        });
+        const { text, headers } = result;
         const title = matchTagContent(text, "title");
         const canonical = matchCanonical(text);
         const snapshots = uniqueMatches(
@@ -134,6 +160,7 @@ async function collectOpenAiTtsModels({ timeoutMs: requestTimeoutMs }) {
           hasSpeechEndpoint: /v1\/audio\/speech/i.test(text),
           snapshots,
           available: true,
+          warning: getCacheWarnings(result, `${modelId} docs page`)[0] || null,
         };
       } catch (error) {
         return {
@@ -158,8 +185,16 @@ async function collectOpenAiTtsModels({ timeoutMs: requestTimeoutMs }) {
     snapshots: page.snapshots,
   }));
   const warnings = pages
-    .filter((page) => !page.available)
-    .map((page) => `${page.modelId}: ${page.error}`);
+    .flatMap((page) => {
+      const pageWarnings = [];
+      if (!page.available) {
+        pageWarnings.push(`${page.modelId}: ${page.error}`);
+      }
+      if (page.warning) {
+        pageWarnings.push(`${page.modelId}: ${page.warning}`);
+      }
+      return pageWarnings;
+    });
 
   return {
     id: "openai-tts-model-pages",
@@ -182,7 +217,11 @@ async function collectOpenAiTtsModels({ timeoutMs: requestTimeoutMs }) {
 async function collectMdnWebGpu({ timeoutMs: requestTimeoutMs }) {
   const url = "https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API";
   try {
-    const { text, headers } = await fetchText(url, { timeoutMs: requestTimeoutMs });
+    const result = await fetchText(url, {
+      cacheId: "mdn-webgpu",
+      timeoutMs: requestTimeoutMs,
+    });
+    const { text, headers } = result;
     const title = matchTagContent(text, "title");
     const canonical = matchCanonical(text);
     const availability = matchPlainSentence(
@@ -212,10 +251,12 @@ async function collectMdnWebGpu({ timeoutMs: requestTimeoutMs }) {
       label: "MDN WebGPU API",
       category: "webgpu",
       url,
-      status: "ok",
+      status: getCacheWarnings(result, "MDN WebGPU reference page").length
+        ? "warning"
+        : "ok",
       summary: [availability, baselineDetail].filter(Boolean).join(" | ") || "Checked MDN WebGPU guidance.",
       materialKey: hashJson(materialPayload),
-      warnings: [],
+      warnings: getCacheWarnings(result, "MDN WebGPU reference page"),
       meta: {
         title,
         canonical,
@@ -256,8 +297,15 @@ async function collectContext7Freshness({ timeoutMs: requestTimeoutMs, staleDays
 
   if (configuredUrl) {
     try {
-      await fetchText(configuredUrl, { timeoutMs: requestTimeoutMs, accept: "application/json,text/plain,*/*" });
-      remoteReachable = true;
+      const result = await fetchText(configuredUrl, {
+        cacheId: "context7-freshness",
+        timeoutMs: requestTimeoutMs,
+        accept: "application/json,text/plain,*/*",
+      });
+      remoteReachable = result.cacheState !== "cache-fallback";
+      warnings.push(
+        ...getCacheWarnings(result, "Context7 snapshot feed"),
+      );
     } catch (error) {
       remoteReachable = false;
       warnings.push(`Remote snapshot unavailable: ${formatError(error)}`);
@@ -411,26 +459,41 @@ function formatReport(state, diff, { initialized }) {
   return `${lines.join("\n").trim()}\n`;
 }
 
-async function fetchText(url, { timeoutMs: requestTimeoutMs, accept = "text/html,application/xml,application/json;q=0.9,*/*;q=0.8" }) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), requestTimeoutMs);
-  try {
-    const response = await fetch(url, {
-      headers: {
-        Accept: accept,
-        "User-Agent": "personal-website-repo-pulse/1.0",
-      },
-      redirect: "follow",
-      signal: controller.signal,
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-    const text = await response.text();
-    return { text, headers: response.headers };
-  } finally {
-    clearTimeout(timeout);
+async function fetchText(
+  url,
+  {
+    cacheId,
+    timeoutMs: requestTimeoutMs,
+    accept = "text/html,application/xml,application/json;q=0.9,*/*;q=0.8",
+  },
+) {
+  const safeCacheId = String(cacheId || "source")
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "source";
+
+  return fetchTextWithCache({
+    url,
+    timeoutMs: requestTimeoutMs,
+    maxRetries: pulseFetchRetries,
+    baseDelayMs: pulseFetchBaseDelayMs,
+    maxDelayMs: pulseFetchMaxDelayMs,
+    useRetryAfter: true,
+    readCacheOnError: true,
+    cachePath: path.join(pulseCacheDir, `${safeCacheId}.body`),
+    etagPath: path.join(pulseCacheDir, `${safeCacheId}.etag`),
+    headers: {
+      Accept: accept,
+      "User-Agent": "personal-website-repo-pulse/1.0",
+    },
+  });
+}
+
+function getCacheWarnings(result, label) {
+  if (!result || result.cacheState !== "cache-fallback" || !result.error) {
+    return [];
   }
+  return [`${label} served the last cached response after retries failed: ${formatError(result.error)}`];
 }
 
 function parseRssItems(xml) {
@@ -544,6 +607,11 @@ async function readJsonIfExists(filePath) {
 function toPositiveNumber(rawValue, fallback) {
   const parsed = Number(rawValue);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+function toNonNegativeInteger(rawValue, fallback) {
+  const parsed = Number(rawValue);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : fallback;
 }
 
 async function writeGithubOutputs(values) {

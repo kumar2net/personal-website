@@ -1,0 +1,58 @@
+:root {
+  --microsoap-bg: #08111f;
+  --microsoap-card: rgba(14, 24, 42, 0.88);
+  --microsoap-accent: #ff7b3d;
+  --microsoap-accent-soft: #ffd166;
+  --microsoap-text: #f8fafc;
+  --microsoap-muted: #b9c3d6;
+}
+
+.microsoap-frame {
+  position: relative;
+  width: 100%;
+  max-width: 405px;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 123, 61, 0.28), transparent 28%),
+    linear-gradient(180deg, #111827 0%, var(--microsoap-bg) 100%);
+  color: var(--microsoap-text);
+}
+
+.microsoap-safe {
+  position: absolute;
+  inset: 72px 42px 168px;
+}
+
+.microsoap-speaker {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(255, 123, 61, 0.16);
+  color: var(--microsoap-accent-soft);
+}
+
+.microsoap-caption {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgba(8, 17, 31, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+}
+
+.microsoap-caption p {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.4;
+}
+
+.microsoap-caption small {
+  display: block;
+  margin-top: 10px;
+  color: var(--microsoap-muted);
+}
