@@ -352,7 +352,7 @@ export const ananyasLocalGuide = {
       id: "services",
       title: "Other useful nearby services",
       description:
-        "These are practical backups for transport, repairs, and medical support around the same corridor.",
+        "These are practical backups for transport, repairs, medical support, and occasional home-setup errands across the wider Coimbatore run.",
       items: [
         {
           ...officialSiteVerification,
@@ -401,6 +401,23 @@ export const ananyasLocalGuide = {
             "https://www.justdial.com/Coimbatore/Micheal-Electrical-Plumbing-Near-Rajalakshmi-Madapam-Puthupalayam-Veenapalayam-Post-Thondamuthur/0422PX422-X422-181126143008-C5S4_BZDET",
           mapUrl: createMapsSearchUrl(
             "Micheal Electrical & Plumbing, Rajalakshmi Madapam, Puthupalayam, Veenapalayam Post, Thondamuthur, Coimbatore",
+          ),
+        },
+        {
+          ...officialSiteVerification,
+          verifiedAt: "2026-03-22",
+          staleAfterDays: 45,
+          name: "Bharath Electronics & Appliances",
+          area: "Tatabad / Gandhipuram side",
+          address:
+            "26/1, Dr. Alagappa Chettiyar Road, Tatabad, near Kovai Scan Centre, Coimbatore 641012",
+          hours: "Official site says 9:30 am - 9:30 pm, Monday to Sunday",
+          note:
+            "Not on the immediate Thondamuthur corridor, but a useful city-side fallback for appliance, TV, laptop, or purifier purchases when a family member is already heading into central Coimbatore.",
+          sourceLabel: "Official site",
+          sourceUrl: "https://www.bharathelectronics.in/contact",
+          mapUrl: createMapsSearchUrl(
+            "Bharath Electronics & Appliances, 26/1 Dr. Alagappa Chettiyar Road, Tatabad, Coimbatore 641012",
           ),
         },
       ],

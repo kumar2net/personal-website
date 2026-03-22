@@ -25,13 +25,15 @@ const albums = [
   },
 ];
 
+const CHANNEL_SHORTS_URL = "https://www.youtube.com/@kumar2net/shorts";
+
 const channelHighlights = [
   {
-    eyebrow: "Energy + India",
-    title: "From crude oil to your kitchen",
+    eyebrow: "Banking + Service",
+    title: "HDFC chairman exit and customer support",
     description:
-      "A quick explainer on why Iran-linked supply shocks reach Indian kitchens fast, how LPG moves through Hormuz, and why one kitchen flame sits on top of a much larger energy system.",
-    url: "https://www.youtube.com/shorts/rfdkOWr-gQ4",
+      "A practical look at whether leadership churn can fix a broken support loop, or whether customers will keep getting pushed between teams with no real end-to-end resolution.",
+    url: "https://www.youtube.com/shorts/POOxNw3Wx9M",
     accent: "warning",
   },
   {
@@ -163,10 +165,10 @@ const Album = () => {
                       AIKumar Useful Stuff
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 720 }}>
-                      Short, practical explainers from the channel on energy,
-                      broadband, payments, AI systems, and everyday decision-making.
-                      Start with a few useful picks here, then jump into the full
-                      Shorts feed.
+                      Short, practical explainers from the channel on customer-service
+                      failures, broadband, payments, AI systems, and everyday
+                      decision-making. Start with a few useful picks here, then jump
+                      into the full Shorts feed.
                     </Typography>
                   </Box>
 
@@ -174,7 +176,7 @@ const Album = () => {
                     <Button
                       variant="contained"
                       size="small"
-                      href="https://www.youtube.com/@kumar2net/shorts"
+                      href={CHANNEL_SHORTS_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       endIcon={<FaExternalLinkAlt style={{ opacity: 0.7, fontSize: "0.8em" }} />}

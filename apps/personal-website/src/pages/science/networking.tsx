@@ -85,6 +85,54 @@ const measurementSnapshots = [
   },
 ];
 
+const globalHostingHubs = [
+  {
+    rank: "1",
+    title: "Ashburn / Northern Virginia, USA",
+    badge: "North America core",
+    summary:
+      "Representative campuses: Equinix DC metro, Digital Realty Ashburn, and QTS Ashburn.",
+    body:
+      "If you want one place where hyperscalers, CDNs, carriers, and enterprise networks collide at scale, this is still the clearest answer. Ashburn is the east-coast and transatlantic hand-off zone many operators engineer around, which is why so much globally consumed web content is replicated or peered here.",
+  },
+  {
+    rank: "2",
+    title: "Frankfurt, Germany",
+    badge: "Europe backbone",
+    summary:
+      "Representative campuses: DE-CIX-connected Frankfurt facilities across Equinix, Digital Realty, and other carrier hotels.",
+    body:
+      "Frankfurt anchors a huge share of European interconnection because DE-CIX Frankfurt remains the continent's dominant exchange point. For web content, that makes the metro a prime place to cache, peer, and serve users across Central and Western Europe with low latency.",
+  },
+  {
+    rank: "3",
+    title: "Amsterdam, Netherlands",
+    badge: "Dense peering fabric",
+    summary:
+      "Representative campuses: AMS-IX-connected Science Park and other Amsterdam carrier-neutral data centers.",
+    body:
+      "Amsterdam is one of the internet's classic exchange cities: dense peering, strong hosting history, and direct relationships between ISPs, cloud platforms, and content networks. If a platform wants broad European reach without pushing every request back to origin, Amsterdam is still one of the obvious places to sit.",
+  },
+  {
+    rank: "4",
+    title: "Singapore",
+    badge: "Southeast Asia gateway",
+    summary:
+      "Representative campuses: Equinix SG facilities, SGIX points of presence, and other carrier-neutral Singapore sites.",
+    body:
+      "Singapore matters because it compresses a huge amount of Southeast Asian, regional cloud, and submarine-cable connectivity into a small, highly interconnected market. Global media, SaaS, and gaming companies use it as a practical launch point for serving APAC traffic without placing every workload in multiple countries first.",
+  },
+  {
+    rank: "5",
+    title: "Tokyo, Japan",
+    badge: "Northeast Asia hub",
+    summary:
+      "Representative campuses: AT TOKYO centers, Equinix TY campuses, and exchange-rich Tokyo interconnection sites.",
+    body:
+      "Tokyo remains one of Asia's most important content metros because it concentrates Japanese ISPs, major content providers, cloud regions, and exchange platforms in one market. For globally popular platforms, Tokyo is where a lot of high-value Northeast Asian traffic gets cached, peered, and kept fast.",
+  },
+];
+
 export default function NetworkingPage() {
   const theme = useTheme();
   const paletteVars = (theme.vars?.palette ?? {}) as Record<string, string | undefined>;
@@ -226,6 +274,71 @@ export default function NetworkingPage() {
               </Card>
             ))}
           </Box>
+
+          <Divider sx={{ borderColor: outlineVariant, opacity: 0.9 }} />
+
+          <Card sx={cardSx}>
+            <CardContent sx={{ display: "grid", gap: 1.4 }}>
+              <Typography variant="titleLarge" sx={{ color: primaryContainer }}>
+                Top 5 Data Center Hubs For Global Web Content
+              </Typography>
+              <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                There is no clean official leaderboard of single buildings that "host the
+                web" because modern content is spread across cloud regions, CDN caches,
+                and carrier-neutral facilities. The better answer is to rank the biggest
+                interconnection metros where web content is most commonly replicated,
+                cached, and handed off to users.
+              </Typography>
+            </CardContent>
+          </Card>
+
+          <Box
+            sx={{
+              display: "grid",
+              gap: 2,
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "repeat(2, minmax(0, 1fr))",
+              },
+            }}
+          >
+            {globalHostingHubs.map((hub) => (
+              <Card key={hub.title} sx={{ ...cardSx, height: "100%" }}>
+                <CardContent sx={{ display: "grid", gap: 1.25 }}>
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{ flexWrap: "wrap", gap: 1 }}
+                  >
+                    <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                      #{hub.rank} {hub.title}
+                    </Typography>
+                    <Chip
+                      size="small"
+                      label={hub.badge}
+                      sx={{
+                        bgcolor: alpha(secondaryContainer, 0.14),
+                        color: onSurface,
+                        fontWeight: 600,
+                      }}
+                    />
+                  </Stack>
+                  <Typography variant="bodyMedium" sx={{ color: alpha(onSurface, 0.82) }}>
+                    {hub.summary}
+                  </Typography>
+                  <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                    {hub.body}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </Box>
+
+          <Typography variant="bodyMedium" sx={{ color: alpha(onSurface, 0.72) }}>
+            Ordering reflects global hosting and peering significance as of March 2026,
+            not total floor space or a formal industry-wide ranking.
+          </Typography>
 
           <Divider sx={{ borderColor: outlineVariant, opacity: 0.9 }} />
 

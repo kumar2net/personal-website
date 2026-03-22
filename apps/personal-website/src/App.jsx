@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import {
   Link as RouterLink,
@@ -31,6 +31,7 @@ import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import PasswordGate from "./components/PasswordGate";
 import About from "./pages/About";
+import { trackCtaClick, trackPageView } from "./lib/analytics";
 
 // Lazy load all other components
 const Home = lazy(() => import("./pages/Home"));
@@ -145,48 +146,12 @@ const ExternalNewsRedirect = () => {
   );
 };
 
-function useGaPageViews() {
+function useAnalyticsPageViews() {
   const location = useLocation();
 
-  // Track GA4 page_view on route change
-  const trackPageView = React.useCallback(() => {
-    if (typeof window === "undefined") return;
-    if (typeof window.gtag !== "function") return;
-
-    // GA4 SPA best practice: use `gtag('config', measurementId, { page_path })`
-    // on route changes. This reliably produces GA4 pageviews for client-side
-    // routing even when the initial `gtag('config', ...)` uses `send_page_view: false`.
-    const GA_MEASUREMENT_ID = "G-PZ37S6E5BL";
-    const pagePath = location.pathname + location.search;
-    window.gtag("config", GA_MEASUREMENT_ID, {
-      send_page_view: true,
-      page_path: pagePath,
-      page_location: window.location.href,
-      page_title: document.title,
-    });
-
-    // Also track custom event for better analytics
-    window.gtag("event", "page_view_custom", {
-      event_category: "engagement",
-      event_label: location.pathname,
-      page_path: pagePath,
-      page_title: document.title,
-    });
+  useEffect(() => {
+    void trackPageView();
   }, [location.pathname, location.search]);
-
-  useEffect(() => {
-    trackPageView();
-  }, [trackPageView]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return undefined;
-    const handleReady = () => trackPageView();
-    window.addEventListener("ga:ready", handleReady);
-    if (window.__gaReady) {
-      handleReady();
-    }
-    return () => window.removeEventListener("ga:ready", handleReady);
-  }, [trackPageView]);
 }
 
 const App = ({ mode }) => {
@@ -196,14 +161,11 @@ const App = ({ mode }) => {
   const [showWorldClock, setShowWorldClock] = useState(false);
   const isDarkMode = mode === "dark";
 
-  const trackClick = (eventName, parameters = {}) => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("event", eventName, {
-        event_category: "navigation",
-        event_label: eventName,
-        ...parameters,
-      });
-    }
+  const trackClick = (ctaId, parameters = {}) => {
+    void trackCtaClick({
+      cta_id: ctaId,
+      ...parameters,
+    });
   };
 
   const getLinkProps = (item) =>
@@ -219,7 +181,10 @@ const App = ({ mode }) => {
   const handleNavClick = (item, isMobile = false) => {
     trackClick(
       isMobile ? `${item.analyticsKey}_mobile` : item.analyticsKey,
-      { surface: isMobile ? "drawer" : "appbar" },
+      {
+        surface: isMobile ? "drawer" : "appbar",
+        destination: item.to || item.href,
+      },
     );
     if (isMobile) {
       setIsMobileMenuOpen(false);
@@ -227,7 +192,7 @@ const App = ({ mode }) => {
   };
   const currentYear = new Date().getFullYear();
 
-  useGaPageViews();
+  useAnalyticsPageViews();
 
   // Handle app loading and error states
   useEffect(() => {
@@ -369,7 +334,12 @@ const App = ({ mode }) => {
               <Box
                 component={RouterLink}
                 to="/"
-                onClick={() => trackClick("nav_home")}
+                onClick={() =>
+                  trackClick("nav_home", {
+                    destination: "/",
+                    surface: "appbar",
+                  })
+                }
                 aria-label="கு कु Home"
                 sx={{
                   display: "inline-flex",

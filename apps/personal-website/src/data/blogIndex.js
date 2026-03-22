@@ -2,6 +2,24 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-03-22-kardashev-scale-ai-energy-bottleneck": {
+    title:
+      "The Kardashev Scale, Explained the Feynman Way: AI's Real Bottleneck Is Energy",
+    description:
+      "A plain-language explainer inspired by Uchiha Itachi's note: why the road from today's AI boom to a Type I civilisation runs through grids, reactors, transmission lines, cooling, and efficiency per joule.",
+    image: "/generate/2026-03-22-kardashev-scale-ai-energy-bottleneck-hero.png",
+    tags: [
+      "AI",
+      "Energy",
+      "Kardashev Scale",
+      "Feynman Explainer",
+      "Bitcoin",
+      "Infrastructure",
+    ],
+    datePublished: "2026-03-22",
+    dateModified: "2026-03-22",
+    readingTime: "~6 min",
+  },
   "2026-03-17-reply-cortisol-ashwagandha-sanjaay-babu": {
     title: "Reply: Cortisol, Ashwagandha, and a More Careful Frame (Sanjaay Babu)",
     description:

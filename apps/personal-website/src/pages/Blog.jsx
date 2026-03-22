@@ -15,6 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import SEO from "../components/SEO";
 import SemanticSearch from "../components/SemanticSearch";
 import { getAllBlogPosts } from "../data/blogRegistry";
+import { trackCtaClick } from "../lib/analytics";
 import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const INITIAL_ARCHIVE_COUNT = 8;
@@ -109,7 +110,7 @@ function MetaRow({ post, tone = "default" }) {
   );
 }
 
-function FeaturedPostCard({ post }) {
+function FeaturedPostCard({ post, onNavigate }) {
   return (
     <Box
       component={motion.article}
@@ -184,6 +185,7 @@ function FeaturedPostCard({ post }) {
           <Typography
             component={RouterLink}
             to={post.link}
+            onClick={() => onNavigate?.(post, "lead_headline")}
             variant="h2"
             itemProp="headline"
             sx={(theme) => ({
@@ -215,6 +217,7 @@ function FeaturedPostCard({ post }) {
               to={post.link}
               variant="contained"
               endIcon={<ArrowOutwardIcon />}
+              onClick={() => onNavigate?.(post, "lead_button")}
               sx={{
                 borderRadius: 999,
                 px: 2.75,
@@ -231,7 +234,7 @@ function FeaturedPostCard({ post }) {
   );
 }
 
-function CompactPostCard({ post, index }) {
+function CompactPostCard({ post, index, onNavigate }) {
   return (
     <Box
       component={motion.article}
@@ -281,6 +284,7 @@ function CompactPostCard({ post, index }) {
         <Typography
           component={RouterLink}
           to={post.link}
+          onClick={() => onNavigate?.(post, "spotlight_headline")}
           variant="h5"
           itemProp="headline"
           sx={{
@@ -313,7 +317,7 @@ function CompactPostCard({ post, index }) {
   );
 }
 
-function ArchivePostCard({ post, index }) {
+function ArchivePostCard({ post, index, onNavigate }) {
   return (
     <Box
       component={motion.article}
@@ -365,6 +369,7 @@ function ArchivePostCard({ post, index }) {
         <Typography
           component={RouterLink}
           to={post.link}
+          onClick={() => onNavigate?.(post, "archive_headline")}
           variant="h6"
           itemProp="headline"
           sx={{
@@ -403,6 +408,7 @@ function ArchivePostCard({ post, index }) {
             to={post.link}
             size="small"
             endIcon={<ArrowOutwardIcon fontSize="small" />}
+            onClick={() => onNavigate?.(post, "archive_button")}
             sx={{
               alignSelf: { xs: "flex-start", sm: "center" },
               borderRadius: 999,
@@ -443,6 +449,20 @@ export default function Blog() {
       .slice(0, 6)
       .map(([tag]) => tag);
   }, [processedPosts]);
+
+  const trackPostNavigation = (post, surface) => {
+    void trackCtaClick({
+      cta_id: `blog_${surface}_${post.slug}`,
+      cta_label: post.title,
+      destination: post.link,
+      surface: `blog_${surface}`,
+      position: surface,
+      content_id: post.slug,
+      content_type: "post",
+      channel: "blog",
+      publish_date: post.datePublished,
+    });
+  };
 
   return (
     <Box
@@ -556,10 +576,18 @@ export default function Blog() {
                 alignItems: "start",
               }}
             >
-              <FeaturedPostCard post={featuredPost} />
+              <FeaturedPostCard
+                post={featuredPost}
+                onNavigate={trackPostNavigation}
+              />
               <Stack spacing={3}>
                 {spotlightPosts.map((post, index) => (
-                  <CompactPostCard key={post.link} post={post} index={index} />
+                  <CompactPostCard
+                    key={post.link}
+                    post={post}
+                    index={index}
+                    onNavigate={trackPostNavigation}
+                  />
                 ))}
               </Stack>
             </Box>
@@ -599,7 +627,12 @@ export default function Blog() {
             }}
           >
             {visibleArchivePosts.map((post, index) => (
-              <ArchivePostCard key={post.link} post={post} index={index} />
+              <ArchivePostCard
+                key={post.link}
+                post={post}
+                index={index}
+                onNavigate={trackPostNavigation}
+              />
             ))}
           </Box>
 
@@ -608,11 +641,16 @@ export default function Blog() {
               <Button
                 variant="outlined"
                 size="large"
-                onClick={() =>
+                onClick={() => {
+                  void trackCtaClick({
+                    cta_id: "blog_load_more",
+                    surface: "blog_archive",
+                    position: String(visibleArchiveCount + 1),
+                  });
                   setVisibleArchiveCount((count) =>
                     Math.min(count + ARCHIVE_BATCH_SIZE, archivePosts.length),
-                  )
-                }
+                  );
+                }}
                 sx={{
                   borderRadius: 999,
                   px: 3,

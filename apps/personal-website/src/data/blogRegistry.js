@@ -2,6 +2,61 @@ import { blogIndex } from "../data/blogIndex";
 import { unsplashHeroPool } from "./unsplashHeroPool";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
+const GENERIC_LISTING_IMAGE = "/media/blogwordcloud.png";
+
+const thematicHeroRules = [
+  {
+    matches: ["cortisol", "ashwagandha", "health", "ayurveda", "wellness"],
+    image:
+      "https://images.unsplash.com/photo-1569936906148-06de87cb0681?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: ["africa", "african", "colonialism", "development", "kenya", "nairobi"],
+    image:
+      "https://images.unsplash.com/photo-1693902997450-7e912c0d3554?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: ["election", "assembly", "government", "governance", "politics", "state"],
+    image:
+      "https://images.unsplash.com/photo-1760872645513-63b6846ce3c9?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: ["democracy", "civic", "turnout", "apathy", "voter"],
+    image:
+      "https://images.unsplash.com/photo-1761001315762-847bcee74967?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: ["music", "bhajan", "tamil", "tinglish", "culture"],
+    image:
+      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: ["writing", "learning", "clarity", "language", "slang", "education"],
+    image:
+      "https://images.unsplash.com/photo-1759752393718-7b57f6da3caa?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: ["market", "finance", "stock", "economy", "investment"],
+    image:
+      "https://images.unsplash.com/photo-1742076553114-cfd4f27de46f?auto=format&fit=crop&w=1600&q=80",
+  },
+  {
+    matches: [
+      "ai",
+      "artificial intelligence",
+      "technology",
+      "data center",
+      "server",
+      "upi",
+      "aadhaar",
+      "automation",
+      "it services",
+      "enterprise software",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1762163516269-3c143e04175c?auto=format&fit=crop&w=1600&q=80",
+  },
+];
 
 let cachedRegistry = null;
 
@@ -74,11 +129,49 @@ function inferDateFromSlug(slug) {
   return match ? match[1] : "";
 }
 
-function pickHeroImage(index) {
+function isGenericListingImage(image) {
+  return !image || image === GENERIC_LISTING_IMAGE;
+}
+
+function pickRotatingHeroImage(index) {
   if (!Array.isArray(unsplashHeroPool) || unsplashHeroPool.length === 0) {
     return "";
   }
   return unsplashHeroPool[index % unsplashHeroPool.length];
+}
+
+function pickThematicHeroImage(post) {
+  const haystack = [
+    post?.slug,
+    post?.title,
+    ...(Array.isArray(post?.tags) ? post.tags : []),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  const match = thematicHeroRules.find((rule) =>
+    rule.matches.some((needle) => haystack.includes(needle))
+  );
+
+  return match?.image || "";
+}
+
+function pickHeroImage(post, index) {
+  if (!post) {
+    return pickRotatingHeroImage(index);
+  }
+
+  if (!isGenericListingImage(post.image)) {
+    return post.image;
+  }
+
+  return (
+    pickThematicHeroImage(post) ||
+    pickRotatingHeroImage(index) ||
+    post.image ||
+    GENERIC_LISTING_IMAGE
+  );
 }
 
 function normalizeMetadata(raw) {
@@ -190,8 +283,8 @@ export function getAllBlogPosts() {
     lastModified: post.lastModified || post.date,
     excerpt: post.excerpt || post.description,
     tags: post.tags,
-    image: post.image || "/media/blogwordcloud.png",
-    heroImage: pickHeroImage(index),
+    image: post.image || GENERIC_LISTING_IMAGE,
+    heroImage: pickHeroImage(post, index),
     link: post.link,
     slug: post.slug,
     datePublished: post.datePublished,

@@ -22,7 +22,6 @@ import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
 import MemoryRoundedIcon from "@mui/icons-material/MemoryRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
-import PublicRoundedIcon from "@mui/icons-material/PublicRounded";
 import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
 import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
@@ -31,131 +30,131 @@ import SEO from "../components/SEO";
 import WorldClock from "../components/WorldClock";
 import { getAllBlogPosts } from "../data/blogRegistry";
 
-const editionLabel = "Mid-March 2026 edition";
+const editionLabel = "Weekend edition · March 21-22, 2026";
 
 const moodSwatches = [
   {
-    name: "Risk Amber",
-    hex: "#f59e0b",
-    meaning: "Energy still sets the emotional floor.",
+    name: "Thermal Peach",
+    hex: "#ff9f6e",
+    meaning: "Spring is arriving with the wrong temperature curve.",
   },
   {
-    name: "Signal Blue",
-    hex: "#38bdf8",
-    meaning: "Diplomacy is active, but nobody trusts calm yet.",
+    name: "Reserve Gold",
+    hex: "#f6c453",
+    meaning: "Policy backstops are buying time for markets.",
   },
   {
-    name: "Circuit Mint",
-    hex: "#2dd4bf",
-    meaning: "AI ambition now looks like land, power, chips, and cash.",
+    name: "Paris Blue",
+    hex: "#64b5ff",
+    meaning: "Negotiation is active, but trust is still thin.",
   },
   {
-    name: "Heat Haze",
-    hex: "#fb7185",
-    meaning: "Climate stress keeps turning background noise into foreground reality.",
+    name: "Grid Teal",
+    hex: "#43d8c9",
+    meaning: "AI ambition keeps resolving into power and infrastructure.",
   },
 ];
 
 const moodTags = [
-  "Energy shock",
-  "Trade reset",
-  "AI buildout",
-  "Weather whiplash",
+  "Weekend desk",
+  "March heat",
+  "Oil backstop",
+  "Grid realism",
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Energy pressure",
-    title: "Hormuz risk is back in the room",
+    eyebrow: "Heat anomaly",
+    title: "March heat is arriving out of season",
     summary:
-      "By March 16, 2026, Gulf conflict had slowed shipping and kept oil anxiety visible again in daily life, policy, and household budgets.",
-    source: "Signal date: March 16, 2026",
+      "On March 21, 2026, AP was still reporting extreme heat warnings across the U.S. Southwest, with summerlike temperatures stretching as far as Nebraska just a day into spring.",
+    source: "Signal date: March 21, 2026",
+    to: "/science",
+    analyticsKey: "home_weekend_heat",
+    accent: "#ff9f6e",
+    icon: CloudQueueRoundedIcon,
+    cta: "Open science notes",
+  },
+  {
+    eyebrow: "Energy backstop",
+    title: "Oil is being steadied with reserves, not calm",
+    summary:
+      "The IEA's record emergency reserve release on March 11 made the week's energy mood plain: flows can be stabilized, but only with visible intervention.",
+    source: "Signal date: March 11, 2026",
     to: "/blog/2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india",
-    analyticsKey: "home_worldpulse_energy",
-    accent: "#f59e0b",
+    analyticsKey: "home_weekend_energy",
+    accent: "#f6c453",
     icon: BoltRoundedIcon,
     cta: "Read the energy chain",
   },
   {
-    eyebrow: "Trade negotiation",
-    title: "Washington and Beijing are talking, carefully",
+    eyebrow: "Trade choreography",
+    title: "Paris kept tariffs in negotiation mode",
     summary:
-      "Paris talks on March 16 kept retaliation in check, but the tone remains competitive, procedural, and highly conditional.",
-    source: "Signal date: March 16, 2026",
+      "The March 15 and March 16 talks lowered the immediate temperature, but the U.S.-China relationship still reads as competitive, procedural, and provisional.",
+    source: "Signal dates: March 15-16, 2026",
     to: "/keydata",
-    analyticsKey: "home_worldpulse_trade",
-    accent: "#38bdf8",
+    analyticsKey: "home_weekend_trade",
+    accent: "#64b5ff",
     icon: CompareArrowsRoundedIcon,
-    cta: "Track the market spillover",
+    cta: "Track the spillover",
   },
   {
-    eyebrow: "AI infrastructure",
-    title: "The AI race now looks physical",
+    eyebrow: "AI energy reality",
+    title: "The weekend essay question is still electricity",
     summary:
-      "India's February 2026 summit pushed the story beyond models into data centers, compute access, talent, and Global South positioning.",
-    source: "Signal date: February 19, 2026",
-    to: "/blog/2026-03-10-indian-it-ai-reality-check",
-    analyticsKey: "home_worldpulse_ai",
-    accent: "#2dd4bf",
+      "India's February 17 AI push and March 12 power note converged on the same point: compute ambition only matters if grids, cooling, and supply stay ahead of demand.",
+    source: "Signal dates: February 17 and March 12, 2026",
+    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
+    analyticsKey: "home_weekend_ai_energy",
+    accent: "#43d8c9",
     icon: MemoryRoundedIcon,
-    cta: "Read the India angle",
-  },
-  {
-    eyebrow: "Climate stress",
-    title: "Weather keeps arriving as whiplash",
-    summary:
-      "On March 16, the same U.S. day carried blizzards, wildfire risk, severe storms, flooding, and heat that looked more like June than March.",
-    source: "Signal date: March 16, 2026",
-    to: "/science",
-    analyticsKey: "home_worldpulse_climate",
-    accent: "#fb7185",
-    icon: CloudQueueRoundedIcon,
-    cta: "Open science notes",
+    cta: "Read the weekend essay",
   },
 ];
 
 const siteVectors = [
   {
-    eyebrow: "Writing",
-    title: "Notes for a high-voltage year",
+    eyebrow: "Long read",
+    title: "Start with the weekend essay on AI and energy",
     summary:
-      "Essays on energy, shipping, India, AI, policy, and the parts of life that still resist simplification.",
-    to: "/blog",
-    analyticsKey: "home_vector_blog",
-    accent: "#f6ad37",
+      "A slower explainer on the Kardashev scale, power demand, and why intelligence at scale is still constrained by electricity.",
+    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
+    analyticsKey: "home_vector_weekend_essay",
+    accent: "#ff9f6e",
     icon: MenuBookRoundedIcon,
-    cta: "Enter the blog",
+    cta: "Read the long essay",
   },
   {
     eyebrow: "Numbers",
-    title: "Check the dashboard before the narrative hardens",
+    title: "Then check the scoreboard",
     summary:
-      "Markets, crude, volatility, and U.S./India signals as a practical companion to whatever the headline cycle is shouting today.",
+      "Crude, volatility, indices, and the handful of metrics that tell you whether the week was noise or regime change.",
     to: "/keydata",
     analyticsKey: "home_vector_keydata",
-    accent: "#7dd3fc",
+    accent: "#64b5ff",
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
   {
-    eyebrow: "Building",
-    title: "Projects that turn noise into instruments",
+    eyebrow: "Workbench",
+    title: "Then visit the build side",
     summary:
-      "Utilities, experiments, and interfaces built for a world with tighter feedback loops and less patience for hand-waving.",
+      "Projects and utilities for making systems legible instead of merely impressive.",
     to: "/projects",
     analyticsKey: "home_vector_projects",
-    accent: "#34d399",
+    accent: "#43d8c9",
     icon: RocketLaunchRoundedIcon,
     cta: "See projects",
   },
   {
-    eyebrow: "Culture",
-    title: "Keep one channel open to music and memory",
+    eyebrow: "Soft exit",
+    title: "Then leave some room for music and memory",
     summary:
-      "A homepage cannot be all alertness. It also needs rhythm, devotion, breath, and some residue of ordinary life.",
+      "Weekend mode should not end in policy and markets alone. It also needs rhythm, culture, and a little human residue.",
     to: "/music",
     analyticsKey: "home_vector_music",
-    accent: "#fb7185",
+    accent: "#f472b6",
     icon: MusicNoteRoundedIcon,
     cta: "Open music",
   },
@@ -163,15 +162,15 @@ const siteVectors = [
 
 const quickLinks = [
   { label: "About", to: "/about", analyticsKey: "home_quick_about" },
+  { label: "Blog", to: "/blog", analyticsKey: "home_quick_blog" },
   { label: "Learning", to: "/learning", analyticsKey: "home_quick_learning" },
   { label: "Album", to: "/album", analyticsKey: "home_quick_album" },
-  { label: "Science", to: "/science", analyticsKey: "home_quick_science" },
   { label: "Elsewhere", to: "/elsewhere", analyticsKey: "home_quick_elsewhere" },
 ];
 
 const featuredSlugs = [
+  "2026-03-22-kardashev-scale-ai-energy-bottleneck",
   "2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india",
-  "2026-03-10-indian-it-ai-reality-check",
   "2026-03-07-impact-of-straits-for-trade-commerce",
 ];
 
@@ -211,21 +210,21 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       transition={{ duration: 0.45 }}
       sx={{
         "--home-surface": isDarkMode
-          ? "rgba(11, 16, 24, 0.9)"
-          : "rgba(255, 255, 255, 0.92)",
+          ? "rgba(24, 15, 20, 0.9)"
+          : "rgba(255, 250, 246, 0.94)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(15, 23, 34, 0.94)"
-          : "rgba(248, 251, 255, 0.96)",
+          ? "rgba(32, 20, 26, 0.95)"
+          : "rgba(253, 248, 243, 0.98)",
         "--home-border": isDarkMode
-          ? "rgba(164, 179, 197, 0.18)"
-          : "rgba(66, 92, 122, 0.16)",
+          ? "rgba(255, 212, 171, 0.16)"
+          : "rgba(139, 93, 60, 0.14)",
         "--home-muted-text": isDarkMode
-          ? "rgba(219, 228, 238, 0.76)"
-          : "rgba(55, 70, 92, 0.72)",
-        "--home-ink": isDarkMode ? "#f8fafc" : "#09111c",
+          ? "rgba(244, 228, 212, 0.74)"
+          : "rgba(91, 68, 55, 0.78)",
+        "--home-ink": isDarkMode ? "#fff7ed" : "#1d120d",
         "--home-shadow": isDarkMode
-          ? "0 28px 80px rgba(0, 0, 0, 0.34)"
-          : "0 26px 64px rgba(79, 110, 158, 0.14)",
+          ? "0 30px 90px rgba(9, 6, 7, 0.4)"
+          : "0 26px 64px rgba(138, 90, 51, 0.14)",
         display: "flex",
         flexDirection: "column",
         gap: { xs: 3, md: 4 },
@@ -236,9 +235,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Mid-March 2026 homepage edition: energy shock, trade resets, AI buildout, weather whiplash, and a more outward-looking front page."
+        description="Weekend edition for March 21-22, 2026: March heat, oil backstops, Paris tariff talks, and a new long read on AI's energy bottleneck."
         canonicalPath="/"
-        image="/media/blogwordcloud.png"
+        image="/generate/2026-03-22-kardashev-scale-ai-energy-bottleneck-hero.png"
         type="website"
       />
 
@@ -257,17 +256,17 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "radial-gradient(circle at 18% 18%, rgba(245, 158, 11, 0.22), transparent 24%), radial-gradient(circle at 82% 14%, rgba(56, 189, 248, 0.18), transparent 24%), radial-gradient(circle at 72% 84%, rgba(45, 212, 191, 0.18), transparent 24%), linear-gradient(145deg, rgba(6, 10, 16, 0.98), rgba(12, 20, 31, 0.97) 52%, rgba(18, 28, 40, 0.95))"
-                : "radial-gradient(circle at 18% 18%, rgba(245, 158, 11, 0.2), transparent 24%), radial-gradient(circle at 82% 14%, rgba(56, 189, 248, 0.16), transparent 24%), radial-gradient(circle at 72% 84%, rgba(45, 212, 191, 0.14), transparent 24%), linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(243, 247, 252, 0.98) 52%, rgba(236, 244, 248, 0.95))",
+                ? "radial-gradient(circle at 14% 14%, rgba(255, 159, 110, 0.3), transparent 22%), radial-gradient(circle at 83% 18%, rgba(100, 181, 255, 0.18), transparent 22%), radial-gradient(circle at 74% 84%, rgba(67, 216, 201, 0.16), transparent 24%), linear-gradient(150deg, rgba(22, 12, 18, 0.98), rgba(39, 19, 27, 0.97) 48%, rgba(27, 16, 21, 0.96))"
+                : "radial-gradient(circle at 14% 14%, rgba(255, 159, 110, 0.22), transparent 22%), radial-gradient(circle at 83% 18%, rgba(100, 181, 255, 0.16), transparent 22%), radial-gradient(circle at 74% 84%, rgba(67, 216, 201, 0.15), transparent 24%), linear-gradient(150deg, rgba(255, 248, 242, 0.98), rgba(255, 242, 232, 0.98) 48%, rgba(247, 240, 234, 0.96))",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 28%), linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(0deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)",
-                backgroundSize: "100% 100%, 52px 52px, 52px 52px",
-                opacity: isDarkMode ? 0.18 : 0.1,
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(255, 210, 170, 0.09) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(100, 181, 255, 0.05) 0 1px, transparent 1px 26px)",
+                backgroundSize: "100% 100%, 100% 100%, 100% 100%",
+                opacity: isDarkMode ? 0.22 : 0.1,
                 pointerEvents: "none",
               },
             }}
@@ -280,7 +279,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 justifyContent="space-between"
               >
                 <Chip
-                  icon={<PublicRoundedIcon fontSize="small" />}
+                  icon={<TravelExploreRoundedIcon fontSize="small" />}
                   label={editionLabel}
                   sx={{
                     borderRadius: 999,
@@ -288,8 +287,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     letterSpacing: 0.35,
                     color: "var(--home-ink)",
                     backgroundColor: isDarkMode
-                      ? "rgba(248, 250, 252, 0.08)"
-                      : "rgba(255, 255, 255, 0.7)",
+                      ? "rgba(255, 247, 237, 0.08)"
+                      : "rgba(255, 255, 255, 0.72)",
                     backdropFilter: "blur(14px)",
                   }}
                 />
@@ -301,7 +300,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  March 17, 2026 snapshot • refreshed {todayLabel}
+                  Weekend of March 21-22, 2026 • refreshed {todayLabel}
                 </Typography>
               </Stack>
 
@@ -311,14 +310,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   sx={{
                     fontFamily: heroFont,
                     fontWeight: 700,
-                    fontSize: { xs: "2.5rem", md: "4.35rem" },
+                    fontSize: { xs: "2.45rem", md: "4.3rem" },
                     lineHeight: 0.94,
                     letterSpacing: "-0.05em",
-                    maxWidth: 780,
+                    maxWidth: 760,
                     color: "var(--home-ink)",
                   }}
                 >
-                  The birthday colors are gone. The world runs hotter now.
+                  Weekend mode: slower scroll, bigger systems.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -326,14 +325,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                     fontSize: { xs: "1rem", md: "1.08rem" },
                     maxWidth: 760,
-                    lineHeight: 1.7,
+                    lineHeight: 1.72,
                   }}
                 >
-                  This front page now turns outward. Mid-March 2026 feels like
-                  energy stress, tariff negotiation, AI infrastructure land
-                  grabs, and weather that refuses to stay background texture.
-                  The site stays personal, but the homepage mood is now alert,
-                  industrial, and a little heat-streaked.
+                  This weekend version eases off the weekday alarm and turns
+                  into a warmer briefing. The week ended with early spring
+                  heat, emergency oil backstops, Paris tariff choreography, and
+                  a fresh long read on the oldest truth in tech: AI runs on
+                  electricity before it runs on dreams.
                 </Typography>
               </Stack>
 
@@ -353,8 +352,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       borderColor: "var(--home-border)",
                       color: "var(--home-ink)",
                       backgroundColor: isDarkMode
-                        ? "rgba(15, 23, 34, 0.62)"
-                        : "rgba(255, 255, 255, 0.74)",
+                        ? "rgba(34, 20, 26, 0.66)"
+                        : "rgba(255, 255, 255, 0.76)",
                     }}
                   />
                 ))}
@@ -367,28 +366,28 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog"
+                  to="/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_blog_cta")}
+                  onClick={() => trackClick("home_hero_weekend_essay_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
                     textTransform: "none",
                     fontWeight: 700,
                     boxShadow: "none",
-                    color: "#09111c",
+                    color: "#1d120d",
                     background:
-                      "linear-gradient(135deg, #f59e0b 0%, #fbbf24 35%, #fb7185 100%)",
+                      "linear-gradient(135deg, #ff9f6e 0%, #f6c453 44%, #64b5ff 100%)",
                     "&:hover": {
                       boxShadow: "none",
                       background:
-                        "linear-gradient(135deg, #e89006 0%, #f2b318 35%, #f85d7a 100%)",
+                        "linear-gradient(135deg, #fb905a 0%, #efba3a 44%, #53a8ff 100%)",
                     },
                   }}
                 >
-                  Read the latest notes
+                  Start with the weekend essay
                 </Button>
                 <Button
                   component={RouterLink}
@@ -409,10 +408,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/projects"
+                  to="/blog"
                   variant="text"
                   size="large"
-                  onClick={() => trackClick("home_hero_projects_cta")}
+                  onClick={() => trackClick("home_hero_blog_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 2,
@@ -421,7 +420,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  See the build side
+                  Browse recent posts
                 </Button>
               </Stack>
 
@@ -433,8 +432,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: cautious forward motion. Nothing is settled, but
-                    everything is moving.
+                    Mood: reflective, heat-shimmered, and system-aware rather
+                    than panicked.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -442,8 +441,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Use this page as a dispatch board: read deeper, check the
-                    numbers, then step sideways into music, books, or memory.
+                    Weekend use: one long read, one dashboard check, then a
+                    softer exit into music, books, or memory.
                   </Typography>
                 </Grid>
               </Grid>
@@ -474,7 +473,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Mood Atlas
+                  Weekend Palette
                 </Typography>
                 <Typography
                   variant="h5"
@@ -484,7 +483,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering this version
+                  The colors steering this two-day version
                 </Typography>
               </Box>
 
@@ -501,9 +500,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       height: 42,
                       borderRadius: 2.5,
                       flexShrink: 0,
-                      border: "1px solid rgba(255, 255, 255, 0.18)",
+                      border: "1px solid rgba(255, 255, 255, 0.14)",
                       backgroundColor: swatch.hex,
-                      boxShadow: `0 0 0 1px ${alpha("#09111c", 0.08)}`,
+                      boxShadow: `0 0 0 1px ${alpha("#1d120d", 0.08)}`,
                     }}
                   />
                   <Stack spacing={0.25}>
@@ -540,8 +539,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This is not a live newsroom. It is an honest front page for
-                  this exact moment, with the date left visible on purpose.
+                  This weekend edition slows the page down without pretending
+                  the week was calm. The date stays visible so the mood has a
+                  timestamp.
                 </Typography>
               </Box>
 
@@ -598,8 +598,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           borderRadius: 4,
           border: "1px solid var(--home-border)",
           background: isDarkMode
-            ? "linear-gradient(135deg, rgba(15, 23, 34, 0.94), rgba(9, 14, 22, 0.98))"
-            : "linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 252, 0.98))",
+            ? "linear-gradient(135deg, rgba(34, 20, 26, 0.94), rgba(22, 13, 18, 0.98))"
+            : "linear-gradient(135deg, rgba(255, 250, 246, 0.98), rgba(250, 244, 238, 0.98))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -620,7 +620,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-muted-text)",
                 }}
               >
-                World Pulse
+                Weekend Signals
               </Typography>
               <Typography
                 variant="h4"
@@ -630,15 +630,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-ink)",
                 }}
               >
-                Four forces setting the tone right now
+                What this weekend feels like
               </Typography>
             </Stack>
             <Typography
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              These are the signals informing the page design, not a promise of
-              perpetual freshness. The date is part of the design.
+              More digest than ticker. Exact dates stay visible so the page
+              reads as a dated weekend brief, not fake permanence.
             </Typography>
           </Stack>
 
@@ -800,7 +800,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Site Routes
+                  Weekend Routes
                 </Typography>
                 <Typography
                   variant="h4"
@@ -810,7 +810,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Four ways into the site from this mood
+                  How to use the site this weekend
                 </Typography>
               </Box>
 
@@ -955,7 +955,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Quick Drift
+                  Soft Exits
                 </Typography>
                 <Typography
                   variant="h5"
@@ -983,15 +983,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       textDecoration: "none",
                       color: "inherit",
                       backgroundColor: isDarkMode
-                        ? "rgba(18, 28, 40, 0.45)"
-                        : "rgba(255, 255, 255, 0.72)",
+                        ? "rgba(35, 22, 28, 0.48)"
+                        : "rgba(255, 255, 255, 0.74)",
                       transition:
                         "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
                       "&:hover": {
                         transform: "translateX(4px)",
-                        borderColor: alpha("#38bdf8", 0.85),
+                        borderColor: alpha("#64b5ff", 0.82),
                         backgroundColor: isDarkMode
-                          ? "rgba(18, 28, 40, 0.68)"
+                          ? "rgba(35, 22, 28, 0.68)"
                           : "rgba(255, 255, 255, 0.92)",
                       },
                     }}
@@ -1011,8 +1011,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: alpha("#38bdf8", 0.12),
-                            color: "#38bdf8",
+                            backgroundColor: alpha("#64b5ff", 0.14),
+                            color: "#64b5ff",
                           }}
                         >
                           <TravelExploreRoundedIcon sx={{ fontSize: 20 }} />
@@ -1038,9 +1038,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                The page is outward-facing now, but not fully surrendered to
-                headlines. There is still room for books, craft, and ordinary
-                human detail.
+                Weekend mode means less doomscroll, more deliberate wandering.
+                The page can face the week without being trapped inside it.
               </Typography>
             </Stack>
           </Paper>
@@ -1058,7 +1057,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            Current Reading
+            Weekend Reading Stack
           </Typography>
           <Typography
             variant="h4"
@@ -1068,7 +1067,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Three recent posts that match the weather
+            Three posts for a slower two-day read
           </Typography>
         </Stack>
 
@@ -1139,7 +1138,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                         position: "absolute",
                         inset: 0,
                         background:
-                          "linear-gradient(180deg, rgba(8, 16, 24, 0.12) 0%, rgba(8, 16, 24, 0.74) 70%, rgba(5, 10, 18, 0.96) 100%)",
+                          "linear-gradient(180deg, rgba(20, 12, 16, 0.12) 0%, rgba(20, 12, 16, 0.74) 70%, rgba(11, 7, 9, 0.96) 100%)",
                       }}
                     />
                     <Stack
@@ -1165,8 +1164,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             size="small"
                             sx={{
                               borderRadius: 999,
-                              color: "#f8fafc",
-                              backgroundColor: "rgba(8, 16, 24, 0.58)",
+                              color: "#fff7ed",
+                              backgroundColor: "rgba(20, 12, 16, 0.58)",
                             }}
                           />
                         ))}
@@ -1177,7 +1176,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                           fontFamily: heroFont,
                           fontWeight: 650,
                           lineHeight: 1.05,
-                          color: "#f8fafc",
+                          color: "#fff7ed",
                         }}
                       >
                         {post.title}
@@ -1185,7 +1184,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       <Typography
                         variant="body2"
                         sx={{
-                          color: "rgba(232, 238, 247, 0.88)",
+                          color: "rgba(249, 233, 218, 0.9)",
                           maxWidth: index === 0 ? 520 : 320,
                         }}
                       >
@@ -1199,14 +1198,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                         <Typography
                           variant="caption"
                           sx={{
-                            color: "rgba(232, 238, 247, 0.86)",
+                            color: "rgba(249, 233, 218, 0.84)",
                             letterSpacing: 0.3,
                           }}
                         >
                           {post.date}
                         </Typography>
                         <ArrowOutwardRoundedIcon
-                          sx={{ color: "#f8fafc", fontSize: 18 }}
+                          sx={{ color: "#fff7ed", fontSize: 18 }}
                         />
                       </Stack>
                     </Stack>

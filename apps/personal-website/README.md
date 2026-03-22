@@ -24,8 +24,7 @@ Personal site for Kumar A. built with React and Vite. The project bundles togeth
   - Removed Weekly Whisper (PromptBox) from all blog posts
   - Removed ReactionBar and ChromeReaderModeNudge components
   - Cleaner, more focused reading experience
-- **GA4 Pageview Tracking** (Dec 2025): Improved SPA analytics accuracy
-  - Keeps `send_page_view: false` on initial load and triggers pageviews on React Router changes using `gtag('config', ...)`.
+- **Privacy-First Analytics** (Mar 2026): Plausible is now the primary tracker for SPA pageviews and content/CTA events, with a server-side GA4 Measurement Protocol mirror reserved for revenue-critical events.
 - **Sitemap & SEO** (Nov 2025): Enhanced search engine optimization
   - Regenerated sitemap.xml and sitemap.html with latest content
   - Added Google Search Console API submission script
@@ -43,7 +42,7 @@ See `docs/CHANGELOG.md` for a detailed history.
 - **Dashboards** – Utilities spending dashboard, status page, dossier timelines, and other data-first explorations.
 - **Books & Notes** – Mixed media content (Markdown, PDF excerpts, DOCX conversions) routed through lazily loaded page bundles.
 - **Backend Support** – Optional Node/Python services that feed GA4 + BigQuery powered recommendations.
-- **Observability** – Vercel Speed Insights instrumentation baked into the root React tree for real-user performance analytics without extra setup.
+- **Observability** – Plausible pageviews/events for content performance, a GA4 Measurement Protocol revenue mirror, and Vercel Speed Insights for real-user performance analytics.
 
 ## Tech Stack Overview
 
@@ -103,7 +102,7 @@ npm run dev
 npm run dev:netlify
 ```
 
-`npm run dev` uses the custom Vite middleware to proxy `/api/convert` and `/api/semantic-search` into the Node handlers so the semantic index is queried without deploying functions.
+`npm run dev` uses the custom Vite middleware to serve local API handlers such as `/api/semantic-search`, `/api/blog-tts`, `/api/engagement`, `/api/keydata`, and `/api/analytics-revenue` without deploying functions.
 
 ### Quality & Tooling
 
@@ -127,6 +126,13 @@ npm run test:all
 npm run build
 # Outputs to dist/
 ```
+
+## Analytics
+
+- Primary tracker: Plausible. Configure `VITE_PLAUSIBLE_DOMAIN` and, if needed, `VITE_PLAUSIBLE_SCRIPT_SRC` / `VITE_PLAUSIBLE_API_HOST`.
+- Revenue mirror: server-side GA4 Measurement Protocol via `/api/analytics-revenue`. Set `GA4_MEASUREMENT_ID` and `GA4_MP_API_SECRET` in the deployment environment.
+- The client runtime records SPA pageviews plus `content_view`, `content_engagement`, and `cta_click`. Helpers for `newsletter_subscribe`, `trial_start`, `purchase`, and `affiliate_payout` live in [`src/lib/analytics.js`](/Users/kumara/personal-website/apps/personal-website/src/lib/analytics.js).
+- Important tradeoff: the GA4 Measurement Protocol mirror uses an anonymous first-party visitor/session identifier by default. Google’s docs position Measurement Protocol as a supplement to tagged client data, so if you later need full GA-native acquisition attribution, feed a GA-issued `client_id` into the mirror payload.
 
 ## Catch-up posts
 

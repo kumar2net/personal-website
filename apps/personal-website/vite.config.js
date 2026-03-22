@@ -71,6 +71,7 @@ const LOCAL_API_ROUTE_DEFINITIONS = [
   { prefix: "/api/semantic-search", filePath: "api/semantic-search.js" },
   { prefix: "/api/blog-tts", filePath: "api/blog-tts.js" },
   { prefix: "/api/engagement", filePath: "api/engagement.js" },
+  { prefix: "/api/analytics-revenue", filePath: "api/analytics-revenue.js" },
   { prefix: "/api/keydata", filePath: "api/keydata.js" },
 ];
 
