@@ -6,29 +6,88 @@ on:
     - cron: "30 2 * * *"
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  issues: write
 
 jobs:
   pulse:
     name: Repo pulse baseline
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: "20"
-      - run: npm run pulse:check -- --write-state
-      - uses: peter-evans/create-pull-request@v7
+          package-manager-cache: false
+      - name: Run repo pulse
+        id: pulse
+        run: |
+          npm run pulse:check -- --write-state | tee pulse-check.log
+          {
+            echo "## Repo pulse baseline"
+            echo
+            echo "```text"
+            cat pulse-check.log
+            echo "```"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload repo pulse artifacts
+        if: ${{ steps.pulse.outputs.initialized == 'true' || steps.pulse.outputs.materialChanges != '0' }}
+        uses: actions/upload-artifact@v6
         with:
-          branch: codex/repo-pulse
-          commit-message: Update repo pulse baseline
-          title: Update repo pulse baseline
-          body: |
-            Automated repo pulse update.
+          name: repo-pulse-${{ github.run_id }}
+          path: |
+            docs/_facts/pulse-state.json
+            docs/_facts/pulse-report.md
+            pulse-check.log
+      - name: Open or update repo pulse issue
+        if: ${{ steps.pulse.outputs.initialized == 'true' || steps.pulse.outputs.materialChanges != '0' }}
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require("node:fs");
 
-            This refreshes the tracked baseline for:
-            - OpenAI audio/TTS docs signals
-            - MDN WebGPU availability guidance
-            - Context7 freshness metadata
-          delete-branch: true
+            const title = "Repo pulse baseline update needed";
+            const report = fs.readFileSync("docs/_facts/pulse-report.md", "utf8");
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              "The scheduled repo pulse job detected a baseline change.",
+              "",
+              "GitHub Actions cannot open pull requests in this repository, so this workflow now files an issue instead of failing on PR creation.",
+              "",
+              `Workflow run: ${runUrl}`,
+              `Material changes: ${process.env.MATERIAL_CHANGES}`,
+              `Warnings: ${process.env.WARNING_COUNT}`,
+              "",
+              report,
+            ].join("\n");
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              per_page: 100,
+            });
+            const existing = issues.find(
+              (issue) => !issue.pull_request && issue.title === title,
+            );
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+              });
+              core.info(`Updated issue #${existing.number}`);
+            } else {
+              const { data: issue } = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+              core.info(`Created issue #${issue.number}`);
+            }
+        env:
+          MATERIAL_CHANGES: ${{ steps.pulse.outputs.materialChanges }}
+          WARNING_COUNT: ${{ steps.pulse.outputs.warningCount }}

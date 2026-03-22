@@ -27,10 +27,10 @@ const explainers = [
       "Packet rate acts like demand. Loss creates red failure bursts at node boundaries. Latency jitter keeps travel times uneven, which is why a link can show “good speed” in a test and still feel flaky during calls, gaming, or page loads.",
   },
   {
-    title: "Why 5 GHz often feels faster",
+    title: "Why 5 GHz feels faster and 6 GHz matters",
     tone: "primary",
     body:
-      "5 GHz usually offers more spectrum and less neighbor interference than crowded 2.4 GHz, so the first wireless hop is cleaner. The tradeoff is range. Move far from the access point and the signal can weaken enough that the old 2.4 GHz band starts winning again.",
+      "5 GHz usually offers more spectrum and less neighbor interference than crowded 2.4 GHz, so the first wireless hop is cleaner. 6 GHz is the new band on the block: in the U.S. it runs from 5.925 GHz to 7.125 GHz, which gives Wi-Fi about 1,200 MHz of fresh spectrum to work with. Channel width is just the size of the lane your Wi-Fi channel occupies inside that band. A 20 MHz channel is a narrow lane, while 40, 80, and 160 MHz channels are wider and can carry more data; Wi-Fi 7 can stretch to 320 MHz in 6 GHz. The tradeoff is reach: 6 GHz drops off through walls faster than 5 GHz, and 5 GHz drops off faster than 2.4 GHz.",
   },
   {
     title: "Where this can go next",

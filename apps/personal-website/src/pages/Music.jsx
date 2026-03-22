@@ -205,9 +205,10 @@ const MusicPage = () => {
                   Latest spins
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  The newest two additions right now are {latestTwoTitles},
-                  pulled straight from the playlist tail so this card always
-                  matches what I added most recently.
+                  The tail of the playlist shifts first, and right now that
+                  means {latestTwoTitles}. This section stays tied to the most
+                  recent adds, so the snapshot always reflects what just landed
+                  in rotation.
                 </Typography>
 
                 <Stack spacing={2}>

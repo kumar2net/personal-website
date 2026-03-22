@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-03-22-kumclaw-worthwhile-use-case": {
+    title: "KumClaw and the Search for a Worthwhile Use Case",
+    description:
+      "KumClaw stays on my future-project list, but a Mac mini running OpenClaw does not impress me if the interface is just WhatsApp or Telegram. Wake me up when it can make oats கஞ்சி and a respectable ராகி கூழ்.",
+    image: "/generate/2026-03-22-kumclaw-worthwhile-use-case-hero.png",
+    tags: ["AI", "OpenClaw", "Mac mini", "Humor", "Kitchen", "Interfaces"],
+    datePublished: "2026-03-22",
+    dateModified: "2026-03-22",
+    readingTime: "~3 min",
+  },
   "2026-03-22-kardashev-scale-ai-energy-bottleneck": {
     title:
       "The Kardashev Scale, Explained the Feynman Way: AI's Real Bottleneck Is Energy",
