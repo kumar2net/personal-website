@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedAt": "2026-03-19T02:47:26.756Z",
+  "checkedAt": "2026-03-22T08:01:48.518Z",
   "sources": [
     {
       "id": "openai-audio-rss",
@@ -12,7 +12,7 @@
       "materialKey": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
       "warnings": [],
       "meta": {
-        "lastModified": "Thu, 19 Mar 2026 02:24:15 GMT",
+        "lastModified": "Fri, 20 Mar 2026 18:40:23 GMT",
         "latest": {
           "title": "Transcribing User Audio with a Separate Realtime Request",
           "link": "https://developers.openai.com/cookbook/examples/realtime_out_of_band_transcription/",
@@ -82,7 +82,8 @@
               "gpt-4o-mini-tts-2025-03-20",
               "gpt-4o-mini-tts-2025-12-15"
             ],
-            "available": true
+            "available": true,
+            "warning": null
           },
           {
             "modelId": "tts-1",
@@ -92,7 +93,8 @@
             "lastModified": null,
             "hasSpeechEndpoint": true,
             "snapshots": [],
-            "available": true
+            "available": true,
+            "warning": null
           },
           {
             "modelId": "tts-1-hd",
@@ -102,7 +104,8 @@
             "lastModified": null,
             "hasSpeechEndpoint": true,
             "snapshots": [],
-            "available": true
+            "available": true,
+            "warning": null
           }
         ]
       }
@@ -119,7 +122,7 @@
       "meta": {
         "title": "WebGPU API - Web APIs | MDN",
         "canonical": "https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API",
-        "lastModified": "Thu, 19 Mar 2026 01:12:46 GMT",
+        "lastModified": "Sun, 22 Mar 2026 01:11:54 GMT",
         "availability": "",
         "baselineDetail": "This feature is not Baseline because it does not work in some of the most widely-used browsers.",
         "secureContext": "This feature is available only in secure contexts (HTTPS), in some or all supporting browsers .",
@@ -130,22 +133,28 @@
       "id": "context7-freshness",
       "label": "Context7 freshness",
       "category": "docs",
-      "url": "https://docs.context7.dev/latest/index.json",
-      "status": "warning",
-      "summary": "Context7 snapshot age: 4.6d (remote unavailable)",
-      "materialKey": "1e214de4fe7f00fbc09e04c559d69ebadfcf4258aaaf6ee3766343d9b8516f02",
-      "warnings": [
-        "Remote snapshot unavailable: fetch failed"
-      ],
+      "url": "https://context7.com/api/v2/context?libraryId=/upstash/context7&query=overview%20authentication%20api%20keys%20mcp%20search",
+      "status": "ok",
+      "summary": "Context7 snapshot age: 1.3d",
+      "materialKey": "07f1cee7505176ba54d7d117ec9690ec673e6bbe20e56e11d35429e29a2e4c51",
+      "warnings": [],
       "meta": {
-        "configuredUrl": "https://docs.context7.dev/latest/index.json",
-        "lastUpdated": "2026-03-14T11:15:16.075Z",
-        "ageDays": 4.6,
-        "remoteReachable": false,
+        "configuredUrl": "https://context7.com/api/v2/context?libraryId=/upstash/context7&query=overview%20authentication%20api%20keys%20mcp%20search",
+        "lastUpdated": "2026-03-21T01:29:42.327Z",
+        "ageDays": 1.3,
+        "remoteReachable": true,
         "staleDays": 14
       }
     }
   ],
-  "lastMaterialChangeAt": null,
-  "materialChanges": []
+  "lastMaterialChangeAt": "2026-03-22T08:01:48.518Z",
+  "materialChanges": [
+    {
+      "id": "context7-freshness",
+      "label": "Context7 freshness",
+      "reason": "Context7 freshness changed materially.",
+      "previousSummary": "Context7 snapshot age: 4.6d (remote unavailable)",
+      "currentSummary": "Context7 snapshot age: 1.3d"
+    }
+  ]
 }

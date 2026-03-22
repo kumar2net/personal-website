@@ -1,0 +1,114 @@
+### GET /api/v2/context - Query Documentation
+
+Source: https://github.com/upstash/context7/blob/master/docs/howto/api-keys.mdx
+
+Query Context7's documentation services using an API key for authentication. This endpoint retrieves context information from a specified library based on your search query.
+
+```APIDOC
+## GET /api/v2/context
+
+### Description
+Query Context7's documentation services to retrieve context information from a specified library based on a search query.
+
+### Method
+GET
+
+### Endpoint
+`https://context7.com/api/v2/context`
+
+### Parameters
+#### Query Parameters
+- **libraryId** (string) - Required - The library identifier in format `/owner/repository` (e.g., `/vercel/next.js`)
+- **query** (string) - Required - The search query to find relevant documentation
+
+### Authentication
+- **Authorization** (string) - Required - Bearer token format: `Bearer YOUR_API_KEY`
+- API key format: `ctx7sk-**********************`
+
+### Request Example
+```bash
+curl "https://context7.com/api/v2/context?libraryId=/vercel/next.js&query=routing" \
+  -H "Authorization: Bearer ctx7sk-YOUR_API_KEY_HERE"
+```
+
+### Response
+#### Success Response (200)
+- **data** (object) - Context information matching the query
+- **libraryId** (string) - The queried library identifier
+- **query** (string) - The search query used
+
+#### Error Response (401)
+- **error** (string) - "Unauthorized" - Invalid or missing API key
+
+#### Error Response (404)
+- **error** (string) - "Library not found" - Invalid libraryId
+
+### Security Notes
+- API keys are shown only once during creation
+- Store API keys securely in environment variables
+- Revoked keys will immediately fail all requests
+- Use descriptive key names to track usage across applications
+```
+
+--------------------------------
+
+### Configure API Key for Context7 MCP to Prevent Authentication Errors (HTTP Headers)
+
+Source: https://github.com/upstash/context7/blob/master/docs/resources/troubleshooting.mdx
+
+This snippet illustrates the correct format for including the `CONTEXT7_API_KEY` in HTTP headers to resolve `401 Unauthorized` errors. Ensure your API key is valid and correctly formatted.
+
+```json
+{
+  "headers": {
+    "CONTEXT7_API_KEY": "YOUR_API_KEY"
+  }
+}
+```
+
+--------------------------------
+
+### Configure API Key for Context7 MCP to Prevent Rate Limiting (HTTP Transport)
+
+Source: https://github.com/upstash/context7/blob/master/docs/resources/troubleshooting.mdx
+
+This configuration shows how to add your API key to the Context7 MCP client when using HTTP transport to prevent rate limiting. The API key is included in the `CONTEXT7_API_KEY` header.
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+--------------------------------
+
+### Authentication Options for Setup
+
+Source: https://github.com/upstash/context7/blob/master/skills/context7-cli/references/setup.md
+
+Authenticate using an existing API key or trigger an OAuth flow. Note that --oauth is exclusive to MCP mode where the IDE handles the flow.
+
+```bash
+ctx7 setup --api-key YOUR_KEY  # Use an existing API key (both MCP and CLI + Skills mode)
+ctx7 setup --oauth             # OAuth endpoint — MCP mode only (IDE handles the auth flow)
+```
+
+--------------------------------
+
+### Authenticate Context7 API Request with Bearer Token
+
+Source: https://github.com/upstash/context7/blob/master/docs/howto/api-keys.mdx
+
+Example curl command demonstrating how to authenticate requests to Context7's API using a Bearer token in the Authorization header. The API key should be included in the format 'Bearer YOUR_API_KEY' and requests include parameters like libraryId and query for documentation context retrieval.
+
+```bash
+curl "https://context7.com/api/v2/context?libraryId=/vercel/next.js&query=routing" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
