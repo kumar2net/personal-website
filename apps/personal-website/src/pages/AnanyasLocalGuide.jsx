@@ -10,6 +10,7 @@ import ChecklistRoundedIcon from "@mui/icons-material/ChecklistRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
+import SmartToyRoundedIcon from "@mui/icons-material/SmartToyRounded";
 import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
 import ViewModuleRoundedIcon from "@mui/icons-material/ViewModuleRounded";
 import {
@@ -30,6 +31,7 @@ import {
 import { alpha } from "@mui/material/styles";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link as RouterLink } from "react-router-dom";
+import LocalGuideAssistant from "../components/LocalGuideAssistant";
 import SEO from "../components/SEO";
 import { ananyasLocalGuide } from "../data/ananyasLocalGuide";
 import { saveListingReport } from "../../lib/engagement/blob";
@@ -1073,6 +1075,15 @@ export default function AnanyasLocalGuide() {
               </Button>
               <Button
                 component="a"
+                href="#guide-assistant"
+                variant="outlined"
+                startIcon={<SmartToyRoundedIcon />}
+                sx={{ borderRadius: 999 }}
+              >
+                Ask assistant
+              </Button>
+              <Button
+                component="a"
                 href={csvDownloadUrl}
                 download="ananyas-nearby-guide.csv"
                 variant="outlined"
@@ -1124,6 +1135,8 @@ export default function AnanyasLocalGuide() {
             {reportFeedback.message}
           </Alert>
         ) : null}
+
+        <LocalGuideAssistant />
 
         <SpreadsheetTable
           rows={spreadsheetRows}

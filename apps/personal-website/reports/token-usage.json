@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-03-22T11:21:03.050Z",
-  "totalInputTokens": 93956,
-  "totalOutputTokens": 5749,
-  "totalTokens": 99705,
+  "generatedAt": "2026-03-23T11:48:49.243Z",
+  "totalInputTokens": 103076,
+  "totalOutputTokens": 6022,
+  "totalTokens": 109098,
   "entries": [
     {
       "provider": "openai",
@@ -1298,6 +1298,30 @@
       "request_id": "chatcmpl-DMB9JSLbcXSIRpZ7OrrQoTYvH4JLB",
       "meta": {
         "timestamp": "2026-03-22T11:21:03.050Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "local-guide-query",
+      "model": "gpt-5.2-2025-12-11",
+      "input_tokens": 4560,
+      "output_tokens": 133,
+      "total_tokens": 4693,
+      "request_id": "resp_0cc36d864384a8d00069c128751f748197afd70dcfe54f6279",
+      "meta": {
+        "timestamp": "2026-03-23T11:48:08.294Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "local-guide-query",
+      "model": "gpt-5.2-2025-12-11",
+      "input_tokens": 4560,
+      "output_tokens": 140,
+      "total_tokens": 4700,
+      "request_id": "resp_0c86b14d0b58baf60069c1289da1d481a0bbf9689fcfacd914",
+      "meta": {
+        "timestamp": "2026-03-23T11:48:49.243Z"
       }
     }
   ]
