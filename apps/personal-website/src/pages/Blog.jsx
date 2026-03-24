@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
@@ -13,13 +13,14 @@ import {
 import { alpha } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
 import SEO from "../components/SEO";
-import SemanticSearch from "../components/SemanticSearch";
 import { getAllBlogPosts } from "../data/blogRegistry";
 import { trackCtaClick } from "../lib/analytics";
+import { scheduleIdleTask } from "../lib/scheduleIdle";
 import { addLastModifiedIfMissing } from "../utils/contentDates";
 
 const INITIAL_ARCHIVE_COUNT = 8;
 const ARCHIVE_BATCH_SIZE = 6;
+const SemanticSearch = lazy(() => import("../components/SemanticSearch"));
 
 function getPostImage(post) {
   return post.heroImage || post.image || "/media/blogwordcloud.png";
@@ -430,6 +431,15 @@ export default function Blog() {
     [],
   );
   const [visibleArchiveCount, setVisibleArchiveCount] = useState(INITIAL_ARCHIVE_COUNT);
+  const [showSemanticSearch, setShowSemanticSearch] = useState(false);
+
+  useEffect(() => {
+    const cancel = scheduleIdleTask(() => {
+      setShowSemanticSearch(true);
+    }, { timeout: 1400 });
+
+    return cancel;
+  }, []);
 
   const featuredPost = processedPosts[0];
   const spotlightPosts = processedPosts.slice(1, 3);
@@ -559,7 +569,21 @@ export default function Blog() {
                   backdropFilter: "blur(12px)",
                 })}
               >
-                <SemanticSearch />
+                {showSemanticSearch ? (
+                  <Suspense
+                    fallback={
+                      <Typography variant="body2" color="text.secondary">
+                        Preparing semantic search…
+                      </Typography>
+                    }
+                  >
+                    <SemanticSearch />
+                  </Suspense>
+                ) : (
+                  <Typography variant="body2" color="text.secondary">
+                    Preparing semantic search…
+                  </Typography>
+                )}
               </Box>
             </Stack>
           </Box>

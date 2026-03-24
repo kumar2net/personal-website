@@ -293,9 +293,9 @@ function normalizeContextFromText(rawText) {
 
   try {
     const payload = JSON.parse(text);
-    return summarizePayload(payload);
+    return compactContextSummary(summarizePayload(payload));
   } catch {
-    return text;
+    return compactContextSummary(text);
   }
 }
 
@@ -329,6 +329,149 @@ function summarizePayload(payload) {
   }
 
   return lines.join("\n").trim();
+}
+
+function compactContextSummary(text) {
+  const normalized = String(text || "").replace(/\r\n/g, "\n").trim();
+  if (!normalized) {
+    return "";
+  }
+
+  if (normalized.startsWith("Context7 snapshot fallback")) {
+    return normalized;
+  }
+
+  const sections = extractMarkdownSections(normalized);
+  const lines = ["Context7 compact snapshot", ""];
+
+  if (sections.length) {
+    for (const section of sections.slice(0, 5)) {
+      const line = formatCompactSection(section);
+      if (line) {
+        lines.push(line);
+      }
+    }
+  } else {
+    for (const bullet of fallbackBullets(normalized).slice(0, 5)) {
+      lines.push(`- ${bullet}`);
+    }
+  }
+
+  lines.push("- Refresh with `node scripts/pull-context7.mjs` before relying on vendor-specific details.");
+  return lines.join("\n").trim();
+}
+
+function extractMarkdownSections(text) {
+  const lines = text.split("\n");
+  const sections = [];
+  let current = null;
+  let inCode = false;
+
+  const pushCurrent = () => {
+    if (current && (current.summary || current.bullets.length)) {
+      sections.push(current);
+    }
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (line.startsWith("```")) {
+      inCode = !inCode;
+      continue;
+    }
+
+    if (/^#{2,3}\s+/.test(line)) {
+      const title = line.replace(/^#{2,3}\s+/, "").trim();
+      if (isGenericContextHeading(title)) {
+        continue;
+      }
+      pushCurrent();
+      current = {
+        title,
+        summary: "",
+        bullets: [],
+      };
+      continue;
+    }
+
+    if (!current) {
+      continue;
+    }
+
+    if (!line || line.startsWith("Source:") || /^-+$/.test(line)) {
+      continue;
+    }
+
+    if (inCode) {
+      continue;
+    }
+
+    if (/^[-*]\s+/.test(line)) {
+      if (current.bullets.length < 2) {
+        current.bullets.push(line.replace(/^[-*]\s+/, "").trim());
+      }
+      continue;
+    }
+
+    if (!current.summary) {
+      current.summary = line;
+    }
+  }
+
+  pushCurrent();
+  return sections;
+}
+
+function formatCompactSection(section) {
+  const details = [];
+
+  if (section.summary) {
+    details.push(section.summary);
+  }
+  if (section.bullets.length) {
+    details.push(section.bullets.join("; "));
+  }
+
+  if (!details.length) {
+    return "";
+  }
+
+  const body = truncateLine(details.join(" "), 220);
+  return `- ${section.title}: ${body}`;
+}
+
+function fallbackBullets(text) {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("```"))
+    .slice(0, 12)
+    .map((line) => truncateLine(line.replace(/^[-*]\s+/, ""), 220));
+}
+
+function truncateLine(text, maxLength) {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return `${text.slice(0, maxLength - 3).trimEnd()}...`;
+}
+
+function isGenericContextHeading(title) {
+  return new Set([
+    "Description",
+    "Method",
+    "Endpoint",
+    "Parameters",
+    "Query Parameters",
+    "Authentication",
+    "Request Example",
+    "Response",
+    "Success Response (200)",
+    "Error Response (401)",
+    "Error Response (404)",
+    "Security Notes",
+  ]).has(title);
 }
 
 function pickContext(payload) {

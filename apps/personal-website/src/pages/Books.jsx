@@ -1,3 +1,4 @@
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -8,14 +9,15 @@ import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
 import BookCover from '../components/BookCover';
-import BooksDataGrid from '../components/BooksDataGrid';
 import autoBooks from '../data/autoBooks.json';
 
 const fallbackGradient = 'linear-gradient(135deg, #e0e7ff 0%, #f5d0fe 100%)';
+const BooksDataGrid = lazy(() => import('../components/BooksDataGrid'));
 
 const manualBooks = [
   {
@@ -207,6 +209,30 @@ function BookCard({ book }) {
 
 function Books() {
   const cards = [...autoBooks, ...manualBooks];
+  const gridSentinelRef = useRef(null);
+  const [showBooksGrid, setShowBooksGrid] = useState(false);
+
+  useEffect(() => {
+    if (showBooksGrid || typeof window === 'undefined' || !gridSentinelRef.current) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShowBooksGrid(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '280px 0px' },
+    );
+
+    observer.observe(gridSentinelRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [showBooksGrid]);
 
   return (
     <Container maxWidth="lg" sx={{ py: 6 }}>
@@ -229,7 +255,43 @@ function Books() {
 
       <Divider sx={{ my: 5 }} />
 
-      <BooksDataGrid books={autoBooks} />
+      <Box ref={gridSentinelRef}>
+        {showBooksGrid ? (
+          <Suspense
+            fallback={
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  borderRadius: 3,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                }}
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Loading the interactive catalog…
+                </Typography>
+              </Paper>
+            }
+          >
+            <BooksDataGrid books={autoBooks} />
+          </Suspense>
+        ) : (
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid',
+              borderColor: 'divider',
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              The interactive catalog loads when you scroll here, so the books page stays lighter on mobile networks.
+            </Typography>
+          </Paper>
+        )}
+      </Box>
     </Container>
   );
 }

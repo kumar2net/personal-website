@@ -1,15 +1,12 @@
 # Writing Skill
 
-Goal: write clear, direct blog posts with one sharp point.
+Write with one clear point and enough tension to keep the reader moving.
 
-Rules:
-1. Start with a hook in the first sentence. If it does not pull, rewrite.
-2. Keep sentences short. Aim for one thought per sentence.
-3. Use active voice and precise verbs. Prefer concrete nouns.
-4. Cut filler. Remove "very", "really", "just", "that" when possible.
-5. Favor simple words over fancy words.
-6. Keep one main point. Everything supports it.
-7. Avoid cliches and corporate language.
-8. End without a summary. Last line should surprise but feel right.
-9. Read aloud pass: ensure rhythm and clarity.
-10. Expand acronyms at first mention, then use the short form afterward. Example: "United Nations Conference on Trade and Development (UNCTAD)".
+- Open with a real claim, question, or friction point.
+- Keep one paragraph to one move.
+- Prefer short active sentences and specific nouns.
+- Use evidence, examples, or observed detail before abstraction.
+- Expand acronyms on first use, then shorten them afterward.
+- Cut filler, cliches, hedges, and corporate phrasing.
+- End on the sharpest line, not a recap.
+- Do one read-aloud pass before shipping.

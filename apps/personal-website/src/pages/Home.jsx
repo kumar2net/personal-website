@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -14,7 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { alpha, keyframes } from "@mui/material/styles";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import BoltRoundedIcon from "@mui/icons-material/BoltRounded";
 import CloudQueueRoundedIcon from "@mui/icons-material/CloudQueueRounded";
@@ -28,7 +27,31 @@ import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
 import WorldClock from "../components/WorldClock";
-import { getAllBlogPosts } from "../data/blogRegistry";
+import { homeFeaturedPosts } from "../data/homeFeaturedPosts";
+
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+`;
+
+function revealUpSx(delay = 0, duration = 0.45) {
+  return {
+    animation: `${fadeUp} ${duration}s cubic-bezier(0.22, 1, 0.36, 1) both`,
+    animationDelay: `${delay}s`,
+    "@media (prefers-reduced-motion: reduce)": {
+      animation: "none",
+      opacity: 1,
+      transform: "none",
+    },
+  };
+}
 
 const editionLabel = "Weekend edition · March 21-22, 2026";
 
@@ -168,12 +191,6 @@ const quickLinks = [
   { label: "Elsewhere", to: "/elsewhere", analyticsKey: "home_quick_elsewhere" },
 ];
 
-const featuredSlugs = [
-  "2026-03-22-kardashev-scale-ai-energy-bottleneck",
-  "2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india",
-  "2026-03-07-impact-of-straits-for-trade-commerce",
-];
-
 const socialLinks = [
   {
     href: "https://kumar2net.wordpress.com/",
@@ -192,10 +209,7 @@ const socialLinks = [
 function Home({ isDarkMode, showWorldClock, trackClick }) {
   const heroFont =
     '"Space Grotesk", "IBM Plex Sans", "Avenir Next", "Noto Sans", sans-serif';
-  const postsBySlug = new Map(getAllBlogPosts().map((post) => [post.slug, post]));
-  const featuredPosts = featuredSlugs
-    .map((slug) => postsBySlug.get(slug))
-    .filter(Boolean);
+  const featuredPosts = homeFeaturedPosts;
   const todayLabel = new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
@@ -204,11 +218,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
 
   return (
     <Box
-      component={motion.section}
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45 }}
       sx={{
+        ...revealUpSx(),
         "--home-surface": isDarkMode
           ? "rgba(24, 15, 20, 0.9)"
           : "rgba(255, 250, 246, 0.94)",
@@ -244,12 +255,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       <Grid container spacing={2.5} alignItems="stretch">
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper
-            component={motion.div}
             elevation={0}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
             sx={{
+              ...revealUpSx(0.05, 0.5),
               position: "relative",
               overflow: "hidden",
               borderRadius: 5,
@@ -649,14 +657,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               return (
                 <Grid key={signal.title} size={{ xs: 12, sm: 6 }}>
                   <Card
-                    component={motion.article}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.35,
-                      delay: 0.08 + index * 0.05,
-                    }}
                     sx={(theme) => ({
+                      ...revealUpSx(0.08 + index * 0.05, 0.35),
                       height: "100%",
                       borderRadius: 3,
                       border: "1px solid var(--home-border)",
@@ -821,14 +823,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   return (
                     <Grid key={item.title} size={{ xs: 12, sm: 6 }}>
                       <Card
-                        component={motion.article}
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.35,
-                          delay: 0.08 + index * 0.04,
-                        }}
                         sx={(theme) => ({
+                          ...revealUpSx(0.08 + index * 0.04, 0.35),
                           height: "100%",
                           borderRadius: 3,
                           border: "1px solid var(--home-border)",
@@ -1078,11 +1074,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               size={{ xs: 12, md: index === 0 ? 6 : 3 }}
             >
               <Card
-                component={motion.article}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.38, delay: 0.12 + index * 0.06 }}
                 sx={(theme) => ({
+                  ...revealUpSx(0.12 + index * 0.06, 0.38),
                   height: "100%",
                   borderRadius: 4,
                   overflow: "hidden",

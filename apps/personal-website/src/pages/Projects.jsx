@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import remarkGfm from "remark-gfm";
 import BlogSentimentSummary from "../components/BlogSentimentSummary";
+import { appleMiniHomeAutomationBom } from "../data/appleMiniHomeAutomationBom";
 import homeAutomationDesignRaw from "../../../../docs/HOME_AUTOMATION_APPLE_MINI_OPENCLAW.md?raw";
 
 const projects = [
@@ -361,41 +362,64 @@ const futureProjects = [
   {
     title: "Apple Mini Home Automation Control Plane",
     summary:
-      "A planned whole-home automation system built around a Mac mini running OpenClaw and Home Assistant, with OpenAI voice APIs handling speech input, tool calling, and spoken confirmations for lights, BLDC fans, AC units, sensors, and room-level scenes.",
+      "A planned Wi-Fi-first whole-home automation system built around a Mac mini running kumclaw and Home Assistant, with OpenAI voice APIs handling speech input, tool calling, and spoken confirmations for lights, BLDC fans, AC units, sensors, and room-level scenes.",
     goals: [
       "Voice-first control using OpenAI Realtime/audio APIs rather than Siri or vendor voice assistants.",
       "Local orchestration on the Mac mini for routines, schedules, and natural-language control.",
       "Safe support for BLDC fan control, split AC automation, and manual wall-switch fallback.",
-      "Matter/Thread first, Zigbee second, and Wi-Fi or IR only where legacy devices require it.",
+      "Wi-Fi-only relays, sensors, and room controllers, with IR kept only for legacy AC paths that still need a remote bridge.",
     ],
     stack: [
       "Mac mini",
-      "OpenClaw",
+      "kumclaw",
       "Home Assistant",
       "OpenAI Realtime API",
       "gpt-realtime",
       "gpt-4o-transcribe",
       "gpt-4o-mini-tts",
-      "Matter/Thread",
-      "Zigbee",
+      "Wi-Fi router",
+      "Wi-Fi relays",
+      "Wi-Fi sensors",
       "IR bridge",
-      "UPS",
     ],
     diagrams: [
       {
         title: "Network and control topology",
         src: "/media/generated/home-automation-apple-mini-network.svg",
-        alt: "Network diagram for a Mac mini home automation system with OpenAI voice APIs, OpenClaw, Home Assistant, and smart home device protocols.",
+        alt: "Network diagram for a Wi-Fi-first Mac mini home automation system with OpenAI voice APIs, kumclaw, Home Assistant, and room-level smart devices.",
       },
       {
         title: "Power and wiring schematic",
         src: "/media/generated/home-automation-apple-mini-schematic.svg",
-        alt: "Schematic diagram for home automation wiring with lighting relays, BLDC fan controller, AC control, UPS, and safety protection devices.",
+        alt: "Schematic diagram for home automation wiring with lighting relays, BLDC fan controller, AC control, and safety protection devices.",
       },
     ],
+    bom: appleMiniHomeAutomationBom,
     notesMarkdown: homeAutomationDesignMarkdown,
   },
 ];
+
+const inrFormatter = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+});
+
+const formatBomCost = (value, fallback) =>
+  typeof value === "number" ? inrFormatter.format(value) : fallback;
+
+const getBomScopeClasses = (scope) => {
+  if (scope === "Core") {
+    return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  }
+  if (scope === "Optional") {
+    return "border-amber-200 bg-amber-50 text-amber-700";
+  }
+  if (scope === "Software") {
+    return "border-sky-200 bg-sky-50 text-sky-700";
+  }
+  return "border-slate-200 bg-slate-100 text-slate-700";
+};
 
 const Projects = () => {
   return (
@@ -406,7 +430,7 @@ const Projects = () => {
       className="max-w-6xl mx-auto px-4 py-8"
     >
       <h1 className="text-3xl font-bold mb-8">My Projects</h1>
-      <div className="space-y-8">
+      <div className="flex flex-col gap-8">
         {projects.map((project, index) => (
           <motion.div
             key={index}
@@ -608,11 +632,8 @@ const Projects = () => {
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: (projects.length + 0.5) * 0.2,
-          }}
-          className="space-y-6"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="order-first space-y-6"
         >
           <div className="flex items-end justify-between gap-4">
             <div>
@@ -643,7 +664,7 @@ const Projects = () => {
                   <div className="rounded-2xl border border-emerald-200 bg-white/80 px-4 py-3 text-sm text-slate-700 shadow-sm dark:border-emerald-800/60 dark:bg-slate-900/85">
                     Concept stage
                     <div className="mt-1 font-semibold text-emerald-700">
-                      Architecture and wiring plan complete
+                      Wi-Fi device plan and wiring outline complete
                     </div>
                   </div>
                 </div>
@@ -713,11 +734,194 @@ const Projects = () => {
                     <p className="mt-4 text-sm leading-6 text-slate-600">
                       The design keeps manual overrides, isolates mains switching
                       from low-voltage control, routes speech through OpenAI
-                      APIs on the Mac mini backend, and avoids unsafe generic
-                      relay control for BLDC fans and split AC compressor paths.
+                      APIs on the Mac mini backend, keeps room endpoints on
+                      Wi-Fi, and avoids unsafe generic relay control for BLDC
+                      fans and split AC compressor paths.
                     </p>
                   </div>
                 </div>
+
+                {project.bom ? (
+                  <div className="mt-8 rounded-2xl border border-slate-200 bg-white/90 p-6 dark:border-slate-700 dark:bg-slate-900/85">
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                      <div>
+                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                          Planning spreadsheet
+                        </p>
+                        <h4 className="mt-1 text-lg font-semibold text-slate-900">
+                          Reference bill of materials
+                        </h4>
+                        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
+                          {project.bom.referenceSetup}
+                        </p>
+                      </div>
+                      <a
+                        href={project.bom.csvDownloadHref}
+                        download={project.bom.csvDownloadName}
+                        className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-100"
+                      >
+                        Download CSV
+                      </a>
+                    </div>
+
+                    <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                          Core hardware
+                        </p>
+                        <p className="mt-2 text-2xl font-bold text-slate-900">
+                          {formatBomCost(
+                            project.bom.coreHardwareSubtotalInr,
+                            "Included",
+                          )}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                          Control plane, Wi-Fi relays, Wi-Fi sensors, and AC IR
+                          bridges.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700">
+                          Expanded budget
+                        </p>
+                        <p className="mt-2 text-2xl font-bold text-slate-900">
+                          {formatBomCost(
+                            project.bom.expandedHardwareSubtotalInr,
+                            "Included",
+                          )}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                          Adds the optional BLDC fan replacement path.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
+                          Pricing checked
+                        </p>
+                        <p className="mt-2 text-lg font-bold text-slate-900">
+                          {project.bom.pricingCheckedAt}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                          India planning prices, rounded for procurement drift.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-600">
+                          Excluded
+                        </p>
+                        <p className="mt-2 text-lg font-bold text-slate-900">
+                          Labor and rewiring
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                          Electrician time, switchboard changes, and panel
+                          protection upgrades sit outside this subtotal.
+                        </p>
+                      </div>
+                    </div>
+
+                    <ul className="mt-6 space-y-2 text-sm leading-6 text-slate-600">
+                      {project.bom.assumptions.map((assumption) => (
+                        <li key={assumption} className="flex items-start">
+                          <svg
+                            className="mt-1 mr-3 h-4 w-4 shrink-0 text-emerald-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          <span>{assumption}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-6 overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700">
+                      <table className="min-w-[960px] w-full divide-y divide-slate-200 text-left text-sm dark:divide-slate-700">
+                        <thead className="bg-slate-50 dark:bg-slate-950/60">
+                          <tr>
+                            <th className="px-4 py-3 font-semibold text-slate-700">
+                              Scope
+                            </th>
+                            <th className="px-4 py-3 font-semibold text-slate-700">
+                              Material
+                            </th>
+                            <th className="px-4 py-3 font-semibold text-slate-700">
+                              Qty
+                            </th>
+                            <th className="px-4 py-3 font-semibold text-slate-700">
+                              Approx unit
+                            </th>
+                            <th className="px-4 py-3 font-semibold text-slate-700">
+                              Approx line
+                            </th>
+                            <th className="px-4 py-3 font-semibold text-slate-700">
+                              Function
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-900/70">
+                          {project.bom.rows.map((row) => (
+                            <tr key={`${row.scope}-${row.item}`}>
+                              <td className="px-4 py-4 align-top">
+                                <span
+                                  className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${getBomScopeClasses(row.scope)}`}
+                                >
+                                  {row.scope}
+                                </span>
+                              </td>
+                              <td className="px-4 py-4 align-top">
+                                <div className="font-semibold text-slate-900">
+                                  {row.item}
+                                </div>
+                                <div className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-500">
+                                  {row.category}
+                                </div>
+                                <div className="mt-2 text-sm leading-6 text-slate-500">
+                                  {row.price_basis}
+                                </div>
+                              </td>
+                              <td className="px-4 py-4 align-top font-medium text-slate-700">
+                                {row.qty}
+                              </td>
+                              <td className="px-4 py-4 align-top font-medium text-slate-700">
+                                {formatBomCost(
+                                  row.approx_unit_cost_inr,
+                                  "Usage-based",
+                                )}
+                              </td>
+                              <td className="px-4 py-4 align-top font-medium text-slate-900">
+                                {formatBomCost(
+                                  row.approx_line_cost_inr,
+                                  "Variable monthly",
+                                )}
+                              </td>
+                              <td className="px-4 py-4 align-top">
+                                <div className="text-slate-700">
+                                  {row.function}
+                                </div>
+                                <div className="mt-2 text-sm leading-6 text-slate-500">
+                                  {row.notes}
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <p className="mt-4 text-sm leading-6 text-slate-600">
+                      The core subtotal is a hardware planning budget. OpenAI
+                      voice usage stays variable, and the optional fan row is
+                      only for the safer replacement path when existing BLDC
+                      fans cannot be integrated cleanly.
+                    </p>
+                  </div>
+                ) : null}
 
                 <div className="mt-8 rounded-2xl border border-slate-200 bg-white/80 p-6 dark:border-slate-700 dark:bg-slate-900/85">
                   <h4 className="mb-4 text-lg font-semibold text-slate-900">

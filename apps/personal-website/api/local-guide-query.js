@@ -153,6 +153,18 @@ function getVerificationLabel(item) {
   return "Directory only";
 }
 
+function formatContactNumbers(contactNumbers = []) {
+  return contactNumbers
+    .filter(
+      (contact) =>
+        contact &&
+        typeof contact.label === "string" &&
+        typeof contact.display === "string",
+    )
+    .map((contact) => `${contact.label}: ${contact.display}`)
+    .join("; ");
+}
+
 function flattenGuide(guide) {
   const listings = guide.categories.flatMap((category) =>
     category.items.map((item) => ({
@@ -164,6 +176,7 @@ function flattenGuide(guide) {
       address: item.address,
       hours: item.hours || "Check timings directly",
       note: item.note || "",
+      contactNumbers: Array.isArray(item.contactNumbers) ? item.contactNumbers : [],
       sourceLabel: item.sourceLabel || "",
       sourceUrl: item.sourceUrl || "",
       mapUrl: item.mapUrl || "",
@@ -177,6 +190,9 @@ function flattenGuide(guide) {
         item.area,
         item.address,
         item.note,
+        item.contactNumbers
+          ?.map((contact) => `${contact.label} ${contact.display}`)
+          .join(" "),
         item.sourceLabel,
       ]
         .filter(Boolean)
@@ -200,6 +216,7 @@ function flattenGuide(guide) {
     verifiedAt: item.verifiedAt || "",
     staleAfterDays: Number(item.staleAfterDays) || 30,
     verificationLabel: getVerificationLabel(item),
+    contactNumbers: [],
     shortlistLabel: item.shortlistLabel || "",
     examples: Array.isArray(item.examples) ? item.examples : [],
     searchText: [
@@ -244,12 +261,17 @@ function buildGuideContext(guide, entries) {
           `Address: ${entry.address}`,
           `Hours: ${entry.hours}`,
           `Note: ${entry.note}`,
+          entry.contactNumbers.length
+            ? `ContactNumbers: ${formatContactNumbers(entry.contactNumbers)}`
+            : null,
           `Verification: ${entry.verificationLabel}`,
           `VerifiedAt: ${entry.verifiedAt || "Unknown"}`,
           `SourceLabel: ${entry.sourceLabel}`,
           `SourceUrl: ${entry.sourceUrl}`,
           `MapUrl: ${entry.mapUrl}`,
-        ].join(" | "),
+        ]
+          .filter(Boolean)
+          .join(" | "),
       );
     });
 
@@ -411,6 +433,7 @@ function toSuggestedListings(names = []) {
       area: entry.area,
       note: entry.note,
       hours: entry.hours,
+      contactNumbers: entry.contactNumbers,
       sourceLabel: entry.sourceLabel,
       sourceUrl: entry.sourceUrl,
       mapUrl: entry.mapUrl,
@@ -431,6 +454,8 @@ function buildShareText(question, answer) {
 function buildHeuristicResult(question) {
   const questionLower = question.toLowerCase();
   const tokens = tokenize(question);
+  const wantsContactDetails =
+    /\b(call|phone|number|mobile|landline|contact)\b/.test(questionLower);
   const ranked = GUIDE_ENTRIES.map((entry) => ({
     ...entry,
     score: scoreEntry(entry, tokens, questionLower),
@@ -454,6 +479,28 @@ function buildHeuristicResult(question) {
 
   const topListings = ranked.filter((entry) => entry.type === "listing").slice(0, 3);
   const topEntries = (topListings.length ? topListings : ranked.slice(0, 3)).slice(0, 3);
+  const entriesWithContacts = topEntries.filter(
+    (entry) => entry.type === "listing" && entry.contactNumbers.length,
+  );
+  if (wantsContactDetails && entriesWithContacts.length) {
+    const answer = entriesWithContacts
+      .map((entry) => `${entry.name}: ${formatContactNumbers(entry.contactNumbers)}`)
+      .join("; ")
+      .concat(". Recheck live timing before depending on a listing.");
+
+    return {
+      answer,
+      confidence: "grounded",
+      suggestedListings: toSuggestedListings(
+        entriesWithContacts.map((entry) => entry.name),
+      ),
+      shareText: buildShareText(question, answer),
+      model: "heuristic",
+      provider: "heuristic",
+      fallback: true,
+    };
+  }
+
   const summaryPrefix =
     topEntries[0]?.type === "watchlist"
       ? "The guide does not show a fully verified direct listing, but the closest watchlist leads are"

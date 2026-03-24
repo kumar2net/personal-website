@@ -1,141 +1,178 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
   <title id="title">Apple mini home automation network diagram</title>
-  <desc id="desc">Network and control topology for a home automation system using OpenAI voice APIs, a Mac mini running OpenClaw and Home Assistant, and smart devices for lights, BLDC fans, AC, and sensors.</desc>
+  <desc id="desc">A Wi-Fi-only home automation topology showing voice inputs, OpenAI voice APIs, a Mac mini running kumclaw and Home Assistant, and room devices connected over Wi-Fi.</desc>
   <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#17312c" />
-    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbf7ee" />
+      <stop offset="55%" stop-color="#f4fbf8" />
+      <stop offset="100%" stop-color="#eef5ff" />
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#17312c" flood-opacity="0.08" />
+    </filter>
     <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M0,0 L12,6 L0,12 z" fill="#2f63c5" />
     </marker>
-    <marker id="arrowOrange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 z" fill="#b96c18" />
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#0d6b53" />
     </marker>
     <style>
-      .bg { fill: #f6f4ed; }
-      .frame { fill: #fffdf8; stroke: #17312c; stroke-width: 3; rx: 28; ry: 28; }
-      .appleZone { fill: #eef5ff; stroke: #2f63c5; stroke-width: 3; rx: 20; ry: 20; }
-      .coreZone { fill: #e9fbf4; stroke: #0d6b53; stroke-width: 3; rx: 20; ry: 20; }
-      .edgeZone { fill: #fff3df; stroke: #b96c18; stroke-width: 3; rx: 20; ry: 20; }
-      .nodeApple { fill: #dbe9ff; stroke: #2f63c5; stroke-width: 2.5; rx: 18; ry: 18; }
-      .nodeCore { fill: #d4f5ea; stroke: #0d6b53; stroke-width: 2.5; rx: 18; ry: 18; }
-      .nodeEdge { fill: #ffe7c7; stroke: #b96c18; stroke-width: 2.5; rx: 18; ry: 18; }
-      .nodeNeutral { fill: #ffffff; stroke: #17312c; stroke-width: 2.5; rx: 18; ry: 18; }
-      .note { fill: #fffefb; stroke: #17312c; stroke-width: 2; stroke-dasharray: 8 8; rx: 14; ry: 14; }
+      .shell { fill: rgba(255, 253, 248, 0.9); stroke: #d8e1db; stroke-width: 2; }
+      .panelInput { fill: #eef4ff; stroke: #4e79d7; stroke-width: 3; }
+      .panelVoice { fill: #ecf8ff; stroke: #2f7dcb; stroke-width: 3; }
+      .panelCore { fill: #eaf9f1; stroke: #0d7a5a; stroke-width: 3; }
+      .panelEdge { fill: #fff4e7; stroke: #c67a23; stroke-width: 3; }
+      .card { fill: #fffefb; stroke: #d6ded8; stroke-width: 2; filter: url(#softShadow); }
+      .cardInput { fill: #ffffff; stroke: #bdd2ff; stroke-width: 2; filter: url(#softShadow); }
+      .cardVoice { fill: #ffffff; stroke: #b7daf5; stroke-width: 2; filter: url(#softShadow); }
+      .cardCore { fill: #ffffff; stroke: #b7e3d2; stroke-width: 2; filter: url(#softShadow); }
+      .cardEdge { fill: #fffdf8; stroke: #f0c98d; stroke-width: 2; filter: url(#softShadow); }
+      .chipBlue { fill: #dce9ff; stroke: #4e79d7; stroke-width: 1.5; }
+      .chipGreen { fill: #daf4e8; stroke: #0d7a5a; stroke-width: 1.5; }
+      .chipOrange { fill: #ffe8c7; stroke: #c67a23; stroke-width: 1.5; }
+      .chipGray { fill: #f2f4f3; stroke: #74817c; stroke-width: 1.5; }
       .title { font: 800 38px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
-      .subtitle { font: 500 21px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #36554c; }
-      .section { font: 800 26px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
+      .subtitle { font: 500 21px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #35564c; }
+      .panelTitle { font: 800 26px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
       .label { font: 700 23px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
       .small { font: 500 18px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #24433b; }
-      .tiny { font: 500 16px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #24433b; }
-      .wire { fill: none; stroke: #17312c; stroke-width: 4; marker-end: url(#arrow); }
+      .tiny { font: 500 16px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #35564c; }
+      .chipText { font: 700 16px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
+      .step { font: 800 18px 'Avenir Next', 'Helvetica Neue', Arial, sans-serif; fill: #17312c; }
       .wireBlue { fill: none; stroke: #2f63c5; stroke-width: 4; marker-end: url(#arrowBlue); }
-      .wireOrange { fill: none; stroke: #b96c18; stroke-width: 4; marker-end: url(#arrowOrange); }
-      .dashed { stroke-dasharray: 10 10; }
+      .wireGreen { fill: none; stroke: #0d6b53; stroke-width: 4; marker-end: url(#arrowGreen); }
+      .wireDashed { fill: none; stroke: #5f6a66; stroke-width: 3.5; stroke-dasharray: 10 8; }
     </style>
   </defs>
 
-  <rect class="bg" width="1600" height="980" />
-  <text class="title" x="60" y="62">Apple Mini Home Automation Network</text>
-  <text class="subtitle" x="60" y="96">OpenAI voice APIs for speech, OpenClaw for tool routing, Home Assistant for device orchestration.</text>
+  <rect width="1600" height="980" fill="url(#bgGrad)" />
+  <rect class="shell" x="22" y="22" width="1556" height="936" rx="36" ry="36" />
 
-  <rect class="appleZone" x="40" y="130" width="330" height="780" />
-  <text class="section" x="64" y="170">Voice and API Layer</text>
+  <text class="title" x="60" y="72">Apple Mini Home Automation Network</text>
+  <text class="subtitle" x="60" y="108">Wi-Fi-only layout: speech in, local orchestration on the Mac mini, and room devices connected over one home LAN.</text>
 
-  <rect class="nodeApple" x="70" y="210" width="270" height="120" />
-  <text class="label" x="96" y="250">Phone / room mic</text>
-  <text class="small" x="96" y="282">Push-to-talk or ambient mic client</text>
-  <text class="small" x="96" y="308">Streams audio toward Mac mini backend</text>
+  <rect class="chipBlue" x="60" y="130" width="150" height="34" rx="17" ry="17" />
+  <text class="chipText" x="88" y="152">Speech</text>
+  <rect class="chipGreen" x="225" y="130" width="190" height="34" rx="17" ry="17" />
+  <text class="chipText" x="253" y="152">Local control</text>
+  <rect class="chipOrange" x="430" y="130" width="184" height="34" rx="17" ry="17" />
+  <text class="chipText" x="458" y="152">Wi-Fi devices</text>
+  <rect class="chipGray" x="629" y="130" width="192" height="34" rx="17" ry="17" />
+  <text class="chipText" x="657" y="152">Manual fallback</text>
 
-  <rect class="nodeApple" x="70" y="370" width="270" height="120" />
-  <text class="label" x="96" y="410">OpenAI voice APIs</text>
-  <text class="small" x="96" y="442">Realtime API: gpt-realtime</text>
-  <text class="small" x="96" y="468">STT/TTS: gpt-4o-transcribe + gpt-4o-mini-tts</text>
+  <rect class="panelInput" x="60" y="190" width="280" height="610" rx="28" ry="28" />
+  <circle cx="96" cy="227" r="20" fill="#4e79d7" />
+  <text class="step" x="89" y="233">1</text>
+  <text class="panelTitle" x="126" y="235">How you talk to it</text>
 
-  <rect class="nodeNeutral" x="70" y="530" width="270" height="120" />
-  <text class="label" x="96" y="570">Wall switches and scenes</text>
-  <text class="small" x="96" y="602">Manual fallback</text>
-  <text class="small" x="96" y="628">Physical overrides stay usable</text>
+  <rect class="cardInput" x="82" y="264" width="236" height="108" rx="22" ry="22" />
+  <text class="label" x="104" y="306">Phone or wall tablet</text>
+  <text class="small" x="104" y="334">Push-to-talk screen or dashboard app</text>
+  <text class="small" x="104" y="358">Audio starts here and heads to OpenAI</text>
 
-  <rect class="note" x="70" y="700" width="270" height="170" />
-  <text class="label" x="96" y="742">Primary user paths</text>
-  <text class="tiny" x="96" y="778">1. "Turn on living room lights"</text>
-  <text class="tiny" x="96" y="806">2. "Set fan to sleep mode"</text>
-  <text class="tiny" x="96" y="834">3. "Cool house at 6 PM"</text>
+  <rect class="cardInput" x="82" y="398" width="236" height="108" rx="22" ry="22" />
+  <text class="label" x="104" y="440">Room microphone</text>
+  <text class="small" x="104" y="468">Dedicated mic or browser client</text>
+  <text class="small" x="104" y="492">Lets voice commands feel ambient</text>
 
-  <rect class="coreZone" x="410" y="130" width="420" height="780" />
-  <text class="section" x="436" y="170">Local Control Core</text>
+  <rect class="card" x="82" y="532" width="236" height="124" rx="22" ry="22" />
+  <text class="label" x="104" y="574">Wall switches</text>
+  <text class="small" x="104" y="602">Stay wired and usable</text>
+  <text class="small" x="104" y="626">even if cloud speech is unavailable</text>
 
-  <rect class="nodeNeutral" x="450" y="205" width="340" height="105" />
-  <text class="label" x="476" y="246">Router + switch + Wi-Fi</text>
-  <text class="small" x="476" y="276">Flat LAN plus outbound access for OpenAI API calls</text>
+  <rect class="card" x="82" y="684" width="236" height="90" rx="22" ry="22" />
+  <text class="label" x="104" y="722">Main fallback rule</text>
+  <text class="tiny" x="104" y="750">Automation should add convenience, not replace</text>
+  <text class="tiny" x="104" y="770">basic local control.</text>
 
-  <rect class="nodeCore" x="450" y="348" width="340" height="165" />
-  <text class="label" x="476" y="390">Mac mini</text>
-  <text class="small" x="476" y="422">OpenClaw gateway and OpenAI tool router</text>
-  <text class="small" x="476" y="448">Home Assistant VM or container</text>
-  <text class="small" x="476" y="474">Always-on automation host and policy layer</text>
+  <rect class="panelVoice" x="380" y="190" width="280" height="610" rx="28" ry="28" />
+  <circle cx="416" cy="227" r="20" fill="#2f7dcb" />
+  <text class="step" x="409" y="233">2</text>
+  <text class="panelTitle" x="446" y="235">Voice layer</text>
 
-  <rect class="nodeCore" x="450" y="548" width="340" height="110" />
-  <text class="label" x="476" y="590">Automation bus</text>
-  <text class="small" x="476" y="620">MQTT, webhooks, REST, local scripts</text>
+  <rect class="cardVoice" x="402" y="290" width="236" height="182" rx="24" ry="24" />
+  <text class="label" x="424" y="332">OpenAI voice APIs</text>
+  <text class="small" x="424" y="362">Realtime API: `gpt-realtime`</text>
+  <text class="small" x="424" y="390">STT: `gpt-4o-transcribe`</text>
+  <text class="small" x="424" y="418">TTS: `gpt-4o-mini-tts`</text>
+  <text class="tiny" x="424" y="448">Speech arrives here, intent is recognized,</text>
+  <text class="tiny" x="424" y="468">and spoken confirmation comes back out.</text>
 
-  <rect class="nodeCore" x="450" y="692" width="340" height="110" />
-  <text class="label" x="476" y="734">Power resilience</text>
-  <text class="small" x="476" y="764">Small UPS for router, Mac mini, dongles</text>
+  <rect class="card" x="402" y="510" width="236" height="154" rx="24" ry="24" />
+  <text class="label" x="424" y="552">Easy mental model</text>
+  <text class="tiny" x="424" y="582">1. You speak</text>
+  <text class="tiny" x="424" y="606">2. OpenAI understands and replies</text>
+  <text class="tiny" x="424" y="630">3. The Mac mini performs the action</text>
+  <text class="tiny" x="424" y="654">4. Wi-Fi devices change state</text>
 
-  <rect class="edgeZone" x="870" y="130" width="690" height="780" />
-  <text class="section" x="896" y="170">Edge Protocols and Loads</text>
+  <rect class="panelCore" x="700" y="190" width="360" height="610" rx="28" ry="28" />
+  <circle cx="736" cy="227" r="20" fill="#0d7a5a" />
+  <text class="step" x="729" y="233">3</text>
+  <text class="panelTitle" x="766" y="235">Local control core</text>
 
-  <rect class="nodeEdge" x="900" y="205" width="250" height="110" />
-  <text class="label" x="926" y="246">Matter / Thread</text>
-  <text class="small" x="926" y="276">Preferred for new switches and sensors</text>
+  <rect class="chipGreen" x="860" y="210" width="164" height="30" rx="15" ry="15" />
+  <text class="chipText" x="888" y="230">Single LAN</text>
 
-  <rect class="nodeEdge" x="1180" y="205" width="250" height="110" />
-  <text class="label" x="1206" y="246">Zigbee</text>
-  <text class="small" x="1206" y="276">Reliable mesh for sensors and relays</text>
+  <rect class="cardCore" x="724" y="262" width="312" height="164" rx="24" ry="24" />
+  <text class="label" x="748" y="304">Mac mini</text>
+  <text class="small" x="748" y="334">kumclaw handles tool routing and guardrails</text>
+  <text class="small" x="748" y="362">Home Assistant runs scenes, schedules,</text>
+  <text class="small" x="748" y="390">dashboards, and device integrations</text>
 
-  <rect class="nodeEdge" x="1040" y="350" width="280" height="105" />
-  <text class="label" x="1066" y="390">Wi-Fi / IR / LAN endpoints</text>
-  <text class="small" x="1066" y="420">AC bridges, meters, legacy smart modules</text>
+  <rect class="cardCore" x="724" y="456" width="312" height="110" rx="24" ry="24" />
+  <text class="label" x="748" y="498">Automation bus</text>
+  <text class="small" x="748" y="526">Webhooks, REST calls, local scripts, vendor APIs</text>
 
-  <rect class="nodeEdge" x="900" y="510" width="190" height="120" />
-  <text class="label" x="924" y="552">Lights</text>
-  <text class="small" x="924" y="582">Relay or dimmer</text>
-  <text class="small" x="924" y="606">Room circuits</text>
+  <rect class="cardCore" x="724" y="594" width="312" height="138" rx="24" ry="24" />
+  <text class="label" x="748" y="636">Router + Wi-Fi</text>
+  <text class="small" x="748" y="664">One stable LAN for dashboards, sensors, relays,</text>
+  <text class="small" x="748" y="692">IR bridges, and outbound OpenAI API traffic</text>
 
-  <rect class="nodeEdge" x="1120" y="510" width="190" height="120" />
-  <text class="label" x="1144" y="552">BLDC fans</text>
-  <text class="small" x="1144" y="582">Fan-rated smart</text>
-  <text class="small" x="1144" y="606">controller only</text>
+  <rect class="panelEdge" x="1100" y="190" width="440" height="610" rx="28" ry="28" />
+  <circle cx="1136" cy="227" r="20" fill="#c67a23" />
+  <text class="step" x="1129" y="233">4</text>
+  <text class="panelTitle" x="1166" y="235">Wi-Fi home devices</text>
 
-  <rect class="nodeEdge" x="1340" y="510" width="190" height="120" />
-  <text class="label" x="1364" y="552">AC units</text>
-  <text class="small" x="1364" y="582">IR bridge or</text>
-  <text class="small" x="1364" y="606">dry-contact interface</text>
+  <rect class="cardEdge" x="1124" y="260" width="392" height="92" rx="24" ry="24" />
+  <text class="label" x="1148" y="300">Wi-Fi-only plan</text>
+  <text class="small" x="1148" y="328">No Zigbee, no Thread, no NFC. IR stays only for legacy AC control.</text>
 
-  <rect class="nodeEdge" x="1025" y="690" width="380" height="120" />
-  <text class="label" x="1052" y="732">Sensors and meters</text>
-  <text class="small" x="1052" y="762">Motion, door, temp, humidity, energy, leak</text>
-  <text class="small" x="1052" y="788">Feed automations, scenes, alerts, and dashboards</text>
+  <rect class="cardEdge" x="1124" y="382" width="182" height="132" rx="22" ry="22" />
+  <text class="label" x="1148" y="422">Lights</text>
+  <text class="small" x="1148" y="450">Wi-Fi relays or dimmers</text>
+  <text class="small" x="1148" y="474">Keep switch fallback intact</text>
 
-  <path class="wireBlue" d="M340 270 C385 270 385 257 450 257" />
-  <path class="wireBlue" d="M340 430 C390 430 390 257 450 257" />
-  <path class="wire dashed" d="M340 590 C400 590 400 605 450 605" />
+  <rect class="cardEdge" x="1334" y="382" width="182" height="132" rx="22" ry="22" />
+  <text class="label" x="1358" y="422">BLDC fans</text>
+  <text class="small" x="1358" y="450">Use fan-rated Wi-Fi control only</text>
+  <text class="small" x="1358" y="474">No generic dimmer path</text>
 
-  <path class="wire" d="M620 310 L620 348" />
-  <path class="wire" d="M620 513 L620 548" />
-  <path class="wire" d="M620 658 L620 692" />
+  <rect class="cardEdge" x="1124" y="544" width="182" height="132" rx="22" ry="22" />
+  <text class="label" x="1148" y="584">AC units</text>
+  <text class="small" x="1148" y="612">Wi-Fi to IR bridge</text>
+  <text class="small" x="1148" y="636">or vendor dry-contact path</text>
 
-  <path class="wireOrange" d="M790 430 C865 430 865 260 900 260" />
-  <path class="wireOrange" d="M790 430 C900 430 930 260 1180 260" />
-  <path class="wireOrange" d="M790 430 C900 430 930 402 1040 402" />
+  <rect class="cardEdge" x="1334" y="544" width="182" height="132" rx="22" ry="22" />
+  <text class="label" x="1358" y="584">Sensors</text>
+  <text class="small" x="1358" y="612">Motion, climate, door, leak,</text>
+  <text class="small" x="1358" y="636">and energy over Wi-Fi</text>
 
-  <path class="wireOrange" d="M1025 315 C1025 390 995 390 995 510" />
-  <path class="wireOrange" d="M1240 315 C1240 390 1215 390 1215 510" />
-  <path class="wireOrange" d="M1180 455 C1180 490 1435 490 1435 510" />
-  <path class="wireOrange dashed" d="M1180 455 C1180 600 1215 600 1215 690" />
+  <rect class="cardEdge" x="1124" y="706" width="392" height="68" rx="22" ry="22" />
+  <text class="small" x="1148" y="744">Planning note: strong 2.4 GHz room coverage matters because every endpoint depends on the same Wi-Fi fabric.</text>
 
-  <rect class="note" x="890" y="835" width="640" height="55" />
-  <text class="tiny" x="916" y="868">Design rule: Matter/Thread for new hardware, Zigbee for dense sensor mesh, Wi-Fi/IR only for legacy AC or vendor-specific devices.</text>
+  <path class="wireBlue" d="M318 318 C354 318 362 344 402 344" />
+  <path class="wireBlue" d="M318 452 C354 452 362 390 402 390" />
+  <path class="wireBlue" d="M638 382 C676 382 684 344 724 344" />
+  <path class="wireGreen" d="M880 426 L880 594" />
+
+  <path class="wireGreen" d="M1036 664 C1080 664 1080 448 1124 448" />
+  <path class="wireGreen" d="M1036 664 C1095 664 1095 448 1334 448" />
+  <path class="wireGreen" d="M1036 664 C1080 664 1080 610 1124 610" />
+  <path class="wireGreen" d="M1036 664 C1095 664 1095 610 1334 610" />
+
+  <path class="wireDashed" d="M318 594 C580 594 760 448 1124 448" />
+
+  <rect class="card" x="60" y="834" width="1480" height="92" rx="28" ry="28" />
+  <text class="label" x="88" y="876">Flow</text>
+  <text class="small" x="88" y="906">Speak into a phone, tablet, or room mic -> OpenAI voice APIs understand the request -> the Mac mini applies logic through kumclaw and Home Assistant -> Wi-Fi devices respond across the home LAN.</text>
 </svg>

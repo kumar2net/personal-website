@@ -1,5 +1,10 @@
 const createMapsSearchUrl = (query) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+const createContactNumber = (label, display, tel) => ({
+  label,
+  display,
+  tel,
+});
 
 const compiledOn = "2026-03-18";
 const verifiedBy = "Kumar (web research)";
@@ -166,6 +171,10 @@ export const ananyasLocalGuide = {
           hours: "Check current timings before going",
           note:
             "Useful backup for vegetables, milk, bread, and monthly staples if a family member is doing a larger run.",
+          contactNumbers: [
+            createContactNumber("Mobile", "95859 13131", "9585913131"),
+            createContactNumber("Landline", "0422-2425662", "04222425662"),
+          ],
           sourceLabel: "Justdial",
           sourceUrl:
             "https://www.justdial.com/Coimbatore/Day-to-Day-Supermarket-Near-Chinmaiya-School-Vadavalli/0422PX422-X422-130129095226-F1F9_BZDET",
@@ -224,6 +233,9 @@ export const ananyasLocalGuide = {
           hours: "Same-day delivery is available for selected bouquets",
           note:
             "Stronger bouquet and gifting backup when children or family want a cleaner online order flow instead of a roadside flower run.",
+          contactNumbers: [
+            createContactNumber("Mobile", "93603 77717", "9360377717"),
+          ],
           sourceLabel: "Official site",
           sourceUrl: "https://hopesflorist.com/",
           mapUrl: createMapsSearchUrl(
@@ -247,7 +259,11 @@ export const ananyasLocalGuide = {
             "112, Narasipuram Road, Thondamuthur, Coimbatore 641109",
           hours: "Public listing says not 24 hours",
           note:
-            "Near District Cooperative Bank. Public listing shows 0422-2617375 and 98948 37631.",
+            "Near District Cooperative Bank. Good first call for nearby walk-in prescriptions.",
+          contactNumbers: [
+            createContactNumber("Mobile", "98948 37631", "9894837631"),
+            createContactNumber("Landline", "0422-2617375", "04222617375"),
+          ],
           sourceLabel: "AskLaila",
           sourceUrl:
             "https://www.asklaila.com/listing/Coimbatore/thondamuthur/sri-murugan-medicals/0Tri0paP/",
@@ -264,6 +280,10 @@ export const ananyasLocalGuide = {
           hours: "Check the branch directly for live timing",
           note:
             "Listed on the official Coimbatore branches page, useful as a second nearby medicine option.",
+          contactNumbers: [
+            createContactNumber("Mobile", "99439 71000", "9943971000"),
+            createContactNumber("Landline", "0422-2617800", "04222617800"),
+          ],
           sourceLabel: "Official branch page",
           sourceUrl: "https://thulasipharmacy.com/coimbatore-branches.php",
           mapUrl: createMapsSearchUrl(
@@ -280,6 +300,9 @@ export const ananyasLocalGuide = {
           hours: "Check the live store page before ordering",
           note:
             "Not the closest walk-in option, but the official Apollo page makes it a good backup for online ordering and medicine delivery.",
+          contactNumbers: [
+            createContactNumber("Mobile", "97515 57273", "9751557273"),
+          ],
           sourceLabel: "Official store page",
           sourceUrl:
             "https://www.apollopharmacy.in/medical-stores/coimbatore/thondamuthur-18055",
@@ -364,6 +387,11 @@ export const ananyasLocalGuide = {
           hours: "Check the hospital directly for current availability",
           note:
             "Official site describes it as a 30-bed multispeciality hospital in the Thondamuthur belt.",
+          contactNumbers: [
+            createContactNumber("Emergency mobile", "88707 83938", "8870783938"),
+            createContactNumber("Appointments", "88707 59916", "8870759916"),
+            createContactNumber("Landline", "0422-2617770", "04222617770"),
+          ],
           sourceLabel: "Official site",
           sourceUrl: "https://anp.hms-society.com/",
           mapUrl: createMapsSearchUrl(
@@ -414,6 +442,10 @@ export const ananyasLocalGuide = {
           hours: "Official site says 9:30 am - 9:30 pm, Monday to Sunday",
           note:
             "Not on the immediate Thondamuthur corridor, but a useful city-side fallback for appliance, TV, laptop, or purifier purchases when a family member is already heading into central Coimbatore.",
+          contactNumbers: [
+            createContactNumber("Mobile", "98423 44323", "9842344323"),
+            createContactNumber("Landline", "0422-2491222", "04222491222"),
+          ],
           sourceLabel: "Official site",
           sourceUrl: "https://www.bharathelectronics.in/contact",
           mapUrl: createMapsSearchUrl(

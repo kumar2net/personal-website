@@ -1,162 +1,32 @@
-# Personal Website
+# Personal Website App
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/bfc9b371-d915-45d3-a051-c92d45dd1206/deploy-status)](https://app.netlify.com/projects/kumarweb/deploys)
+Primary site app for `kumar2net.com`.
 
-Personal site for Kumar A. built with React and Vite. The project bundles together long‑form writing, project dossiers, utilities dashboards, book notes, and AI‑assisted experiments that run off Netlify Functions and a lightweight Python backend.
+## Stack
+- Vite 7
+- React 19
+- MUI 7 via `@kumar2net/ui-theme`
+- Serverless-compatible handlers under `api/`
 
-## Live Site
+## Commands
+- `npm run --workspace apps/personal-website dev`
+- `npm run --workspace apps/personal-website build`
+- `npm run --workspace apps/personal-website preview`
+- `npm run --workspace apps/personal-website blog:validate`
+- `npm run --workspace apps/personal-website semantic:index`
+- `npm run --workspace apps/personal-website shorts:metrics`
 
-- **Production**: https://kumar2net.com  
-- **Primary branch**: `master`
+## Local Workflow
+- Run `npm run dev` from the repo root for the normal Vite loop.
+- Run `vercel dev` when you need local parity for `/api/blog-tts`, `/api/translate`, and other serverless routes.
+- Keep `OPENAI_API_KEY` available for AI-backed routes and content indexing that depends on OpenAI.
 
-## Latest Highlights
+## Source Map
+- `src/`: app UI, routes, content, and shared client utilities
+- `api/`: TTS, translation, and related serverless handlers
+- `scripts/`: validation, indexing, sitemap, QA, and content tooling
+- `reports/`: generated quality and performance reports
 
-- **AI-Powered Blog Generation** (Nov 2025): Automated blog post creation using OpenAI GPT-4 and DALL-E 3
-  - New `generate-blog-post.mjs` script for creating blog posts from markdown hints
-  - Automatic content generation with structured sections
-  - AI-generated hero images using DALL-E 3
-  - Seamless integration with existing blog infrastructure
-- **Dark Mode Fixes** (Nov 2025): Comprehensive dark mode text visibility improvements
-  - Fixed BlogPostLayout with `!important` color overrides for all text elements
-  - Ensured proper contrast for headings, paragraphs, and UI elements
-  - Fixed semantic search input background for better visibility
-- **Engagement Simplification** (Nov 2025): Streamlined user engagement features
-  - Removed Weekly Whisper (PromptBox) from all blog posts
-  - Removed ReactionBar and ChromeReaderModeNudge components
-  - Cleaner, more focused reading experience
-- **Privacy-First Analytics** (Mar 2026): Plausible is now the primary tracker for SPA pageviews and content/CTA events, with a server-side GA4 Measurement Protocol mirror reserved for revenue-critical events.
-- **Sitemap & SEO** (Nov 2025): Enhanced search engine optimization
-  - Regenerated sitemap.xml and sitemap.html with latest content
-  - Added Google Search Console API submission script
-  - MUI font compliance (Inter, Roboto, Material Icons) to fully align with MUI design guidelines.
-- **Science (Feb 2026)**: Added `/science` hub with the “Protein Folding – Insulin & Heart Medication Insights” page featuring a WebGPU/WebGL2 insulin folding visualization and cardiometabolic context for Bisolong, Ecosprin, Dytor, glimepiride, and metformin.
-- **Local Dev**: Fixed API routing for `/api/engagement` to prevent 404 errors during local development.
-
-See `docs/CHANGELOG.md` for a detailed history.
-
-## Feature Snapshot
-
-- **Blog & Knowledge Library** – JSX blog posts with badges, tables, embeds, and a semantic-search powered landing page, plus Markdown-based book and note content elsewhere in the repo.
-- **Projects Hub** – Narrative write-ups paired with motion-enhanced visuals, plus deep dives like the AI recommender code viewer.
-- **AI & Analytics Utilities** – Serverless functions for topic recommendations, semantic search backed by OpenAI embeddings, tech-trend aggregation, and CMS helpers.
-- **Dashboards** – Utilities spending dashboard, status page, dossier timelines, and other data-first explorations.
-- **Books & Notes** – Mixed media content (Markdown, PDF excerpts, DOCX conversions) routed through lazily loaded page bundles.
-- **Backend Support** – Optional Node/Python services that feed GA4 + BigQuery powered recommendations.
-- **Observability** – Plausible pageviews/events for content performance, a GA4 Measurement Protocol revenue mirror, and Vercel Speed Insights for real-user performance analytics.
-
-## Tech Stack Overview
-
-| Layer | Details |
-|-------|---------|
-| **Frontend** | React 18, Vite 5, React Router 6, Tailwind CSS, Framer Motion, Vercel Speed Insights |
-| **Content** | Markdown + MDX-style JSX pages, `react-markdown`, `gray-matter`, custom SVG assets |
-| **Serverless** | `apps/personal-website/api/*.js` (Vercel/Netlify compatible) for conversions, semantic search, feeds, journaling |
-| **Backend (optional)** | Python scripts + services in `backend/` for BigQuery and Vertex AI integrations |
-| **Tooling** | ESLint 9, Biome, Codemon CLI, Netlify CLI, Node 18 |
-
-## Repository Layout
-
-```
-personal-website/
-├── src/                  # React source (components, pages, data helpers)
-├── api/                  # (under apps/personal-website) Serverless endpoints (convert, semantic-search, feeds, generations)
-├── backend/              # Python + node service scripts for GA4/BQ workflows
-├── docs/                 # Architecture, deployment, changelog, research notes
-├── public/               # Static assets served by Netlify
-├── scripts/              # Utility and test runners
-└── src/data/semantic-index.json  # OpenAI embedding index generated by scripts/build-semantic-index.mjs
-```
-
-## Local Development
-
-### Prerequisites
-
-- Node.js 18+
-- npm (ships with Node 18)
-
-### Setup
-
-```bash
-git clone https://github.com/kumar2net/personal-website.git
-cd personal-website
-npm install
-```
-
-### Semantic Search Index
-
-The semantic search API reads vectors from `src/data/semantic-index.json`. Regenerate it whenever blog content changes:
-
-```bash
-npm run --workspace apps/personal-website semantic:index
-```
-
-The script loads every `src/pages/blog/*.jsx` file, strips JSX to text, calls OpenAI embedding models (default `text-embedding-3-small`), and snapshots vectors plus metadata into the JSON index. Production builds run the same command via `npm run build`, so keeping `OPENAI_API_KEY` set ensures Vercel/Netlify builds stay up to date.
-
-### Start a Dev Server
-
-```bash
-# Default Vite dev server (fast iteration)
-npm run dev
-
-# Netlify-style environment with serverless functions
-npm run dev:netlify
-```
-
-`npm run dev` uses the custom Vite middleware to serve local API handlers such as `/api/semantic-search`, `/api/blog-tts`, `/api/engagement`, `/api/keydata`, and `/api/analytics-revenue` without deploying functions.
-
-### Quality & Tooling
-
-```bash
-# Lint entire project
-npm run lint
-
-# Browser QA against a running dev/preview server
-npm run qa:browser -- --baseUrl=http://127.0.0.1:5173
-
-# Biome static analysis
-npm run biome:check
-
-# Test scripts (unit + e2e wrappers)
-npm run test:all
-```
-
-### Build Output
-
-```bash
-npm run build
-# Outputs to dist/
-```
-
-## Analytics
-
-- Primary tracker: Plausible. Configure `VITE_PLAUSIBLE_DOMAIN` and, if needed, `VITE_PLAUSIBLE_SCRIPT_SRC` / `VITE_PLAUSIBLE_API_HOST`.
-- Revenue mirror: server-side GA4 Measurement Protocol via `/api/analytics-revenue`. Set `GA4_MEASUREMENT_ID` and `GA4_MP_API_SECRET` in the deployment environment.
-- The client runtime records SPA pageviews plus `content_view`, `content_engagement`, and `cta_click`. Helpers for `newsletter_subscribe`, `trial_start`, `purchase`, and `affiliate_payout` live in [`src/lib/analytics.js`](/Users/kumara/personal-website/apps/personal-website/src/lib/analytics.js).
-- Important tradeoff: the GA4 Measurement Protocol mirror uses an anonymous first-party visitor/session identifier by default. Google’s docs position Measurement Protocol as a supplement to tagged client data, so if you later need full GA-native acquisition attribution, feed a GA-issued `client_id` into the mirror payload.
-
-## Catch-up posts
-
-The global "Catch up" pill highlights blog posts published since you last marked yourself as caught up.
-
-- Storage: the most recent catch-up time is stored in `localStorage` under `user_last_catchup_v1`.
-- Header UI: the navigation pill shows a badge with the number of new posts and opens a modal list capped at 12 items.
-- Blog page: a banner surfaces the same count, lets you filter to recent posts, and exposes a "Mark as caught up" action.
-- QA tip: inspect `user_last_catchup_v1` in your browser's localStorage to review or reset the stored timestamp.
-
-## Deployment Notes
-
-- Production hosting runs on Netlify with automated deploys from `master`.
-- Build command: `npm run build`
-- Publish directory: `dist/`
-- Review `docs/DEPLOYMENT_STATUS.md` for pre-flight checks, quality gates, and manual deploy instructions.
-
-## Additional Documentation
-
-- `docs/ARCHITECTURE_AND_TECH_STACK.md` – System architecture, data flows, and service inventory.
-- `docs/DEPLOYMENT_STATUS.md` – Deployment health, QA checklist, and monitoring pointers.
-- `docs/CHANGELOG.md` – Time-stamped record of code/content updates.
-- `api/BLOG_TTS_CONTRACT.md` – `/api/blog-tts` request/response contract, headers, and performance guidance.
-
-For questions or follow-ups, open an issue or contact Kumar directly. Happy shipping!
-
----
+## Docs
+- API contract: [`api/BLOG_TTS_CONTRACT.md`](/Users/kumara/personal-website/apps/personal-website/api/BLOG_TTS_CONTRACT.md)
+- Repo-level context: [`README.md`](/Users/kumara/personal-website/README.md), [`AGENTS.md`](/Users/kumara/personal-website/AGENTS.md), [`PROJECT.md`](/Users/kumara/personal-website/PROJECT.md)

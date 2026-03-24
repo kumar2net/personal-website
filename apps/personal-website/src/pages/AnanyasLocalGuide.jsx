@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import LocalGroceryStoreRoundedIcon from "@mui/icons-material/LocalGroceryStoreRounded";
@@ -6,14 +6,17 @@ import LocalPharmacyRoundedIcon from "@mui/icons-material/LocalPharmacyRounded";
 import ShoppingBasketRoundedIcon from "@mui/icons-material/ShoppingBasketRounded";
 import HandymanRoundedIcon from "@mui/icons-material/HandymanRounded";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import ChecklistRoundedIcon from "@mui/icons-material/ChecklistRounded";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import LaunchRoundedIcon from "@mui/icons-material/LaunchRounded";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SmartToyRoundedIcon from "@mui/icons-material/SmartToyRounded";
-import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
 import ViewModuleRoundedIcon from "@mui/icons-material/ViewModuleRounded";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Alert,
   Box,
   Button,
@@ -29,7 +32,6 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link as RouterLink } from "react-router-dom";
 import LocalGuideAssistant from "../components/LocalGuideAssistant";
 import SEO from "../components/SEO";
@@ -101,6 +103,26 @@ function getOptionalChipProps(color, variant = "outlined") {
   return { color, variant };
 }
 
+function getContactNumbers(item) {
+  if (!Array.isArray(item?.contactNumbers)) {
+    return [];
+  }
+
+  return item.contactNumbers.filter(
+    (contact) =>
+      contact &&
+      typeof contact.display === "string" &&
+      typeof contact.tel === "string" &&
+      contact.display.trim() &&
+      contact.tel.trim(),
+  );
+}
+
+function buildTelephoneHref(value) {
+  const normalized = String(value || "").replace(/[^\d+]/g, "");
+  return normalized ? `tel:${normalized}` : undefined;
+}
+
 function getVerificationState(item) {
   const verifiedAt = parseIsoDate(item.verifiedAt);
   const now = new Date();
@@ -161,101 +183,9 @@ function toReportId(groupId, label) {
   return `${groupId}:${normalizedLabel}`;
 }
 
-function buildGuideSpreadsheetRows(guide) {
-  return guide.categories.flatMap((category) =>
-    category.items.map((item) => {
-      const verification = getVerificationState(item);
-      const toneRank =
-        verification.tone === "stale"
-          ? 0
-          : verification.tone === "soon"
-            ? 1
-            : verification.tone === "fresh"
-              ? 2
-              : 3;
-
-      return {
-        id: item.id || toReportId(category.id, item.name),
-        categoryId: category.id,
-        categoryTitle: category.title,
-        name: item.name,
-        area: item.area,
-        address: item.address,
-        hours: item.hours || "Check timings directly",
-        note: item.note,
-        sourceLabel: item.sourceLabel,
-        sourceUrl: item.sourceUrl,
-        mapUrl: item.mapUrl,
-        verificationMethod: verification.methodLabel,
-        verificationMethodColor: verification.methodColor,
-        freshnessLabel: verification.freshnessLabel,
-        freshnessColor: verification.freshnessColor,
-        freshnessTone: verification.tone,
-        freshnessRank: toneRank,
-        lastCheckedText: verification.lastCheckedText,
-        refreshWindowText: verification.refreshWindowText,
-        lastCheckedAt: item.verifiedAt || "",
-        nextReviewAt: addDaysToIso(item.verifiedAt, Number(item.staleAfterDays) || 30)
-          ?.toISOString()
-          ?.slice(0, 10) || "",
-      };
-    }),
-  );
-}
-
-function escapeCsvValue(value) {
-  const normalized = value == null ? "" : String(value);
-  const escaped = normalized.replace(/"/g, '""');
-
-  if (/[",\n]/.test(escaped)) {
-    return `"${escaped}"`;
-  }
-
-  return escaped;
-}
-
-function createGuideCsv(rows) {
-  const headers = [
-    "Category",
-    "Listing",
-    "Area",
-    "Address",
-    "Hours",
-    "Note",
-    "Verification Method",
-    "Freshness",
-    "Last Checked",
-    "Refresh Window",
-    "Source Label",
-    "Source URL",
-    "Map URL",
-  ];
-
-  const lines = rows.map((row) =>
-    [
-      row.categoryTitle,
-      row.name,
-      row.area,
-      row.address,
-      row.hours,
-      row.note,
-      row.verificationMethod,
-      row.freshnessLabel,
-      row.lastCheckedText,
-      row.refreshWindowText,
-      row.sourceLabel,
-      row.sourceUrl,
-      row.mapUrl,
-    ]
-      .map(escapeCsvValue)
-      .join(","),
-  );
-
-  return [headers.join(","), ...lines].join("\n");
-}
-
 function ListingCard({ item, reportTarget, onSuggestUpdate, onMarkStale }) {
   const verification = getVerificationState(item);
+  const contactNumbers = getContactNumbers(item);
 
   return (
     <Paper
@@ -311,6 +241,28 @@ function ListingCard({ item, reportTarget, onSuggestUpdate, onMarkStale }) {
         <Typography variant="body2" sx={{ lineHeight: 1.7 }}>
           {item.note}
         </Typography>
+        {contactNumbers.length ? (
+          <Stack spacing={0.8}>
+            <Typography variant="caption" color="text.secondary">
+              Call directly
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {contactNumbers.map((contact) => (
+                <Button
+                  key={`${item.name}:${contact.label}:${contact.tel}`}
+                  component="a"
+                  href={buildTelephoneHref(contact.tel)}
+                  size="small"
+                  variant="outlined"
+                  startIcon={<CallRoundedIcon />}
+                  sx={{ borderRadius: 999 }}
+                >
+                  {contact.label}: {contact.display}
+                </Button>
+              ))}
+            </Stack>
+          </Stack>
+        ) : null}
         <Stack spacing={0.45}>
           <Typography variant="caption" color="text.secondary">
             {verification.lastCheckedText}
@@ -522,353 +474,6 @@ function QuickJumpCard({ href, icon: Icon, eyebrow, title, description, meta }) 
   );
 }
 
-function SpreadsheetTable({ rows, csvDownloadUrl, onSuggestUpdate, onMarkStale }) {
-  const freshnessSummary = rows.reduce(
-    (summary, row) => {
-      summary.total += 1;
-      if (row.freshnessTone === "stale") {
-        summary.stale += 1;
-      } else if (row.freshnessTone === "soon") {
-        summary.soon += 1;
-      } else if (row.freshnessTone === "fresh") {
-        summary.fresh += 1;
-      } else {
-        summary.unknown += 1;
-      }
-      return summary;
-    },
-    { total: 0, fresh: 0, soon: 0, stale: 0, unknown: 0 },
-  );
-
-  const columns = useMemo(
-    () => [
-      {
-        field: "name",
-        headerName: "Listing",
-        minWidth: 230,
-        flex: 1.1,
-        renderCell: (params) => (
-          <Box sx={{ py: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 700 }}>
-              {params.row.name}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {params.row.sourceLabel}
-            </Typography>
-          </Box>
-        ),
-      },
-      {
-        field: "categoryTitle",
-        headerName: "Category",
-        minWidth: 170,
-        flex: 0.8,
-      },
-      {
-        field: "area",
-        headerName: "Area",
-        minWidth: 160,
-        flex: 0.8,
-      },
-      {
-        field: "hours",
-        headerName: "Hours",
-        minWidth: 210,
-        flex: 1,
-      },
-      {
-        field: "address",
-        headerName: "Address",
-        minWidth: 260,
-        flex: 1.25,
-        renderCell: (params) => (
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ py: 1, whiteSpace: "normal", lineHeight: 1.6 }}
-          >
-            {params.value}
-          </Typography>
-        ),
-      },
-      {
-        field: "note",
-        headerName: "Why it matters",
-        minWidth: 300,
-        flex: 1.45,
-        renderCell: (params) => (
-          <Typography variant="body2" sx={{ py: 1, whiteSpace: "normal", lineHeight: 1.7 }}>
-            {params.value}
-          </Typography>
-        ),
-      },
-      {
-        field: "freshnessLabel",
-        headerName: "Freshness",
-        minWidth: 170,
-        flex: 0.8,
-        sortComparator: (_v1, _v2, param1, param2) =>
-          (param1.api.getRow(param1.id)?.freshnessRank ?? 99) -
-          (param2.api.getRow(param2.id)?.freshnessRank ?? 99),
-        renderCell: (params) => (
-          <Chip
-            label={params.row.freshnessLabel}
-            size="small"
-            {...getOptionalChipProps(params.row.freshnessColor, "filled")}
-          />
-        ),
-      },
-      {
-        field: "verificationMethod",
-        headerName: "Verification",
-        minWidth: 170,
-        flex: 0.8,
-        renderCell: (params) => (
-          <Chip
-            label={params.row.verificationMethod}
-            size="small"
-            {...getOptionalChipProps(params.row.verificationMethodColor)}
-          />
-        ),
-      },
-      {
-        field: "lastCheckedAt",
-        headerName: "Last checked",
-        minWidth: 150,
-        flex: 0.7,
-        valueFormatter: (value) => (value ? formatGuideDate(value) : "Unknown"),
-      },
-      {
-        field: "nextReviewAt",
-        headerName: "Refresh after",
-        minWidth: 150,
-        flex: 0.7,
-        valueFormatter: (value) => (value ? formatGuideDate(value) : "Unknown"),
-      },
-      {
-        field: "links",
-        headerName: "Links",
-        minWidth: 190,
-        flex: 0.9,
-        sortable: false,
-        filterable: false,
-        disableColumnMenu: true,
-        renderCell: (params) => (
-          <Stack direction="row" spacing={1} sx={{ py: 0.75 }}>
-            <Button
-              component="a"
-              href={params.row.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="contained"
-              size="small"
-              sx={{ borderRadius: 999 }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              Map
-            </Button>
-            <Button
-              component="a"
-              href={params.row.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="text"
-              size="small"
-              sx={{ borderRadius: 999 }}
-              endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={(event) => event.stopPropagation()}
-            >
-              Source
-            </Button>
-          </Stack>
-        ),
-      },
-      {
-        field: "report",
-        headerName: "Report",
-        minWidth: 180,
-        flex: 0.95,
-        sortable: false,
-        filterable: false,
-        disableColumnMenu: true,
-        renderCell: (params) => {
-          const reportTarget = {
-            reportId: params.row.id,
-            name: params.row.name,
-            categoryId: params.row.categoryId,
-          };
-
-          return (
-            <Stack direction="row" spacing={1} sx={{ py: 0.75 }}>
-              <Button
-                variant="outlined"
-                size="small"
-                sx={{ borderRadius: 999 }}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onSuggestUpdate(reportTarget);
-                }}
-              >
-                Update
-              </Button>
-              <Button
-                color="warning"
-                variant="text"
-                size="small"
-                sx={{ borderRadius: 999 }}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onMarkStale(reportTarget);
-                }}
-              >
-                Stale
-              </Button>
-            </Stack>
-          );
-        },
-      },
-    ],
-    [onMarkStale, onSuggestUpdate],
-  );
-
-  return (
-    <Paper
-      id="spreadsheet-view"
-      elevation={0}
-      sx={(theme) => ({
-        p: { xs: 2.25, md: 3 },
-        borderRadius: 4,
-        border: "1px solid",
-        borderColor: alpha(theme.palette.primary.main, 0.14),
-        backgroundColor: alpha(theme.palette.background.paper, 0.94),
-        scrollMarginTop: theme.spacing(12),
-      })}
-    >
-      <Stack spacing={2.25}>
-        <Stack
-          direction={{ xs: "column", lg: "row" }}
-          spacing={1.75}
-          justifyContent="space-between"
-          alignItems={{ xs: "flex-start", lg: "center" }}
-        >
-          <Box>
-            <Typography variant="h4" sx={{ fontWeight: 800 }}>
-              Spreadsheet view
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mt: 0.75, maxWidth: 760 }}>
-              One clean sheet for scanning every listing, comparing freshness, and
-              exporting the guide into Excel or Google Sheets.
-            </Typography>
-          </Box>
-          <Button
-            component="a"
-            href={csvDownloadUrl}
-            download="ananyas-nearby-guide.csv"
-            variant="contained"
-            startIcon={<DownloadRoundedIcon />}
-            sx={{ borderRadius: 999 }}
-          >
-            Download CSV
-          </Button>
-        </Stack>
-
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-          <Chip label={`${freshnessSummary.total} listings`} />
-          <Chip
-            label={`${freshnessSummary.fresh} fresh`}
-            {...getOptionalChipProps("success", "filled")}
-          />
-          <Chip
-            label={`${freshnessSummary.soon} recheck soon`}
-            {...getOptionalChipProps("warning", "filled")}
-          />
-          <Chip
-            label={`${freshnessSummary.stale} overdue`}
-            {...getOptionalChipProps("error", "filled")}
-          />
-          {freshnessSummary.unknown ? (
-            <Chip label={`${freshnessSummary.unknown} missing dates`} variant="outlined" />
-          ) : null}
-        </Stack>
-
-        <Box
-          sx={(theme) => ({
-            height: 720,
-            width: "100%",
-            border: "1px solid",
-            borderColor: alpha(theme.palette.divider, 0.9),
-            borderRadius: 3,
-            overflow: "hidden",
-            backgroundColor: alpha(theme.palette.background.default, 0.55),
-            "& .MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              alignItems: "flex-start",
-              py: 1,
-            },
-            "& .MuiDataGrid-cell:focus, & .MuiDataGrid-columnHeader:focus": {
-              outline: "none",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: alpha(theme.palette.primary.main, 0.05),
-            },
-            "& .MuiDataGrid-toolbarContainer": {
-              px: 1.25,
-              py: 1,
-              gap: 1,
-              borderBottom: "1px solid",
-              borderColor: alpha(theme.palette.divider, 0.7),
-            },
-            "& .MuiDataGrid-row.row-stale": {
-              backgroundColor: alpha(theme.palette.error.main, 0.035),
-            },
-            "& .MuiDataGrid-row.row-soon": {
-              backgroundColor: alpha(theme.palette.warning.main, 0.04),
-            },
-            "& .MuiDataGrid-row:hover": {
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
-          })}
-        >
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            disableRowSelectionOnClick
-            density="compact"
-            pageSizeOptions={[10, 25, 50]}
-            getRowHeight={() => "auto"}
-            getEstimatedRowHeight={() => 108}
-            getRowClassName={(params) =>
-              params.row.freshnessTone === "stale"
-                ? "row-stale"
-                : params.row.freshnessTone === "soon"
-                  ? "row-soon"
-                  : ""
-            }
-            initialState={{
-              pagination: { paginationModel: { pageSize: 10 } },
-              sorting: {
-                sortModel: [{ field: "freshnessLabel", sort: "asc" }],
-              },
-            }}
-            slots={{ toolbar: GridToolbar }}
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: {
-                  debounceMs: 300,
-                  placeholder: "Filter listings, category, area, or notes",
-                },
-              },
-            }}
-          />
-        </Box>
-      </Stack>
-    </Paper>
-  );
-}
-
 export default function AnanyasLocalGuide() {
   const [reportDialog, setReportDialog] = useState({
     open: false,
@@ -878,10 +483,6 @@ export default function AnanyasLocalGuide() {
   const [reportError, setReportError] = useState("");
   const [reportFeedback, setReportFeedback] = useState(null);
   const [isSubmittingReport, setIsSubmittingReport] = useState(false);
-  const spreadsheetRows = buildGuideSpreadsheetRows(ananyasLocalGuide);
-  const csvDownloadUrl = `data:text/csv;charset=utf-8,${encodeURIComponent(
-    `\uFEFF${createGuideCsv(spreadsheetRows)}`,
-  )}`;
 
   const openUpdateDialog = (target) => {
     setReportDialog({ open: true, target });
@@ -962,36 +563,6 @@ export default function AnanyasLocalGuide() {
     }
   };
 
-  const topJumpCards = [
-    {
-      href: "#spreadsheet-view",
-      icon: TableChartRoundedIcon,
-      eyebrow: "Fast scan",
-      title: "Spreadsheet view",
-      description:
-        "See every store and service in one table with hours, freshness, and links.",
-      meta: `${spreadsheetRows.length} rows`,
-    },
-    {
-      href: "#cards-view",
-      icon: ViewModuleRoundedIcon,
-      eyebrow: "Detailed browse",
-      title: "Card view",
-      description:
-        "Use the fuller cards when you want context, notes, and bigger tap targets.",
-      meta: `${ananyasLocalGuide.categories.length} sections`,
-    },
-    {
-      href: "#next-additions",
-      icon: ChecklistRoundedIcon,
-      eyebrow: "Watchlist",
-      title: "Next additions",
-      description:
-        "Keep track of high-value services that still need on-ground verification.",
-      meta: `${ananyasLocalGuide.nextUsefulAdditions.length} items`,
-    },
-  ];
-
   return (
     <Box sx={{ width: "100%", maxWidth: 1120, mx: "auto" }}>
       <SEO
@@ -1038,9 +609,9 @@ export default function AnanyasLocalGuide() {
               color="text.secondary"
               sx={{ maxWidth: 760, fontSize: { xs: "1rem", md: "1.08rem" } }}
             >
-              A practical starter directory for fruits, medicines, groceries,
-              and day-to-day support around the Thondamuthur, Dhaliyur, and
-              Vadavalli corridor in Coimbatore.
+              This page now starts with voice. Ask by speaking first, hear the
+              answer back, and only drop into manual browsing if you want to
+              inspect the raw listings yourself.
             </Typography>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={1.25}>
               <Chip label={ananyasLocalGuide.communityName} />
@@ -1066,31 +637,21 @@ export default function AnanyasLocalGuide() {
               </Button>
               <Button
                 component="a"
-                href="#spreadsheet-view"
-                variant="outlined"
-                startIcon={<TableChartRoundedIcon />}
-                sx={{ borderRadius: 999 }}
-              >
-                Jump to spreadsheet
-              </Button>
-              <Button
-                component="a"
                 href="#guide-assistant"
                 variant="outlined"
                 startIcon={<SmartToyRoundedIcon />}
                 sx={{ borderRadius: 999 }}
               >
-                Ask assistant
+                Jump to voice assistant
               </Button>
               <Button
                 component="a"
-                href={csvDownloadUrl}
-                download="ananyas-nearby-guide.csv"
+                href="#browse-listings"
                 variant="outlined"
-                startIcon={<DownloadRoundedIcon />}
+                startIcon={<ViewModuleRoundedIcon />}
                 sx={{ borderRadius: 999 }}
               >
-                Download CSV
+                Browse listings
               </Button>
               <Button
                 component={RouterLink}
@@ -1105,27 +666,6 @@ export default function AnanyasLocalGuide() {
           </Stack>
         </Paper>
 
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "repeat(3, minmax(0, 1fr))",
-            },
-            gap: 2,
-          }}
-        >
-          {topJumpCards.map((card) => (
-            <QuickJumpCard key={card.href} {...card} />
-          ))}
-        </Box>
-
-        <Alert severity="info" sx={{ borderRadius: 3 }}>
-          Each card now shows source strength and a refresh window. Fast-moving
-          items like tiffin, taxis, and repair vendors should be rechecked every
-          14 to 21 days; slower listings are pushed to 30 to 45 days.
-        </Alert>
-
         {reportFeedback ? (
           <Alert
             severity={reportFeedback.severity}
@@ -1138,143 +678,178 @@ export default function AnanyasLocalGuide() {
 
         <LocalGuideAssistant />
 
-        <SpreadsheetTable
-          rows={spreadsheetRows}
-          csvDownloadUrl={csvDownloadUrl}
-          onSuggestUpdate={openUpdateDialog}
-          onMarkStale={handleMarkStale}
-        />
-
         <Stack
-          id="cards-view"
-          spacing={3.5}
+          id="browse-listings"
+          spacing={2}
           sx={(theme) => ({ scrollMarginTop: theme.spacing(12) })}
         >
-          <Paper
-            elevation={0}
-            sx={(theme) => ({
-              p: { xs: 2.25, md: 3 },
-              borderRadius: 4,
-              border: "1px solid",
-              borderColor: "divider",
-              backgroundColor: alpha(theme.palette.background.paper, 0.9),
-            })}
-          >
-            <Stack spacing={1.1}>
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                Notes
-              </Typography>
-              {ananyasLocalGuide.notes.map((note) => (
-                <Typography key={note} variant="body2" color="text.secondary">
-                  {note}
-                </Typography>
-              ))}
-            </Stack>
-          </Paper>
+          <Box>
+            <Typography variant="h4" sx={{ fontWeight: 800 }}>
+              Manual browse
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mt: 0.75, maxWidth: 760 }}>
+              One compact fallback layer for scanning listings directly. The
+              duplicate spreadsheet and repeated browse summaries have been
+              removed so the page stays focused on voice first.
+            </Typography>
+          </Box>
 
-          {ananyasLocalGuide.categories.map((category) => {
+          {ananyasLocalGuide.categories.map((category, index) => {
             const Icon = categoryIcons[category.id] || LocationOnRoundedIcon;
             return (
-              <Stack key={category.id} spacing={1.8}>
-                <Stack spacing={0.8}>
-                  <Stack direction="row" spacing={1.2} alignItems="center">
-                    <Icon color="primary" />
-                    <Typography variant="h4" sx={{ fontWeight: 800 }}>
-                      {category.title}
-                    </Typography>
-                  </Stack>
-                  <Typography variant="body1" color="text.secondary">
-                    {category.description}
-                  </Typography>
-                </Stack>
-
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr",
-                      md: "repeat(2, minmax(0, 1fr))",
-                      xl: "repeat(3, minmax(0, 1fr))",
-                    },
-                    gap: 2,
-                  }}
+              <Accordion
+                key={category.id}
+                defaultExpanded={index === 0}
+                disableGutters
+                elevation={0}
+                sx={(theme) => ({
+                  borderRadius: 4,
+                  border: "1px solid",
+                  borderColor: alpha(theme.palette.primary.main, 0.12),
+                  backgroundColor: alpha(theme.palette.background.paper, 0.92),
+                  "&:before": {
+                    display: "none",
+                  },
+                })}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreRoundedIcon />}
+                  sx={{ px: { xs: 2, md: 2.5 }, py: 0.5 }}
                 >
-                  {category.items.map((item) => {
-                    const reportTarget = {
-                      reportId: item.id || toReportId(category.id, item.name),
-                      name: item.name,
-                      categoryId: category.id,
-                    };
+                  <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    spacing={1.2}
+                    alignItems={{ xs: "flex-start", sm: "center" }}
+                    justifyContent="space-between"
+                    sx={{ width: "100%" }}
+                  >
+                    <Stack direction="row" spacing={1.2} alignItems="center">
+                      <Icon color="primary" />
+                      <Box>
+                        <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                          {category.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {category.description}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                    <Chip
+                      label={`${category.items.length} listings`}
+                      size="small"
+                      sx={{ borderRadius: 999 }}
+                    />
+                  </Stack>
+                </AccordionSummary>
+                <AccordionDetails sx={{ px: { xs: 2, md: 2.5 }, pb: 2.5 }}>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "1fr",
+                        md: "repeat(2, minmax(0, 1fr))",
+                        xl: "repeat(3, minmax(0, 1fr))",
+                      },
+                      gap: 2,
+                    }}
+                  >
+                    {category.items.map((item) => {
+                      const reportTarget = {
+                        reportId: item.id || toReportId(category.id, item.name),
+                        name: item.name,
+                        categoryId: category.id,
+                      };
 
-                    return (
-                      <ListingCard
-                        key={item.name}
-                        item={item}
-                        reportTarget={reportTarget}
-                        onSuggestUpdate={openUpdateDialog}
-                        onMarkStale={handleMarkStale}
-                      />
-                    );
-                  })}
-                </Box>
-              </Stack>
+                      return (
+                        <ListingCard
+                          key={item.name}
+                          item={item}
+                          reportTarget={reportTarget}
+                          onSuggestUpdate={openUpdateDialog}
+                          onMarkStale={handleMarkStale}
+                        />
+                      );
+                    })}
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
             );
           })}
-        </Stack>
 
-        <Divider />
-
-        <Paper
-          id="next-additions"
-          elevation={0}
-          sx={(theme) => ({
-            p: { xs: 2.25, md: 3 },
-            borderRadius: 4,
-            border: "1px solid",
-            borderColor: alpha(theme.palette.primary.main, 0.14),
-            backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            scrollMarginTop: theme.spacing(12),
-          })}
-        >
-          <Stack spacing={1.6}>
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              Next useful additions
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              These are the next categories worth verifying on the ground once
-              you move in. They are higher leverage than adding more generic
-              store listings.
-            </Typography>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  lg: "repeat(2, minmax(0, 1fr))",
-                },
-                gap: 2,
-              }}
+          <Accordion
+            disableGutters
+            elevation={0}
+            sx={(theme) => ({
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: alpha(theme.palette.primary.main, 0.14),
+              backgroundColor: alpha(theme.palette.primary.main, 0.04),
+              "&:before": {
+                display: "none",
+              },
+            })}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreRoundedIcon />}
+              sx={{ px: { xs: 2, md: 2.5 }, py: 0.5 }}
             >
-              {ananyasLocalGuide.nextUsefulAdditions.map((item) => {
-                const reportTarget = {
-                  reportId: item.id || toReportId("next-addition", item.title),
-                  name: item.title,
-                  categoryId: "next-addition",
-                };
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={1.2}
+                alignItems={{ xs: "flex-start", sm: "center" }}
+                justifyContent="space-between"
+                sx={{ width: "100%" }}
+              >
+                <Stack direction="row" spacing={1.2} alignItems="center">
+                  <ChecklistRoundedIcon color="primary" />
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                      Next useful additions
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Higher-leverage services that still need on-ground verification.
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Chip
+                  label={`${ananyasLocalGuide.nextUsefulAdditions.length} watchlist items`}
+                  size="small"
+                  sx={{ borderRadius: 999 }}
+                />
+              </Stack>
+            </AccordionSummary>
+            <AccordionDetails sx={{ px: { xs: 2, md: 2.5 }, pb: 2.5 }}>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    lg: "repeat(2, minmax(0, 1fr))",
+                  },
+                  gap: 2,
+                }}
+              >
+                {ananyasLocalGuide.nextUsefulAdditions.map((item) => {
+                  const reportTarget = {
+                    reportId: item.id || toReportId("next-addition", item.title),
+                    name: item.title,
+                    categoryId: "next-addition",
+                  };
 
-                return (
-                  <AdditionCard
-                    key={item.id}
-                    item={item}
-                    reportTarget={reportTarget}
-                    onSuggestUpdate={openUpdateDialog}
-                    onMarkStale={handleMarkStale}
-                  />
-                );
-              })}
-            </Box>
-          </Stack>
-        </Paper>
+                  return (
+                    <AdditionCard
+                      key={item.id}
+                      item={item}
+                      reportTarget={reportTarget}
+                      onSuggestUpdate={openUpdateDialog}
+                      onMarkStale={handleMarkStale}
+                    />
+                  );
+                })}
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        </Stack>
       </Stack>
 
       <Dialog

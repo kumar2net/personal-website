@@ -1,4 +1,4 @@
-import { getBlogPostSeo } from "../data/blogRegistry";
+import { getBlogPostSeo } from "../data/blogSeoIndex";
 
 const DEFAULT_SITE_URL = "https://kumar2net.com";
 const DEFAULT_AUTHOR =

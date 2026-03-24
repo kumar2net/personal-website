@@ -41,6 +41,7 @@ kumscripts/
 
 # Cache directories
 .cache/
+.codex/cache/
 .config/
 .configstore/
 .npm/

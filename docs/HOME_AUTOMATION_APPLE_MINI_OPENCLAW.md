@@ -2,7 +2,7 @@
 
 This design uses:
 
-- `OpenClaw` on a Mac mini.
+- `kumclaw` on a Mac mini.
 - OpenAI APIs for all speech input, intent handling, tool calling, and spoken replies.
 - The Mac mini also runs `Home Assistant` in a VM or container, because it gives you better support for mixed device types like lights, BLDC fan controllers, IR AC bridges, sensors, and meters.
 - A local client such as a browser dashboard, wall tablet, mobile app, or room microphone streams audio while keeping the API key on the Mac mini server side.
@@ -19,25 +19,24 @@ This design uses:
 
 - Voice layer: OpenAI `Realtime API` with `gpt-realtime` for low-latency speech-to-speech control and tool calling.
 - Audio fallback layer: `gpt-4o-transcribe` for speech-to-text and `gpt-4o-mini-tts` for spoken replies when you want a split pipeline instead of full realtime speech-to-speech.
-- AI layer: `OpenClaw` on the Mac mini for routines, dashboards, summaries, guardrails, and local action routing.
+- AI layer: `kumclaw` on the Mac mini for routines, dashboards, summaries, guardrails, and local action routing.
 - Automation layer: `Home Assistant` for device integrations, scenes, schedules, presence, and the final control surface for home devices.
-- Protocol priority: `Matter/Thread` first, `Zigbee` second, `Wi-Fi` and `IR` only where needed for legacy devices.
-- Reliability layer: small `UPS` for the Mac mini, router, and the control dongles.
+- Device network: `Wi-Fi` only for relays, sensors, dashboards, and room controllers in this plan. Avoid `Zigbee`, `Thread`, and `NFC`.
 
 ## Voice Flow
 
 - User speaks into a phone, browser client, wall tablet, or room mic.
 - Audio goes to the Mac mini service and then to OpenAI voice APIs.
-- The OpenAI model issues tool calls through `OpenClaw`.
-- `OpenClaw` sends the final device action into `Home Assistant`.
+- The OpenAI model issues tool calls through `kumclaw`.
+- `kumclaw` sends the final device action into `Home Assistant`.
 - The spoken confirmation comes back through OpenAI TTS.
 
 ## Device Mapping
 
-- Lights: smart relay or dimmer modules placed behind switch plates or in the distribution box.
-- BLDC fans: use a fan-rated controller that explicitly supports BLDC fans, Matter, Zigbee, or a supported API.
+- Lights: Wi-Fi smart relay or dimmer modules placed behind switch plates or in the distribution box.
+- BLDC fans: use a fan-rated controller that explicitly supports BLDC fans and exposes a safe Wi-Fi path or vendor API.
 - AC: use an IR bridge for split AC units that already have remotes, or a dry-contact thermostat interface only if the AC model supports it.
-- Sensors: motion, door, temperature, humidity, power metering, and leak sensors should feed Home Assistant for automations.
+- Sensors: motion, door, temperature, humidity, power metering, and leak sensors should connect over Wi-Fi or through a vendor integration that Home Assistant can bridge cleanly.
 
 ## Wiring Rules
 
@@ -51,6 +50,8 @@ This design uses:
 
 - This voice path depends on internet connectivity because OpenAI APIs are cloud-hosted.
 - Keep `OPENAI_API_KEY` only on the Mac mini or another trusted server, never in a browser or thin client.
+- Check Wi-Fi coverage room by room before buying sensors in bulk, especially for battery-powered endpoints.
+- Existing backup power can stay in place if available; no new backup-power purchase is assumed here.
 - If you use TTS around other people, disclose that the voice is AI-generated.
 
 ## Platform Swap
@@ -58,8 +59,8 @@ This design uses:
 If you prefer `openHAB` instead of `Home Assistant`, the architecture still works:
 
 - Replace the `Home Assistant` box on the Mac mini with `openHAB`.
-- Keep `OpenClaw` as the local orchestration layer.
+- Keep `kumclaw` as the local orchestration layer.
 - Keep OpenAI realtime/audio APIs as the speech layer.
-- Keep the same Matter, Zigbee, Wi-Fi, and IR device edges.
+- Keep the same Wi-Fi and IR device edges.
 
 The only practical difference is the automation engine and integration catalog, not the physical wiring plan.

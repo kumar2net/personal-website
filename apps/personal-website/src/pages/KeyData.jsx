@@ -1,12 +1,15 @@
 import { startTransition, useEffect, useRef, useState } from "react";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Alert,
   Box,
   Button,
   Chip,
   CircularProgress,
-  Divider,
   Paper,
   Stack,
   Table,
@@ -329,6 +332,35 @@ function formatAsOf(value) {
   return DAY_FORMATTER.format(date);
 }
 
+function getAverageChange(items, window) {
+  const values = items
+    ?.map((item) => Number(item?.changes?.[window]))
+    .filter((value) => Number.isFinite(value));
+
+  if (!values?.length) {
+    return null;
+  }
+
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function getGroupSnapshot(group) {
+  const items = Array.isArray(group?.items) ? group.items : [];
+  const sortedByDay = [...items].sort(
+    (left, right) =>
+      (right?.changes?.dayPct || 0) - (left?.changes?.dayPct || 0),
+  );
+
+  return {
+    positiveCount: items.filter((item) => (item?.changes?.dayPct || 0) > 0).length,
+    avgDayPct: getAverageChange(items, "dayPct"),
+    avgWeekPct: getAverageChange(items, "weekPct"),
+    avgMonthPct: getAverageChange(items, "monthPct"),
+    leader: sortedByDay[0] || null,
+    laggard: sortedByDay.at(-1) || null,
+  };
+}
+
 function getHeatTone(theme, change) {
   if (change == null || Number.isNaN(change)) {
     return {
@@ -467,6 +499,32 @@ function SummaryCard({ eyebrow, value, detail }) {
   );
 }
 
+function SummaryPill({ label, value, toneValue = null }) {
+  const theme = useTheme();
+  const tone = getHeatTone(theme, toneValue);
+
+  return (
+    <Box
+      sx={{
+        px: 1.2,
+        py: 0.9,
+        borderRadius: 3,
+        border: "1px solid",
+        borderColor: tone.border,
+        backgroundColor: tone.muted,
+        minWidth: 86,
+      }}
+    >
+      <Typography variant="caption" sx={{ display: "block", opacity: 0.78 }}>
+        {label}
+      </Typography>
+      <Typography variant="body2" sx={{ fontWeight: 700, color: tone.accent }}>
+        {value}
+      </Typography>
+    </Box>
+  );
+}
+
 function InsightCard({ insight }) {
   const theme = useTheme();
   const paletteKey =
@@ -481,56 +539,25 @@ function InsightCard({ insight }) {
     <Paper
       elevation={0}
       sx={{
-        p: 2.25,
+        p: 2,
         borderRadius: 4,
         border: "1px solid",
         borderColor: alpha(accent, 0.22),
         backgroundColor: alpha(accent, 0.06),
       }}
     >
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        spacing={1}
-        justifyContent="space-between"
-        alignItems={{ xs: "flex-start", sm: "center" }}
+      <Typography
+        variant="overline"
+        sx={{ color: accent, letterSpacing: 1.1, fontWeight: 700 }}
       >
-        <Typography
-          variant="overline"
-          sx={{ color: accent, letterSpacing: 1.1, fontWeight: 700 }}
-        >
-          Generated insight
-        </Typography>
-        <Chip
-          size="small"
-          label={
-            insight.tone === "positive"
-              ? "Constructive"
-              : insight.tone === "negative"
-                ? "Defensive"
-                : "Mixed"
-          }
-          sx={{
-            borderColor: alpha(accent, 0.32),
-            color: accent,
-          }}
-          variant="outlined"
-        />
-      </Stack>
-
-      <Typography variant="h6" sx={{ mt: 1, lineHeight: 1.25 }}>
+        Gist
+      </Typography>
+      <Typography variant="subtitle1" sx={{ mt: 0.6, fontWeight: 700, lineHeight: 1.3 }}>
         {insight.title}
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.8 }}>
         {insight.summary}
       </Typography>
-
-      <Stack spacing={0.8} sx={{ mt: 1.75 }}>
-        {insight.evidence?.map((entry) => (
-          <Typography key={entry} variant="body2" color="text.secondary">
-            {`\u2022 ${entry}`}
-          </Typography>
-        ))}
-      </Stack>
     </Paper>
   );
 }
@@ -557,10 +584,9 @@ function InsightsSection({ insights, snapshot }) {
         alignItems={{ xs: "flex-start", md: "center" }}
       >
         <Box sx={{ maxWidth: 760 }}>
-          <Typography variant="h5">Daily generated insights</Typography>
+          <Typography variant="h5">At a glance</Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 0.9 }}>
-            {snapshot?.cadenceLabel ||
-              "This page refreshes on a daily snapshot cadence."}
+            Start here. The dense per-ticker tape sits below in expandable sections.
           </Typography>
         </Box>
         <Chip
@@ -578,7 +604,7 @@ function InsightsSection({ insights, snapshot }) {
           gap: 2,
           gridTemplateColumns: {
             xs: "1fr",
-            xl: "repeat(2, minmax(0, 1fr))",
+            lg: "repeat(3, minmax(0, 1fr))",
           },
         }}
       >
@@ -587,6 +613,130 @@ function InsightsSection({ insights, snapshot }) {
         ))}
       </Box>
     </Paper>
+  );
+}
+
+function CategoryOverviewCard({ group }) {
+  const theme = useTheme();
+  const { positiveCount, avgDayPct, avgWeekPct, avgMonthPct, leader, laggard } =
+    getGroupSnapshot(group);
+  const tone = getHeatTone(theme, avgDayPct);
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        p: 2.25,
+        borderRadius: 4,
+        border: "1px solid",
+        borderColor: tone.border,
+        backgroundImage: `linear-gradient(180deg, ${tone.background}, ${alpha(
+          theme.palette.background.paper,
+          0.96,
+        )})`,
+      }}
+    >
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={1.25}
+        justifyContent="space-between"
+        alignItems={{ xs: "flex-start", sm: "center" }}
+      >
+        <Typography variant="h6" sx={{ lineHeight: 1.2 }}>
+          {group.label}
+        </Typography>
+        <Chip
+          label={`${positiveCount}/${group.items.length} up`}
+          size="small"
+          sx={{
+            borderColor: tone.border,
+            color: tone.accent,
+          }}
+          variant="outlined"
+        />
+      </Stack>
+
+      <Stack
+        direction="row"
+        alignItems="baseline"
+        spacing={1}
+        sx={{ mt: 2 }}
+      >
+        <Typography variant="h4" sx={{ fontWeight: 700, color: tone.accent }}>
+          {formatPercent(avgDayPct)}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          average 1D move
+        </Typography>
+      </Stack>
+
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+        {leader && laggard
+          ? `Leader ${leader.ticker} ${formatPercent(leader.changes.dayPct)}. Laggard ${laggard.ticker} ${formatPercent(laggard.changes.dayPct)}.`
+          : "Leader and laggard data unavailable."}
+      </Typography>
+
+      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 1.75 }}>
+        <SummaryPill label="1W" value={formatPercent(avgWeekPct)} toneValue={avgWeekPct} />
+        <SummaryPill
+          label="1M"
+          value={formatPercent(avgMonthPct)}
+          toneValue={avgMonthPct}
+        />
+        <SummaryPill label="Set size" value={`${group.items.length} names`} />
+      </Stack>
+    </Paper>
+  );
+}
+
+function ReferenceSectionAccordion({
+  title,
+  description,
+  chipLabel,
+  children,
+  defaultExpanded = false,
+}) {
+  return (
+    <Accordion
+      defaultExpanded={defaultExpanded}
+      disableGutters
+      elevation={0}
+      sx={(theme) => ({
+        borderRadius: 4,
+        border: "1px solid",
+        borderColor: alpha(theme.palette.primary.main, 0.12),
+        backgroundColor: alpha(theme.palette.background.paper, 0.92),
+        "&:before": {
+          display: "none",
+        },
+      })}
+    >
+      <AccordionSummary
+        expandIcon={<ExpandMoreRoundedIcon />}
+        sx={{ px: { xs: 2, md: 2.5 }, py: 0.5 }}
+      >
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={1.5}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", md: "center" }}
+          sx={{ width: "100%" }}
+        >
+          <Box sx={{ maxWidth: 760 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              {title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+              {description}
+            </Typography>
+          </Box>
+          {chipLabel ? <Chip label={chipLabel} size="small" variant="outlined" /> : null}
+        </Stack>
+      </AccordionSummary>
+      <AccordionDetails sx={{ px: { xs: 2, md: 2.5 }, pb: 2.5 }}>
+        {children}
+      </AccordionDetails>
+    </Accordion>
   );
 }
 
@@ -696,17 +846,9 @@ function DataCenterCapacityCard({ market }) {
   );
 }
 
-function DataCenterCapacitySection() {
-  return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: { xs: 2.5, md: 3 },
-        borderRadius: 5,
-        border: "1px solid",
-        borderColor: "divider",
-      }}
-    >
+function DataCenterCapacitySection({ embedded = false }) {
+  const content = (
+    <>
       <Stack
         direction={{ xs: "column", md: "row" }}
         spacing={1.5}
@@ -747,13 +889,11 @@ function DataCenterCapacitySection() {
           </Typography>
         ))}
       </Stack>
-    </Paper>
+    </>
   );
-}
 
-function MagnificentSevenTable({ items }) {
-  if (!items?.length) {
-    return null;
+  if (embedded) {
+    return content;
   }
 
   return (
@@ -766,6 +906,18 @@ function MagnificentSevenTable({ items }) {
         borderColor: "divider",
       }}
     >
+      {content}
+    </Paper>
+  );
+}
+
+function MagnificentSevenTable({ items, embedded = false }) {
+  if (!items?.length) {
+    return null;
+  }
+
+  const content = (
+    <>
       <Stack
         direction={{ xs: "column", md: "row" }}
         spacing={1.5}
@@ -819,11 +971,13 @@ function MagnificentSevenTable({ items }) {
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </>
   );
-}
 
-function MetricGlossary() {
+  if (embedded) {
+    return content;
+  }
+
   return (
     <Paper
       elevation={0}
@@ -834,6 +988,14 @@ function MetricGlossary() {
         borderColor: "divider",
       }}
     >
+      {content}
+    </Paper>
+  );
+}
+
+function MetricGlossary({ embedded = false }) {
+  const content = (
+    <>
       <Typography variant="h5">What these metrics mean</Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
         A quick plain-language read on the shorthand used throughout the page.
@@ -871,6 +1033,24 @@ function MetricGlossary() {
           </Paper>
         ))}
       </Box>
+    </>
+  );
+
+  if (embedded) {
+    return content;
+  }
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        p: { xs: 2.5, md: 3 },
+        borderRadius: 5,
+        border: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      {content}
     </Paper>
   );
 }
@@ -950,10 +1130,108 @@ function MarketTile({ item }) {
   );
 }
 
-function KeyDataSection({ group }) {
-  const positiveCount = group.items.filter(
-    (item) => (item.changes.dayPct || 0) > 0,
-  ).length;
+function KeyDataSection({ group, defaultExpanded = false }) {
+  const theme = useTheme();
+  const { positiveCount, avgDayPct, leader } = getGroupSnapshot(group);
+  const tone = getHeatTone(theme, avgDayPct);
+
+  return (
+    <Accordion
+      defaultExpanded={defaultExpanded}
+      disableGutters
+      elevation={0}
+      sx={{
+        borderRadius: 4,
+        border: "1px solid",
+        borderColor: tone.border,
+        backgroundColor: alpha(theme.palette.background.paper, 0.92),
+        "&:before": {
+          display: "none",
+        },
+      }}
+    >
+      <AccordionSummary
+        expandIcon={<ExpandMoreRoundedIcon />}
+        sx={{ px: { xs: 2, md: 2.5 }, py: 0.5 }}
+      >
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={1.5}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", md: "center" }}
+          sx={{ width: "100%" }}
+        >
+          <Box sx={{ maxWidth: 760 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              {group.label}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+              {group.description}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ mt: 0.9, color: tone.accent, fontWeight: 700 }}
+            >
+              {leader
+                ? `Leader today: ${leader.ticker} ${formatPercent(leader.changes.dayPct)}`
+                : "Leader data unavailable."}
+            </Typography>
+          </Box>
+          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+            <Chip
+              label={`Avg 1D ${formatPercent(avgDayPct)}`}
+              size="small"
+              variant="outlined"
+              sx={{ borderColor: tone.border, color: tone.accent }}
+            />
+            <Chip
+              label={`${positiveCount}/${group.items.length} up`}
+              size="small"
+              variant="outlined"
+              sx={{ borderColor: tone.border, color: tone.accent }}
+            />
+          </Stack>
+        </Stack>
+      </AccordionSummary>
+
+      <AccordionDetails sx={{ px: { xs: 2, md: 2.5 }, pb: 2.5 }}>
+        <Box
+          sx={{
+            display: "grid",
+            gap: 2,
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, minmax(0, 1fr))",
+              xl: "repeat(3, minmax(0, 1fr))",
+            },
+          }}
+        >
+          {group.items.map((item) => (
+            <MarketTile key={item.id} item={item} />
+          ))}
+        </Box>
+      </AccordionDetails>
+    </Accordion>
+  );
+}
+
+function HowToReadSection({ notes, embedded = false }) {
+  const content = (
+    <>
+      <Typography variant="h5">How to read this page</Typography>
+      <Stack spacing={1.25} sx={{ mt: 2 }}>
+        {notes?.map((note) => (
+          <Typography key={note} variant="body2" color="text.secondary">
+            {note}
+          </Typography>
+        ))}
+      </Stack>
+    </>
+  );
+
+  if (embedded) {
+    return content;
+  }
 
   return (
     <Paper
@@ -965,43 +1243,7 @@ function KeyDataSection({ group }) {
         borderColor: "divider",
       }}
     >
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={2}
-        justifyContent="space-between"
-        alignItems={{ xs: "flex-start", md: "center" }}
-      >
-        <Box>
-          <Typography variant="h4" sx={{ fontSize: { xs: "1.5rem", md: "1.9rem" } }}>
-            {group.label}
-          </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-            {group.description}
-          </Typography>
-        </Box>
-        <Chip
-          label={`${positiveCount}/${group.items.length} up today`}
-          color={positiveCount >= Math.ceil(group.items.length / 2) ? "success" : "default"}
-          variant={positiveCount >= Math.ceil(group.items.length / 2) ? "filled" : "outlined"}
-        />
-      </Stack>
-
-      <Box
-        sx={{
-          mt: 3,
-          display: "grid",
-          gap: 2,
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, minmax(0, 1fr))",
-            xl: "repeat(3, minmax(0, 1fr))",
-          },
-        }}
-      >
-        {group.items.map((item) => (
-          <MarketTile key={item.id} item={item} />
-        ))}
-      </Box>
+      {content}
     </Paper>
   );
 }
@@ -1121,7 +1363,7 @@ export default function KeyData() {
   const strongestMonth = payload.highlights?.strongestMonth?.[0];
 
   return (
-    <Stack spacing={3.5}>
+    <Stack spacing={3}>
       <Paper
         elevation={0}
         sx={{
@@ -1155,29 +1397,41 @@ export default function KeyData() {
               variant="h2"
               sx={{
                 mt: 1,
-                fontSize: { xs: "2rem", md: "3rem" },
+                fontSize: { xs: "2rem", md: "2.8rem" },
                 lineHeight: 1.02,
               }}
             >
-              Your daily pulse across U.S., India, crude, renewables, and AI hardware.
+              Key data, at a glance.
             </Typography>
             <Typography
               variant="body1"
               color="text.secondary"
               sx={{ mt: 1.5, maxWidth: 680 }}
             >
-              This daily snapshot tracks the themes that keep showing up in
-              your writing and investing curiosity: benchmark indices, energy
-              stress, the transition stack, the AI build-out, data center
-              capacity, and a generated read on what the numbers imply.
+              A compact daily pulse for the themes you track most. Start with
+              the gist, scan the category cards, then open the full tape only
+              where you want more detail.
             </Typography>
 
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 2.25 }}>
-              <Chip label="USA + India" color="primary" variant="outlined" />
-              <Chip label="Crude + volatility" color="primary" variant="outlined" />
-              <Chip label="Renewables" color="primary" variant="outlined" />
-              <Chip label="AI infrastructure" color="primary" variant="outlined" />
-              <Chip label="Data centers" color="primary" variant="outlined" />
+              <Chip
+                label={
+                  payload.snapshot?.key
+                    ? `Snapshot ${formatAsOf(payload.snapshot.key)}`
+                    : "Daily snapshot"
+                }
+                color="primary"
+                variant="outlined"
+              />
+              <Chip
+                label={
+                  breadth
+                    ? `${breadth.positive}/${breadth.total} positive today`
+                    : "Breadth unavailable"
+                }
+                color="primary"
+                variant="outlined"
+              />
             </Stack>
           </Box>
 
@@ -1198,16 +1452,14 @@ export default function KeyData() {
               {isRefreshing ? "Reloading..." : "Reload snapshot"}
             </Button>
             <Typography variant="body2" color="text.secondary">
-              Snapshot {payload.snapshot?.key ? formatAsOf(payload.snapshot.key) : "Unknown date"}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
               Built {generatedAtLabel}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Next refresh after {nextRefreshLabel}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Data is end-of-day and source timestamps can differ by market.
+              {payload.snapshot?.cadenceLabel ||
+                "Data is end-of-day and source timestamps can differ by market."}
             </Typography>
           </Stack>
         </Stack>
@@ -1241,14 +1493,14 @@ export default function KeyData() {
           value={
             breadth ? `${breadth.positive}/${breadth.total} positive` : "—"
           }
-          detail="Simple 1-day breadth across the tracked watchlist."
+          detail="1-day breadth across the full tracked watchlist."
         />
         <SummaryCard
           eyebrow="Leader"
           value={
             leader ? `${leader.ticker} ${formatPercent(leader.changePct)}` : "—"
           }
-          detail={leader ? `${leader.label} led the 1-day tape.` : "No leader available."}
+          detail={leader ? `${leader.label} led the day.` : "No leader available."}
         />
         <SummaryCard
           eyebrow="Laggard"
@@ -1258,7 +1510,7 @@ export default function KeyData() {
               : "—"
           }
           detail={
-            laggard ? `${laggard.label} was the weakest 1-day move.` : "No laggard available."
+            laggard ? `${laggard.label} was the weakest move.` : "No laggard available."
           }
         />
         <SummaryCard
@@ -1272,23 +1524,13 @@ export default function KeyData() {
           }
           detail={
             strongestMonth
-              ? `${strongestMonth.label} has the strongest 1-month change in the current set.`
+              ? `${strongestMonth.label} leads the current 1-month change set.`
               : "No 1-month leader available."
           }
         />
       </Box>
 
       <InsightsSection insights={payload.insights} snapshot={payload.snapshot} />
-
-      <DataCenterCapacitySection />
-
-      {payload.categories.map((group) => (
-        <KeyDataSection key={group.id} group={group} />
-      ))}
-
-      <MagnificentSevenTable items={payload.magnificentSeven} />
-
-      <MetricGlossary />
 
       <Paper
         elevation={0}
@@ -1299,16 +1541,87 @@ export default function KeyData() {
           borderColor: "divider",
         }}
       >
-        <Typography variant="h5">How to read this page</Typography>
-        <Divider sx={{ my: 2 }} />
-        <Stack spacing={1.25}>
-          {payload.notes?.map((note) => (
-            <Typography key={note} variant="body2" color="text.secondary">
-              {note}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={1.5}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", md: "center" }}
+        >
+          <Box sx={{ maxWidth: 760 }}>
+            <Typography variant="h5">Category pulse</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.9 }}>
+              One card per theme so the page reads like a brief first, not a wall
+              of tiles.
             </Typography>
-          ))}
+          </Box>
+          <Chip label={`${payload.categories.length} tracked groups`} variant="outlined" />
         </Stack>
+
+        <Box
+          sx={{
+            mt: 2.5,
+            display: "grid",
+            gap: 2,
+            gridTemplateColumns: {
+              xs: "1fr",
+              md: "repeat(2, minmax(0, 1fr))",
+              xl: "repeat(3, minmax(0, 1fr))",
+            },
+          }}
+        >
+          {payload.categories.map((group) => (
+            <CategoryOverviewCard key={group.id} group={group} />
+          ))}
+        </Box>
       </Paper>
+
+      <Box>
+        <Typography variant="h5">Open the full tape</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.9 }}>
+          Each section expands into the original ticker-by-ticker view when you
+          need the detail.
+        </Typography>
+      </Box>
+
+      <Stack spacing={1.5}>
+        {payload.categories.map((group) => (
+          <KeyDataSection key={group.id} group={group} />
+        ))}
+      </Stack>
+
+      <Stack spacing={1.5}>
+        <ReferenceSectionAccordion
+          title="Data center capacity build-out"
+          description="The slower-moving physical layer behind the AI trade, kept collapsed by default."
+          chipLabel="Structural trend"
+        >
+          <DataCenterCapacitySection embedded />
+        </ReferenceSectionAccordion>
+
+        <ReferenceSectionAccordion
+          title="Magnificent 7 share prices"
+          description="Quick bottom-table check on the mega-cap platform and AI names."
+          chipLabel="7 names"
+        >
+          <MagnificentSevenTable items={payload.magnificentSeven} embedded />
+        </ReferenceSectionAccordion>
+
+        <ReferenceSectionAccordion
+          title="Metric glossary"
+          description="Plain-language definitions for the page shorthand."
+          chipLabel={`${METRIC_GLOSSARY.length} terms`}
+        >
+          <MetricGlossary embedded />
+        </ReferenceSectionAccordion>
+
+        <ReferenceSectionAccordion
+          title="How to read this page"
+          description="Cadence, source caveats, and the snapshot timing rules."
+          chipLabel={payload.notes?.length ? `${payload.notes.length} notes` : null}
+        >
+          <HowToReadSection notes={payload.notes} embedded />
+        </ReferenceSectionAccordion>
+      </Stack>
     </Stack>
   );
 }

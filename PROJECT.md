@@ -1,49 +1,28 @@
-# PROJECT.md - personal-website monorepo
+# PROJECT.md
 
-## 0) Mission
-Build a personal platform, not a static portfolio:
-- practical writing on AI, networks, and real systems
-- interactive tools and explainers
-- reliable publishing with low-friction iteration
+## Mission
+Build `kumar2net.com` as a practical publishing and product lab: clear writing, useful tools, explainers, and AI-assisted workflows that stay usable after the demo.
 
-## 1) Repo reality
+## Repo Reality
 - Monorepo: npm workspaces + Turborepo.
-- Main app: `apps/personal-website` (Vite + React + MUI).
+- Main app: `apps/personal-website` using Vite 7, React 19, and MUI 7.
 - Shared theme: `packages/ui-theme`.
-- API routes and scripts are part of daily workflow, not side artifacts.
+- Operational scripts, serverless handlers, and content pipelines are part of the product surface, not side projects.
 
-## 2) Runbook
-- Install: `npm install`
-- Dev: `npm run dev`
-- Build all: `npm run build`
-- Build app only: workspace command for `apps/personal-website`
-- Preview app: workspace preview command
-- Use `vercel dev` when validating local serverless behavior.
+## Current Priorities
+- Keep publishing stable: blog metadata, sitemap, semantic index, TTS, and translation.
+- Keep docs compact, accurate, and tied to code instead of folklore.
+- Improve interactive explainers and short-form tooling without increasing maintenance drag.
 
-## 3) Non-negotiables
-- No hand-wavy technical claims.
-- Verify current facts and include dates for time-sensitive info.
-- Keep UI fast, accessible, and maintainable.
-- Respect existing theming architecture and package boundaries.
-- Prefer simple data flow over clever indirection.
+## Working Rules
+- Verify time-sensitive vendor facts before writing them down.
+- Prefer one canonical doc over multiple partial copies.
+- Rewrite or delete stale guidance instead of appending another layer.
+- Keep changes reversible and easy for the next engineer to understand.
 
-## 4) Priority stack
-### Now
-- Keep blog and metadata pipelines stable.
-- Keep AI audio and translation paths robust with explicit fallbacks.
-- Improve context docs so agents execute predictably.
-
-### Next
-- Add interactive network and systems explainers.
-- Improve repeatable workflow from notes to published post.
-
-### Later
-- Personalized discovery for returning readers.
-- Broader local-language support with measurable quality checks.
-
-## 5) Instruction precedence
-1. Explicit user request in-session.
-2. `AGENTS.md` repository rules.
-3. This file (`PROJECT.md`) for operational context.
-4. `user.md` for working style.
-5. `SOUL.md` for stable tone and principles.
+## Instruction Precedence
+1. User request in-session.
+2. `AGENTS.md`.
+3. `PROJECT.md`.
+4. `user.md`.
+5. `SOUL.md`.

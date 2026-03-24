@@ -1,27 +1,17 @@
 # @kumar2net/ui-theme
 
-Material 3 theme primitives for the personal website.
+Shared MUI 7 theme package for the repo.
 
-This package uses MUI v8 CSS variable theming and exposes a small API via named exports.
+## Exports
+- `ThemeProvider`
+- `getTheme(mode)`
+- `colorTokens`
 
-```tsx
-import { ThemeProvider } from "@kumar2net/ui-theme";
+## Rules
+- Use named exports only.
+- Use this package provider instead of nesting raw `CssVarsProvider`s in app code.
+- Treat it as the canonical theme surface for light/dark/system behavior across the repo.
 
-function AppProviders({ children }) {
-  return <ThemeProvider defaultMode="system">{children}</ThemeProvider>;
-}
-```
-
-## Theme access
-
-- Use `getTheme(mode)` when you need a theme object (e.g. testing, SSR, or a one-off theme override).
-- Use `colorTokens` to access the underlying palette primitives.
-
-## Material 3 container roles (additive)
-
-The theme adds Material Design 3 container roles under `theme.palette.m3`:
-
-- `theme.palette.m3.primaryContainer` / `theme.palette.m3.onPrimaryContainer`
-- `theme.palette.m3.secondaryContainer` / `theme.palette.m3.onSecondaryContainer`
-
-These are intended for tonal surfaces (highlighted containers) and their corresponding readable foreground colors. Existing usage of `theme.palette.primary.main` and `theme.palette.primary.contrastText` remains supported and unchanged.
+## Notes
+- Peer deps support React 18 or 19; the main app currently runs React 19.
+- Keep style decisions here when they need to be shared, not duplicated in each app.

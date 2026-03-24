@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
   <title id="title">Apple mini home automation schematic</title>
-  <desc id="desc">Electrical and control schematic for a home automation system with a Mac mini, OpenAI voice APIs, UPS-backed network, lighting relays, BLDC fan controllers, AC control bridges, and manual wall-switch fallback.</desc>
+  <desc id="desc">Electrical and control schematic for a home automation system with a Mac mini, OpenAI voice APIs, Wi-Fi networking, lighting relays, BLDC fan controllers, AC control bridges, and manual wall-switch fallback.</desc>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M0,0 L12,6 L0,12 z" fill="#17312c" />
@@ -30,7 +30,7 @@
 
   <rect class="bg" width="1600" height="1100" />
   <text class="title" x="60" y="62">Apple Mini Home Automation Schematic</text>
-  <text class="subtitle" x="60" y="96">Example branch layout for lights, BLDC fans, AC, sensors, OpenAI voice control, and UPS-backed control gear.</text>
+  <text class="subtitle" x="60" y="96">Example branch layout for lights, BLDC fans, AC, Wi-Fi sensors, OpenAI voice control, and the local control network.</text>
 
   <rect class="power" x="40" y="140" width="300" height="880" />
   <text class="section" x="66" y="180">Distribution Side</text>
@@ -60,20 +60,20 @@
   <text class="section" x="418" y="180">Low-Voltage Control Plane</text>
 
   <rect class="device" x="430" y="215" width="230" height="95" />
-  <text class="label" x="455" y="255">UPS</text>
-  <text class="small" x="455" y="283">Backs up router and Mac mini</text>
+  <text class="label" x="455" y="255">Router / Wi-Fi</text>
+  <text class="small" x="455" y="283">Local network for clients and room devices</text>
 
   <rect class="control" x="700" y="215" width="250" height="95" />
   <text class="label" x="726" y="255">Mac mini</text>
-  <text class="small" x="726" y="283">OpenClaw + Home Assistant</text>
+  <text class="small" x="726" y="283">kumclaw + Home Assistant</text>
 
   <rect class="apple" x="990" y="215" width="240" height="95" />
   <text class="label" x="1016" y="255">OpenAI voice APIs</text>
   <text class="small" x="1016" y="283">gpt-realtime / transcribe / TTS</text>
 
   <rect class="device" x="1270" y="215" width="240" height="95" />
-  <text class="label" x="1296" y="255">Router / WAN / Zigbee</text>
-  <text class="small" x="1296" y="283">Internet for OpenAI + local device radios</text>
+  <text class="label" x="1296" y="255">Router / WAN / Wi-Fi</text>
+  <text class="small" x="1296" y="283">Internet for OpenAI plus room-to-room Wi-Fi coverage</text>
 
   <rect class="frame" x="390" y="405" width="1160" height="175" />
   <text class="section" x="418" y="442">Lighting Branch</text>
@@ -146,6 +146,6 @@
   <text class="tiny" x="1196" y="550">2. Use fan-specific BLDC hardware.</text>
   <text class="tiny" x="1196" y="578">3. For AC, prefer IR or vendor dry contact.</text>
   <text class="tiny" x="1196" y="606">4. Keep wall-switch fallback.</text>
-  <text class="tiny" x="1196" y="634">5. UPS only needs control gear, not heavy loads.</text>
+  <text class="tiny" x="1196" y="634">5. Existing backup, if any, only needs control gear, not heavy loads.</text>
   <text class="tiny" x="1196" y="662">6. Final mains work should be electrician-installed.</text>
 </svg>

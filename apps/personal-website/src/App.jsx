@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { HiMenu } from "react-icons/hi";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import {
   Link as RouterLink,
   Route,
@@ -30,10 +30,10 @@ import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import PasswordGate from "./components/PasswordGate";
-import About from "./pages/About";
-import { trackCtaClick, trackPageView } from "./lib/analytics";
+import { trackCtaClick, trackPageView } from "./lib/analyticsClient";
 
 // Lazy load all other components
+const About = lazy(() => import("./pages/About"));
 const Home = lazy(() => import("./pages/Home"));
 const Album = lazy(() => import("./pages/Album"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -156,7 +156,6 @@ function useAnalyticsPageViews() {
 
 const App = ({ mode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [showWorldClock, setShowWorldClock] = useState(false);
   const isDarkMode = mode === "dark";
@@ -194,12 +193,6 @@ const App = ({ mode }) => {
 
   useAnalyticsPageViews();
 
-  // Handle app loading and error states
-  useEffect(() => {
-    // Remove artificial delay for faster loading
-    setIsLoading(false);
-  }, []);
-
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
     const reveal = () => setShowWorldClock(true);
@@ -231,28 +224,6 @@ const App = ({ mode }) => {
       window.removeEventListener("unhandledrejection", handleError);
     };
   }, []);
-
-  // Show loading state
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "background.default",
-        }}
-      >
-        <Stack spacing={2} alignItems="center">
-          <CircularProgress color="primary" />
-          <Typography variant="body2" color="text.secondary">
-            Loading…
-          </Typography>
-        </Stack>
-      </Box>
-    );
-  }
 
   // Show error state
   if (hasError) {
@@ -412,7 +383,7 @@ const App = ({ mode }) => {
                 aria-label="Open mobile menu"
                 sx={{ color: isDarkMode ? "#f8fafc" : "#0f172a" }}
               >
-                <HiMenu />
+                <MenuRoundedIcon />
               </IconButton>
             </Stack>
           </Toolbar>

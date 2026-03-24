@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import BlogPostLayout from "../../components/BlogPostLayout";
-import { getBlogPostSeo } from "../../data/blogRegistry";
+import { getBlogPostSeo } from "../../data/blogSeoIndex";
 
 const jsxModules = import.meta.glob("/src/pages/blog/*.jsx");
 

@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 const badges = [
   "AI",
-  "OpenClaw",
+  "kumclaw",
   "Mac mini",
   "Humor",
   "Interfaces",
@@ -30,12 +30,12 @@ const interfaceOptions = [
 
 export const metadata = {
   slug: "2026-03-22-kumclaw-worthwhile-use-case",
-  title: "KumClaw and the Search for a Worthwhile Use Case",
+  title: "kumclaw and the Search for a Worthwhile Use Case",
   description:
-    "KumClaw stays on my future-project list, but a Mac mini running OpenClaw does not impress me if the interface is just WhatsApp or Telegram. Wake me up when it can make oats கஞ்சி and a respectable ராகி கூழ்.",
+    "kumclaw stays on my future-project list, but a Mac mini running kumclaw does not impress me if the interface is just WhatsApp or Telegram. Wake me up when it can make oats கஞ்சி and a respectable ராகி கூழ்.",
   excerpt:
-    "KumClaw stays on my future-project list, but a Mac mini running OpenClaw does not impress me if the interface is just WhatsApp or Telegram. Wake me up when it can make oats கஞ்சி and a respectable ராகி கூழ்.",
-  tags: ["AI", "OpenClaw", "Mac mini", "Humor", "Kitchen", "Interfaces"],
+    "kumclaw stays on my future-project list, but a Mac mini running kumclaw does not impress me if the interface is just WhatsApp or Telegram. Wake me up when it can make oats கஞ்சி and a respectable ராகி கூழ்.",
+  tags: ["AI", "kumclaw", "Mac mini", "Humor", "Kitchen", "Interfaces"],
   datePublished: "2026-03-22",
   dateModified: "2026-03-22",
   image: "/generate/2026-03-22-kumclaw-worthwhile-use-case-hero.png",
@@ -205,10 +205,10 @@ export default function BlogPost() {
             m: 0,
           }}
         >
-          KumClaw and the Search for a Worthwhile Use Case
+          kumclaw and the Search for a Worthwhile Use Case
         </Typography>
         <Typography variant="body1" sx={bodyTextSx}>
-          I am parking <strong>KumClaw</strong> under future projects, but with
+          I am parking <strong>kumclaw</strong> under future projects, but with
           one raised eyebrow. I still do not see a use case that feels solid
           enough to deserve the wiring, attention, and inevitable demo theatre.
         </Typography>
@@ -231,7 +231,7 @@ export default function BlogPost() {
         <Typography variant="body1" sx={bodyTextSx}>
           Peter Steinberger had a nice beer test for machines like this. Fair
           enough. My benchmark is more kitchen-table and less Silicon Valley. If
-          KumClaw can wake up before me and make a proper bowl of oats{" "}
+          kumclaw can wake up before me and make a proper bowl of oats{" "}
           <span lang="ta">கஞ்சி</span>, then we can begin the conversation.
         </Typography>
         <Typography variant="body1" sx={bodyTextSx}>
@@ -247,7 +247,7 @@ export default function BlogPost() {
           A WhatsApp bot is not a control plane.
         </SectionHeading>
         <Typography variant="body1" sx={bodyTextSx}>
-          Using WhatsApp or Telegram as a text interface to talk to OpenClaw
+          Using WhatsApp or Telegram as a text interface to talk to kumclaw
           running on a Mac mini does not enthuse me one bit. That is not a leap
           forward. That is a remote control with profile pictures.
         </Typography>
@@ -266,7 +266,7 @@ export default function BlogPost() {
 
       <Box component="section" sx={{ display: "grid", gap: 2.5 }}>
         <SectionHeading number="3">
-          What would actually make KumClaw interesting
+          What would actually make kumclaw interesting
         </SectionHeading>
         <Typography variant="body1" sx={bodyTextSx}>
           The version that interests me does not shout. It disappears into the
@@ -290,7 +290,7 @@ export default function BlogPost() {
         </Box>
         <Typography variant="body1" sx={bodyTextSx}>
           So yes, I am keeping my fingers crossed. This is a light-hearted dig,
-          not a burial note. The day KumClaw starts solving small domestic
+          not a burial note. The day kumclaw starts solving small domestic
           frictions with grace, and perhaps manages breakfast without turning my
           house into a chat app, I will happily upgrade my opinion.
         </Typography>
