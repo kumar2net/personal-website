@@ -362,10 +362,11 @@ const futureProjects = [
   {
     title: "Apple Mini Home Automation Control Plane",
     summary:
-      "A planned Wi-Fi-first whole-home automation system built around a Mac mini running kumclaw and Home Assistant, with OpenAI voice APIs handling speech input, tool calling, and spoken confirmations for lights, BLDC fans, AC units, sensors, and room-level scenes.",
+      "A planned Wi-Fi-first whole-home automation system built around a Mac mini running kumclaw and Home Assistant, with OpenAI voice APIs handling speech input, tool calling, and spoken confirmations for lights, BLDC fans, AC units, sensors, a door-side intercom, and room-level scenes.",
     goals: [
       "Voice-first control using OpenAI Realtime/audio APIs rather than Siri or vendor voice assistants.",
       "Local orchestration on the Mac mini for routines, schedules, and natural-language control.",
+      "Door speaker and intercom coverage at the main entrance so visitors identify themselves before I answer or trigger any entry routine.",
       "Safe support for BLDC fan control, split AC automation, and manual wall-switch fallback.",
       "Wi-Fi-only relays, sensors, and room controllers, with IR kept only for legacy AC paths that still need a remote bridge.",
     ],
@@ -380,18 +381,19 @@ const futureProjects = [
       "Wi-Fi router",
       "Wi-Fi relays",
       "Wi-Fi sensors",
+      "Wi-Fi door speaker",
       "IR bridge",
     ],
     diagrams: [
       {
         title: "Network and control topology",
         src: "/media/generated/home-automation-apple-mini-network.svg",
-        alt: "Network diagram for a Wi-Fi-first Mac mini home automation system with OpenAI voice APIs, kumclaw, Home Assistant, and room-level smart devices.",
+        alt: "Network diagram for a Wi-Fi-first Mac mini home automation system with OpenAI voice APIs, kumclaw, Home Assistant, room-level smart devices, and a visitor intercom.",
       },
       {
         title: "Power and wiring schematic",
         src: "/media/generated/home-automation-apple-mini-schematic.svg",
-        alt: "Schematic diagram for home automation wiring with lighting relays, BLDC fan controller, AC control, and safety protection devices.",
+        alt: "Schematic diagram for home automation wiring with lighting relays, BLDC fan controller, AC control, visitor intercom notes, and safety protection devices.",
       },
     ],
     bom: appleMiniHomeAutomationBom,
@@ -735,8 +737,9 @@ const Projects = () => {
                       The design keeps manual overrides, isolates mains switching
                       from low-voltage control, routes speech through OpenAI
                       APIs on the Mac mini backend, keeps room endpoints on
-                      Wi-Fi, and avoids unsafe generic relay control for BLDC
-                      fans and split AC compressor paths.
+                      Wi-Fi, adds a door-side speaker for visitor
+                      identification, and avoids unsafe generic relay control
+                      for BLDC fans and split AC compressor paths.
                     </p>
                   </div>
                 </div>
@@ -776,8 +779,8 @@ const Projects = () => {
                           )}
                         </p>
                         <p className="mt-2 text-sm leading-6 text-slate-600">
-                          Control plane, Wi-Fi relays, Wi-Fi sensors, and AC IR
-                          bridges.
+                          Control plane, Wi-Fi relays, Wi-Fi sensors, entry
+                          intercom, and AC IR bridges.
                         </p>
                       </div>
                       <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-4">

@@ -114,6 +114,19 @@ const rows = [
   },
   {
     scope: "Core",
+    category: "Entry control",
+    item: "Wi-Fi door speaker / visitor intercom",
+    qty: 1,
+    approx_unit_cost_inr: 6500,
+    approx_line_cost_inr: 6500,
+    function:
+      "Lets visitors identify themselves through two-way audio before anyone answers or triggers an entry routine.",
+    price_basis: "Representative India market price rounded",
+    notes:
+      "One main entry point assumed. Choose a Wi-Fi unit with reliable two-way talk and a clean Home Assistant integration.",
+  },
+  {
+    scope: "Core",
     category: "AC control",
     item: "SwitchBot Hub Mini IR bridge",
     qty: 2,
@@ -186,7 +199,7 @@ const expandedHardwareSubtotalInr = rows
 export const appleMiniHomeAutomationBom = {
   pricingCheckedAt: "March 24, 2026",
   referenceSetup:
-    "Reference setup: a 2-bedroom home with strong room-to-room Wi-Fi coverage, 6 light circuits, 3 fan rooms, and 2 AC rooms.",
+    "Reference setup: a 2-bedroom home with strong room-to-room Wi-Fi coverage, 6 light circuits, 3 fan rooms, 2 AC rooms, and 1 main entry intercom.",
   assumptions: [
     "The Mac mini hosts both kumclaw and Home Assistant, while an existing phone or tablet is reused as the microphone and dashboard client.",
     "This version assumes Wi-Fi-only relays and sensors, so 2.4 GHz coverage must be stable in every room before device rollout.",

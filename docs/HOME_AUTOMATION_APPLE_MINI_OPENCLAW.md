@@ -4,7 +4,7 @@ This design uses:
 
 - `kumclaw` on a Mac mini.
 - OpenAI APIs for all speech input, intent handling, tool calling, and spoken replies.
-- The Mac mini also runs `Home Assistant` in a VM or container, because it gives you better support for mixed device types like lights, BLDC fan controllers, IR AC bridges, sensors, and meters.
+- The Mac mini also runs `Home Assistant` in a VM or container, because it gives you better support for mixed device types like lights, BLDC fan controllers, IR AC bridges, sensors, meters, and a Wi-Fi door intercom.
 - A local client such as a browser dashboard, wall tablet, mobile app, or room microphone streams audio while keeping the API key on the Mac mini server side.
 
 ## Network Diagram
@@ -36,6 +36,7 @@ This design uses:
 - Lights: Wi-Fi smart relay or dimmer modules placed behind switch plates or in the distribution box.
 - BLDC fans: use a fan-rated controller that explicitly supports BLDC fans and exposes a safe Wi-Fi path or vendor API.
 - AC: use an IR bridge for split AC units that already have remotes, or a dry-contact thermostat interface only if the AC model supports it.
+- Entry: a Wi-Fi door speaker or intercom at the main entrance so visitors identify themselves before you answer or trigger any entry routine.
 - Sensors: motion, door, temperature, humidity, power metering, and leak sensors should connect over Wi-Fi or through a vendor integration that Home Assistant can bridge cleanly.
 
 ## Wiring Rules
@@ -51,6 +52,7 @@ This design uses:
 - This voice path depends on internet connectivity because OpenAI APIs are cloud-hosted.
 - Keep `OPENAI_API_KEY` only on the Mac mini or another trusted server, never in a browser or thin client.
 - Check Wi-Fi coverage room by room before buying sensors in bulk, especially for battery-powered endpoints.
+- Keep the door speaker on the strongest available Wi-Fi signal at the entrance, since clear two-way audio matters more than adding extra automation tricks.
 - Existing backup power can stay in place if available; no new backup-power purchase is assumed here.
 - If you use TTS around other people, disclose that the voice is AI-generated.
 

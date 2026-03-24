@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
   <title id="title">Apple mini home automation network diagram</title>
-  <desc id="desc">A Wi-Fi-only home automation topology showing voice inputs, OpenAI voice APIs, a Mac mini running kumclaw and Home Assistant, and room devices connected over Wi-Fi.</desc>
+  <desc id="desc">A Wi-Fi-only home automation topology showing voice inputs, OpenAI voice APIs, a Mac mini running kumclaw and Home Assistant, room devices connected over Wi-Fi, and a visitor intercom at the main entrance.</desc>
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fbf7ee" />
@@ -157,8 +157,10 @@
   <text class="small" x="1358" y="612">Motion, climate, door, leak,</text>
   <text class="small" x="1358" y="636">and energy over Wi-Fi</text>
 
-  <rect class="cardEdge" x="1124" y="706" width="392" height="68" rx="22" ry="22" />
-  <text class="small" x="1148" y="744">Planning note: strong 2.4 GHz room coverage matters because every endpoint depends on the same Wi-Fi fabric.</text>
+  <rect class="cardEdge" x="1124" y="694" width="392" height="94" rx="22" ry="22" />
+  <text class="label" x="1148" y="730">Door speaker / intercom</text>
+  <text class="small" x="1148" y="758">Visitors identify themselves before you answer,</text>
+  <text class="small" x="1148" y="782">with two-way talk over the same Wi-Fi network.</text>
 
   <path class="wireBlue" d="M318 318 C354 318 362 344 402 344" />
   <path class="wireBlue" d="M318 452 C354 452 362 390 402 390" />
@@ -169,10 +171,11 @@
   <path class="wireGreen" d="M1036 664 C1095 664 1095 448 1334 448" />
   <path class="wireGreen" d="M1036 664 C1080 664 1080 610 1124 610" />
   <path class="wireGreen" d="M1036 664 C1095 664 1095 610 1334 610" />
+  <path class="wireGreen" d="M1036 664 C1085 664 1085 742 1124 742" />
 
   <path class="wireDashed" d="M318 594 C580 594 760 448 1124 448" />
 
   <rect class="card" x="60" y="834" width="1480" height="92" rx="28" ry="28" />
   <text class="label" x="88" y="876">Flow</text>
-  <text class="small" x="88" y="906">Speak into a phone, tablet, or room mic -> OpenAI voice APIs understand the request -> the Mac mini applies logic through kumclaw and Home Assistant -> Wi-Fi devices respond across the home LAN.</text>
+  <text class="small" x="88" y="906">Speak into a phone, tablet, or room mic -> OpenAI voice APIs understand the request -> the Mac mini applies logic through kumclaw and Home Assistant -> Wi-Fi devices, including the entry intercom, respond across the home LAN.</text>
 </svg>
