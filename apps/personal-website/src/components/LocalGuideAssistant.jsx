@@ -26,26 +26,266 @@ const QUERY_ENDPOINT =
   "/api/local-guide-query";
 const TTS_ENDPOINT =
   import.meta.env.VITE_BLOG_TTS_ENDPOINT?.trim() || "/api/blog-tts";
-const RECOGNITION_LANGUAGE =
-  import.meta.env.VITE_LOCAL_GUIDE_SPEECH_LANG || "en-IN";
-
-const CONFIDENCE_META = {
-  grounded: {
-    label: "Grounded in guide",
-    severity: "success",
+const LANGUAGE_OPTIONS = [
+  {
+    code: "en",
+    label: "English",
+    recognition:
+      import.meta.env.VITE_LOCAL_GUIDE_SPEECH_EN_LANG || "en-IN",
   },
-  partial: {
-    label: "Partial match",
-    severity: "warning",
+  {
+    code: "ta",
+    label: "தமிழ்",
+    recognition:
+      import.meta.env.VITE_LOCAL_GUIDE_SPEECH_TA_LANG || "ta-IN",
   },
-  not_in_guide: {
-    label: "Not covered directly",
-    severity: "info",
+  {
+    code: "hi",
+    label: "हिन्दी",
+    recognition:
+      import.meta.env.VITE_LOCAL_GUIDE_SPEECH_HI_LANG || "hi-IN",
+  },
+];
+const UI_COPY = {
+  en: {
+    assistantLanguage: "Assistant language",
+    audioFirstBeta: "Audio-first beta",
+    voiceReplyBadge: "Voice reply",
+    whatsappShareBadge: "WhatsApp share",
+    title: "Speak your question first",
+    description:
+      "Tap the mic, ask for medicines, groceries, taxis, or repairs, and the guide will answer back in voice. Typing is still available, but it is now a fallback instead of the main path.",
+    listeningNow: "Listening now…",
+    readyToListen: "Ready to listen",
+    listeningPrompt:
+      "Speak normally. The page will capture your question and submit it as soon as you stop.",
+    idlePrompt:
+      "Try a natural question like “Which pharmacy should we try first?” or “Where can we get milk nearby?”",
+    tapToSpeak: "Tap to speak",
+    stopListening: "Stop listening",
+    typeInstead: "Type instead",
+    hideTyping: "Hide typing",
+    heard: "Heard",
+    typeQuestionLabel: "Type a question instead",
+    typePlaceholder:
+      "Which pharmacy should we try first for repeat medicines?",
+    typingHelper:
+      "Typing is the fallback path if microphone capture is unavailable.",
+    checkingGuide: "Checking guide…",
+    askByText: "Ask by text",
+    clearTypedQuestion: "Clear typed question",
+    voiceFallbackAlert:
+      "Voice capture is not available in this browser, so the assistant is falling back to typing for the question while keeping spoken replies.",
+    question: "Question",
+    spokenReply: "Spoken reply",
+    generatingVoice: "Generating voice…",
+    pauseVoice: "Pause voice",
+    playVoiceAgain: "Play voice again",
+    playVoiceReply: "Play voice reply",
+    sendWhatsApp: "Send via WhatsApp",
+    autoplayBlocked:
+      "Your browser blocked autoplay. Use “Play voice reply” to start the spoken answer.",
+    relatedListings: "Related listings",
+    openMap: "Open map",
+    openSource: "Open source",
+    fallbackUsed:
+      "OpenAI was unavailable for this request, so the page used a local keyword fallback.",
+    recheckAvailability:
+      "Recheck live timing and availability before depending on a listing.",
+    heuristicFallback: "heuristic fallback",
+    queryFailed: "The guide assistant could not answer that.",
+    noUsableQuestion:
+      "I did not catch a usable question. Try again or switch to typing.",
+    micUnavailableHere:
+      "Voice capture is not available here. Type your question instead.",
+    micBusy:
+      "Microphone capture is busy right now. Wait a moment and try again.",
+    recognitionErrors: {
+      notAllowed:
+        "Microphone permission was blocked. Allow mic access or use typing.",
+      noSpeech:
+        "I could not hear a clear question. Try again a little closer to the microphone.",
+      audioCapture: "No working microphone was detected.",
+      network: "Speech recognition hit a network issue. Try again in a moment.",
+      default: "Voice capture failed. Try again or switch to typing.",
+    },
+    confidence: {
+      grounded: "Grounded in guide",
+      partial: "Partial match",
+      not_in_guide: "Not covered directly",
+    },
+  },
+  ta: {
+    assistantLanguage: "உதவியாளர் மொழி",
+    audioFirstBeta: "ஒலி முன்னுரிமை பீட்டா",
+    voiceReplyBadge: "குரல் பதில்",
+    whatsappShareBadge: "WhatsApp பகிர்வு",
+    title: "முதலில் உங்கள் கேள்வியை பேசுங்கள்",
+    description:
+      "மைக்ரோஃபோனைத் தட்டி மருந்து, மளிகை, டாக்ஸி அல்லது ரிப்பெயர் பற்றி கேளுங்கள். வழிகாட்டி குரலில் பதில் சொலும். டைப்பிங் இன்னும் உள்ளது, ஆனால் அது மாற்று வழி மட்டுமே.",
+    listeningNow: "இப்போது கேட்கிறேன்…",
+    readyToListen: "கேட்கத் தயாராக உள்ளது",
+    listeningPrompt:
+      "இயல்பாகப் பேசுங்கள். நீங்கள் நிறுத்தியவுடன் பக்கம் உங்கள் கேள்வியைப் பிடித்து அனுப்பும்.",
+    idlePrompt:
+      "“முதலில் எந்த மருந்தகத்தை முயற்சிக்கலாம்?” அல்லது “அருகில் பால் எங்கு கிடைக்கும்?” என்று கேளுங்கள்.",
+    tapToSpeak: "பேச தட்டவும்",
+    stopListening: "கேட்பதை நிறுத்து",
+    typeInstead: "அதற்கு பதில் டைப் செய்யவும்",
+    hideTyping: "டைப்பிங்கை மறை",
+    heard: "கேட்டது",
+    typeQuestionLabel: "அதற்கு பதில் கேள்வியை டைப் செய்யவும்",
+    typePlaceholder: "மீண்டும் வாங்க வேண்டிய மருந்துக்கு எந்த மருந்தகம் நல்லது?",
+    typingHelper:
+      "மைக்ரோஃபோன் வேலை செய்யாதபோது டைப்பிங் மாற்று வழியாக இருக்கும்.",
+    checkingGuide: "வழிகாட்டியை பார்க்கிறது…",
+    askByText: "உரையாக கேள்",
+    clearTypedQuestion: "டைப் செய்த கேள்வியை நீக்கு",
+    voiceFallbackAlert:
+      "இந்த உலாவியில் குரல் பதிவு இல்லை. அதனால் கேள்விக்கு டைப்பிங் பயன்படுத்தப்படும், ஆனால் பதில் குரலில் தொடரும்.",
+    question: "கேள்வி",
+    spokenReply: "குரல் பதில்",
+    generatingVoice: "குரல் உருவாக்கப்படுகிறது…",
+    pauseVoice: "குரலை நிறுத்து",
+    playVoiceAgain: "குரலை மீண்டும் இயக்கு",
+    playVoiceReply: "குரல் பதிலை இயக்கு",
+    sendWhatsApp: "WhatsApp மூலம் அனுப்பு",
+    autoplayBlocked:
+      "உங்கள் உலாவி தானாக ஒலியைத் தடுத்தது. “குரல் பதிலை இயக்கு” என்பதை அழுத்துங்கள்.",
+    relatedListings: "தொடர்புடைய பட்டியல்கள்",
+    openMap: "வரைபடம் திற",
+    openSource: "மூலத்தை திற",
+    fallbackUsed:
+      "இந்த கோரிக்கைக்கு OpenAI இல்லை, அதனால் பக்கம் உள்ளூர் கீவர்ட் fallback-ஐ பயன்படுத்தியது.",
+    recheckAvailability:
+      "ஒரு பட்டியலை நம்பும் முன் நேரமும் கிடைப்பும் மீண்டும் சரிபார்க்கவும்.",
+    heuristicFallback: "உள்ளூர் fallback",
+    queryFailed: "வழிகாட்டி இந்த கேள்விக்கு பதில் தர முடியவில்லை.",
+    noUsableQuestion:
+      "பயன்படுத்தக்கூடிய கேள்வி கேட்கவில்லை. மீண்டும் முயற்சிக்கவும் அல்லது டைப்பிங்கைப் பயன்படுத்தவும்.",
+    micUnavailableHere:
+      "இங்கே குரல் பதிவு இல்லை. அதற்கு பதில் உங்கள் கேள்வியை டைப் செய்யவும்.",
+    micBusy:
+      "மைக்ரோஃபோன் பதிவு இப்போது பிஸியாக உள்ளது. ஒரு நிமிடம் கழித்து மீண்டும் முயற்சிக்கவும்.",
+    recognitionErrors: {
+      notAllowed:
+        "மைக்ரோஃபோன் அனுமதி தடுக்கப்பட்டது. அனுமதி வழங்கவும் அல்லது டைப்பிங்கைப் பயன்படுத்தவும்.",
+      noSpeech:
+        "தெளிவான கேள்வி கேட்கவில்லை. மைக்ரோஃபோனுக்கு அருகில் இருந்து மீண்டும் முயற்சிக்கவும்.",
+      audioCapture: "பணிபுரியும் மைக்ரோஃபோன் கண்டுபிடிக்கப்படவில்லை.",
+      network:
+        "குரல் அறிதலில் நெட்வொர்க் சிக்கல் ஏற்பட்டது. சிறிது நேரத்தில் மீண்டும் முயற்சிக்கவும்.",
+      default:
+        "குரல் பதிவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும் அல்லது டைப்பிங்கைப் பயன்படுத்தவும்.",
+    },
+    confidence: {
+      grounded: "வழிகாட்டி அடிப்படையில்",
+      partial: "பகுதி பொருத்தம்",
+      not_in_guide: "நேரடியாக இல்லை",
+    },
+  },
+  hi: {
+    assistantLanguage: "असिस्टेंट भाषा",
+    audioFirstBeta: "ऑडियो-फर्स्ट बीटा",
+    voiceReplyBadge: "आवाज़ में जवाब",
+    whatsappShareBadge: "WhatsApp शेयर",
+    title: "पहले अपना सवाल बोलिए",
+    description:
+      "माइक दबाइए, दवा, किराना, टैक्सी या रिपेयर के बारे में पूछिए, और गाइड आपको आवाज़ में जवाब देगा। टाइपिंग अभी भी उपलब्ध है, लेकिन अब वह बैकअप रास्ता है।",
+    listeningNow: "अभी सुन रहा हूँ…",
+    readyToListen: "सुनने के लिए तैयार",
+    listeningPrompt:
+      "सामान्य तरीके से बोलिए। आप रुकते ही पेज आपके सवाल को पकड़कर भेज देगा।",
+    idlePrompt:
+      "जैसे “पहले कौन-सी फ़ार्मेसी ट्राय करें?” या “पास में दूध कहाँ मिलेगा?” पूछकर देखें।",
+    tapToSpeak: "बोलने के लिए टैप करें",
+    stopListening: "सुनना बंद करें",
+    typeInstead: "इसके बजाय टाइप करें",
+    hideTyping: "टाइपिंग छिपाएँ",
+    heard: "सुना गया",
+    typeQuestionLabel: "इसके बजाय सवाल टाइप करें",
+    typePlaceholder: "दोबारा खरीदने वाली दवाओं के लिए पहले कौन-सी फ़ार्मेसी ट्राय करें?",
+    typingHelper:
+      "अगर माइक्रोफोन उपलब्ध न हो तो टाइपिंग बैकअप रास्ता है।",
+    checkingGuide: "गाइड देखा जा रहा है…",
+    askByText: "टेक्स्ट से पूछें",
+    clearTypedQuestion: "टाइप किया सवाल साफ करें",
+    voiceFallbackAlert:
+      "इस ब्राउज़र में वॉइस कैप्चर उपलब्ध नहीं है, इसलिए सवाल के लिए टाइपिंग इस्तेमाल होगी, लेकिन जवाब आवाज़ में रहेगा।",
+    question: "सवाल",
+    spokenReply: "आवाज़ में जवाब",
+    generatingVoice: "आवाज़ बनाई जा रही है…",
+    pauseVoice: "आवाज़ रोकें",
+    playVoiceAgain: "आवाज़ फिर चलाएँ",
+    playVoiceReply: "आवाज़ में जवाब चलाएँ",
+    sendWhatsApp: "WhatsApp से भेजें",
+    autoplayBlocked:
+      "आपके ब्राउज़र ने ऑटोप्ले रोक दिया। आवाज़ शुरू करने के लिए “आवाज़ में जवाब चलाएँ” दबाएँ।",
+    relatedListings: "संबंधित लिस्टिंग",
+    openMap: "मैप खोलें",
+    openSource: "स्रोत खोलें",
+    fallbackUsed:
+      "इस अनुरोध के लिए OpenAI उपलब्ध नहीं था, इसलिए पेज ने लोकल कीवर्ड fallback इस्तेमाल किया।",
+    recheckAvailability:
+      "किसी लिस्टिंग पर निर्भर होने से पहले समय और उपलब्धता फिर से जांच लें।",
+    heuristicFallback: "लोकल fallback",
+    queryFailed: "गाइड इस सवाल का जवाब नहीं दे सका।",
+    noUsableQuestion:
+      "मुझे इस्तेमाल करने लायक सवाल सुनाई नहीं दिया। फिर कोशिश करें या टाइपिंग पर जाएँ।",
+    micUnavailableHere:
+      "यहाँ वॉइस कैप्चर उपलब्ध नहीं है। इसके बजाय अपना सवाल टाइप करें।",
+    micBusy:
+      "माइक्रोफोन कैप्चर अभी व्यस्त है। एक क्षण रुककर फिर कोशिश करें।",
+    recognitionErrors: {
+      notAllowed:
+        "माइक्रोफोन की अनुमति रोकी गई थी। माइक एक्सेस दें या टाइपिंग इस्तेमाल करें।",
+      noSpeech:
+        "मुझे साफ सवाल सुनाई नहीं दिया। माइक्रोफोन के थोड़ा करीब आकर फिर कोशिश करें।",
+      audioCapture: "कोई काम करने वाला माइक्रोफोन नहीं मिला।",
+      network:
+        "स्पीच रिकग्निशन में नेटवर्क समस्या आई। थोड़ी देर बाद फिर कोशिश करें।",
+      default:
+        "वॉइस कैप्चर विफल रहा। फिर कोशिश करें या टाइपिंग इस्तेमाल करें।",
+    },
+    confidence: {
+      grounded: "गाइड पर आधारित",
+      partial: "आंशिक मेल",
+      not_in_guide: "सीधे कवर नहीं है",
+    },
   },
 };
 
-const VOICE_INSTRUCTIONS =
-  "Speak clearly, calmly, and warmly. Keep the delivery practical and easy to follow for a family member checking nearby options.";
+const CONFIDENCE_META = {
+  grounded: { severity: "success" },
+  partial: { severity: "warning" },
+  not_in_guide: { severity: "info" },
+};
+const VOICE_INSTRUCTIONS = {
+  en: "Speak clearly, calmly, and warmly. Keep the delivery practical and easy to follow for a family member checking nearby options.",
+  ta: "தமிழில் தெளிவாக, மெதுவாக, அன்பாக பேசுங்கள். குடும்ப உறுப்பினர் அருகிலுள்ள விருப்பங்களை பார்த்துக்கொள்ள எளிதாக இருக்க வேண்டும்.",
+  hi: "हिंदी में साफ, शांत और गर्मजोशी से बोलें। जवाब व्यावहारिक और परिवार के किसी सदस्य के लिए आसानी से समझ आने वाला हो।",
+};
+
+function resolveInitialLanguage() {
+  if (typeof window === "undefined") {
+    return "en";
+  }
+
+  const browserLanguages = [
+    ...(window.navigator.languages || []),
+    window.navigator.language,
+  ]
+    .filter(Boolean)
+    .map((entry) => String(entry).toLowerCase());
+
+  if (browserLanguages.some((entry) => entry.startsWith("ta"))) {
+    return "ta";
+  }
+  if (browserLanguages.some((entry) => entry.startsWith("hi"))) {
+    return "hi";
+  }
+  return "en";
+}
 
 function normalizeText(value) {
   return String(value || "")
@@ -98,25 +338,28 @@ function getSpeechRecognitionConstructor() {
   return window.SpeechRecognition || window.webkitSpeechRecognition || null;
 }
 
-function describeRecognitionError(code) {
+function describeRecognitionError(code, languageCode = "en") {
+  const copy = UI_COPY[languageCode] || UI_COPY.en;
+
   switch (code) {
     case "not-allowed":
     case "service-not-allowed":
-      return "Microphone permission was blocked. Allow mic access or use typing.";
+      return copy.recognitionErrors.notAllowed;
     case "no-speech":
-      return "I could not hear a clear question. Try again a little closer to the microphone.";
+      return copy.recognitionErrors.noSpeech;
     case "audio-capture":
-      return "No working microphone was detected.";
+      return copy.recognitionErrors.audioCapture;
     case "network":
-      return "Speech recognition hit a network issue. Try again in a moment.";
+      return copy.recognitionErrors.network;
     case "aborted":
       return "";
     default:
-      return "Voice capture failed. Try again or switch to typing.";
+      return copy.recognitionErrors.default;
   }
 }
 
 export default function LocalGuideAssistant() {
+  const [selectedLanguage, setSelectedLanguage] = useState(resolveInitialLanguage);
   const [question, setQuestion] = useState("");
   const [lastQuestion, setLastQuestion] = useState("");
   const [heardText, setHeardText] = useState("");
@@ -143,6 +386,10 @@ export default function LocalGuideAssistant() {
   const submitQuestionRef = useRef(null);
 
   const canSubmit = question.trim().length >= 3 && !loading;
+  const activeLanguage =
+    LANGUAGE_OPTIONS.find((entry) => entry.code === selectedLanguage) ||
+    LANGUAGE_OPTIONS[0];
+  const copy = UI_COPY[selectedLanguage] || UI_COPY.en;
   const confidenceMeta =
     CONFIDENCE_META[reply?.confidence] || CONFIDENCE_META.partial;
 
@@ -154,9 +401,13 @@ export default function LocalGuideAssistant() {
     const shareText =
       reply.shareText ||
       [
-        "Ananyas nearby guide",
-        `Q: ${normalizeText(lastQuestion || question)}`,
-        `A: ${normalizeText(reply.answer)}`,
+        reply?.language === "hi"
+          ? "अनन्यास नज़दीकी गाइड"
+          : reply?.language === "ta"
+            ? "அனன்யாஸ் அருகிலுள்ள வழிகாட்டி"
+            : "Ananyas nearby guide",
+        `${reply?.language === "hi" ? "सवाल" : reply?.language === "ta" ? "கேள்வி" : "Question"}: ${normalizeText(lastQuestion || question)}`,
+        `${reply?.language === "hi" ? "जवाब" : reply?.language === "ta" ? "பதில்" : "Answer"}: ${normalizeText(reply.answer)}`,
         buildGuideUrl(),
       ].join("\n");
 
@@ -209,7 +460,10 @@ export default function LocalGuideAssistant() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question: trimmedQuestion }),
+        body: JSON.stringify({
+          question: trimmedQuestion,
+          language: selectedLanguage,
+        }),
       });
 
       let payload = null;
@@ -221,14 +475,17 @@ export default function LocalGuideAssistant() {
 
       if (!response.ok) {
         throw new Error(
-          extractErrorMessage(payload, "The guide assistant could not answer that."),
+          extractErrorMessage(payload, copy.queryFailed),
         );
       }
 
       setReply(payload);
-      void generateVoiceReply(payload?.answer);
+      if (payload?.language && payload.language !== selectedLanguage) {
+        setSelectedLanguage(payload.language);
+      }
+      void generateVoiceReply(payload?.answer, payload?.language || selectedLanguage);
     } catch (err) {
-      setError(err?.message || "The guide assistant could not answer that.");
+      setError(err?.message || copy.queryFailed);
     } finally {
       setLoading(false);
     }
@@ -273,7 +530,7 @@ export default function LocalGuideAssistant() {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = RECOGNITION_LANGUAGE;
+    recognition.lang = activeLanguage.recognition;
     recognition.continuous = false;
     recognition.interimResults = true;
     recognition.maxAlternatives = 1;
@@ -313,7 +570,7 @@ export default function LocalGuideAssistant() {
     };
 
     recognition.onerror = (event) => {
-      const message = describeRecognitionError(event?.error);
+      const message = describeRecognitionError(event?.error, selectedLanguage);
       if (message) {
         setListeningError(message);
       }
@@ -335,9 +592,7 @@ export default function LocalGuideAssistant() {
       }
 
       if (!manualStopRef.current) {
-        setListeningError(
-          "I did not catch a usable question. Try again or switch to typing.",
-        );
+        setListeningError(copy.noUsableQuestion);
       }
     };
 
@@ -356,7 +611,7 @@ export default function LocalGuideAssistant() {
       }
       recognitionRef.current = null;
     };
-  }, []);
+  }, [activeLanguage.recognition]);
 
   useEffect(() => {
     if (!audioUrl || !autoPlayPendingRef.current || !audioRef.current) {
@@ -377,7 +632,7 @@ export default function LocalGuideAssistant() {
     void playAudio();
   }, [audioUrl]);
 
-  const generateVoiceReply = async (answerText) => {
+  const generateVoiceReply = async (answerText, languageCode = selectedLanguage) => {
     const normalizedAnswer = normalizeText(answerText);
     if (!normalizedAnswer) {
       return;
@@ -400,10 +655,10 @@ export default function LocalGuideAssistant() {
         body: JSON.stringify({
           text: normalizedAnswer,
           slug: "ananyas-nearby-assistant",
-          language: "en",
+          language: languageCode,
           response_format: "mp3",
           stream_format: "audio",
-          instructions: VOICE_INSTRUCTIONS,
+          instructions: VOICE_INSTRUCTIONS[languageCode] || VOICE_INSTRUCTIONS.en,
         }),
       });
 
@@ -457,7 +712,7 @@ export default function LocalGuideAssistant() {
 
     if (!recognitionRef.current || !listeningSupported) {
       setShowTextComposer(true);
-      setListeningError("Voice capture is not available here. Type your question instead.");
+      setListeningError(copy.micUnavailableHere);
       return;
     }
 
@@ -472,9 +727,7 @@ export default function LocalGuideAssistant() {
     try {
       recognitionRef.current.start();
     } catch {
-      setListeningError(
-        "Microphone capture is busy right now. Wait a moment and try again.",
-      );
+      setListeningError(copy.micBusy);
     }
   };
 
@@ -499,7 +752,7 @@ export default function LocalGuideAssistant() {
     }
 
     if (reply?.answer) {
-      await generateVoiceReply(reply.answer);
+      await generateVoiceReply(reply.answer, reply?.language || selectedLanguage);
     }
   };
 
@@ -523,18 +776,39 @@ export default function LocalGuideAssistant() {
       <Stack spacing={2.5}>
         <Stack spacing={1.25}>
           <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
-            <Chip size="small" color="primary" label="Audio-first beta" />
-            <Chip size="small" variant="outlined" label="Voice reply" />
-            <Chip size="small" variant="outlined" label="WhatsApp share" />
+            <Chip size="small" color="primary" label={copy.audioFirstBeta} />
+            <Chip size="small" variant="outlined" label={copy.voiceReplyBadge} />
+            <Chip size="small" variant="outlined" label={copy.whatsappShareBadge} />
           </Stack>
           <Typography variant="h4" sx={{ fontWeight: 800, maxWidth: 760 }}>
-            Speak your question first
+            {copy.title}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 760 }}>
-            Tap the mic, ask for medicines, groceries, taxis, or repairs, and
-            the guide will answer back in voice. Typing is still available, but
-            it is now a fallback instead of the main path.
+            {copy.description}
           </Typography>
+          <Stack spacing={0.9}>
+            <Typography variant="caption" color="text.secondary">
+              {copy.assistantLanguage}
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+              {LANGUAGE_OPTIONS.map((option) => (
+                <Chip
+                  key={option.code}
+                  clickable
+                  color={selectedLanguage === option.code ? "primary" : "default"}
+                  variant={selectedLanguage === option.code ? "filled" : "outlined"}
+                  label={option.label}
+                  onClick={() => {
+                    if (isListening) {
+                      manualStopRef.current = true;
+                      recognitionRef.current?.stop();
+                    }
+                    setSelectedLanguage(option.code);
+                  }}
+                />
+              ))}
+            </Stack>
+          </Stack>
         </Stack>
 
         <Paper
@@ -569,12 +843,12 @@ export default function LocalGuideAssistant() {
                 <SmartToyRoundedIcon color="primary" sx={{ fontSize: 44 }} />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                {isListening ? "Listening now…" : "Ready to listen"}
+                {isListening ? copy.listeningNow : copy.readyToListen}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 680 }}>
                 {isListening
-                  ? "Speak normally. The page will capture your question and submit it as soon as you stop."
-                  : "Try a natural question like “Which pharmacy should we try first?” or “Where can we get milk nearby?”"}
+                  ? copy.listeningPrompt
+                  : copy.idlePrompt}
               </Typography>
             </Stack>
 
@@ -592,7 +866,7 @@ export default function LocalGuideAssistant() {
                   borderRadius: 999,
                 }}
               >
-                {isListening ? "Stop listening" : "Tap to speak"}
+                {isListening ? copy.stopListening : copy.tapToSpeak}
               </Button>
               <Button
                 type="button"
@@ -602,7 +876,7 @@ export default function LocalGuideAssistant() {
                 startIcon={<KeyboardRoundedIcon />}
                 sx={{ minWidth: 180, minHeight: 52, borderRadius: 999 }}
               >
-                {showTextComposer ? "Hide typing" : "Type instead"}
+                {showTextComposer ? copy.hideTyping : copy.typeInstead}
               </Button>
             </Stack>
 
@@ -620,7 +894,7 @@ export default function LocalGuideAssistant() {
                 })}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Heard
+                  {copy.heard}
                 </Typography>
                 <Typography variant="body1" sx={{ mt: 0.5 }}>
                   {heardText}
@@ -640,9 +914,9 @@ export default function LocalGuideAssistant() {
                   minRows={2}
                   value={question}
                   onChange={(event) => setQuestion(event.target.value)}
-                  label="Type a question instead"
-                  placeholder="Which pharmacy should we try first for repeat medicines?"
-                  helperText="Typing is the fallback path if microphone capture is unavailable."
+                  label={copy.typeQuestionLabel}
+                  placeholder={copy.typePlaceholder}
+                  helperText={copy.typingHelper}
                 />
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={1.25}>
                   <Button
@@ -658,7 +932,7 @@ export default function LocalGuideAssistant() {
                     }
                     sx={{ borderRadius: 999 }}
                   >
-                    {loading ? "Checking guide…" : "Ask by text"}
+                    {loading ? copy.checkingGuide : copy.askByText}
                   </Button>
                   <Button
                     type="button"
@@ -669,7 +943,7 @@ export default function LocalGuideAssistant() {
                     }}
                     sx={{ borderRadius: 999 }}
                   >
-                    Clear typed question
+                    {copy.clearTypedQuestion}
                   </Button>
                 </Stack>
               </Stack>
@@ -679,8 +953,7 @@ export default function LocalGuideAssistant() {
 
         {!listeningSupported ? (
           <Alert severity="info">
-            Voice capture is not available in this browser, so the assistant is
-            falling back to typing for the question while keeping spoken replies.
+            {copy.voiceFallbackAlert}
           </Alert>
         ) : null}
 
@@ -690,14 +963,15 @@ export default function LocalGuideAssistant() {
         {reply ? (
           <Stack spacing={2}>
             <Alert severity={confidenceMeta.severity}>
-              <strong>{confidenceMeta.label}.</strong> Recheck live timing and
-              availability before depending on a listing.
+              <strong>
+                {(copy.confidence?.[reply?.confidence] || copy.confidence.partial)}.
+              </strong>{" "}
+              {copy.recheckAvailability}
             </Alert>
 
             {reply.fallback ? (
               <Alert severity="warning">
-                OpenAI was unavailable for this request, so the page used a local
-                keyword fallback.
+                {copy.fallbackUsed}
               </Alert>
             ) : null}
 
@@ -715,7 +989,7 @@ export default function LocalGuideAssistant() {
                 {lastQuestion ? (
                   <Box>
                     <Typography variant="caption" color="text.secondary">
-                      Question
+                      {copy.question}
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 0.35, fontWeight: 600 }}>
                       {lastQuestion}
@@ -725,7 +999,7 @@ export default function LocalGuideAssistant() {
 
                 <Box>
                   <Typography variant="caption" color="text.secondary">
-                    Spoken reply
+                    {copy.spokenReply}
                   </Typography>
                   <Typography variant="body1" sx={{ mt: 0.5, whiteSpace: "pre-line" }}>
                     {reply.answer}
@@ -735,11 +1009,11 @@ export default function LocalGuideAssistant() {
                 <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                   <Chip
                     size="small"
-                    label={reply.provider === "openai" ? reply.model : "heuristic fallback"}
+                    label={reply.provider === "openai" ? reply.model : copy.heuristicFallback}
                     variant="outlined"
                   />
                   {audioStatus === "loading" ? (
-                    <Chip size="small" label="Generating voice…" color="primary" />
+                    <Chip size="small" label={copy.generatingVoice} color="primary" />
                   ) : null}
                 </Stack>
               </Stack>
@@ -757,12 +1031,12 @@ export default function LocalGuideAssistant() {
                 sx={{ borderRadius: 999 }}
               >
                 {audioStatus === "loading"
-                  ? "Generating voice…"
+                  ? copy.generatingVoice
                   : isPlaying
-                    ? "Pause voice"
+                    ? copy.pauseVoice
                     : audioUrl
-                      ? "Play voice again"
-                      : "Play voice reply"}
+                      ? copy.playVoiceAgain
+                      : copy.playVoiceReply}
               </Button>
 
               <Button
@@ -776,14 +1050,13 @@ export default function LocalGuideAssistant() {
                 startIcon={<ShareRoundedIcon />}
                 sx={{ borderRadius: 999 }}
               >
-                Send via WhatsApp
+                {copy.sendWhatsApp}
               </Button>
             </Stack>
 
             {autoPlayBlocked ? (
               <Alert severity="info">
-                Your browser blocked autoplay. Use “Play voice reply” to start the
-                spoken answer.
+                {copy.autoplayBlocked}
               </Alert>
             ) : null}
 
@@ -792,7 +1065,7 @@ export default function LocalGuideAssistant() {
             {Array.isArray(reply.suggestedListings) && reply.suggestedListings.length ? (
               <Box>
                 <Typography variant="subtitle2" sx={{ mb: 1.25 }}>
-                  Related listings
+                  {copy.relatedListings}
                 </Typography>
                 <Stack spacing={1.25}>
                   {reply.suggestedListings.map((listing) => {
@@ -860,7 +1133,7 @@ export default function LocalGuideAssistant() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                Open map
+                                {copy.openMap}
                               </Button>
                             ) : null}
                             {listing.sourceUrl ? (
@@ -872,7 +1145,7 @@ export default function LocalGuideAssistant() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                Open source
+                                {copy.openSource}
                               </Button>
                             ) : null}
                           </Stack>

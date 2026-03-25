@@ -19,6 +19,103 @@ const SITE_URL = (process.env.VITE_SITE_URL || "https://www.kumar2net.com")
   .trim()
   .replace(/\/+$/, "");
 const GUIDE_URL = `${SITE_URL}/local/ananyas-nearby`;
+const LANGUAGE_ALIASES = {
+  en: "en",
+  english: "en",
+  hi: "hi",
+  hindi: "hi",
+  ta: "ta",
+  tn: "ta",
+  tamil: "ta",
+};
+const LANGUAGE_META = {
+  en: {
+    label: "English",
+    shareTitle: "Ananyas nearby guide",
+    shareQuestion: "Question",
+    shareAnswer: "Answer",
+    noMatch:
+      "I could not find a direct match in this guide. Try asking about medicines, milk, groceries, flowers, taxis, repairs, diagnostics, or tiffin backup. This page only covers the listed nearby options and watchlist additions around Ananyas Phase 7.",
+    watchlistPrefix:
+      "The guide does not show a fully verified direct listing, but the closest watchlist leads are",
+    strongestPrefix: "The strongest matches in this guide are",
+    locationConnector: "is in",
+    recheck:
+      "Recheck live timing and availability before depending on any listing.",
+    contactRecheck: "Recheck live timing before depending on a listing.",
+  },
+  hi: {
+    label: "Hindi",
+    shareTitle: "अनन्यास नज़दीकी गाइड",
+    shareQuestion: "सवाल",
+    shareAnswer: "जवाब",
+    noMatch:
+      "मुझे इस गाइड में सीधा मिलान नहीं मिला। दवा, दूध, किराना, फूल, टैक्सी, मरम्मत, डायग्नॉस्टिक्स या टिफिन बैकअप के बारे में पूछकर देखें। यह पेज केवल अनन्यास फेज 7 के आसपास की सूचीबद्ध जगहों और वॉचलिस्ट विकल्पों को कवर करता है।",
+    watchlistPrefix:
+      "इस गाइड में पूरी तरह सत्यापित सीधी सूची नहीं है, लेकिन सबसे नज़दीकी वॉचलिस्ट विकल्प हैं",
+    strongestPrefix: "इस गाइड में सबसे अच्छे मेल ये हैं",
+    locationConnector: "में है",
+    recheck:
+      "किसी सूची पर भरोसा करने से पहले समय और उपलब्धता फिर से जांच लें।",
+    contactRecheck:
+      "किसी सूची पर भरोसा करने से पहले समय फिर से जांच लें।",
+  },
+  ta: {
+    label: "Tamil",
+    shareTitle: "அனன்யாஸ் அருகிலுள்ள வழிகாட்டி",
+    shareQuestion: "கேள்வி",
+    shareAnswer: "பதில்",
+    noMatch:
+      "இந்த வழிகாட்டியில் நேரடி பொருத்தம் கிடைக்கவில்லை. மருந்து, பால், மளிகை, மலர்கள், டாக்ஸி, பழுது பார்க்கும் சேவை, டயக்னோஸ்டிக்ஸ் அல்லது டிபன் பாக்கப் பற்றி கேட்டு பார்க்கலாம். இந்த பக்கம் அனன்யாஸ் பேஸ் 7 அருகிலுள்ள பட்டியலிடப்பட்ட விருப்பங்களையும் வாட்ச்லிஸ்ட் சேர்த்தல்களையும் மட்டுமே கவர்க்கிறது.",
+    watchlistPrefix:
+      "இந்த வழிகாட்டியில் முழுமையாக உறுதிப்படுத்தப்பட்ட நேரடி பட்டியல் இல்லை, ஆனால் அருகிலுள்ள வாட்ச்லிஸ்ட் விருப்பங்கள்",
+    strongestPrefix: "இந்த வழிகாட்டியில் மிகச் சரியான பொருத்தங்கள்",
+    locationConnector: "இருப்பிடம்",
+    recheck:
+      "ஏதேனும் பட்டியலை நம்புவதற்கு முன் நேரமும் கிடைப்பும் மறுபடியும் சரிபார்க்கவும்.",
+    contactRecheck:
+      "பட்டியலை நம்புவதற்கு முன் நேரத்தை மறுபடியும் சரிபார்க்கவும்.",
+  },
+};
+const CONTACT_LABELS = {
+  en: {
+    Mobile: "Mobile",
+    Landline: "Landline",
+    "Emergency mobile": "Emergency mobile",
+    Appointments: "Appointments",
+  },
+  hi: {
+    Mobile: "मोबाइल",
+    Landline: "लैंडलाइन",
+    "Emergency mobile": "इमरजेंसी मोबाइल",
+    Appointments: "अपॉइंटमेंट",
+  },
+  ta: {
+    Mobile: "மொபைல்",
+    Landline: "லேண்ட்லைன்",
+    "Emergency mobile": "அவசர மொபைல்",
+    Appointments: "அப்பாயின்ட்மெண்ட்",
+  },
+};
+const CONTACT_QUERY_HINTS = [
+  "call",
+  "phone",
+  "number",
+  "mobile",
+  "landline",
+  "contact",
+  "கால்",
+  "அழை",
+  "எண்",
+  "நம்பர்",
+  "மொபைல்",
+  "தொலைபேசி",
+  "फोन",
+  "नंबर",
+  "मोबाइल",
+  "लैंडलाइन",
+  "संपर्क",
+];
 
 const STOP_WORDS = new Set([
   "a",
@@ -56,8 +153,37 @@ const STOP_WORDS = new Set([
 ]);
 
 const CATEGORY_HINTS = {
-  fruits: ["fruit", "fruits", "vegetable", "vegetables", "produce"],
-  flowers: ["flower", "flowers", "garland", "garlands", "bouquet", "pooja"],
+  fruits: [
+    "fruit",
+    "fruits",
+    "vegetable",
+    "vegetables",
+    "produce",
+    "பழம்",
+    "பழங்கள்",
+    "காய்கறி",
+    "காய்கறிகள்",
+    "फल",
+    "फलों",
+    "सब्जी",
+    "सब्जियां",
+  ],
+  flowers: [
+    "flower",
+    "flowers",
+    "garland",
+    "garlands",
+    "bouquet",
+    "pooja",
+    "பூ",
+    "பூக்கள்",
+    "மலர்",
+    "மாலை",
+    "फूल",
+    "फूलों",
+    "माला",
+    "गुलदस्ता",
+  ],
   medicines: [
     "medicine",
     "medicines",
@@ -67,6 +193,14 @@ const CATEGORY_HINTS = {
     "tablet",
     "tablets",
     "prescription",
+    "மருந்து",
+    "மருந்துகள்",
+    "மெடிக்கல்",
+    "பார்மசி",
+    "दवा",
+    "दवाइयां",
+    "मेडिकल",
+    "फार्मेसी",
   ],
   groceries: [
     "grocery",
@@ -79,6 +213,14 @@ const CATEGORY_HINTS = {
     "store",
     "supermarket",
     "staples",
+    "பால்",
+    "மளிகை",
+    "கிராணா",
+    "சூப்பர்மார்கெட்",
+    "दूध",
+    "किराना",
+    "ग्रॉसरी",
+    "सुपरमार्केट",
   ],
   services: [
     "taxi",
@@ -95,6 +237,18 @@ const CATEGORY_HINTS = {
     "physio",
     "physiotherapy",
     "appliance",
+    "டாக்சி",
+    "கேப்",
+    "மருத்துவமனை",
+    "பிளம்பர்",
+    "எலக்ட்ரீஷியன்",
+    "அப்ளையன்ஸ்",
+    "टैक्सी",
+    "कैब",
+    "अस्पताल",
+    "प्लम्बर",
+    "इलेक्ट्रीशियन",
+    "अप्लायंस",
   ],
 };
 
@@ -147,13 +301,40 @@ function normalizeQuestion(value) {
     .slice(0, MAX_QUESTION_CHARS);
 }
 
+function detectLanguageFromText(value) {
+  const text = String(value || "");
+  if (/[\u0B80-\u0BFF]/u.test(text)) {
+    return "ta";
+  }
+  if (/[\u0900-\u097F]/u.test(text)) {
+    return "hi";
+  }
+  return "en";
+}
+
+function resolveLanguageCode(value, fallback = "en") {
+  const normalized = String(value || "")
+    .trim()
+    .toLowerCase();
+  return LANGUAGE_ALIASES[normalized] || fallback;
+}
+
+function getLanguageMeta(language = "en") {
+  return LANGUAGE_META[resolveLanguageCode(language)] || LANGUAGE_META.en;
+}
+
+function localizeContactLabel(label, language = "en") {
+  const resolvedLanguage = resolveLanguageCode(language);
+  return CONTACT_LABELS[resolvedLanguage]?.[label] || label;
+}
+
 function getVerificationLabel(item) {
   if (item.verificationMethod === "official-site") return "Official site";
   if (item.verificationMethod === "shortlist-only") return "Shortlist only";
   return "Directory only";
 }
 
-function formatContactNumbers(contactNumbers = []) {
+function formatContactNumbers(contactNumbers = [], language = "en") {
   return contactNumbers
     .filter(
       (contact) =>
@@ -161,7 +342,10 @@ function formatContactNumbers(contactNumbers = []) {
         typeof contact.label === "string" &&
         typeof contact.display === "string",
     )
-    .map((contact) => `${contact.label}: ${contact.display}`)
+    .map(
+      (contact) =>
+        `${localizeContactLabel(contact.label, language)}: ${contact.display}`,
+    )
     .join("; ");
 }
 
@@ -359,7 +543,7 @@ function parseResponseJSON(response) {
 function tokenize(text) {
   return String(text || "")
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/[^\p{L}\p{N}\s-]/gu, " ")
     .split(/\s+/)
     .map((token) => token.trim())
     .filter(Boolean)
@@ -442,20 +626,23 @@ function toSuggestedListings(names = []) {
     }));
 }
 
-function buildShareText(question, answer) {
+function buildShareText(question, answer, language = "en") {
+  const meta = getLanguageMeta(language);
   return [
-    "Ananyas nearby guide",
-    `Q: ${question}`,
-    `A: ${String(answer || "").replace(/\s+/g, " ").trim()}`,
+    meta.shareTitle,
+    `${meta.shareQuestion}: ${question}`,
+    `${meta.shareAnswer}: ${String(answer || "").replace(/\s+/g, " ").trim()}`,
     GUIDE_URL,
   ].join("\n");
 }
 
-function buildHeuristicResult(question) {
+function buildHeuristicResult(question, language = "en") {
+  const meta = getLanguageMeta(language);
   const questionLower = question.toLowerCase();
   const tokens = tokenize(question);
-  const wantsContactDetails =
-    /\b(call|phone|number|mobile|landline|contact)\b/.test(questionLower);
+  const wantsContactDetails = CONTACT_QUERY_HINTS.some((hint) =>
+    questionLower.includes(hint),
+  );
   const ranked = GUIDE_ENTRIES.map((entry) => ({
     ...entry,
     score: scoreEntry(entry, tokens, questionLower),
@@ -464,13 +651,13 @@ function buildHeuristicResult(question) {
     .sort((a, b) => b.score - a.score);
 
   if (!ranked.length) {
-    const answer =
-      "I could not find a direct match in this guide. Try asking about medicines, milk, groceries, flowers, taxis, repairs, diagnostics, or tiffin backup. This page only covers the listed nearby options and watchlist additions around Ananyas Phase 7.";
+    const answer = meta.noMatch;
     return {
       answer,
       confidence: "not_in_guide",
       suggestedListings: [],
-      shareText: buildShareText(question, answer),
+      shareText: buildShareText(question, answer, language),
+      language: resolveLanguageCode(language),
       model: "heuristic",
       provider: "heuristic",
       fallback: true,
@@ -484,9 +671,12 @@ function buildHeuristicResult(question) {
   );
   if (wantsContactDetails && entriesWithContacts.length) {
     const answer = entriesWithContacts
-      .map((entry) => `${entry.name}: ${formatContactNumbers(entry.contactNumbers)}`)
+      .map(
+        (entry) =>
+          `${entry.name}: ${formatContactNumbers(entry.contactNumbers, language)}`,
+      )
       .join("; ")
-      .concat(". Recheck live timing before depending on a listing.");
+      .concat(`. ${meta.contactRecheck}`);
 
     return {
       answer,
@@ -494,7 +684,8 @@ function buildHeuristicResult(question) {
       suggestedListings: toSuggestedListings(
         entriesWithContacts.map((entry) => entry.name),
       ),
-      shareText: buildShareText(question, answer),
+      shareText: buildShareText(question, answer, language),
+      language: resolveLanguageCode(language),
       model: "heuristic",
       provider: "heuristic",
       fallback: true,
@@ -503,29 +694,31 @@ function buildHeuristicResult(question) {
 
   const summaryPrefix =
     topEntries[0]?.type === "watchlist"
-      ? "The guide does not show a fully verified direct listing, but the closest watchlist leads are"
-      : "The strongest matches in this guide are";
+      ? meta.watchlistPrefix
+      : meta.strongestPrefix;
   const answer = `${summaryPrefix} ${joinNames(topEntries)}. ${topEntries
-    .map((entry) => `${entry.name} is in ${entry.area}`)
-    .join("; ")}. Recheck live timing and availability before depending on any listing.`;
+    .map((entry) => `${entry.name} ${meta.locationConnector} ${entry.area}`)
+    .join("; ")}. ${meta.recheck}`;
 
   return {
     answer,
     confidence: topEntries[0]?.type === "watchlist" ? "partial" : "grounded",
     suggestedListings: toSuggestedListings(topEntries.map((entry) => entry.name)),
-    shareText: buildShareText(question, answer),
+    shareText: buildShareText(question, answer, language),
+    language: resolveLanguageCode(language),
     model: "heuristic",
     provider: "heuristic",
     fallback: true,
   };
 }
 
-async function askOpenAI(question) {
+async function askOpenAI(question, language = "en") {
   const apiKey = String(process.env.OPENAI_API_KEY || "").trim();
   if (!apiKey) {
     throw new Error("OPENAI_API_KEY is not configured");
   }
 
+  const meta = getLanguageMeta(language);
   const client = new OpenAI({ apiKey });
   const schema = {
     name: "local_guide_answer",
@@ -557,6 +750,7 @@ async function askOpenAI(question) {
   const instructions = [
     "You answer questions about a local listings page for Ananyas Nana Nani Homes Phase 7 in Coimbatore.",
     "Use only the guide data provided. Do not invent phone numbers, timings, prices, distances, or delivery guarantees.",
+    `Reply in ${meta.label}.`,
     "Prefer exact listing names from the guide.",
     "If the guide only has shortlist/watchlist leads, say that clearly instead of pretending they are fully verified listings.",
     "If the answer is not in the guide, say so briefly and suggest the kinds of things the user can ask from this page.",
@@ -610,7 +804,8 @@ async function askOpenAI(question) {
     answer,
     confidence,
     suggestedListings,
-    shareText: buildShareText(question, answer),
+    shareText: buildShareText(question, answer, language),
+    language: resolveLanguageCode(language),
     model: response?.model || DEFAULT_MODEL,
     provider: "openai",
     fallback: false,
@@ -641,6 +836,10 @@ export default async function handler(req, res) {
   }
 
   const question = normalizeQuestion(payload?.question);
+  const language = resolveLanguageCode(
+    payload?.language,
+    detectLanguageFromText(question),
+  );
   if (question.length < 3) {
     return res.status(400).json({
       error: "Ask a fuller question so the guide assistant has enough context.",
@@ -648,11 +847,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await askOpenAI(question);
+    const result = await askOpenAI(question, language);
     return res.status(200).json(result);
   } catch (error) {
     console.error("[local-guide-query] OpenAI lookup failed, falling back", error);
-    const fallback = buildHeuristicResult(question);
+    const fallback = buildHeuristicResult(question, language);
     return res.status(200).json(fallback);
   }
 }

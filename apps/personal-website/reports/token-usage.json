@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-03-24T01:57:29.654Z",
-  "totalInputTokens": 112201,
-  "totalOutputTokens": 6390,
-  "totalTokens": 118591,
+  "generatedAt": "2026-03-25T02:48:31.810Z",
+  "totalInputTokens": 122039,
+  "totalOutputTokens": 7166,
+  "totalTokens": 129205,
   "entries": [
     {
       "provider": "openai",
@@ -1346,6 +1346,54 @@
       "request_id": "resp_01a5f8e75d428e950069c1ef8672d0819f9419c45e10ef092c",
       "meta": {
         "timestamp": "2026-03-24T01:57:29.654Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "local-guide-query",
+      "model": "gpt-5.2-2025-12-11",
+      "input_tokens": 4705,
+      "output_tokens": 187,
+      "total_tokens": 4892,
+      "request_id": "resp_088b6a265d7db2930069c34ce4d940819eb3ce4a1853fc9c21",
+      "meta": {
+        "timestamp": "2026-03-25T02:48:08.471Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "blog-tts-translation",
+      "model": "gpt-4o-mini-2024-07-18",
+      "input_tokens": 184,
+      "output_tokens": 149,
+      "total_tokens": 333,
+      "request_id": "chatcmpl-DN8Zt29mDnPS7mCD9Pa32JuiHPQUN",
+      "meta": {
+        "timestamp": "2026-03-25T02:48:12.555Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "local-guide-query",
+      "model": "gpt-5.2-2025-12-11",
+      "input_tokens": 4716,
+      "output_tokens": 238,
+      "total_tokens": 4954,
+      "request_id": "resp_0818d4574a4b270b0069c34cf75b2c819388b07091b868ab3b",
+      "meta": {
+        "timestamp": "2026-03-25T02:48:27.715Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "blog-tts-translation",
+      "model": "gpt-4o-mini-2024-07-18",
+      "input_tokens": 233,
+      "output_tokens": 202,
+      "total_tokens": 435,
+      "request_id": "chatcmpl-DN8aCEBQngkZ8l2jvm4dPSVMJbpX1",
+      "meta": {
+        "timestamp": "2026-03-25T02:48:31.809Z"
       }
     }
   ]
