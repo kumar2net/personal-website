@@ -1,6 +1,0 @@
-file '/Users/kumara/personal-website/output/sora-thank-you-20260313/clips/01-hook.mp4'
-file '/Users/kumara/personal-website/output/sora-thank-you-20260313/clips/02-chennai.mp4'
-file '/Users/kumara/personal-website/output/sora-thank-you-20260313/clips/03-singapore.mp4'
-file '/Users/kumara/personal-website/output/sora-thank-you-20260313/clips/04-orlando.mp4'
-file '/Users/kumara/personal-website/output/sora-thank-you-20260313/clips/05-payoff.mp4'
-file '/Users/kumara/personal-website/output/sora-thank-you-20260313/clips/06-endcard.mp4'

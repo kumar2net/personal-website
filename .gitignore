@@ -58,6 +58,24 @@ transcription_*.txt
 eng.traineddata
 bug*.jpg
 
+# Generated media/output bundles
+outputs/
+output/
+generate/ytshorts/**/*.mp4
+generate/ytshorts/**/*.wav
+generate/ytshorts/**/*.srt
+generate/ytshorts/**/*.json
+generate/ytshorts/**/*.m4a
+generate/ytshorts/**/*.aiff
+generate/ytshorts/**/*.mp3
+generate/ytshorts/**/*.jpg
+generate/ytshorts/**/*.png
+generate/ytshorts/**/__pycache__/
+generate/ytshorts/**/concat-list.txt
+content/shorts/*/clips/*.mp4
+content/shorts/*/clips/*-job*.json
+content/shorts/*/renders/*.mp4
+
 # KDP/eBook project files
 KDP_*.md
 KDP_*.html

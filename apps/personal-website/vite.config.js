@@ -72,7 +72,6 @@ const LOCAL_API_ROUTE_DEFINITIONS = [
   { prefix: "/api/local-guide-query", filePath: "api/local-guide-query.js" },
   { prefix: "/api/blog-tts", filePath: "api/blog-tts.js" },
   { prefix: "/api/engagement", filePath: "api/engagement.js" },
-  { prefix: "/api/analytics-revenue", filePath: "api/analytics-revenue.js" },
   { prefix: "/api/keydata", filePath: "api/keydata.js" },
 ];
 

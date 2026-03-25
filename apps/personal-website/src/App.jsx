@@ -30,7 +30,6 @@ import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import PasswordGate from "./components/PasswordGate";
-import { trackCtaClick, trackPageView } from "./lib/analyticsClient";
 
 // Lazy load all other components
 const About = lazy(() => import("./pages/About"));
@@ -146,11 +145,43 @@ const ExternalNewsRedirect = () => {
   );
 };
 
-function useAnalyticsPageViews() {
+function useGaPageViews() {
   const location = useLocation();
 
   useEffect(() => {
-    void trackPageView();
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const trackPageView = () => {
+      if (typeof window.gtag !== "function") {
+        return;
+      }
+
+      const GA_MEASUREMENT_ID = "G-PZ37S6E5BL";
+      const pagePath = location.pathname + location.search;
+      window.gtag("config", GA_MEASUREMENT_ID, {
+        send_page_view: true,
+        page_path: pagePath,
+        page_location: window.location.href,
+        page_title: document.title,
+      });
+      window.gtag("event", "page_view_custom", {
+        event_category: "engagement",
+        event_label: location.pathname,
+        page_path: pagePath,
+        page_title: document.title,
+      });
+    };
+
+    if (typeof window.gtag === "function") {
+      trackPageView();
+      return undefined;
+    }
+
+    const handleReady = () => trackPageView();
+    window.addEventListener("ga:ready", handleReady);
+    return () => window.removeEventListener("ga:ready", handleReady);
   }, [location.pathname, location.search]);
 }
 
@@ -160,11 +191,14 @@ const App = ({ mode }) => {
   const [showWorldClock, setShowWorldClock] = useState(false);
   const isDarkMode = mode === "dark";
 
-  const trackClick = (ctaId, parameters = {}) => {
-    void trackCtaClick({
-      cta_id: ctaId,
-      ...parameters,
-    });
+  const trackClick = (eventName, parameters = {}) => {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", eventName, {
+        event_category: "navigation",
+        event_label: eventName,
+        ...parameters,
+      });
+    }
   };
 
   const getLinkProps = (item) =>
@@ -182,7 +216,6 @@ const App = ({ mode }) => {
       isMobile ? `${item.analyticsKey}_mobile` : item.analyticsKey,
       {
         surface: isMobile ? "drawer" : "appbar",
-        destination: item.to || item.href,
       },
     );
     if (isMobile) {
@@ -191,7 +224,7 @@ const App = ({ mode }) => {
   };
   const currentYear = new Date().getFullYear();
 
-  useAnalyticsPageViews();
+  useGaPageViews();
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -307,7 +340,6 @@ const App = ({ mode }) => {
                 to="/"
                 onClick={() =>
                   trackClick("nav_home", {
-                    destination: "/",
                     surface: "appbar",
                   })
                 }

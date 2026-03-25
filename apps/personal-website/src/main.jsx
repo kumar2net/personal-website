@@ -6,8 +6,8 @@ import { getTheme, ThemeProvider } from "@kumar2net/ui-theme";
 import App from "./App.jsx";
 import "./output.css";
 import { ColorModeProvider, useColorMode } from "./providers/ColorModeProvider";
-import { warmAnalytics } from "./lib/analyticsClient";
 import { scheduleIdleTask } from "./lib/scheduleIdle";
+import GoogleAnalytics from "./components/GoogleAnalytics.jsx";
 
 const SHOULD_RENDER_SPEED_INSIGHTS =
   typeof import.meta !== "undefined" && import.meta.env.PROD;
@@ -33,9 +33,6 @@ const ObservabilityBootstrap = () => {
   const [showSpeedInsights, setShowSpeedInsights] = React.useState(false);
 
   React.useEffect(() => {
-    const cancelAnalytics = scheduleIdleTask(() => {
-      void warmAnalytics();
-    });
     const cancelSpeedInsights = SHOULD_RENDER_SPEED_INSIGHTS
       ? scheduleIdleTask(() => {
           setShowSpeedInsights(true);
@@ -43,7 +40,6 @@ const ObservabilityBootstrap = () => {
       : () => {};
 
     return () => {
-      cancelAnalytics();
       cancelSpeedInsights();
     };
   }, []);
@@ -71,6 +67,7 @@ const ColorModeBridge = () => {
         }}
       >
         <App mode={mode} />
+        <GoogleAnalytics />
         <ObservabilityBootstrap />
       </BrowserRouter>
     </HelmetProvider>

@@ -18,8 +18,10 @@ const SNAPSHOT_REFRESH_UTC_HOUR = 2;
 const SNAPSHOT_REFRESH_UTC_MINUTE = 0;
 const BROWSER_CACHE_MAX_AGE_SECONDS = 5 * 60;
 const CDN_STALE_SECONDS = 12 * 60 * 60;
-const REQUEST_TIMEOUT_MS = 12_000;
-const MAX_FETCH_ATTEMPTS = 4;
+const DEFAULT_REQUEST_TIMEOUT_MS = 8_000;
+const DEFAULT_MAX_FETCH_ATTEMPTS = 3;
+const FRED_REQUEST_TIMEOUT_MS = 4_500;
+const FRED_MAX_FETCH_ATTEMPTS = 2;
 const STOOQ_CONCURRENCY = 3;
 const FRED_CONCURRENCY = 4;
 const STOOQ_LOOKBACK_DAYS = 120;
@@ -356,7 +358,7 @@ function describeFetchError(error) {
   }
 
   if (error.name === "AbortError") {
-    return `Timed out after ${REQUEST_TIMEOUT_MS}ms`;
+    return `Timed out after ${error.timeoutMs || DEFAULT_REQUEST_TIMEOUT_MS}ms`;
   }
 
   const causeMessage = String(error.cause?.message || "").trim();
@@ -367,12 +369,14 @@ function describeFetchError(error) {
   return causeMessage || error.message || "Unknown error";
 }
 
-async function fetchText(url, headers = {}) {
+async function fetchText(url, headers = {}, options = {}) {
+  const timeoutMs = Number(options.timeoutMs) || DEFAULT_REQUEST_TIMEOUT_MS;
+  const maxAttempts = Number(options.maxAttempts) || DEFAULT_MAX_FETCH_ATTEMPTS;
   let lastError;
 
-  for (let attempt = 1; attempt <= MAX_FETCH_ATTEMPTS; attempt += 1) {
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
       const response = await fetch(url, {
@@ -390,8 +394,11 @@ async function fetchText(url, headers = {}) {
 
       return await response.text();
     } catch (error) {
+      if (error?.name === "AbortError") {
+        error.timeoutMs = timeoutMs;
+      }
       lastError = error;
-      if (attempt < MAX_FETCH_ATTEMPTS && isRetryableFetchError(error)) {
+      if (attempt < maxAttempts && isRetryableFetchError(error)) {
         await sleep(
           RETRY_BACKOFF_BASE_MS * attempt + Math.floor(Math.random() * 150),
         );
@@ -436,7 +443,10 @@ async function loadFredItem(definition) {
       definition.seriesId,
     )}` + `&cosd=${toIsoDate(startDate)}`;
 
-  const text = await fetchText(url, STOOQ_HEADERS);
+  const text = await fetchText(url, STOOQ_HEADERS, {
+    timeoutMs: FRED_REQUEST_TIMEOUT_MS,
+    maxAttempts: FRED_MAX_FETCH_ATTEMPTS,
+  });
   const rows = parseFredSeries(text);
 
   return normalizeItem(definition, summarizeSeries(rows));
@@ -983,12 +993,17 @@ function summarizeUnavailableDefinitions(sourceLabel, definitions) {
   return `${sourceLabel} is still unavailable for ${labels.join(", ")}${suffix}.`;
 }
 
-function summarizeRecoveredDefinitions(sourceLabel, recovered, fallbackSnapshotKey) {
+function buildRecoveredSourceSummary(source, recovered, fallbackSnapshotKey) {
   if (!recovered.length || !fallbackSnapshotKey) {
     return null;
   }
 
-  return `Used the most recent successful ${sourceLabel} snapshot (${fallbackSnapshotKey}) for ${recovered.length} instrument${recovered.length === 1 ? "" : "s"} while the live source retried unsuccessfully.`;
+  return {
+    source,
+    sourceLabel: KEYDATA_SOURCE_LABELS[source] || source,
+    count: recovered.length,
+    snapshotKey: fallbackSnapshotKey,
+  };
 }
 
 function getPayloadCacheSeconds(payload, snapshotWindow) {
@@ -1107,39 +1122,27 @@ export async function buildPayload(snapshotWindow, options = {}) {
     nseRecovery.recovered.length +
     stooqRecovery.recovered.length +
     fredRecovery.recovered.length;
+  const recoveredSources = [
+    buildRecoveredSourceSummary(
+      "nse",
+      nseRecovery.recovered,
+      fallbackSnapshotKey,
+    ),
+    buildRecoveredSourceSummary(
+      "stooq",
+      stooqRecovery.recovered,
+      fallbackSnapshotKey,
+    ),
+    buildRecoveredSourceSummary(
+      "fred",
+      fredRecovery.recovered,
+      fallbackSnapshotKey,
+    ),
+  ].filter(Boolean);
   const recoveredFromPreviousSnapshot =
     recoveredItemCount > 0 &&
     Boolean(fallbackSnapshotKey) &&
     fallbackSnapshotKey !== snapshotWindow.key;
-
-  if (recoveredFromPreviousSnapshot) {
-    const nseRecoveryWarning = summarizeRecoveredDefinitions(
-      KEYDATA_SOURCE_LABELS.nse,
-      nseRecovery.recovered,
-      fallbackSnapshotKey,
-    );
-    if (nseRecoveryWarning) {
-      warnings.push(nseRecoveryWarning);
-    }
-
-    const stooqRecoveryWarning = summarizeRecoveredDefinitions(
-      KEYDATA_SOURCE_LABELS.stooq,
-      stooqRecovery.recovered,
-      fallbackSnapshotKey,
-    );
-    if (stooqRecoveryWarning) {
-      warnings.push(stooqRecoveryWarning);
-    }
-
-    const fredRecoveryWarning = summarizeRecoveredDefinitions(
-      KEYDATA_SOURCE_LABELS.fred,
-      fredRecovery.recovered,
-      fallbackSnapshotKey,
-    );
-    if (fredRecoveryWarning) {
-      warnings.push(fredRecoveryWarning);
-    }
-  }
 
   if (nseResult.status === "rejected" && !nseRecovery.recovered.length) {
     warnings.push(
@@ -1213,6 +1216,7 @@ export async function buildPayload(snapshotWindow, options = {}) {
       cadenceLabel: snapshotWindow.cadenceLabel,
       servedStale: recoveredFromPreviousSnapshot,
       staleItemCount: recoveredItemCount,
+      recoveredSources,
     },
     highlights,
     insights,
@@ -1238,13 +1242,11 @@ function buildStalePayload(payload, error, snapshotWindow) {
       cadenceLabel:
         payload.snapshot?.cadenceLabel || snapshotWindow.cadenceLabel,
       servedStale: true,
+      refreshPending: true,
       staleReason: error?.message || "Unknown refresh error",
       requestedKey: snapshotWindow.key,
     },
-    warnings: [
-      `Fresh snapshot for ${snapshotWindow.key} failed; serving the most recent successful snapshot instead.`,
-      ...(payload.warnings || []),
-    ],
+    warnings: payload.warnings || [],
   };
 }
 

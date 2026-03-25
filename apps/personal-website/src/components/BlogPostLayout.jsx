@@ -1,48 +1,13 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { Box, Container, alpha } from "@mui/material";
 import SEO from "./SEO";
 import BlogAudioPlayer from "./BlogAudioPlayer";
 import { useColorMode } from "../providers/ColorModeProvider";
-import {
-  getBlogContentProps,
-  trackContentEngagement,
-  trackContentView,
-  trackCtaClick,
-} from "../lib/analytics";
-
-const ENGAGEMENT_MILESTONES_SECONDS = [15, 30, 60, 120, 240];
-
-function ctaIdFromValue(value = "") {
-  const normalized = value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "")
-    .slice(0, 80);
-
-  return normalized || "link";
-}
-
-function linkLabel(anchor) {
-  return (
-    anchor.getAttribute("data-analytics-label") ||
-    anchor.getAttribute("aria-label") ||
-    anchor.textContent ||
-    anchor.href ||
-    "link"
-  )
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, 120);
-}
 
 export default function BlogPostLayout({ slug, post, children }) {
   const articleRef = useRef(null);
   const { mode } = useColorMode();
   const isDark = mode === "dark";
-  const contentProps = useMemo(
-    () => getBlogContentProps(slug, post),
-    [slug, post],
-  );
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -66,115 +31,6 @@ export default function BlogPostLayout({ slug, post, children }) {
     description: post?.description,
   };
 
-  useEffect(() => {
-    void trackContentView(contentProps);
-
-    if (typeof window === "undefined" || typeof document === "undefined") {
-      return undefined;
-    }
-
-    const sentMilestones = new Set();
-    let engagedMs = 0;
-    let activeSince = document.hidden ? 0 : Date.now();
-    let summarySent = false;
-
-    const syncEngagement = () => {
-      if (activeSince) {
-        engagedMs += Date.now() - activeSince;
-        activeSince = 0;
-      }
-
-      const engagedSeconds = Math.floor(engagedMs / 1000);
-      ENGAGEMENT_MILESTONES_SECONDS.forEach((milestone) => {
-        if (engagedSeconds >= milestone && !sentMilestones.has(milestone)) {
-          sentMilestones.add(milestone);
-          void trackContentEngagement({
-            ...contentProps,
-            engaged_seconds: milestone,
-            engagement_kind: "milestone",
-            milestone_label: `${milestone}s`,
-          });
-        }
-      });
-
-      if (!document.hidden && !summarySent) {
-        activeSince = Date.now();
-      }
-    };
-
-    const emitSummary = () => {
-      if (summarySent) {
-        return;
-      }
-
-      syncEngagement();
-      const totalSeconds = Math.floor(engagedMs / 1000);
-      if (totalSeconds < 5) {
-        return;
-      }
-
-      summarySent = true;
-      void trackContentEngagement({
-        ...contentProps,
-        engaged_seconds: totalSeconds,
-        engagement_kind: "summary",
-      });
-    };
-
-    const handleVisibilityChange = () => {
-      syncEngagement();
-    };
-
-    const intervalId = window.setInterval(syncEngagement, 5000);
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("pagehide", emitSummary);
-
-    return () => {
-      window.clearInterval(intervalId);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("pagehide", emitSummary);
-      emitSummary();
-    };
-  }, [contentProps]);
-
-  const handleArticleClickCapture = (event) => {
-    if (!(event.target instanceof Element)) {
-      return;
-    }
-
-    const anchor = event.target.closest("a");
-    if (!anchor) {
-      return;
-    }
-
-    const rawHref = anchor.getAttribute("href") || anchor.href;
-    if (!rawHref || rawHref.startsWith("#")) {
-      return;
-    }
-
-    const destination = rawHref.startsWith("http")
-      ? rawHref
-      : typeof window !== "undefined"
-        ? new URL(rawHref, window.location.origin).toString()
-        : rawHref;
-    const isOutbound =
-      typeof window !== "undefined" &&
-      /^https?:\/\//.test(destination) &&
-      !destination.startsWith(window.location.origin);
-    const label = linkLabel(anchor);
-
-    void trackCtaClick({
-      ...contentProps,
-      cta_id: `article_${isOutbound ? "outbound" : "link"}_${ctaIdFromValue(label || rawHref)}`,
-      cta_label: label || rawHref,
-      destination,
-      surface: "article_body",
-      position: isOutbound ? "outbound" : "internal",
-      promo: anchor.dataset.analyticsPromo || undefined,
-    });
-  };
-
   return (
     <>
       <SEO
@@ -195,7 +51,6 @@ export default function BlogPostLayout({ slug, post, children }) {
         <Box
           component="article"
           ref={articleRef}
-          onClickCapture={handleArticleClickCapture}
           sx={(theme) => {
             const colors = {
               blue: isDark ? theme.palette.primary.light : theme.palette.primary.main,

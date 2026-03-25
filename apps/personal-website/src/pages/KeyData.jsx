@@ -161,6 +161,14 @@ function isPastRefreshBoundary(payload, now = Date.now()) {
   return nextRefreshTimestamp != null && now >= nextRefreshTimestamp;
 }
 
+function shouldRefreshPayload(payload) {
+  if (!hasUsablePayloadShape(payload)) {
+    return true;
+  }
+
+  return isPastRefreshBoundary(payload) || Boolean(payload.snapshot?.servedStale);
+}
+
 function readCachedKeyDataPayload() {
   if (typeof window === "undefined") {
     return null;
@@ -196,19 +204,15 @@ function markPayloadAsStaleFallback(payload) {
     return payload;
   }
 
-  const snapshotKey = payload.snapshot?.key;
-  const fallbackWarning = snapshotKey
-    ? `Fresh snapshot for ${snapshotKey} is unavailable right now; showing the most recent successful snapshot instead.`
-    : "Fresh snapshot is unavailable right now; showing the most recent successful snapshot instead.";
-
   return {
     ...payload,
     status: "stale",
     snapshot: {
       ...(payload.snapshot || {}),
       servedStale: true,
+      refreshPending: true,
     },
-    warnings: [fallbackWarning, ...(payload.warnings || [])],
+    warnings: payload.warnings || [],
   };
 }
 
@@ -234,8 +238,13 @@ async function fetchKeyDataPayload({
   signal,
   bypassBrowserCache = false,
   preferStatic = false,
+  allowStaleStatic = false,
+  includeDynamicFallback = true,
 } = {}) {
-  const candidates = getEndpointCandidates(preferStatic);
+  const candidates =
+    preferStatic && !includeDynamicFallback
+      ? [STATIC_SNAPSHOT_ENDPOINT]
+      : getEndpointCandidates(preferStatic);
   let lastError;
   let staleFallback = null;
 
@@ -271,6 +280,9 @@ async function fetchKeyDataPayload({
         isPastRefreshBoundary(payload)
       ) {
         staleFallback = payload;
+        if (allowStaleStatic || !includeDynamicFallback) {
+          return markPayloadAsStaleFallback(payload);
+        }
         continue;
       }
 
@@ -330,6 +342,24 @@ function formatAsOf(value) {
   }
 
   return DAY_FORMATTER.format(date);
+}
+
+function getSnapshotStatusLabel(payload) {
+  const snapshot = payload?.snapshot;
+  if (!snapshot?.servedStale) {
+    return null;
+  }
+
+  const staleItemCount = Number(snapshot.staleItemCount) || 0;
+  if (staleItemCount > 0) {
+    return `Using last good data for ${staleItemCount} item${staleItemCount === 1 ? "" : "s"}`;
+  }
+
+  if (snapshot.refreshPending) {
+    return "Refreshing latest snapshot";
+  }
+
+  return "Using last good snapshot";
 }
 
 function getAverageChange(items, window) {
@@ -1264,19 +1294,50 @@ export default function KeyData() {
   useEffect(() => {
     const controller = new AbortController();
     const cachedPayload = initialPayloadRef.current;
-    const hasCachedPayload = Boolean(cachedPayload);
-    const shouldBypassBrowserCache = isPastRefreshBoundary(cachedPayload);
 
     async function loadInitialData() {
-      if (hasCachedPayload) {
+      let renderablePayload = cachedPayload;
+
+      if (!renderablePayload) {
+        try {
+          const staticPayload = await fetchKeyDataPayload({
+            signal: controller.signal,
+            preferStatic: true,
+            allowStaleStatic: true,
+            includeDynamicFallback: false,
+          });
+          writeCachedKeyDataPayload(staticPayload);
+          renderablePayload = staticPayload;
+          startTransition(() => {
+            setPayload(staticPayload);
+            setError("");
+          });
+        } catch (staticLoadError) {
+          if (controller.signal.aborted) {
+            return;
+          }
+        }
+      }
+
+      const needsLiveRefresh = shouldRefreshPayload(renderablePayload);
+
+      if (renderablePayload && needsLiveRefresh) {
         setIsRefreshing(true);
+      }
+
+      if (!needsLiveRefresh) {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+          setIsRefreshing(false);
+        }
+        return;
       }
 
       try {
         const nextPayload = await fetchKeyDataPayload({
           signal: controller.signal,
-          bypassBrowserCache: shouldBypassBrowserCache,
-          preferStatic: true,
+          bypassBrowserCache: needsLiveRefresh,
+          preferStatic: false,
         });
         writeCachedKeyDataPayload(nextPayload);
         startTransition(() => {
@@ -1284,7 +1345,7 @@ export default function KeyData() {
           setError("");
         });
       } catch (loadError) {
-        if (!controller.signal.aborted) {
+        if (!controller.signal.aborted && !renderablePayload) {
           setError(loadError?.message || "Unable to load key data.");
         }
       } finally {
@@ -1315,7 +1376,9 @@ export default function KeyData() {
         setError("");
       });
     } catch (refreshError) {
-      setError(refreshError?.message || "Unable to reload key data.");
+      if (!payload) {
+        setError(refreshError?.message || "Unable to reload key data.");
+      }
     } finally {
       setIsRefreshing(false);
       controller.abort();
@@ -1361,6 +1424,7 @@ export default function KeyData() {
   const leader = payload.highlights?.leaders?.[0];
   const laggard = payload.highlights?.laggards?.[0];
   const strongestMonth = payload.highlights?.strongestMonth?.[0];
+  const snapshotStatusLabel = getSnapshotStatusLabel(payload);
 
   return (
     <Stack spacing={3}>
@@ -1432,6 +1496,9 @@ export default function KeyData() {
                 color="primary"
                 variant="outlined"
               />
+              {snapshotStatusLabel ? (
+                <Chip label={snapshotStatusLabel} variant="outlined" />
+              ) : null}
             </Stack>
           </Box>
 
