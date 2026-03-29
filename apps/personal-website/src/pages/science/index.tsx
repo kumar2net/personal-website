@@ -61,7 +61,7 @@ export default function ScienceIndex() {
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
                 <Chip
                   size="small"
-                  label="Sora 2 + Infographic"
+                  label="Infographic + Anatomy"
                   sx={{
                     width: "fit-content",
                     backgroundColor: alpha(primaryContainer, 0.14),
@@ -77,7 +77,7 @@ export default function ScienceIndex() {
                   sports and what the definitive, anatomy-corrective fixes are.
                 </Typography>
                 <Typography variant="bodySmall" sx={{ color: alpha(onSurface, 0.7) }}>
-                  Includes a stitched ~36s Sora 2 flow with thumbnail chapters and a labeled infographic.
+                  Includes a labeled infographic and a concise anatomy-first explainer.
                 </Typography>
               </CardContent>
             </CardActionArea>

@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   CardContent,
-  Chip,
   Container,
   Divider,
   Grid,
@@ -18,10 +17,6 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import SEO from "../../components/SEO";
-
-const PRIMARY_VIDEO_SRC = "/media/generated/back-pain-sora-12s.mp4";
-const FALLBACK_VIDEO_SRC = "/media/generated/back-pain-sora.mp4";
-const PART2_VIDEO_SRC = "/media/generated/back-pain-sora-12s-part2.mp4";
 
 const microvideoSteps = [
   {
@@ -134,64 +129,13 @@ export default function BackPainPlanPage() {
           </Stack>
 
           <Card sx={cardSx}>
-            <CardContent sx={{ display: "grid", gap: 1.25 }}>
-              <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
-                Guided Video (Sora, ~4s)
-              </Typography>
-              <Typography variant="bodyMedium" sx={{ color: alpha(onSurface, 0.8) }}>
-                Short visual of the key sequence. Use the captions below for a longer
-                voiceover if you record your own 12-second guide.
-              </Typography>
-              <Box
-                component="video"
-                controls
-                playsInline
-                preload="metadata"
-                sx={{
-                  width: "100%",
-                  borderRadius: 2,
-                  border: `1px solid ${alpha(outlineVariant, 0.8)}`,
-                  backgroundColor: alpha(onSurface, 0.04),
-                }}
-              >
-                <source src={PRIMARY_VIDEO_SRC} type="video/mp4" />
-                <source src={FALLBACK_VIDEO_SRC} type="video/mp4" />
-                Your browser does not support the video tag.
-              </Box>
-            </CardContent>
-          </Card>
-
-          <Card sx={cardSx}>
-            <CardContent sx={{ display: "grid", gap: 1.25 }}>
-              <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
-                Guided Video – Part 2 (Sora, ~4s)
-              </Typography>
-              <Typography variant="bodyMedium" sx={{ color: alpha(onSurface, 0.8) }}>
-                Continuation: countertop hinge, supported split-stance, and sit/stand
-                strategy. Use this after the first clip for a daily flow.
-              </Typography>
-              <Box
-                component="video"
-                controls
-                playsInline
-                preload="metadata"
-                sx={{
-                  width: "100%",
-                  borderRadius: 2,
-                  border: `1px solid ${alpha(outlineVariant, 0.8)}`,
-                  backgroundColor: alpha(onSurface, 0.04),
-                }}
-              >
-                <source src={PART2_VIDEO_SRC} type="video/mp4" />
-                Your browser does not support the video tag.
-              </Box>
-            </CardContent>
-          </Card>
-
-          <Card sx={cardSx}>
             <CardContent sx={{ display: "grid", gap: 1.5 }}>
               <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
-                Video/Voiceover Script (use these captions)
+                Guided Sequence
+              </Typography>
+              <Typography variant="bodyMedium" sx={{ color: alpha(onSurface, 0.8) }}>
+                Use these steps as a short daily reset or as a voiceover outline if you
+                want to record your own guide.
               </Typography>
               <Grid container spacing={2}>
                 {microvideoSteps.map((step) => (

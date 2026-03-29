@@ -365,7 +365,7 @@ const imageDir = 'apps/personal-website/public/media/generated/'
 1. **Automatic blogPostsData.js Updates**: Script could automatically append to the data file
 2. **Image Optimization**: Compress images during download for better performance
 3. **Multiple Images**: Support for multiple images per blog post
-4. **Video Generation**: Integration with Sora for video content
+4. **Video Generation**: Optional short-form companion workflow
 5. **SEO Metadata**: Automatic generation of meta descriptions and keywords
 
 ## Related Documentation

@@ -72,9 +72,6 @@ generate/ytshorts/**/*.jpg
 generate/ytshorts/**/*.png
 generate/ytshorts/**/__pycache__/
 generate/ytshorts/**/concat-list.txt
-content/shorts/*/clips/*.mp4
-content/shorts/*/clips/*-job*.json
-content/shorts/*/renders/*.mp4
 
 # KDP/eBook project files
 KDP_*.md

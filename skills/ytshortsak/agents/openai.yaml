@@ -1,4 +1,4 @@
 interface:
   display_name: "YT Shorts AK"
-  short_description: "Plan Shorts with Sora and CTR optimization"
-  default_prompt: "Use $ytshortsak to turn my original idea into a 50-second YouTube Short with a hook, Sora clip plan, narration/captions, packaging, and CTA."
+  short_description: "Plan Shorts with pacing and CTR optimization"
+  default_prompt: "Use $ytshortsak to turn my original idea into a 50-second YouTube Short with a hook, clip plan, narration/captions, packaging, and CTA."

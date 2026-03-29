@@ -15,9 +15,6 @@ export const metadata = {
 };
 
 const heroImage = "/generate/2026-03-13-pisces-birthday-chorus-at-sixty-hero.svg";
-const soraVideo = "/generate/2026-03-13-pisces-birthday-chorus-at-sixty-sora-2.mp4";
-const soraPoster =
-  "/generate/2026-03-13-pisces-birthday-chorus-at-sixty-sora-2-poster.jpg";
 
 const colors = {
   abyss: "#10354a",
@@ -308,80 +305,6 @@ export default function BlogPost() {
             }}
           >
             ♓
-          </Typography>
-        </Box>
-
-        <Box
-          component="section"
-          className="pisces-surface"
-          sx={{
-            ...cardSx,
-            display: "flex",
-            flexDirection: "column",
-            p: { xs: 2, md: 3 },
-            gap: 2,
-          }}
-        >
-          <Typography
-            variant="overline"
-            sx={{
-              display: "block",
-              letterSpacing: 1.2,
-              color: colors.tide,
-            }}
-          >
-            Sora 2 companion video
-          </Typography>
-          <Typography variant="h2" sx={{ mt: 0, mb: 1, color: colors.ink }}>
-            The thank-you note, answered in the same medium
-          </Typography>
-          <Typography variant="body1" sx={{ ...bodyTextSx, mb: 0 }}>
-            I wanted this near the top because it is the closest thing to a
-            reply in kind: a first-person thank-you stitched around Singapore,
-            Orlando, SFO, and Seattle, with the narration text I sent back.
-          </Typography>
-          <Box
-            sx={{
-              position: "relative",
-              overflow: "hidden",
-              mt: 1,
-              borderRadius: 4,
-              background: `linear-gradient(180deg, ${colors.abyss} 0%, ${alpha(
-                colors.abyss,
-                0.82,
-              )} 100%)`,
-              border: `1px solid ${alpha(colors.tide, 0.22)}`,
-              boxShadow: "0 28px 60px rgba(16, 53, 74, 0.18)",
-            }}
-          >
-            <Box
-              component="video"
-              controls
-              playsInline
-              preload="metadata"
-              poster={soraPoster}
-              sx={{
-                display: "block",
-                width: "100%",
-                aspectRatio: "9 / 16",
-                objectFit: "cover",
-                backgroundColor: colors.abyss,
-              }}
-            >
-              <source src={soraVideo} type="video/mp4" />
-              Your browser does not support the embedded video. You can still
-              access it directly at {soraVideo}.
-            </Box>
-          </Box>
-          <Typography
-            variant="body2"
-            sx={{
-              color: alpha(colors.ink, 0.76),
-              lineHeight: 1.7,
-            }}
-          >
-            Captioned 48-second vertical cut with first-person narration and
-            the four-city birthday reply.
           </Typography>
         </Box>
 

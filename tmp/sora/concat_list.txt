@@ -1,5 +1,0 @@
-file /Users/kumara/personal-website/outputs/sora/llm-truce_seg1.mp4
-file /Users/kumara/personal-website/outputs/sora/llm-truce_seg2.mp4
-file /Users/kumara/personal-website/outputs/sora/llm-truce_seg3.mp4
-file /Users/kumara/personal-website/outputs/sora/llm-truce_seg4.mp4
-file /Users/kumara/personal-website/outputs/sora/black_tail.mp4

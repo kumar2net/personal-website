@@ -1,8 +1,0 @@
-[0:v][1:v]overlay=0:0:enable='between(t,0,8)'[v1];
-[v1][2:v]overlay=0:0:enable='between(t,8,16)'[v2];
-[v2][3:v]overlay=0:0:enable='between(t,16,24)'[v3];
-[v3][4:v]overlay=0:0:enable='between(t,24,32)'[v4];
-[v4][5:v]overlay=0:0:enable='between(t,32,40)'[v5];
-[v5][6:v]overlay=0:0:enable='between(t,40,48)'[vout];
-[0:a]volume=0.16[bed];
-[bed][7:a]amix=inputs=2:duration=first:dropout_transition=2[aout]

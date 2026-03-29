@@ -822,7 +822,7 @@ const App = ({ mode }) => {
                     <>
                       <SEO
                         title="Recurrent Kneecap Dislocation – Anatomy and Permanent Fix"
-                        description="Stitched multi-part Sora 2 explainer plus infographic on recurrent lateral patellar instability and definitive correction."
+                        description="Annotated infographic and anatomy note on recurrent lateral patellar instability and definitive correction."
                         canonicalPath="/science/patellar-instability"
                         type="article"
                       />
