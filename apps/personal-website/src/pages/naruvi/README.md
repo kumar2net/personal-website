@@ -1,11 +1,10 @@
 # Naruvi Section
 
-Owner-facing private report for the `/naruvi` route.
+Owner-facing report for the `/naruvi` route.
 
 ## Current Scope
 
 - Date-stamped status snapshot for the Naruvi water-management discussion
-- Password-gated route using `VITE_NARUVI_USERNAME` / `VITE_NARUVI_PASSWORD`
 - Source register separating local figures, public benchmarks, and pending confirmations
 - Editable solar ROI calculator
 - Two embedded technical diagrams:

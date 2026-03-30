@@ -924,19 +924,7 @@ const App = ({ mode }) => {
                         canonicalPath="/naruvi"
                         type="website"
                       />
-                      <PasswordGate
-                        title="Naruvi Report Access"
-                        description="Enter the credentials shared with Naruvi owners to view this private water-management report."
-                        usernameEnvKey="VITE_NARUVI_USERNAME"
-                        passwordEnvKey="VITE_NARUVI_PASSWORD"
-                        defaultUsername=""
-                        defaultPassword=""
-                        storageKey="naruvi-authenticated-v1"
-                        submitLabel="Unlock report"
-                        helperText="Set `VITE_NARUVI_USERNAME` and `VITE_NARUVI_PASSWORD` in your `.env` to configure this gate."
-                      >
-                        <NaruviWaterIssues />
-                      </PasswordGate>
+                      <NaruviWaterIssues />
                     </>
                   }
                 />
