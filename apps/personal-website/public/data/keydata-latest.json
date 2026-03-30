@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-03-30T01:43:04.758Z",
-  "status": "ok",
+  "generatedAt": "2026-03-30T02:23:19.474Z",
+  "status": "stale",
   "snapshot": {
-    "key": "2026-03-29",
-    "generatedAt": "2026-03-30T01:43:04.758Z",
-    "refreshAt": "2026-03-29T02:00:00.000Z",
-    "nextRefreshAt": "2026-03-30T02:00:00.000Z",
+    "key": "2026-03-30",
+    "generatedAt": "2026-03-30T02:23:19.474Z",
+    "refreshAt": "2026-03-30T02:00:00.000Z",
+    "nextRefreshAt": "2026-03-31T02:00:00.000Z",
     "cadenceLabel": "Refreshes once daily after 07:30 IST (02:00 UTC).",
-    "servedStale": false,
+    "servedStale": true,
     "staleItemCount": 22,
     "recoveredSources": [
       {
@@ -179,7 +179,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -222,7 +222,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -265,7 +265,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         }
       ]
@@ -315,7 +315,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -597,7 +597,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -640,7 +640,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -683,7 +683,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -726,7 +726,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -769,7 +769,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         }
       ]
@@ -819,7 +819,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -862,7 +862,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -905,7 +905,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -948,7 +948,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -991,7 +991,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -1034,7 +1034,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         },
         {
@@ -1077,7 +1077,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-03-29",
-            "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+            "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
           }
         }
       ]
@@ -1124,7 +1124,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     },
     {
@@ -1167,7 +1167,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     },
     {
@@ -1210,7 +1210,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     },
     {
@@ -1253,7 +1253,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     },
     {
@@ -1296,7 +1296,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     },
     {
@@ -1339,7 +1339,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     },
     {
@@ -1382,7 +1382,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-03-29",
-        "snapshotGeneratedAt": "2026-03-30T01:21:13.301Z"
+        "snapshotGeneratedAt": "2026-03-30T01:43:04.758Z"
       }
     }
   ],

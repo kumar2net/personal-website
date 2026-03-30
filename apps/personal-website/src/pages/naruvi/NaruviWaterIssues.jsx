@@ -124,7 +124,7 @@ const refreshNotes = [
 const updateTrackers = [
   {
     title: 'Solar economics updated',
-    body: 'Latest owner input says total solar cost after subsidy should remain under ₹9,00,000, which pulls the payback period down to about 25 months, or just over 2 years.',
+    body: 'Latest owner input says the current solar plan is grid-connected only, without any BESS, and total cost should remain under ₹9,00,000 once TNPDCL gives back the subsidy. That pulls payback down to about 25 months, or just over 2 years.',
     tone: 'emerald',
   },
   {
@@ -160,6 +160,11 @@ const sourceRegister = [
     body: 'Latest owner input added on March 30, 2026: solar should land below ₹9 lakh after subsidy, the indoor RO line remains politically important, and NOWA is contemplating a parallel utility-water line plus a TDS reset to about 70.',
   },
   {
+    title: 'Groundwater-recharge priority',
+    date: COMMUNITY_UPDATE_DATE,
+    body: 'Owner observation over the last four years is that both monsoons have been weak at the site, so rainwater harvesting is now being treated as the clearest low-hanging fruit for recharging the water table.',
+  },
+  {
     title: 'Public benchmark',
     date: 'WHO domestic water quantity guidance',
     body: 'Basic domestic service starts around 20 L/person/day, higher hygiene around 50 L/person/day, and optimal domestic service above 100 L/person/day.',
@@ -179,6 +184,7 @@ const monitoringItems = [
   'TNPDCL common-service bill before and after the tariff/load changes',
   'Delivered TDS band for the retained indoor RO line',
   'Outdoor utility-line uptake after one outlet per villa goes live',
+  'Rainwater harvesting capture and recharge status before and after each monsoon',
 ];
 
 const SummaryCard = ({ eyebrow, value, detail, tone = 'slate' }) => (
@@ -763,6 +769,31 @@ const NaruviWaterIssues = () => {
           </div>
         </section>
 
+        <section className="mb-10 rounded-3xl border-2 border-cyan-300 bg-cyan-50 p-6 shadow-sm">
+          <div className="max-w-4xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-800">
+              Immediate Priority
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold text-cyan-950">
+              Rainwater harvesting should be treated as the low-hanging fruit
+              and implemented ASAP
+            </h2>
+            <p className="mt-4 text-base leading-7 text-slate-800">
+              Owner observation over the last four years is that both the South
+              West and North East monsoons have largely been a flop show at the
+              site. That makes it even more important to capture every bit of
+              rainfall available and use it to recharge the water table instead
+              of letting runoff escape.
+            </p>
+            <p className="mt-4 text-base leading-7 text-slate-800">
+              This page now treats rainwater harvesting as a separate urgent
+              workstream, not a side note behind solar or RO optimization.
+              Water-table recharge is the cleanest near-term resilience move
+              available to the community.
+            </p>
+          </div>
+        </section>
+
         <section className="mb-10 rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
@@ -771,10 +802,11 @@ const NaruviWaterIssues = () => {
               </h2>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-emerald-950">
                 Update date: {COMMUNITY_UPDATE_DATE}. Latest owner input says
-                solar should come in below ₹9,00,000 after subsidy, strong owner
-                opinion still favors retaining the RO-fed villa network, and the
-                current NOWA office is contemplating a parallel outdoor
-                utility-water line plus a TDS reset to about 70.
+                solar should come in below ₹9,00,000 after TNPDCL gives back
+                the subsidy, strong owner opinion still favors retaining the
+                RO-fed villa network, and the current NOWA office is
+                contemplating a parallel outdoor utility-water line plus a TDS
+                reset to about 70.
               </p>
             </div>
           </div>
@@ -870,6 +902,11 @@ const NaruviWaterIssues = () => {
                 confirmed refresh is the lower solar capex and the revised water
                 design direction from owners and NOWA.
               </p>
+              <p className="mt-3 text-sm leading-6 text-slate-800">
+                There is no BESS or battery-energy-storage-system scope in this
+                Naruvi solar plan. The current economics shown here are for a
+                direct grid-connected solar setup.
+              </p>
             </div>
           </div>
         </section>
@@ -878,7 +915,7 @@ const NaruviWaterIssues = () => {
           <h2 className="text-2xl font-semibold text-slate-900">
             Technical Diagrams
           </h2>
-          <div className="mt-5 grid gap-6 xl:grid-cols-2">
+          <div className="mt-5 grid gap-6">
             <WaterArchitectureDiagram />
             <EnergyBillingDiagram />
           </div>
@@ -970,10 +1007,11 @@ const NaruviWaterIssues = () => {
           </h2>
           <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-800">
             These defaults reflect the latest owner note on this page:
-            post-subsidy capex below {formatCurrency(900000)} and payback of
-            about 25 months, plus the older optional assumption that LM51 fixed
-            charges may reduce if that workstream also completes. Treat this as
-            a planning tool until future bills confirm the realized savings.
+            capex below {formatCurrency(900000)} after TNPDCL gives back the
+            subsidy, payback of about 25 months, and no battery-storage layer in
+            the current solar scope. The older LM51 fixed-charge reduction
+            remains an optional assumption. Treat this as a planning tool until
+            future bills confirm the realized savings.
           </p>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -1114,6 +1152,11 @@ const NaruviWaterIssues = () => {
                 {nextActions.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
+                <li>
+                  Start rainwater harvesting as an urgent parallel workstream so
+                  every usable spell of rain is captured for groundwater
+                  recharge.
+                </li>
                 <li>
                   Document the final operating note: retain indoor RO use, raise
                   supplied TDS to around 70, and reserve the new outlet for
