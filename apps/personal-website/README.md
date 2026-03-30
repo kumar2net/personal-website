@@ -20,6 +20,7 @@ Primary site app for `kumar2net.com`.
 - Run `npm run dev` from the repo root for the normal Vite loop.
 - Run `vercel dev` when you need local parity for `/api/blog-tts`, `/api/translate`, and other serverless routes.
 - Keep `OPENAI_API_KEY` available for AI-backed routes and content indexing that depends on OpenAI.
+- Private client-side gates can be configured through `.env`, including `VITE_UTILITIES_USERNAME` / `VITE_UTILITIES_PASSWORD` and `VITE_NARUVI_USERNAME` / `VITE_NARUVI_PASSWORD`.
 
 ## Source Map
 - `src/`: app UI, routes, content, and shared client utilities

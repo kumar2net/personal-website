@@ -1,29 +1,31 @@
 # Naruvi Section
 
-This section contains the Naruvi Gated Community Water Management Report.
+Owner-facing private report for the `/naruvi` route.
+
+## Current Scope
+
+- Date-stamped status snapshot for the Naruvi water-management discussion
+- Password-gated route using `VITE_NARUVI_USERNAME` / `VITE_NARUVI_PASSWORD`
+- Source register separating local figures, public benchmarks, and pending confirmations
+- Editable solar ROI calculator
+- Two embedded technical diagrams:
+  - Proposed parallel utility-water architecture
+  - Solar and TNPDCL billing logic
+
+## Current Design Direction
+
+The active recommendation is now the parallel utility-water approach:
+
+- Keep the indoor RO-fed villa network unchanged
+- Add one pressurized outdoor utility-water outlet per villa
+- Shift outdoor demand away from the RO plant first
+- Confirm savings only after post-change TNPDCL bills and vendor scope are available
+
+The older single-line mixing concept is historical background, not the preferred
+design on the page anymore.
 
 ## Files
 
-- `NaruviWaterIssues.jsx` - Main React component for the water management report
-- `index.js` - Export file for clean imports
-
-## Content
-
-The report covers:
-
-1. **Current Water Usage Analysis** - 26,000 litres per day across 35 villas
-2. **WHO Guidelines** - Water consumption recommendations with personal opinion (150L/person/day)
-3. **Proposed Solution** - Dual water system (RO + Borewell hardwater)
-4. **Solution Diagram** - Visual representation of the proposed system
-5. **Implementation Strategy** - Using existing plumbing with controls
-6. **Cost Analysis** - ₹7,00,000 with detailed breakdown table
-7. **Recommendations** - Implementation considerations and next steps
-8. **Personal Insights** - "My 2 Cents" section with additional recommendations
-
-## Navigation
-
-The page is accessible at `/naruvi` when accessed directly via URL, but is **discrete** - it's not prominently featured in the main navigation menus or home page buttons. This makes it accessible to those who know the URL while keeping it low-profile.
-
-## Source
-
-Based on the content from `docs/naruviWaterissues.md`.
+- `NaruviWaterIssues.jsx` - main route component, calculations, and diagrams
+- `NaruviWaterIssues.css` - light-surface and SVG typography styling
+- `index.js` - re-export for route loading

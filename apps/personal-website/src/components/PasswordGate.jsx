@@ -7,26 +7,34 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-const STORAGE_KEY = 'utilities-authenticated-v1';
-
 const normalizeValue = (value) =>
   typeof value === 'string' ? value.trim() : '';
 
-const useCredentials = () =>
+const useCredentials = ({
+  usernameEnvKey,
+  passwordEnvKey,
+  defaultUsername,
+  defaultPassword,
+}) =>
   useMemo(
     () => ({
-      username:
-        normalizeValue(import.meta.env.VITE_UTILITIES_USERNAME) || 'utilities',
-      password:
-        normalizeValue(import.meta.env.VITE_UTILITIES_PASSWORD) || 'dashboard',
+      username: normalizeValue(import.meta.env[usernameEnvKey]) || defaultUsername,
+      password: normalizeValue(import.meta.env[passwordEnvKey]) || defaultPassword,
     }),
-    [],
+    [defaultPassword, defaultUsername, passwordEnvKey, usernameEnvKey],
   );
 
 const PasswordGate = ({
   children,
   title = "Utilities Access",
   description = "Enter the credentials shared with you to view this dashboard.",
+  usernameEnvKey = 'VITE_UTILITIES_USERNAME',
+  passwordEnvKey = 'VITE_UTILITIES_PASSWORD',
+  defaultUsername = 'utilities',
+  defaultPassword = 'dashboard',
+  storageKey = 'utilities-authenticated-v1',
+  submitLabel = 'Unlock dashboard',
+  helperText,
 }) => {
   const [formState, setFormState] = useState({
     username: '',
@@ -35,13 +43,24 @@ const PasswordGate = ({
   const { username, password } = formState;
   const [error, setError] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const credentials = useCredentials();
+  const credentials = useCredentials({
+    usernameEnvKey,
+    passwordEnvKey,
+    defaultUsername,
+    defaultPassword,
+  });
+  const credentialsConfigured = Boolean(
+    credentials.username && credentials.password
+  );
+  const resolvedHelperText =
+    helperText ||
+    `Tip: update \`${usernameEnvKey}\` and \`${passwordEnvKey}\` in your .env to change credentials.`;
 
   useEffect(() => {
     try {
       const stored =
         typeof window !== 'undefined'
-          ? window.sessionStorage.getItem(STORAGE_KEY)
+          ? window.sessionStorage.getItem(storageKey)
           : null;
       if (stored === 'true') {
         setIsAuthenticated(true);
@@ -49,10 +68,14 @@ const PasswordGate = ({
     } catch {
       // Ignore sessionStorage errors (private browsing, etc.)
     }
-  }, []);
+  }, [storageKey]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!credentialsConfigured) {
+      setError('This password gate is not configured for this environment yet.');
+      return;
+    }
     if (
       username.trim() === credentials.username &&
       password.trim() === credentials.password
@@ -61,7 +84,7 @@ const PasswordGate = ({
       setError('');
       try {
         if (typeof window !== 'undefined') {
-          window.sessionStorage.setItem(STORAGE_KEY, 'true');
+          window.sessionStorage.setItem(storageKey, 'true');
         }
       } catch {
         // Non-blocking if sessionStorage is unavailable
@@ -112,6 +135,12 @@ const PasswordGate = ({
               {error}
             </Alert>
           ) : null}
+          {!credentialsConfigured ? (
+            <Alert severity="warning" sx={{ borderRadius: 2 }}>
+              This page is gated, but credentials have not been configured in
+              this environment yet.
+            </Alert>
+          ) : null}
           <TextField
             label="Username"
             value={username}
@@ -140,11 +169,10 @@ const PasswordGate = ({
             fullWidth
           />
           <Button type="submit" variant="contained" size="large">
-            Unlock dashboard
+            {submitLabel}
           </Button>
           <Typography variant="caption" color="text.secondary">
-            Tip: update `VITE_UTILITIES_USERNAME` and
-            `VITE_UTILITIES_PASSWORD` in your `.env` to change credentials.
+            {resolvedHelperText}
           </Typography>
         </Stack>
       </Paper>

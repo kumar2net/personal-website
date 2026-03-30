@@ -2,20 +2,691 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import './NaruviWaterIssues.css';
 
-const MONTHLY_TNPDCL_COST = 49757;
+const LAST_UPDATED = 'March 30, 2026';
+const COMMUNITY_UPDATE_DATE = 'March 30, 2026';
+
+const DAILY_RO_PERMEATE_L = 29000;
+const OCCUPIED_VILLAS = 35;
+const ASSUMED_RESIDENTS_PER_VILLA = 3;
+const DAILY_PER_CAPITA_L = Math.round(
+  DAILY_RO_PERMEATE_L / OCCUPIED_VILLAS / ASSUMED_RESIDENTS_PER_VILLA
+);
+
+const HALF_RECOVERY_RAW_INPUT_L = DAILY_RO_PERMEATE_L * 2;
+const HIGH_REJECT_RECOVERY = 0.35;
+const HIGH_REJECT_RAW_INPUT_L = Math.round(
+  DAILY_RO_PERMEATE_L / HIGH_REJECT_RECOVERY
+);
+const HIGH_REJECT_VOLUME_L = HIGH_REJECT_RAW_INPUT_L - DAILY_RO_PERMEATE_L;
+const SHIFTED_OUTPUT_EXAMPLE_L = 1000;
+const RAW_WATER_SAVED_AT_50_RECOVERY_L = SHIFTED_OUTPUT_EXAMPLE_L * 2;
+const RAW_WATER_SAVED_AT_35_RECOVERY_L = Math.round(
+  SHIFTED_OUTPUT_EXAMPLE_L / HIGH_REJECT_RECOVERY
+);
+
+const MONTHLY_VARIABLE_ENERGY_COST = 45477;
+const MONTHLY_FIXED_CHARGE = 4280;
+const MONTHLY_TNPDCL_COST = MONTHLY_VARIABLE_ENERGY_COST + MONTHLY_FIXED_CHARGE;
+const BOREWELL_PUMP_MONTHLY_COST = 9567;
+const RO_PUMP_MONTHLY_COST = 25650;
+const LIGHTING_MONTHLY_COST = 10260;
+const RO_PUMP_SHARE_PERCENT = Math.round(
+  (RO_PUMP_MONTHLY_COST / MONTHLY_VARIABLE_ENERGY_COST) * 100
+);
+const WATER_PRODUCTION_SHARE_PERCENT = Math.round(
+  ((RO_PUMP_MONTHLY_COST + BOREWELL_PUMP_MONTHLY_COST) /
+    MONTHLY_VARIABLE_ENERGY_COST) *
+    100
+);
+
+const MONTHLY_FIXED_CHARGE_SAVINGS_REFERENCE = 1391;
 const LM51_PREVIOUS_LOAD_KW = 15;
 const LM51_REVISED_LOAD_KW = 2;
 const TNPDCL_FIXED_CHARGE_PER_KW_PER_2_MONTHS = 214;
 
-const MONTHLY_FIXED_CHARGE_SAVINGS =
-  ((LM51_PREVIOUS_LOAD_KW - LM51_REVISED_LOAD_KW) *
-    TNPDCL_FIXED_CHARGE_PER_KW_PER_2_MONTHS) /
-  2;
+const VILLA_SAMPLE_BILL = {
+  billDate: 'July 26, 2025',
+  billPeriod: 'May 24, 2025 to July 26, 2025',
+  tariff: 'LA1A',
+  sanctionedLoadKw: 13,
+  energyKwh: 323,
+  maxDemandKw: 2.6,
+  payableRs: 813,
+};
+
+const toneClasses = {
+  sky: 'border-sky-200 bg-sky-50',
+  emerald: 'border-emerald-200 bg-emerald-50',
+  amber: 'border-amber-200 bg-amber-50',
+  rose: 'border-rose-200 bg-rose-50',
+  violet: 'border-violet-200 bg-violet-50',
+  slate: 'border-slate-200 bg-slate-50',
+};
 
 const parseInputNumber = (value) => {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;
 };
+
+const formatNumber = (value) => value.toLocaleString('en-IN');
+
+const formatCurrency = (value) =>
+  `₹${Math.round(value).toLocaleString('en-IN')}`;
+
+const snapshotItems = [
+  {
+    eyebrow: 'RO permeate model',
+    value: `${formatNumber(DAILY_RO_PERMEATE_L)} L/day`,
+    detail:
+      'Latest archived plant model used on this page for current-system sizing.',
+    tone: 'sky',
+  },
+  {
+    eyebrow: 'Use intensity',
+    value: `${formatNumber(DAILY_PER_CAPITA_L)} L/person/day`,
+    detail: `${OCCUPIED_VILLAS} occupied villas x ${ASSUMED_RESIDENTS_PER_VILLA} assumed residents each.`,
+    tone: 'emerald',
+  },
+  {
+    eyebrow: 'Shared-system power model',
+    value: formatCurrency(MONTHLY_TNPDCL_COST),
+    detail: `${formatCurrency(MONTHLY_VARIABLE_ENERGY_COST)} energy + ${formatCurrency(MONTHLY_FIXED_CHARGE)} fixed charge per month.`,
+    tone: 'amber',
+  },
+  {
+    eyebrow: 'Latest villa bill found',
+    value: `${formatCurrency(VILLA_SAMPLE_BILL.payableRs)} for ${formatNumber(
+      VILLA_SAMPLE_BILL.energyKwh
+    )} kWh`,
+    detail: `Single-villa TNPDCL bill dated ${VILLA_SAMPLE_BILL.billDate}; not the same billing context as the shared plant model.`,
+    tone: 'slate',
+  },
+];
+
+const refreshNotes = [
+  {
+    title: 'Source dates exposed',
+    body: 'The page now labels which numbers come from the archived plant calculation, the July 2025 villa bill, and the March 2026 community update.',
+    tone: 'sky',
+  },
+  {
+    title: 'Current design promoted',
+    body: 'The preferred design is now clearly the parallel utility-water line. The older single-line mixing idea is treated as background, not the active recommendation.',
+    tone: 'emerald',
+  },
+  {
+    title: 'Technical diagrams added',
+    body: 'Water architecture and solar-billing logic are now shown visually so owners can inspect the proposed operating model without parsing long paragraphs.',
+    tone: 'amber',
+  },
+];
+
+const updateTrackers = [
+  {
+    title: 'Solar economics updated',
+    body: 'Latest owner input says total solar cost after subsidy should remain under ₹9,00,000, which pulls the payback period down to about 25 months, or just over 2 years.',
+    tone: 'emerald',
+  },
+  {
+    title: 'Owner opinion has split cleanly',
+    body: 'A strong owner group wants to retain 100% RO usage inside villas for appliance and fitting protection, while the opposing view points to low-TDS water, high reject volume, and avoidable energy cost.',
+    tone: 'sky',
+  },
+  {
+    title: 'Current NOWA design direction',
+    body: 'The office is contemplating one additional pressurized parallel line for outdoor utility use, a TDS increase to roughly 70, and retention of the existing indoor RO supply.',
+    tone: 'amber',
+  },
+];
+
+const sourceRegister = [
+  {
+    title: 'Archived plant model',
+    date: 'NaruviWatercalc.csv',
+    body: `29,000 L/day RO permeate, ${formatCurrency(
+      MONTHLY_TNPDCL_COST
+    )}/month shared-system power model, and the 50% recovery baseline come from the archived community calculation sheet.`,
+  },
+  {
+    title: 'Sample TNPDCL villa bill',
+    date: VILLA_SAMPLE_BILL.billDate,
+    body: `The latest Naruvi-specific bill found in the repo is a single-villa LA1A bill: ${formatNumber(
+      VILLA_SAMPLE_BILL.energyKwh
+    )} kWh, ${formatCurrency(VILLA_SAMPLE_BILL.payableRs)}, 13 kW sanctioned load, 2.6 kW max demand.`,
+  },
+  {
+    title: 'Community status note',
+    date: COMMUNITY_UPDATE_DATE,
+    body: 'Latest owner input added on March 30, 2026: solar should land below ₹9 lakh after subsidy, the indoor RO line remains politically important, and NOWA is contemplating a parallel utility-water line plus a TDS reset to about 70.',
+  },
+  {
+    title: 'Public benchmark',
+    date: 'WHO domestic water quantity guidance',
+    body: 'Basic domestic service starts around 20 L/person/day, higher hygiene around 50 L/person/day, and optimal domestic service above 100 L/person/day.',
+  },
+];
+
+const nextActions = [
+  'Close vendor quotes from teams that have actually built pressurized supply systems in existing villa layouts.',
+  'Freeze one standard outdoor outlet design per villa, including isolation valves and labelling.',
+  'Publish a short owner note distinguishing indoor RO use from the new outdoor utility-water use.',
+  'Capture the first post-change bills before claiming realized savings from solar export or LM51 fixed-charge reduction.',
+];
+
+const monitoringItems = [
+  'RO plant runtime hours per day',
+  'Borewell pump runtime hours per day',
+  'TNPDCL common-service bill before and after the tariff/load changes',
+  'Delivered TDS band for the retained indoor RO line',
+  'Outdoor utility-line uptake after one outlet per villa goes live',
+];
+
+const SummaryCard = ({ eyebrow, value, detail, tone = 'slate' }) => (
+  <div
+    className={`naruvi-light-surface naruvi-light-card rounded-2xl border p-5 ${toneClasses[tone]}`}
+  >
+    <p className="text-xs font-semibold uppercase tracking-[0.2em] opacity-70">
+      {eyebrow}
+    </p>
+    <p className="mt-3 text-2xl font-semibold leading-tight">{value}</p>
+    <p className="mt-2 text-sm leading-6 opacity-90">{detail}</p>
+  </div>
+);
+
+const InsightCard = ({ title, body, tone = 'slate' }) => (
+  <div
+    className={`naruvi-light-surface naruvi-light-card rounded-2xl border p-5 ${toneClasses[tone]}`}
+  >
+    <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
+    <p className="mt-3 text-sm leading-6 text-slate-800">{body}</p>
+  </div>
+);
+
+const WaterArchitectureDiagram = () => (
+  <figure className="naruvi-light-surface naruvi-light-card rounded-2xl border border-slate-200 bg-white p-4">
+    <svg
+      className="naruvi-diagram"
+      viewBox="0 0 960 560"
+      role="img"
+      aria-labelledby="naruvi-water-diagram-title naruvi-water-diagram-desc"
+    >
+      <title id="naruvi-water-diagram-title">
+        Proposed Naruvi water architecture
+      </title>
+      <desc id="naruvi-water-diagram-desc">
+        Borewell and corporation water feed both the RO plant for protected
+        indoor use and a separate utility booster line for outdoor uses, while
+        keeping the indoor villa plumbing unchanged.
+      </desc>
+      <defs>
+        <marker
+          id="naruvi-arrow-blue"
+          markerWidth="12"
+          markerHeight="12"
+          refX="10"
+          refY="6"
+          orient="auto"
+        >
+          <path d="M0,0 L12,6 L0,12 z" fill="#2563eb" />
+        </marker>
+        <marker
+          id="naruvi-arrow-green"
+          markerWidth="12"
+          markerHeight="12"
+          refX="10"
+          refY="6"
+          orient="auto"
+        >
+          <path d="M0,0 L12,6 L0,12 z" fill="#059669" />
+        </marker>
+      </defs>
+
+      <rect
+        x="20"
+        y="20"
+        width="920"
+        height="520"
+        rx="28"
+        fill="#f8fafc"
+        stroke="#cbd5e1"
+      />
+      <text x="52" y="64" className="naruvi-diagram-title">
+        Proposed Water Architecture
+      </text>
+      <text x="52" y="92" className="naruvi-diagram-subtitle">
+        Contemplated direction as of March 30, 2026: keep the indoor RO loop
+        intact, add one outdoor utility outlet per villa, and shift outdoor
+        demand away from the RO plant.
+      </text>
+
+      <rect
+        x="60"
+        y="170"
+        width="190"
+        height="120"
+        rx="20"
+        fill="#dbeafe"
+        stroke="#60a5fa"
+        strokeWidth="2"
+      />
+      <text x="155" y="210" textAnchor="middle" className="naruvi-diagram-label">
+        <tspan x="155" dy="0">
+          Borewell +
+        </tspan>
+        <tspan x="155" dy="28">
+          Corporation Water
+        </tspan>
+      </text>
+      <text x="155" y="266" textAnchor="middle" className="naruvi-diagram-small">
+        Existing raw-water sources
+      </text>
+
+      <rect
+        x="390"
+        y="95"
+        width="190"
+        height="120"
+        rx="20"
+        fill="#eff6ff"
+        stroke="#2563eb"
+        strokeWidth="2"
+      />
+      <text x="485" y="145" textAnchor="middle" className="naruvi-diagram-label">
+        <tspan x="485" dy="0">
+          RO Plant
+        </tspan>
+        <tspan x="485" dy="28">
+          Protected Indoor Feed
+        </tspan>
+      </text>
+      <text x="485" y="192" textAnchor="middle" className="naruvi-diagram-small">
+        Soft water retained for kitchen, bath, fixtures
+      </text>
+
+      <rect
+        x="390"
+        y="325"
+        width="190"
+        height="120"
+        rx="20"
+        fill="#ecfdf5"
+        stroke="#10b981"
+        strokeWidth="2"
+      />
+      <text x="485" y="374" textAnchor="middle" className="naruvi-diagram-label">
+        <tspan x="485" dy="0">
+          Utility Tank +
+        </tspan>
+        <tspan x="485" dy="28">
+          Booster / Valves
+        </tspan>
+      </text>
+      <text x="485" y="421" textAnchor="middle" className="naruvi-diagram-small">
+        Separate pressurized service
+      </text>
+
+      <rect
+        x="690"
+        y="75"
+        width="210"
+        height="160"
+        rx="20"
+        fill="#eff6ff"
+        stroke="#2563eb"
+        strokeWidth="2"
+      />
+      <text x="795" y="118" textAnchor="middle" className="naruvi-diagram-label">
+        Indoor RO Loop
+      </text>
+      <text x="795" y="152" textAnchor="middle" className="naruvi-diagram-small">
+        Kitchen
+      </text>
+      <text x="795" y="178" textAnchor="middle" className="naruvi-diagram-small">
+        Bathing / fixtures
+      </text>
+      <text x="795" y="204" textAnchor="middle" className="naruvi-diagram-small">
+        Drinking and appliance protection
+      </text>
+
+      <rect
+        x="690"
+        y="305"
+        width="210"
+        height="150"
+        rx="20"
+        fill="#ecfdf5"
+        stroke="#10b981"
+        strokeWidth="2"
+      />
+      <text x="795" y="349" textAnchor="middle" className="naruvi-diagram-label">
+        Outdoor Utility Outlet
+      </text>
+      <text x="795" y="381" textAnchor="middle" className="naruvi-diagram-small">
+        Vehicle washing
+      </text>
+      <text x="795" y="407" textAnchor="middle" className="naruvi-diagram-small">
+        Floor washing
+      </text>
+      <text x="795" y="433" textAnchor="middle" className="naruvi-diagram-small">
+        Garden watering / cleaning
+      </text>
+
+      <path
+        d="M250 205 H390"
+        fill="none"
+        stroke="#2563eb"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-blue)"
+      />
+      <path
+        d="M250 255 V385 H390"
+        fill="none"
+        stroke="#059669"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-green)"
+      />
+      <path
+        d="M580 155 H690"
+        fill="none"
+        stroke="#2563eb"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-blue)"
+      />
+      <path
+        d="M580 385 H690"
+        fill="none"
+        stroke="#059669"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-green)"
+      />
+
+      <path
+        d="M690 245 H900"
+        fill="none"
+        stroke="#94a3b8"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeDasharray="12 10"
+      />
+      <text x="795" y="272" textAnchor="middle" className="naruvi-diagram-note">
+        Internal villa plumbing remains untouched
+      </text>
+
+      <rect
+        x="60"
+        y="455"
+        width="840"
+        height="54"
+        rx="16"
+        fill="#fff7ed"
+        stroke="#fdba74"
+      />
+      <text x="80" y="487" className="naruvi-diagram-note">
+        Engineering intent: shift outdoor demand first. Every 1,000 L/day moved
+        off RO can save roughly {formatNumber(RAW_WATER_SAVED_AT_50_RECOVERY_L)}
+        {' '}
+        to {formatNumber(RAW_WATER_SAVED_AT_35_RECOVERY_L)} L/day of raw-water
+        extraction, depending on actual recovery.
+      </text>
+    </svg>
+    <figcaption className="mt-3 text-sm leading-6 text-slate-700">
+      Current NOWA contemplation: do not retrofit hidden indoor pipelines. Add
+      one separate pressurized outdoor utility-water point per villa and use it
+      to remove outdoor demand from the RO loop first.
+    </figcaption>
+  </figure>
+);
+
+const EnergyBillingDiagram = () => (
+  <figure className="naruvi-light-surface naruvi-light-card rounded-2xl border border-slate-200 bg-white p-4">
+    <svg
+      className="naruvi-diagram"
+      viewBox="0 0 960 540"
+      role="img"
+      aria-labelledby="naruvi-energy-diagram-title naruvi-energy-diagram-desc"
+    >
+      <title id="naruvi-energy-diagram-title">
+        Solar and billing logic for Naruvi
+      </title>
+      <desc id="naruvi-energy-diagram-desc">
+        Rooftop solar and TNPDCL grid supply meet at the common service meter,
+        which feeds the RO pump, borewell pump, and common lighting. Savings
+        come from consumption offset, export credit, and lower fixed charges
+        after reducing LM51 sanctioned load.
+      </desc>
+      <defs>
+        <marker
+          id="naruvi-arrow-amber"
+          markerWidth="12"
+          markerHeight="12"
+          refX="10"
+          refY="6"
+          orient="auto"
+        >
+          <path d="M0,0 L12,6 L0,12 z" fill="#d97706" />
+        </marker>
+        <marker
+          id="naruvi-arrow-slate"
+          markerWidth="12"
+          markerHeight="12"
+          refX="10"
+          refY="6"
+          orient="auto"
+        >
+          <path d="M0,0 L12,6 L0,12 z" fill="#475569" />
+        </marker>
+      </defs>
+
+      <rect
+        x="20"
+        y="20"
+        width="920"
+        height="500"
+        rx="28"
+        fill="#f8fafc"
+        stroke="#cbd5e1"
+      />
+      <text x="52" y="64" className="naruvi-diagram-title">
+        Solar and Billing Logic
+      </text>
+      <text x="52" y="92" className="naruvi-diagram-subtitle">
+        The calculator below is driven by three value paths: solar consumption
+        offset, export credit, and an optional fixed-charge reduction if the
+        LM51 load-rationalization track also lands.
+      </text>
+
+      <rect
+        x="60"
+        y="80"
+        width="210"
+        height="110"
+        rx="20"
+        fill="#fef3c7"
+        stroke="#f59e0b"
+        strokeWidth="2"
+      />
+      <text x="165" y="128" textAnchor="middle" className="naruvi-diagram-label">
+        Rooftop Solar
+      </text>
+      <text x="165" y="160" textAnchor="middle" className="naruvi-diagram-small">
+        Post-subsidy capex assumed below
+      </text>
+      <text x="165" y="182" textAnchor="middle" className="naruvi-diagram-small">
+        {formatCurrency(890000)}
+      </text>
+
+      <rect
+        x="60"
+        y="260"
+        width="210"
+        height="110"
+        rx="20"
+        fill="#e2e8f0"
+        stroke="#64748b"
+        strokeWidth="2"
+      />
+      <text x="165" y="308" textAnchor="middle" className="naruvi-diagram-label">
+        TNPDCL Grid
+      </text>
+      <text x="165" y="340" textAnchor="middle" className="naruvi-diagram-small">
+        Imports cover shortfall
+      </text>
+      <text x="165" y="362" textAnchor="middle" className="naruvi-diagram-small">
+        Exports create credit
+      </text>
+
+      <rect
+        x="380"
+        y="170"
+        width="210"
+        height="140"
+        rx="20"
+        fill="#eff6ff"
+        stroke="#2563eb"
+        strokeWidth="2"
+      />
+      <text x="485" y="214" textAnchor="middle" className="naruvi-diagram-label">
+        Common Service Meter
+      </text>
+      <text x="485" y="248" textAnchor="middle" className="naruvi-diagram-small">
+        Solar offset + export accounting
+      </text>
+      <text x="485" y="270" textAnchor="middle" className="naruvi-diagram-small">
+        LM51 load reduction and LA1D action
+      </text>
+      <text x="485" y="292" textAnchor="middle" className="naruvi-diagram-small">
+        must show up in future bills
+      </text>
+
+      <rect
+        x="690"
+        y="70"
+        width="190"
+        height="120"
+        rx="20"
+        fill="#ede9fe"
+        stroke="#8b5cf6"
+        strokeWidth="2"
+      />
+      <text x="785" y="118" textAnchor="middle" className="naruvi-diagram-label">
+        RO Pump
+      </text>
+      <text x="785" y="150" textAnchor="middle" className="naruvi-diagram-small">
+        {formatCurrency(RO_PUMP_MONTHLY_COST)}/month
+      </text>
+      <text x="785" y="172" textAnchor="middle" className="naruvi-diagram-small">
+        {RO_PUMP_SHARE_PERCENT}% of modeled variable energy
+      </text>
+
+      <rect
+        x="690"
+        y="220"
+        width="190"
+        height="110"
+        rx="20"
+        fill="#dcfce7"
+        stroke="#22c55e"
+        strokeWidth="2"
+      />
+      <text x="785" y="265" textAnchor="middle" className="naruvi-diagram-label">
+        Borewell Pump
+      </text>
+      <text x="785" y="296" textAnchor="middle" className="naruvi-diagram-small">
+        {formatCurrency(BOREWELL_PUMP_MONTHLY_COST)}/month
+      </text>
+
+      <rect
+        x="690"
+        y="360"
+        width="190"
+        height="110"
+        rx="20"
+        fill="#fee2e2"
+        stroke="#f87171"
+        strokeWidth="2"
+      />
+      <text x="785" y="405" textAnchor="middle" className="naruvi-diagram-label">
+        Common Lighting
+      </text>
+      <text x="785" y="436" textAnchor="middle" className="naruvi-diagram-small">
+        {formatCurrency(LIGHTING_MONTHLY_COST)}/month
+      </text>
+
+      <path
+        d="M270 135 H380"
+        fill="none"
+        stroke="#d97706"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-amber)"
+      />
+      <path
+        d="M270 315 H340 V260 H380"
+        fill="none"
+        stroke="#475569"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-slate)"
+      />
+      <path
+        d="M590 210 H690"
+        fill="none"
+        stroke="#8b5cf6"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-slate)"
+      />
+      <path
+        d="M590 260 H650 V275 H690"
+        fill="none"
+        stroke="#22c55e"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-slate)"
+      />
+      <path
+        d="M590 310 H650 V415 H690"
+        fill="none"
+        stroke="#ef4444"
+        strokeWidth="8"
+        strokeLinecap="round"
+        markerEnd="url(#naruvi-arrow-slate)"
+      />
+
+      <rect
+        x="60"
+        y="408"
+        width="530"
+        height="68"
+        rx="16"
+        fill="#fff7ed"
+        stroke="#fdba74"
+      />
+      <text x="82" y="437" className="naruvi-diagram-note">
+        Savings levers on this page: monthly solar offset, export credit, and a
+        reference fixed-charge reduction of about {formatCurrency(
+          MONTHLY_FIXED_CHARGE_SAVINGS_REFERENCE
+        )}
+        /month if LM51 sanctioned load falls from {LM51_PREVIOUS_LOAD_KW} kW to
+        {' '}
+        {LM51_REVISED_LOAD_KW} kW at {formatCurrency(
+          TNPDCL_FIXED_CHARGE_PER_KW_PER_2_MONTHS
+        )}
+        {' '}
+        per kW per two months.
+      </text>
+    </svg>
+    <figcaption className="mt-3 text-sm leading-6 text-slate-700">
+      The page still uses editable assumptions, because the solar capex update
+      is recent and realized savings cannot be confirmed until post-change
+      TNPDCL bills and export credits actually land.
+    </figcaption>
+  </figure>
+);
 
 const NaruviWaterIssues = () => {
   const [solarIntegrationCost, setSolarIntegrationCost] = useState(890000);
@@ -66,87 +737,263 @@ const NaruviWaterIssues = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="naruvi-report max-w-4xl mx-auto"
+      transition={{ duration: 0.45 }}
+      className="naruvi-report mx-auto max-w-6xl px-4 pb-12"
     >
-      <div className="bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-          Naruvi Gated Community Water Management Report
-        </h1>
+      <div className="rounded-[28px] bg-white p-6 shadow-lg md:p-10">
+        <section className="mb-10">
+          <div className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
+            Updated {LAST_UPDATED}
+          </div>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900">
+            Naruvi Water Management Report
+          </h1>
+          <p className="mt-4 max-w-4xl text-lg leading-8 text-slate-700">
+            This refresh incorporates the latest owner input: solar capex should
+            stay below ₹9 lakh after subsidy, owner sentiment still strongly
+            favors retaining the indoor RO supply, and the current NOWA
+            contemplation is a separate outdoor utility-water line rather than
+            hidden indoor plumbing changes.
+          </p>
 
-        {/* Positive Update */}
-        <div className="naruvi-light-surface bg-green-50 border-l-4 border-green-400 p-6 mb-8">
-          <h2 className="text-xl font-semibold text-green-800 mb-3">
-            ✅ Good News Update
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {snapshotItems.map((item) => (
+              <SummaryCard key={item.eyebrow} {...item} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10 rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold text-emerald-900">
+                Latest Owner Update On Record
+              </h2>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-emerald-950">
+                Update date: {COMMUNITY_UPDATE_DATE}. Latest owner input says
+                solar should come in below ₹9,00,000 after subsidy, strong owner
+                opinion still favors retaining the RO-fed villa network, and the
+                current NOWA office is contemplating a parallel outdoor
+                utility-water line plus a TDS reset to about 70.
+              </p>
+            </div>
+          </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {updateTrackers.map((item) => (
+              <InsightCard key={item.title} {...item} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            What Changed In This Refresh
           </h2>
-          <p className="text-emerald-950 font-medium">
-            Update date: March 6, 2026
-          </p>
-          <p className="text-slate-800 mt-2">
-            Primary implemented action: Naruvi Owners Welfare Association
-            (NOWA) has initiated solar power evacuation alignment with Tamil
-            Nadu Power Distribution Corporation Limited (TNPDCL), formerly
-            Tamil Nadu Generation and Distribution Corporation (TANGEDCO).
-          </p>
-          <p className="text-slate-800 mt-2">
-            Revised solar economics: the total solar cost after subsidy is now
-            expected to remain below ₹9,00,000. With the current assumptions on
-            this page, that brings estimated payback down to about 25 months,
-            or just over 2 years.
-          </p>
-          <p className="text-slate-800 mt-2">
-            NOWA has handed over official intimation to shift sanctioned loads
-            from LM51 to LA1D, and an online application has been submitted to
-            reduce the LM51 sanctioned load from 15 kilowatts (kW) to 2 kW.
-          </p>
-          <p className="text-slate-800 mt-2">
-            Expected impact: lower fixed electricity charges should start
-            reflecting from the next bill cycle.
-          </p>
-          <p className="text-slate-800 mt-2">
-            Water-phase refinement: based on owner feedback and the single-line
-            underground plumbing constraint, NOWA is now pursuing a separate
-            pressurized utility-water line for outdoor uses while retaining the
-            existing RO line inside villas.
-          </p>
-          <p className="text-slate-800 mt-2">
-            Execution status: NOWA wanted to complete the parallel line before
-            March 2026, but work is delayed because vendors experienced in
-            pressurized supply systems are not yet readily available. Follow-up
-            is in progress.
-          </p>
-        </div>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {refreshNotes.map((item) => (
+              <InsightCard key={item.title} {...item} />
+            ))}
+          </div>
+        </section>
 
-        {/* Solar ROI Calculator */}
-        <section className="bg-amber-50 border-l-4 border-amber-400 p-6 mb-8 not-prose">
-          <h2 className="text-xl font-semibold mb-3" style={{ color: '#78350f' }}>
-            Solar Power Integration with TNPDCL: ROI Calculator
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Latest Evidence Register
           </h2>
-          <p style={{ color: '#92400e' }}>
-            Editable assumptions for payback from solar consumption-offset
-            savings, export credit, and sanctioned-load fixed-charge reduction.
-            The default values reflect the latest update: post-subsidy capex
-            below ₹9 lakh and payback of roughly 25 months.
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-700">
+            The page now distinguishes between local Naruvi-specific evidence,
+            public benchmark guidance, and unresolved items that still need
+            vendor confirmation.
+          </p>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {sourceRegister.map((item) => (
+              <div
+                key={item.title}
+                className="naruvi-light-surface naruvi-light-card rounded-2xl border border-slate-200 bg-slate-50 p-5"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  {item.date}
+                </p>
+                <h3 className="mt-2 text-lg font-semibold text-slate-900">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-slate-700">
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Two Different Billing Lenses
+          </h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-sky-200 bg-sky-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                Latest Single-Villa Bill In The Repo
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-slate-800">
+                Bill date: {VILLA_SAMPLE_BILL.billDate}. Billing period:{' '}
+                {VILLA_SAMPLE_BILL.billPeriod}. Tariff: {VILLA_SAMPLE_BILL.tariff}
+                . Energy consumed: {formatNumber(VILLA_SAMPLE_BILL.energyKwh)}{' '}
+                kWh. Payable amount: {formatCurrency(VILLA_SAMPLE_BILL.payableRs)}.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-slate-800">
+                This is a domestic villa bill with subsidy effects, so it cannot
+                be used directly to validate the community common-services
+                estimate below.
+              </p>
+            </div>
+
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-amber-200 bg-amber-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                Shared Common-Services Model
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-slate-800">
+                The archived community calculation uses a {formatCurrency(9)}
+                /kWh energy assumption and a fixed monthly charge of{' '}
+                {formatCurrency(MONTHLY_FIXED_CHARGE)} to model the RO plant,
+                borewell pump, and common lighting together.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-slate-800">
+                Result: {formatCurrency(MONTHLY_TNPDCL_COST)}/month modeled
+                TNPDCL cost, with the RO pump alone accounting for about{' '}
+                {RO_PUMP_SHARE_PERCENT}% of variable energy spend and water
+                production loads together accounting for about{' '}
+                {WATER_PRODUCTION_SHARE_PERCENT}%.
+              </p>
+              <p className="mt-3 text-sm leading-6 text-slate-800">
+                This page now treats the fixed-charge reduction as an editable
+                assumption in the calculator, not as the main update. The main
+                confirmed refresh is the lower solar capex and the revised water
+                design direction from owners and NOWA.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Technical Diagrams
+          </h2>
+          <div className="mt-5 grid gap-6 xl:grid-cols-2">
+            <WaterArchitectureDiagram />
+            <EnergyBillingDiagram />
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Water Balance And Benchmark Notes
+          </h2>
+          <div className="mt-5 grid gap-4 lg:grid-cols-3">
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-slate-200 bg-slate-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                Current Modeled Water Balance
+              </h3>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-800">
+                <li>
+                  RO permeate delivered to villas: about{' '}
+                  {formatNumber(DAILY_RO_PERMEATE_L)} L/day.
+                </li>
+                <li>
+                  At 50% recovery, raw-water input is about{' '}
+                  {formatNumber(HALF_RECOVERY_RAW_INPUT_L)} L/day.
+                </li>
+                <li>
+                  If reject water is closer to 65%, raw-water input can rise to
+                  about {formatNumber(HIGH_REJECT_RAW_INPUT_L)} L/day, with
+                  reject volume around {formatNumber(HIGH_REJECT_VOLUME_L)}{' '}
+                  L/day.
+                </li>
+                <li>
+                  The latest owner update explicitly flags this high reject
+                  water loss and drain discharge as one of the main reasons to
+                  move outdoor demand away from the RO loop.
+                </li>
+              </ul>
+            </div>
+
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                WHO Domestic Water Guidance
+              </h3>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-800">
+                <li>Absolute drinking minimum: about 5.3 L/person/day.</li>
+                <li>Basic domestic service: about 20 L/person/day.</li>
+                <li>Higher hygiene level: about 50 L/person/day.</li>
+                <li>Optimal domestic service: above 100 L/person/day.</li>
+              </ul>
+              <p className="mt-4 text-sm leading-6 text-slate-800">
+                Current modeled use intensity at Naruvi is about{' '}
+                {formatNumber(DAILY_PER_CAPITA_L)} L/person/day, so the
+                immediate target is not scarcity relief. It is avoiding
+                unnecessary RO treatment for outdoor uses.
+              </p>
+            </div>
+
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-violet-200 bg-violet-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                Practical Leverage
+              </h3>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-800">
+                <li>
+                  Every {formatNumber(SHIFTED_OUTPUT_EXAMPLE_L)} L/day removed
+                  from RO demand saves around{' '}
+                  {formatNumber(RAW_WATER_SAVED_AT_50_RECOVERY_L)} L/day of
+                  raw-water extraction at 50% recovery.
+                </li>
+                <li>
+                  Under a harsher 35% recovery case, the same shift saves about{' '}
+                  {formatNumber(RAW_WATER_SAVED_AT_35_RECOVERY_L)} L/day.
+                </li>
+                <li>
+                  That is why a dedicated outdoor utility line is the cleanest
+                  first move: it attacks waste without opening walls or floors
+                  inside occupied villas.
+                </li>
+                <li>
+                  The owner note also states that for the volume shifted to the
+                  parallel line, roughly twice that quantity can be saved from
+                  being pumped out of the borewells.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-10 rounded-3xl border border-amber-200 bg-amber-50 p-6">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Solar Power Integration With TNPDCL: ROI Calculator
+          </h2>
+          <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-800">
+            These defaults reflect the latest owner note on this page:
+            post-subsidy capex below {formatCurrency(900000)} and payback of
+            about 25 months, plus the older optional assumption that LM51 fixed
+            charges may reduce if that workstream also completes. Treat this as
+            a planning tool until future bills confirm the realized savings.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-4 mt-4">
-            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <label className="text-sm font-medium text-slate-900">
               One-time solar integration cost after subsidy (₹)
               <input
                 type="number"
                 min="0"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={solarIntegrationCost}
                 onChange={(event) =>
                   setSolarIntegrationCost(parseInputNumber(event.target.value))
                 }
               />
             </label>
-            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+            <label className="text-sm font-medium text-slate-900">
               Monthly solar consumption-offset savings (₹)
               <input
                 type="number"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={monthlySolarOffsetSavings}
                 onChange={(event) =>
                   setMonthlySolarOffsetSavings(
@@ -155,11 +1002,11 @@ const NaruviWaterIssues = () => {
                 }
               />
             </label>
-            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
-              Monthly solar evacuation/export credit (₹)
+            <label className="text-sm font-medium text-slate-900">
+              Monthly solar export credit (₹)
               <input
                 type="number"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={monthlySolarExportCredit}
                 onChange={(event) =>
                   setMonthlySolarExportCredit(
@@ -168,11 +1015,11 @@ const NaruviWaterIssues = () => {
                 }
               />
             </label>
-            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+            <label className="text-sm font-medium text-slate-900">
               Monthly operation and maintenance cost (₹)
               <input
                 type="number"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={monthlySolarMaintenanceCost}
                 onChange={(event) =>
                   setMonthlySolarMaintenanceCost(
@@ -181,33 +1028,33 @@ const NaruviWaterIssues = () => {
                 }
               />
             </label>
-            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+            <label className="text-sm font-medium text-slate-900">
               LM51 current sanctioned load (kW)
               <input
                 type="number"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={calculatorCurrentLoadKw}
                 onChange={(event) =>
                   setCalculatorCurrentLoadKw(parseInputNumber(event.target.value))
                 }
               />
             </label>
-            <label className="text-sm font-medium" style={{ color: '#78350f' }}>
+            <label className="text-sm font-medium text-slate-900">
               LM51 revised sanctioned load (kW)
               <input
                 type="number"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={calculatorRevisedLoadKw}
                 onChange={(event) =>
                   setCalculatorRevisedLoadKw(parseInputNumber(event.target.value))
                 }
               />
             </label>
-            <label className="text-sm font-medium md:col-span-2" style={{ color: '#78350f' }}>
+            <label className="text-sm font-medium text-slate-900 md:col-span-2">
               TNPDCL fixed charge (₹ per kW per 2 months)
               <input
                 type="number"
-                className="mt-1 w-full border border-amber-300 rounded px-3 py-2 bg-white text-slate-900"
+                className="mt-1 w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-slate-900"
                 value={calculatorFixedChargeRate}
                 onChange={(event) =>
                   setCalculatorFixedChargeRate(
@@ -218,695 +1065,107 @@ const NaruviWaterIssues = () => {
             </label>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-4 mt-5">
-            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
-              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
-                Fixed-charge savings
-              </p>
-              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
-                ₹{Math.round(calculatorFixedChargeSavings).toLocaleString('en-IN')}/month
-              </p>
-            </div>
-            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
-              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
-                Net monthly savings
-              </p>
-              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
-                ₹{Math.round(solarNetMonthlySavings).toLocaleString('en-IN')}
-              </p>
-            </div>
-            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
-              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
-                Estimated payback
-              </p>
-              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
-                {solarPaybackMonths
-                  ? `${solarPaybackMonths} months (${solarPaybackYears} years)`
-                  : 'No payback (savings <= 0)'}
-              </p>
-            </div>
-            <div className="naruvi-light-surface naruvi-light-card bg-white border border-amber-200 rounded p-4">
-              <p className="text-xs uppercase tracking-wide" style={{ color: '#92400e' }}>
-                Annual ROI
-              </p>
-              <p className="text-lg font-semibold" style={{ color: '#78350f' }}>
-                {solarAnnualRoiPercent}%
-              </p>
-            </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-4">
+            <SummaryCard
+              eyebrow="Fixed-charge savings"
+              value={`${formatCurrency(calculatorFixedChargeSavings)}/month`}
+              detail="Derived from the LM51 sanctioned-load delta and the tariff assumption above."
+              tone="amber"
+            />
+            <SummaryCard
+              eyebrow="Net monthly savings"
+              value={formatCurrency(solarNetMonthlySavings)}
+              detail="Offset savings + export credit + fixed-charge savings - O&M."
+              tone="emerald"
+            />
+            <SummaryCard
+              eyebrow="Estimated payback"
+              value={
+                solarPaybackMonths
+                  ? `${solarPaybackMonths} months`
+                  : 'No payback'
+              }
+              detail={
+                solarPaybackMonths
+                  ? `${solarPaybackYears} years at the current assumptions.`
+                  : 'Savings must exceed costs to produce a payback.'
+              }
+              tone="sky"
+            />
+            <SummaryCard
+              eyebrow="Annual ROI"
+              value={`${solarAnnualRoiPercent}%`}
+              detail="Illustrative annualized return on the current capex assumption."
+              tone="slate"
+            />
           </div>
-
-          <p className="text-xs mt-3" style={{ color: '#78350f' }}>
-            Net monthly savings = solar consumption-offset savings + export
-            credit + LM51 fixed-charge savings - operation and maintenance cost.
-          </p>
         </section>
 
-        {/* Community Impact of Update */}
-        <section className="bg-emerald-50 border-l-4 border-emerald-400 p-6 mb-8">
-          <h2 className="text-xl font-semibold text-emerald-800 mb-3">
-            What this means for the community
+        <section className="mb-10">
+          <h2 className="text-2xl font-semibold text-slate-900">
+            Immediate Next Actions
           </h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-emerald-800 mb-2">
-                Solar Evacuation Milestone
+          <div className="mt-5 grid gap-4 lg:grid-cols-2">
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-slate-200 bg-slate-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                What Should Happen Next
               </h3>
-              <p className="text-sm text-gray-700">
-                The association has started with solar-power evacuation and
-                grid-side alignment, which is the first executed step in the
-                current cost-optimization roadmap.
-              </p>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-800">
+                {nextActions.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+                <li>
+                  Document the final operating note: retain indoor RO use, raise
+                  supplied TDS to around 70, and reserve the new outlet for
+                  vehicle washing, floor washing, garden watering, and related
+                  outdoor cleaning.
+                </li>
+              </ul>
             </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-emerald-800 mb-2">
-                Lower Fixed Charges
+
+            <div className="naruvi-light-surface naruvi-light-card rounded-2xl border border-slate-200 bg-slate-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-950">
+                What Must Be Measured
               </h3>
-              <p className="text-sm text-gray-700">
-                Reducing LM51 sanctioned load from 15 kW to 2 kW should reduce
-                fixed-demand billing burden once the request is processed.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-emerald-800 mb-2">
-                Next Bill Impact
-              </h3>
-              <p className="text-sm text-gray-700">
-                Moving load from LM51 to LA1D and lowering LM51 sanctioned load
-                should improve billing predictability, with first benefits
-                expected in the next bill cycle.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-emerald-800 mb-2">
-                Faster Solar Payback
-              </h3>
-              <p className="text-sm text-gray-700">
-                With the revised post-subsidy cost below ₹9,00,000, the solar
-                phase now appears to break even in about 25 months under the
-                current savings assumptions.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-emerald-800 mb-2">
-                Revised Water Proposal
-              </h3>
-              <p className="text-sm text-gray-700">
-                The current direction is to retain RO water inside villas,
-                increase TDS to around 70, and add one separate outdoor utility
-                outlet per villa using a pressurized parallel line.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-emerald-800 mb-2">
-                Execution Delay
-              </h3>
-              <p className="text-sm text-gray-700">
-                NOWA wanted the parallel line completed before March 2026, but
-                the work is currently delayed by contractor availability for
-                pressurized water-supply systems.
-              </p>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-800">
+                {monitoringItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        <div className="prose prose-lg max-w-none">
-          {/* Executive Summary */}
-          <div className="naruvi-light-surface bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
-            <h2 className="text-xl font-semibold text-blue-800 mb-3">
-              Current Position: Solar Economics Improved, Water Plan Refined
-            </h2>
-            <p className="text-slate-800">
-              Solar integration is under execution and the revised post-subsidy
-              payback is now about 25 months. On water, the emerging direction
-              is not to rework internal villa plumbing, but to retain RO supply
-              inside villas, raise TDS to about 70, and add a separate
-              pressurized utility-water outlet for each villa.
+        <section className="rounded-3xl border border-red-200 bg-red-50 p-6">
+          <h2 className="text-2xl font-semibold text-red-900">
+            Caveats
+          </h2>
+          <div className="mt-4 space-y-3 text-sm leading-6 text-red-950">
+            <p>
+              This is still an owner-facing engineering note, not a stamped
+              plumbing or electrical design package. The water architecture is a
+              practical recommendation based on the site constraint that hidden
+              indoor pipelines are hard to rework safely.
+            </p>
+            <p>
+              Community-specific claims such as post-subsidy solar capex,
+              planned tariff migration, and vendor delay status should be
+              checked again against live quotes, applications, and future bills
+              before anyone treats them as closed facts.
+            </p>
+            <p>
+              Public benchmark used on this page: World Health Organization,
+              <a
+                href="https://iris.who.int/handle/10665/338044"
+                className="ml-1 text-red-900 underline decoration-red-300 underline-offset-2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Domestic water quantity, service level and health, 2nd ed.
+              </a>
             </p>
           </div>
-
-          {/* Current Situation */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Current Water Usage Analysis
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-gray-700 mb-2">
-                  Current Metrics
-                </h3>
-                <ul className="space-y-2 text-gray-600">
-                  <li>• Total daily consumption: 29,000 litres</li>
-                  <li>• Occupied villas: 35</li>
-                  <li>• Assumed residents per villa: 3</li>
-                  <li>• Current usage per person: 276 litres/day</li>
-                </ul>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-green-700 mb-2">
-                  World Health Organization (WHO) Recommendations
-                </h3>
-                <ul className="space-y-2 text-green-900">
-                  <li>• Absolute minimum: 5.3 L/person/day</li>
-                  <li>• Basic domestic needs: 20 L/person/day</li>
-                  <li>• Full hygiene needs: 50 L/person/day</li>
-                  <li>• Optimal service: 100+ L/person/day</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* WHO Guidelines */}
-          <section className="mb-8 not-prose">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              World Health Organization Guidelines
-            </h2>
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6">
-              <p className="mb-4" style={{ color: '#0f172a' }}>
-                <strong>Single tap access (within 100m):</strong> ~50 litres per
-                person per day, meeting higher hygiene needs.
-              </p>
-              <p style={{ color: '#0f172a' }}>
-                <strong>
-                  Optimal access (multiple taps, continuous supply):
-                </strong>{' '}
-                Over 100 litres per person per day, covering all domestic and
-                hygiene requirements.
-              </p>
-            </div>
-            <div className="mt-4 text-sm" style={{ color: '#0f172a' }}>
-              <p style={{ color: '#0f172a' }}>
-                <strong>My realistic opinion:</strong> 150 Litres per person per
-                day
-              </p>
-            </div>
-            <div className="mt-4 text-sm" style={{ color: '#1e293b' }}>
-              <p style={{ color: '#1e293b' }}>
-                Source:{' '}
-                <a
-                  href="https://iris.who.int/bitstream/handle/10665/338044/9789240015241-eng.pdf"
-                  className="text-blue-700 hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  WHO Guidelines for Drinking-water Quality
-                </a>
-              </p>
-            </div>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Latest Inputs from Owners and NOWA
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="naruvi-light-surface bg-sky-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-sky-800 mb-2">
-                  Strong Support for Retaining RO
-                </h3>
-                <p className="text-sm text-slate-800">
-                  A number of owners, including some previous office bearers,
-                  do not want the present concept of 100% RO usage inside the
-                  villas to be disturbed because it protects appliances,
-                  sanitary fittings, and internal plumbing.
-                </p>
-              </div>
-              <div className="naruvi-light-surface bg-rose-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-rose-800 mb-2">
-                  Counterarguments Raised by Other Owners
-                </h3>
-                <p className="text-sm text-slate-800">
-                  The main concerns are that very low-TDS RO water around 20 may
-                  not be ideal for health and plants, the RO system may reject
-                  around 65% of water to the drain, and the plant adds avoidable
-                  electricity cost.
-                </p>
-              </div>
-              <div className="naruvi-light-surface bg-amber-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-amber-800 mb-2">
-                  Physical Constraint
-                </h3>
-                <p className="text-sm text-slate-800">
-                  Internal villa plumbing is largely underground and designed as
-                  a single-source supply network, which significantly limits the
-                  freedom to alter the existing water circuit.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Solution */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Updated Proposal: Retain RO Supply + Add Parallel Utility Line
-            </h2>
-
-            <div className="naruvi-light-surface bg-blue-50 border-l-4 border-blue-400 p-6 mb-6">
-              <h3 className="text-lg font-semibold text-blue-800 mb-3">
-                Current NOWA Direction
-              </h3>
-              <div className="space-y-2 text-slate-800">
-                <p>
-                  • <strong>Retain the existing RO line</strong> as the main
-                  supply inside villas.
-                </p>
-                <p>
-                  • <strong>Increase supplied TDS to about 70</strong> so the
-                  water carries some electrolytes while remaining soft enough
-                  for domestic use.
-                </p>
-                <p>
-                  • <strong>Add one independent pressurized parallel line</strong>{' '}
-                  carrying borewell plus corporation water directly to the
-                  villas.
-                </p>
-                <p>
-                  • <strong>Provide one outlet per villa</strong> on the inside
-                  compound wall facing the road, with pressure similar to the
-                  present RO line.
-                </p>
-                <p>
-                  • <strong>Use the new outlet primarily for</strong> vehicle
-                  washing, floor washing, garden watering, and related outdoor
-                  cleaning needs.
-                </p>
-              </div>
-            </div>
-
-            <div className="naruvi-light-surface bg-orange-50 border-l-4 border-orange-400 p-6 mb-6">
-              <h3 className="text-lg font-semibold text-orange-800 mb-3">
-                Why This Revision Makes Sense
-              </h3>
-              <div className="space-y-2 text-slate-800">
-                <p>
-                  • <strong>It preserves appliance protection</strong> by not
-                  disturbing the RO-fed internal villa network.
-                </p>
-                <p>
-                  • <strong>It avoids major internal plumbing changes</strong>{' '}
-                  in villas that were originally built for a single-source
-                  underground supply.
-                </p>
-                <p>
-                  • <strong>It still reduces RO dependency</strong> because
-                  outdoor and gardening uses can shift away from RO water.
-                </p>
-                <p>
-                  • <strong>It lowers waste and energy use</strong> by reducing
-                  both raw-water pumping and RO plant operating time.
-                </p>
-              </div>
-            </div>
-
-            {/* Energy Consumption Analysis */}
-            <div className="bg-purple-50 border-l-4 border-purple-400 p-6 mb-6">
-              <h3 className="text-lg font-semibold text-purple-800 mb-4">
-                Energy Consumption Analysis
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="naruvi-light-surface naruvi-light-card min-w-full bg-white border border-gray-300 rounded-lg">
-                  <thead className="bg-purple-100">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Component</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Power (kW)</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Hours/Day</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Energy/Day (kilowatt-hours, kWh)</th>
-                      <th className="px-4 py-3 text-left text-sm font-semibold text-purple-700 border-b">Monthly Energy Cost (₹)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">Borewell Pump</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">4</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">37.3</td>
-                      <td className="px-4 py-3 text-sm font-medium text-purple-800">9,567</td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">RO High-Pressure Pump</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">100</td>
-                      <td className="px-4 py-3 text-sm font-medium text-purple-800">25,650</td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-sm text-gray-900">Common Area Lighting</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">4</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">10</td>
-                      <td className="px-4 py-3 text-sm text-gray-600">40</td>
-                      <td className="px-4 py-3 text-sm font-medium text-purple-800">10,260</td>
-                    </tr>
-                    <tr className="naruvi-light-surface hover:bg-gray-50 bg-purple-50">
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">Total</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-900">-</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-purple-900">177.3</td>
-                      <td className="px-4 py-3 text-sm font-semibold text-purple-900">45,477</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
-              <div className="mt-4 grid md:grid-cols-2 gap-4">
-                <div className="naruvi-light-surface naruvi-light-card bg-white p-4 rounded-lg border">
-                  <h4 className="font-semibold text-purple-800 mb-2">Key Parameters</h4>
-                  <ul className="space-y-1 text-sm text-purple-900">
-                    <li>• Electricity Tariff: ₹9/kWh (TNPDCL)</li>
-                    <li>• Fixed Charge: ₹214/kW per 2 months</li>
-                    <li>• Fixed cost TNPDCL: ₹4,280</li>
-                    <li>• Total estimate TNPDCL cost: ₹49,757</li>
-                    <li>• RO Plant Daily Supply: about 29,000 litres to villas</li>
-                    <li>• Owner feedback indicates reject water may be around 65%</li>
-                    <li>• Pump Runtime: 10 hours actual</li>
-                    <li>• Lighting Runtime: 10 hours</li>
-                  </ul>
-                </div>
-                <div className="naruvi-light-surface naruvi-light-card bg-white p-4 rounded-lg border">
-                  <h4 className="font-semibold text-purple-800 mb-2">RO Efficiency Calculation</h4>
-                  <p className="text-sm text-purple-900 mb-2">
-                    At 50% recovery, producing <strong>29,000 litres</strong> of
-                    RO water requires about <strong>58,000 litres</strong> of
-                    input water per day. If reject water is closer to 65%, the
-                    input requirement can rise to about{' '}
-                    <strong>82,900 litres</strong>.
-                  </p>
-                  <p className="text-sm text-purple-900">
-                    <strong>Operational implication:</strong> shifting outdoor
-                    demand to the parallel line cuts borewell pumping, RO
-                    runtime, reject-water generation, and electricity use.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="naruvi-light-surface bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-blue-900 mb-2">
-                  Existing RO Supply Inside Villas
-                </h3>
-                <ul className="space-y-1 text-blue-900">
-                  <li>• Cooking</li>
-                  <li>• Bathing</li>
-                  <li>• General washing and fixture protection</li>
-                  <li>• Drinking</li>
-                </ul>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-green-900 mb-2">
-                  New Parallel Utility Outlet
-                </h3>
-                <ul className="space-y-1 text-green-900">
-                  <li>• Vehicle washing</li>
-                  <li>• Floor washing</li>
-                  <li>• Garden watering</li>
-                  <li>• Outdoor cleaning and related utility use</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-8 grid md:grid-cols-3 gap-4 not-prose">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  1. Source
-                </h3>
-                <p className="text-sm text-gray-700">
-                  Borewell and corporation water continue to be available for a
-                  separate utility service without replacing the internal RO
-                  distribution line.
-                </p>
-              </div>
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  2. Delivery
-                </h3>
-                <p className="text-sm text-gray-700">
-                  A pressurized parallel line runs independently and provides one
-                  outlet per villa on the inside compound wall facing the road.
-                </p>
-              </div>
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  3. Benefit
-                </h3>
-                <p className="text-sm text-gray-700">
-                  RO demand reduces without disturbing existing villa plumbing,
-                  lowering water wastage and energy consumption in the process.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Implementation Strategy */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Implementation Strategy
-            </h2>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-semibold text-gray-700 mb-3">
-                Independent Parallel Line Without Altering Internal Villa Plumbing
-              </h3>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-gray-700 mb-2">
-                    Engineering Approach:
-                  </h4>
-                  <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    <li>Keep the existing RO network inside villas unchanged</li>
-                    <li>Lay a separate pressurized line along the common utility route</li>
-                    <li>Provide one outdoor outlet per villa at the compound wall</li>
-                    <li>Match outlet pressure broadly with the current RO supply pressure</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-700 mb-2">
-                    Operating Logic:
-                  </h4>
-                  <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    <li>Use RO water inside villas as the protected domestic supply</li>
-                    <li>Use the new utility outlet for outdoor and heavy washing needs</li>
-                    <li>Raise TDS to around 70 and monitor it as part of routine plant operations</li>
-                    <li>Label the new outlet clearly so use-cases remain unambiguous</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-700 mb-2">
-                    Execution Status:
-                  </h4>
-                  <ul className="list-disc list-inside text-gray-600 space-y-1">
-                    <li>NOWA intended to complete this phase before March 2026</li>
-                    <li>The work is delayed due to the availability of pressurized-supply specialists</li>
-                    <li>Association follow-up is continuing to implement it as early as possible</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Cost Analysis */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Operational and Cost Impact
-            </h2>
-            
-            {/* TNPDCL Energy Cost */}
-            <div className="bg-green-50 border-l-4 border-green-400 p-6 mb-6">
-              <h3 className="text-xl font-semibold text-green-800 mb-3">
-                Monthly TNPDCL Energy Cost
-              </h3>
-              <p className="text-2xl font-bold text-green-700 mb-2">
-                ₹49,757
-              </p>
-              <div className="text-sm text-green-900 space-y-1">
-                <p>
-                  • Based on energy consumption analysis from NaruviWatercalc.csv
-                </p>
-                <p>• Includes monthly energy costs (₹45,477) + fixed costs (₹4,280)</p>
-                <p>
-                  • Current operational cost for existing system
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 bg-amber-50 border-l-4 border-amber-400 p-6 not-prose">
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#78350f' }}>
-                Revised Solar Economics
-              </h3>
-              <p style={{ color: '#0f172a' }}>
-                Using the latest assumption of post-subsidy solar cost below
-                <strong> ₹9,00,000</strong>, the current calculator defaults
-                produce an estimated payback of <strong>about {solarPaybackMonths} months</strong>{' '}
-                ({solarPaybackYears} years). This is materially better than the
-                earlier estimate and strengthens the case for the solar phase
-                already under execution.
-              </p>
-            </div>
-
-            <div className="mt-6 bg-indigo-50 border-l-4 border-indigo-400 p-6 rounded-lg not-prose">
-              <h3 className="text-xl font-semibold mb-3" style={{ color: '#1e1b4b' }}>
-                Expected Benefit of the Parallel Water Line
-              </h3>
-              <div className="space-y-2" style={{ color: '#0f172a' }}>
-                <p>
-                  • The new line should substantially reduce the volume of water
-                  that has to pass through the RO plant for outdoor and utility
-                  uses.
-                </p>
-                <p>
-                  • NOWA&apos;s current working assumption is that for the volume
-                  supplied through the parallel line, roughly twice that volume
-                  can be saved from being pumped out of the borewells because it
-                  no longer enters the RO cycle.
-                </p>
-                <p>
-                  • Lower RO demand should reduce both borewell pumping time and
-                  RO plant running time, which in turn lowers electricity cost.
-                </p>
-                <p>
-                  • Final capex for the revised parallel-line design should be
-                  confirmed after quotes from vendors who handle pressurized
-                  water-supply systems.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-6 bg-blue-50 border-l-4 border-blue-400 p-6">
-              <h3 className="text-xl font-semibold text-blue-800 mb-3">
-                Scope to Be Finalized Through Vendor Quotes
-              </h3>
-              <div className="text-sm text-blue-900 space-y-1">
-                <p>• Parallel pressurized line routing across the community</p>
-                <p>• One standardized outdoor outlet per villa</p>
-                <p>• Pressure balancing, isolation valves, and controls</p>
-                <p>• TDS-setting and monitoring protocol for the retained RO supply</p>
-              </div>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              <p className="font-bold">
-                Note: TNPDCL costs – <span className="font-extrabold">₹49,757</span>{' '}
-                are based on energy consumption analysis and may vary based on actual usage patterns. RO (Reverse
-                Osmosis) plant operational costs (power, membrane replacement)
-                are additional.
-              </p>
-            </div>
-          </section>
-
-          {/* Recommendations */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Recommendations
-            </h2>
-            <div className="space-y-4">
-              <div className="naruvi-light-surface bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-blue-900 mb-2">
-                  Immediate Actions
-                </h3>
-                <ul className="list-disc list-inside text-slate-800 space-y-1">
-                  <li>Close quotes from vendors experienced in pressurized supply systems</li>
-                  <li>Freeze the standard location and hardware specification for one outlet per villa</li>
-                  <li>Publish the operating note for RO line versus utility line usage</li>
-                </ul>
-              </div>
-              <div className="naruvi-light-surface bg-yellow-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-amber-900 mb-2">
-                  Implementation Considerations
-                </h3>
-                <ul className="list-disc list-inside text-slate-800 space-y-1">
-                  <li>Do not tamper with internal villa plumbing unless a later expert study supports it</li>
-                  <li>Raise TDS only with a defined monitoring band and periodic reporting</li>
-                  <li>Track pre/post metrics: RO runtime, borewell pumping hours, and electricity bills</li>
-                </ul>
-              </div>
-              <div className="naruvi-light-surface bg-emerald-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-emerald-900 mb-2">
-                  Communication to Owners
-                </h3>
-                <ul className="list-disc list-inside text-slate-800 space-y-1">
-                  <li>Explain that the RO-protection objective inside villas is being retained</li>
-                  <li>Show that outdoor uses are the first target for reducing RO dependence</li>
-                  <li>Share timeline updates transparently because vendor availability is the current bottleneck</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Summary */}
-          <section className="bg-gray-100 p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Summary
-            </h2>
-            <p className="text-gray-700 mb-4">
-              The revised owner-facing recommendation is to keep the present RO
-              supply inside villas, modestly raise TDS to about 70, and add one
-              separate pressurized borewell plus corporation-water outlet per
-              villa for outdoor uses.
-            </p>
-            <p className="text-gray-700">
-              <strong>Why this is the better fit now:</strong> it respects the
-              underground single-source plumbing constraint, retains protection
-              for appliances and fittings, and still reduces RO loading,
-              groundwater extraction, reject-water loss, and electricity use.
-            </p>
-          </section>
-
-          {/* My 2 Cents */}
-          <section className="bg-yellow-50 p-4 rounded-lg mt-6 not-prose">
-            <h2 className="text-xl font-semibold mb-2" style={{ color: '#854d0e' }}>
-              Postscript (PS):
-            </h2>
-            <p style={{ color: '#0f172a' }}>
-              Reject-water reuse in selected common-area applications and rain
-              water harvesting still deserve parallel study. But the most
-              practical next step, based on the current owner feedback and site
-              constraints, is the separate utility-water line rather than
-              internal villa plumbing changes. Thank you.
-            </p>
-          </section>
-
-          {/* Disclaimer */}
-          <section className="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg mt-6 not-prose">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0">
-                <svg
-                  className="w-6 h-6 text-red-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold mb-3" style={{ color: '#991b1b' }}>
-                  ⚠️ Disclaimer
-                </h2>
-                <div className="space-y-2" style={{ color: '#0f172a' }}>
-                  <p style={{ color: '#0f172a' }}>
-                    <strong>Experience Basis:</strong> This analysis is based on
-                    my personal experience of facing water management issues
-                    during our time living in Chennai.
-                  </p>
-                  <p style={{ color: '#0f172a' }}>
-                    <strong>Artificial Intelligence (AI) Assistance:</strong>{' '}
-                    Some structured estimates and summaries were prepared with
-                    the help of AI tools.
-                  </p>
-                  <p style={{ color: '#0f172a' }}>
-                    <strong>Expertise Level:</strong> I have limited knowledge
-                    in Civil Engineering and Plumbing. This report should be
-                    reviewed by qualified professionals before implementation.
-                  </p>
-                  <p className="text-sm font-medium mt-3" style={{ color: '#b91c1c' }}>
-                    Please consult with certified engineers and plumbers for
-                    professional assessment and implementation.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+        </section>
       </div>
     </motion.div>
   );

@@ -44,3 +44,45 @@
   ) {
   color: #0f172a !important;
 }
+
+.naruvi-report .naruvi-diagram {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.naruvi-report .naruvi-diagram :is(text, tspan) {
+  fill: #0f172a;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.naruvi-report .naruvi-diagram-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.naruvi-report .naruvi-diagram-subtitle {
+  fill: #334155;
+  font-size: 14px;
+}
+
+.naruvi-report .naruvi-diagram-label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.naruvi-report .naruvi-diagram-small {
+  fill: #334155;
+  font-size: 14px;
+}
+
+.naruvi-report .naruvi-diagram-note {
+  fill: #7c2d12;
+  font-size: 14px;
+}
