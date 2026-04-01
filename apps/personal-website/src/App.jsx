@@ -83,6 +83,7 @@ const ShortsOptimizerDashboard = lazy(
 const MicroSoapStudio = lazy(() => import("./pages/MicroSoapStudio"));
 const LocalGuideReview = lazy(() => import("./pages/LocalGuideReview"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
+const CommonEbCalculator = lazy(() => import("./pages/CommonEbCalculator"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
 const MyReminiscences = lazy(
@@ -911,6 +912,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <ConvertPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/commoneb"
+                  element={
+                    <>
+                      <SEO
+                        title="Aishwarya Enclave Common EB Calculator"
+                        description="Spreadsheet-style calculator for splitting the common EB bill between Royal Stores and 8 flats."
+                        canonicalPath="/commoneb"
+                        type="website"
+                      />
+                      <CommonEbCalculator />
                     </>
                   }
                 />
