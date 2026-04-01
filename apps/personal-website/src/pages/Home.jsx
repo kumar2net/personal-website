@@ -13,7 +13,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { alpha, keyframes } from "@mui/material/styles";
+import { alpha, darken, keyframes } from "@mui/material/styles";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import BoltRoundedIcon from "@mui/icons-material/BoltRounded";
 import CloudQueueRoundedIcon from "@mui/icons-material/CloudQueueRounded";
@@ -380,16 +380,18 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   endIcon={<ArrowOutwardRoundedIcon />}
                   onClick={() => trackClick("home_hero_weekend_essay_cta")}
                   sx={{
+                    "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
                     px: 3,
                     textTransform: "none",
                     fontWeight: 700,
                     boxShadow: "none",
-                    color: "#0b2440",
+                    color: "var(--variant-containedColor)",
                     background:
                       "linear-gradient(135deg, #ff9f6e 0%, #f6c453 44%, #64b5ff 100%)",
                     "&:hover": {
                       boxShadow: "none",
+                      color: "var(--variant-containedColor)",
                       background:
                         "linear-gradient(135deg, #fb905a 0%, #efba3a 44%, #53a8ff 100%)",
                     },
@@ -653,6 +655,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           <Grid container spacing={2}>
             {worldPulse.map((signal, index) => {
               const SignalIcon = signal.icon;
+              const signalAccentInk = isDarkMode
+                ? signal.accent
+                : darken(signal.accent, 0.42);
 
               return (
                 <Grid key={signal.title} size={{ xs: 12, sm: 6 }}>
@@ -668,7 +673,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                         "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
                       "&:hover": {
                         transform: "translateY(-3px)",
-                        borderColor: signal.accent,
+                        borderColor: signalAccentInk,
                         boxShadow: theme.shadows[6],
                       },
                     })}
@@ -700,12 +705,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                                 ),
                               }}
                             >
-                              <SignalIcon sx={{ color: signal.accent }} />
+                              <SignalIcon sx={{ color: signalAccentInk }} />
                             </Box>
                             <Typography
                               variant="overline"
                               sx={{
-                                color: signal.accent,
+                                color: signalAccentInk,
                                 letterSpacing: 1.5,
                                 fontWeight: 700,
                               }}
@@ -757,14 +762,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                               <Typography
                                 variant="caption"
                                 sx={{
-                                  color: signal.accent,
+                                  color: signalAccentInk,
                                   fontWeight: 700,
                                 }}
                               >
                                 {signal.cta}
                               </Typography>
                               <ArrowOutwardRoundedIcon
-                                sx={{ fontSize: 18, color: signal.accent }}
+                                sx={{ fontSize: 18, color: signalAccentInk }}
                               />
                             </Stack>
                           </Stack>
@@ -819,6 +824,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               <Grid container spacing={2}>
                 {siteVectors.map((item, index) => {
                   const ItemIcon = item.icon;
+                  const itemAccentInk = isDarkMode
+                    ? item.accent
+                    : darken(item.accent, 0.42);
 
                   return (
                     <Grid key={item.title} size={{ xs: 12, sm: 6 }}>
@@ -834,7 +842,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
                           "&:hover": {
                             transform: "translateY(-3px)",
-                            borderColor: item.accent,
+                            borderColor: itemAccentInk,
                             boxShadow: theme.shadows[6],
                           },
                         })}
@@ -866,12 +874,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                                     ),
                                   }}
                                 >
-                                  <ItemIcon sx={{ color: item.accent }} />
+                                  <ItemIcon sx={{ color: itemAccentInk }} />
                                 </Box>
                                 <Typography
                                   variant="overline"
                                   sx={{
-                                    color: item.accent,
+                                    color: itemAccentInk,
                                     letterSpacing: 1.6,
                                     fontWeight: 700,
                                   }}
@@ -914,7 +922,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                                   {item.cta}
                                 </Typography>
                                 <ArrowOutwardRoundedIcon
-                                  sx={{ fontSize: 18, color: item.accent }}
+                                  sx={{ fontSize: 18, color: itemAccentInk }}
                                 />
                               </Stack>
                             </Stack>

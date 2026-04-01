@@ -13,11 +13,11 @@
     @apply bg-gray-100 text-gray-900 antialiased transition-colors duration-150 dark:bg-slate-950 dark:text-slate-100;
   }
 
-  a {
+  a:not([class*="Mui"]) {
     @apply text-blue-600 transition-colors dark:text-blue-300;
   }
 
-  a:hover {
+  a:not([class*="Mui"]):hover {
     @apply text-blue-700 dark:text-blue-200;
   }
 }
