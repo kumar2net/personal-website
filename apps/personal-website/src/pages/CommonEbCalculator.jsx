@@ -1,6 +1,4 @@
 import { useMemo, useState } from "react";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import {
   Alert,
@@ -23,8 +21,7 @@ import {
 } from "@mui/material";
 
 const FLAT_COUNT = 8;
-const ROYAL_STORES_SHARE = 0.5;
-const INITIAL_ROW_COUNT = 12;
+const ROYAL_STORES_PER_FLAT_SHARE = 0.5;
 
 const currencyFormatter = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -40,34 +37,6 @@ function formatCurrency(value) {
   return currencyFormatter.format(value);
 }
 
-function createRow(period = "", commonAmount = "", notes = "") {
-  return {
-    id:
-      globalThis.crypto?.randomUUID?.() ??
-      `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
-    period,
-    commonAmount,
-    notes,
-  };
-}
-
-function getPeriodLabel(offset = 0) {
-  const date = new Date();
-  date.setDate(1);
-  date.setMonth(date.getMonth() + offset);
-
-  return new Intl.DateTimeFormat("en-IN", {
-    month: "short",
-    year: "numeric",
-  }).format(date);
-}
-
-function createInitialRows() {
-  return Array.from({ length: INITIAL_ROW_COUNT }, (_, index) =>
-    createRow(getPeriodLabel(index)),
-  );
-}
-
 function parseAmount(rawValue) {
   if (rawValue === "" || rawValue == null) {
     return null;
@@ -81,16 +50,15 @@ function parseAmount(rawValue) {
   return parsed;
 }
 
-function calculateRow(row) {
-  const amount = parseAmount(row.commonAmount);
+function calculateSplit(rawAmount) {
+  const amount = parseAmount(rawAmount);
   const hasAmount = amount != null;
 
   if (!hasAmount) {
     return {
-      ...row,
       amount: null,
       hasAmount: false,
-      equalSplit: null,
+      basePerFlat: null,
       royalStores: null,
       flatsPool: null,
       perFlat: null,
@@ -98,47 +66,42 @@ function calculateRow(row) {
     };
   }
 
-  const equalSplit = amount / FLAT_COUNT;
-  const royalStores = amount * ROYAL_STORES_SHARE;
+  const basePerFlat = amount / FLAT_COUNT;
+  const royalStores = basePerFlat * ROYAL_STORES_PER_FLAT_SHARE;
   const flatsPool = amount - royalStores;
   const perFlat = flatsPool / FLAT_COUNT;
 
   return {
-    ...row,
     amount,
     hasAmount: true,
-    equalSplit,
+    basePerFlat,
     royalStores,
     flatsPool,
     perFlat,
-    savingsVsEqualSplit: equalSplit - perFlat,
+    savingsVsEqualSplit: basePerFlat - perFlat,
   };
 }
 
-function buildCsv(rows) {
+function buildCsv(row) {
   const headers = [
-    "Period",
-    "Common EB Amount",
-    "Equal Split Divide by 8",
-    "Royal Stores 50%",
-    "Flats Pool 50%",
+    "Current Billing Cycle Common Amount",
+    "Base Flat Amount Divide by 8",
+    "Royal Stores 50% of Base Flat Amount",
+    "Amount Left for 8 Flats",
     "Each Flat Share",
     "Savings vs Divide by 8",
-    "Notes",
   ];
 
-  const csvRows = rows.map((row) => [
-    row.period,
+  const values = [
     row.amount ?? "",
-    row.equalSplit ?? "",
+    row.basePerFlat ?? "",
     row.royalStores ?? "",
     row.flatsPool ?? "",
     row.perFlat ?? "",
     row.savingsVsEqualSplit ?? "",
-    row.notes,
-  ]);
+  ];
 
-  return [headers, ...csvRows]
+  return [headers, values]
     .map((columns) =>
       columns
         .map((value) => `"${String(value ?? "").replaceAll('"', '""')}"`)
@@ -147,16 +110,16 @@ function buildCsv(rows) {
     .join("\n");
 }
 
-function downloadCsv(rows) {
+function downloadCsv(row) {
   if (typeof window === "undefined") {
     return;
   }
 
-  const blob = new Blob([buildCsv(rows)], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob([buildCsv(row)], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "aishwarya-enclave-common-eb.csv";
+  link.download = "aishwarya-enclave-common-eb-current-cycle.csv";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -186,61 +149,9 @@ function SummaryCard({ label, value, helper }) {
 }
 
 export default function CommonEbCalculator() {
-  const [rows, setRows] = useState(() => createInitialRows());
+  const [commonAmount, setCommonAmount] = useState("");
 
-  const calculatedRows = useMemo(
-    () => rows.map((row) => calculateRow(row)),
-    [rows],
-  );
-
-  const filledRowCount = useMemo(
-    () => calculatedRows.filter((row) => row.hasAmount).length,
-    [calculatedRows],
-  );
-
-  const summary = useMemo(
-    () =>
-      calculatedRows.reduce(
-        (totals, row) => {
-          if (!row.hasAmount) {
-            return totals;
-          }
-
-          return {
-            commonAmount: totals.commonAmount + row.amount,
-            royalStores: totals.royalStores + row.royalStores,
-            flatsPool: totals.flatsPool + row.flatsPool,
-            perFlat: totals.perFlat + row.perFlat,
-            savingsVsEqualSplit:
-              totals.savingsVsEqualSplit + row.savingsVsEqualSplit,
-          };
-        },
-        {
-          commonAmount: 0,
-          royalStores: 0,
-          flatsPool: 0,
-          perFlat: 0,
-          savingsVsEqualSplit: 0,
-        },
-      ),
-    [calculatedRows],
-  );
-
-  const handleRowChange = (rowId, field, value) => {
-    setRows((currentRows) =>
-      currentRows.map((row) =>
-        row.id === rowId ? { ...row, [field]: value } : row,
-      ),
-    );
-  };
-
-  const handleAddRow = () => {
-    setRows((currentRows) => [...currentRows, createRow(getPeriodLabel(currentRows.length))]);
-  };
-
-  const handleDeleteRow = (rowId) => {
-    setRows((currentRows) => currentRows.filter((row) => row.id !== rowId));
-  };
+  const row = useMemo(() => calculateSplit(commonAmount), [commonAmount]);
 
   return (
     <Stack spacing={4}>
@@ -252,22 +163,35 @@ export default function CommonEbCalculator() {
         >
           Aishwarya Enclave Common EB Calculator
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 860 }}>
-          Enter the monthly common EB bill and the sheet will calculate the
-          Aishwarya Enclave split automatically: Royal Stores pays 50% of the
-          total and the remaining 50% is shared equally across 8 flats.
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ maxWidth: 860 }}
+        >
+          Enter the current billing cycle common EB amount. The calculator uses
+          this split: base flat amount is common EB divided by 8, Royal Stores
+          pays 50% of that base flat amount, and the remaining bill is shared
+          equally across the 8 flats.
         </Typography>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} flexWrap="wrap">
-          <Chip label="8 flats" color="primary" variant="outlined" />
-          <Chip label="Royal Stores: 50%" color="primary" variant="outlined" />
-          <Chip label="Each flat: common amount ÷ 16" color="primary" variant="outlined" />
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1.5}
+          flexWrap="wrap"
+        >
+          <Chip label="1 current billing cycle row" color="primary" variant="outlined" />
+          <Chip label="Base flat amount = common EB ÷ 8" color="primary" variant="outlined" />
+          <Chip
+            label="Royal Stores = 50% of base flat amount"
+            color="primary"
+            variant="outlined"
+          />
         </Stack>
       </Stack>
 
       <Alert severity="info" variant="outlined">
-        Reference split by 8: <strong>Common amount ÷ 8</strong>. Aishwarya
-        Enclave split: <strong>Royal Stores = 50%</strong>, and{" "}
-        <strong>each flat = (remaining 50%) ÷ 8</strong>.
+        Formula used: <strong>Base flat amount = Common amount ÷ 8</strong>,{" "}
+        <strong>Royal Stores = 50% of base flat amount</strong>, and{" "}
+        <strong>Each flat = (Common amount - Royal Stores share) ÷ 8</strong>.
       </Alert>
 
       <Box
@@ -282,24 +206,26 @@ export default function CommonEbCalculator() {
         }}
       >
         <SummaryCard
-          label="Common EB Total"
-          value={formatCurrency(summary.commonAmount)}
-          helper={`${filledRowCount} filled month${filledRowCount === 1 ? "" : "s"}`}
+          label="Common EB Amount"
+          value={formatCurrency(row.amount)}
+          helper="Current billing cycle input"
         />
         <SummaryCard
-          label="Royal Stores Total"
-          value={formatCurrency(summary.royalStores)}
-          helper="50% of the total common EB"
+          label="Royal Stores"
+          value={formatCurrency(row.royalStores)}
+          helper="50% of the base divide-by-8 amount"
         />
         <SummaryCard
-          label="All Flats Total"
-          value={formatCurrency(summary.flatsPool)}
-          helper="Combined share for the 8 flats"
+          label="Left for 8 Flats"
+          value={formatCurrency(row.flatsPool)}
+          helper="Remaining amount after Royal Stores share"
         />
         <SummaryCard
-          label="Each Flat Total"
-          value={formatCurrency(summary.perFlat)}
-          helper={`Savings vs divide-by-8: ${formatCurrency(summary.savingsVsEqualSplit)}`}
+          label="Each Flat Share"
+          value={formatCurrency(row.perFlat)}
+          helper={`Savings vs divide-by-8: ${formatCurrency(
+            row.savingsVsEqualSplit,
+          )}`}
         />
       </Box>
 
@@ -313,101 +239,55 @@ export default function CommonEbCalculator() {
         >
           <Stack spacing={0.5}>
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              Monthly Sheet
+              Current Billing Cycle
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Edit the amount column only. All other payment columns update
-              automatically.
+              Update the common EB amount in the single row below.
             </Typography>
           </Stack>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
-            <Button
-              variant="outlined"
-              startIcon={<DownloadRoundedIcon />}
-              onClick={() => downloadCsv(calculatedRows)}
-              disabled={filledRowCount === 0}
-            >
-              Export CSV
-            </Button>
-            <Button variant="contained" startIcon={<AddRoundedIcon />} onClick={handleAddRow}>
-              Add Month
-            </Button>
-          </Stack>
+          <Button
+            variant="outlined"
+            startIcon={<DownloadRoundedIcon />}
+            onClick={() => downloadCsv(row)}
+            disabled={!row.hasAmount}
+          >
+            Export CSV
+          </Button>
         </Stack>
 
         <Divider />
 
         <TableContainer sx={{ overflowX: "auto" }}>
-          <Table sx={{ minWidth: 1120 }}>
+          <Table sx={{ minWidth: 920 }}>
             <TableHead>
               <TableRow>
-                <TableCell>Period</TableCell>
-                <TableCell>Common EB Amount</TableCell>
-                <TableCell>Divide by 8</TableCell>
-                <TableCell>Royal Stores 50%</TableCell>
-                <TableCell>Flats Pool 50%</TableCell>
+                <TableCell>Current Billing Cycle Common Amount</TableCell>
+                <TableCell>Base Flat Amount</TableCell>
+                <TableCell>Royal Stores</TableCell>
+                <TableCell>Left for 8 Flats</TableCell>
                 <TableCell>Each Flat Share</TableCell>
                 <TableCell>Savings Per Flat</TableCell>
-                <TableCell>Notes</TableCell>
-                <TableCell align="right">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {calculatedRows.map((row) => (
-                <TableRow hover key={row.id}>
-                  <TableCell sx={{ minWidth: 160 }}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      value={row.period}
-                      onChange={(event) =>
-                        handleRowChange(row.id, "period", event.target.value)
-                      }
-                      placeholder="Apr 2026"
-                    />
-                  </TableCell>
-                  <TableCell sx={{ minWidth: 170 }}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      type="number"
-                      value={row.commonAmount}
-                      onChange={(event) =>
-                        handleRowChange(row.id, "commonAmount", event.target.value)
-                      }
-                      placeholder="0.00"
-                      inputProps={{ min: 0, step: "0.01" }}
-                    />
-                  </TableCell>
-                  <TableCell>{formatCurrency(row.equalSplit)}</TableCell>
-                  <TableCell>{formatCurrency(row.royalStores)}</TableCell>
-                  <TableCell>{formatCurrency(row.flatsPool)}</TableCell>
-                  <TableCell>{formatCurrency(row.perFlat)}</TableCell>
-                  <TableCell>{formatCurrency(row.savingsVsEqualSplit)}</TableCell>
-                  <TableCell sx={{ minWidth: 220 }}>
-                    <TextField
-                      fullWidth
-                      size="small"
-                      value={row.notes}
-                      onChange={(event) =>
-                        handleRowChange(row.id, "notes", event.target.value)
-                      }
-                      placeholder="Optional note"
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button
-                      color="inherit"
-                      size="small"
-                      startIcon={<DeleteOutlineRoundedIcon />}
-                      onClick={() => handleDeleteRow(row.id)}
-                      disabled={rows.length === 1}
-                    >
-                      Remove
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+              <TableRow hover>
+                <TableCell sx={{ minWidth: 240 }}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    type="number"
+                    value={commonAmount}
+                    onChange={(event) => setCommonAmount(event.target.value)}
+                    placeholder="0.00"
+                    inputProps={{ min: 0, step: "0.01" }}
+                  />
+                </TableCell>
+                <TableCell>{formatCurrency(row.basePerFlat)}</TableCell>
+                <TableCell>{formatCurrency(row.royalStores)}</TableCell>
+                <TableCell>{formatCurrency(row.flatsPool)}</TableCell>
+                <TableCell>{formatCurrency(row.perFlat)}</TableCell>
+                <TableCell>{formatCurrency(row.savingsVsEqualSplit)}</TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
