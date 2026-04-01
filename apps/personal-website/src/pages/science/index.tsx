@@ -180,7 +180,7 @@ export default function ScienceIndex() {
           <Card sx={cardSx}>
             <CardActionArea
               component={RouterLink}
-              to="/science/protein-folding"
+              to="/science/my-health-data-explained"
               sx={{ height: "100%" }}
             >
               <CardContent sx={{ display: "grid", gap: 1.25 }}>
@@ -195,7 +195,7 @@ export default function ScienceIndex() {
                   }}
                 />
                 <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
-                  Insulin Protein Folding & Heart Meds
+                  My Health Data Explained
                 </Typography>
                 <Typography variant="bodyLarge" sx={{ color: onSurface }}>
                   WebGPU visualization of insulin A/B chains with context on my low

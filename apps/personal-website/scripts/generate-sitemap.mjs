@@ -33,9 +33,10 @@ const STATIC_ROUTES = [
   '/science/patellar-instability',
   '/science/brain-vs-ai',
   '/science/paper-sizes',
-  '/science/protein-folding',
+  '/science/my-health-data-explained',
   '/science/networking',
   '/science/back-pain',
+  '/commoneb',
   '/naruvi',
   '/contact',
   // '/news' is an external redirect; omit from sitemap to avoid soft-404 noise
@@ -204,6 +205,7 @@ const main = async () => {
       '/music',
       '/album',
       '/books',
+      '/commoneb',
       '/contact',
       '/elsewhere',
     ];

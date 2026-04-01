@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import {
+  Navigate,
   Link as RouterLink,
   Route,
   Routes,
@@ -44,8 +45,8 @@ const MusicPage = lazy(() => import("./pages/Music"));
 const Elsewhere = lazy(() => import("./pages/Elsewhere"));
 const AnanyasLocalGuide = lazy(() => import("./pages/AnanyasLocalGuide"));
 const ScienceIndex = lazy(() => import("./pages/science"));
-const ProteinFoldingPage = lazy(
-  () => import("./pages/science/protein-folding"),
+const MyHealthDataExplainedPage = lazy(
+  () => import("./pages/science/my-health-data-explained"),
 );
 const BrainVsAiPrimerPage = lazy(() => import("./pages/science/brain-vs-ai"));
 const BackPainPlanPage = lazy(() => import("./pages/science/back-pain"));
@@ -83,6 +84,7 @@ const ShortsOptimizerDashboard = lazy(
 const MicroSoapStudio = lazy(() => import("./pages/MicroSoapStudio"));
 const LocalGuideReview = lazy(() => import("./pages/LocalGuideReview"));
 const ConvertPage = lazy(() => import("./pages/Convert"));
+const CommonEbCalculator = lazy(() => import("./pages/CommonEbCalculator"));
 
 const NaruviWaterIssues = lazy(() => import("./pages/naruvi"));
 const MyReminiscences = lazy(
@@ -833,14 +835,20 @@ const App = ({ mode }) => {
                 <Route
                   path="/science/protein-folding"
                   element={
+                    <Navigate replace to="/science/my-health-data-explained" />
+                  }
+                />
+                <Route
+                  path="/science/my-health-data-explained"
+                  element={
                     <>
                       <SEO
-                        title="Protein Folding – Insulin & Heart Medication Insights"
-                        description="Interactive WebGPU visual of insulin folding with cardiometabolic explanations."
-                        canonicalPath="/science/protein-folding"
+                        title="My Health Data Explained"
+                        description="Interactive WebGPU visual of insulin folding with medication, symptom, and cardiometabolic context."
+                        canonicalPath="/science/my-health-data-explained"
                         type="website"
                       />
-                      <ProteinFoldingPage />
+                      <MyHealthDataExplainedPage />
                     </>
                   }
                 />
@@ -911,6 +919,20 @@ const App = ({ mode }) => {
                         type="website"
                       />
                       <ConvertPage />
+                    </>
+                  }
+                />
+                <Route
+                  path="/commoneb"
+                  element={
+                    <>
+                      <SEO
+                        title="Aishwarya Enclave Common EB Calculator"
+                        description="Spreadsheet-style calculator for splitting the common EB bill between Royal Stores and 8 flats."
+                        canonicalPath="/commoneb"
+                        type="website"
+                      />
+                      <CommonEbCalculator />
                     </>
                   }
                 />

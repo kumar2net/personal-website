@@ -53,7 +53,7 @@ function revealUpSx(delay = 0, duration = 0.45) {
   };
 }
 
-const editionLabel = "Weekend edition · March 21-22, 2026";
+const editionLabel = "This Week Mood · World Over";
 
 const moodSwatches = [
   {
@@ -79,8 +79,8 @@ const moodSwatches = [
 ];
 
 const moodTags = [
-  "Weekend desk",
-  "March heat",
+  "World over",
+  "Heat map",
   "Oil backstop",
   "Grid realism",
 ];
@@ -124,7 +124,7 @@ const worldPulse = [
   },
   {
     eyebrow: "AI energy reality",
-    title: "The weekend essay question is still electricity",
+    title: "The lead essay question is still electricity",
     summary:
       "India's February 17 AI push and March 12 power note converged on the same point: compute ambition only matters if grids, cooling, and supply stay ahead of demand.",
     source: "Signal dates: February 17 and March 12, 2026",
@@ -132,14 +132,14 @@ const worldPulse = [
     analyticsKey: "home_weekend_ai_energy",
     accent: "#43d8c9",
     icon: MemoryRoundedIcon,
-    cta: "Read the weekend essay",
+    cta: "Read the lead essay",
   },
 ];
 
 const siteVectors = [
   {
     eyebrow: "Long read",
-    title: "Start with the weekend essay on AI and energy",
+    title: "Start with the lead essay on AI and energy",
     summary:
       "A slower explainer on the Kardashev scale, power demand, and why intelligence at scale is still constrained by electricity.",
     to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
@@ -150,7 +150,7 @@ const siteVectors = [
   },
   {
     eyebrow: "Numbers",
-    title: "Then check the scoreboard",
+    title: "Then check the weekly scoreboard",
     summary:
       "Crude, volatility, indices, and the handful of metrics that tell you whether the week was noise or regime change.",
     to: "/keydata",
@@ -174,7 +174,7 @@ const siteVectors = [
     eyebrow: "Soft exit",
     title: "Then leave some room for music and memory",
     summary:
-      "Weekend mode should not end in policy and markets alone. It also needs rhythm, culture, and a little human residue.",
+      "A world-over weekly read should not end in policy and markets alone. It also needs rhythm, culture, and a little human residue.",
     to: "/music",
     analyticsKey: "home_vector_music",
     accent: "#f472b6",
@@ -246,7 +246,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Weekend edition for March 21-22, 2026: March heat, oil backstops, Paris tariff talks, and a new long read on AI's energy bottleneck."
+        description="This week's mood, world over: heat stress, oil backstops, tariff choreography, and AI's energy bottleneck."
         canonicalPath="/"
         image="/generate/2026-03-22-kardashev-scale-ai-energy-bottleneck-hero.png"
         type="website"
@@ -308,7 +308,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Weekend of March 21-22, 2026 • refreshed {todayLabel}
+                  Refreshed {todayLabel} • signal dates noted below
                 </Typography>
               </Stack>
 
@@ -325,7 +325,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Weekend mode: slower scroll, bigger systems.
+                  This week's mood, world over.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -336,11 +336,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     lineHeight: 1.72,
                   }}
                 >
-                  This weekend version eases off the weekday alarm and turns
-                  into a warmer briefing. The week ended with early spring
-                  heat, emergency oil backstops, Paris tariff choreography, and
-                  a fresh long read on the oldest truth in tech: AI runs on
-                  electricity before it runs on dreams.
+                  The home page now reads like a weekly global pulse instead of
+                  a dated special edition. Heat is arriving early, energy is
+                  being stabilized by intervention, trade stays procedural, and
+                  the oldest truth in tech still holds: AI runs on electricity
+                  before it runs on dreams.
                 </Typography>
               </Stack>
 
@@ -385,7 +385,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "none",
                     fontWeight: 700,
                     boxShadow: "none",
-                    color: "#1d120d",
+                    color: "#0b2440",
                     background:
                       "linear-gradient(135deg, #ff9f6e 0%, #f6c453 44%, #64b5ff 100%)",
                     "&:hover": {
@@ -395,7 +395,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     },
                   }}
                 >
-                  Start with the weekend essay
+                  Start with the lead essay
                 </Button>
                 <Button
                   component={RouterLink}
@@ -440,8 +440,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: reflective, heat-shimmered, and system-aware rather
-                    than panicked.
+                    Mood: alert, heat-shimmered, and system-aware rather than
+                    apocalyptic.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -449,8 +449,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Weekend use: one long read, one dashboard check, then a
-                    softer exit into music, books, or memory.
+                    Weekly use: one lead essay, one dashboard check, then drift
+                    into music, books, or memory.
                   </Typography>
                 </Grid>
               </Grid>
@@ -481,7 +481,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Weekend Palette
+                  This Week Mood
                 </Typography>
                 <Typography
                   variant="h5"
@@ -491,7 +491,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering this two-day version
+                  The colors steering the world-over read
                 </Typography>
               </Box>
 
@@ -547,8 +547,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This weekend edition slows the page down without pretending
-                  the week was calm. The date stays visible so the mood has a
+                  This weekly frame keeps the page readable without pretending
+                  the week was calm. Dates stay visible so the mood keeps a
                   timestamp.
                 </Typography>
               </Box>
@@ -628,7 +628,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-muted-text)",
                 }}
               >
-                Weekend Signals
+                World Over
               </Typography>
               <Typography
                 variant="h4"
@@ -638,15 +638,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-ink)",
                 }}
               >
-                What this weekend feels like
+                This week's mood, signal by signal
               </Typography>
             </Stack>
             <Typography
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              More digest than ticker. Exact dates stay visible so the page
-              reads as a dated weekend brief, not fake permanence.
+              More signal board than ticker. Exact dates stay visible so the
+              page reads as a weekly pulse, not fake permanence.
             </Typography>
           </Stack>
 
@@ -802,7 +802,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Weekend Routes
+                  Weekly Routes
                 </Typography>
                 <Typography
                   variant="h4"
@@ -812,7 +812,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  How to use the site this weekend
+                  How to use the site this week
                 </Typography>
               </Box>
 
@@ -951,7 +951,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Soft Exits
+                  Other Routes
                 </Typography>
                 <Typography
                   variant="h5"
@@ -1034,8 +1034,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                Weekend mode means less doomscroll, more deliberate wandering.
-                The page can face the week without being trapped inside it.
+                This week asks for less doomscroll, more deliberate wandering.
+                The page can face the world without being trapped inside it.
               </Typography>
             </Stack>
           </Paper>
@@ -1053,7 +1053,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            Weekend Reading Stack
+            This Week Reading Stack
           </Typography>
           <Typography
             variant="h4"
@@ -1063,7 +1063,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Three posts for a slower two-day read
+            Three posts to ground the global mood
           </Typography>
         </Stack>
 

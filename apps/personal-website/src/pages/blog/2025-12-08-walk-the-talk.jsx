@@ -480,12 +480,12 @@ export default function BlogPost() {
           PS: Do check out our WebGL rendering at{" "}
           <Box
             component="a"
-            href="http://localhost:5173/science/protein-folding"
+            href="http://localhost:5173/science/my-health-data-explained"
             target="_blank"
             rel="noopener noreferrer"
             sx={{ color: "primary.main", fontWeight: 700 }}
           >
-            /science/protein-folding
+            /science/my-health-data-explained
           </Box>
         </Typography>
       </Box>

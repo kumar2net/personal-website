@@ -57,9 +57,15 @@ const snapshotCards: SnapshotCard[] = [
   },
   {
     label: "Confirmed companion medicines",
-    value: "Five cardiometabolic supports",
+    value: "Four cardiometabolic supports",
     detail:
-      "The current schedule also includes Eptus, Losar, Dytor, Cilobid, and Eccosprin for pressure, fluid, flow, and clot-risk support.",
+      "The current schedule also includes Losar, Dytor, Cilobid, and Eccosprin for pressure, fluid, flow, and clot-risk support.",
+  },
+  {
+    label: "Current clinical burden",
+    value: "Foot ulcer + LVEF 26%",
+    detail:
+      "Reported issues include a diabetic foot ulcer and breathing difficulty with shortness of breath in the setting of a low LVEF of 26%. Past history also includes necrotizing fasciitis.",
   },
 ];
 
@@ -88,18 +94,6 @@ const mechanismCards: MechanismCard[] = [
 
 const medicationSchedule: MedicationScheduleRow[] = [
   {
-    drug: "Eptus",
-    dose: "25 mg (1/2 tablet)",
-    timing: "Morning",
-    morning: "1/2",
-    afternoon: "0",
-    night: "0",
-    pattern: "1/2-0-0",
-    role: "Helps lower remodeling and pressure stress.",
-    proteinLink:
-      "Creates a steadier cardiovascular backdrop so insulin-responsive tissues are not working against excess pressure and fluid strain.",
-  },
-  {
     drug: "Losar",
     dose: "25 mg",
     timing: "Morning",
@@ -113,7 +107,7 @@ const medicationSchedule: MedicationScheduleRow[] = [
   },
   {
     drug: "Dytor",
-    dose: "5 mg",
+    dose: "10 mg",
     timing: "Morning",
     morning: "1",
     afternoon: "0",
@@ -161,7 +155,7 @@ const medicationSchedule: MedicationScheduleRow[] = [
   },
 ];
 
-export default function ProteinFoldingPage() {
+export default function MyHealthDataExplainedPage() {
   const theme = useTheme();
   const paletteVars = (theme.vars?.palette ?? {}) as Record<string, string | undefined>;
 
@@ -183,9 +177,9 @@ export default function ProteinFoldingPage() {
   return (
     <>
       <SEO
-        title="Protein Folding – Insulin & Heart Medication Insights"
-        description="Interactive WebGPU visual of insulin folding with cardiometabolic explanations."
-        canonicalPath="/science/protein-folding"
+        title="My Health Data Explained"
+        description="Interactive WebGPU visual of insulin folding with medication, symptom, and cardiometabolic context."
+        canonicalPath="/science/my-health-data-explained"
         type="website"
       />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
@@ -198,7 +192,7 @@ export default function ProteinFoldingPage() {
                 letterSpacing: 0.2,
               }}
             >
-              Insulin Protein Folding
+              My Health Data Explained
             </Typography>
             <Typography
               variant="bodyLarge"
@@ -206,8 +200,9 @@ export default function ProteinFoldingPage() {
             >
               A molecule-first view of the confirmed cardiometabolic notes currently
               on this site. The page now ties together insulin folding, the active
-              glucose-lowering medicine, and the companion medicines that help keep
-              the broader physiology stable.
+              glucose-lowering medicine, the companion medicines that help keep the
+              broader physiology stable, and the symptom burden shaping daily
+              function.
             </Typography>
             <Stack direction="row" sx={{ flexWrap: "wrap", gap: 1 }}>
               <Chip
@@ -298,6 +293,29 @@ export default function ProteinFoldingPage() {
                 glimepiride + metformin combination, it supports insulin release and
                 insulin sensitivity, making each unit of correctly folded insulin more
                 effective and less likely to drive swings.
+              </Typography>
+            </CardContent>
+          </Card>
+
+          <Card sx={cardSx}>
+            <CardContent sx={{ display: "grid", gap: 1.5 }}>
+              <Typography variant="titleMedium" sx={{ color: primaryContainer }}>
+                Treatment Protocol, Plainly Explained
+              </Typography>
+              <Typography variant="bodyLarge" sx={{ color: onSurface }}>
+                Think of the plan as a repair crew working on the same house from
+                different directions at once: Starglim M2 helps bring blood sugar down
+                so tissues are not bathing in excess glucose, Losar lowers pressure in
+                the circulation, Dytor removes extra fluid so the heart and lungs are
+                not pushing against congestion when LVEF is 26%, and Cilobid with
+                Eccosprin help blood keep moving and reduce clot-related risk. The aim
+                is not to treat the foot, the heart, and the sugar problem as separate
+                stories, but to reduce strain everywhere at once so breathing is easier,
+                wound healing has a better chance, and circulation to vulnerable tissue
+                is less compromised. The history matters too: a past episode of
+                necrotizing fasciitis means serious soft-tissue damage and infection are
+                part of the real background, which is why wound surveillance and early
+                escalation matter in the overall picture.
               </Typography>
             </CardContent>
           </Card>
