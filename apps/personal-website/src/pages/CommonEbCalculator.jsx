@@ -26,6 +26,7 @@ const ROYAL_STORES_PER_FLAT_SHARE = 0.5;
 const currencyFormatter = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
+  minimumFractionDigits: 0,
   maximumFractionDigits: 2,
 });
 
@@ -50,6 +51,10 @@ function parseAmount(rawValue) {
   return parsed;
 }
 
+function roundToRupee(value) {
+  return Math.round(value);
+}
+
 function calculateSplit(rawAmount) {
   const amount = parseAmount(rawAmount);
   const hasAmount = amount != null;
@@ -58,47 +63,49 @@ function calculateSplit(rawAmount) {
     return {
       amount: null,
       hasAmount: false,
+      flatCount: FLAT_COUNT,
       basePerFlat: null,
       royalStores: null,
-      flatsPool: null,
-      perFlat: null,
-      savingsVsEqualSplit: null,
+      extraPerFlat: null,
+      payablePerFlat: null,
     };
   }
 
-  const basePerFlat = amount / FLAT_COUNT;
-  const royalStores = basePerFlat * ROYAL_STORES_PER_FLAT_SHARE;
-  const flatsPool = amount - royalStores;
-  const perFlat = flatsPool / FLAT_COUNT;
+  const basePerFlat = roundToRupee(amount / FLAT_COUNT);
+  const royalStores = roundToRupee(
+    basePerFlat * ROYAL_STORES_PER_FLAT_SHARE,
+  );
+  const extraPerFlat = roundToRupee(royalStores / FLAT_COUNT);
+  const payablePerFlat = basePerFlat + extraPerFlat;
 
   return {
     amount,
     hasAmount: true,
+    flatCount: FLAT_COUNT,
     basePerFlat,
     royalStores,
-    flatsPool,
-    perFlat,
-    savingsVsEqualSplit: basePerFlat - perFlat,
+    extraPerFlat,
+    payablePerFlat,
   };
 }
 
 function buildCsv(row) {
   const headers = [
     "Current Billing Cycle Common Amount",
-    "Base Flat Amount Divide by 8",
-    "Royal Stores 50% of Base Flat Amount",
-    "Amount Left for 8 Flats",
-    "Each Flat Share",
-    "Savings vs Divide by 8",
+    "Number of Flats",
+    "Amount Per Flat",
+    "Payable by Royal Stores 50%",
+    "Extra Amount Per Flat",
+    "Payable by Each Flat",
   ];
 
   const values = [
     row.amount ?? "",
+    row.flatCount ?? "",
     row.basePerFlat ?? "",
     row.royalStores ?? "",
-    row.flatsPool ?? "",
-    row.perFlat ?? "",
-    row.savingsVsEqualSplit ?? "",
+    row.extraPerFlat ?? "",
+    row.payablePerFlat ?? "",
   ];
 
   return [headers, values]
@@ -169,9 +176,10 @@ export default function CommonEbCalculator() {
           sx={{ maxWidth: 860 }}
         >
           Enter the current billing cycle common EB amount. The calculator uses
-          this split: base flat amount is common EB divided by 8, Royal Stores
-          pays 50% of that base flat amount, and the remaining bill is shared
-          equally across the 8 flats.
+          this split: amount per flat is common EB divided by 8, Royal Stores
+          pays 50% of that amount, the Royal Stores share is divided across the
+          8 flats, and each flat pays the base amount plus that extra share.
+          Values are rounded to the nearest rupee at each step.
         </Typography>
         <Stack
           direction={{ xs: "column", sm: "row" }}
@@ -179,9 +187,9 @@ export default function CommonEbCalculator() {
           flexWrap="wrap"
         >
           <Chip label="1 current billing cycle row" color="primary" variant="outlined" />
-          <Chip label="Base flat amount = common EB ÷ 8" color="primary" variant="outlined" />
+          <Chip label="Amount per flat = common EB ÷ 8" color="primary" variant="outlined" />
           <Chip
-            label="Royal Stores = 50% of base flat amount"
+            label="Royal Stores = 50% of amount per flat"
             color="primary"
             variant="outlined"
           />
@@ -189,9 +197,10 @@ export default function CommonEbCalculator() {
       </Stack>
 
       <Alert severity="info" variant="outlined">
-        Formula used: <strong>Base flat amount = Common amount ÷ 8</strong>,{" "}
-        <strong>Royal Stores = 50% of base flat amount</strong>, and{" "}
-        <strong>Each flat = (Common amount - Royal Stores share) ÷ 8</strong>.
+        Formula used: <strong>Amount per flat = Common amount ÷ 8</strong>,{" "}
+        <strong>Royal Stores = 50% of amount per flat</strong>,{" "}
+        <strong>Extra per flat = Royal Stores share ÷ 8</strong>, and{" "}
+        <strong>Each flat = Amount per flat + Extra per flat</strong>.
       </Alert>
 
       <Box
@@ -201,7 +210,7 @@ export default function CommonEbCalculator() {
           gridTemplateColumns: {
             xs: "1fr",
             sm: "repeat(2, minmax(0, 1fr))",
-            lg: "repeat(4, minmax(0, 1fr))",
+            lg: "repeat(3, minmax(0, 1fr))",
           },
         }}
       >
@@ -211,21 +220,29 @@ export default function CommonEbCalculator() {
           helper="Current billing cycle input"
         />
         <SummaryCard
+          label="Number of Flats"
+          value={String(row.flatCount)}
+          helper="Fixed for Aishwarya Enclave"
+        />
+        <SummaryCard
+          label="Amount Per Flat"
+          value={formatCurrency(row.basePerFlat)}
+          helper="Common EB amount divided by 8"
+        />
+        <SummaryCard
           label="Royal Stores"
           value={formatCurrency(row.royalStores)}
-          helper="50% of the base divide-by-8 amount"
+          helper="50% of the amount per flat"
         />
         <SummaryCard
-          label="Left for 8 Flats"
-          value={formatCurrency(row.flatsPool)}
-          helper="Remaining amount after Royal Stores share"
+          label="Extra Amount Per Flat"
+          value={formatCurrency(row.extraPerFlat)}
+          helper="Royal Stores share divided by 8"
         />
         <SummaryCard
-          label="Each Flat Share"
-          value={formatCurrency(row.perFlat)}
-          helper={`Savings vs divide-by-8: ${formatCurrency(
-            row.savingsVsEqualSplit,
-          )}`}
+          label="Payable by Each Flat"
+          value={formatCurrency(row.payablePerFlat)}
+          helper="Amount per flat plus extra amount"
         />
       </Box>
 
@@ -258,15 +275,15 @@ export default function CommonEbCalculator() {
         <Divider />
 
         <TableContainer sx={{ overflowX: "auto" }}>
-          <Table sx={{ minWidth: 920 }}>
+          <Table sx={{ minWidth: 1080 }}>
             <TableHead>
               <TableRow>
                 <TableCell>Current Billing Cycle Common Amount</TableCell>
-                <TableCell>Base Flat Amount</TableCell>
-                <TableCell>Royal Stores</TableCell>
-                <TableCell>Left for 8 Flats</TableCell>
-                <TableCell>Each Flat Share</TableCell>
-                <TableCell>Savings Per Flat</TableCell>
+                <TableCell>Number of Flats</TableCell>
+                <TableCell>Amount Per Flat</TableCell>
+                <TableCell>Payable by Royal Stores (50%)</TableCell>
+                <TableCell>Extra Amount Per Flat</TableCell>
+                <TableCell>Payable by Each Flat</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -282,11 +299,11 @@ export default function CommonEbCalculator() {
                     inputProps={{ min: 0, step: "0.01" }}
                   />
                 </TableCell>
+                <TableCell>{row.flatCount}</TableCell>
                 <TableCell>{formatCurrency(row.basePerFlat)}</TableCell>
                 <TableCell>{formatCurrency(row.royalStores)}</TableCell>
-                <TableCell>{formatCurrency(row.flatsPool)}</TableCell>
-                <TableCell>{formatCurrency(row.perFlat)}</TableCell>
-                <TableCell>{formatCurrency(row.savingsVsEqualSplit)}</TableCell>
+                <TableCell>{formatCurrency(row.extraPerFlat)}</TableCell>
+                <TableCell>{formatCurrency(row.payablePerFlat)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
