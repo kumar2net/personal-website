@@ -2,6 +2,26 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-04-10-middle-east-fiasco-cost-scorecard": {
+    title: "The Middle East Fiasco: A Cost Scorecard for All This Strategic Genius",
+    description:
+      "A satirical cost scorecard for the region's ongoing escalation: Gaza recovery needs, Lebanon losses, Israel's war bill, the Suez revenue collapse, shipping-rate spikes, and the wider taxpayer tab.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Geopolitics", "Middle East", "War", "Shipping", "Economics", "Policy"],
+    datePublished: "2026-04-10",
+    dateModified: "2026-04-10",
+    readingTime: "~6 min",
+  },
+  "2026-04-10-reply-chinese-energy-investments-sanjaay-babu": {
+    title: "Reply: Chinese Energy Investments, State Capacity, and the India Lesson (Sanjaay Babu)",
+    description:
+      "A reply to Sanjaay Babu's essay on Chinese energy investments in Africa: the deeper issue is not only foreign capital, but whether the state builds a hard governance frame with rules, escalation, and enforcement.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Reply", "India", "Governance", "Telecom", "Airlines", "State Capacity"],
+    datePublished: "2026-04-10",
+    dateModified: "2026-04-10",
+    readingTime: "~4 min",
+  },
   "2026-03-22-kumclaw-worthwhile-use-case": {
     title: "KumClaw and the Search for a Worthwhile Use Case",
     description:

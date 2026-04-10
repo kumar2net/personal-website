@@ -1,5 +1,16 @@
 export const homeFeaturedPosts = [
   {
+    slug: "2026-04-10-reply-chinese-energy-investments-sanjaay-babu",
+    title: "Chinese Energy Investments, State Capacity, and the India Lesson",
+    excerpt:
+      "A practical note on Chinese energy investments in Africa and the deeper issue beneath the politics: whether the host state has a hard governance frame with rules, escalation, and enforcement.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Governance", "Energy", "State Capacity", "India"],
+    link: "/blog/2026-04-10-reply-chinese-energy-investments-sanjaay-babu",
+    date: "April 10, 2026",
+    datePublished: "2026-04-10",
+  },
+  {
     slug: "2026-03-22-kardashev-scale-ai-energy-bottleneck",
     title:
       "The Kardashev Scale, Explained the Feynman Way: AI's Real Bottleneck Is Energy",
@@ -21,16 +32,5 @@ export const homeFeaturedPosts = [
     link: "/blog/2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india",
     date: "March 14, 2026",
     datePublished: "2026-03-14",
-  },
-  {
-    slug: "2026-03-07-impact-of-straits-for-trade-commerce",
-    title: "Straits, War Risk, and the Price of Passage",
-    excerpt:
-      "A practical look at Hormuz, Bab el-Mandeb, and Suez: the oil value concentrated in each corridor, what war does to cargo and hull insurance, and why the real solution is layered resilience.",
-    image: "/generate/2026-03-07-impact-of-straits-for-trade-commerce-hero.png",
-    tags: ["Geopolitics", "Shipping", "Oil", "Hormuz"],
-    link: "/blog/2026-03-07-impact-of-straits-for-trade-commerce",
-    date: "March 7, 2026",
-    datePublished: "2026-03-07",
   },
 ];

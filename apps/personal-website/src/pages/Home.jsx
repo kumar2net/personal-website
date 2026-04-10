@@ -22,7 +22,6 @@ import MemoryRoundedIcon from "@mui/icons-material/MemoryRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
 import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
-import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
 import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
@@ -53,106 +52,117 @@ function revealUpSx(delay = 0, duration = 0.45) {
   };
 }
 
-const editionLabel = "This Week Mood · World Over";
+const editionLabel = "This Week Mood · April 6-10, 2026";
 
 const moodSwatches = [
   {
-    name: "Thermal Peach",
-    hex: "#ff9f6e",
-    meaning: "Spring is arriving with the wrong temperature curve.",
+    name: "Heat Haze",
+    hex: "#ff9868",
+    meaning: "March's abnormal warmth is still steering the April read.",
   },
   {
-    name: "Reserve Gold",
+    name: "Buffer Gold",
     hex: "#f6c453",
-    meaning: "Policy backstops are buying time for markets.",
+    meaning: "Oil flows are being cushioned by inventories and emergency stocks.",
   },
   {
-    name: "Paris Blue",
+    name: "Grid Steel",
     hex: "#64b5ff",
-    meaning: "Negotiation is active, but trust is still thin.",
+    meaning: "AI demand is turning utilities and fuel mix into public politics.",
   },
   {
-    name: "Grid Teal",
-    hex: "#43d8c9",
-    meaning: "AI ambition keeps resolving into power and infrastructure.",
+    name: "Rulebook Green",
+    hex: "#55c794",
+    meaning: "Strategic sectors now reward states that can enforce terms.",
   },
 ];
 
 const moodTags = [
-  "World over",
-  "Heat map",
-  "Oil backstop",
-  "Grid realism",
+  "April 6-10",
+  "Heat anomaly",
+  "Grid politics",
+  "Rulebook realism",
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Heat anomaly",
-    title: "March heat is arriving out of season",
+    eyebrow: "Heat spillover",
+    title: "March's heat shock is still defining April",
     summary:
-      "On March 21, 2026, AP was still reporting extreme heat warnings across the U.S. Southwest, with summerlike temperatures stretching as far as Nebraska just a day into spring.",
-    source: "Signal date: March 21, 2026",
+      "On April 8, 2026, AP reported that March had become the most abnormally hot month in 132 years of U.S. records, with daytime highs nearly matching a normal April profile. The week still feels like climate whiplash, not seasonal reset.",
+    source: "Signal date: April 8, 2026",
     to: "/science",
-    analyticsKey: "home_weekend_heat",
-    accent: "#ff9f6e",
+    analyticsKey: "home_weekly_heat",
+    accent: "#ff9868",
     icon: CloudQueueRoundedIcon,
     cta: "Open science notes",
   },
   {
-    eyebrow: "Energy backstop",
-    title: "Oil is being steadied with reserves, not calm",
+    eyebrow: "Grid politics",
+    title: "AI load is colliding with clean-energy plans",
     summary:
-      "The IEA's record emergency reserve release on March 11 made the week's energy mood plain: flows can be stabilized, but only with visible intervention.",
-    source: "Signal date: March 11, 2026",
+      "On April 9, 2026, AP reported that Nevada's largest utility may need three times Las Vegas's electricity demand just to serve proposed data centers, and likely cannot do it without fossil fuels. AI demand is now utility politics.",
+    source: "Signal date: April 9, 2026",
+    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
+    analyticsKey: "home_weekly_grid",
+    accent: "#64b5ff",
+    icon: MemoryRoundedIcon,
+    cta: "Read the power explainer",
+  },
+  {
+    eyebrow: "Oil buffer",
+    title: "Oil is being cushioned by inventories, not calm",
+    summary:
+      "In its March 2026 report, the IEA cut forecast oil demand growth for March and April by more than 1 mb/d on average and highlighted the unprecedented 400 million barrel emergency release agreed on March 11. The market mood is buffer, not balance.",
+    source: "Signal dates: March 11-12, 2026",
     to: "/blog/2026-03-14-from-one-barrel-to-your-kitchen-refining-costs-india",
-    analyticsKey: "home_weekend_energy",
+    analyticsKey: "home_weekly_oil",
     accent: "#f6c453",
     icon: BoltRoundedIcon,
     cta: "Read the energy chain",
   },
   {
-    eyebrow: "Trade choreography",
-    title: "Paris kept tariffs in negotiation mode",
+    eyebrow: "Rulebook realism",
+    title: "Strategic sectors are hardening behind tariffs and governance",
     summary:
-      "The March 15 and March 16 talks lowered the immediate temperature, but the U.S.-China relationship still reads as competitive, procedural, and provisional.",
-    source: "Signal dates: March 15-16, 2026",
-    to: "/keydata",
-    analyticsKey: "home_weekend_trade",
-    accent: "#64b5ff",
+      "China opened new trade probes on March 27, and Washington rolled out a pharmaceutical tariff framework on April 2. The new April 10 note on the site pushes the lesson inward: capital matters less than the state capacity behind the rulebook.",
+    source: "Signal dates: March 27, April 2, and April 10, 2026",
+    to: "/blog/2026-04-10-reply-chinese-energy-investments-sanjaay-babu",
+    analyticsKey: "home_weekly_rulebook",
+    accent: "#55c794",
     icon: CompareArrowsRoundedIcon,
-    cta: "Track the spillover",
-  },
-  {
-    eyebrow: "AI energy reality",
-    title: "The lead essay question is still electricity",
-    summary:
-      "India's February 17 AI push and March 12 power note converged on the same point: compute ambition only matters if grids, cooling, and supply stay ahead of demand.",
-    source: "Signal dates: February 17 and March 12, 2026",
-    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
-    analyticsKey: "home_weekend_ai_energy",
-    accent: "#43d8c9",
-    icon: MemoryRoundedIcon,
-    cta: "Read the lead essay",
+    cta: "Read the governance note",
   },
 ];
 
 const siteVectors = [
   {
-    eyebrow: "Long read",
-    title: "Start with the lead essay on AI and energy",
+    eyebrow: "Lead note",
+    title: "Start with the new governance note",
     summary:
-      "A slower explainer on the Kardashev scale, power demand, and why intelligence at scale is still constrained by electricity.",
-    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
-    analyticsKey: "home_vector_weekend_essay",
-    accent: "#ff9f6e",
+      "An April 10 reply on Chinese energy investments, state capacity, and why strategic sectors need a domestic rulebook with real enforcement.",
+    to: "/blog/2026-04-10-reply-chinese-energy-investments-sanjaay-babu",
+    analyticsKey: "home_vector_lead_note",
+    accent: "#55c794",
     icon: MenuBookRoundedIcon,
-    cta: "Read the long essay",
+    cta: "Read the governance note",
+  },
+  {
+    eyebrow: "Deep explainer",
+    title: "Then read the AI power constraint",
+    summary:
+      "The energy bottleneck essay is still the cleanest way to think about why compute ambition ends up in substations, cooling loops, and megawatts.",
+    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
+    analyticsKey: "home_vector_ai_power",
+    accent: "#43d8c9",
+    icon: MemoryRoundedIcon,
+    cta: "Read the power explainer",
   },
   {
     eyebrow: "Numbers",
     title: "Then check the weekly scoreboard",
     summary:
-      "Crude, volatility, indices, and the handful of metrics that tell you whether the week was noise or regime change.",
+      "Crude, indices, volatility, and the handful of metrics that tell you whether this week is repricing or just talking.",
     to: "/keydata",
     analyticsKey: "home_vector_keydata",
     accent: "#64b5ff",
@@ -160,21 +170,10 @@ const siteVectors = [
     cta: "Open key data",
   },
   {
-    eyebrow: "Workbench",
-    title: "Then visit the build side",
-    summary:
-      "Projects and utilities for making systems legible instead of merely impressive.",
-    to: "/projects",
-    analyticsKey: "home_vector_projects",
-    accent: "#43d8c9",
-    icon: RocketLaunchRoundedIcon,
-    cta: "See projects",
-  },
-  {
     eyebrow: "Soft exit",
     title: "Then leave some room for music and memory",
     summary:
-      "A world-over weekly read should not end in policy and markets alone. It also needs rhythm, culture, and a little human residue.",
+      "If the week is all systems and state capacity, the exit should still sound human.",
     to: "/music",
     analyticsKey: "home_vector_music",
     accent: "#f472b6",
@@ -246,7 +245,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="This week's mood, world over: heat stress, oil backstops, tariff choreography, and AI's energy bottleneck."
+        description="Week of April 6-10, 2026: heat stress, grid politics, oil buffers, and a new note on state capacity."
         canonicalPath="/"
         image="/generate/2026-03-22-kardashev-scale-ai-energy-bottleneck-hero.png"
         type="website"
@@ -325,7 +324,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  This week's mood, world over.
+                  Hotter maps, tighter grids, harder rulebooks.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -336,11 +335,13 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     lineHeight: 1.72,
                   }}
                 >
-                  The home page now reads like a weekly global pulse instead of
-                  a dated special edition. Heat is arriving early, energy is
-                  being stabilized by intervention, trade stays procedural, and
-                  the oldest truth in tech still holds: AI runs on electricity
-                  before it runs on dreams.
+                  As of April 10, 2026, the week feels less like a victory lap
+                  than a systems test. March's heat shock is still showing up
+                  in April climate data, utilities are admitting AI demand can
+                  shove them back toward fossil fuels, oil markets are leaning
+                  on inventories and emergency stocks, and the newest note on
+                  the site argues that capital without state capacity becomes
+                  dependence.
                 </Typography>
               </Stack>
 
@@ -374,11 +375,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck"
+                  to="/blog/2026-04-10-reply-chinese-energy-investments-sanjaay-babu"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_weekend_essay_cta")}
+                  onClick={() => trackClick("home_hero_governance_note_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -397,14 +398,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     },
                   }}
                 >
-                  Start with the lead essay
+                  Start with the governance note
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/keydata"
+                  to="/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck"
                   variant="outlined"
                   size="large"
-                  onClick={() => trackClick("home_hero_keydata_cta")}
+                  onClick={() => trackClick("home_hero_power_explainer_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
@@ -414,14 +415,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Open key data
+                  Read the power explainer
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/blog"
+                  to="/keydata"
                   variant="text"
                   size="large"
-                  onClick={() => trackClick("home_hero_blog_cta")}
+                  onClick={() => trackClick("home_hero_keydata_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 2,
@@ -430,7 +431,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Browse recent posts
+                  Open key data
                 </Button>
               </Stack>
 
@@ -442,8 +443,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: alert, heat-shimmered, and system-aware rather than
-                    apocalyptic.
+                    Mood: hotter, tighter, and more rulebook-focused than
+                    celebratory.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -451,8 +452,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Weekly use: one lead essay, one dashboard check, then drift
-                    into music, books, or memory.
+                    Weekly use: start with the governance note, then the power
+                    constraint, then the scoreboard.
                   </Typography>
                 </Grid>
               </Grid>
@@ -493,7 +494,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering the world-over read
+                  The colors steering the April 6-10 read
                 </Typography>
               </Box>
 
@@ -549,9 +550,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This weekly frame keeps the page readable without pretending
-                  the week was calm. Dates stay visible so the mood keeps a
-                  timestamp.
+                  This frame is pinned to signals from March 27 through April
+                  10, 2026. Dates stay visible so the page reads like a week,
+                  not a timeless brand voice.
                 </Typography>
               </Box>
 
@@ -647,8 +648,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              More signal board than ticker. Exact dates stay visible so the
-              page reads as a weekly pulse, not fake permanence.
+              Four dated signals, one weekly read. The page stays anchored to
+              April 10, 2026 instead of pretending these moods are permanent.
             </Typography>
           </Stack>
 
@@ -1042,8 +1043,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                This week asks for less doomscroll, more deliberate wandering.
-                The page can face the world without being trapped inside it.
+                This week asks for less doomscroll, more systems thinking. The
+                page can track stress without flattening into panic.
               </Typography>
             </Stack>
           </Paper>
@@ -1061,7 +1062,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            This Week Reading Stack
+            April 6-10 Reading Stack
           </Typography>
           <Typography
             variant="h4"
@@ -1071,7 +1072,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Three posts to ground the global mood
+            Three posts for the current systems mood
           </Typography>
         </Stack>
 

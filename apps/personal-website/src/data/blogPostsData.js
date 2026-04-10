@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "The Middle East Fiasco: A Cost Scorecard for All This Strategic Genius",
+    date: "April 10, 2026",
+    lastModified: "April 10, 2026",
+    excerpt:
+      "A satirical cost scorecard for the region's ongoing escalation: Gaza recovery needs, Lebanon losses, Israel's war bill, the Suez revenue collapse, shipping-rate spikes, and the wider taxpayer tab.",
+    tags: ["Geopolitics", "Middle East", "War", "Shipping", "Economics", "Policy"],
+    image: "/media/blogwordcloud.png",
+    link: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
+  },
+  {
     title: "Reply: Last Week Tonight #6 (Sanjaay Babu)",
     date: "February 16, 2026",
     lastModified: "February 16, 2026",
