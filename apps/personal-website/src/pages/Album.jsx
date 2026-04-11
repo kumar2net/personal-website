@@ -29,6 +29,14 @@ const CHANNEL_SHORTS_URL = "https://www.youtube.com/@kumar2net/shorts";
 
 const channelHighlights = [
   {
+    eyebrow: "Geopolitics + Costs",
+    title: "Middle East war costs",
+    description:
+      "A quick cost breakdown of how headline war-spend estimates can pass $64B before oil, shipping, security, and wider economic spillovers are counted.",
+    url: "https://www.youtube.com/shorts/wO5ko_s-tl8",
+    accent: "error",
+  },
+  {
     eyebrow: "Banking + Service",
     title: "HDFC chairman exit and customer support",
     description:
@@ -165,10 +173,10 @@ const Album = () => {
                       AIKumar Useful Stuff
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 720 }}>
-                      Short, practical explainers from the channel on customer-service
-                      failures, broadband, payments, AI systems, and everyday
-                      decision-making. Start with a few useful picks here, then jump
-                      into the full Shorts feed.
+                      Short, practical explainers from the channel on Middle East
+                      war-cost math, customer-service failures, broadband, payments,
+                      AI systems, and everyday decision-making. Start with a few
+                      useful picks here, then jump into the full Shorts feed.
                     </Typography>
                   </Box>
 
