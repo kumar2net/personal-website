@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations": {
+    title: "Reply: Are My Diabetes, Heart, and Antibiotic Drugs Tested Together?",
+    description:
+      "A patient-centered reply to The Daily Brief's clinical-trials essay: new drugs are tested, some interactions are studied, but the exact diabetes-cardio-antibiotic stack a patient receives is often not tested as a full cocktail.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Reply", "Health", "Clinical Trials", "Drug Safety", "Polypharmacy", "India"],
+    datePublished: "2026-04-11",
+    dateModified: "2026-04-11",
+    readingTime: "~5 min",
+  },
   "2026-04-10-middle-east-fiasco-cost-scorecard": {
     title: "The Middle East Fiasco: A Cost Scorecard for All This Strategic Genius",
     description:

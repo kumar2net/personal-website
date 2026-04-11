@@ -1,0 +1,63 @@
+1. [HI] रणनीति नहीं. बिल देखिए.
+   HI: रणनीति नहीं. बिल देखिए.
+   TA: Strategy இல்லை. Bill-ஐ பாருங்கள்.
+
+2. [TA] மனித விலையே மிகப் பெரியது.
+   HI: मानव लागत सबसे भारी है.
+   TA: மனித விலையே மிகப் பெரியது.
+
+3. [HI] Gaza और West Bank: $53B recovery.
+   HI: Gaza और West Bank: $53B recovery.
+   TA: காசா + West Bank: $53B recovery.
+
+4. [TA] Lebanon-க்கு $11B rebuild தேவை.
+   HI: Lebanon को $11B rebuild चाहिए.
+   TA: Lebanon-க்கு $11B rebuild தேவை.
+
+5. [HI] Israel का public bill? लगभग $46B.
+   HI: Israel का public bill? लगभग $46B.
+   TA: Israel public bill? சுமார் $46B.
+
+6. [TA] 2023-25 forecast: $81B. Budget யோகாசனம்.
+   HI: 2023-25 forecast: $81B. Budget योगासन.
+   TA: 2023-25 forecast: $81B. Budget யோகாசனம்.
+
+7. [HI] Suez revenue $10.25B से $3.99B.
+   HI: Suez revenue $10.25B से $3.99B.
+   TA: Suez வருமானம் $10.25B-இல் இருந்து $3.99B.
+
+8. [TA] Ship traffic பாதி. Detour full rate.
+   HI: Ship traffic आधा. Detour full rate.
+   TA: Ship traffic பாதி. Detour full rate.
+
+9. [HI] Container transits -67%. Freight +256%.
+   HI: Container transits -67%. Freight +256%.
+   TA: Container transit -67%. Freight +256%.
+
+10. [TA] Inflation மீண்டும் surprise-aa? Really?
+   HI: Inflation फिर surprise? सच में?
+   TA: Inflation மீண்டும் surprise-aa? Really?
+
+11. [HI] U.S. tab: करीब $31-34B.
+   HI: U.S. tab: करीब $31-34B.
+   TA: U.S. bill: கிட்டத்தட்ட $31-34B.
+
+12. [TA] அதுவும் ஒரு நாட்டின் ledger மட்டும்.
+   HI: और ये सिर्फ एक देश का ledger.
+   TA: அதுவும் ஒரு நாட்டின் ledger மட்டும்.
+
+13. [HI] Clean subtotal? Recovery alone ~$64B.
+   HI: Clean subtotal? Recovery alone ~$64B.
+   TA: Clean subtotal? Recovery மட்டும் ~$64B.
+
+14. [TA] மீதமுள்ள costs? Spreadsheet-க்கே headache.
+   HI: बाकी costs? Spreadsheet को भी headache.
+   TA: மீதமுள்ள costs? Spreadsheet-க்கே headache.
+
+15. [HI] Security बोला, सब गरीब हुए.
+   HI: Security बोला, सब गरीब हुए.
+   TA: Security சொன்னோம், எல்லோரும் poorer.
+
+16. [TA] Safety later. Invoice இப்போதே. Classic.
+   HI: Safety बाद में. Invoice अभी. Classic.
+   TA: Safety later. Invoice இப்போதே. Classic.
