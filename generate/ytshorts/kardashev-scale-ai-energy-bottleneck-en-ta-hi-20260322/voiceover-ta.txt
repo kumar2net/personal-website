@@ -1,0 +1,23 @@
+1. AIக்கு புத்திசாலி code மட்டும் போதாது. பெரிய power plug வேண்டும்.
+
+2. Kardashev scaleன்னா civilization-ன் power meter.
+
+3. இன்று மனிதகம் சுமார் Type 0.73-ல் இருக்கிறது.
+
+4. Type I நெருக்கமா தோன்றும்; ஆனால் scale logarithmic.
+
+5. அந்த சின்ன jump-க்கு 500 முதல் 600 மடங்கு usable power தேவை.
+
+6. அதனால் AI model story மட்டும் இல்லை; அது grid story.
+
+7. Training, inference, cooling, backup எல்லாம் electricity சாப்பிடும்.
+
+8. IEA கணக்கில் 2024 data centres சுமார் 415 TWh பயன்படுத்தின.
+
+9. 2030 base case? சுமார் 945 TWh.
+
+10. Data centres மாதங்களில் எழும்; substations அப்படி இல்லை.
+
+11. Bitcoin-ன் நியாயமான grid case flexible demand; magic இல்லை.
+
+12. Future screen-ல் software போல இருக்கும்; கீழே turbines, transformers, copper, cooling.

@@ -2,6 +2,17 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer": {
+    title:
+      "The Iran War's Hidden Materials Bill: Helium, Fertilizer, Plastics, and Oil",
+    description:
+      "A dated supply-chain map of materials exposed by the Iran war and Hormuz disruption: helium, LNG, oil products, fertilizer inputs, sulfur, naphtha, methanol, aluminum, and semiconductor watch items.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Iran War", "Materials", "Helium", "Fertilizer", "Energy", "Supply Chains"],
+    datePublished: "2026-04-14",
+    dateModified: "2026-04-14",
+    readingTime: "~8 min",
+  },
   "2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations": {
     title: "Reply: Are My Diabetes, Heart, and Antibiotic Drugs Tested Together?",
     description:

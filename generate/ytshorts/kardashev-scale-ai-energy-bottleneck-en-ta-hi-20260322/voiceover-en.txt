@@ -1,0 +1,23 @@
+1. AI is not waiting only for smarter code. It is waiting for a bigger power plug.
+
+2. The Kardashev scale is a civilization's power meter.
+
+3. Today humanity sits around Type 0.73.
+
+4. Type I sounds close, until you remember the scale is logarithmic.
+
+5. That tiny jump means roughly 500 to 600 times more usable power.
+
+6. So AI stops being only a model story. It becomes a grid story.
+
+7. Training, inference, cooling, backup: all of it needs electricity.
+
+8. IEA puts data centers at about 415 TWh in 2024.
+
+9. Its base case points to roughly 945 TWh by 2030.
+
+10. Data centers can rise in months. Substations and firm power do not.
+
+11. Bitcoin's useful grid case is flexible demand, not magic.
+
+12. The future may look like software; underneath it is turbines, transformers, copper, and cooling.

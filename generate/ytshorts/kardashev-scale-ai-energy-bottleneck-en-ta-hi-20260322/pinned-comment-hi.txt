@@ -1,0 +1,1 @@
+AI scale ke liye pehle kya fix hona chahiye: generation, transmission, cooling, ya compute efficiency?

@@ -80,15 +80,16 @@ repository_guidelines: |
 
   ## Context7 Snapshot
   <!--CTX7:BEGIN-->
-  Last updated: 2026-03-24T01:40:11.042Z
+  Last updated: 2026-04-14T01:37:37.859Z
   
   Context7 compact snapshot
   
   - GET /api/v2/context - Query Documentation: Query Context7's documentation services using an API key for authentication. This endpoint retrieves context information from a specified library based on your search query.
   - GET /api/v2/context: curl "https://context7.com/api/v2/context?libraryId=/vercel/next.js&query=routing" \
+  - Authenticate Context7 API Request with Bearer Token: Example curl command demonstrating how to authenticate requests to Context7's API using a Bearer token in the Authorization header. The API key should be included in the format 'Bearer YOUR_API_KEY' and requests inclu...
   - Configure API Key for Context7 MCP to Prevent Authentication Errors (HTTP Headers): This snippet illustrates the correct format for including the `CONTEXT7_API_KEY` in HTTP headers to resolve `401 Unauthorized` errors. Ensure your API key is valid and correctly formatted.
   - Configure API Key for Context7 MCP to Prevent Rate Limiting (HTTP Transport): This configuration shows how to add your API key to the Context7 MCP client when using HTTP transport to prevent rate limiting. The API key is included in the `CONTEXT7_API_KEY` header.
-  - Authentication Options for Setup: Authenticate using an existing API key or trigger an OAuth flow. Note that --oauth is exclusive to MCP mode where the IDE handles the flow.
   - Refresh with `node scripts/pull-context7.mjs` before relying on vendor-specific details.
   <!--CTX7:END-->
+
 
