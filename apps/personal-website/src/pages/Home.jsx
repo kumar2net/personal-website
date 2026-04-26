@@ -15,9 +15,7 @@ import {
 } from "@mui/material";
 import { alpha, darken, keyframes } from "@mui/material/styles";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
-import CompareArrowsRoundedIcon from "@mui/icons-material/CompareArrowsRounded";
 import HealthAndSafetyRoundedIcon from "@mui/icons-material/HealthAndSafetyRounded";
-import MemoryRoundedIcon from "@mui/icons-material/MemoryRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
@@ -50,100 +48,112 @@ function revealUpSx(delay = 0, duration = 0.45) {
   };
 }
 
-const editionLabel = "This Week Mood · April 6-11, 2026";
+const editionLabel = "This Week Mood · April 20-24, 2026";
 
 const moodSwatches = [
   {
-    name: "Safety Blue",
+    name: "Hormuz Red",
+    hex: "#e86f51",
+    meaning: "Energy chokepoints are setting the week's risk premium.",
+  },
+  {
+    name: "Institution Blue",
     hex: "#6db7ff",
-    meaning: "Patient-level medicine stacks need more than generic reassurance.",
+    meaning: "Policy tools are being tested faster than institutions can adapt.",
   },
   {
     name: "Ledger Gold",
     hex: "#f6c453",
-    meaning: "War and policy choices eventually send invoices.",
+    meaning: "War, freight, fuel, and food shocks are turning into household bills.",
   },
   {
-    name: "Grid Steel",
-    hex: "#7a8cff",
-    meaning: "AI demand is turning utilities and fuel mix into public politics.",
-  },
-  {
-    name: "Rulebook Green",
+    name: "Resilience Green",
     hex: "#55c794",
-    meaning: "Strategic sectors now reward states that can enforce terms.",
+    meaning: "The practical question is what keeps working under stress.",
   },
 ];
 
 const moodTags = [
-  "April 6-11",
-  "Drug safety",
-  "Cost accounting",
-  "Grid politics",
+  "April 20-24",
+  "Energy shock",
+  "War-risk growth",
+  "Institution strain",
+  "Resilience",
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Patient safety",
-    title: "The new question is the whole medicine stack",
+    eyebrow: "Energy shock",
+    title: "The chokepoint is back in the price of everything",
     summary:
-      "The April 11 note asks the practical patient question: not whether each diabetes, heart, or antibiotic drug was tested, but whether the real-world combination reaching the bedside has been checked as a stack.",
-    source: "Signal date: April 11, 2026",
-    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
-    analyticsKey: "home_weekly_patient_safety",
-    accent: "#6db7ff",
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the drug-stack note",
+      "By April 24, oil and fuel anxiety had moved from market ticker to daily-life pressure. The week's mood is not just conflict; it is how quickly a strait, a barrel, a tanker route, and a grocery bill become the same story.",
+    source: "Signal date: April 24, 2026",
+    to: "/blog/2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer",
+    analyticsKey: "home_weekly_energy_chokepoint",
+    accent: "#e86f51",
+    icon: QueryStatsRoundedIcon,
+    cta: "Read the materials map",
   },
   {
-    eyebrow: "Cost ledger",
-    title: "The Middle East bill is the trend, not the footnote",
+    eyebrow: "Growth shadow",
+    title: "The global economy is still standing, but less relaxed",
     summary:
-      "The April 10 scorecard turns escalation into a ledger: Gaza recovery needs, Lebanon losses, Israel's public bill, Suez revenue, freight disruption, and the wider taxpayer tab all point to the same conclusion: strategy has invoices.",
-    source: "Signal date: April 10, 2026",
+      "The April IMF view put growth in the shadow of war: slower activity, stickier inflation, and downside risks from conflict, fragmentation, AI disappointment, and renewed trade tension.",
+    source: "Signal date: April 14, 2026",
+    to: "/keydata",
+    analyticsKey: "home_weekly_growth_shadow",
+    accent: "#6db7ff",
+    icon: QueryStatsRoundedIcon,
+    cta: "Open key data",
+  },
+  {
+    eyebrow: "Institution strain",
+    title: "Risk management is now the main operating system",
+    summary:
+      "This week's Spring Meetings takeaway was blunt: businesses are adapting to risk faster than public buffers are being rebuilt, while energy and supply-chain shocks hit lower-income economies hardest.",
+    source: "Signal date: April 23, 2026",
     to: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
-    analyticsKey: "home_weekly_middle_east_costs",
+    analyticsKey: "home_weekly_institution_strain",
     accent: "#f6c453",
     icon: QueryStatsRoundedIcon,
-    cta: "Open the cost scorecard",
+    cta: "Open the cost ledger",
   },
   {
-    eyebrow: "Grid politics",
-    title: "AI load is colliding with clean-energy plans",
+    eyebrow: "Human scale",
+    title: "Macro risk still ends at the person using the system",
     summary:
-      "On April 9, 2026, AP reported that Nevada's largest utility may need three times Las Vegas's electricity demand just to serve proposed data centers, and likely cannot do it without fossil fuels. AI demand is now utility politics.",
-    source: "Signal date: April 9, 2026",
-    to: "/blog/2026-03-22-kardashev-scale-ai-energy-bottleneck",
-    analyticsKey: "home_weekly_grid",
-    accent: "#7a8cff",
-    icon: MemoryRoundedIcon,
-    cta: "Read the power explainer",
-  },
-  {
-    eyebrow: "Rulebook realism",
-    title: "Strategic sectors are hardening behind tariffs and governance",
-    summary:
-      "The April 10 governance note keeps the same thread closer to home: foreign capital matters, but strategic sectors only work when the state has rules, escalation paths, and enforcement power.",
-    source: "Signal date: April 10, 2026",
-    to: "/blog/2026-04-10-reply-chinese-energy-investments-sanjaay-babu",
-    analyticsKey: "home_weekly_rulebook",
+      "The site lens stays practical: after the war-risk ledger comes the bedside checklist. The April 11 drug-stack note asks whether real-world combinations are checked, not merely individual ingredients.",
+    source: "Site signal: April 11, 2026",
+    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
+    analyticsKey: "home_weekly_human_scale",
     accent: "#55c794",
-    icon: CompareArrowsRoundedIcon,
-    cta: "Read the governance note",
+    icon: HealthAndSafetyRoundedIcon,
+    cta: "Check the drug stack",
   },
 ];
 
 const siteVectors = [
   {
     eyebrow: "Lead note",
-    title: "Start with the drug-stack safety note",
+    title: "Start with the materials map",
     summary:
-      "The April 11 post is the most current one: a patient-centered reply on clinical trials, real-world drug combinations, and the interaction checks people should ask for.",
-    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
-    analyticsKey: "home_vector_drug_stack",
+      "The April 14 post explains why the current energy shock is wider than crude: helium, fertilizer inputs, plastics, LNG, oil products, and semiconductor watch items all sit inside the daily economy.",
+    to: "/blog/2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer",
+    analyticsKey: "home_vector_materials_bill",
+    accent: "#e86f51",
+    icon: QueryStatsRoundedIcon,
+    cta: "Read the materials map",
+  },
+  {
+    eyebrow: "Numbers",
+    title: "Then check the weekly scoreboard",
+    summary:
+      "Crude, indices, volatility, and the handful of metrics that tell you whether this week is repricing or just talking.",
+    to: "/keydata",
+    analyticsKey: "home_vector_keydata",
     accent: "#6db7ff",
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the safety note",
+    icon: QueryStatsRoundedIcon,
+    cta: "Open key data",
   },
   {
     eyebrow: "Cost scorecard",
@@ -157,26 +167,15 @@ const siteVectors = [
     cta: "Open the scorecard",
   },
   {
-    eyebrow: "Rulebook",
-    title: "Then connect it to state capacity",
+    eyebrow: "Safety stack",
+    title: "Then bring it down to patient scale",
     summary:
-      "The Chinese-energy-investments reply is the same April systems mood from another angle: who writes the rules, who enforces them, and who becomes dependent.",
-    to: "/blog/2026-04-10-reply-chinese-energy-investments-sanjaay-babu",
-    analyticsKey: "home_vector_rulebook",
+      "The April 11 note turns safety into a real-world question: not whether each pill passed its own exam, but whether the actual combination was checked.",
+    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
+    analyticsKey: "home_vector_drug_stack",
     accent: "#55c794",
-    icon: CompareArrowsRoundedIcon,
-    cta: "Read the governance note",
-  },
-  {
-    eyebrow: "Numbers",
-    title: "Then check the weekly scoreboard",
-    summary:
-      "Crude, indices, volatility, and the handful of metrics that tell you whether this week is repricing or just talking.",
-    to: "/keydata",
-    analyticsKey: "home_vector_keydata",
-    accent: "#64b5ff",
-    icon: QueryStatsRoundedIcon,
-    cta: "Open key data",
+    icon: HealthAndSafetyRoundedIcon,
+    cta: "Read the safety note",
   },
 ];
 
@@ -243,9 +242,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Week of April 6-11, 2026: drug-stack safety, Middle East cost accounting, AI-grid pressure, and governance rulebooks."
+        description="Week of April 20-24, 2026: energy shock, war-risk growth, institutional strain, and practical resilience."
         canonicalPath="/"
-        image="/generate/2026-03-22-kardashev-scale-ai-energy-bottleneck-hero.png"
+        image="/media/blogwordcloud.png"
         type="website"
       />
 
@@ -317,12 +316,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     fontWeight: 700,
                     fontSize: { xs: "2.45rem", md: "4.3rem" },
                     lineHeight: 0.94,
-                    letterSpacing: "-0.05em",
+                    letterSpacing: 0,
                     maxWidth: 760,
                     color: "var(--home-ink)",
                   }}
                 >
-                  Safer stacks, cost ledgers, harder rulebooks.
+                  Risk premium is this week's mood.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -333,12 +332,13 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     lineHeight: 1.72,
                   }}
                 >
-                  As of April 11, 2026, the homepage mood is practical and
-                  slightly suspicious. The freshest note asks whether real
-                  diabetes-cardio-antibiotic drug stacks are checked as a
-                  whole. The April 10 posts keep the week in ledger mode:
-                  Middle East escalation has costs, foreign capital needs
-                  rulebooks, and AI's power appetite still lands on the grid.
+                  As of April 24, 2026, the homepage mood is alert but
+                  practical. Energy chokepoints are feeding inflation worries,
+                  the global growth story is being rewritten under war risk,
+                  and institutions are being asked to absorb more shock with
+                  thinner buffers. The site lens stays systems-first: map the
+                  hidden inputs, count the ledger, then bring the question back
+                  to the person using the system.
                 </Typography>
               </Stack>
 
@@ -372,11 +372,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations"
+                  to="/blog/2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_drug_stack_cta")}
+                  onClick={() => trackClick("home_hero_materials_bill_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -395,14 +395,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     },
                   }}
                 >
-                  Start with the safety note
+                  Start with the materials map
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-04-10-middle-east-fiasco-cost-scorecard"
+                  to="/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations"
                   variant="outlined"
                   size="large"
-                  onClick={() => trackClick("home_hero_cost_scorecard_cta")}
+                  onClick={() => trackClick("home_hero_drug_stack_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
@@ -412,7 +412,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Read the cost scorecard
+                  Check the human stack
                 </Button>
                 <Button
                   component={RouterLink}
@@ -440,8 +440,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: safety-first, ledger-minded, and allergic to vague
-                    assurances.
+                    Mood: wary, energy-sensitive, and impatient with vague
+                    resilience talk.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -449,8 +449,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Weekly use: start with the drug-stack note, then the Middle
-                    East cost scorecard, then the governance frame.
+                    Weekly use: start with the materials map, check the data,
+                    then read the cost ledger and human-scale safety note.
                   </Typography>
                 </Grid>
               </Grid>
@@ -491,7 +491,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering the April 6-11 read
+                  The colors steering the April 20-24 read
                 </Typography>
               </Box>
 
@@ -547,9 +547,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to signals from April 9 through April
-                  11, 2026. Dates stay visible so the page reads like a week,
-                  not a timeless brand voice.
+                  This frame is pinned to April 20-24 global signals, with the
+                  April 14 materials map as the local explainer. Dates stay
+                  visible so the page reads like a week, not a timeless brand
+                  voice.
                 </Typography>
               </Box>
 
@@ -646,7 +647,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
               Four dated signals, one weekly read. The page stays anchored to
-              April 11, 2026 instead of pretending these moods are permanent.
+              April 20-24, 2026 instead of pretending these moods are permanent.
             </Typography>
           </Stack>
 
@@ -1040,8 +1041,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                This week asks for fewer slogans and more checklists: drug
-                interactions, cost ledgers, escalation paths, and grid capacity.
+                This week asks for fewer slogans and more checklists: energy
+                exposure, policy buffers, cost ledgers, and human-scale safety.
               </Typography>
             </Stack>
           </Paper>
@@ -1059,7 +1060,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            April 6-11 Reading Stack
+            April 20-24 Reading Stack
           </Typography>
           <Typography
             variant="h4"
@@ -1069,7 +1070,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Three posts for the current safety-and-systems mood
+            Three posts for the current risk-premium mood
           </Typography>
         </Stack>
 

@@ -1,5 +1,25 @@
 export const blogPosts = [
   {
+    title: "Reply: XML Tags Are Useful, Not Magic",
+    date: "April 26, 2026",
+    lastModified: "April 26, 2026",
+    excerpt:
+      "A reply on prompting style: XML tags can help when boundaries matter, but Markdown, bullets, and simple English are usually enough because modern LLMs understand structure very well.",
+    tags: ["Reply", "AI", "Prompting", "LLMs", "Writing", "Markdown"],
+    image: "/media/blogwordcloud.png",
+    link: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
+  },
+  {
+    title: "Reply: Nithin Kamath on Wealth, Inequality, and Idle Capital",
+    date: "April 26, 2026",
+    lastModified: "April 26, 2026",
+    excerpt:
+      "A reply to Nithin Kamath's note on wealth inequality: the problem is not markets themselves, but asset-heavy compounding without a social floor, productive investment, and accountable state capacity.",
+    tags: ["Reply", "Inequality", "Wealth", "Markets", "India", "State Capacity"],
+    image: "/media/blogwordcloud.png",
+    link: "/blog/2026-04-26-reply-nithin-kamath-wealth-inequality",
+  },
+  {
     title: "Reply: Are My Diabetes, Heart, and Antibiotic Drugs Tested Together?",
     date: "April 11, 2026",
     lastModified: "April 11, 2026",

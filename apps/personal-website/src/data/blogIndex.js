@@ -2,6 +2,26 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-04-26-reply-xml-tags-prompts-sanjaay-babu": {
+    title: "Reply: XML Tags Are Useful, Not Magic",
+    description:
+      "A reply on prompting style: XML tags can help when boundaries matter, but Markdown, bullets, and simple English are usually enough because modern LLMs understand structure very well.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Reply", "AI", "Prompting", "LLMs", "Writing", "Markdown"],
+    datePublished: "2026-04-26",
+    dateModified: "2026-04-26",
+    readingTime: "~3 min",
+  },
+  "2026-04-26-reply-nithin-kamath-wealth-inequality": {
+    title: "Reply: Nithin Kamath on Wealth, Inequality, and Idle Capital",
+    description:
+      "A reply to Nithin Kamath's note on wealth inequality: the problem is not markets themselves, but asset-heavy compounding without a social floor, productive investment, and accountable state capacity.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Reply", "Inequality", "Wealth", "Markets", "India", "State Capacity"],
+    datePublished: "2026-04-26",
+    dateModified: "2026-04-26",
+    readingTime: "~5 min",
+  },
   "2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer": {
     title:
       "The Iran War's Hidden Materials Bill: Helium, Fertilizer, Plastics, and Oil",
