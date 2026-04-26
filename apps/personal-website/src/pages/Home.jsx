@@ -622,7 +622,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           <Stack spacing={1.4} sx={{ maxWidth: 780 }}>
             <Chip
               icon={<MusicNoteRoundedIcon fontSize="small" />}
-              label="கசடதபரரா song note"
+              label="கசடதபரரா song note · Tamil typing"
               sx={{
                 alignSelf: "flex-start",
                 borderRadius: 999,
@@ -650,25 +650,62 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               <br />
               எவரும் ராவணனோ எவரும் ராவணனோ அவரும் பாடனும் அவரும் பாடனும்
             </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "var(--home-muted-text)",
+                lineHeight: 1.7,
+                maxWidth: 680,
+              }}
+            >
+              Tamil typing hint added on the Music page: use Gboard, switch the
+              keyboard language to Tamil, and type song notes or lyrics directly
+              in Tamil script.
+            </Typography>
           </Stack>
-          <Button
-            component={RouterLink}
-            to="/music#kasadathaparara"
-            variant="contained"
-            size="large"
-            endIcon={<ArrowOutwardRoundedIcon />}
-            onClick={() => trackClick("home_kasadathaparara_music_cta")}
-            sx={{
-              borderRadius: 999,
-              px: 3,
-              flexShrink: 0,
-              textTransform: "none",
-              fontWeight: 700,
-              boxShadow: "none",
-            }}
+          <Stack
+            direction={{ xs: "column", sm: "row", md: "column" }}
+            spacing={1.2}
+            sx={{ width: { xs: "100%", md: "auto" } }}
           >
-            Open music reference
-          </Button>
+            <Button
+              component={RouterLink}
+              to="/music#kasadathaparara"
+              variant="contained"
+              size="large"
+              endIcon={<ArrowOutwardRoundedIcon />}
+              onClick={() => trackClick("home_kasadathaparara_music_cta")}
+              sx={{
+                borderRadius: 999,
+                px: 3,
+                flexShrink: 0,
+                textTransform: "none",
+                fontWeight: 700,
+                boxShadow: "none",
+              }}
+            >
+              Open music reference
+            </Button>
+            <Button
+              component={RouterLink}
+              to="/music#tamil-typing-gboard"
+              variant="outlined"
+              size="large"
+              endIcon={<ArrowOutwardRoundedIcon />}
+              onClick={() => trackClick("home_tamil_typing_gboard_cta")}
+              sx={{
+                borderRadius: 999,
+                px: 3,
+                flexShrink: 0,
+                textTransform: "none",
+                fontWeight: 700,
+                color: "var(--home-ink)",
+                borderColor: "var(--home-border)",
+              }}
+            >
+              Tamil typing hint
+            </Button>
+          </Stack>
         </Stack>
       </Paper>
 
