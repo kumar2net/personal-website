@@ -24,11 +24,10 @@ const MusicPage = () => {
     : theme.palette.getContrastText(theme.palette.error.main);
   const { playlistId, playlistShareId } = musicPlaylistSnapshot;
   const latestSpins = musicPlaylistSnapshot.tracks.slice(-3);
-  const latestTwoSpins = musicPlaylistSnapshot.tracks.slice(-2);
-  const latestTwoTitles =
-    latestTwoSpins.length === 2
-      ? `"${latestTwoSpins[0].title}" and "${latestTwoSpins[1].title}"`
-      : "the latest two additions";
+  const latestSpinTitles =
+    latestSpins.length === 3
+      ? `"${latestSpins[0].title}", "${latestSpins[1].title}", and "${latestSpins[2].title}"`
+      : "the latest additions";
 
   return (
     <Box
@@ -87,6 +86,60 @@ const MusicPage = () => {
               story-driven tracks I keep on repeat.
             </Typography>
           </Box>
+
+          <Paper
+            id="kasadathaparara"
+            elevation={0}
+            sx={{
+              scrollMarginTop: 96,
+              p: { xs: 3, md: 4 },
+              borderRadius: 4,
+              border: `1px solid ${alpha(theme.palette.warning.main, 0.35)}`,
+              background: `linear-gradient(135deg, ${alpha(
+                theme.palette.warning.light,
+                isDark ? 0.22 : 0.18,
+              )}, ${alpha(theme.palette.background.paper, 0.96)})`,
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <Stack spacing={2}>
+              <Typography
+                variant="overline"
+                sx={{
+                  letterSpacing: "0.2em",
+                  color: "text.secondary",
+                  fontWeight: 700,
+                }}
+              >
+                SONG REFERENCE
+              </Typography>
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{
+                  fontFamily:
+                    '"Noto Sans Tamil", "Space Grotesk", "IBM Plex Sans", sans-serif',
+                  fontWeight: 800,
+                  fontSize: { xs: "2rem", md: "3rem" },
+                  letterSpacing: 0,
+                }}
+              >
+                கசடதபரரா
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: '"Noto Sans Tamil", "Noto Sans", sans-serif',
+                  fontSize: { xs: "1.2rem", md: "1.45rem" },
+                  lineHeight: 1.65,
+                  color: "text.primary",
+                }}
+              >
+                பறை அடித்துட்டு பறை அடித்துட்டு... பறை அடித்திட்டு பறை அடித்திட்டு இறை அடித்திடியா
+                <br />
+                எவரும் ராவணனோ எவரும் ராவணனோ அவரும் பாடனும் அவரும் பாடனும்
+              </Typography>
+            </Stack>
+          </Paper>
 
           <Grid container spacing={4} alignItems="stretch">
             <Grid item xs={12} md={6}>
@@ -206,7 +259,7 @@ const MusicPage = () => {
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
                   The tail of the playlist shifts first, and right now that
-                  means {latestTwoTitles}. This section stays tied to the most
+                  means {latestSpinTitles}. This section stays tied to the most
                   recent adds, so the snapshot always reflects what just landed
                   in rotation.
                 </Typography>

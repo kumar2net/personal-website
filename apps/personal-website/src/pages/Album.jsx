@@ -148,11 +148,13 @@ const Album = () => {
               variant="h5"
               sx={{
                 color: "text.secondary",
-                maxWidth: 560,
+                maxWidth: 640,
                 mx: "auto",
               }}
             >
               Captured Moments with bold color, warmer light, and quicker drops.
+              I also practise writing in Gboard here and there, just to keep
+              the Tamil typing muscle from going rusty.
             </Typography>
           </Box>
 
