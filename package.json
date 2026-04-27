@@ -14,6 +14,7 @@
     "retriever:determinism": "node scripts/retriever-determinism.mjs",
     "idempotency:check": "node scripts/idempotency-guard.mjs",
     "agent:lint": "node scripts/agent-lint.mjs",
+    "agent:smoke": "node scripts/agent-smoke.mjs",
     "canary:health": "node scripts/canary-health.mjs",
     "token:budget": "node scripts/token-budget.mjs",
     "pulse:check": "node scripts/pulse-check.mjs --state docs/_facts/pulse-state.json --report docs/_facts/pulse-report.md",

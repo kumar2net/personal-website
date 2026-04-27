@@ -1,5 +1,9 @@
 import path from "node:path";
 import fs from "node:fs/promises";
+import {
+  resolveIdempotencyKey,
+  withIdempotentExecution,
+} from "../src/lib/idempotency.js";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -78,21 +82,33 @@ export default async function handler(req, res) {
   let stored = false;
 
   if (logDir) {
-    try {
-      const resolvedDir = path.resolve(logDir);
-      const filePath = path.join(resolvedDir, `${episodeId}.ndjson`);
-      const record = {
-        acceptedAt: new Date().toISOString(),
-        episodeId,
-        choiceId,
-        seriesTitle: seriesTitle || null,
-      };
-      await fs.mkdir(resolvedDir, { recursive: true });
-      await fs.appendFile(filePath, `${JSON.stringify(record)}\n`, "utf8");
-      stored = true;
-    } catch (error) {
-      console.error("[microsoap-vote] Failed to write vote log", error);
-    }
+    const idempotencyKey = resolveIdempotencyKey(req, {
+      operation: "microsoap-vote",
+      episodeId,
+      choiceId,
+      seriesTitle,
+    });
+    stored = await withIdempotentExecution({
+      key: `microsoap-vote:${idempotencyKey}`,
+      fn: async () => {
+        try {
+          const resolvedDir = path.resolve(logDir);
+          const filePath = path.join(resolvedDir, `${episodeId}.ndjson`);
+          const record = {
+            acceptedAt: new Date().toISOString(),
+            episodeId,
+            choiceId,
+            seriesTitle: seriesTitle || null,
+          };
+          await fs.mkdir(resolvedDir, { recursive: true });
+          await fs.appendFile(filePath, `${JSON.stringify(record)}\n`, "utf8");
+          return true;
+        } catch (error) {
+          console.error("[microsoap-vote] Failed to write vote log", error);
+          return false;
+        }
+      },
+    });
   }
 
   return res.status(202).json({

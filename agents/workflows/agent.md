@@ -5,6 +5,6 @@
 - Max tokens: n/a
 - Inputs: New PR content, API scripts, semantic index updates, token usage artifacts.
 - Outputs: Blocked/green CI checks and workflow artifacts.
-- Guardrails: Deterministic retrieval checks, token budgets, canary guard, agent docs lint.
+- Guardrails: Deterministic retrieval checks, token budgets, canary guard, p95 smoke measurements, agent docs lint.
 - Cost notes: No direct cost except CI runtime minutes.
-- Test command: `npm run idempotency:check`
+- Test command: `npm run agent:smoke`
