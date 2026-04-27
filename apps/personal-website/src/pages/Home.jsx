@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -22,8 +23,9 @@ import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
 import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
-import WorldClock from "../components/WorldClock";
 import { homeFeaturedPosts } from "../data/homeFeaturedPosts";
+
+const WorldClock = lazy(() => import("../components/WorldClock"));
 
 const fadeUp = keyframes`
   from {
@@ -564,7 +566,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   Still watching multiple time zones.
                 </Typography>
                 {showWorldClock ? (
-                  <WorldClock compact />
+                  <Suspense
+                    fallback={<Box sx={{ minHeight: 120 }} aria-hidden />}
+                  >
+                    <WorldClock compact />
+                  </Suspense>
                 ) : (
                   <Box sx={{ minHeight: 120 }} aria-hidden />
                 )}

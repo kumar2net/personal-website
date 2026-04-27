@@ -31,10 +31,10 @@ import SEO from "./components/SEO";
 import Logo from "./components/Logo";
 import ScrollToTop from "./components/ScrollToTop";
 import PasswordGate from "./components/PasswordGate";
+import Home from "./pages/Home";
 
 // Lazy load all other components
 const About = lazy(() => import("./pages/About"));
-const Home = lazy(() => import("./pages/Home"));
 const Album = lazy(() => import("./pages/Album"));
 const Blog = lazy(() => import("./pages/Blog"));
 const Books = lazy(() => import("./pages/Books"));
