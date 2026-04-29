@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 
 export const metadata = {
   slug: "2026-04-29-pet-ct-scan-experience-explained",
-  title: "PET-CT Scan: What Happened Inside That Machine Yesterday Morning",
+  title: "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning",
   description:
-    "A patient-friendly explanation of PET-CT after a real scan: the tracer, the CT, why the table moved in stages, what the report shows, and how PET-CT compares with MRI, EEG, and ultrasound.",
+    "A patient-friendly explanation of positron emission tomography (PET)-computed tomography (CT) after a real scan: the tracer, why the table moved in stages, what the report shows, and how PET-CT compares with magnetic resonance imaging (MRI), electroencephalography (EEG), and ultrasound.",
   excerpt:
-    "A patient-friendly explanation of PET-CT after a real scan: the tracer, the CT, why the table moved in stages, what the report shows, and how PET-CT compares with MRI, EEG, and ultrasound.",
+    "A patient-friendly explanation of positron emission tomography (PET)-computed tomography (CT) after a real scan: the tracer, why the table moved in stages, what the report shows, and how PET-CT compares with magnetic resonance imaging (MRI), electroencephalography (EEG), and ultrasound.",
   tags: ["Health", "PET-CT", "Nuclear Medicine", "Imaging", "MRI", "EEG", "Ultrasound"],
   datePublished: "2026-04-29",
   dateModified: "2026-04-29",
@@ -14,14 +14,15 @@ export const metadata = {
   readingTime: "~7 min",
 };
 
-const title = "PET-CT Scan: What Happened Inside That Machine Yesterday Morning";
+const title =
+  "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning";
 
 const tags = ["Health", "PET-CT", "Nuclear Medicine", "Imaging", "MRI", "EEG", "Ultrasound"];
 
 const tracerTypes = [
-  "F-18 FDG, or fluorodeoxyglucose, is the common workhorse. It behaves like glucose, so tissues with higher sugar use can show higher uptake. This is widely used in cancer imaging, infection or inflammation questions, and some heart or brain studies.",
-  "Ga-68 DOTATATE is used mainly when doctors are looking for somatostatin-receptor-positive neuroendocrine tumors.",
-  "PSMA PET tracers, often Ga-68 PSMA or F-18 PSMA agents, are used for prostate cancer imaging.",
+  "Fluorine-18 fluorodeoxyglucose (F-18 FDG) is the common workhorse. It behaves like glucose, so tissues with higher sugar use can show higher uptake. This is widely used in cancer imaging, infection or inflammation questions, and some heart or brain studies.",
+  "Gallium-68 DOTATATE (Ga-68 DOTATATE) is used mainly when doctors are looking for somatostatin-receptor-positive neuroendocrine tumors.",
+  "Prostate-specific membrane antigen (PSMA) PET tracers, often Ga-68 PSMA or F-18 PSMA agents, are used for prostate cancer imaging.",
   "F-18 sodium fluoride can be used for bone-focused PET imaging.",
   "Other PET tracers exist for specific heart, brain, tumor, and research questions, but most routine whole-body oncology PET-CT scans still use F-18 FDG.",
 ];
@@ -30,7 +31,7 @@ const machineSteps = [
   "The table first uses a quick planning view so the technologist can confirm the body region to scan.",
   "The CT part is usually quick. It uses X-rays to create an anatomic map and can also help correct the PET signal for attenuation, meaning how tissues weaken the detected photons.",
   "The PET part is slower. The table moves in small bed positions because the detector ring sees only a section of the body at a time. At each stop, the scanner collects enough signal before moving to the next section.",
-  "The repeated movement is not treatment and it is not the machine doing something new to each organ. It is mostly data collection, one slice-range at a time, later stitched into a whole-body 3D map.",
+  "The repeated movement is not treatment and it is not the machine doing something new to each organ. It is mostly data collection, one slice-range at a time, later stitched into a whole-body three-dimensional (3D) map.",
   "If breathing or body movement happens, the images can blur or misalign. That is why they ask you to lie still, and sometimes to hold your breath for part of the CT.",
 ];
 
@@ -39,7 +40,7 @@ const reportOutputs = [
   "A PET image set, showing where the tracer accumulated more or less strongly.",
   "Fused PET-CT images, where the metabolic PET signal is overlaid on the CT anatomy.",
   "A written radiology or nuclear medicine report, usually with sections such as indication, tracer and dose, blood glucose value for FDG scans, technique, findings, impression, and comparison with older scans if available.",
-  "Numbers such as SUV, or standardized uptake value, may appear. SUV is a semi-quantitative measure of tracer uptake, useful for context but not a stand-alone diagnosis.",
+  "Numbers such as standardized uptake value (SUV) may appear. SUV is a semi-quantitative measure of tracer uptake, useful for context but not a stand-alone diagnosis.",
 ];
 
 const comparisonRows = [
@@ -50,13 +51,13 @@ const comparisonRows = [
     limit: "Uses ionizing radiation and depends on the selected tracer",
   },
   {
-    test: "MRI",
+    test: "Magnetic resonance imaging (MRI)",
     sees: "Soft-tissue structure, fluid, blood flow patterns, diffusion, and contrast behavior",
     strength: "Excellent for brain, spine, joints, liver, pelvis, and soft tissues without ionizing radiation",
     limit: "Longer scan, sensitive to motion, metal-device restrictions, and not primarily a whole-body metabolism test",
   },
   {
-    test: "EEG",
+    test: "Electroencephalography (EEG)",
     sees: "Electrical activity from the brain through scalp electrodes",
     strength: "Very useful for seizures, brain rhythm, sleep, and real-time electrical patterns",
     limit: "Does not show tumors, lymph nodes, organs, or whole-body anatomy",
@@ -73,7 +74,7 @@ const modalityCards = [
   {
     name: "PET-CT",
     signal: "Radioactive tracer",
-    frequency: "Not RF: PET detects 511 keV gamma photons; CT uses diagnostic X-rays",
+    frequency: "Not radiofrequency (RF): PET detects 511 kiloelectronvolt (keV) gamma photons; CT uses diagnostic X-rays",
     question: "Where is active biology?",
     output: "Hot/cold metabolic map fused with CT anatomy",
     bestFor: "Cancer staging, treatment response, infection or inflammation questions, selected heart and brain studies",
@@ -82,9 +83,9 @@ const modalityCards = [
     accent: "#2563EB",
   },
   {
-    name: "MRI",
+    name: "Magnetic resonance imaging (MRI)",
     signal: "Magnet + radiofrequency pulses",
-    frequency: "RF pulses: about 64 MHz at 1.5T and 128 MHz at 3T",
+    frequency: "RF pulses: about 64 megahertz (MHz) at 1.5 tesla (1.5T) and 128 MHz at 3T",
     question: "What do soft tissues look like?",
     output: "High-detail soft-tissue images in many contrasts",
     bestFor: "Brain, spine, joints, liver, pelvis, soft tissue, vessels, and detailed local problem-solving",
@@ -93,9 +94,9 @@ const modalityCards = [
     accent: "#7C3AED",
   },
   {
-    name: "EEG",
+    name: "Electroencephalography (EEG)",
     signal: "Scalp electrodes",
-    frequency: "Brain rhythms: delta 0.5-4 Hz, theta 4-8 Hz, alpha 8-13 Hz, beta 13-30 Hz, gamma 30+ Hz",
+    frequency: "Brain rhythms: delta 0.5-4 hertz (Hz), theta 4-8 Hz, alpha 8-13 Hz, beta 13-30 Hz, gamma 30+ Hz",
     question: "What is brain electricity doing?",
     output: "Brain-wave traces over time",
     bestFor: "Seizures, epilepsy workup, sleep studies, encephalopathy, and real-time brain rhythm questions",
@@ -108,7 +109,7 @@ const modalityCards = [
     signal: "High-frequency sound waves",
     frequency: "Sound waves, not RF: roughly 1-20 MHz clinically, depending on probe and use",
     question: "What is moving or echoing now?",
-    output: "Live grayscale, Doppler blood-flow, or 3D ultrasound images",
+    output: "Live grayscale, Doppler blood-flow, or 3D images",
     bestFor: "Pregnancy, abdomen, heart echo, blood vessels, thyroid, muscles, fluid pockets, guided needles",
     patientFeels: "Gel on skin, handheld probe, real-time movement on screen",
     radiation: "No ionizing radiation",
@@ -232,14 +233,15 @@ export default function BlogPost() {
         <Typography variant="body1" sx={bodyTextSx}>
           I was also told to come on an empty stomach: no food after 10 PM the previous
           night for the first batch of scans around 8 AM. That instruction is especially
-          common for FDG PET-CT, because food and high insulin levels can change how a
-          glucose-like tracer is distributed in the body.
+          common for fluorine-18 fluorodeoxyglucose (F-18 FDG) PET-CT, because
+          food and high insulin levels can change how a glucose-like tracer is
+          distributed in the body.
         </Typography>
         <Box component="figure" sx={{ m: 0, display: "flex", flexDirection: "column", gap: 1 }}>
           <Box
             component="img"
             src="/generate/2026-04-29-pet-ct-machine.png"
-            alt="AI-generated illustration of a modern PET-CT scanner in a hospital imaging room"
+            alt="Artificial intelligence-generated illustration of a modern PET-CT scanner in a hospital imaging room"
             loading="lazy"
             decoding="async"
             sx={{
@@ -254,8 +256,8 @@ export default function BlogPost() {
             variant="caption"
             sx={{ color: "var(--mui-palette-text-secondary)", textAlign: "center" }}
           >
-            AI-generated visual of a modern PET-CT scanner, included as an educational
-            illustration rather than a photograph of my scan room.
+            Artificial intelligence (AI)-generated visual of a modern PET-CT scanner,
+            included as an educational illustration rather than a photograph of my scan room.
           </Typography>
         </Box>
       </Box>
@@ -272,7 +274,7 @@ export default function BlogPost() {
           positron. That positron quickly meets an electron in the body. The two
           annihilate and produce two photons travelling in almost opposite directions.
           Detector rings inside the PET scanner pick up these paired signals. A computer
-          then reconstructs a 3D map of where the tracer collected.
+          then reconstructs a three-dimensional (3D) map of where the tracer collected.
         </Typography>
         <Typography variant="body1" sx={bodyTextSx}>
           The CT part adds a structural map. It helps the doctor locate the PET signal
@@ -293,9 +295,10 @@ export default function BlogPost() {
         </Typography>
         <Typography variant="body1" sx={bodyTextSx}>
           The injected amount is tiny and diagnostic. It is chosen to create images, not
-          to treat disease. The most common whole-body PET-CT tracer is F-18 FDG. The
-          &quot;F-18&quot; part is radioactive fluorine. The &quot;FDG&quot; part is a glucose-like
-          molecule. Active cells use more glucose, so some cancers, infections,
+          to treat disease. The most common whole-body PET-CT tracer is fluorine-18
+          fluorodeoxyglucose (F-18 FDG). The &quot;F-18&quot; part is radioactive fluorine.
+          The &quot;FDG&quot; part is a glucose-like molecule. Active cells use more glucose,
+          so some cancers, infections,
           inflammatory areas, brain tissue, heart muscle, and even recently exercised
           muscles can show uptake.
         </Typography>
@@ -380,7 +383,7 @@ export default function BlogPost() {
 
       <Box component="section" sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Typography variant="h2" sx={{ fontSize: { xs: "1.6rem", md: "2rem" }, fontWeight: 600 }}>
-          PET-CT vs MRI vs EEG
+          PET-CT vs magnetic resonance imaging (MRI), electroencephalography (EEG), and ultrasound
         </Typography>
         <Typography variant="body1" sx={sectionIntroSx}>
           These are not rival cameras. They answer different biological questions.
@@ -414,9 +417,9 @@ export default function BlogPost() {
         </Box>
         <Box sx={calloutSx}>
           <Typography variant="body1" sx={bodyTextSx}>
-            My simplest summary: PET-CT asks &quot;where is the active biology?&quot; MRI asks
-            &quot;what does the soft tissue look like in detail?&quot; EEG asks &quot;what is the
-            brain&apos;s electrical activity doing over time?&quot;
+            My simplest summary: PET-CT asks &quot;where is the active biology?&quot; MRI
+            asks &quot;what does the soft tissue look like in detail?&quot; EEG asks
+            &quot;what is the brain&apos;s electrical activity doing over time?&quot;
           </Typography>
         </Box>
       </Box>

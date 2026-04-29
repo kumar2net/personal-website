@@ -3,9 +3,9 @@
 
 export const blogIndex = {
   "2026-04-29-pet-ct-scan-experience-explained": {
-    title: "PET-CT Scan: What Happened Inside That Machine Yesterday Morning",
+    title: "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning",
     description:
-      "A patient-friendly explanation of PET-CT after a real scan: the tracer, the CT, why the table moved in stages, what the report shows, and how PET-CT compares with MRI, EEG, and ultrasound.",
+      "A patient-friendly explanation of positron emission tomography (PET)-computed tomography (CT) after a real scan: the tracer, why the table moved in stages, what the report shows, and how PET-CT compares with magnetic resonance imaging (MRI), electroencephalography (EEG), and ultrasound.",
     image: "/generate/2026-04-29-pet-ct-machine.png",
     tags: ["Health", "PET-CT", "Nuclear Medicine", "Imaging", "MRI", "EEG", "Ultrasound"],
     datePublished: "2026-04-29",

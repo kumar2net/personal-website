@@ -67,6 +67,7 @@ repository_guidelines: |
   - Prefer canonical contracts and runbooks over repeated vendor-detail dumps.
   - Keep 2-space indentation, functional React components, and named exports in `packages/ui-theme`.
   - Do not reintroduce nested `CssVarsProvider`s; use `ThemeProvider` and `getTheme` from `@kumar2net/ui-theme`.
+  - In reader-facing copy, expand acronyms on first mention, then use the acronym alone afterward.
 
   ## AI Routes
   - `/api/blog-tts` and `/api/translate` are the main OpenAI-backed endpoints in daily use.
@@ -91,5 +92,4 @@ repository_guidelines: |
   - Configure API Key for Context7 MCP to Prevent Rate Limiting (HTTP Transport): This configuration shows how to add your API key to the Context7 MCP client when using HTTP transport to prevent rate limiting. The API key is included in the `CONTEXT7_API_KEY` header.
   - Refresh with `node scripts/pull-context7.mjs` before relying on vendor-specific details.
   <!--CTX7:END-->
-
 
