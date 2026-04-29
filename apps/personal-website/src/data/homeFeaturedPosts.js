@@ -1,5 +1,17 @@
 export const homeFeaturedPosts = [
   {
+    slug: "2026-04-29-pet-ct-scan-experience-explained",
+    title:
+      "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning",
+    excerpt:
+      "A patient-friendly explanation of a PET-CT scan: the tracer, table movement, report language, and how the scan differs from MRI, EEG, and ultrasound.",
+    image: "/generate/2026-04-29-pet-ct-machine.png",
+    tags: ["Health", "PET-CT", "Imaging"],
+    link: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+    date: "April 29, 2026",
+    datePublished: "2026-04-29",
+  },
+  {
     slug: "2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer",
     title: "Iran War, Hidden Materials Bill: Helium, Fertilizer, and the Real Supply Chain",
     excerpt:
@@ -20,16 +32,5 @@ export const homeFeaturedPosts = [
     link: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     date: "April 11, 2026",
     datePublished: "2026-04-11",
-  },
-  {
-    slug: "2026-04-10-middle-east-fiasco-cost-scorecard",
-    title: "The Middle East Fiasco: A Cost Scorecard",
-    excerpt:
-      "A satirical cost scorecard for escalation: Gaza recovery needs, Lebanon losses, Israel's public bill, Suez revenue, shipping-rate shocks, and the wider taxpayer tab.",
-    image: "/media/blogwordcloud-card.jpg",
-    tags: ["Geopolitics", "Middle East", "War", "Economics"],
-    link: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
-    date: "April 10, 2026",
-    datePublished: "2026-04-10",
   },
 ];

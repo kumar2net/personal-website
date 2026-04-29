@@ -51,61 +51,61 @@ function revealUpSx(delay = 0, duration = 0.45) {
   };
 }
 
-const editionLabel = "Weekend Realities · April 25-26, 2026";
+const editionLabel = "Week Mode · April 29-May 3, 2026";
 
 const moodSwatches = [
   {
-    name: "Saturday Brass",
-    hex: "#d9a441",
-    meaning: "Bills, repairs, groceries, and errands set the weekend ground truth.",
+    name: "Scan Teal",
+    hex: "#1f9d8a",
+    meaning: "Medical clarity, reports, and patient notes set the week in motion.",
   },
   {
-    name: "Inbox Blue",
-    hex: "#5f9ed1",
-    meaning: "The world keeps sending signals even when the laptop should be shut.",
+    name: "Ledger Indigo",
+    hex: "#5167c7",
+    meaning: "Markets, bills, and public costs still need calm accounting.",
   },
   {
-    name: "Kitchen Leaf",
-    hex: "#63b47d",
-    meaning: "Health, food, sleep, and family logistics are the useful metrics.",
+    name: "Care Coral",
+    hex: "#d86f57",
+    meaning: "The human body, medicine stack, and family routines stay first.",
   },
   {
-    name: "Late-Evening Plum",
-    hex: "#a66aa4",
-    meaning: "Music and reflection keep the weekend from becoming only admin work.",
+    name: "Rainlit Gold",
+    hex: "#d6a744",
+    meaning: "Music, Tamil notes, and small rituals keep the week from becoming only admin.",
   },
 ];
 
 const moodTags = [
-  "April 25-26",
-  "Bills and buffers",
-  "Health check",
-  "Family logistics",
+  "April 29-May 3",
+  "Scan clarity",
+  "Ledger mode",
+  "Care routines",
   "Music reset",
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Household ledger",
-    title: "The headline still becomes a weekend bill",
+    eyebrow: "Scan room",
+    title: "The body deserves a plain-English map",
     summary:
-      "The weekend read is not to panic about geopolitics. It is to notice how oil, freight, fertilizer, plastics, and food inputs quietly arrive inside ordinary household math.",
-    source: "Weekend checkpoint: April 26, 2026",
-    to: "/blog/2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer",
-    analyticsKey: "home_weekly_energy_chokepoint",
-    accent: "#d9a441",
-    icon: QueryStatsRoundedIcon,
-    cta: "Read the materials map",
+      "A positron emission tomography (PET)-computed tomography (CT) scan is not magic and not a mystery box. This week starts by translating the machine, tracer, table movement, and report into ordinary language.",
+    source: "Week checkpoint: April 29, 2026",
+    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+    analyticsKey: "home_weekly_pet_ct_clarity",
+    accent: "#1f9d8a",
+    icon: HealthAndSafetyRoundedIcon,
+    cta: "Read the scan note",
   },
   {
     eyebrow: "Reality check",
     title: "The dashboard matters only if it changes a decision",
     summary:
-      "Use the numbers as a weekend sanity check: crude, indices, volatility, and a few cross-currents. Enough signal to stay oriented, not enough noise to ruin Sunday.",
-    source: "Weekend checkpoint: April 26, 2026",
+      "Use the numbers as a weekly sanity check: crude, indices, volatility, and a few cross-currents. Enough signal to stay oriented, not enough noise to hijack the day.",
+    source: "Week checkpoint: April 29, 2026",
     to: "/keydata",
     analyticsKey: "home_weekly_growth_shadow",
-    accent: "#5f9ed1",
+    accent: "#5167c7",
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
@@ -113,11 +113,11 @@ const worldPulse = [
     eyebrow: "Cost memory",
     title: "Big conflicts should still be counted calmly",
     summary:
-      "Weekend distance helps: reconstruction bills, canal losses, freight shocks, public borrowing, and taxpayer costs need a ledger before they become slogans.",
-    source: "Weekend checkpoint: April 26, 2026",
+      "Reconstruction bills, canal losses, freight shocks, public borrowing, and taxpayer costs need a ledger before they become slogans.",
+    source: "Week checkpoint: April 29, 2026",
     to: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
     analyticsKey: "home_weekly_institution_strain",
-    accent: "#c98f35",
+    accent: "#d6a744",
     icon: QueryStatsRoundedIcon,
     cta: "Open the cost ledger",
   },
@@ -125,11 +125,11 @@ const worldPulse = [
     eyebrow: "Care stack",
     title: "The most practical system is still the body at home",
     summary:
-      "After markets and maps, the weekend comes back to sleep, food, medicine, movement, and the real combinations people actually live with.",
-    source: "Weekend checkpoint: April 26, 2026",
+      "After markets and maps, the week comes back to sleep, food, medicine, movement, and the real combinations people actually live with.",
+    source: "Week checkpoint: April 29, 2026",
     to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_weekly_human_scale",
-    accent: "#63b47d",
+    accent: "#d86f57",
     icon: HealthAndSafetyRoundedIcon,
     cta: "Check the drug stack",
   },
@@ -137,24 +137,24 @@ const worldPulse = [
 
 const siteVectors = [
   {
-    eyebrow: "Bills",
-    title: "Start with what can hit the kitchen table",
+    eyebrow: "Body",
+    title: "Start with the scan note",
     summary:
-      "The materials map is the weekend bridge from distant conflict to groceries, fuel, plastics, fertilizer, medical supply chains, and small household decisions.",
-    to: "/blog/2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer",
-    analyticsKey: "home_vector_materials_bill",
-    accent: "#d9a441",
-    icon: QueryStatsRoundedIcon,
-    cta: "Read the materials map",
+      "The PET-CT explainer turns a clinical morning into a clear map of tracer, CT anatomy, PET signal, report language, and what the machine is actually doing.",
+    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+    analyticsKey: "home_vector_pet_ct_scan",
+    accent: "#1f9d8a",
+    icon: HealthAndSafetyRoundedIcon,
+    cta: "Read the scan note",
   },
   {
     eyebrow: "Pulse",
     title: "Then take a five-minute data pulse",
     summary:
-      "Crude, indices, volatility, and a few metrics are enough. The weekend job is orientation, not compulsive watching.",
+      "Crude, indices, volatility, and a few metrics are enough. The week job is orientation, not compulsive watching.",
     to: "/keydata",
     analyticsKey: "home_vector_keydata",
-    accent: "#5f9ed1",
+    accent: "#5167c7",
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
@@ -165,18 +165,18 @@ const siteVectors = [
       "A calmer accounting of escalation: reconstruction bills, lost canal revenue, freight-rate shocks, borrowing, and taxpayer costs.",
     to: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
     analyticsKey: "home_vector_middle_east_costs",
-    accent: "#c98f35",
+    accent: "#d6a744",
     icon: MenuBookRoundedIcon,
     cta: "Open the scorecard",
   },
   {
-    eyebrow: "Body",
+    eyebrow: "Care",
     title: "Then bring it back to care at home",
     summary:
-      "The April 11 note turns safety into a weekend checklist: not whether each pill passed alone, but whether the real combination was checked.",
+      "The April 11 note turns safety into a weekly checklist: not whether each pill passed alone, but whether the real combination was checked.",
     to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_vector_drug_stack",
-    accent: "#63b47d",
+    accent: "#d86f57",
     icon: HealthAndSafetyRoundedIcon,
     cta: "Read the safety note",
   },
@@ -221,20 +221,20 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
         ...revealUpSx(),
         "--home-surface": isDarkMode
           ? "rgba(19, 18, 24, 0.9)"
-          : "rgba(252, 250, 244, 0.94)",
+          : "rgba(247, 251, 248, 0.94)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(27, 25, 33, 0.95)"
-          : "rgba(248, 245, 237, 0.98)",
+          ? "rgba(24, 27, 35, 0.95)"
+          : "rgba(240, 248, 245, 0.98)",
         "--home-border": isDarkMode
-          ? "rgba(232, 211, 172, 0.18)"
-          : "rgba(116, 94, 62, 0.16)",
+          ? "rgba(156, 206, 197, 0.2)"
+          : "rgba(47, 111, 103, 0.18)",
         "--home-muted-text": isDarkMode
-          ? "rgba(238, 230, 214, 0.76)"
-          : "rgba(70, 65, 55, 0.78)",
-        "--home-ink": isDarkMode ? "#fff9ef" : "#211b15",
+          ? "rgba(226, 238, 236, 0.76)"
+          : "rgba(33, 63, 58, 0.78)",
+        "--home-ink": isDarkMode ? "#f5fffc" : "#102622",
         "--home-shadow": isDarkMode
           ? "0 30px 90px rgba(7, 7, 10, 0.42)"
-          : "0 26px 64px rgba(97, 78, 43, 0.14)",
+          : "0 26px 64px rgba(31, 101, 92, 0.14)",
         display: "flex",
         flexDirection: "column",
         gap: { xs: 3, md: 4 },
@@ -245,7 +245,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Weekend realities for April 25-26, 2026: household ledgers, practical health checks, global signals, music, and grounded reflection."
+        description="Week mode for April 29-May 3, 2026: scan clarity, practical health checks, household ledgers, global signals, music, and grounded reflection."
         canonicalPath="/"
         image="/media/blogwordcloud.png"
         type="website"
@@ -263,15 +263,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "radial-gradient(circle at 14% 14%, rgba(217, 164, 65, 0.28), transparent 22%), radial-gradient(circle at 83% 18%, rgba(95, 158, 209, 0.18), transparent 22%), radial-gradient(circle at 74% 84%, rgba(166, 106, 164, 0.18), transparent 24%), linear-gradient(150deg, rgba(18, 17, 23, 0.98), rgba(33, 28, 37, 0.97) 48%, rgba(20, 28, 24, 0.96))"
-                : "radial-gradient(circle at 14% 14%, rgba(217, 164, 65, 0.2), transparent 22%), radial-gradient(circle at 83% 18%, rgba(95, 158, 209, 0.16), transparent 22%), radial-gradient(circle at 74% 84%, rgba(166, 106, 164, 0.14), transparent 24%), linear-gradient(150deg, rgba(252, 250, 244, 0.98), rgba(246, 241, 230, 0.98) 48%, rgba(238, 242, 233, 0.96))",
+                ? "radial-gradient(circle at 14% 14%, rgba(31, 157, 138, 0.3), transparent 22%), radial-gradient(circle at 83% 18%, rgba(81, 103, 199, 0.2), transparent 22%), radial-gradient(circle at 74% 84%, rgba(216, 111, 87, 0.18), transparent 24%), linear-gradient(150deg, rgba(13, 22, 25, 0.98), rgba(24, 28, 41, 0.97) 48%, rgba(28, 38, 32, 0.96))"
+                : "radial-gradient(circle at 14% 14%, rgba(31, 157, 138, 0.2), transparent 22%), radial-gradient(circle at 83% 18%, rgba(81, 103, 199, 0.15), transparent 22%), radial-gradient(circle at 74% 84%, rgba(216, 111, 87, 0.13), transparent 24%), linear-gradient(150deg, rgba(247, 251, 248, 0.98), rgba(235, 246, 243, 0.98) 48%, rgba(248, 242, 229, 0.96))",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(217, 164, 65, 0.08) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(95, 158, 209, 0.05) 0 1px, transparent 1px 26px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(31, 157, 138, 0.08) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(81, 103, 199, 0.05) 0 1px, transparent 1px 26px)",
                 backgroundSize: "100% 100%, 100% 100%, 100% 100%",
                 opacity: isDarkMode ? 0.22 : 0.1,
                 pointerEvents: "none",
@@ -307,7 +307,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Refreshed {todayLabel} • weekend checkpoint
+                  Refreshed {todayLabel} • week checkpoint
                 </Typography>
               </Stack>
 
@@ -324,7 +324,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Weekend reality has entered the chat.
+                  Week mode is scan-aware and practical.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -335,12 +335,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     lineHeight: 1.72,
                   }}
                 >
-                  As of Sunday, April 26, 2026, the homepage mood is grounded,
-                  slightly tired, and still paying attention. The weekend has
-                  its own truth: groceries, health checks, family logistics,
-                  music, bills, and a few global signals that refuse to stay
-                  outside the house. The site lens stays practical: count what
-                  matters, lower the noise, and keep the human stack visible.
+                  As of Wednesday, April 29, 2026, the homepage mood is clear,
+                  watchful, and deliberately practical. A medical scan, a few
+                  market signals, household costs, medicine routines, Tamil
+                  music notes, and the outside world all sit on the same table.
+                  The site lens stays simple: explain what matters, lower the
+                  noise, and keep the human stack visible.
                 </Typography>
               </Stack>
 
@@ -374,11 +374,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-04-14-iran-war-hidden-materials-bill-helium-fertilizer"
+                  to="/blog/2026-04-29-pet-ct-scan-experience-explained"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_materials_bill_cta")}
+                  onClick={() => trackClick("home_hero_pet_ct_scan_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -388,16 +388,16 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     boxShadow: "none",
                     color: "var(--variant-containedColor)",
                     background:
-                      "linear-gradient(135deg, #d9a441 0%, #63b47d 48%, #5f9ed1 100%)",
+                      "linear-gradient(135deg, #1f9d8a 0%, #d6a744 48%, #5167c7 100%)",
                     "&:hover": {
                       boxShadow: "none",
                       color: "var(--variant-containedColor)",
                       background:
-                        "linear-gradient(135deg, #c99535 0%, #55a66f 48%, #4f90c5 100%)",
+                        "linear-gradient(135deg, #188a79 0%, #c59636 48%, #4458b5 100%)",
                     },
                   }}
                 >
-                  Start with the materials map
+                  Start with the scan note
                 </Button>
                 <Button
                   component={RouterLink}
@@ -442,8 +442,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: grounded, chore-aware, health-conscious, and allergic
-                    to performative optimism.
+                    Mood: scan-aware, ledger-minded, health-conscious, and
+                    allergic to performative optimism.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -451,8 +451,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Weekend use: do the ledger, check the body, keep the music
-                    nearby, and let the data stay useful.
+                    Week use: read the report, do the ledger, check the body,
+                    keep the music nearby, and let the data stay useful.
                   </Typography>
                 </Grid>
               </Grid>
@@ -483,7 +483,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Weekend Mood
+                  Week Mood
                 </Typography>
                 <Typography
                   variant="h5"
@@ -493,7 +493,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering the April 25-26 read
+                  The colors steering the April 29-May 3 read
                 </Typography>
               </Box>
 
@@ -549,10 +549,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to the April 25-26 weekend: home
-                  economics, care routines, music, and a manageable read of the
-                  outside world. Dates stay visible so the page reads like a
-                  moment, not a timeless brand voice.
+                  This frame is pinned to the April 29-May 3 week: scan
+                  clarity, home economics, care routines, music, and a
+                  manageable read of the outside world. Dates stay visible so
+                  the page reads like a moment, not a timeless brand voice.
                 </Typography>
               </Box>
 
@@ -614,8 +614,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           borderRadius: 4,
           border: "1px solid var(--home-border)",
           backgroundImage: isDarkMode
-            ? "linear-gradient(135deg, rgba(166, 106, 164, 0.28), rgba(22, 23, 28, 0.94) 48%, rgba(99, 180, 125, 0.2))"
-            : "linear-gradient(135deg, rgba(166, 106, 164, 0.16), rgba(255, 255, 255, 0.96) 48%, rgba(99, 180, 125, 0.14))",
+            ? "linear-gradient(135deg, rgba(216, 111, 87, 0.26), rgba(22, 27, 31, 0.94) 48%, rgba(31, 157, 138, 0.2))"
+            : "linear-gradient(135deg, rgba(216, 111, 87, 0.14), rgba(255, 255, 255, 0.96) 48%, rgba(31, 157, 138, 0.14))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -744,7 +744,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-muted-text)",
                 }}
               >
-                Weekend Reality
+                Week Reality
               </Typography>
               <Typography
                 variant="h4"
@@ -754,15 +754,16 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-ink)",
                 }}
               >
-                What the weekend is really saying
+                What the week is really saying
               </Typography>
             </Stack>
             <Typography
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              Four practical signals, one Sunday read. The page stays anchored
-              to April 25-26, 2026 instead of pretending this mood is permanent.
+              Four practical signals, one late-April read. The page stays
+              anchored to April 29-May 3, 2026 instead of pretending this mood
+              is permanent.
             </Typography>
           </Stack>
 
@@ -921,7 +922,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Weekend Routes
+                  Week Routes
                 </Typography>
                 <Typography
                   variant="h4"
@@ -931,7 +932,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  How to use the site this weekend
+                  How to use the site this week
                 </Typography>
               </Box>
 
@@ -1129,8 +1130,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: alpha("#5f9ed1", 0.14),
-                            color: "#5f9ed1",
+                            backgroundColor: alpha("#5167c7", 0.14),
+                            color: "#5167c7",
                           }}
                         >
                           <TravelExploreRoundedIcon sx={{ fontSize: 20 }} />
@@ -1156,9 +1157,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                This weekend asks for fewer slogans and more checklists: bills,
-                errands, medicine, sleep, food, music, and one honest look at
-                the outside world.
+                This week asks for fewer slogans and more checklists: reports,
+                bills, medicine, sleep, food, music, and one honest look at the
+                outside world.
               </Typography>
             </Stack>
           </Paper>
@@ -1176,7 +1177,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            Weekend Reading Stack
+            Week Reading Stack
           </Typography>
           <Typography
             variant="h4"
@@ -1186,7 +1187,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Three posts for the current weekend-reality mood
+            Three posts for the current week-mode mood
           </Typography>
         </Stack>
 
