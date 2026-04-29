@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-04-29-pet-ct-scan-experience-explained": {
+    title: "PET-CT Scan: What Happened Inside That Machine Yesterday Morning",
+    description:
+      "A patient-friendly explanation of PET-CT after a real scan: the tracer, the CT, why the table moved in stages, what the report shows, and how PET-CT compares with MRI, EEG, and ultrasound.",
+    image: "/generate/2026-04-29-pet-ct-machine.png",
+    tags: ["Health", "PET-CT", "Nuclear Medicine", "Imaging", "MRI", "EEG", "Ultrasound"],
+    datePublished: "2026-04-29",
+    dateModified: "2026-04-29",
+    readingTime: "~7 min",
+  },
   "2026-04-26-reply-xml-tags-prompts-sanjaay-babu": {
     title: "Reply: XML Tags Are Useful, Not Magic",
     description:

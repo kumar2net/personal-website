@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "PET-CT Scan: What Happened Inside That Machine Yesterday Morning",
+    date: "April 29, 2026",
+    lastModified: "April 29, 2026",
+    excerpt:
+      "A patient-friendly explanation of PET-CT after a real scan: the tracer, the CT, why the table moved in stages, what the report shows, and how PET-CT compares with MRI, EEG, and ultrasound.",
+    tags: ["Health", "PET-CT", "Nuclear Medicine", "Imaging", "MRI", "EEG", "Ultrasound"],
+    image: "/generate/2026-04-29-pet-ct-machine.png",
+    link: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+  },
+  {
     title: "Reply: XML Tags Are Useful, Not Magic",
     date: "April 26, 2026",
     lastModified: "April 26, 2026",
