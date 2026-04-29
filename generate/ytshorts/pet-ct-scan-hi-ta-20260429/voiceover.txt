@@ -1,59 +1,59 @@
-1. [HI] ये scan सिर्फ फोटो नहीं है.
-   HI: ये scan सिर्फ फोटो नहीं है.
-   TA: இந்த scan வெறும் photo இல்லை.
+1. [HI] सोचिए sugar के साथ छोटी bell लगी है.
+   HI: सोचिए sugar के साथ छोटी bell लगी है.
+   TA: Sugar-க்கு ஒரு சின்ன bell வைத்தது போல.
 
-2. [TA] ஒரு layer activity. இன்னொரு layer location.
-   HI: एक layer activity. दूसरी location.
-   TA: ஒரு layer activity. இன்னொரு layer location.
+2. [TA] Active cells sugar-ஐ அதிகம் எடுத்துக்கொள்ளும்.
+   HI: Active cells sugar ज़्यादा लेते हैं.
+   TA: Active cells sugar-ஐ அதிகம் எடுத்துக்கொள்ளும்.
 
-3. [HI] FDG यानी glucose जैसा tracer.
-   HI: FDG यानी glucose जैसा tracer.
-   TA: FDG என்றால் glucose மாதிரி tracer.
+3. [HI] FDG glucose जैसा clue है.
+   HI: FDG glucose जैसा clue है.
+   TA: FDG glucose மாதிரி clue.
 
-4. [TA] அதனால் தான் fasting சொன்னார்கள்.
-   HI: इसलिए fasting बोला गया.
-   TA: அதனால் தான் fasting சொன்னார்கள்.
+4. [TA] Fasting-னால் background clean ஆகும்.
+   HI: Fasting से background साफ रहता है.
+   TA: Fasting-னால் background clean ஆகும்.
 
-5. [HI] चलना, chewing, shivering image बिगाड़ सकते हैं.
-   HI: चलना, chewing, shivering image बिगाड़ सकते हैं.
-   TA: Movement image-ஐ blur பண்ணும்.
+5. [HI] Bell को body में घूमने का time चाहिए.
+   HI: Bell को body में घूमने का time चाहिए.
+   TA: Bell உடம்பில் சுற்ற time தேவை.
 
-6. [TA] CT spot எங்கே என்று காட்டும்.
-   HI: CT बताता है spot कहाँ है.
-   TA: CT spot எங்கே என்று காட்டும்.
+6. [TA] CT கேட்கும்: அது எங்கே?
+   HI: CT पूछता है: चीज़ कहाँ है?
+   TA: CT கேட்கும்: அது எங்கே?
 
-7. [HI] Table इसलिए बार-बार move हुआ.
-   HI: Table इसलिए बार-बार move हुआ.
-   TA: அதனால் table மீண்டும் மீண்டும் நகர்ந்தது.
+7. [HI] PET पूछता है: activity कहाँ है?
+   HI: PET पूछता है: activity कहाँ है?
+   TA: PET கேட்கும்: activity எங்கே?
 
-8. [TA] Machine treatment செய்யவில்லை.
-   HI: Machine इलाज नहीं कर रही थी.
-   TA: Machine treatment செய்யவில்லை.
+8. [TA] Machine section by section படிக்கும்.
+   HI: Machine shelf by shelf पढ़ती है.
+   TA: Machine section by section படிக்கும்.
 
-9. [HI] Report में fused image और impression आता है.
-   HI: Report में fused image और impression आता है.
-   TA: Report-ல் fused image, impression வரும்.
+9. [HI] Report में map के ऊपर signal आता है.
+   HI: Report में map के ऊपर signal आता है.
+   TA: Report-ல் map மேல signal வரும்.
 
-10. [TA] SUV number மட்டும் diagnosis இல்லை.
-   HI: SUV number अकेला diagnosis नहीं है.
-   TA: SUV number மட்டும் diagnosis இல்லை.
+10. [TA] SUV clue தான், final answer இல்லை.
+   HI: SUV clue है, final answer नहीं.
+   TA: SUV clue தான், final answer இல்லை.
 
-11. [HI] MRI soft tissue detail के लिए strong है.
-   HI: MRI soft tissue detail के लिए strong है.
-   TA: MRI soft tissue detail-க்கு strong.
+11. [HI] MRI shape और soft tissue detail दिखाता है.
+   HI: MRI shape और soft tissue detail दिखाता है.
+   TA: MRI shape, soft tissue detail காட்டும்.
 
-12. [TA] EEG brain waves. Ultrasound sound waves.
-   HI: EEG brain waves. Ultrasound sound waves.
-   TA: EEG brain waves. Ultrasound sound waves.
+12. [TA] EEG electricity. Ultrasound echo.
+   HI: EEG electricity. Ultrasound echo.
+   TA: EEG electricity. Ultrasound echo.
 
-13. [HI] Goal है hidden focus ढूँढना.
-   HI: Goal है hidden focus ढूँढना.
-   TA: Goal hidden focus கண்டுபிடிப்பது.
+13. [HI] Goal है body में hidden fire ढूँढना.
+   HI: Goal है body में hidden fire ढूँढना.
+   TA: Goal hidden fire கண்டுபிடிப்பது.
 
-14. [TA] Hot spot இருந்தால் proof என்ன?
-   HI: Hot spot मिला तो proof क्या है?
-   TA: Hot spot இருந்தால் proof என்ன?
+14. [TA] Hot spot இருந்தால் proof எப்படி?
+   HI: Hot spot मिला तो proof कैसे?
+   TA: Hot spot இருந்தால் proof எப்படி?
 
-15. [HI] PET-CT active biology की location बताता है.
-   HI: PET-CT active biology की location बताता है.
-   TA: PET-CT active biology எங்கே என்று காட்டும்.
+15. [HI] CT map है. PET hunger signal.
+   HI: CT map है. PET hunger signal.
+   TA: CT map. PET hunger signal.

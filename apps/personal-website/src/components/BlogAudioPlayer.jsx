@@ -42,6 +42,11 @@ const AUDIO_MIME = MP3_MIME;
 const MAX_CLIENT_CHARS = 25000;
 const DEFAULT_TTS_SPEED = Number(import.meta.env.VITE_BLOG_TTS_SPEED || "1");
 const OPUS_PREFERRED_TEXT_LIMIT = 3000;
+const MSE_MAX_BUFFER_AHEAD_SECONDS = 45;
+const MSE_RESUME_BUFFER_AHEAD_SECONDS = 25;
+const MSE_RETAIN_BEHIND_SECONDS = 8;
+const MSE_BUFFER_WAIT_MS = 250;
+const MSE_QUOTA_RETRY_LIMIT = 3;
 
 function clampSpeed(value) {
   if (!Number.isFinite(value)) {
@@ -131,16 +136,74 @@ function waitForSourceBufferIdle(sourceBuffer) {
   });
 }
 
-async function appendToSourceBuffer(sourceBuffer, chunk) {
-  await waitForSourceBufferIdle(sourceBuffer);
+function getBufferedAheadSeconds(sourceBuffer, audioElement) {
+  const buffered = sourceBuffer?.buffered;
+  if (!buffered?.length) {
+    return 0;
+  }
+
+  const currentTime = Number.isFinite(audioElement?.currentTime)
+    ? audioElement.currentTime
+    : 0;
+  let furthestEnd = currentTime;
+
+  for (let i = 0; i < buffered.length; i += 1) {
+    const start = buffered.start(i);
+    const end = buffered.end(i);
+    if (end >= currentTime && start <= furthestEnd + 0.5) {
+      furthestEnd = Math.max(furthestEnd, end);
+    }
+  }
+
+  return Math.max(0, furthestEnd - currentTime);
+}
+
+function waitForPlaybackProgress(audioElement, signal) {
+  if (signal?.aborted) {
+    return Promise.reject(new DOMException("Aborted", "AbortError"));
+  }
+
   return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      window.clearTimeout(timer);
+      signal?.removeEventListener("abort", onAbort);
+      audioElement?.removeEventListener("timeupdate", onProgress);
+      audioElement?.removeEventListener("seeking", onProgress);
+      audioElement?.removeEventListener("play", onProgress);
+      audioElement?.removeEventListener("playing", onProgress);
+    };
+    const onProgress = () => {
+      cleanup();
+      resolve();
+    };
+    const onAbort = () => {
+      cleanup();
+      reject(new DOMException("Aborted", "AbortError"));
+    };
+    const timer = window.setTimeout(onProgress, MSE_BUFFER_WAIT_MS);
+
+    signal?.addEventListener("abort", onAbort, { once: true });
+    audioElement?.addEventListener("timeupdate", onProgress, { once: true });
+    audioElement?.addEventListener("seeking", onProgress, { once: true });
+    audioElement?.addEventListener("play", onProgress, { once: true });
+    audioElement?.addEventListener("playing", onProgress, { once: true });
+  });
+}
+
+async function removeSourceBufferRange(sourceBuffer, start, end) {
+  if (end <= start || !Number.isFinite(start) || !Number.isFinite(end)) {
+    return;
+  }
+
+  await waitForSourceBufferIdle(sourceBuffer);
+  await new Promise((resolve, reject) => {
     const onUpdateEnd = () => {
       cleanup();
       resolve();
     };
     const onError = () => {
       cleanup();
-      reject(new Error("Failed to append streaming audio chunk."));
+      reject(new Error("Failed to prune buffered audio."));
     };
     const cleanup = () => {
       sourceBuffer.removeEventListener("updateend", onUpdateEnd);
@@ -149,12 +212,113 @@ async function appendToSourceBuffer(sourceBuffer, chunk) {
     sourceBuffer.addEventListener("updateend", onUpdateEnd);
     sourceBuffer.addEventListener("error", onError);
     try {
-      sourceBuffer.appendBuffer(chunk);
+      sourceBuffer.remove(start, end);
     } catch (error) {
       cleanup();
       reject(error);
     }
   });
+}
+
+async function prunePlayedSourceBuffer(sourceBuffer, audioElement) {
+  const buffered = sourceBuffer?.buffered;
+  if (!buffered?.length) {
+    return false;
+  }
+
+  const currentTime = Number.isFinite(audioElement?.currentTime)
+    ? audioElement.currentTime
+    : 0;
+  const pruneBefore = currentTime - MSE_RETAIN_BEHIND_SECONDS;
+  if (pruneBefore <= 0) {
+    return false;
+  }
+
+  const rangesToPrune = [];
+  for (let i = 0; i < buffered.length; i += 1) {
+    const start = buffered.start(i);
+    const end = buffered.end(i);
+    const removeEnd = Math.min(end, pruneBefore);
+    if (removeEnd - start > 0.5) {
+      rangesToPrune.push([start, removeEnd]);
+    }
+  }
+
+  for (const [start, end] of rangesToPrune) {
+    await removeSourceBufferRange(sourceBuffer, start, end);
+  }
+
+  const pruned = rangesToPrune.length > 0;
+  return pruned;
+}
+
+async function waitForSourceBufferBudget(sourceBuffer, audioElement, signal) {
+  while (
+    getBufferedAheadSeconds(sourceBuffer, audioElement) >
+    MSE_MAX_BUFFER_AHEAD_SECONDS
+  ) {
+    await prunePlayedSourceBuffer(sourceBuffer, audioElement);
+    if (
+      getBufferedAheadSeconds(sourceBuffer, audioElement) <=
+      MSE_RESUME_BUFFER_AHEAD_SECONDS
+    ) {
+      return;
+    }
+    await waitForPlaybackProgress(audioElement, signal);
+  }
+}
+
+function isSourceBufferQuotaError(error) {
+  return (
+    error?.name === "QuotaExceededError" ||
+    /sourcebuffer is full|quota/i.test(error?.message || "")
+  );
+}
+
+async function appendToSourceBuffer(
+  sourceBuffer,
+  chunk,
+  { audioElement, signal } = {},
+) {
+  await waitForSourceBufferBudget(sourceBuffer, audioElement, signal);
+  await waitForSourceBufferIdle(sourceBuffer);
+
+  for (let attempt = 0; attempt <= MSE_QUOTA_RETRY_LIMIT; attempt += 1) {
+    try {
+      await new Promise((resolve, reject) => {
+        const onUpdateEnd = () => {
+          cleanup();
+          resolve();
+        };
+        const onError = () => {
+          cleanup();
+          reject(new Error("Failed to append streaming audio chunk."));
+        };
+        const cleanup = () => {
+          sourceBuffer.removeEventListener("updateend", onUpdateEnd);
+          sourceBuffer.removeEventListener("error", onError);
+        };
+        sourceBuffer.addEventListener("updateend", onUpdateEnd);
+        sourceBuffer.addEventListener("error", onError);
+        try {
+          sourceBuffer.appendBuffer(chunk);
+        } catch (error) {
+          cleanup();
+          reject(error);
+        }
+      });
+      return;
+    } catch (error) {
+      if (!isSourceBufferQuotaError(error) || attempt === MSE_QUOTA_RETRY_LIMIT) {
+        throw error;
+      }
+
+      await prunePlayedSourceBuffer(sourceBuffer, audioElement);
+      await waitForPlaybackProgress(audioElement, signal);
+      await waitForSourceBufferBudget(sourceBuffer, audioElement, signal);
+      await waitForSourceBufferIdle(sourceBuffer);
+    }
+  }
 }
 
 function normalizeText(text) {
@@ -545,7 +709,10 @@ export default function BlogAudioPlayer({ slug, articleRef }) {
         if (!value || !value.byteLength) {
           continue;
         }
-        await appendToSourceBuffer(sourceBuffer, value);
+        await appendToSourceBuffer(sourceBuffer, value, {
+          audioElement: audioRef.current,
+          signal: abortControllerRef.current?.signal,
+        });
       }
 
       await waitForSourceBufferIdle(sourceBuffer);
