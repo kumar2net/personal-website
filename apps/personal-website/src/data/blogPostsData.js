@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "Claude Code vs Codex: The Markdown Files That Matter",
+    date: "May 15, 2026",
+    lastModified: "May 15, 2026",
+    excerpt:
+      "Claude Code and Codex both use plain Markdown as the control surface for agent behavior, but they organize it differently. Here is where AGENTS.md, CLAUDE.md, skills, agents, projects, hooks, MCP, and plugins fit.",
+    tags: ["AI", "Claude Code", "Codex", "Markdown", "Agents", "Skills"],
+    image: "/media/blogwordcloud.png",
+    link: "/blog/2026-05-15-claude-vs-codex-markdown-files",
+  },
+  {
     title: "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning",
     date: "April 29, 2026",
     lastModified: "April 29, 2026",

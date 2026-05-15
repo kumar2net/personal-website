@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-05-15-claude-vs-codex-markdown-files": {
+    title: "Claude Code vs Codex: The Markdown Files That Matter",
+    description:
+      "A practical comparison of Claude Code and Codex customization through Markdown files: AGENTS.md, CLAUDE.md, skills, agents, commands, projects, hooks, MCP, and plugins.",
+    image: "/media/blogwordcloud.png",
+    tags: ["AI", "Claude Code", "Codex", "Markdown", "Agents", "Skills"],
+    datePublished: "2026-05-15",
+    dateModified: "2026-05-15",
+    readingTime: "~6 min",
+  },
   "2026-04-29-pet-ct-scan-experience-explained": {
     title: "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning",
     description:
