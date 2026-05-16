@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-03-25T02:48:31.810Z",
-  "totalInputTokens": 122039,
-  "totalOutputTokens": 7166,
-  "totalTokens": 129205,
+  "generatedAt": "2026-05-16T11:40:49.091Z",
+  "totalInputTokens": 126785,
+  "totalOutputTokens": 7322,
+  "totalTokens": 134107,
   "entries": [
     {
       "provider": "openai",
@@ -1394,6 +1394,18 @@
       "request_id": "chatcmpl-DN8aCEBQngkZ8l2jvm4dPSVMJbpX1",
       "meta": {
         "timestamp": "2026-03-25T02:48:31.809Z"
+      }
+    },
+    {
+      "provider": "openai",
+      "route": "local-guide-query",
+      "model": "gpt-5.2-2025-12-11",
+      "input_tokens": 4746,
+      "output_tokens": 156,
+      "total_tokens": 4902,
+      "request_id": "resp_0612945f8a390380006a0857bd59cc819d9065f1f0ee768de3",
+      "meta": {
+        "timestamp": "2026-05-16T11:40:49.091Z"
       }
     }
   ]

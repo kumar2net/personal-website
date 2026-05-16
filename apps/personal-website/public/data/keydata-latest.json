@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-04-26T06:31:51.057Z",
+  "generatedAt": "2026-05-16T11:36:54.924Z",
   "status": "ok",
   "snapshot": {
-    "key": "2026-04-26",
-    "generatedAt": "2026-04-26T06:31:51.057Z",
-    "refreshAt": "2026-04-26T02:00:00.000Z",
-    "nextRefreshAt": "2026-04-27T02:00:00.000Z",
+    "key": "2026-05-16",
+    "generatedAt": "2026-05-16T11:36:54.924Z",
+    "refreshAt": "2026-05-16T02:00:00.000Z",
+    "nextRefreshAt": "2026-05-17T02:00:00.000Z",
     "cadenceLabel": "Refreshes once daily after 07:30 IST (02:00 UTC).",
     "servedStale": false,
     "staleItemCount": 22,
@@ -14,7 +14,7 @@
         "source": "stooq",
         "sourceLabel": "Stooq",
         "count": 22,
-        "snapshotKey": "2026-04-26"
+        "snapshotKey": "2026-05-16"
       }
     ]
   },
@@ -29,24 +29,24 @@
       {
         "label": "WTI Crude",
         "ticker": "WTI",
-        "changePct": 5.99
-      },
-      {
-        "label": "Brent Crude",
-        "ticker": "BRENT",
-        "changePct": 4.84
+        "changePct": 2.72
       },
       {
         "label": "Henry Hub Gas",
         "ticker": "HHGAS",
-        "changePct": 3.69
+        "changePct": 2.55
+      },
+      {
+        "label": "Brent Crude",
+        "ticker": "BRENT",
+        "changePct": 2.54
       }
     ],
     "laggards": [
       {
-        "label": "Nifty IT",
-        "ticker": "NIFTYIT",
-        "changePct": -5.29
+        "label": "VIX",
+        "ticker": "VIX",
+        "changePct": -3.41
       },
       {
         "label": "Arm",
@@ -66,36 +66,36 @@
         "changePct": 7.47
       },
       {
-        "label": "Nifty Bank",
-        "ticker": "BANKNIFTY",
-        "changePct": 6.62
+        "label": "Henry Hub Gas",
+        "ticker": "HHGAS",
+        "changePct": 6.82
       },
       {
-        "label": "Nifty 50",
-        "ticker": "NIFTY50",
-        "changePct": 4.3
+        "label": "WTI Crude",
+        "ticker": "WTI",
+        "changePct": 3.27
       }
     ]
   },
   "insights": [
     {
       "id": "risk-tone",
-      "title": "Risk tone is mixed",
-      "summary": "Breadth is 14/23 positive and VIX sits in a contained regime at 19.31.",
-      "tone": "neutral",
+      "title": "Risk tone is constructive",
+      "summary": "Breadth is healthy at 14/23 positive, and VIX is 17.26, which keeps the volatility backdrop relatively calm.",
+      "tone": "positive",
       "evidence": [
         "Breadth: 14 up, 9 down, 0 flat",
-        "VIX: 19.31 (contained)"
+        "VIX: 17.26 (contained)"
       ]
     },
     {
       "id": "cross-market",
-      "title": "U.S. indices are leading the day",
-      "summary": "The U.S. basket is averaging -0.46% versus -1.23% in India, with DJI setting the stronger pace.",
-      "tone": "negative",
+      "title": "India is leading the day",
+      "summary": "India is averaging +0.56% versus -0.46% for the U.S. group, with SENSEX showing the firmer tone.",
+      "tone": "positive",
       "evidence": [
         "U.S. average 1D: -0.46%",
-        "India average 1D: -1.23%",
+        "India average 1D: +0.56%",
         "DJI lead: -0.18% | SENSEX lead: +1.89%"
       ]
     },
@@ -113,11 +113,11 @@
     {
       "id": "energy-transition",
       "title": "Energy and transition signals are mixed",
-      "summary": "Oil is moving +5.42% on average for the day while the renewables basket is at +0.96%, so macro energy and transition equities are not telling the same story cleanly.",
+      "summary": "Oil is moving +2.63% on average for the day while the renewables basket is at +0.96%, so macro energy and transition equities are not telling the same story cleanly.",
       "tone": "neutral",
       "evidence": [
-        "WTI: $91.06 | Brent: $103.40",
-        "Henry Hub: $2.81 | Renewables average 1D: +0.96%",
+        "WTI: $101.56 | Brent: $106.11",
+        "Henry Hub: $2.82 | Renewables average 1D: +0.96%",
         "Renewables average 1M: -9.19%"
       ]
     },
@@ -178,8 +178,8 @@
             6556.37
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -221,8 +221,8 @@
             21761.89
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -264,8 +264,8 @@
             46124.06
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         }
       ]
@@ -314,8 +314,8 @@
             74068.45
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -326,19 +326,19 @@
           "sourceLabel": "NSE India",
           "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
           "unitLabel": "price",
-          "asOf": "2026-04-24",
-          "latestValue": 23897.95,
-          "previousClose": 24173.05,
+          "asOf": "2026-05-15",
+          "latestValue": 23643.5,
+          "previousClose": 23689.6,
           "changes": {
-            "dayPct": -1.14,
-            "weekPct": -1.87,
-            "monthPct": 4.3
+            "dayPct": -0.19,
+            "weekPct": -2.2,
+            "monthPct": -2.43
           },
           "sparkline": [
-            22912.4,
-            24353.55,
-            24173.05,
-            23897.95
+            24231.3,
+            24176.15,
+            23689.6,
+            23643.5
           ]
         },
         {
@@ -349,19 +349,19 @@
           "sourceLabel": "NSE India",
           "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
           "unitLabel": "price",
-          "asOf": "2026-04-24",
-          "latestValue": 56089.75,
-          "previousClose": 56305,
+          "asOf": "2026-05-15",
+          "latestValue": 53710.35,
+          "previousClose": 54128.95,
           "changes": {
-            "dayPct": -0.38,
-            "weekPct": -0.84,
-            "monthPct": 6.62
+            "dayPct": -0.77,
+            "weekPct": -2.89,
+            "monthPct": -4.6
           },
           "sparkline": [
-            52605.65,
-            56565.7,
-            56305,
-            56089.75
+            56301.95,
+            55310.55,
+            54128.95,
+            53710.35
           ]
         },
         {
@@ -372,19 +372,19 @@
           "sourceLabel": "NSE India",
           "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
           "unitLabel": "price",
-          "asOf": "2026-04-24",
-          "latestValue": 28530.6,
-          "previousClose": 30124.3,
+          "asOf": "2026-05-15",
+          "latestValue": 27716.9,
+          "previousClose": 27360.35,
           "changes": {
-            "dayPct": -5.29,
-            "weekPct": -10.31,
-            "monthPct": -3.77
+            "dayPct": 1.3,
+            "weekPct": -5.71,
+            "monthPct": -12.12
           },
           "sparkline": [
-            29648.9,
-            31809.85,
-            30124.3,
-            28530.6
+            31539.75,
+            29394.2,
+            27360.35,
+            27716.9
           ]
         }
       ]
@@ -402,35 +402,35 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/DCOILWTICO",
           "unitLabel": "USD/bbl",
-          "asOf": "2026-04-20",
-          "latestValue": 91.06,
-          "previousClose": 85.91,
+          "asOf": "2026-05-11",
+          "latestValue": 101.56,
+          "previousClose": 98.87,
           "changes": {
-            "dayPct": 5.99,
-            "weekPct": -9.59,
-            "monthPct": -7.75
+            "dayPct": 2.72,
+            "weekPct": -7.47,
+            "monthPct": 3.27
           },
           "sparkline": [
-            93.18,
-            91.51,
-            96.18,
-            101.26,
-            104.69,
-            102.86,
-            101.9,
-            113.23,
-            0,
-            114.01,
-            114.58,
-            96.17,
-            99.62,
-            98.34,
-            100.72,
             93.07,
             93.04,
             96.46,
             85.91,
-            91.06
+            91.06,
+            93.64,
+            94.76,
+            99.27,
+            98.42,
+            99.89,
+            103.45,
+            110.47,
+            108.64,
+            105.38,
+            109.76,
+            105.66,
+            98.75,
+            98.38,
+            98.87,
+            101.56
           ]
         },
         {
@@ -441,35 +441,35 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/DCOILBRENTEU",
           "unitLabel": "USD/bbl",
-          "asOf": "2026-04-20",
-          "latestValue": 103.4,
-          "previousClose": 98.63,
+          "asOf": "2026-05-11",
+          "latestValue": 106.11,
+          "previousClose": 103.48,
           "changes": {
-            "dayPct": 4.84,
-            "weekPct": -16.13,
-            "monthPct": -12.68
+            "dayPct": 2.54,
+            "weekPct": null,
+            "monthPct": -10.88
           },
           "sparkline": [
-            108.42,
-            109.14,
-            113.39,
-            121.47,
-            121.88,
-            126.69,
-            119.56,
-            127.61,
-            0,
-            0,
-            138.21,
-            122.11,
-            119.03,
-            119.07,
-            123.28,
             118.69,
             114.93,
             116.63,
             98.63,
-            103.4
+            103.4,
+            106.14,
+            113.44,
+            113.25,
+            111.86,
+            113.89,
+            117.62,
+            124.16,
+            124.24,
+            118.26,
+            0,
+            114.51,
+            103.7,
+            101.82,
+            103.48,
+            106.11
           ]
         },
         {
@@ -480,35 +480,35 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/DHHNGSP",
           "unitLabel": "USD/MMBtu",
-          "asOf": "2026-04-20",
-          "latestValue": 2.81,
-          "previousClose": 2.71,
+          "asOf": "2026-05-11",
+          "latestValue": 2.82,
+          "previousClose": 2.75,
           "changes": {
-            "dayPct": 3.69,
-            "weekPct": 0.72,
-            "monthPct": -7.57
+            "dayPct": 2.55,
+            "weekPct": 5.62,
+            "monthPct": 6.82
           },
           "sparkline": [
-            2.9,
-            2.94,
-            2.99,
-            2.99,
-            2.88,
-            2.88,
-            2.99,
-            2.86,
-            0,
-            3.04,
-            3.01,
-            2.78,
-            2.78,
-            2.64,
-            2.79,
             2.79,
             2.78,
             2.78,
             2.71,
-            2.81
+            2.81,
+            2.76,
+            2.75,
+            2.65,
+            2.54,
+            2.72,
+            2.7,
+            2.6,
+            2.64,
+            2.63,
+            2.67,
+            2.83,
+            2.75,
+            2.7,
+            2.75,
+            2.82
           ]
         },
         {
@@ -519,35 +519,35 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/VIXCLS",
           "unitLabel": "index",
-          "asOf": "2026-04-23",
-          "latestValue": 19.31,
-          "previousClose": 18.92,
+          "asOf": "2026-05-14",
+          "latestValue": 17.26,
+          "previousClose": 17.87,
           "changes": {
-            "dayPct": 2.06,
-            "weekPct": 7.64,
-            "monthPct": -28.35
+            "dayPct": -3.41,
+            "weekPct": 1.05,
+            "monthPct": -5.99
           },
           "sparkline": [
-            31.05,
-            30.61,
-            25.25,
-            24.54,
-            23.87,
-            0,
-            24.17,
-            25.78,
-            21.04,
-            19.49,
-            19.23,
-            19.12,
-            18.36,
-            18.17,
-            17.94,
             17.48,
             18.87,
             19.5,
             18.92,
-            19.31
+            19.31,
+            18.71,
+            18.02,
+            17.83,
+            18.81,
+            16.89,
+            16.99,
+            18.29,
+            17.38,
+            17.39,
+            17.08,
+            17.19,
+            18.38,
+            17.99,
+            17.87,
+            17.26
           ]
         }
       ]
@@ -596,8 +596,8 @@
             18.31
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -639,8 +639,8 @@
             55.43
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -682,8 +682,8 @@
             70.74
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -725,8 +725,8 @@
             192.85
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -768,8 +768,8 @@
             40.97
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         }
       ]
@@ -818,8 +818,8 @@
             394.59
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -861,8 +861,8 @@
             175.2
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -904,8 +904,8 @@
             205.37
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -947,8 +947,8 @@
             318.29
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -990,8 +990,8 @@
             343.25
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -1033,8 +1033,8 @@
             1399.42
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         },
         {
@@ -1076,8 +1076,8 @@
             134.96
           ],
           "fallback": {
-            "snapshotKey": "2026-04-26",
-            "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
           }
         }
       ]
@@ -1123,8 +1123,8 @@
         251.64
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     },
     {
@@ -1166,8 +1166,8 @@
         372.74
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     },
     {
@@ -1209,8 +1209,8 @@
         207.24
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     },
     {
@@ -1252,8 +1252,8 @@
         290.44
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     },
     {
@@ -1295,8 +1295,8 @@
         592.92
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     },
     {
@@ -1338,8 +1338,8 @@
         175.2
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     },
     {
@@ -1381,8 +1381,8 @@
         383.03
       ],
       "fallback": {
-        "snapshotKey": "2026-04-26",
-        "snapshotGeneratedAt": "2026-04-26T06:30:37.725Z"
+        "snapshotKey": "2026-05-16",
+        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
       }
     }
   ],

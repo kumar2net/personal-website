@@ -6,8 +6,8 @@ const createContactNumber = (label, display, tel) => ({
   tel,
 });
 
-const compiledOn = "2026-03-18";
-const verifiedBy = "Kumar (web research)";
+const compiledOn = "2026-05-16";
+const verifiedBy = "Kumar (public web refresh)";
 const publicDirectoryVerification = {
   verifiedAt: compiledOn,
   verifiedBy,
@@ -35,7 +35,7 @@ export const ananyasLocalGuide = {
     "Ananyas Nana Nani Homes Phase 7, Thondamuthur, Dhaliyur Road, Coimbatore 641109",
   ),
   notes: [
-    "This is a starter list compiled from public web sources on March 18, 2026.",
+    "This is a starter list refreshed from public web sources on May 16, 2026.",
     "Hours, delivery coverage, and phone numbers can change; call before depending on any listing.",
     "The page intentionally anchors to the Phase 7 campus and area, not to any specific flat number.",
   ],
@@ -168,9 +168,9 @@ export const ananyasLocalGuide = {
           area: "Vadavalli",
           address:
             "No 9, ESR Arcade Building, Ground Floor, Near Chinmaya School, Thondamuthur Road, Vadavalli, Coimbatore 641041",
-          hours: "Check current timings before going",
+          hours: "Current Justdial listing says 6:00 am - 10:00 pm",
           note:
-            "Useful backup for vegetables, milk, bread, and monthly staples if a family member is doing a larger run.",
+            "Useful backup for vegetables, milk, bread, and monthly staples if a family member is doing a larger run. The current public listing still presents it as a broad grocery and supermarket stop on the Vadavalli approach road.",
           contactNumbers: [
             createContactNumber("Mobile", "95859 13131", "9585913131"),
             createContactNumber("Landline", "0422-2425662", "04222425662"),
@@ -279,13 +279,13 @@ export const ananyasLocalGuide = {
           address: "Door No 6/8, Mathampatti Road, Thondamuthur, Coimbatore 641109",
           hours: "Check the branch directly for live timing",
           note:
-            "Listed on the official Coimbatore branches page, useful as a second nearby medicine option.",
+            "Listed on the current official branches page, useful as a second nearby medicine option.",
           contactNumbers: [
             createContactNumber("Mobile", "99439 71000", "9943971000"),
             createContactNumber("Landline", "0422-2617800", "04222617800"),
           ],
-          sourceLabel: "Official branch page",
-          sourceUrl: "https://thulasipharmacy.com/coimbatore-branches.php",
+          sourceLabel: "Official branches page",
+          sourceUrl: "https://thulasipharmacy.com/branches/",
           mapUrl: createMapsSearchUrl(
             "Thulasi Pharmacy, 6/8 Mathampatti Road, Thondamuthur, Coimbatore 641109",
           ),
@@ -297,7 +297,7 @@ export const ananyasLocalGuide = {
           area: "Vadavalli approach",
           address:
             "Vadavalli Thondamuthur Road, Lakshmi Nagar, Vadavalli, Coimbatore 641007",
-          hours: "Check the live store page before ordering",
+          hours: "Official store page currently shows 9:00 am - 11:00 pm",
           note:
             "Not the closest walk-in option, but the official Apollo page makes it a good backup for online ordering and medicine delivery.",
           contactNumbers: [
@@ -305,7 +305,7 @@ export const ananyasLocalGuide = {
           ],
           sourceLabel: "Official store page",
           sourceUrl:
-            "https://www.apollopharmacy.in/medical-stores/coimbatore/thondamuthur-18055",
+            "https://www.apollopharmacy.in/medical-stores/apollo-pharmacy-apollo_pharmacy_thondamuthur-coimbatore-18055",
           mapUrl: createMapsSearchUrl(
             "Apollo Pharmacy, Vadavalli Thondamuthur Road, Lakshmi Nagar, Vadavalli, Coimbatore 641007",
           ),

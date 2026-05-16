@@ -2,11 +2,11 @@
   "playlistId": "PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH",
   "playlistShareId": "WfNRuoFY0s0sW-84",
   "sourceUrl": "https://music.youtube.com/playlist?list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH&si=WfNRuoFY0s0sW-84",
-  "trackCount": 25,
+  "trackCount": 26,
   "tracks": [
     {
       "title": "AMBADI KANNAN | K S CHITHRA | T S RADHAKRISHNAJI | SUDHAKARAN MENON",
-      "artists": "K.S. Chithra",
+      "artists": "Chitra",
       "videoId": "W2B8B4ZL6X0",
       "url": "https://music.youtube.com/watch?v=W2B8B4ZL6X0&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
     },
@@ -83,7 +83,7 @@
       "url": "https://music.youtube.com/watch?v=hosbQVvlais&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
     },
     {
-      "title": "Agam - Ashutosh Shashank Shekhar | Shiv Stuti at Kashi - Banaras - Varanasi | Maha Shiv Ratri 2026",
+      "title": "Ashutosh Shashank Shekhar",
       "artists": "Agam Aggarwal",
       "videoId": "nVx-6ICOEf0",
       "url": "https://music.youtube.com/watch?v=nVx-6ICOEf0&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
@@ -143,8 +143,8 @@
       "url": "https://music.youtube.com/watch?v=cBQTSS7Uxd4&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
     },
     {
-      "title": "Prem Ki Leela | Krishnavataram | Shreya Ghoshal, Javed Ali, Irshad Kamil, Prasad S.",
-      "artists": "Saregama Music",
+      "title": "Prem Ki Leela",
+      "artists": "Shreya Ghoshal, Javed Ali & Suvarna Tiwari",
       "videoId": "lAsJ_rCgbZE",
       "url": "https://music.youtube.com/watch?v=lAsJ_rCgbZE&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
     },
@@ -153,6 +153,12 @@
       "artists": "Urupaanar",
       "videoId": "oT1-aeT1NDk",
       "url": "https://music.youtube.com/watch?v=oT1-aeT1NDk&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
+    },
+    {
+      "title": "SRI RUDRAM (NAMAKAM) | Perfect Pronunciation & Swaras | Yajur Veda | K Suresh",
+      "artists": "The Ghanapati",
+      "videoId": "PbGBn14Q-TU",
+      "url": "https://music.youtube.com/watch?v=PbGBn14Q-TU&list=PLUTFXCgXawk_wv0Wo8XoNPdI-SxqTfQSH"
     }
   ]
 }

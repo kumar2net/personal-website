@@ -51,134 +51,134 @@ function revealUpSx(delay = 0, duration = 0.45) {
   };
 }
 
-const editionLabel = "Week Mode · April 29-May 3, 2026";
+const editionLabel = "Weekend Workbench · May 16, 2026";
 
 const moodSwatches = [
   {
-    name: "Scan Teal",
-    hex: "#1f9d8a",
-    meaning: "Medical clarity, reports, and patient notes set the week in motion.",
+    name: "Agent Blue",
+    hex: "#2563eb",
+    meaning: "The lead signal is practical agent work: Markdown files, skills, and reusable instructions.",
   },
   {
-    name: "Ledger Indigo",
-    hex: "#5167c7",
-    meaning: "Markets, bills, and public costs still need calm accounting.",
+    name: "Terminal Cyan",
+    hex: "#0891b2",
+    meaning: "Tools, routes, and data stay close to the surface without becoming theatre.",
   },
   {
-    name: "Care Coral",
-    hex: "#d86f57",
-    meaning: "The human body, medicine stack, and family routines stay first.",
+    name: "Care Green",
+    hex: "#16a34a",
+    meaning: "Health explainers and medicine notes keep the human scale visible.",
   },
   {
-    name: "Rainlit Gold",
-    hex: "#d6a744",
-    meaning: "Music, Tamil notes, and small rituals keep the week from becoming only admin.",
+    name: "Notebook Rose",
+    hex: "#e11d48",
+    meaning: "Writing, music, and personal notes keep the technical desk from going sterile.",
   },
 ];
 
 const moodTags = [
-  "April 29-May 3",
-  "Scan clarity",
-  "Ledger mode",
-  "Care routines",
+  "May 16",
+  "Agent notes",
+  "Markdown control",
+  "Care notes",
   "Music reset",
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Scan room",
-    title: "The body deserves a plain-English map",
+    eyebrow: "Agent desk",
+    title: "Markdown is the control surface this weekend",
     summary:
-      "A positron emission tomography (PET)-computed tomography (CT) scan is not magic and not a mystery box. This week starts by translating the machine, tracer, table movement, and report into ordinary language.",
-    source: "Week checkpoint: April 29, 2026",
-    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
-    analyticsKey: "home_weekly_pet_ct_clarity",
-    accent: "#1f9d8a",
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the scan note",
+      "The newest note compares Claude Code and Codex through the files that actually matter: AGENTS.md, CLAUDE.md, skills, subagents, commands, MCP, and plugins.",
+    source: "Weekend checkpoint: May 16, 2026",
+    to: "/blog/2026-05-15-claude-vs-codex-markdown-files",
+    analyticsKey: "home_latest_agent_markdown",
+    accent: "#2563eb",
+    icon: MenuBookRoundedIcon,
+    cta: "Read the agent note",
   },
   {
-    eyebrow: "Reality check",
-    title: "The dashboard matters only if it changes a decision",
+    eyebrow: "Signal check",
+    title: "Keep the data useful, not compulsive",
     summary:
-      "Use the numbers as a weekly sanity check: crude, indices, volatility, and a few cross-currents. Enough signal to stay oriented, not enough noise to hijack the day.",
-    source: "Week checkpoint: April 29, 2026",
+      "Key Data remains the quick orientation layer: enough market and macro signal to stay awake, not enough noise to hijack the weekend.",
+    source: "Weekend checkpoint: May 16, 2026",
     to: "/keydata",
-    analyticsKey: "home_weekly_growth_shadow",
-    accent: "#5167c7",
+    analyticsKey: "home_latest_keydata_pulse",
+    accent: "#0891b2",
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
   {
-    eyebrow: "Cost memory",
-    title: "Big conflicts should still be counted calmly",
+    eyebrow: "Care stack",
+    title: "Health notes still need plain language",
     summary:
-      "Reconstruction bills, canal losses, freight shocks, public borrowing, and taxpayer costs need a ledger before they become slogans.",
-    source: "Week checkpoint: April 29, 2026",
-    to: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
-    analyticsKey: "home_weekly_institution_strain",
-    accent: "#d6a744",
-    icon: QueryStatsRoundedIcon,
-    cta: "Open the cost ledger",
+      "The PET-CT and drug-combination posts keep the medical parts readable: what happened, what the report means, and what questions are worth asking.",
+    source: "Weekend checkpoint: May 16, 2026",
+    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+    analyticsKey: "home_latest_health_clarity",
+    accent: "#16a34a",
+    icon: HealthAndSafetyRoundedIcon,
+    cta: "Read the scan note",
   },
   {
-    eyebrow: "Care stack",
-    title: "The most practical system is still the body at home",
+    eyebrow: "Personal reset",
+    title: "Music keeps the workbench human",
     summary:
-      "After markets and maps, the week comes back to sleep, food, medicine, movement, and the real combinations people actually live with.",
-    source: "Week checkpoint: April 29, 2026",
-    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
-    analyticsKey: "home_weekly_human_scale",
-    accent: "#d86f57",
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Check the drug stack",
+      "Tamil song notes, recent spins, and the small ritual of listening belong beside the technical notes. The weekend desk needs both.",
+    source: "Weekend checkpoint: May 16, 2026",
+    to: "/music",
+    analyticsKey: "home_latest_music_reset",
+    accent: "#e11d48",
+    icon: MusicNoteRoundedIcon,
+    cta: "Open music",
   },
 ];
 
 const siteVectors = [
   {
-    eyebrow: "Body",
-    title: "Start with the scan note",
+    eyebrow: "Agents",
+    title: "Start with the Markdown map",
     summary:
-      "The PET-CT explainer turns a clinical morning into a clear map of tracer, CT anatomy, PET signal, report language, and what the machine is actually doing.",
-    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
-    analyticsKey: "home_vector_pet_ct_scan",
-    accent: "#1f9d8a",
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the scan note",
+      "The Claude-vs-Codex note turns customization into a file map: project memory, skills, subagents, commands, tools, and what belongs in scripts.",
+    to: "/blog/2026-05-15-claude-vs-codex-markdown-files",
+    analyticsKey: "home_vector_agent_markdown",
+    accent: "#2563eb",
+    icon: MenuBookRoundedIcon,
+    cta: "Read the agent note",
   },
   {
     eyebrow: "Pulse",
-    title: "Then take a five-minute data pulse",
+    title: "Then check the outside signal",
     summary:
-      "Crude, indices, volatility, and a few metrics are enough. The week job is orientation, not compulsive watching.",
+      "Key Data is still the compact pulse check: crude, markets, volatility, and a few numbers that are useful enough.",
     to: "/keydata",
     analyticsKey: "home_vector_keydata",
-    accent: "#5167c7",
+    accent: "#0891b2",
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
   {
-    eyebrow: "Memory",
-    title: "Then keep a cost ledger for noisy events",
+    eyebrow: "Care",
+    title: "Then keep the body notes readable",
     summary:
-      "A calmer accounting of escalation: reconstruction bills, lost canal revenue, freight-rate shocks, borrowing, and taxpayer costs.",
-    to: "/blog/2026-04-10-middle-east-fiasco-cost-scorecard",
-    analyticsKey: "home_vector_middle_east_costs",
-    accent: "#d6a744",
-    icon: MenuBookRoundedIcon,
-    cta: "Open the scorecard",
+      "PET-CT, drug combinations, reports, and family health questions all deserve language that a patient can actually use.",
+    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+    analyticsKey: "home_vector_health_notes",
+    accent: "#16a34a",
+    icon: HealthAndSafetyRoundedIcon,
+    cta: "Read the scan note",
   },
   {
-    eyebrow: "Care",
-    title: "Then bring it back to care at home",
+    eyebrow: "Music",
+    title: "Then leave room for the reset",
     summary:
-      "The April 11 note turns safety into a weekly checklist: not whether each pill passed alone, but whether the real combination was checked.",
-    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
-    analyticsKey: "home_vector_drug_stack",
-    accent: "#d86f57",
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the safety note",
+      "The Music page is the non-dashboard part of the site: song notes, Tamil typing, and the small reset that keeps the desk human.",
+    to: "/music",
+    analyticsKey: "home_vector_music_reset",
+    accent: "#e11d48",
+    icon: MusicNoteRoundedIcon,
+    cta: "Open music",
   },
 ];
 
@@ -220,21 +220,21 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       sx={{
         ...revealUpSx(),
         "--home-surface": isDarkMode
-          ? "rgba(19, 18, 24, 0.9)"
-          : "rgba(247, 251, 248, 0.94)",
+          ? "rgba(8, 13, 26, 0.92)"
+          : "rgba(248, 250, 252, 0.96)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(24, 27, 35, 0.95)"
-          : "rgba(240, 248, 245, 0.98)",
+          ? "rgba(13, 21, 37, 0.96)"
+          : "rgba(241, 245, 249, 0.98)",
         "--home-border": isDarkMode
-          ? "rgba(156, 206, 197, 0.2)"
-          : "rgba(47, 111, 103, 0.18)",
+          ? "rgba(147, 197, 253, 0.2)"
+          : "rgba(37, 99, 235, 0.16)",
         "--home-muted-text": isDarkMode
-          ? "rgba(226, 238, 236, 0.76)"
-          : "rgba(33, 63, 58, 0.78)",
-        "--home-ink": isDarkMode ? "#f5fffc" : "#102622",
+          ? "rgba(226, 232, 240, 0.76)"
+          : "rgba(51, 65, 85, 0.82)",
+        "--home-ink": isDarkMode ? "#f8fafc" : "#0f172a",
         "--home-shadow": isDarkMode
           ? "0 30px 90px rgba(7, 7, 10, 0.42)"
-          : "0 26px 64px rgba(31, 101, 92, 0.14)",
+          : "0 26px 64px rgba(15, 23, 42, 0.12)",
         display: "flex",
         flexDirection: "column",
         gap: { xs: 3, md: 4 },
@@ -245,7 +245,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Week mode for April 29-May 3, 2026: scan clarity, practical health checks, household ledgers, global signals, music, and grounded reflection."
+        description="Weekend workbench for May 16, 2026: agent Markdown files, key data, health explainers, music notes, learning routes, and grounded reflection."
         canonicalPath="/"
         image="/media/blogwordcloud.png"
         type="website"
@@ -263,15 +263,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "radial-gradient(circle at 14% 14%, rgba(31, 157, 138, 0.3), transparent 22%), radial-gradient(circle at 83% 18%, rgba(81, 103, 199, 0.2), transparent 22%), radial-gradient(circle at 74% 84%, rgba(216, 111, 87, 0.18), transparent 24%), linear-gradient(150deg, rgba(13, 22, 25, 0.98), rgba(24, 28, 41, 0.97) 48%, rgba(28, 38, 32, 0.96))"
-                : "radial-gradient(circle at 14% 14%, rgba(31, 157, 138, 0.2), transparent 22%), radial-gradient(circle at 83% 18%, rgba(81, 103, 199, 0.15), transparent 22%), radial-gradient(circle at 74% 84%, rgba(216, 111, 87, 0.13), transparent 24%), linear-gradient(150deg, rgba(247, 251, 248, 0.98), rgba(235, 246, 243, 0.98) 48%, rgba(248, 242, 229, 0.96))",
+                ? "radial-gradient(circle at 14% 14%, rgba(37, 99, 235, 0.34), transparent 23%), radial-gradient(circle at 84% 18%, rgba(8, 145, 178, 0.24), transparent 22%), radial-gradient(circle at 74% 84%, rgba(225, 29, 72, 0.18), transparent 24%), linear-gradient(150deg, rgba(6, 12, 25, 0.98), rgba(15, 23, 42, 0.98) 50%, rgba(20, 16, 33, 0.96))"
+                : "radial-gradient(circle at 14% 14%, rgba(37, 99, 235, 0.16), transparent 23%), radial-gradient(circle at 84% 18%, rgba(8, 145, 178, 0.14), transparent 22%), radial-gradient(circle at 74% 84%, rgba(225, 29, 72, 0.1), transparent 24%), linear-gradient(150deg, rgba(248, 250, 252, 0.99), rgba(239, 246, 255, 0.98) 50%, rgba(253, 242, 248, 0.94))",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(31, 157, 138, 0.08) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(81, 103, 199, 0.05) 0 1px, transparent 1px 26px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(37, 99, 235, 0.07) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(8, 145, 178, 0.05) 0 1px, transparent 1px 26px)",
                 backgroundSize: "100% 100%, 100% 100%, 100% 100%",
                 opacity: isDarkMode ? 0.22 : 0.1,
                 pointerEvents: "none",
@@ -307,7 +307,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Refreshed {todayLabel} • week checkpoint
+                  Refreshed {todayLabel} • weekend checkpoint
                 </Typography>
               </Stack>
 
@@ -324,7 +324,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Week mode is scan-aware and practical.
+                  Weekend workbench: Markdown, signal, music.
                 </Typography>
                 <Typography
                   variant="body1"
@@ -335,12 +335,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     lineHeight: 1.72,
                   }}
                 >
-                  As of Wednesday, April 29, 2026, the homepage mood is clear,
-                  watchful, and deliberately practical. A medical scan, a few
-                  market signals, household costs, medicine routines, Tamil
-                  music notes, and the outside world all sit on the same table.
-                  The site lens stays simple: explain what matters, lower the
-                  noise, and keep the human stack visible.
+                  As of Saturday, May 16, 2026, the homepage is tuned to the
+                  latest site mood: agent customization in plain Markdown, a
+                  quick data pulse, health explainers that stay readable, and
+                  music close enough to reset the desk. The lens stays simple:
+                  explain what matters, lower the noise, and keep the human
+                  stack visible.
                 </Typography>
               </Stack>
 
@@ -374,11 +374,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-04-29-pet-ct-scan-experience-explained"
+                  to="/blog/2026-05-15-claude-vs-codex-markdown-files"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_pet_ct_scan_cta")}
+                  onClick={() => trackClick("home_hero_agent_markdown_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -388,23 +388,23 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     boxShadow: "none",
                     color: "var(--variant-containedColor)",
                     background:
-                      "linear-gradient(135deg, #1f9d8a 0%, #d6a744 48%, #5167c7 100%)",
+                      "linear-gradient(135deg, #93c5fd 0%, #67e8f9 52%, #fb7185 100%)",
                     "&:hover": {
                       boxShadow: "none",
                       color: "var(--variant-containedColor)",
                       background:
-                        "linear-gradient(135deg, #188a79 0%, #c59636 48%, #4458b5 100%)",
+                        "linear-gradient(135deg, #60a5fa 0%, #22d3ee 52%, #e11d48 100%)",
                     },
                   }}
                 >
-                  Start with the scan note
+                  Read the agent Markdown map
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations"
+                  to="/keydata"
                   variant="outlined"
                   size="large"
-                  onClick={() => trackClick("home_hero_drug_stack_cta")}
+                  onClick={() => trackClick("home_hero_keydata_secondary_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
@@ -414,7 +414,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Check the human stack
+                  Open key data
                 </Button>
                 <Button
                   component={RouterLink}
@@ -442,8 +442,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: scan-aware, ledger-minded, health-conscious, and
-                    allergic to performative optimism.
+                    Mood: agent-aware, signal-first, health-conscious, and
+                    allergic to performative ceremony.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -451,8 +451,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Week use: read the report, do the ledger, check the body,
-                    keep the music nearby, and let the data stay useful.
+                    Weekend use: read the Markdown map, check the pulse, keep
+                    the music nearby, and let the data stay useful.
                   </Typography>
                 </Grid>
               </Grid>
@@ -483,7 +483,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Week Mood
+                  Weekend Mood
                 </Typography>
                 <Typography
                   variant="h5"
@@ -493,7 +493,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering the April 29-May 3 read
+                  The colors steering the May 16 workbench
                 </Typography>
               </Box>
 
@@ -549,10 +549,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to the April 29-May 3 week: scan
-                  clarity, home economics, care routines, music, and a
-                  manageable read of the outside world. Dates stay visible so
-                  the page reads like a moment, not a timeless brand voice.
+                  This frame is pinned to May 16: agent Markdown files, key
+                  data, health explainers, music, and a manageable read of the
+                  outside world. Dates stay visible so the page reads like a
+                  moment, not a timeless brand voice.
                 </Typography>
               </Box>
 
@@ -614,8 +614,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           borderRadius: 4,
           border: "1px solid var(--home-border)",
           backgroundImage: isDarkMode
-            ? "linear-gradient(135deg, rgba(216, 111, 87, 0.26), rgba(22, 27, 31, 0.94) 48%, rgba(31, 157, 138, 0.2))"
-            : "linear-gradient(135deg, rgba(216, 111, 87, 0.14), rgba(255, 255, 255, 0.96) 48%, rgba(31, 157, 138, 0.14))",
+            ? "linear-gradient(135deg, rgba(8, 145, 178, 0.24), rgba(15, 23, 42, 0.94) 48%, rgba(225, 29, 72, 0.16))"
+            : "linear-gradient(135deg, rgba(8, 145, 178, 0.12), rgba(255, 255, 255, 0.96) 48%, rgba(225, 29, 72, 0.1))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -744,7 +744,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-muted-text)",
                 }}
               >
-                Week Reality
+                Weekend Reality
               </Typography>
               <Typography
                 variant="h4"
@@ -754,16 +754,16 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-ink)",
                 }}
               >
-                What the week is really saying
+                What the latest workbench is really saying
               </Typography>
             </Stack>
             <Typography
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              Four practical signals, one late-April read. The page stays
-              anchored to April 29-May 3, 2026 instead of pretending this mood
-              is permanent.
+              Four practical signals, one weekend read. The page stays
+              anchored to May 16, 2026 instead of pretending this mood is
+              permanent.
             </Typography>
           </Stack>
 
@@ -922,7 +922,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Week Routes
+                  Weekend Routes
                 </Typography>
                 <Typography
                   variant="h4"
@@ -932,7 +932,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  How to use the site this week
+                  How to use the site this weekend
                 </Typography>
               </Box>
 
@@ -1130,8 +1130,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: alpha("#5167c7", 0.14),
-                            color: "#5167c7",
+                            backgroundColor: alpha("#2563eb", 0.14),
+                            color: "#2563eb",
                           }}
                         >
                           <TravelExploreRoundedIcon sx={{ fontSize: 20 }} />
@@ -1157,9 +1157,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                This week asks for fewer slogans and more checklists: reports,
-                bills, medicine, sleep, food, music, and one honest look at the
-                outside world.
+                This weekend asks for fewer slogans and more useful surfaces:
+                agent notes, data, health, learning, books, music, and one
+                honest look at the outside world.
               </Typography>
             </Stack>
           </Paper>
@@ -1177,7 +1177,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            Week Reading Stack
+            Weekend Reading Stack
           </Typography>
           <Typography
             variant="h4"
@@ -1187,7 +1187,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-ink)",
             }}
           >
-            Three posts for the current week-mode mood
+            Three posts for the latest workbench mood
           </Typography>
         </Stack>
 
