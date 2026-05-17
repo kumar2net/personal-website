@@ -87,15 +87,15 @@ const moodTags = [
 const worldPulse = [
   {
     eyebrow: "Agent desk",
-    title: "Markdown is the control surface this weekend",
+    title: "Prompt structure stays practical this weekend",
     summary:
-      "The newest note compares Claude Code and Codex through the files that actually matter: AGENTS.md, CLAUDE.md, skills, subagents, commands, MCP, and plugins.",
+      "The newest note keeps XML tags in proportion: useful when boundaries matter, but clear tasks, bullets, examples, and context do most of the work.",
     source: "Weekend checkpoint: May 16, 2026",
-    to: "/blog/2026-05-15-claude-vs-codex-markdown-files",
+    to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
     analyticsKey: "home_latest_agent_markdown",
     accent: "#2563eb",
     icon: MenuBookRoundedIcon,
-    cta: "Read the agent note",
+    cta: "Read the prompt note",
   },
   {
     eyebrow: "Signal check",
@@ -113,13 +113,13 @@ const worldPulse = [
     eyebrow: "Care stack",
     title: "Health notes still need plain language",
     summary:
-      "The PET-CT and drug-combination posts keep the medical parts readable: what happened, what the report means, and what questions are worth asking.",
+      "The drug-combination note keeps the medical parts readable: what is tested, what is not, and what questions are worth asking.",
     source: "Weekend checkpoint: May 16, 2026",
-    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_latest_health_clarity",
     accent: "#16a34a",
     icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the scan note",
+    cta: "Read the health note",
   },
   {
     eyebrow: "Personal reset",
@@ -138,14 +138,14 @@ const worldPulse = [
 const siteVectors = [
   {
     eyebrow: "Agents",
-    title: "Start with the Markdown map",
+    title: "Start with prompt structure",
     summary:
-      "The Claude-vs-Codex note turns customization into a file map: project memory, skills, subagents, commands, tools, and what belongs in scripts.",
-    to: "/blog/2026-05-15-claude-vs-codex-markdown-files",
+      "The XML-tags note keeps the useful part of prompt structure while avoiding ceremony where plain Markdown and clear English are enough.",
+    to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
     analyticsKey: "home_vector_agent_markdown",
     accent: "#2563eb",
     icon: MenuBookRoundedIcon,
-    cta: "Read the agent note",
+    cta: "Read the prompt note",
   },
   {
     eyebrow: "Pulse",
@@ -162,12 +162,12 @@ const siteVectors = [
     eyebrow: "Care",
     title: "Then keep the body notes readable",
     summary:
-      "PET-CT, drug combinations, reports, and family health questions all deserve language that a patient can actually use.",
-    to: "/blog/2026-04-29-pet-ct-scan-experience-explained",
+      "Drug combinations, clinical trials, reports, and family health questions all deserve language that a patient can actually use.",
+    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_vector_health_notes",
     accent: "#16a34a",
     icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the scan note",
+    cta: "Read the health note",
   },
   {
     eyebrow: "Music",
@@ -245,7 +245,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Weekend workbench for May 16, 2026: agent Markdown files, key data, health explainers, music notes, learning routes, and grounded reflection."
+        description="Weekend workbench for May 16, 2026: prompt structure notes, key data, health explainers, music notes, learning routes, and grounded reflection."
         canonicalPath="/"
         image="/media/blogwordcloud.png"
         type="website"
@@ -374,7 +374,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-05-15-claude-vs-codex-markdown-files"
+                  to="/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
@@ -397,7 +397,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     },
                   }}
                 >
-                  Read the agent Markdown map
+                  Read the prompt structure note
                 </Button>
                 <Button
                   component={RouterLink}
@@ -549,7 +549,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to May 16: agent Markdown files, key
+                  This frame is pinned to May 16: prompt structure notes, key
                   data, health explainers, music, and a manageable read of the
                   outside world. Dates stay visible so the page reads like a
                   moment, not a timeless brand voice.

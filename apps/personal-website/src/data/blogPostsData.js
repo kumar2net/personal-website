@@ -1,25 +1,5 @@
 export const blogPosts = [
   {
-    title: "Claude Code vs Codex: The Markdown Files That Matter",
-    date: "May 15, 2026",
-    lastModified: "May 15, 2026",
-    excerpt:
-      "Claude Code and Codex both use plain Markdown as the control surface for agent behavior, but they organize it differently. Here is where AGENTS.md, CLAUDE.md, skills, agents, projects, hooks, MCP, and plugins fit.",
-    tags: ["AI", "Claude Code", "Codex", "Markdown", "Agents", "Skills"],
-    image: "/media/blogwordcloud.png",
-    link: "/blog/2026-05-15-claude-vs-codex-markdown-files",
-  },
-  {
-    title: "Positron Emission Tomography (PET)-Computed Tomography (CT) Scan: What Happened Inside That Machine Yesterday Morning",
-    date: "April 29, 2026",
-    lastModified: "April 29, 2026",
-    excerpt:
-      "A patient-friendly explanation of positron emission tomography (PET)-computed tomography (CT) after a real scan: the tracer, why the table moved in stages, what the report shows, and how PET-CT compares with magnetic resonance imaging (MRI), electroencephalography (EEG), and ultrasound.",
-    tags: ["Health", "PET-CT", "Nuclear Medicine", "Imaging", "MRI", "EEG", "Ultrasound"],
-    image: "/generate/2026-04-29-pet-ct-machine.png",
-    link: "/blog/2026-04-29-pet-ct-scan-experience-explained",
-  },
-  {
     title: "Reply: XML Tags Are Useful, Not Magic",
     date: "April 26, 2026",
     lastModified: "April 26, 2026",
