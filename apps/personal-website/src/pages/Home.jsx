@@ -53,26 +53,38 @@ function revealUpSx(delay = 0, duration = 0.45) {
 
 const editionLabel = "Weekend Workbench · May 16, 2026";
 
+const homeAccents = {
+  prompt: "#0f766e",
+  signal: "#2563eb",
+  care: "#b45309",
+  music: "#be123c",
+  route: "#475569",
+};
+
 const moodSwatches = [
   {
-    name: "Agent Blue",
-    hex: "#2563eb",
-    meaning: "The lead signal is practical agent work: Markdown files, skills, and reusable instructions.",
+    name: "Prompt Teal",
+    hex: homeAccents.prompt,
+    meaning:
+      "Prompt structure and writing systems stay practical instead of ceremonial.",
   },
   {
-    name: "Terminal Cyan",
-    hex: "#0891b2",
-    meaning: "Tools, routes, and data stay close to the surface without becoming theatre.",
+    name: "Signal Blue",
+    hex: homeAccents.signal,
+    meaning:
+      "Tools, routes, and data stay close to the surface without becoming theatre.",
   },
   {
-    name: "Care Green",
-    hex: "#16a34a",
-    meaning: "Health explainers and medicine notes keep the human scale visible.",
+    name: "Care Amber",
+    hex: homeAccents.care,
+    meaning:
+      "Health explainers and medicine notes keep the human scale visible.",
   },
   {
-    name: "Notebook Rose",
-    hex: "#e11d48",
-    meaning: "Writing, music, and personal notes keep the technical desk from going sterile.",
+    name: "Music Rose",
+    hex: homeAccents.music,
+    meaning:
+      "Writing, music, and personal notes keep the technical desk from going sterile.",
   },
 ];
 
@@ -93,7 +105,7 @@ const worldPulse = [
     source: "Weekend checkpoint: May 16, 2026",
     to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
     analyticsKey: "home_latest_agent_markdown",
-    accent: "#2563eb",
+    accent: homeAccents.prompt,
     icon: MenuBookRoundedIcon,
     cta: "Read the prompt note",
   },
@@ -105,7 +117,7 @@ const worldPulse = [
     source: "Weekend checkpoint: May 16, 2026",
     to: "/keydata",
     analyticsKey: "home_latest_keydata_pulse",
-    accent: "#0891b2",
+    accent: homeAccents.signal,
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
@@ -117,7 +129,7 @@ const worldPulse = [
     source: "Weekend checkpoint: May 16, 2026",
     to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_latest_health_clarity",
-    accent: "#16a34a",
+    accent: homeAccents.care,
     icon: HealthAndSafetyRoundedIcon,
     cta: "Read the health note",
   },
@@ -129,7 +141,7 @@ const worldPulse = [
     source: "Weekend checkpoint: May 16, 2026",
     to: "/music",
     analyticsKey: "home_latest_music_reset",
-    accent: "#e11d48",
+    accent: homeAccents.music,
     icon: MusicNoteRoundedIcon,
     cta: "Open music",
   },
@@ -143,7 +155,7 @@ const siteVectors = [
       "The XML-tags note keeps the useful part of prompt structure while avoiding ceremony where plain Markdown and clear English are enough.",
     to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
     analyticsKey: "home_vector_agent_markdown",
-    accent: "#2563eb",
+    accent: homeAccents.prompt,
     icon: MenuBookRoundedIcon,
     cta: "Read the prompt note",
   },
@@ -154,7 +166,7 @@ const siteVectors = [
       "Key Data is still the compact pulse check: crude, markets, volatility, and a few numbers that are useful enough.",
     to: "/keydata",
     analyticsKey: "home_vector_keydata",
-    accent: "#0891b2",
+    accent: homeAccents.signal,
     icon: QueryStatsRoundedIcon,
     cta: "Open key data",
   },
@@ -165,7 +177,7 @@ const siteVectors = [
       "Drug combinations, clinical trials, reports, and family health questions all deserve language that a patient can actually use.",
     to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_vector_health_notes",
-    accent: "#16a34a",
+    accent: homeAccents.care,
     icon: HealthAndSafetyRoundedIcon,
     cta: "Read the health note",
   },
@@ -176,7 +188,7 @@ const siteVectors = [
       "The Music page is the non-dashboard part of the site: song notes, Tamil typing, and the small reset that keeps the desk human.",
     to: "/music",
     analyticsKey: "home_vector_music_reset",
-    accent: "#e11d48",
+    accent: homeAccents.music,
     icon: MusicNoteRoundedIcon,
     cta: "Open music",
   },
@@ -187,7 +199,11 @@ const quickLinks = [
   { label: "Blog", to: "/blog", analyticsKey: "home_quick_blog" },
   { label: "Learning", to: "/learning", analyticsKey: "home_quick_learning" },
   { label: "Album", to: "/album", analyticsKey: "home_quick_album" },
-  { label: "Elsewhere", to: "/elsewhere", analyticsKey: "home_quick_elsewhere" },
+  {
+    label: "Elsewhere",
+    to: "/elsewhere",
+    analyticsKey: "home_quick_elsewhere",
+  },
 ];
 
 const socialLinks = [
@@ -220,21 +236,23 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       sx={{
         ...revealUpSx(),
         "--home-surface": isDarkMode
-          ? "rgba(8, 13, 26, 0.92)"
-          : "rgba(248, 250, 252, 0.96)",
+          ? "rgba(13, 18, 28, 0.96)"
+          : "rgba(255, 255, 255, 0.98)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(13, 21, 37, 0.96)"
-          : "rgba(241, 245, 249, 0.98)",
+          ? "rgba(19, 27, 39, 0.96)"
+          : "rgba(247, 249, 250, 0.98)",
         "--home-border": isDarkMode
-          ? "rgba(147, 197, 253, 0.2)"
-          : "rgba(37, 99, 235, 0.16)",
+          ? "rgba(148, 163, 184, 0.28)"
+          : "rgba(100, 116, 139, 0.2)",
         "--home-muted-text": isDarkMode
-          ? "rgba(226, 232, 240, 0.76)"
-          : "rgba(51, 65, 85, 0.82)",
-        "--home-ink": isDarkMode ? "#f8fafc" : "#0f172a",
+          ? "rgba(226, 232, 240, 0.74)"
+          : "rgba(51, 65, 85, 0.84)",
+        "--home-ink": isDarkMode ? "#f8fafc" : "#111827",
+        "--home-accent": homeAccents.prompt,
+        "--home-accent-strong": isDarkMode ? "#5eead4" : homeAccents.prompt,
         "--home-shadow": isDarkMode
-          ? "0 30px 90px rgba(7, 7, 10, 0.42)"
-          : "0 26px 64px rgba(15, 23, 42, 0.12)",
+          ? "0 24px 70px rgba(0, 0, 0, 0.38)"
+          : "0 18px 48px rgba(15, 23, 42, 0.1)",
         display: "flex",
         flexDirection: "column",
         gap: { xs: 3, md: 4 },
@@ -259,21 +277,21 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               ...revealUpSx(0.05, 0.5),
               position: "relative",
               overflow: "hidden",
-              borderRadius: 5,
+              borderRadius: 2,
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "radial-gradient(circle at 14% 14%, rgba(37, 99, 235, 0.34), transparent 23%), radial-gradient(circle at 84% 18%, rgba(8, 145, 178, 0.24), transparent 22%), radial-gradient(circle at 74% 84%, rgba(225, 29, 72, 0.18), transparent 24%), linear-gradient(150deg, rgba(6, 12, 25, 0.98), rgba(15, 23, 42, 0.98) 50%, rgba(20, 16, 33, 0.96))"
-                : "radial-gradient(circle at 14% 14%, rgba(37, 99, 235, 0.16), transparent 23%), radial-gradient(circle at 84% 18%, rgba(8, 145, 178, 0.14), transparent 22%), radial-gradient(circle at 74% 84%, rgba(225, 29, 72, 0.1), transparent 24%), linear-gradient(150deg, rgba(248, 250, 252, 0.99), rgba(239, 246, 255, 0.98) 50%, rgba(253, 242, 248, 0.94))",
+                ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22) 0%, rgba(13, 18, 28, 0.98) 32%, rgba(30, 41, 59, 0.98) 68%, rgba(190, 18, 60, 0.16) 100%)"
+                : "linear-gradient(135deg, rgba(240, 253, 250, 0.98) 0%, rgba(255, 255, 255, 0.98) 38%, rgba(248, 250, 252, 0.98) 70%, rgba(255, 247, 237, 0.96) 100%)",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(37, 99, 235, 0.07) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(8, 145, 178, 0.05) 0 1px, transparent 1px 26px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.08) 0 1px, transparent 1px 28px), repeating-linear-gradient(90deg, rgba(180, 83, 9, 0.06) 0 1px, transparent 1px 28px)",
                 backgroundSize: "100% 100%, 100% 100%, 100% 100%",
-                opacity: isDarkMode ? 0.22 : 0.1,
+                opacity: isDarkMode ? 0.22 : 0.16,
                 pointerEvents: "none",
               },
             }}
@@ -294,8 +312,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     letterSpacing: 0.35,
                     color: "var(--home-ink)",
                     backgroundColor: isDarkMode
-                      ? "rgba(255, 247, 237, 0.08)"
-                      : "rgba(255, 255, 255, 0.72)",
+                      ? "rgba(15, 118, 110, 0.2)"
+                      : "rgba(240, 253, 250, 0.84)",
                     backdropFilter: "blur(14px)",
                   }}
                 />
@@ -344,12 +362,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 </Typography>
               </Stack>
 
-              <Stack
-                direction="row"
-                spacing={1}
-                useFlexGap
-                flexWrap="wrap"
-              >
+              <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
                 {moodTags.map((label) => (
                   <Chip
                     key={label}
@@ -360,8 +373,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       borderColor: "var(--home-border)",
                       color: "var(--home-ink)",
                       backgroundColor: isDarkMode
-                        ? "rgba(30, 27, 35, 0.66)"
-                        : "rgba(255, 255, 255, 0.76)",
+                        ? "rgba(15, 23, 42, 0.72)"
+                        : "rgba(255, 255, 255, 0.82)",
                     }}
                   />
                 ))}
@@ -388,12 +401,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     boxShadow: "none",
                     color: "var(--variant-containedColor)",
                     background:
-                      "linear-gradient(135deg, #93c5fd 0%, #67e8f9 52%, #fb7185 100%)",
+                      "linear-gradient(135deg, #99f6e4 0%, #fef3c7 58%, #fecdd3 100%)",
                     "&:hover": {
                       boxShadow: "none",
                       color: "var(--variant-containedColor)",
                       background:
-                        "linear-gradient(135deg, #60a5fa 0%, #22d3ee 52%, #e11d48 100%)",
+                        "linear-gradient(135deg, #5eead4 0%, #fde68a 58%, #fda4af 100%)",
                     },
                   }}
                 >
@@ -412,22 +425,6 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     fontWeight: 600,
                     color: "var(--home-ink)",
                     borderColor: "var(--home-border)",
-                  }}
-                >
-                  Open key data
-                </Button>
-                <Button
-                  component={RouterLink}
-                  to="/keydata"
-                  variant="text"
-                  size="large"
-                  onClick={() => trackClick("home_hero_keydata_cta")}
-                  sx={{
-                    borderRadius: 999,
-                    px: 2,
-                    textTransform: "none",
-                    fontWeight: 600,
-                    color: "var(--home-ink)",
                   }}
                 >
                   Open key data
@@ -466,7 +463,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
             sx={{
               height: "100%",
               p: { xs: 3, md: 3.5 },
-              borderRadius: 4,
+              borderRadius: 2,
               border: "1px solid var(--home-border)",
               backgroundColor: "var(--home-surface-muted)",
               boxShadow: "var(--home-shadow)",
@@ -508,7 +505,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     sx={{
                       width: 42,
                       height: 42,
-                      borderRadius: 2.5,
+                      borderRadius: 2,
                       flexShrink: 0,
                       border: "1px solid rgba(255, 255, 255, 0.14)",
                       backgroundColor: swatch.hex,
@@ -611,11 +608,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
         sx={{
           ...revealUpSx(0.12, 0.5),
           p: { xs: 3, md: 4 },
-          borderRadius: 4,
+          borderRadius: 2,
           border: "1px solid var(--home-border)",
           backgroundImage: isDarkMode
-            ? "linear-gradient(135deg, rgba(8, 145, 178, 0.24), rgba(15, 23, 42, 0.94) 48%, rgba(225, 29, 72, 0.16))"
-            : "linear-gradient(135deg, rgba(8, 145, 178, 0.12), rgba(255, 255, 255, 0.96) 48%, rgba(225, 29, 72, 0.1))",
+            ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22), rgba(15, 23, 42, 0.94) 48%, rgba(180, 83, 9, 0.18))"
+            : "linear-gradient(135deg, rgba(240, 253, 250, 0.98), rgba(255, 255, 255, 0.96) 48%, rgba(255, 247, 237, 0.98))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -635,8 +632,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 fontWeight: 700,
                 color: "var(--home-ink)",
                 backgroundColor: isDarkMode
-                  ? "rgba(255, 247, 237, 0.08)"
-                  : "rgba(255, 255, 255, 0.74)",
+                  ? "rgba(190, 18, 60, 0.18)"
+                  : "rgba(255, 241, 242, 0.86)",
               }}
             />
             <Typography
@@ -652,7 +649,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 color: "var(--home-ink)",
               }}
             >
-              பறை அடித்துட்டு பறை அடித்துட்டு... பறை அடித்திட்டு பறை அடித்திட்டு இறை அடித்திடியா
+              பறை அடித்துட்டு பறை அடித்துட்டு... பறை அடித்திட்டு பறை அடித்திட்டு
+              இறை அடித்திடியா
               <br />
               எவரும் ராவணனோ எவரும் ராவணனோ அவரும் பாடனும் அவரும் பாடனும்
             </Typography>
@@ -719,11 +717,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
         elevation={0}
         sx={{
           p: { xs: 3, md: 3.5 },
-          borderRadius: 4,
+          borderRadius: 2,
           border: "1px solid var(--home-border)",
           background: isDarkMode
-            ? "linear-gradient(135deg, rgba(27, 25, 33, 0.94), rgba(18, 17, 23, 0.98))"
-            : "linear-gradient(135deg, rgba(252, 250, 244, 0.98), rgba(246, 242, 234, 0.98))",
+            ? "linear-gradient(135deg, rgba(19, 27, 39, 0.98), rgba(13, 18, 28, 0.98))"
+            : "linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -761,9 +759,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              Four practical signals, one weekend read. The page stays
-              anchored to May 16, 2026 instead of pretending this mood is
-              permanent.
+              Four practical signals, one weekend read. The page stays anchored
+              to May 16, 2026 instead of pretending this mood is permanent.
             </Typography>
           </Stack>
 
@@ -780,7 +777,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     sx={(theme) => ({
                       ...revealUpSx(0.08 + index * 0.05, 0.35),
                       height: "100%",
-                      borderRadius: 3,
+                      borderRadius: 2,
                       border: "1px solid var(--home-border)",
                       backgroundColor: "var(--home-surface-muted)",
                       boxShadow: "none",
@@ -906,7 +903,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
             sx={{
               height: "100%",
               p: { xs: 3, md: 3.5 },
-              borderRadius: 4,
+              borderRadius: 2,
               border: "1px solid var(--home-border)",
               backgroundColor: "var(--home-surface)",
             }}
@@ -949,7 +946,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                         sx={(theme) => ({
                           ...revealUpSx(0.08 + index * 0.04, 0.35),
                           height: "100%",
-                          borderRadius: 3,
+                          borderRadius: 2,
                           border: "1px solid var(--home-border)",
                           backgroundColor: "var(--home-surface-muted)",
                           boxShadow: "none",
@@ -1058,7 +1055,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
             sx={{
               height: "100%",
               p: { xs: 3, md: 3.5 },
-              borderRadius: 4,
+              borderRadius: 2,
               border: "1px solid var(--home-border)",
               backgroundColor: "var(--home-surface-muted)",
             }}
@@ -1097,20 +1094,20 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     onClick={() => trackClick(link.analyticsKey)}
                     sx={{
                       p: 1.75,
-                      borderRadius: 3,
+                      borderRadius: 2,
                       border: "1px solid var(--home-border)",
                       textDecoration: "none",
                       color: "inherit",
                       backgroundColor: isDarkMode
-                        ? "rgba(31, 29, 38, 0.5)"
+                        ? "rgba(15, 23, 42, 0.58)"
                         : "rgba(255, 255, 255, 0.74)",
                       transition:
                         "transform 180ms ease, border-color 180ms ease, background-color 180ms ease",
                       "&:hover": {
                         transform: "translateX(4px)",
-                        borderColor: alpha("#64b5ff", 0.82),
+                        borderColor: alpha(homeAccents.prompt, 0.72),
                         backgroundColor: isDarkMode
-                          ? "rgba(31, 29, 38, 0.7)"
+                          ? "rgba(15, 23, 42, 0.76)"
                           : "rgba(255, 255, 255, 0.92)",
                       },
                     }}
@@ -1130,8 +1127,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: alpha("#2563eb", 0.14),
-                            color: "#2563eb",
+                            backgroundColor: alpha(homeAccents.route, 0.14),
+                            color: homeAccents.route,
                           }}
                         >
                           <TravelExploreRoundedIcon sx={{ fontSize: 20 }} />
@@ -1193,15 +1190,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
 
         <Grid container spacing={2}>
           {featuredPosts.map((post, index) => (
-            <Grid
-              key={post.slug}
-              size={{ xs: 12, md: index === 0 ? 6 : 3 }}
-            >
+            <Grid key={post.slug} size={{ xs: 12, md: index === 0 ? 6 : 3 }}>
               <Card
                 sx={(theme) => ({
                   ...revealUpSx(0.12 + index * 0.06, 0.38),
                   height: "100%",
-                  borderRadius: 4,
+                  borderRadius: 2,
                   overflow: "hidden",
                   border: "1px solid var(--home-border)",
                   backgroundColor: "var(--home-surface)",
@@ -1234,7 +1228,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                       decoding="async"
                       src={post.image || post.heroImage}
                       onError={(event) => {
-                        if (event.currentTarget.dataset.fallbackApplied === "1") {
+                        if (
+                          event.currentTarget.dataset.fallbackApplied === "1"
+                        ) {
                           return;
                         }
                         event.currentTarget.dataset.fallbackApplied = "1";
