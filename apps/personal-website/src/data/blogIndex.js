@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-06-06-reply-ai-public-good-sanjaay-babu": {
+    title: "Reply: AI Access Is Not Enough. Public AI Needs Citizens Too.",
+    description:
+      "A reply to Sanjaay Babu's essay on AI as an individual right versus a collective public good: public AI infrastructure matters, but basic access still matters because citizens must be able to use, test, and contest the systems built in their name.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Reply", "AI", "Public Goods", "Governance", "Digital Public Infrastructure"],
+    datePublished: "2026-06-06",
+    dateModified: "2026-06-06",
+    readingTime: "~4 min",
+  },
   "2026-04-26-reply-xml-tags-prompts-sanjaay-babu": {
     title: "Reply: XML Tags Are Useful, Not Magic",
     description:
