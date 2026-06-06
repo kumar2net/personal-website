@@ -14,6 +14,15 @@ import {
 import { useColorMode } from "../providers/ColorModeProvider";
 import musicPlaylistSnapshot from "../data/musicPlaylistSnapshot.json";
 
+const latestSpinBlurbs = {
+  "Madhiyin Mudhugil Performance Video | Thol - Urupaanar":
+    "A literary, percussive Tamil performance piece that resets the pace of the playlist without losing intensity.",
+  "Prem Ki Leela":
+    "Big-screen Hindi melody with enough sweep and lift to pull the mix back into a more theatrical lane.",
+  "Kasadathaparam | கசடதபறம் | Performance Video | From Urupaanar's Thol":
+    "The newest add. Sharp Tamil phrasing, stage energy, and rhythmic bite make it the current hook on repeat.",
+};
+
 const MusicPage = () => {
   const theme = useTheme();
   const { mode } = useColorMode();
@@ -289,6 +298,10 @@ const MusicPage = () => {
                       </Typography>
                       <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
                         {item.artists.split(" · ")[0]}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                        {latestSpinBlurbs[item.title] ??
+                          "One of the latest additions shaping the current tone of the playlist."}
                       </Typography>
                       <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1.5 }}>
                         {index === latestSpins.length - 1

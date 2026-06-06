@@ -17,9 +17,9 @@ import {
 
 const albums = [
   {
-    title: "Latest Album Drop",
+    title: "June 2026 Album Drop",
     description:
-      "A fresh set of everyday frames and warm highlights, including a Bharatanatyam dance bit and other interesting 2026 images.",
+      "A tighter June 2026 photo set with everyday frames, warmer light, and a Bharatanatyam moment anchoring the drop.",
     url: "https://photos.app.goo.gl/7LgrDCzrsR9n8NbL6",
     accent: "secondary",
   },

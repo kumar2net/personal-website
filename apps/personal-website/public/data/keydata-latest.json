@@ -1,19 +1,31 @@
 {
-  "generatedAt": "2026-05-16T11:36:54.924Z",
-  "status": "ok",
+  "generatedAt": "2026-06-06T11:36:47.294Z",
+  "status": "stale",
   "snapshot": {
-    "key": "2026-05-16",
-    "generatedAt": "2026-05-16T11:36:54.924Z",
-    "refreshAt": "2026-05-16T02:00:00.000Z",
-    "nextRefreshAt": "2026-05-17T02:00:00.000Z",
+    "key": "2026-06-06",
+    "generatedAt": "2026-06-06T11:36:47.294Z",
+    "refreshAt": "2026-06-06T02:00:00.000Z",
+    "nextRefreshAt": "2026-06-07T02:00:00.000Z",
     "cadenceLabel": "Refreshes once daily after 07:30 IST (02:00 UTC).",
-    "servedStale": false,
-    "staleItemCount": 22,
+    "servedStale": true,
+    "staleItemCount": 29,
     "recoveredSources": [
+      {
+        "source": "nse",
+        "sourceLabel": "NSE India",
+        "count": 3,
+        "snapshotKey": "2026-05-16"
+      },
       {
         "source": "stooq",
         "sourceLabel": "Stooq",
         "count": 22,
+        "snapshotKey": "2026-05-16"
+      },
+      {
+        "source": "fred",
+        "sourceLabel": "FRED",
+        "count": 4,
         "snapshotKey": "2026-05-16"
       }
     ]
@@ -179,7 +191,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -222,7 +234,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -265,7 +277,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         }
       ]
@@ -315,7 +327,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -339,7 +351,11 @@
             24176.15,
             23689.6,
             23643.5
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         },
         {
           "id": "nifty-bank",
@@ -362,7 +378,11 @@
             55310.55,
             54128.95,
             53710.35
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         },
         {
           "id": "nifty-it",
@@ -385,7 +405,11 @@
             29394.2,
             27360.35,
             27716.9
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         }
       ]
     },
@@ -431,7 +455,11 @@
             98.38,
             98.87,
             101.56
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         },
         {
           "id": "brent",
@@ -470,7 +498,11 @@
             101.82,
             103.48,
             106.11
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         },
         {
           "id": "henry-hub",
@@ -509,7 +541,11 @@
             2.7,
             2.75,
             2.82
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         },
         {
           "id": "vix",
@@ -548,7 +584,11 @@
             17.99,
             17.87,
             17.26
-          ]
+          ],
+          "fallback": {
+            "snapshotKey": "2026-05-16",
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+          }
         }
       ]
     },
@@ -597,7 +637,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -640,7 +680,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -683,7 +723,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -726,7 +766,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -769,7 +809,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         }
       ]
@@ -819,7 +859,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -862,7 +902,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -905,7 +945,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -948,7 +988,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -991,7 +1031,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -1034,7 +1074,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         },
         {
@@ -1077,7 +1117,7 @@
           ],
           "fallback": {
             "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
           }
         }
       ]
@@ -1124,7 +1164,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     },
     {
@@ -1167,7 +1207,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     },
     {
@@ -1210,7 +1250,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     },
     {
@@ -1253,7 +1293,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     },
     {
@@ -1296,7 +1336,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     },
     {
@@ -1339,7 +1379,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     },
     {
@@ -1382,7 +1422,7 @@
       ],
       "fallback": {
         "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:35:34.862Z"
+        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
       }
     }
   ],
