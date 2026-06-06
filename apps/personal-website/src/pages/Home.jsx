@@ -51,58 +51,130 @@ function revealUpSx(delay = 0, duration = 0.45) {
   };
 }
 
-const editionLabel = "Weekend Workbench · May 16, 2026";
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+});
+
+const dayThemePlans = [
+  {
+    edition: "Sunday Reset",
+    checkpoint: "Sunday checkpoint",
+    rhythm: "reset",
+    useLine: "read one note, queue one useful task, and keep the week humane",
+  },
+  {
+    edition: "Monday Launchpad",
+    checkpoint: "Monday checkpoint",
+    rhythm: "launch",
+    useLine: "pick the signal, clear one route, and start with less ceremony",
+  },
+  {
+    edition: "Tuesday Signal Desk",
+    checkpoint: "Tuesday checkpoint",
+    rhythm: "signal",
+    useLine: "check the data, sharpen one draft, and keep the work visible",
+  },
+  {
+    edition: "Wednesday Workbench",
+    checkpoint: "Wednesday checkpoint",
+    rhythm: "midweek",
+    useLine: "trim the noise, keep the useful links close, and finish the next pass",
+  },
+  {
+    edition: "Thursday Field Notes",
+    checkpoint: "Thursday checkpoint",
+    rhythm: "field-note",
+    useLine: "connect the notes, test the assumptions, and leave a cleaner trail",
+  },
+  {
+    edition: "Friday Closeout",
+    checkpoint: "Friday checkpoint",
+    rhythm: "closeout",
+    useLine: "close the loops, save the durable signal, and make room for the reset",
+  },
+  {
+    edition: "Saturday Workbench",
+    checkpoint: "Saturday checkpoint",
+    rhythm: "warm weekend",
+    paletteTone: "teal, marigold, rose, and quiet ink",
+    useLine:
+      "read the Markdown map, check the pulse, keep the music nearby, and let the weekend colors slow the desk down",
+  },
+];
+
+function getCurrentDayTheme(date = new Date()) {
+  const plan = dayThemePlans[date.getDay()] ?? dayThemePlans[6];
+  const dateLabel = dateFormatter.format(date);
+  const shortDateLabel = shortDateFormatter.format(date);
+
+  return {
+    ...plan,
+    dateLabel,
+    shortDateLabel,
+    editionLabel: `${plan.edition} · ${dateLabel}`,
+    sourceLabel: `${plan.checkpoint}: ${dateLabel}`,
+    heroTitle: `${plan.edition}: ${plan.paletteTone ?? "Markdown, signal, music"}.`,
+    seoDescription: `${plan.edition} for ${dateLabel}: a ${plan.rhythm} homepage palette with prompt structure notes, key data, health explainers, music notes, learning routes, and grounded reflection.`,
+    heroCopy: `As of ${dateLabel}, the homepage is tuned to a ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: agent customization in plain Markdown, a quick data pulse, health explainers that stay readable, and music close enough to reset the desk. The lens stays simple: explain what matters, lower the noise, and keep the human stack visible.`,
+    moodTags: [
+      shortDateLabel,
+      plan.rhythm,
+      "Teal + marigold",
+      "Care notes",
+      "Rose reset",
+    ],
+  };
+}
 
 const homeAccents = {
   prompt: "#0f766e",
-  signal: "#2563eb",
-  care: "#b45309",
+  signal: "#4f46e5",
+  care: "#d97706",
   music: "#be123c",
-  route: "#475569",
+  route: "#334155",
 };
 
 const moodSwatches = [
   {
-    name: "Prompt Teal",
+    name: "Workbench Teal",
     hex: homeAccents.prompt,
     meaning:
       "Prompt structure and writing systems stay practical instead of ceremonial.",
   },
   {
-    name: "Signal Blue",
+    name: "Signal Indigo",
     hex: homeAccents.signal,
     meaning:
       "Tools, routes, and data stay close to the surface without becoming theatre.",
   },
   {
-    name: "Care Amber",
+    name: "Care Marigold",
     hex: homeAccents.care,
     meaning:
       "Health explainers and medicine notes keep the human scale visible.",
   },
   {
-    name: "Music Rose",
+    name: "Reset Rose",
     hex: homeAccents.music,
     meaning:
       "Writing, music, and personal notes keep the technical desk from going sterile.",
   },
 ];
 
-const moodTags = [
-  "May 16",
-  "Agent notes",
-  "Markdown control",
-  "Care notes",
-  "Music reset",
-];
-
 const worldPulse = [
   {
     eyebrow: "Agent desk",
-    title: "Prompt structure stays practical this weekend",
+    title: "Prompt structure stays practical today",
     summary:
       "The newest note keeps XML tags in proportion: useful when boundaries matter, but clear tasks, bullets, examples, and context do most of the work.",
-    source: "Weekend checkpoint: May 16, 2026",
     to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
     analyticsKey: "home_latest_agent_markdown",
     accent: homeAccents.prompt,
@@ -113,8 +185,7 @@ const worldPulse = [
     eyebrow: "Signal check",
     title: "Keep the data useful, not compulsive",
     summary:
-      "Key Data remains the quick orientation layer: enough market and macro signal to stay awake, not enough noise to hijack the weekend.",
-    source: "Weekend checkpoint: May 16, 2026",
+      "Key Data remains the quick orientation layer: enough market and macro signal to stay awake, not enough noise to hijack the day.",
     to: "/keydata",
     analyticsKey: "home_latest_keydata_pulse",
     accent: homeAccents.signal,
@@ -126,7 +197,6 @@ const worldPulse = [
     title: "Health notes still need plain language",
     summary:
       "The drug-combination note keeps the medical parts readable: what is tested, what is not, and what questions are worth asking.",
-    source: "Weekend checkpoint: May 16, 2026",
     to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_latest_health_clarity",
     accent: homeAccents.care,
@@ -137,8 +207,7 @@ const worldPulse = [
     eyebrow: "Personal reset",
     title: "Music keeps the workbench human",
     summary:
-      "Tamil song notes, recent spins, and the small ritual of listening belong beside the technical notes. The weekend desk needs both.",
-    source: "Weekend checkpoint: May 16, 2026",
+      "Tamil song notes, recent spins, and the small ritual of listening belong beside the technical notes. The desk needs both.",
     to: "/music",
     analyticsKey: "home_latest_music_reset",
     accent: homeAccents.music,
@@ -225,34 +294,30 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
   const heroFont =
     '"Space Grotesk", "IBM Plex Sans", "Avenir Next", "Noto Sans", sans-serif';
   const featuredPosts = homeFeaturedPosts;
-  const todayLabel = new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date());
+  const dayTheme = getCurrentDayTheme();
 
   return (
     <Box
       sx={{
         ...revealUpSx(),
         "--home-surface": isDarkMode
-          ? "rgba(13, 18, 28, 0.96)"
-          : "rgba(255, 255, 255, 0.98)",
+          ? "rgba(16, 22, 32, 0.96)"
+          : "rgba(255, 252, 247, 0.98)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(19, 27, 39, 0.96)"
-          : "rgba(247, 249, 250, 0.98)",
+          ? "rgba(22, 30, 43, 0.96)"
+          : "rgba(250, 247, 241, 0.98)",
         "--home-border": isDarkMode
           ? "rgba(148, 163, 184, 0.28)"
-          : "rgba(100, 116, 139, 0.2)",
+          : "rgba(120, 113, 108, 0.24)",
         "--home-muted-text": isDarkMode
           ? "rgba(226, 232, 240, 0.74)"
-          : "rgba(51, 65, 85, 0.84)",
-        "--home-ink": isDarkMode ? "#f8fafc" : "#111827",
+          : "rgba(68, 64, 60, 0.86)",
+        "--home-ink": isDarkMode ? "#f8fafc" : "#1c1917",
         "--home-accent": homeAccents.prompt,
         "--home-accent-strong": isDarkMode ? "#5eead4" : homeAccents.prompt,
         "--home-shadow": isDarkMode
-          ? "0 24px 70px rgba(0, 0, 0, 0.38)"
-          : "0 18px 48px rgba(15, 23, 42, 0.1)",
+          ? "0 24px 70px rgba(0, 0, 0, 0.4)"
+          : "0 18px 48px rgba(41, 37, 36, 0.12)",
         display: "flex",
         flexDirection: "column",
         gap: { xs: 3, md: 4 },
@@ -263,7 +328,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     >
       <SEO
         title="Home"
-        description="Weekend workbench for May 16, 2026: prompt structure notes, key data, health explainers, music notes, learning routes, and grounded reflection."
+        description={dayTheme.seoDescription}
         canonicalPath="/"
         image="/media/blogwordcloud.png"
         type="website"
@@ -281,15 +346,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22) 0%, rgba(13, 18, 28, 0.98) 32%, rgba(30, 41, 59, 0.98) 68%, rgba(190, 18, 60, 0.16) 100%)"
-                : "linear-gradient(135deg, rgba(240, 253, 250, 0.98) 0%, rgba(255, 255, 255, 0.98) 38%, rgba(248, 250, 252, 0.98) 70%, rgba(255, 247, 237, 0.96) 100%)",
+                ? "linear-gradient(135deg, rgba(15, 118, 110, 0.24) 0%, rgba(16, 22, 32, 0.98) 34%, rgba(49, 46, 129, 0.32) 68%, rgba(190, 18, 60, 0.18) 100%)"
+                : "linear-gradient(135deg, rgba(240, 253, 250, 0.98) 0%, rgba(255, 251, 235, 0.98) 38%, rgba(250, 247, 241, 0.98) 70%, rgba(255, 241, 242, 0.96) 100%)",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 28%), repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.08) 0 1px, transparent 1px 28px), repeating-linear-gradient(90deg, rgba(180, 83, 9, 0.06) 0 1px, transparent 1px 28px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%), repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.08) 0 1px, transparent 1px 28px), repeating-linear-gradient(90deg, rgba(217, 119, 6, 0.07) 0 1px, transparent 1px 28px)",
                 backgroundSize: "100% 100%, 100% 100%, 100% 100%",
                 opacity: isDarkMode ? 0.22 : 0.16,
                 pointerEvents: "none",
@@ -305,7 +370,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Chip
                   icon={<TravelExploreRoundedIcon fontSize="small" />}
-                  label={editionLabel}
+                  label={dayTheme.editionLabel}
                   sx={{
                     borderRadius: 999,
                     fontWeight: 700,
@@ -325,7 +390,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Refreshed {todayLabel} • weekend checkpoint
+                  Refreshed {dayTheme.dateLabel} • {dayTheme.checkpoint}
                 </Typography>
               </Stack>
 
@@ -342,7 +407,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  Weekend workbench: Markdown, signal, music.
+                  {dayTheme.heroTitle}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -353,17 +418,12 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     lineHeight: 1.72,
                   }}
                 >
-                  As of Saturday, May 16, 2026, the homepage is tuned to the
-                  latest site mood: agent customization in plain Markdown, a
-                  quick data pulse, health explainers that stay readable, and
-                  music close enough to reset the desk. The lens stays simple:
-                  explain what matters, lower the noise, and keep the human
-                  stack visible.
+                  {dayTheme.heroCopy}
                 </Typography>
               </Stack>
 
               <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
-                {moodTags.map((label) => (
+                {dayTheme.moodTags.map((label) => (
                   <Chip
                     key={label}
                     label={label}
@@ -401,7 +461,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     boxShadow: "none",
                     color: "var(--variant-containedColor)",
                     background:
-                      "linear-gradient(135deg, #99f6e4 0%, #fef3c7 58%, #fecdd3 100%)",
+                      "linear-gradient(135deg, #99f6e4 0%, #fde68a 52%, #fecdd3 100%)",
                     "&:hover": {
                       boxShadow: "none",
                       color: "var(--variant-containedColor)",
@@ -448,8 +508,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Weekend use: read the Markdown map, check the pulse, keep
-                    the music nearby, and let the data stay useful.
+                    Today&apos;s use: {dayTheme.useLine}.
                   </Typography>
                 </Grid>
               </Grid>
@@ -480,7 +539,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Weekend Mood
+                  Today&apos;s Mood
                 </Typography>
                 <Typography
                   variant="h5"
@@ -490,7 +549,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  The colors steering the May 16 workbench
+                  The colors steering the {dayTheme.shortDateLabel} workbench
                 </Typography>
               </Box>
 
@@ -546,10 +605,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to May 16: prompt structure notes, key
-                  data, health explainers, music, and a manageable read of the
-                  outside world. Dates stay visible so the page reads like a
-                  moment, not a timeless brand voice.
+                  This frame is pinned to {dayTheme.dateLabel}: prompt
+                  structure notes, key data, health explainers, music, and a
+                  manageable read of the outside world. Dates stay visible so
+                  the page reads like a moment, not a timeless brand voice.
                 </Typography>
               </Box>
 
@@ -611,8 +670,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           borderRadius: 2,
           border: "1px solid var(--home-border)",
           backgroundImage: isDarkMode
-            ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22), rgba(15, 23, 42, 0.94) 48%, rgba(180, 83, 9, 0.18))"
-            : "linear-gradient(135deg, rgba(240, 253, 250, 0.98), rgba(255, 255, 255, 0.96) 48%, rgba(255, 247, 237, 0.98))",
+            ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22), rgba(16, 22, 32, 0.94) 48%, rgba(190, 18, 60, 0.2))"
+            : "linear-gradient(135deg, rgba(240, 253, 250, 0.98), rgba(255, 251, 235, 0.96) 48%, rgba(255, 241, 242, 0.98))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -742,7 +801,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-muted-text)",
                 }}
               >
-                Weekend Reality
+                Today&apos;s Reality
               </Typography>
               <Typography
                 variant="h4"
@@ -752,15 +811,16 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   color: "var(--home-ink)",
                 }}
               >
-                What the latest workbench is really saying
+                What the {dayTheme.rhythm} workbench is really saying
               </Typography>
             </Stack>
             <Typography
               variant="body2"
               sx={{ maxWidth: 520, color: "var(--home-muted-text)" }}
             >
-              Four practical signals, one weekend read. The page stays anchored
-              to May 16, 2026 instead of pretending this mood is permanent.
+              Four practical signals, one current-day read. The page stays
+              anchored to {dayTheme.dateLabel} instead of pretending this mood
+              is permanent.
             </Typography>
           </Stack>
 
@@ -864,7 +924,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                                 letterSpacing: 0.2,
                               }}
                             >
-                              {signal.source}
+                              {dayTheme.sourceLabel}
                             </Typography>
                             <Stack
                               direction="row"
@@ -919,7 +979,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-muted-text)",
                   }}
                 >
-                  Weekend Routes
+                  Today&apos;s Routes
                 </Typography>
                 <Typography
                   variant="h4"
@@ -929,7 +989,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                   }}
                 >
-                  How to use the site this weekend
+                  How to use the site today
                 </Typography>
               </Box>
 
@@ -1154,9 +1214,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 variant="body2"
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
-                This weekend asks for fewer slogans and more useful surfaces:
-                agent notes, data, health, learning, books, music, and one
-                honest look at the outside world.
+                Today asks for fewer slogans and more useful surfaces: agent
+                notes, data, health, learning, books, music, and one honest
+                look at the outside world.
               </Typography>
             </Stack>
           </Paper>
@@ -1174,7 +1234,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               color: "var(--home-muted-text)",
             }}
           >
-            Weekend Reading Stack
+            Today&apos;s Reading Stack
           </Typography>
           <Typography
             variant="h4"

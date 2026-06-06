@@ -23,8 +23,12 @@ const DEFAULT_MAX_FETCH_ATTEMPTS = 3;
 const FRED_REQUEST_TIMEOUT_MS = 4_500;
 const FRED_MAX_FETCH_ATTEMPTS = 2;
 const STOOQ_CONCURRENCY = 3;
+const YAHOO_CONCURRENCY = 1;
+const YAHOO_REQUEST_TIMEOUT_MS = 10_000;
+const YAHOO_MAX_FETCH_ATTEMPTS = 4;
 const FRED_CONCURRENCY = 4;
 const STOOQ_LOOKBACK_DAYS = 120;
+const YAHOO_LOOKBACK_RANGE = "3mo";
 const FRED_LOOKBACK_DAYS = 180;
 const RETRY_BACKOFF_BASE_MS = 350;
 const PARTIAL_CACHE_MAX_AGE_SECONDS = 15 * 60;
@@ -302,6 +306,10 @@ function formatSourceUrl(definition) {
     return `https://stooq.com/q/?s=${encodeURIComponent(definition.symbol)}`;
   }
 
+  if (definition.source === "yahoo") {
+    return `https://finance.yahoo.com/quote/${encodeURIComponent(definition.symbol)}`;
+  }
+
   if (definition.source === "fred") {
     return `https://fred.stlouisfed.org/series/${definition.seriesId}`;
   }
@@ -412,8 +420,8 @@ async function fetchText(url, headers = {}, options = {}) {
   throw lastError;
 }
 
-async function fetchJson(url, headers = {}) {
-  const text = await fetchText(url, headers);
+async function fetchJson(url, headers = {}, options = {}) {
+  const text = await fetchText(url, headers, options);
   return JSON.parse(text);
 }
 
@@ -430,6 +438,37 @@ async function loadStooqItem(definition) {
 
   const text = await fetchText(url, STOOQ_HEADERS);
   const rows = parseStooqSeries(text);
+
+  return normalizeItem(definition, summarizeSeries(rows));
+}
+
+function parseYahooChartRows(json) {
+  const result = json?.chart?.result?.[0];
+  const timestamps = Array.isArray(result?.timestamp) ? result.timestamp : [];
+  const quote = result?.indicators?.quote?.[0] || {};
+  const closes = Array.isArray(quote.close) ? quote.close : [];
+
+  return timestamps
+    .map((timestamp, index) => ({
+      date: toIsoDate(new Date(timestamp * 1000)),
+      dateObject: new Date(timestamp * 1000),
+      close: Number.isFinite(closes[index]) ? closes[index] : null,
+    }))
+    .filter((row) => row.dateObject && !Number.isNaN(row.dateObject.valueOf()) && row.close != null)
+    .sort((left, right) => left.date.localeCompare(right.date));
+}
+
+async function loadYahooItem(definition) {
+  const url =
+    `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(
+      definition.symbol,
+    )}` + `?range=${YAHOO_LOOKBACK_RANGE}&interval=1d`;
+
+  const json = await fetchJson(url, STOOQ_HEADERS, {
+    timeoutMs: YAHOO_REQUEST_TIMEOUT_MS,
+    maxAttempts: YAHOO_MAX_FETCH_ATTEMPTS,
+  });
+  const rows = parseYahooChartRows(json);
 
   return normalizeItem(definition, summarizeSeries(rows));
 }
@@ -1031,13 +1070,15 @@ export async function buildPayload(snapshotWindow, options = {}) {
     ...KEYDATA_GROUPS.flatMap((group) =>
       group.items.filter((item) => item.source === "stooq"),
     ),
-    ...MAGNIFICENT_SEVEN,
   ]);
+  const yahooDefinitions = MAGNIFICENT_SEVEN.filter(
+    (item) => item.source === "yahoo",
+  );
   const fredDefinitions = KEYDATA_GROUPS.flatMap((group) =>
     group.items.filter((item) => item.source === "fred"),
   );
 
-  const [nseResult, stooqResults, fredResults] = await Promise.all([
+  const [nseResult, stooqResults, yahooResults, fredResults] = await Promise.all([
     nseDefinitions.length
       ? loadNseIndexMap()
           .then(
@@ -1058,6 +1099,11 @@ export async function buildPayload(snapshotWindow, options = {}) {
       stooqDefinitions,
       (definition) => loadStooqItem(definition),
       STOOQ_CONCURRENCY,
+    ),
+    settleWithConcurrency(
+      yahooDefinitions,
+      (definition) => loadYahooItem(definition),
+      YAHOO_CONCURRENCY,
     ),
     settleWithConcurrency(
       fredDefinitions,
@@ -1088,6 +1134,17 @@ export async function buildPayload(snapshotWindow, options = {}) {
     failedStooqDefinitions.push(definition);
   });
 
+  const failedYahooDefinitions = [];
+  yahooResults.forEach((result, index) => {
+    const definition = yahooDefinitions[index];
+    if (result.status === "fulfilled") {
+      itemMap.set(definition.id, result.value);
+      return;
+    }
+
+    failedYahooDefinitions.push(definition);
+  });
+
   const failedFredDefinitions = [];
   fredResults.forEach((result, index) => {
     const definition = fredDefinitions[index];
@@ -1101,6 +1158,12 @@ export async function buildPayload(snapshotWindow, options = {}) {
 
   const stooqRecovery = recoverFromFallback({
     definitions: failedStooqDefinitions,
+    itemMap,
+    fallbackItemMap,
+    fallbackPayload,
+  });
+  const yahooRecovery = recoverFromFallback({
+    definitions: failedYahooDefinitions,
     itemMap,
     fallbackItemMap,
     fallbackPayload,
@@ -1121,6 +1184,7 @@ export async function buildPayload(snapshotWindow, options = {}) {
   const recoveredItemCount =
     nseRecovery.recovered.length +
     stooqRecovery.recovered.length +
+    yahooRecovery.recovered.length +
     fredRecovery.recovered.length;
   const recoveredSources = [
     buildRecoveredSourceSummary(
@@ -1131,6 +1195,11 @@ export async function buildPayload(snapshotWindow, options = {}) {
     buildRecoveredSourceSummary(
       "stooq",
       stooqRecovery.recovered,
+      fallbackSnapshotKey,
+    ),
+    buildRecoveredSourceSummary(
+      "yahoo",
+      yahooRecovery.recovered,
       fallbackSnapshotKey,
     ),
     buildRecoveredSourceSummary(
@@ -1164,6 +1233,14 @@ export async function buildPayload(snapshotWindow, options = {}) {
   );
   if (missingStooqWarning) {
     warnings.push(missingStooqWarning);
+  }
+
+  const missingYahooWarning = summarizeUnavailableDefinitions(
+    KEYDATA_SOURCE_LABELS.yahoo,
+    yahooRecovery.missing,
+  );
+  if (missingYahooWarning) {
+    warnings.push(missingYahooWarning);
   }
 
   const missingFredWarning = summarizeUnavailableDefinitions(
@@ -1203,6 +1280,7 @@ export async function buildPayload(snapshotWindow, options = {}) {
     status:
       nseRecovery.missing.length ||
       stooqRecovery.missing.length ||
+      yahooRecovery.missing.length ||
       fredRecovery.missing.length
         ? "partial"
         : recoveredFromPreviousSnapshot
@@ -1225,7 +1303,7 @@ export async function buildPayload(snapshotWindow, options = {}) {
     warnings,
     notes: [
       "This snapshot refreshes once daily after 07:30 IST (02:00 UTC) so the latest U.S. close and the prior India close land in the same daily read.",
-      "U.S. equities and ETFs are derived from delayed daily history served by Stooq.",
+      "U.S. equities and ETFs are derived from delayed daily history served by Stooq; the Magnificent 7 table uses Yahoo Finance daily chart data.",
       "India indices use NSE India's public market snapshot endpoint.",
       "Macro commodities and VIX come from FRED and can lag the freshest equity close by a session or more.",
     ],

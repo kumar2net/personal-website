@@ -1,335 +1,128 @@
 {
-  "generatedAt": "2026-06-06T11:36:47.294Z",
-  "status": "stale",
+  "generatedAt": "2026-06-06T11:48:08.927Z",
+  "status": "partial",
   "snapshot": {
     "key": "2026-06-06",
-    "generatedAt": "2026-06-06T11:36:47.294Z",
+    "generatedAt": "2026-06-06T11:48:08.927Z",
     "refreshAt": "2026-06-06T02:00:00.000Z",
     "nextRefreshAt": "2026-06-07T02:00:00.000Z",
     "cadenceLabel": "Refreshes once daily after 07:30 IST (02:00 UTC).",
-    "servedStale": true,
-    "staleItemCount": 29,
+    "servedStale": false,
+    "staleItemCount": 5,
     "recoveredSources": [
-      {
-        "source": "nse",
-        "sourceLabel": "NSE India",
-        "count": 3,
-        "snapshotKey": "2026-05-16"
-      },
       {
         "source": "stooq",
         "sourceLabel": "Stooq",
-        "count": 22,
-        "snapshotKey": "2026-05-16"
+        "count": 1,
+        "snapshotKey": "2026-06-06"
       },
       {
-        "source": "fred",
-        "sourceLabel": "FRED",
+        "source": "yahoo",
+        "sourceLabel": "Yahoo Finance",
         "count": 4,
-        "snapshotKey": "2026-05-16"
+        "snapshotKey": "2026-06-06"
       }
     ]
   },
   "highlights": {
     "breadth": {
-      "positive": 14,
-      "negative": 9,
+      "positive": 3,
+      "negative": 5,
       "flat": 0,
-      "total": 23
+      "total": 8
     },
     "leaders": [
       {
-        "label": "WTI Crude",
-        "ticker": "WTI",
-        "changePct": 2.72
-      },
-      {
-        "label": "Henry Hub Gas",
-        "ticker": "HHGAS",
-        "changePct": 2.55
-      },
-      {
         "label": "Brent Crude",
         "ticker": "BRENT",
-        "changePct": 2.54
+        "changePct": 5.82
+      },
+      {
+        "label": "WTI Crude",
+        "ticker": "WTI",
+        "changePct": 5.27
+      },
+      {
+        "label": "Nifty Bank",
+        "ticker": "BANKNIFTY",
+        "changePct": 0.35
       }
     ],
     "laggards": [
       {
+        "label": "Henry Hub Gas",
+        "ticker": "HHGAS",
+        "changePct": -8.08
+      },
+      {
+        "label": "NVIDIA",
+        "ticker": "NVDA",
+        "changePct": -6.2
+      },
+      {
         "label": "VIX",
         "ticker": "VIX",
-        "changePct": -3.41
-      },
-      {
-        "label": "Arm",
-        "ticker": "ARM",
-        "changePct": -1.41
-      },
-      {
-        "label": "Broadcom",
-        "ticker": "AVGO",
-        "changePct": -1.31
+        "changePct": -4.11
       }
     ],
     "strongestMonth": [
       {
-        "label": "Arm",
-        "ticker": "ARM",
-        "changePct": 7.47
-      },
-      {
         "label": "Henry Hub Gas",
         "ticker": "HHGAS",
-        "changePct": 6.82
+        "changePct": 16.73
       },
       {
-        "label": "WTI Crude",
-        "ticker": "WTI",
-        "changePct": 3.27
+        "label": "Nifty IT",
+        "ticker": "NIFTYIT",
+        "changePct": -0.88
+      },
+      {
+        "label": "NVIDIA",
+        "ticker": "NVDA",
+        "changePct": -1.31
       }
     ]
   },
   "insights": [
     {
       "id": "risk-tone",
-      "title": "Risk tone is constructive",
-      "summary": "Breadth is healthy at 14/23 positive, and VIX is 17.26, which keeps the volatility backdrop relatively calm.",
-      "tone": "positive",
+      "title": "Risk tone is cautious",
+      "summary": "Only 3/8 tracked instruments are positive, and VIX is 15.40, which points to a more defensive tone.",
+      "tone": "negative",
       "evidence": [
-        "Breadth: 14 up, 9 down, 0 flat",
-        "VIX: 17.26 (contained)"
-      ]
-    },
-    {
-      "id": "cross-market",
-      "title": "India is leading the day",
-      "summary": "India is averaging +0.56% versus -0.46% for the U.S. group, with SENSEX showing the firmer tone.",
-      "tone": "positive",
-      "evidence": [
-        "U.S. average 1D: -0.46%",
-        "India average 1D: +0.56%",
-        "DJI lead: -0.18% | SENSEX lead: +1.89%"
+        "Breadth: 3 up, 5 down, 0 flat",
+        "VIX: 15.40 (contained)"
       ]
     },
     {
       "id": "ai-infrastructure",
-      "title": "AI infrastructure is mixed",
-      "summary": "The AI hardware stack is averaging +0.40% on the day and -2.71% over one month, so the trend is not one-way.",
-      "tone": "neutral",
+      "title": "AI infrastructure has lost short-term momentum",
+      "summary": "The group is averaging -6.20% on the day and -1.31% over one month, which suggests the AI complex is under distribution rather than extending.",
+      "tone": "negative",
       "evidence": [
-        "AI average 1D: +0.40%",
-        "AI average 1M: -2.71%",
-        "Leader: ASML +2.18% | Laggard: ARM -1.41%"
-      ]
-    },
-    {
-      "id": "energy-transition",
-      "title": "Energy and transition signals are mixed",
-      "summary": "Oil is moving +2.63% on average for the day while the renewables basket is at +0.96%, so macro energy and transition equities are not telling the same story cleanly.",
-      "tone": "neutral",
-      "evidence": [
-        "WTI: $101.56 | Brent: $106.11",
-        "Henry Hub: $2.82 | Renewables average 1D: +0.96%",
-        "Renewables average 1M: -9.19%"
+        "AI average 1D: -6.20%",
+        "AI average 1M: -1.31%",
+        "Leader: NVDA -6.20% | Laggard: NVDA -6.20%"
       ]
     },
     {
       "id": "magnificent-seven",
       "title": "Mega-cap growth breadth is narrow",
-      "summary": "Only 2/7 Magnificent 7 names are positive, and the basket is averaging -1.34%, so index support from mega-cap tech looks thin.",
+      "summary": "Only 0/7 Magnificent 7 names are positive, and the basket is averaging -3.32%, so index support from mega-cap tech looks thin.",
       "tone": "negative",
       "evidence": [
-        "Positive names: 2/7",
-        "Leader: TSLA +0.57%",
-        "Laggard: GOOGL -3.85%"
+        "Positive names: 0/7",
+        "Leader: GOOGL -0.98%",
+        "Laggard: NVDA -6.20%"
       ]
     }
   ],
   "categories": [
     {
-      "id": "us-market-pulse",
-      "label": "U.S. Market Pulse",
-      "description": "Broad U.S. index leadership and the tone of large-cap risk appetite.",
-      "items": [
-        {
-          "id": "sp500",
-          "label": "S&P 500",
-          "ticker": "SPX",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=%5Espx",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 6556.37,
-          "previousClose": 6581,
-          "changes": {
-            "dayPct": -0.37,
-            "weekPct": -2.38,
-            "monthPct": -5.11
-          },
-          "sparkline": [
-            6946.13,
-            6908.86,
-            6878.88,
-            6881.62,
-            6816.63,
-            6869.5,
-            6830.71,
-            6740.02,
-            6795.99,
-            6781.48,
-            6775.8,
-            6672.62,
-            6632.19,
-            6699.38,
-            6716.09,
-            6624.7,
-            6606.49,
-            6506.48,
-            6581,
-            6556.37
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "nasdaq-composite",
-          "label": "Nasdaq Composite",
-          "ticker": "IXIC",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=%5Endq",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 21761.89,
-          "previousClose": 21946.76,
-          "changes": {
-            "dayPct": -0.84,
-            "weekPct": -3.19,
-            "monthPct": -4.91
-          },
-          "sparkline": [
-            23152.08,
-            22878.38,
-            22668.21,
-            22748.86,
-            22516.69,
-            22807.48,
-            22748.99,
-            22387.68,
-            22695.95,
-            22697.1,
-            22716.13,
-            22311.98,
-            22105.36,
-            22374.18,
-            22479.53,
-            22152.42,
-            22090.69,
-            21647.61,
-            21946.76,
-            21761.89
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "dow-jones",
-          "label": "Dow Jones",
-          "ticker": "DJI",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=%5Edji",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 46124.06,
-          "previousClose": 46208.47,
-          "changes": {
-            "dayPct": -0.18,
-            "weekPct": -1.85,
-            "monthPct": -7.06
-          },
-          "sparkline": [
-            49482.15,
-            49499.2,
-            48977.92,
-            48904.78,
-            48501.27,
-            48739.41,
-            47954.74,
-            47501.55,
-            47740.8,
-            47706.51,
-            47417.27,
-            46677.85,
-            46558.47,
-            46946.41,
-            46993.26,
-            46225.15,
-            46021.43,
-            45577.47,
-            46208.47,
-            46124.06
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        }
-      ]
-    },
-    {
       "id": "india-market-pulse",
       "label": "India Market Pulse",
       "description": "The India tape through the benchmark, banking, IT, and large-cap breadth lens.",
       "items": [
-        {
-          "id": "sensex",
-          "label": "BSE Sensex",
-          "ticker": "SENSEX",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=%5Esnx",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 74068.45,
-          "previousClose": 72696.39,
-          "changes": {
-            "dayPct": 1.89,
-            "weekPct": -2.63,
-            "monthPct": -10.56
-          },
-          "sparkline": [
-            82225.92,
-            82276.07,
-            82248.61,
-            81287.19,
-            80238.85,
-            79116.19,
-            80015.9,
-            78918.9,
-            77566.16,
-            78205.98,
-            76863.71,
-            76034.42,
-            74563.92,
-            75502.85,
-            76070.84,
-            76704.13,
-            74207.24,
-            74532.96,
-            72696.39,
-            74068.45
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
         {
           "id": "nifty-50",
           "label": "Nifty 50",
@@ -338,24 +131,20 @@
           "sourceLabel": "NSE India",
           "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
           "unitLabel": "price",
-          "asOf": "2026-05-15",
-          "latestValue": 23643.5,
-          "previousClose": 23689.6,
+          "asOf": "2026-06-05",
+          "latestValue": 23366.7,
+          "previousClose": 23416.55,
           "changes": {
-            "dayPct": -0.19,
-            "weekPct": -2.2,
-            "monthPct": -2.43
+            "dayPct": -0.21,
+            "weekPct": -0.77,
+            "monthPct": -3.96
           },
           "sparkline": [
-            24231.3,
-            24176.15,
-            23689.6,
-            23643.5
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            24330.95,
+            23547.75,
+            23416.55,
+            23366.7
+          ]
         },
         {
           "id": "nifty-bank",
@@ -365,24 +154,20 @@
           "sourceLabel": "NSE India",
           "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
           "unitLabel": "price",
-          "asOf": "2026-05-15",
-          "latestValue": 53710.35,
-          "previousClose": 54128.95,
+          "asOf": "2026-06-05",
+          "latestValue": 54496.25,
+          "previousClose": 54307.85,
           "changes": {
-            "dayPct": -0.77,
-            "weekPct": -2.89,
-            "monthPct": -4.6
+            "dayPct": 0.35,
+            "weekPct": 0.47,
+            "monthPct": -2.65
           },
           "sparkline": [
-            56301.95,
-            55310.55,
-            54128.95,
-            53710.35
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            55981.05,
+            54239.2,
+            54307.85,
+            54496.25
+          ]
         },
         {
           "id": "nifty-it",
@@ -392,24 +177,20 @@
           "sourceLabel": "NSE India",
           "sourceUrl": "https://www.nseindia.com/market-data/live-equity-market",
           "unitLabel": "price",
-          "asOf": "2026-05-15",
-          "latestValue": 27716.9,
-          "previousClose": 27360.35,
+          "asOf": "2026-06-05",
+          "latestValue": 29010.3,
+          "previousClose": 29300.6,
           "changes": {
-            "dayPct": 1.3,
-            "weekPct": -5.71,
-            "monthPct": -12.12
+            "dayPct": -0.99,
+            "weekPct": -0.24,
+            "monthPct": -0.88
           },
           "sparkline": [
-            31539.75,
-            29394.2,
-            27360.35,
-            27716.9
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            29267.95,
+            29080.15,
+            29300.6,
+            29010.3
+          ]
         }
       ]
     },
@@ -426,40 +207,36 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/DCOILWTICO",
           "unitLabel": "USD/bbl",
-          "asOf": "2026-05-11",
-          "latestValue": 101.56,
-          "previousClose": 98.87,
+          "asOf": "2026-06-01",
+          "latestValue": 95.96,
+          "previousClose": 91.16,
           "changes": {
-            "dayPct": 2.72,
-            "weekPct": -7.47,
-            "monthPct": 3.27
+            "dayPct": 5.27,
+            "weekPct": null,
+            "monthPct": -8.94
           },
           "sparkline": [
-            93.07,
-            93.04,
-            96.46,
-            85.91,
-            91.06,
-            93.64,
-            94.76,
-            99.27,
-            98.42,
-            99.89,
-            103.45,
-            110.47,
-            108.64,
-            105.38,
-            109.76,
             105.66,
             98.75,
             98.38,
             98.87,
-            101.56
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            101.56,
+            105.78,
+            104.52,
+            104.66,
+            108.99,
+            112.25,
+            112.09,
+            101.69,
+            100.2,
+            100.35,
+            0,
+            97.63,
+            92.35,
+            92.65,
+            91.16,
+            95.96
+          ]
         },
         {
           "id": "brent",
@@ -469,40 +246,36 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/DCOILBRENTEU",
           "unitLabel": "USD/bbl",
-          "asOf": "2026-05-11",
-          "latestValue": 106.11,
-          "previousClose": 103.48,
+          "asOf": "2026-06-01",
+          "latestValue": 98.29,
+          "previousClose": 92.88,
           "changes": {
-            "dayPct": 2.54,
+            "dayPct": 5.82,
             "weekPct": null,
-            "monthPct": -10.88
+            "monthPct": -16.89
           },
           "sparkline": [
-            118.69,
-            114.93,
-            116.63,
-            98.63,
-            103.4,
-            106.14,
-            113.44,
-            113.25,
-            111.86,
-            113.89,
-            117.62,
-            124.16,
-            124.24,
-            118.26,
-            0,
             114.51,
             103.7,
             101.82,
             103.48,
-            106.11
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            106.11,
+            111.37,
+            110.28,
+            110.91,
+            113.96,
+            116.73,
+            114.64,
+            108.93,
+            105.84,
+            106.9,
+            0,
+            102.75,
+            97.11,
+            95.47,
+            92.88,
+            98.29
+          ]
         },
         {
           "id": "henry-hub",
@@ -512,40 +285,36 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/DHHNGSP",
           "unitLabel": "USD/MMBtu",
-          "asOf": "2026-05-11",
-          "latestValue": 2.82,
-          "previousClose": 2.75,
+          "asOf": "2026-06-01",
+          "latestValue": 3.07,
+          "previousClose": 3.34,
           "changes": {
-            "dayPct": 2.55,
-            "weekPct": 5.62,
-            "monthPct": 6.82
+            "dayPct": -8.08,
+            "weekPct": null,
+            "monthPct": 16.73
           },
           "sparkline": [
-            2.79,
-            2.78,
-            2.78,
-            2.71,
-            2.81,
-            2.76,
-            2.75,
-            2.65,
-            2.54,
-            2.72,
-            2.7,
-            2.6,
-            2.64,
-            2.63,
-            2.67,
             2.83,
             2.75,
             2.7,
             2.75,
-            2.82
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            2.82,
+            2.91,
+            2.88,
+            2.79,
+            2.89,
+            3.07,
+            3.23,
+            3.18,
+            3.14,
+            2.92,
+            0,
+            3.1,
+            3.13,
+            3.04,
+            3.34,
+            3.07
+          ]
         },
         {
           "id": "vix",
@@ -555,262 +324,36 @@
           "sourceLabel": "FRED",
           "sourceUrl": "https://fred.stlouisfed.org/series/VIXCLS",
           "unitLabel": "index",
-          "asOf": "2026-05-14",
-          "latestValue": 17.26,
-          "previousClose": 17.87,
+          "asOf": "2026-06-04",
+          "latestValue": 15.4,
+          "previousClose": 16.06,
           "changes": {
-            "dayPct": -3.41,
-            "weekPct": 1.05,
-            "monthPct": -5.99
+            "dayPct": -4.11,
+            "weekPct": -2.16,
+            "monthPct": -11.39
           },
           "sparkline": [
-            17.48,
-            18.87,
-            19.5,
-            18.92,
-            19.31,
-            18.71,
-            18.02,
-            17.83,
-            18.81,
-            16.89,
-            16.99,
-            18.29,
-            17.38,
-            17.39,
-            17.08,
             17.19,
             18.38,
             17.99,
             17.87,
-            17.26
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        }
-      ]
-    },
-    {
-      "id": "renewables-transition",
-      "label": "Renewables Transition",
-      "description": "Clean-energy ETFs plus bottleneck names tied to solar, batteries, and the grid transition.",
-      "items": [
-        {
-          "id": "icln",
-          "label": "iShares Global Clean Energy",
-          "ticker": "ICLN",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=icln.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 18.31,
-          "previousClose": 18.18,
-          "changes": {
-            "dayPct": 0.72,
-            "weekPct": -2.4,
-            "monthPct": -3.17
-          },
-          "sparkline": [
-            19.09,
-            18.67,
-            18.22,
-            18.33,
-            17.71,
-            18.09,
-            17.79,
-            17.42,
-            17.97,
-            18.25,
-            18.51,
-            18.39,
-            18.38,
-            18.52,
-            18.76,
-            18.37,
-            18.75,
+            17.26,
+            18.43,
+            17.82,
             18.06,
-            18.18,
-            18.31
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "tan",
-          "label": "Invesco Solar ETF",
-          "ticker": "TAN",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=tan.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 55.43,
-          "previousClose": 54.99,
-          "changes": {
-            "dayPct": 0.8,
-            "weekPct": -4,
-            "monthPct": -7.26
-          },
-          "sparkline": [
-            59.31,
-            57.58,
-            55,
-            56.36,
-            54.47,
-            54.87,
-            54.09,
-            53.28,
-            54.1,
-            54.9,
-            55.73,
-            54.75,
-            55.38,
-            56.75,
-            57.74,
-            56.58,
-            56.95,
-            55.15,
-            54.99,
-            55.43
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "lit",
-          "label": "Global X Lithium & Battery Tech",
-          "ticker": "LIT",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=lit.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 70.74,
-          "previousClose": 69.89,
-          "changes": {
-            "dayPct": 1.22,
-            "weekPct": -1.26,
-            "monthPct": -3.25
-          },
-          "sparkline": [
-            77.09,
-            75.77,
-            75.4,
-            75.22,
-            70.35,
-            71.14,
-            69.14,
-            68.97,
-            71.43,
-            72.02,
-            72.99,
-            71.15,
-            70.4,
-            71.62,
-            71.64,
-            69.45,
-            68.74,
-            66.98,
-            69.89,
-            70.74
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "fslr",
-          "label": "First Solar",
-          "ticker": "FSLR",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=fslr.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 192.85,
-          "previousClose": 189.92,
-          "changes": {
-            "dayPct": 1.54,
-            "weekPct": -3.78,
-            "monthPct": -20.27
-          },
-          "sparkline": [
-            210.12,
-            200.1,
-            197.2,
-            199.86,
-            197.53,
-            197.23,
-            191.72,
-            189.11,
-            195.37,
-            197.8,
-            200.25,
-            197.56,
-            196.07,
-            199.48,
-            200.42,
-            197.81,
-            199.65,
-            192.82,
-            189.92,
-            192.85
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "enph",
-          "label": "Enphase Energy",
-          "ticker": "ENPH",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=enph.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 40.97,
-          "previousClose": 40.76,
-          "changes": {
-            "dayPct": 0.52,
-            "weekPct": -8.34,
-            "monthPct": -12.01
-          },
-          "sparkline": [
-            48.49,
-            45.77,
-            42.27,
-            44.71,
-            43.2,
-            42.66,
-            41.14,
-            40.23,
-            40.86,
-            43.62,
-            43.34,
-            42.6,
-            44.07,
-            45.89,
-            44.7,
-            43.28,
-            44.64,
-            44.11,
-            40.76,
-            40.97
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
+            17.44,
+            16.76,
+            16.7,
+            16.59,
+            17.01,
+            16.29,
+            15.74,
+            15.32,
+            16.05,
+            15.77,
+            16.06,
+            15.4
+          ]
         }
       ]
     },
@@ -820,49 +363,6 @@
       "description": "The hardware stack that matters for AI build-outs: accelerators, networking, foundry capacity, and tooling.",
       "items": [
         {
-          "id": "smh",
-          "label": "VanEck Semiconductor ETF",
-          "ticker": "SMH",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=smh.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 394.59,
-          "previousClose": 391.36,
-          "changes": {
-            "dayPct": 0.83,
-            "weekPct": -0.58,
-            "monthPct": -4.92
-          },
-          "sparkline": [
-            426.16,
-            412.01,
-            406.37,
-            406.39,
-            391.07,
-            399.1,
-            395.47,
-            380.54,
-            394.37,
-            397.35,
-            401.03,
-            388.13,
-            387.33,
-            393.92,
-            396.88,
-            393.67,
-            394.92,
-            384.74,
-            391.36,
-            394.59
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
           "id": "nvda",
           "label": "NVIDIA",
           "ticker": "NVDA",
@@ -870,254 +370,39 @@
           "sourceLabel": "Stooq",
           "sourceUrl": "https://stooq.com/q/?s=nvda.us",
           "unitLabel": "USD/share",
-          "asOf": "2026-03-24",
-          "latestValue": 175.2,
-          "previousClose": 175.64,
+          "asOf": "2026-06-05",
+          "latestValue": 205.1,
+          "previousClose": 218.66,
           "changes": {
-            "dayPct": -0.25,
-            "weekPct": -3.7,
-            "monthPct": -7.7
+            "dayPct": -6.2,
+            "weekPct": -2.86,
+            "monthPct": -1.31
           },
           "sparkline": [
-            195.56,
-            184.89,
-            177.19,
-            182.48,
-            180.05,
-            183.04,
-            183.33,
-            177.69,
-            182.64,
-            184.76,
-            186.03,
-            183.14,
-            180.25,
-            183.22,
-            181.93,
-            180.4,
-            178.56,
-            172.7,
-            175.64,
-            175.2
+            215.2,
+            219.44,
+            220.78,
+            225.83,
+            235.74,
+            225.32,
+            222.32,
+            220.61,
+            223.47,
+            219.51,
+            215.33,
+            214.86,
+            212.6,
+            214.25,
+            211.14,
+            224.36,
+            222.82,
+            214.75,
+            218.66,
+            205.1
           ],
           "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "amd",
-          "label": "AMD",
-          "ticker": "AMD",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=amd.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 205.37,
-          "previousClose": 202.68,
-          "changes": {
-            "dayPct": 1.33,
-            "weekPct": 4.62,
-            "monthPct": 2.61
-          },
-          "sparkline": [
-            210.86,
-            203.68,
-            200.21,
-            198.62,
-            190.99,
-            202.03,
-            199.45,
-            192.44,
-            202.73,
-            203.24,
-            204.83,
-            197.74,
-            193.39,
-            196.58,
-            196.31,
-            199.46,
-            205.27,
-            201.33,
-            202.68,
-            205.37
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "avgo",
-          "label": "Broadcom",
-          "ticker": "AVGO",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=avgo.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 318.29,
-          "previousClose": 322.51,
-          "changes": {
-            "dayPct": -1.31,
-            "weekPct": -0.94,
-            "monthPct": -4.32
-          },
-          "sparkline": [
-            332.31,
-            321.7,
-            319.55,
-            318.82,
-            313.84,
-            316.96,
-            332.74,
-            330.45,
-            345.75,
-            342.52,
-            341.57,
-            335.97,
-            322.16,
-            324.92,
-            321.31,
-            315.93,
-            319.84,
-            310.51,
-            322.51,
-            318.29
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "tsm",
-          "label": "TSMC",
-          "ticker": "TSM",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=tsm.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 343.25,
-          "previousClose": 338.45,
-          "changes": {
-            "dayPct": 1.42,
-            "weekPct": -0.79,
-            "monthPct": -7.36
-          },
-          "sparkline": [
-            387.73,
-            376.81,
-            374.58,
-            369.11,
-            353.13,
-            357.44,
-            353.86,
-            338.89,
-            348.7,
-            347.09,
-            354.56,
-            336.71,
-            338.31,
-            340.23,
-            345.98,
-            339.57,
-            338.79,
-            329.24,
-            338.45,
-            343.25
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "asml",
-          "label": "ASML",
-          "ticker": "ASML",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=asml.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 1399.42,
-          "previousClose": 1369.62,
-          "changes": {
-            "dayPct": 2.18,
-            "weekPct": 0.74,
-            "monthPct": -4.77
-          },
-          "sparkline": [
-            1526.51,
-            1463.8,
-            1450.56,
-            1423.54,
-            1360.94,
-            1399.49,
-            1368.36,
-            1292.8,
-            1357.42,
-            1383.87,
-            1386.68,
-            1351.58,
-            1345.69,
-            1375.56,
-            1389.16,
-            1355.17,
-            1366.39,
-            1317.25,
-            1369.62,
-            1399.42
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-          }
-        },
-        {
-          "id": "arm",
-          "label": "Arm",
-          "ticker": "ARM",
-          "source": "stooq",
-          "sourceLabel": "Stooq",
-          "sourceUrl": "https://stooq.com/q/?s=arm.us",
-          "unitLabel": "price",
-          "asOf": "2026-03-24",
-          "latestValue": 134.96,
-          "previousClose": 136.89,
-          "changes": {
-            "dayPct": -1.41,
-            "weekPct": 6.01,
-            "monthPct": 7.47
-          },
-          "sparkline": [
-            131.74,
-            129.26,
-            127.45,
-            124.37,
-            121.72,
-            124.1,
-            120.68,
-            114.43,
-            117.63,
-            120.59,
-            120.1,
-            115.12,
-            115.75,
-            121.7,
-            127.31,
-            128.36,
-            129.82,
-            132.35,
-            136.89,
-            134.96
-          ],
-          "fallback": {
-            "snapshotKey": "2026-05-16",
-            "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+            "snapshotKey": "2026-06-06",
+            "snapshotGeneratedAt": "2026-06-06T11:47:21.651Z"
           }
         }
       ]
@@ -1128,215 +413,172 @@
       "id": "aapl",
       "label": "Apple",
       "ticker": "AAPL",
-      "source": "stooq",
-      "sourceLabel": "Stooq",
-      "sourceUrl": "https://stooq.com/q/?s=aapl.us",
+      "source": "yahoo",
+      "sourceLabel": "Yahoo Finance",
+      "sourceUrl": "https://finance.yahoo.com/quote/AAPL",
       "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 251.64,
-      "previousClose": 251.49,
+      "asOf": "2026-06-05",
+      "latestValue": 307.34,
+      "previousClose": 311.23,
       "changes": {
-        "dayPct": 0.06,
-        "weekPct": -1.02,
-        "monthPct": -4.89
+        "dayPct": -1.25,
+        "weekPct": -1.51,
+        "monthPct": 6.9
       },
       "sparkline": [
-        274.23,
-        272.95,
-        264.18,
-        264.72,
-        263.69,
-        262.45,
-        260.25,
-        257.46,
-        259.89,
-        260.72,
-        260.81,
-        255.76,
-        250.12,
-        252.82,
-        254.23,
-        249.94,
-        248.96,
-        247.99,
-        251.49,
-        251.64
+        293.32,
+        292.68,
+        294.8,
+        298.87,
+        298.21,
+        300.23,
+        297.84,
+        298.97,
+        302.25,
+        304.99,
+        308.82,
+        308.33,
+        310.85,
+        312.51,
+        312.06,
+        306.31,
+        315.2,
+        310.26,
+        311.23,
+        307.34
       ],
       "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+        "snapshotKey": "2026-06-06",
+        "snapshotGeneratedAt": "2026-06-06T11:47:21.651Z"
       }
     },
     {
       "id": "msft",
       "label": "Microsoft",
       "ticker": "MSFT",
-      "source": "stooq",
-      "sourceLabel": "Stooq",
-      "sourceUrl": "https://stooq.com/q/?s=msft.us",
+      "source": "yahoo",
+      "sourceLabel": "Yahoo Finance",
+      "sourceUrl": "https://finance.yahoo.com/quote/MSFT",
       "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 372.74,
-      "previousClose": 383,
+      "asOf": "2026-06-05",
+      "latestValue": 416.67,
+      "previousClose": 428.05,
       "changes": {
-        "dayPct": -2.68,
-        "weekPct": -6.68,
-        "monthPct": -6.17
+        "dayPct": -2.66,
+        "weekPct": -7.46,
+        "monthPct": 0.65
       },
       "sparkline": [
-        400.6,
-        401.72,
-        392.74,
-        398.55,
-        403.79,
-        405,
-        410.68,
-        408.63,
-        409.35,
-        405.76,
-        404.88,
-        401.86,
-        395.55,
-        399.95,
-        399.41,
-        391.79,
-        389.02,
-        381.87,
-        383,
-        372.74
+        415.12,
+        412.66,
+        407.77,
+        405.21,
+        409.43,
+        421.92,
+        423.54,
+        417.42,
+        421.06,
+        419.09,
+        418.57,
+        416.03,
+        412.67,
+        426.99,
+        450.24,
+        460.52,
+        441.31,
+        427.34,
+        428.05,
+        416.67
       ],
       "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-      }
-    },
-    {
-      "id": "amzn",
-      "label": "Amazon",
-      "ticker": "AMZN",
-      "source": "stooq",
-      "sourceLabel": "Stooq",
-      "sourceUrl": "https://stooq.com/q/?s=amzn.us",
-      "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 207.24,
-      "previousClose": 210.14,
-      "changes": {
-        "dayPct": -1.38,
-        "weekPct": -3.7,
-        "monthPct": -1.37
-      },
-      "sparkline": [
-        210.64,
-        207.92,
-        210,
-        208.39,
-        208.63,
-        216.82,
-        218.86,
-        213.12,
-        213.42,
-        214.34,
-        212.65,
-        209.53,
-        207.67,
-        211.74,
-        215.2,
-        209.87,
-        208.76,
-        205.37,
-        210.14,
-        207.24
-      ],
-      "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+        "snapshotKey": "2026-06-06",
+        "snapshotGeneratedAt": "2026-06-06T11:47:21.651Z"
       }
     },
     {
       "id": "googl",
       "label": "Alphabet",
       "ticker": "GOOGL",
-      "source": "stooq",
-      "sourceLabel": "Stooq",
-      "sourceUrl": "https://stooq.com/q/?s=googl.us",
+      "source": "yahoo",
+      "sourceLabel": "Yahoo Finance",
+      "sourceUrl": "https://finance.yahoo.com/quote/GOOGL",
       "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 290.44,
-      "previousClose": 302.06,
+      "asOf": "2026-06-05",
+      "latestValue": 368.53,
+      "previousClose": 372.19,
       "changes": {
-        "dayPct": -3.85,
-        "weekPct": -6.59,
-        "monthPct": -7.79
+        "dayPct": -0.98,
+        "weekPct": -3.11,
+        "monthPct": -7.41
       },
       "sparkline": [
-        312.9,
-        307.38,
-        311.76,
-        306.52,
-        303.53,
-        303.03,
-        300.845,
-        298.48,
-        306.34,
-        307.04,
-        308.7,
-        303.55,
-        302.28,
-        305.56,
-        310.92,
-        307.69,
-        307.13,
-        301,
-        302.06,
-        290.44
+        400.8,
+        388.64,
+        387.35,
+        402.62,
+        401.07,
+        396.78,
+        396.94,
+        387.66,
+        388.91,
+        387.66,
+        382.97,
+        388.88,
+        388.83,
+        390.13,
+        380.34,
+        376.37,
+        361.85,
+        358.99,
+        372.19,
+        368.53
       ],
       "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+        "snapshotKey": "2026-06-06",
+        "snapshotGeneratedAt": "2026-06-06T11:47:21.651Z"
       }
     },
     {
       "id": "meta",
       "label": "Meta",
       "ticker": "META",
-      "source": "stooq",
-      "sourceLabel": "Stooq",
-      "sourceUrl": "https://stooq.com/q/?s=meta.us",
+      "source": "yahoo",
+      "sourceLabel": "Yahoo Finance",
+      "sourceUrl": "https://finance.yahoo.com/quote/META",
       "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 592.92,
-      "previousClose": 604.06,
+      "asOf": "2026-06-05",
+      "latestValue": 593,
+      "previousClose": 627.57,
       "changes": {
-        "dayPct": -1.84,
-        "weekPct": -4.78,
-        "monthPct": -9.57
+        "dayPct": -5.51,
+        "weekPct": -6.25,
+        "monthPct": -3.24
       },
       "sparkline": [
-        653.69,
-        657.01,
-        648.18,
-        653.56,
-        654.991,
-        667.52,
-        660.205,
-        644.86,
-        647.34,
-        653.91,
-        654.86,
-        638.18,
-        613.71,
-        627.45,
-        622.66,
-        615.68,
-        606.7,
-        593.66,
-        604.06,
-        592.92
+        609.63,
+        598.86,
+        603,
+        616.63,
+        618.43,
+        614.23,
+        611.21,
+        602.61,
+        605.06,
+        607.38,
+        610.26,
+        612.34,
+        635.26,
+        635.29,
+        632.51,
+        600.47,
+        597.63,
+        622.98,
+        627.57,
+        593
       ],
       "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+        "snapshotKey": "2026-06-06",
+        "snapshotGeneratedAt": "2026-06-06T11:47:21.651Z"
       }
     },
     {
@@ -1347,89 +589,49 @@
       "sourceLabel": "Stooq",
       "sourceUrl": "https://stooq.com/q/?s=nvda.us",
       "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 175.2,
-      "previousClose": 175.64,
+      "asOf": "2026-06-05",
+      "latestValue": 205.1,
+      "previousClose": 218.66,
       "changes": {
-        "dayPct": -0.25,
-        "weekPct": -3.7,
-        "monthPct": -7.7
+        "dayPct": -6.2,
+        "weekPct": -2.86,
+        "monthPct": -1.31
       },
       "sparkline": [
-        195.56,
-        184.89,
-        177.19,
-        182.48,
-        180.05,
-        183.04,
-        183.33,
-        177.69,
-        182.64,
-        184.76,
-        186.03,
-        183.14,
-        180.25,
-        183.22,
-        181.93,
-        180.4,
-        178.56,
-        172.7,
-        175.64,
-        175.2
+        215.2,
+        219.44,
+        220.78,
+        225.83,
+        235.74,
+        225.32,
+        222.32,
+        220.61,
+        223.47,
+        219.51,
+        215.33,
+        214.86,
+        212.6,
+        214.25,
+        211.14,
+        224.36,
+        222.82,
+        214.75,
+        218.66,
+        205.1
       ],
       "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
-      }
-    },
-    {
-      "id": "tsla",
-      "label": "Tesla",
-      "ticker": "TSLA",
-      "source": "stooq",
-      "sourceLabel": "Stooq",
-      "sourceUrl": "https://stooq.com/q/?s=tsla.us",
-      "unitLabel": "USD/share",
-      "asOf": "2026-03-24",
-      "latestValue": 383.03,
-      "previousClose": 380.85,
-      "changes": {
-        "dayPct": 0.57,
-        "weekPct": -4.07,
-        "monthPct": -6.99
-      },
-      "sparkline": [
-        417.4,
-        408.58,
-        402.51,
-        403.32,
-        392.355,
-        405.94,
-        405.4013,
-        396.73,
-        398.6,
-        399.25,
-        407.82,
-        395.01,
-        391.2,
-        395.56,
-        399.27,
-        392.78,
-        380.3,
-        367.96,
-        380.85,
-        383.03
-      ],
-      "fallback": {
-        "snapshotKey": "2026-05-16",
-        "snapshotGeneratedAt": "2026-05-16T11:36:54.924Z"
+        "snapshotKey": "2026-06-06",
+        "snapshotGeneratedAt": "2026-06-06T11:47:21.651Z"
       }
     }
   ],
-  "warnings": [],
+  "warnings": [
+    "Stooq is still unavailable for SPX, IXIC, DJI, SENSEX, ICLN, and 10 more.",
+    "Yahoo Finance is still unavailable for AMZN, TSLA."
+  ],
   "notes": [
     "This snapshot refreshes once daily after 07:30 IST (02:00 UTC) so the latest U.S. close and the prior India close land in the same daily read.",
-    "U.S. equities and ETFs are derived from delayed daily history served by Stooq.",
+    "U.S. equities and ETFs are derived from delayed daily history served by Stooq; the Magnificent 7 table uses Yahoo Finance daily chart data.",
     "India indices use NSE India's public market snapshot endpoint.",
     "Macro commodities and VIX come from FRED and can lag the freshest equity close by a session or more."
   ]
