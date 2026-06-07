@@ -17,8 +17,7 @@ export const metadata = {
   ],
   datePublished: "2026-06-07",
   dateModified: "2026-06-07",
-  image:
-    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+  image: "/media/nr-thesis-defense.png",
   readingTime: "~5 min",
 };
 
@@ -148,20 +147,21 @@ export default function BlogPost() {
         <Box
           component="img"
           src={metadata.image}
-          alt="Waves rolling across coastal water"
+          alt="Congratulations graphic for Namritha Ramakrishnan's master's thesis defense"
           loading="eager"
           decoding="async"
           sx={{
             width: "100%",
-            height: { xs: 240, sm: 340 },
-            objectFit: "cover",
+            height: "auto",
+            objectFit: "contain",
             borderRadius: 2,
             boxShadow: "0 16px 45px rgba(15, 23, 42, 0.18)",
             my: 0,
           }}
         />
         <Typography variant="body2" sx={{ mt: 1, color: "var(--mui-palette-text-secondary)" }}>
-          Coastal systems are not just scenery. They are living infrastructure.
+          Congratulations to Namritha Ramakrishnan on defending her master's thesis in
+          Civil Engineering, Water Resources.
         </Typography>
       </Box>
 
