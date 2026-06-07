@@ -96,60 +96,6 @@ const MusicPage = () => {
             </Typography>
           </Box>
 
-          <Paper
-            id="kasadathaparara"
-            elevation={0}
-            sx={{
-              scrollMarginTop: 96,
-              p: { xs: 3, md: 4 },
-              borderRadius: 4,
-              border: `1px solid ${alpha(theme.palette.warning.main, 0.35)}`,
-              background: `linear-gradient(135deg, ${alpha(
-                theme.palette.warning.light,
-                isDark ? 0.22 : 0.18,
-              )}, ${alpha(theme.palette.background.paper, 0.96)})`,
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <Stack spacing={2}>
-              <Typography
-                variant="overline"
-                sx={{
-                  letterSpacing: "0.2em",
-                  color: "text.secondary",
-                  fontWeight: 700,
-                }}
-              >
-                SONG REFERENCE
-              </Typography>
-              <Typography
-                variant="h3"
-                component="h2"
-                sx={{
-                  fontFamily:
-                    '"Noto Sans Tamil", "Space Grotesk", "IBM Plex Sans", sans-serif',
-                  fontWeight: 800,
-                  fontSize: { xs: "2rem", md: "3rem" },
-                  letterSpacing: 0,
-                }}
-              >
-                கசடதபரரா
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: '"Noto Sans Tamil", "Noto Sans", sans-serif',
-                  fontSize: { xs: "1.2rem", md: "1.45rem" },
-                  lineHeight: 1.65,
-                  color: "text.primary",
-                }}
-              >
-                பறை அடித்துட்டு பறை அடித்துட்டு... பறை அடித்திட்டு பறை அடித்திட்டு இறை அடித்திடியா
-                <br />
-                எவரும் ராவணனோ எவரும் ராவணனோ அவரும் பாடனும் அவரும் பாடனும்
-              </Typography>
-            </Stack>
-          </Paper>
-
           <Grid container spacing={4} alignItems="stretch">
             <Grid item xs={12} md={6}>
               <Paper
@@ -327,70 +273,6 @@ const MusicPage = () => {
             </Grid>
           </Grid>
 
-          <Paper
-            id="tamil-typing-gboard"
-            elevation={0}
-            sx={{
-              scrollMarginTop: 96,
-              overflow: "hidden",
-              borderRadius: 4,
-              border: `1px solid ${alpha(theme.palette.info.main, 0.28)}`,
-              bgcolor: alpha(theme.palette.background.paper, 0.76),
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <Grid container spacing={0} alignItems="center">
-              <Grid item xs={12} md={6}>
-                <Box
-                  component="img"
-                  src="/media/tamiltypinggboard.png"
-                  alt="Gboard Tamil typing keyboard setup"
-                  loading="lazy"
-                  sx={{
-                    display: "block",
-                    width: "100%",
-                    maxHeight: { xs: 520, md: 560 },
-                    objectFit: "contain",
-                    bgcolor: alpha(theme.palette.common.black, isDark ? 0.2 : 0.04),
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Stack spacing={2} sx={{ p: { xs: 3, md: 4 } }}>
-                  <Typography
-                    variant="overline"
-                    sx={{
-                      letterSpacing: "0.2em",
-                      color: "text.secondary",
-                      fontWeight: 700,
-                    }}
-                  >
-                    TAMIL TYPING HINT
-                  </Typography>
-                  <Typography variant="h4" component="h2" fontWeight={700}>
-                    Use Gboard for quick Tamil text
-                  </Typography>
-                  <Typography
-                    lang="ta"
-                    sx={{
-                      fontFamily:
-                        '"Noto Sans Tamil", "Noto Sans", "IBM Plex Sans", sans-serif',
-                      fontSize: { xs: "1.1rem", md: "1.25rem" },
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    தமிழ் வார்த்தைகளை தட்டச்சு செய்ய Gboard-ல் Tamil keyboard
-                    தேர்வு செய்தால் போதும்.
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    On mobile, switch the keyboard language to Tamil in Gboard,
-                    then type the lyrics, notes, or song names directly in Tamil
-                    script.
-                  </Typography>
-                </Stack>
-              </Grid>
-            </Grid>
-          </Paper>
         </Stack>
       </Container>
     </Box>

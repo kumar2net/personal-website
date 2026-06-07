@@ -512,6 +512,16 @@ const App = ({ mode }) => {
                   }
                 />
                 <Route
+                  path="/home"
+                  element={
+                    <Home
+                      isDarkMode={isDarkMode}
+                      showWorldClock={showWorldClock}
+                      trackClick={trackClick}
+                    />
+                  }
+                />
+                <Route
                   path="/about"
                   element={
                     <>

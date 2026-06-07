@@ -2,6 +2,24 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-06-07-seagrass-meadows-ocean-engineering-namritha": {
+    title: "From Seagrass Meadows to Ocean Engineering: A Proud Maama's Note for Namritha",
+    description:
+      "A family note celebrating Namritha Ramakrishnan's University of Central Florida master's thesis defense on seagrass, waves, and sediment transport, and her funded PhD in Ocean Engineering at the University of New Hampshire.",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80",
+    tags: [
+      "Family",
+      "STEM",
+      "Ocean Engineering",
+      "Seagrass",
+      "Coastal Resilience",
+      "Graduate School",
+    ],
+    datePublished: "2026-06-07",
+    dateModified: "2026-06-07",
+    readingTime: "~5 min",
+  },
   "2026-06-06-reply-ai-public-good-sanjaay-babu": {
     title: "Reply: AI Access Is Not Enough. Public AI Needs Citizens Too.",
     description:

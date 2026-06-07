@@ -17,9 +17,9 @@ import {
 import { alpha, darken, keyframes } from "@mui/material/styles";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import HealthAndSafetyRoundedIcon from "@mui/icons-material/HealthAndSafetyRounded";
-import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
 import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
+import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded";
 import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
@@ -67,8 +67,10 @@ const dayThemePlans = [
   {
     edition: "Sunday Reset",
     checkpoint: "Sunday checkpoint",
-    rhythm: "reset",
-    useLine: "read one note, queue one useful task, and keep the week humane",
+    rhythm: "coastal reset",
+    paletteTone: "seagrass teal, lagoon blue, marigold, and rose",
+    useLine:
+      "read the family note, keep one science idea close, check the signal, and let the week start with curiosity",
   },
   {
     edition: "Monday Launchpad",
@@ -123,20 +125,20 @@ function getCurrentDayTheme(date = new Date()) {
     sourceLabel: `${plan.checkpoint}: ${dateLabel}`,
     heroTitle: `${plan.edition}: ${plan.paletteTone ?? "Markdown, signal, music"}.`,
     seoDescription: `${plan.edition} for ${dateLabel}: a ${plan.rhythm} homepage palette with prompt structure notes, key data, health explainers, music notes, learning routes, and grounded reflection.`,
-    heroCopy: `As of ${dateLabel}, the homepage is tuned to a ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: agent customization in plain Markdown, a quick data pulse, health explainers that stay readable, and music close enough to reset the desk. The lens stays simple: explain what matters, lower the noise, and keep the human stack visible.`,
+    heroCopy: `As of ${dateLabel}, the homepage is tuned to a ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: a proud family note on seagrass science, a quick data pulse, readable health explainers, and music close enough to reset the desk. The lens stays simple: explain what matters, lower the noise, and keep the human stack visible.`,
     moodTags: [
       shortDateLabel,
       plan.rhythm,
-      "Teal + marigold",
-      "Care notes",
-      "Rose reset",
+      "Seagrass teal",
+      "Lagoon blue",
+      "Family + STEM",
     ],
   };
 }
 
 const homeAccents = {
   prompt: "#0f766e",
-  signal: "#4f46e5",
+  signal: "#2563eb",
   care: "#d97706",
   music: "#be123c",
   route: "#334155",
@@ -144,16 +146,16 @@ const homeAccents = {
 
 const moodSwatches = [
   {
-    name: "Workbench Teal",
+    name: "Seagrass Teal",
     hex: homeAccents.prompt,
     meaning:
-      "Prompt structure and writing systems stay practical instead of ceremonial.",
+      "Science and writing stay rooted in living systems, not abstract ceremony.",
   },
   {
-    name: "Signal Indigo",
+    name: "Lagoon Blue",
     hex: homeAccents.signal,
     meaning:
-      "Tools, routes, and data stay close to the surface without becoming theatre.",
+      "Waves, data, routes, and site navigation stay clear enough to act on.",
   },
   {
     name: "Care Marigold",
@@ -165,21 +167,21 @@ const moodSwatches = [
     name: "Reset Rose",
     hex: homeAccents.music,
     meaning:
-      "Writing, music, and personal notes keep the technical desk from going sterile.",
+      "Family, music, and personal notes keep the technical desk from going sterile.",
   },
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Agent desk",
-    title: "Prompt structure stays practical today",
+    eyebrow: "Family + STEM",
+    title: "From seagrass meadows to Ocean Engineering",
     summary:
-      "The newest note keeps XML tags in proportion: useful when boundaries matter, but clear tasks, bullets, examples, and context do most of the work.",
-    to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
-    analyticsKey: "home_latest_agent_markdown",
+      "Today's lead note celebrates Namritha's thesis defense, the science of seagrass and sediment transport, and a funded PhD in Ocean Engineering.",
+    to: "/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha",
+    analyticsKey: "home_latest_namritha_seagrass",
     accent: homeAccents.prompt,
-    icon: MenuBookRoundedIcon,
-    cta: "Read the prompt note",
+    icon: ScienceRoundedIcon,
+    cta: "Read the family note",
   },
   {
     eyebrow: "Signal check",
@@ -207,7 +209,7 @@ const worldPulse = [
     eyebrow: "Personal reset",
     title: "Music keeps the workbench human",
     summary:
-      "Tamil song notes, recent spins, and the small ritual of listening belong beside the technical notes. The desk needs both.",
+      "Recent spins and the small ritual of listening belong beside the technical notes. The desk needs both.",
     to: "/music",
     analyticsKey: "home_latest_music_reset",
     accent: homeAccents.music,
@@ -218,15 +220,15 @@ const worldPulse = [
 
 const siteVectors = [
   {
-    eyebrow: "Agents",
-    title: "Start with prompt structure",
+    eyebrow: "Science",
+    title: "Start with the coastal note",
     summary:
-      "The XML-tags note keeps the useful part of prompt structure while avoiding ceremony where plain Markdown and clear English are enough.",
-    to: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
-    analyticsKey: "home_vector_agent_markdown",
+      "Namritha's seagrass work is the right Sunday opener: family pride, field science, coastal resilience, and the next step into Ocean Engineering.",
+    to: "/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha",
+    analyticsKey: "home_vector_namritha_seagrass",
     accent: homeAccents.prompt,
-    icon: MenuBookRoundedIcon,
-    cta: "Read the prompt note",
+    icon: ScienceRoundedIcon,
+    cta: "Read the family note",
   },
   {
     eyebrow: "Pulse",
@@ -254,7 +256,7 @@ const siteVectors = [
     eyebrow: "Music",
     title: "Then leave room for the reset",
     summary:
-      "The Music page is the non-dashboard part of the site: song notes, Tamil typing, and the small reset that keeps the desk human.",
+      "The Music page is the non-dashboard part of the site: recent spins, listening notes, and the small reset that keeps the desk human.",
     to: "/music",
     analyticsKey: "home_vector_music_reset",
     accent: homeAccents.music,
@@ -447,11 +449,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu"
+                  to="/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_agent_markdown_cta")}
+                  onClick={() => trackClick("home_hero_namritha_seagrass_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -470,7 +472,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     },
                   }}
                 >
-                  Read the prompt structure note
+                  Read Namritha&apos;s seagrass note
                 </Button>
                 <Button
                   component={RouterLink}
@@ -500,7 +502,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
                     Mood: agent-aware, signal-first, health-conscious, and
-                    allergic to performative ceremony.
+                    grounded in curiosity, field science, and family pride.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -605,10 +607,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to {dayTheme.dateLabel}: prompt
-                  structure notes, key data, health explainers, music, and a
-                  manageable read of the outside world. Dates stay visible so
-                  the page reads like a moment, not a timeless brand voice.
+                  This frame is pinned to {dayTheme.dateLabel}: seagrass
+                  science, key data, health explainers, music, and a manageable
+                  read of the outside world. Dates stay visible so the page
+                  reads like a moment, not a timeless brand voice.
                 </Typography>
               </Box>
 
@@ -684,7 +686,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           <Stack spacing={1.4} sx={{ maxWidth: 780 }}>
             <Chip
               icon={<MusicNoteRoundedIcon fontSize="small" />}
-              label="கசடதபரரா song note · Tamil typing"
+              label="Sunday note · family, science, ocean engineering"
               sx={{
                 alignSelf: "flex-start",
                 borderRadius: 999,
@@ -708,10 +710,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 color: "var(--home-ink)",
               }}
             >
-              பறை அடித்துட்டு பறை அடித்துட்டு... பறை அடித்திட்டு பறை அடித்திட்டு
-              இறை அடித்திடியா
+              From seagrass meadows to the open ocean.
               <br />
-              எவரும் ராவணனோ எவரும் ராவணனோ அவரும் பாடனும் அவரும் பாடனும்
+              A proud maama&apos;s note for Namritha.
             </Typography>
             <Typography
               variant="body2"
@@ -721,9 +722,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 maxWidth: 680,
               }}
             >
-              Tamil typing hint added on the Music page: use Gboard, switch the
-              keyboard language to Tamil, and type song notes or lyrics directly
-              in Tamil script.
+              Today&apos;s color story is coastal: seagrass teal for curiosity,
+              lagoon blue for engineering, marigold for care, and rose for the
+              family warmth behind the achievement.
             </Typography>
           </Stack>
           <Stack
@@ -733,11 +734,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           >
             <Button
               component={RouterLink}
-              to="/music#kasadathaparara"
+              to="/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha"
               variant="contained"
               size="large"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_kasadathaparara_music_cta")}
+              onClick={() => trackClick("home_namritha_feature_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -747,15 +748,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 boxShadow: "none",
               }}
             >
-              Open music reference
+              Open the note
             </Button>
             <Button
               component={RouterLink}
-              to="/music#tamil-typing-gboard"
+              to="/blog/2025-12-16-agu-2025-seagrass-wave-climates"
               variant="outlined"
               size="large"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_tamil_typing_gboard_cta")}
+              onClick={() => trackClick("home_agu_seagrass_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -766,7 +767,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 borderColor: "var(--home-border)",
               }}
             >
-              Tamil typing hint
+              Related seagrass post
             </Button>
           </Stack>
         </Stack>
@@ -1215,7 +1216,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
               >
                 Today asks for fewer slogans and more useful surfaces: agent
-                notes, data, health, learning, books, music, and one honest
+                science, data, health, learning, books, music, and one honest
                 look at the outside world.
               </Typography>
             </Stack>
