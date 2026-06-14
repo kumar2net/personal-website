@@ -65,12 +65,12 @@ const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
 
 const dayThemePlans = [
   {
-    edition: "Sunday Reset",
-    checkpoint: "Sunday checkpoint",
-    rhythm: "coastal reset",
-    paletteTone: "seagrass teal, lagoon blue, marigold, and rose",
+    edition: "Sunday Signal Reset",
+    checkpoint: "Sunday pulse check",
+    rhythm: "AI infrastructure reset",
+    paletteTone: "graphite, circuit teal, cloud blue, amber, and rose",
     useLine:
-      "read the family note, keep one science idea close, check the signal, and let the week start with curiosity",
+      "read the AI digest, check the infrastructure story, keep one security lesson close, and reset the desk before Monday",
   },
   {
     edition: "Monday Launchpad",
@@ -125,63 +125,63 @@ function getCurrentDayTheme(date = new Date()) {
     sourceLabel: `${plan.checkpoint}: ${dateLabel}`,
     heroTitle: `${plan.edition}: ${plan.paletteTone ?? "Markdown, signal, music"}.`,
     seoDescription: `${plan.edition} for ${dateLabel}: a ${plan.rhythm} homepage palette with prompt structure notes, key data, health explainers, music notes, learning routes, and grounded reflection.`,
-    heroCopy: `As of ${dateLabel}, the homepage is tuned to a ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: a proud family note on seagrass science, a quick data pulse, readable health explainers, and music close enough to reset the desk. The lens stays simple: explain what matters, lower the noise, and keep the human stack visible.`,
+    heroCopy: `As of ${dateLabel}, the homepage is tuned to a ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: the new technology and AI digest leads, key data stays nearby, security gets a sharper edge, and music keeps the desk human. The lens stays simple: explain what matters, lower the noise, and keep the human stack visible.`,
     moodTags: [
       shortDateLabel,
       plan.rhythm,
-      "Seagrass teal",
-      "Lagoon blue",
-      "Family + STEM",
+      "AI infrastructure",
+      "Circuit teal",
+      "Security pulse",
     ],
   };
 }
 
 const homeAccents = {
   prompt: "#0f766e",
-  signal: "#2563eb",
-  care: "#d97706",
+  signal: "#1d4ed8",
+  care: "#b45309",
   music: "#be123c",
   route: "#334155",
 };
 
 const moodSwatches = [
   {
-    name: "Seagrass Teal",
+    name: "Circuit Teal",
     hex: homeAccents.prompt,
     meaning:
-      "Science and writing stay rooted in living systems, not abstract ceremony.",
+      "AI stays useful when the model story connects to real workflows.",
   },
   {
-    name: "Lagoon Blue",
+    name: "Cloud Blue",
     hex: homeAccents.signal,
     meaning:
-      "Waves, data, routes, and site navigation stay clear enough to act on.",
+      "Infrastructure, data centers, operating systems, and routes stay visible.",
   },
   {
-    name: "Care Marigold",
+    name: "Patch Amber",
     hex: homeAccents.care,
     meaning:
-      "Health explainers and medicine notes keep the human scale visible.",
+      "Security, regulation, and patching get treated as first-order news.",
   },
   {
     name: "Reset Rose",
     hex: homeAccents.music,
     meaning:
-      "Family, music, and personal notes keep the technical desk from going sterile.",
+      "Music, family, and personal notes keep the technical desk from going sterile.",
   },
 ];
 
 const worldPulse = [
   {
-    eyebrow: "Family + STEM",
-    title: "From seagrass meadows to Ocean Engineering",
+    eyebrow: "Technology + AI",
+    title: "The week AI became infrastructure",
     summary:
-      "Today's lead note celebrates Namritha's thesis defense, the science of seagrass and sediment transport, and a funded PhD in Ocean Engineering.",
-    to: "/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha",
-    analyticsKey: "home_latest_namritha_seagrass",
+      "Today's lead note connects Apple, OpenAI, Anthropic, Microsoft, Google, and AI security into one practical weekly read.",
+    to: "/blog/2026-06-14-tech-ai-news-digest",
+    analyticsKey: "home_latest_tech_ai_digest",
     accent: homeAccents.prompt,
     icon: ScienceRoundedIcon,
-    cta: "Read the family note",
+    cta: "Read the AI digest",
   },
   {
     eyebrow: "Signal check",
@@ -195,15 +195,15 @@ const worldPulse = [
     cta: "Open key data",
   },
   {
-    eyebrow: "Care stack",
-    title: "Health notes still need plain language",
+    eyebrow: "Security stack",
+    title: "Agentic AI needs boring security discipline",
     summary:
-      "The drug-combination note keeps the medical parts readable: what is tested, what is not, and what questions are worth asking.",
-    to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
-    analyticsKey: "home_latest_health_clarity",
+      "The new AI digest keeps the Langflow and agent-security lesson in view: patch, limit permissions, log, and govern before workflows sprawl.",
+    to: "/blog/2026-06-14-tech-ai-news-digest",
+    analyticsKey: "home_latest_ai_security",
     accent: homeAccents.care,
     icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the health note",
+    cta: "Read the security angle",
   },
   {
     eyebrow: "Personal reset",
@@ -220,15 +220,15 @@ const worldPulse = [
 
 const siteVectors = [
   {
-    eyebrow: "Science",
-    title: "Start with the coastal note",
+    eyebrow: "AI",
+    title: "Start with the weekly AI digest",
     summary:
-      "Namritha's seagrass work is the right Sunday opener: family pride, field science, coastal resilience, and the next step into Ocean Engineering.",
-    to: "/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha",
-    analyticsKey: "home_vector_namritha_seagrass",
+      "The current lead is a compact map of the week: AI in operating systems, public-market pressure, export controls, in-house models, research, and security.",
+    to: "/blog/2026-06-14-tech-ai-news-digest",
+    analyticsKey: "home_vector_tech_ai_digest",
     accent: homeAccents.prompt,
     icon: ScienceRoundedIcon,
-    cta: "Read the family note",
+    cta: "Read the AI digest",
   },
   {
     eyebrow: "Pulse",
@@ -243,9 +243,9 @@ const siteVectors = [
   },
   {
     eyebrow: "Care",
-    title: "Then keep the body notes readable",
+    title: "Then keep the human notes readable",
     summary:
-      "Drug combinations, clinical trials, reports, and family health questions all deserve language that a patient can actually use.",
+      "AI, drug combinations, clinical trials, reports, and family health questions all deserve language that a reader can actually use.",
     to: "/blog/2026-04-11-reply-diabetes-cardio-antibiotic-drug-combinations",
     analyticsKey: "home_vector_health_notes",
     accent: homeAccents.care,
@@ -303,18 +303,18 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       sx={{
         ...revealUpSx(),
         "--home-surface": isDarkMode
-          ? "rgba(16, 22, 32, 0.96)"
-          : "rgba(255, 252, 247, 0.98)",
+          ? "rgba(13, 18, 28, 0.96)"
+          : "rgba(250, 252, 252, 0.98)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(22, 30, 43, 0.96)"
-          : "rgba(250, 247, 241, 0.98)",
+          ? "rgba(18, 27, 40, 0.96)"
+          : "rgba(246, 249, 250, 0.98)",
         "--home-border": isDarkMode
           ? "rgba(148, 163, 184, 0.28)"
-          : "rgba(120, 113, 108, 0.24)",
+          : "rgba(71, 85, 105, 0.2)",
         "--home-muted-text": isDarkMode
           ? "rgba(226, 232, 240, 0.74)"
-          : "rgba(68, 64, 60, 0.86)",
-        "--home-ink": isDarkMode ? "#f8fafc" : "#1c1917",
+          : "rgba(51, 65, 85, 0.86)",
+        "--home-ink": isDarkMode ? "#f8fafc" : "#0f172a",
         "--home-accent": homeAccents.prompt,
         "--home-accent-strong": isDarkMode ? "#5eead4" : homeAccents.prompt,
         "--home-shadow": isDarkMode
@@ -348,15 +348,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "linear-gradient(135deg, rgba(15, 118, 110, 0.24) 0%, rgba(16, 22, 32, 0.98) 34%, rgba(49, 46, 129, 0.32) 68%, rgba(190, 18, 60, 0.18) 100%)"
-                : "linear-gradient(135deg, rgba(240, 253, 250, 0.98) 0%, rgba(255, 251, 235, 0.98) 38%, rgba(250, 247, 241, 0.98) 70%, rgba(255, 241, 242, 0.96) 100%)",
+                ? "linear-gradient(135deg, rgba(15, 118, 110, 0.26) 0%, rgba(13, 18, 28, 0.98) 34%, rgba(29, 78, 216, 0.28) 68%, rgba(180, 83, 9, 0.2) 100%)"
+                : "linear-gradient(135deg, rgba(236, 253, 245, 0.98) 0%, rgba(239, 246, 255, 0.98) 36%, rgba(248, 250, 252, 0.98) 70%, rgba(255, 247, 237, 0.96) 100%)",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%), repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.08) 0 1px, transparent 1px 28px), repeating-linear-gradient(90deg, rgba(217, 119, 6, 0.07) 0 1px, transparent 1px 28px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%), repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.08) 0 1px, transparent 1px 28px), repeating-linear-gradient(90deg, rgba(29, 78, 216, 0.07) 0 1px, transparent 1px 28px)",
                 backgroundSize: "100% 100%, 100% 100%, 100% 100%",
                 opacity: isDarkMode ? 0.22 : 0.16,
                 pointerEvents: "none",
@@ -380,7 +380,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     color: "var(--home-ink)",
                     backgroundColor: isDarkMode
                       ? "rgba(15, 118, 110, 0.2)"
-                      : "rgba(240, 253, 250, 0.84)",
+                      : "rgba(236, 253, 245, 0.84)",
                     backdropFilter: "blur(14px)",
                   }}
                 />
@@ -449,11 +449,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha"
+                  to="/blog/2026-06-14-tech-ai-news-digest"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_namritha_seagrass_cta")}
+                  onClick={() => trackClick("home_hero_tech_ai_digest_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -463,16 +463,16 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     boxShadow: "none",
                     color: "var(--variant-containedColor)",
                     background:
-                      "linear-gradient(135deg, #99f6e4 0%, #fde68a 52%, #fecdd3 100%)",
+                      "linear-gradient(135deg, #99f6e4 0%, #bfdbfe 50%, #fed7aa 100%)",
                     "&:hover": {
                       boxShadow: "none",
                       color: "var(--variant-containedColor)",
                       background:
-                        "linear-gradient(135deg, #5eead4 0%, #fde68a 58%, #fda4af 100%)",
+                        "linear-gradient(135deg, #5eead4 0%, #93c5fd 56%, #fdba74 100%)",
                     },
                   }}
                 >
-                  Read Namritha&apos;s seagrass note
+                  Read the AI digest
                 </Button>
                 <Button
                   component={RouterLink}
@@ -502,7 +502,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
                     Mood: agent-aware, signal-first, health-conscious, and
-                    grounded in curiosity, field science, and family pride.
+                    grounded in current infrastructure, security, and human use.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -607,10 +607,10 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to {dayTheme.dateLabel}: seagrass
-                  science, key data, health explainers, music, and a manageable
-                  read of the outside world. Dates stay visible so the page
-                  reads like a moment, not a timeless brand voice.
+                  This frame is pinned to {dayTheme.dateLabel}: AI infrastructure,
+                  key data, security, health explainers, music, and a manageable
+                  read of the outside world. Dates stay visible so the page reads
+                  like a moment, not a timeless brand voice.
                 </Typography>
               </Box>
 
@@ -672,8 +672,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           borderRadius: 2,
           border: "1px solid var(--home-border)",
           backgroundImage: isDarkMode
-            ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22), rgba(16, 22, 32, 0.94) 48%, rgba(190, 18, 60, 0.2))"
-            : "linear-gradient(135deg, rgba(240, 253, 250, 0.98), rgba(255, 251, 235, 0.96) 48%, rgba(255, 241, 242, 0.98))",
+            ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22), rgba(13, 18, 28, 0.94) 48%, rgba(180, 83, 9, 0.22))"
+            : "linear-gradient(135deg, rgba(236, 253, 245, 0.98), rgba(239, 246, 255, 0.96) 48%, rgba(255, 247, 237, 0.98))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -686,7 +686,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           <Stack spacing={1.4} sx={{ maxWidth: 780 }}>
             <Chip
               icon={<MusicNoteRoundedIcon fontSize="small" />}
-              label="Sunday note · family, science, ocean engineering"
+              label="Sunday note · AI, infrastructure, security"
               sx={{
                 alignSelf: "flex-start",
                 borderRadius: 999,
@@ -710,9 +710,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 color: "var(--home-ink)",
               }}
             >
-              From seagrass meadows to the open ocean.
+              The model demo phase is over.
               <br />
-              A proud maama&apos;s note for Namritha.
+              AI is becoming infrastructure.
             </Typography>
             <Typography
               variant="body2"
@@ -722,9 +722,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 maxWidth: 680,
               }}
             >
-              Today&apos;s color story is coastal: seagrass teal for curiosity,
-              lagoon blue for engineering, marigold for care, and rose for the
-              family warmth behind the achievement.
+              Today&apos;s color story is operational: graphite for the desk,
+              circuit teal for agents, cloud blue for infrastructure, amber for
+              security, and rose for the human reset.
             </Typography>
           </Stack>
           <Stack
@@ -734,11 +734,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           >
             <Button
               component={RouterLink}
-              to="/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha"
+              to="/blog/2026-06-14-tech-ai-news-digest"
               variant="contained"
               size="large"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_namritha_feature_cta")}
+              onClick={() => trackClick("home_tech_ai_digest_feature_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -748,15 +748,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 boxShadow: "none",
               }}
             >
-              Open the note
+              Open the digest
             </Button>
             <Button
               component={RouterLink}
-              to="/blog/2025-12-16-agu-2025-seagrass-wave-climates"
+              to="/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha"
               variant="outlined"
               size="large"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_agu_seagrass_cta")}
+              onClick={() => trackClick("home_namritha_seagrass_support_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -767,7 +767,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 borderColor: "var(--home-border)",
               }}
             >
-              Related seagrass post
+              Keep the seagrass note
             </Button>
           </Stack>
         </Stack>

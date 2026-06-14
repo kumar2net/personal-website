@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "The Week AI Became Infrastructure",
+    date: "June 14, 2026",
+    lastModified: "June 14, 2026",
+    excerpt:
+      "A June 8-14, 2026 digest of technology and AI news: Apple brings AI deeper into the operating system, OpenAI eyes the public markets, Anthropic hits the export-control wall, Microsoft pushes in-house models, Google keeps moving on research, and security teams face AI-native risk.",
+    tags: ["AI", "Technology", "OpenAI", "Apple", "Microsoft", "Anthropic", "Cybersecurity"],
+    image: "/media/generated/2026-06-14-tech-ai-news-digest-hero.png",
+    link: "/blog/2026-06-14-tech-ai-news-digest",
+  },
+  {
     title: "Reply: XML Tags Are Useful, Not Magic",
     date: "April 26, 2026",
     lastModified: "April 26, 2026",

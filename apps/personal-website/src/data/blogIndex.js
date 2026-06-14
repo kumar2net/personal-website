@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-06-14-tech-ai-news-digest": {
+    title: "The Week AI Became Infrastructure",
+    description:
+      "A June 8-14, 2026 digest of technology and AI news: Apple brings AI deeper into the operating system, OpenAI eyes the public markets, Anthropic hits the export-control wall, Microsoft pushes in-house models, Google keeps moving on research, and security teams face AI-native risk.",
+    image: "/media/generated/2026-06-14-tech-ai-news-digest-hero.png",
+    tags: ["AI", "Technology", "OpenAI", "Apple", "Microsoft", "Anthropic", "Cybersecurity"],
+    datePublished: "2026-06-14",
+    dateModified: "2026-06-14",
+    readingTime: "~6 min",
+  },
   "2026-06-07-seagrass-meadows-ocean-engineering-namritha": {
     title: "From Seagrass Meadows to Ocean Engineering: A Proud Maama's Note for Namritha",
     description:
