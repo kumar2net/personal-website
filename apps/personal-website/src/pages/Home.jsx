@@ -24,6 +24,7 @@ import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
 import SEO from "../components/SEO";
 import { homeFeaturedPosts } from "../data/homeFeaturedPosts";
+import musicPlaylistSnapshot from "../data/musicPlaylistSnapshot.json";
 
 const WorldClock = lazy(() => import("../components/WorldClock"));
 
@@ -171,6 +172,50 @@ const moodSwatches = [
   },
 ];
 
+const latestMusicMoodNotes = {
+  "-DYTCQpaDck":
+    "Violin-led Hindi nostalgia, polished enough for the workbench but still warm around the edges.",
+  OJr6XQaQwnU:
+    "A. R. Rahman melancholy in a softer female-version lane, keeping the reset reflective.",
+  BjaPNVEPhnU:
+    "The newest add: Arijit Singh and Salim-Sulaiman move the playlist into a calmer, late-evening register.",
+};
+
+function getCompactTrackTitle(title) {
+  return title
+    .replace(/\s+\(From ".*"\)/, "")
+    .replace(/\s+\|\s+.*$/, "")
+    .trim();
+}
+
+function getLatestMusicSpins(count = 3) {
+  return musicPlaylistSnapshot.tracks
+    .slice(-count)
+    .reverse()
+    .map((track, index) => ({
+      ...track,
+      compactTitle: getCompactTrackTitle(track.title),
+      freshnessLabel: index === 0 ? "Newest add" : "Recent add",
+      moodNote:
+        latestMusicMoodNotes[track.videoId] ??
+        "One of the newest additions shaping the current playlist mood.",
+    }));
+}
+
+function formatTrackList(tracks) {
+  const titles = tracks.map((track) => `"${track.compactTitle}"`);
+
+  if (titles.length <= 1) {
+    return titles[0] ?? "the latest additions";
+  }
+
+  if (titles.length === 2) {
+    return `${titles[0]} and ${titles[1]}`;
+  }
+
+  return `${titles.slice(0, -1).join(", ")}, and ${titles.at(-1)}`;
+}
+
 const worldPulse = [
   {
     eyebrow: "Technology + AI",
@@ -297,6 +342,13 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
     '"Space Grotesk", "IBM Plex Sans", "Avenir Next", "Noto Sans", sans-serif';
   const featuredPosts = homeFeaturedPosts;
   const dayTheme = getCurrentDayTheme();
+  const latestMusicSpins = getLatestMusicSpins();
+  const latestMusicPhrase = formatTrackList(latestMusicSpins);
+  const currentMoodTags = [
+    ...dayTheme.moodTags.slice(0, 3),
+    "Latest spins",
+    latestMusicSpins[0]?.compactTitle ?? "Music reset",
+  ];
 
   return (
     <Box
@@ -425,7 +477,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               </Stack>
 
               <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
-                {dayTheme.moodTags.map((label) => (
+                {currentMoodTags.map((label) => (
                   <Chip
                     key={label}
                     label={label}
@@ -510,7 +562,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Today&apos;s use: {dayTheme.useLine}.
+                    Today&apos;s use: {dayTheme.useLine}. The playlist mood is
+                    currently pulled by {latestMusicPhrase}.
                   </Typography>
                 </Grid>
               </Grid>
@@ -770,6 +823,198 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               Keep the seagrass note
             </Button>
           </Stack>
+        </Stack>
+      </Paper>
+
+      <Paper
+        elevation={0}
+        sx={{
+          ...revealUpSx(0.14, 0.5),
+          p: { xs: 3, md: 3.5 },
+          borderRadius: 2,
+          border: "1px solid var(--home-border)",
+          backgroundImage: isDarkMode
+            ? "linear-gradient(135deg, rgba(190, 18, 60, 0.22), rgba(13, 18, 28, 0.98) 46%, rgba(15, 118, 110, 0.18))"
+            : "linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(255, 255, 255, 0.98) 48%, rgba(236, 253, 245, 0.92))",
+          boxShadow: "var(--home-shadow)",
+        }}
+      >
+        <Stack spacing={2.4}>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={2}
+            alignItems={{ xs: "flex-start", md: "flex-end" }}
+            justifyContent="space-between"
+          >
+            <Stack spacing={1}>
+              <Chip
+                icon={<MusicNoteRoundedIcon fontSize="small" />}
+                label={`Music mood · ${musicPlaylistSnapshot.trackCount} tracks`}
+                sx={{
+                  alignSelf: "flex-start",
+                  borderRadius: 999,
+                  fontWeight: 700,
+                  color: "var(--home-ink)",
+                  backgroundColor: isDarkMode
+                    ? "rgba(190, 18, 60, 0.2)"
+                    : "rgba(255, 241, 242, 0.9)",
+                }}
+              />
+              <Typography
+                variant="h4"
+                sx={{
+                  fontFamily: heroFont,
+                  fontWeight: 650,
+                  color: "var(--home-ink)",
+                }}
+              >
+                Latest songs shaping today&apos;s mood
+              </Typography>
+            </Stack>
+            <Typography
+              variant="body2"
+              sx={{
+                maxWidth: 500,
+                color: "var(--home-muted-text)",
+                lineHeight: 1.7,
+              }}
+            >
+              The Music page tail is now part of the home-page palette: rose for
+              the reset, teal for focus, and these newest adds as the softer
+              counterweight to the AI and data sections.
+            </Typography>
+          </Stack>
+
+          <Grid container spacing={2}>
+            {latestMusicSpins.map((track) => (
+              <Grid key={track.videoId} size={{ xs: 12, md: 4 }}>
+                <Card
+                  sx={(theme) => ({
+                    height: "100%",
+                    borderRadius: 2,
+                    border: "1px solid var(--home-border)",
+                    backgroundColor: "var(--home-surface)",
+                    boxShadow: "none",
+                    transition:
+                      "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
+                    "&:hover": {
+                      transform: "translateY(-3px)",
+                      borderColor: alpha(homeAccents.music, 0.76),
+                      boxShadow: theme.shadows[6],
+                    },
+                  })}
+                >
+                  <CardActionArea
+                    component="a"
+                    href={track.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackClick(`home_music_latest_${track.videoId}`)}
+                    sx={{ height: "100%" }}
+                  >
+                    <CardContent sx={{ p: 2.5, height: "100%" }}>
+                      <Stack spacing={1.35} sx={{ height: "100%" }}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="flex-start"
+                          spacing={1.5}
+                        >
+                          <Box
+                            sx={{
+                              width: 42,
+                              height: 42,
+                              borderRadius: 2,
+                              flexShrink: 0,
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              backgroundColor: alpha(
+                                homeAccents.music,
+                                isDarkMode ? 0.2 : 0.12,
+                              ),
+                              color: isDarkMode
+                                ? "#fb7185"
+                                : darken(homeAccents.music, 0.3),
+                            }}
+                          >
+                            <MusicNoteRoundedIcon fontSize="small" />
+                          </Box>
+                          <Typography
+                            variant="overline"
+                            sx={{
+                              color: isDarkMode
+                                ? "#fb7185"
+                                : darken(homeAccents.music, 0.3),
+                              letterSpacing: 1.4,
+                              fontWeight: 700,
+                              textAlign: "right",
+                            }}
+                          >
+                            {track.freshnessLabel}
+                          </Typography>
+                        </Stack>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontFamily: heroFont,
+                            fontWeight: 650,
+                            color: "var(--home-ink)",
+                            lineHeight: 1.18,
+                          }}
+                        >
+                          {track.compactTitle}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            color: "var(--home-muted-text)",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {track.artists.split(" · ")[0]}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: "var(--home-muted-text)",
+                            lineHeight: 1.62,
+                            flexGrow: 1,
+                          }}
+                        >
+                          {track.moodNote}
+                        </Typography>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="center"
+                          sx={{ pt: 0.5 }}
+                        >
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              color: "var(--home-muted-text)",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Listen on YouTube Music
+                          </Typography>
+                          <ArrowOutwardRoundedIcon
+                            sx={{
+                              fontSize: 18,
+                              color: isDarkMode
+                                ? "#fb7185"
+                                : darken(homeAccents.music, 0.3),
+                            }}
+                          />
+                        </Stack>
+                      </Stack>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </Stack>
       </Paper>
 
