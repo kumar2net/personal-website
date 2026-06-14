@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-06-14-china-india-human-capital-lesson": {
+    title: "Why China Got Rich and India Didn't: The Human Capital Lesson India Must Not Ignore",
+    description:
+      "A reflective India-China development essay on why China's market opening worked on top of earlier mass human-capital preparation, and why India must now make schooling, nutrition, health, women's participation, and skills its central growth strategy.",
+    image: "/generate/2026-06-14-china-india-human-capital-hero.png",
+    tags: ["India", "China", "Human Capital", "Development", "Manufacturing", "Education"],
+    datePublished: "2026-06-14",
+    dateModified: "2026-06-14",
+    readingTime: "~7 min",
+  },
   "2026-06-14-tech-ai-news-digest": {
     title: "The Week AI Became Infrastructure",
     description:
