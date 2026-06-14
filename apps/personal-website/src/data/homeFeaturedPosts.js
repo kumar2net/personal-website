@@ -1,5 +1,16 @@
 export const homeFeaturedPosts = [
   {
+    slug: "2026-06-14-spacex-ipo-pros-cons",
+    title: "SpaceX IPO: What Public Investors Are Really Buying",
+    excerpt:
+      "A dated June 2026 analysis of SpaceX's public-market debut: valuation, Starlink, Starship, governance, execution risk, and what must go right.",
+    image: "/media/spacexipo.png",
+    tags: ["SpaceX", "IPO", "Markets"],
+    link: "/blog/2026-06-14-spacex-ipo-pros-cons",
+    date: "June 14, 2026",
+    datePublished: "2026-06-14",
+  },
+  {
     slug: "2026-06-14-tech-ai-news-digest",
     title: "The Week AI Became Infrastructure",
     excerpt:
@@ -21,16 +32,5 @@ export const homeFeaturedPosts = [
     link: "/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha",
     date: "June 7, 2026",
     datePublished: "2026-06-07",
-  },
-  {
-    slug: "2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
-    title: "Reply: XML Tags Are Useful, Not Magic",
-    excerpt:
-      "A practical prompting note: XML tags can help when boundaries matter, but clear tasks, clean context, bullets, and examples usually do most of the work.",
-    image: "/media/blogwordcloud.png",
-    tags: ["AI", "Prompting", "Writing"],
-    link: "/blog/2026-04-26-reply-xml-tags-prompts-sanjaay-babu",
-    date: "April 26, 2026",
-    datePublished: "2026-04-26",
   },
 ];

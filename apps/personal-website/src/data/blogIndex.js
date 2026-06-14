@@ -2,6 +2,16 @@
 // Add entries as needed; used to hydrate title/description/image/canonical
 
 export const blogIndex = {
+  "2026-06-14-spacex-ipo-pros-cons": {
+    title: "SpaceX IPO: What Public Investors Are Really Buying",
+    description:
+      "A dated June 2026 analysis of the SpaceX IPO, the $75 billion raise, the valuation, and the pros and cons for public investors.",
+    image: "/media/spacexipo.png",
+    tags: ["SpaceX", "IPO", "Markets", "Space", "Starlink", "Investing"],
+    datePublished: "2026-06-14",
+    dateModified: "2026-06-14",
+    readingTime: "~7 min",
+  },
   "2026-06-14-china-india-human-capital-lesson": {
     title: "Why China Got Rich and India Didn't: The Human Capital Lesson India Must Not Ignore",
     description:

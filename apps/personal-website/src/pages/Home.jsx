@@ -19,6 +19,7 @@ import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import HealthAndSafetyRoundedIcon from "@mui/icons-material/HealthAndSafetyRounded";
 import MusicNoteRoundedIcon from "@mui/icons-material/MusicNoteRounded";
 import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
+import RocketLaunchRoundedIcon from "@mui/icons-material/RocketLaunchRounded";
 import ScienceRoundedIcon from "@mui/icons-material/ScienceRounded";
 import TravelExploreRoundedIcon from "@mui/icons-material/TravelExploreRounded";
 import { FaTwitter, FaWordpress } from "react-icons/fa";
@@ -66,12 +67,12 @@ const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
 
 const dayThemePlans = [
   {
-    edition: "Sunday Signal Reset",
-    checkpoint: "Sunday pulse check",
-    rhythm: "AI infrastructure reset",
-    paletteTone: "graphite, circuit teal, cloud blue, amber, and rose",
+    edition: "Sunday Orbital Desk",
+    checkpoint: "Sunday market pulse",
+    rhythm: "orbital market read",
+    paletteTone: "midnight ink, launch teal, orbit blue, brass amber, and soft rose",
     useLine:
-      "read the AI digest, check the infrastructure story, keep one security lesson close, and reset the desk before Monday",
+      "read the SpaceX IPO note, check the AI infrastructure story, keep the valuation risk visible, and reset the desk before Monday",
   },
   {
     edition: "Monday Launchpad",
@@ -124,48 +125,49 @@ function getCurrentDayTheme(date = new Date()) {
     shortDateLabel,
     editionLabel: `${plan.edition} · ${dateLabel}`,
     sourceLabel: `${plan.checkpoint}: ${dateLabel}`,
-    heroTitle: `${plan.edition}: ${plan.paletteTone ?? "Markdown, signal, music"}.`,
-    seoDescription: `${plan.edition} for ${dateLabel}: a ${plan.rhythm} homepage palette with prompt structure notes, key data, health explainers, music notes, learning routes, and grounded reflection.`,
-    heroCopy: `As of ${dateLabel}, the homepage is tuned to a ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: the new technology and AI digest leads, key data stays nearby, security gets a sharper edge, and music keeps the desk human. The lens stays simple: explain what matters, lower the noise, and keep the human stack visible.`,
+    heroTitle: `${plan.edition}: market signal, engineering awe, human reset.`,
+    seoDescription: `${plan.edition} for ${dateLabel}: a ${plan.rhythm} homepage palette with market notes, AI infrastructure, key data, health explainers, music notes, learning routes, and grounded reflection.`,
+    heroCopy: `As of ${dateLabel}, the homepage is tuned around the ${plan.rhythm} mood with ${plan.paletteTone ?? "clear signal colors"}: the SpaceX IPO leads the market story, the AI digest stays nearby, key data remains the compass, and music keeps the desk human. The lens stays simple: admire the engineering, price the risk, and keep the human stack visible.`,
     moodTags: [
       shortDateLabel,
       plan.rhythm,
-      "AI infrastructure",
-      "Circuit teal",
-      "Security pulse",
+      "SpaceX IPO",
+      "Launch teal",
+      "Valuation check",
     ],
   };
 }
 
 const homeAccents = {
-  prompt: "#0f766e",
-  signal: "#1d4ed8",
-  care: "#b45309",
+  prompt: "#0e7490",
+  signal: "#2563eb",
+  care: "#a16207",
   music: "#be123c",
-  route: "#334155",
+  route: "#475569",
+  launch: "#dc2626",
 };
 
 const moodSwatches = [
   {
-    name: "Circuit Teal",
+    name: "Launch Teal",
     hex: homeAccents.prompt,
     meaning:
-      "AI stays useful when the model story connects to real workflows.",
+      "Engineering ambition stays useful only when it connects to operating reality.",
   },
   {
-    name: "Cloud Blue",
+    name: "Orbit Blue",
     hex: homeAccents.signal,
     meaning:
-      "Infrastructure, data centers, operating systems, and routes stay visible.",
+      "Public markets, satellite networks, cloud demand, and routes stay visible.",
   },
   {
-    name: "Patch Amber",
+    name: "Brass Amber",
     hex: homeAccents.care,
     meaning:
-      "Security, regulation, and patching get treated as first-order news.",
+      "Valuation, regulation, execution risk, and governance get first-order attention.",
   },
   {
-    name: "Reset Rose",
+    name: "Soft Rose",
     hex: homeAccents.music,
     meaning:
       "Music, family, and personal notes keep the technical desk from going sterile.",
@@ -218,15 +220,15 @@ function formatTrackList(tracks) {
 
 const worldPulse = [
   {
-    eyebrow: "Technology + AI",
-    title: "The week AI became infrastructure",
+    eyebrow: "Market + Space",
+    title: "SpaceX moves from private legend to public test",
     summary:
-      "Today's lead note connects Apple, OpenAI, Anthropic, Microsoft, Google, and AI security into one practical weekly read.",
-    to: "/blog/2026-06-14-tech-ai-news-digest",
-    analyticsKey: "home_latest_tech_ai_digest",
+      "Today's lead note separates admiration from allocation: $75 billion raised, a huge valuation, and a real question about what must go right.",
+    to: "/blog/2026-06-14-spacex-ipo-pros-cons",
+    analyticsKey: "home_latest_spacex_ipo",
     accent: homeAccents.prompt,
-    icon: ScienceRoundedIcon,
-    cta: "Read the AI digest",
+    icon: RocketLaunchRoundedIcon,
+    cta: "Read the IPO note",
   },
   {
     eyebrow: "Signal check",
@@ -240,15 +242,15 @@ const worldPulse = [
     cta: "Open key data",
   },
   {
-    eyebrow: "Security stack",
-    title: "Agentic AI needs boring security discipline",
+    eyebrow: "AI stack",
+    title: "AI became infrastructure this week",
     summary:
-      "The new AI digest keeps the Langflow and agent-security lesson in view: patch, limit permissions, log, and govern before workflows sprawl.",
+      "The weekly digest keeps Apple, OpenAI, Anthropic, Microsoft, Google, and AI security in one practical frame.",
     to: "/blog/2026-06-14-tech-ai-news-digest",
-    analyticsKey: "home_latest_ai_security",
+    analyticsKey: "home_latest_ai_infrastructure",
     accent: homeAccents.care,
-    icon: HealthAndSafetyRoundedIcon,
-    cta: "Read the security angle",
+    icon: ScienceRoundedIcon,
+    cta: "Read the AI digest",
   },
   {
     eyebrow: "Personal reset",
@@ -265,26 +267,26 @@ const worldPulse = [
 
 const siteVectors = [
   {
-    eyebrow: "AI",
-    title: "Start with the weekly AI digest",
+    eyebrow: "Space",
+    title: "Start with the SpaceX IPO note",
     summary:
-      "The current lead is a compact map of the week: AI in operating systems, public-market pressure, export controls, in-house models, research, and security.",
-    to: "/blog/2026-06-14-tech-ai-news-digest",
-    analyticsKey: "home_vector_tech_ai_digest",
+      "The current lead is a compact map of the IPO: price, valuation, pros, cons, Starlink, Starship, governance, and execution risk.",
+    to: "/blog/2026-06-14-spacex-ipo-pros-cons",
+    analyticsKey: "home_vector_spacex_ipo",
     accent: homeAccents.prompt,
-    icon: ScienceRoundedIcon,
-    cta: "Read the AI digest",
+    icon: RocketLaunchRoundedIcon,
+    cta: "Read the IPO note",
   },
   {
-    eyebrow: "Pulse",
-    title: "Then check the outside signal",
+    eyebrow: "AI",
+    title: "Then read the AI infrastructure digest",
     summary:
-      "Key Data is still the compact pulse check: crude, markets, volatility, and a few numbers that are useful enough.",
-    to: "/keydata",
-    analyticsKey: "home_vector_keydata",
+      "The weekly AI note connects operating systems, model labs, export controls, enterprise stacks, research, and security.",
+    to: "/blog/2026-06-14-tech-ai-news-digest",
+    analyticsKey: "home_vector_tech_ai_digest",
     accent: homeAccents.signal,
-    icon: QueryStatsRoundedIcon,
-    cta: "Open key data",
+    icon: ScienceRoundedIcon,
+    cta: "Read the AI digest",
   },
   {
     eyebrow: "Care",
@@ -355,14 +357,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
       sx={{
         ...revealUpSx(),
         "--home-surface": isDarkMode
-          ? "rgba(13, 18, 28, 0.96)"
-          : "rgba(250, 252, 252, 0.98)",
+          ? "rgba(9, 14, 24, 0.96)"
+          : "rgba(250, 252, 255, 0.98)",
         "--home-surface-muted": isDarkMode
-          ? "rgba(18, 27, 40, 0.96)"
-          : "rgba(246, 249, 250, 0.98)",
+          ? "rgba(14, 22, 36, 0.96)"
+          : "rgba(245, 248, 252, 0.98)",
         "--home-border": isDarkMode
-          ? "rgba(148, 163, 184, 0.28)"
-          : "rgba(71, 85, 105, 0.2)",
+          ? "rgba(148, 163, 184, 0.3)"
+          : "rgba(51, 65, 85, 0.18)",
         "--home-muted-text": isDarkMode
           ? "rgba(226, 232, 240, 0.74)"
           : "rgba(51, 65, 85, 0.86)",
@@ -400,17 +402,34 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               p: { xs: 3, md: 5 },
               border: "1px solid var(--home-border)",
               backgroundImage: isDarkMode
-                ? "linear-gradient(135deg, rgba(15, 118, 110, 0.26) 0%, rgba(13, 18, 28, 0.98) 34%, rgba(29, 78, 216, 0.28) 68%, rgba(180, 83, 9, 0.2) 100%)"
-                : "linear-gradient(135deg, rgba(236, 253, 245, 0.98) 0%, rgba(239, 246, 255, 0.98) 36%, rgba(248, 250, 252, 0.98) 70%, rgba(255, 247, 237, 0.96) 100%)",
+                ? "linear-gradient(135deg, rgba(14, 116, 144, 0.28) 0%, rgba(9, 14, 24, 0.98) 34%, rgba(37, 99, 235, 0.26) 68%, rgba(161, 98, 7, 0.22) 100%)"
+                : "linear-gradient(135deg, rgba(236, 254, 255, 0.98) 0%, rgba(239, 246, 255, 0.98) 36%, rgba(248, 250, 252, 0.98) 70%, rgba(254, 243, 199, 0.92) 100%)",
               boxShadow: "var(--home-shadow)",
               "&::before": {
                 content: '""',
                 position: "absolute",
                 inset: 0,
                 backgroundImage:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%), repeating-linear-gradient(0deg, rgba(15, 118, 110, 0.08) 0 1px, transparent 1px 28px), repeating-linear-gradient(90deg, rgba(29, 78, 216, 0.07) 0 1px, transparent 1px 28px)",
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 30%), repeating-linear-gradient(0deg, rgba(14, 116, 144, 0.08) 0 1px, transparent 1px 30px), repeating-linear-gradient(90deg, rgba(37, 99, 235, 0.07) 0 1px, transparent 1px 30px)",
                 backgroundSize: "100% 100%, 100% 100%, 100% 100%",
                 opacity: isDarkMode ? 0.22 : 0.16,
+                pointerEvents: "none",
+              },
+              "&::after": {
+                content: '""',
+                position: "absolute",
+                right: { xs: -90, md: -70 },
+                top: { xs: -80, md: -110 },
+                width: { xs: 220, md: 320 },
+                height: { xs: 220, md: 320 },
+                borderRadius: "50%",
+                border: "1px solid",
+                borderColor: isDarkMode
+                  ? "rgba(125, 211, 252, 0.28)"
+                  : "rgba(37, 99, 235, 0.18)",
+                boxShadow: isDarkMode
+                  ? "inset 0 0 60px rgba(14, 116, 144, 0.12)"
+                  : "inset 0 0 60px rgba(14, 116, 144, 0.08)",
                 pointerEvents: "none",
               },
             }}
@@ -431,8 +450,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     letterSpacing: 0.35,
                     color: "var(--home-ink)",
                     backgroundColor: isDarkMode
-                      ? "rgba(15, 118, 110, 0.2)"
-                      : "rgba(236, 253, 245, 0.84)",
+                      ? "rgba(14, 116, 144, 0.22)"
+                      : "rgba(236, 254, 255, 0.86)",
                     backdropFilter: "blur(14px)",
                   }}
                 />
@@ -501,11 +520,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
               >
                 <Button
                   component={RouterLink}
-                  to="/blog/2026-06-14-tech-ai-news-digest"
+                  to="/blog/2026-06-14-spacex-ipo-pros-cons"
                   variant="contained"
                   size="large"
                   endIcon={<ArrowOutwardRoundedIcon />}
-                  onClick={() => trackClick("home_hero_tech_ai_digest_cta")}
+                  onClick={() => trackClick("home_hero_spacex_ipo_cta")}
                   sx={{
                     "--variant-containedColor": "#0b2440",
                     borderRadius: 999,
@@ -524,14 +543,14 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     },
                   }}
                 >
-                  Read the AI digest
+                  Read the SpaceX IPO note
                 </Button>
                 <Button
                   component={RouterLink}
-                  to="/keydata"
+                  to="/blog/2026-06-14-tech-ai-news-digest"
                   variant="outlined"
                   size="large"
-                  onClick={() => trackClick("home_hero_keydata_secondary_cta")}
+                  onClick={() => trackClick("home_hero_ai_digest_secondary_cta")}
                   sx={{
                     borderRadius: 999,
                     px: 3,
@@ -541,7 +560,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     borderColor: "var(--home-border)",
                   }}
                 >
-                  Open key data
+                  Open the AI digest
                 </Button>
               </Stack>
 
@@ -553,8 +572,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                     variant="body2"
                     sx={{ color: "var(--home-muted-text)", lineHeight: 1.65 }}
                   >
-                    Mood: agent-aware, signal-first, health-conscious, and
-                    grounded in current infrastructure, security, and human use.
+                    Mood: market-aware, engineering-literate, valuation-conscious,
+                    and grounded in current infrastructure, risk, and human use.
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
@@ -660,10 +679,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                   variant="body2"
                   sx={{ color: "var(--home-muted-text)", lineHeight: 1.7 }}
                 >
-                  This frame is pinned to {dayTheme.dateLabel}: AI infrastructure,
-                  key data, security, health explainers, music, and a manageable
-                  read of the outside world. Dates stay visible so the page reads
-                  like a moment, not a timeless brand voice.
+                  This frame is pinned to {dayTheme.dateLabel}: SpaceX, public
+                  markets, AI infrastructure, key data, health explainers,
+                  music, and a manageable read of the outside world. Dates stay
+                  visible so the page reads like a moment, not a timeless brand
+                  voice.
                 </Typography>
               </Box>
 
@@ -725,8 +745,8 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           borderRadius: 2,
           border: "1px solid var(--home-border)",
           backgroundImage: isDarkMode
-            ? "linear-gradient(135deg, rgba(15, 118, 110, 0.22), rgba(13, 18, 28, 0.94) 48%, rgba(180, 83, 9, 0.22))"
-            : "linear-gradient(135deg, rgba(236, 253, 245, 0.98), rgba(239, 246, 255, 0.96) 48%, rgba(255, 247, 237, 0.98))",
+            ? "linear-gradient(135deg, rgba(14, 116, 144, 0.24), rgba(9, 14, 24, 0.94) 48%, rgba(161, 98, 7, 0.24))"
+            : "linear-gradient(135deg, rgba(236, 254, 255, 0.98), rgba(239, 246, 255, 0.96) 48%, rgba(254, 243, 199, 0.94))",
           boxShadow: "var(--home-shadow)",
         }}
       >
@@ -737,17 +757,17 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           justifyContent="space-between"
         >
           <Stack spacing={1.4} sx={{ maxWidth: 780 }}>
-            <Chip
-              icon={<MusicNoteRoundedIcon fontSize="small" />}
-              label="Sunday note · AI, infrastructure, security"
+              <Chip
+              icon={<RocketLaunchRoundedIcon fontSize="small" />}
+              label="Sunday note · SpaceX, markets, infrastructure"
               sx={{
                 alignSelf: "flex-start",
                 borderRadius: 999,
                 fontWeight: 700,
                 color: "var(--home-ink)",
                 backgroundColor: isDarkMode
-                  ? "rgba(190, 18, 60, 0.18)"
-                  : "rgba(255, 241, 242, 0.86)",
+                  ? "rgba(14, 116, 144, 0.2)"
+                  : "rgba(236, 254, 255, 0.9)",
               }}
             />
             <Typography
@@ -763,9 +783,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 color: "var(--home-ink)",
               }}
             >
-              The model demo phase is over.
+              The private-market legend is public.
               <br />
-              AI is becoming infrastructure.
+              Now the price has to meet the engineering.
             </Typography>
             <Typography
               variant="body2"
@@ -775,9 +795,9 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 maxWidth: 680,
               }}
             >
-              Today&apos;s color story is operational: graphite for the desk,
-              circuit teal for agents, cloud blue for infrastructure, amber for
-              security, and rose for the human reset.
+              Today&apos;s color story is orbital: midnight ink for the desk,
+              launch teal for engineering, orbit blue for infrastructure, brass
+              amber for valuation discipline, and rose for the human reset.
             </Typography>
           </Stack>
           <Stack
@@ -787,11 +807,11 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
           >
             <Button
               component={RouterLink}
-              to="/blog/2026-06-14-tech-ai-news-digest"
+              to="/blog/2026-06-14-spacex-ipo-pros-cons"
               variant="contained"
               size="large"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_tech_ai_digest_feature_cta")}
+              onClick={() => trackClick("home_spacex_ipo_feature_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -801,15 +821,15 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 boxShadow: "none",
               }}
             >
-              Open the digest
+              Open the IPO note
             </Button>
             <Button
               component={RouterLink}
-              to="/blog/2026-06-07-seagrass-meadows-ocean-engineering-namritha"
+              to="/blog/2026-06-14-tech-ai-news-digest"
               variant="outlined"
               size="large"
               endIcon={<ArrowOutwardRoundedIcon />}
-              onClick={() => trackClick("home_namritha_seagrass_support_cta")}
+              onClick={() => trackClick("home_ai_digest_support_cta")}
               sx={{
                 borderRadius: 999,
                 px: 3,
@@ -820,7 +840,7 @@ function Home({ isDarkMode, showWorldClock, trackClick }) {
                 borderColor: "var(--home-border)",
               }}
             >
-              Keep the seagrass note
+              Keep the AI digest
             </Button>
           </Stack>
         </Stack>

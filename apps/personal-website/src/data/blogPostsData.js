@@ -1,5 +1,15 @@
 export const blogPosts = [
   {
+    title: "SpaceX IPO: What Public Investors Are Really Buying",
+    date: "June 14, 2026",
+    lastModified: "June 14, 2026",
+    excerpt:
+      "SpaceX has moved from private-market legend to public-market test case. The attraction is obvious: Starlink, launch dominance, defense demand, Starship optionality, and AI infrastructure dreams. The caution is just as obvious: valuation, losses, execution risk, regulation, and governance.",
+    tags: ["SpaceX", "IPO", "Markets", "Space", "Starlink", "Investing"],
+    image: "/media/spacexipo.png",
+    link: "/blog/2026-06-14-spacex-ipo-pros-cons",
+  },
+  {
     title: "The Week AI Became Infrastructure",
     date: "June 14, 2026",
     lastModified: "June 14, 2026",
