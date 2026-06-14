@@ -12,6 +12,16 @@ export const blogIndex = {
     dateModified: "2026-06-14",
     readingTime: "~7 min",
   },
+  "2026-06-14-clear-writing-age-ai": {
+    title: "Why Clear Writing Wins in the Age of AI",
+    description:
+      "A reflection inspired by Steven Pinker on clarity, jargon, the curse of knowledge, and why human judgment matters even more when AI can produce polished text instantly.",
+    image: "/media/blogwordcloud.png",
+    tags: ["Writing", "AI", "Clarity", "Steven Pinker", "Communication", "LLMs"],
+    datePublished: "2026-06-14",
+    dateModified: "2026-06-14",
+    readingTime: "~5 min",
+  },
   "2026-06-14-tech-ai-news-digest": {
     title: "The Week AI Became Infrastructure",
     description:
